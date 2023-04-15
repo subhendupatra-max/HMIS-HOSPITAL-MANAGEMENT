@@ -1,0 +1,80 @@
+
+<?php $__env->startSection('content'); ?>
+
+<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+    <div class="card">
+        <div class="card-header d-block">
+            <div class="row">
+                <div class="col-md-6 card-title">
+                    Patient List
+                </div>
+
+                <div class="col-md-6 text-right">
+                    <div class="d-block">
+                        <a href="<?php echo e(route('add_new_patient')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add New Patient </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">All Patient</div>
+        </div>
+        <div class="card-body">
+            <div class="">
+                <div class="table-responsive">
+                    <table id="example" class="table table-bordered text-nowrap key-buttons">
+                        <thead>
+                            <tr>
+                                <th class="border-bottom-0">UHID</th>
+                                <th class="border-bottom-0">Patient Name</th>
+                                <th class="border-bottom-0">Guardian Name </th>
+                                <th class="border-bottom-0">Gender</th>
+                                <th class="border-bottom-0">Age</th>
+                                <th class="border-bottom-0">Address</th>
+                                <th class="border-bottom-0">Action</th>
+                            </tr>
+                        </thead>
+                        <?php $__currentLoopData = $all_patient; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $all_patients): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <tbody>
+                            <tr>
+                                <td><?php echo e($all_patients->id); ?></td>
+                                <td><?php echo e($all_patients->prefix); ?> <?php echo e($all_patients->first_name); ?> <?php echo e($all_patients->middle_name); ?> <?php echo e($all_patients->last_name); ?></td>
+                                <td><?php echo e($all_patients->guardian_name_realation); ?> <?php echo e($all_patients->guardian_name); ?></td>
+                                <td><?php echo e($all_patients->gender); ?></td>
+                                <td><?php echo e($all_patients->year); ?> <?php echo e($all_patients->month); ?> <?php echo e($all_patients->day); ?></td>
+                                <td><?php echo e($all_patients->address); ?></td>
+                                <td>
+                                   
+                                    <div class="card-options">
+                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right" style="">
+                                            <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print requisition')): ?>
+                                            <a class="dropdown-item" href="" target="popup"><i class="fa fa-print"></i>Print</a>
+                                            <?php endif; ?>
+
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit requisition')): ?>
+                                            <a class="dropdown-item" href=""><i class="fa fa-edit"></i>Edit</a>
+                                            <?php endif; ?>
+
+                                            <a class="dropdown-item" href="<?php echo e(route('delete.patient.details',  $all_patients->id)); ?>"><i class="fa fa-trash"></i>Delete</a>
+
+                                        </div>
+                                </td>
+
+
+                            </tr>
+                        </tbody>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\hospital\ameInventory1\resources\views/setup/patient/all_patient_details.blade.php ENDPATH**/ ?>

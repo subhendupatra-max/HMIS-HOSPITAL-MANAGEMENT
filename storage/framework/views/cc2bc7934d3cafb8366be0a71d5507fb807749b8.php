@@ -1,0 +1,1 @@
+<?php echo "kdsjfij"; ?><?php /**PATH E:\xampp\ameInventory\resources\views/mail/user-cred.blade.php ENDPATH**/ ?>
