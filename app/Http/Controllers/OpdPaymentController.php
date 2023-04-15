@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\OpdPayment;
 use App\Models\OpdTimeline;
+use App\Models\OpdDetails;
 
 class OpdPaymentController extends Controller
 {
@@ -13,18 +14,20 @@ class OpdPaymentController extends Controller
     {
         $opd_id = base64_decode($id);
         $opdPayment = OpdPayment::all();
+        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
         $opdPaymentDetails =  OpdPayment::where('opd_id', $opd_id)->get();
 
-        return view('OPD.payment.payment-listing', compact('opdPayment', 'opd_id', 'opdPaymentDetails'));
+        return view('OPD.payment.payment-listing', compact('opdPayment', 'opd_id', 'opdPaymentDetails','opd_patient_details'));
     }
 
     public function add_payment_in_opd($id)
     {
         $opd_id = base64_decode($id);
         $opdPayment = OpdPayment::all();
+        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
         $opdPaymentDetails =  OpdPayment::where('opd_id', $opd_id)->get();
 
-        return view('OPD.payment.add-payment', compact('opdPayment', 'opd_id', 'opdPaymentDetails'));
+        return view('OPD.payment.add-payment', compact('opdPayment', 'opd_id', 'opdPaymentDetails','opd_patient_details'));
     }
 
     public function save_payment_in_opd(Request $request)
@@ -50,13 +53,15 @@ class OpdPaymentController extends Controller
         }
     }
 
-    public function edit_payment_in_opd($id)
+    public function edit_payment_in_opd($id,$opd_id)
     {
+        $opd_id = base64_decode($opd_id);
         $e_id = base64_decode($id);
         $payment = OpdPayment::all();
+        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
         $editOpdPaymentDetails = OpdPayment::where('id', $e_id)->first();
 
-        return view('OPD.payment.edit-payment', compact('payment', 'editOpdPaymentDetails'));
+        return view('OPD.payment.edit-payment', compact('payment', 'editOpdPaymentDetails','opd_patient_details'));
     }
 
     public function update_payment_in_opd(Request $request)

@@ -219,6 +219,19 @@ $login_details = DB::table('users')
                         </li>
                         <?php endif; ?>
 
+                        <?php if(auth()->user()->can('Inventory')): ?>
+                        <li class="slide">
+                            <a class="side-menu__item" href="<?php echo e(route('item-stock-listing')); ?>">
+                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                    <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z" />
+
+                                </svg>
+                                <span class="side-menu__label">Inventory </span>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+
                         <?php if(auth()->user()->can('Birth and Death Record')): ?>
                         <li class="slide">
                             <a class="side-menu__item" data-toggle="slide" href="index-2.html#">
@@ -277,6 +290,21 @@ $login_details = DB::table('users')
                             </a>
                         </li>
                         <?php endif; ?>
+                        <?php if(auth()->user()->can('Blood Bank')): ?>
+                        <li class="slide">
+                            <a class="side-menu__item" href="<?php echo e(route('all-blood-details')); ?>">
+
+                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                    <path d="M8 3v2H6v4c0 2.21 1.79 4 4 4s4-1.79 4-4V5h-2V3h3c.552 0 1 .448 1 1v5c0 2.973-2.162 5.44-5 5.917V16.5c0 1.933 1.567 3.5 3.5 3.5 1.497 0 2.775-.94 3.275-2.263C16.728 17.27 16 16.22 16 15c0-1.657 1.343-3 3-3s3 1.343 3 3c0 1.371-.92 2.527-2.176 2.885C19.21 20.252 17.059 22 14.5 22 11.462 22 9 19.538 9 16.5v-1.583C6.162 14.441 4 11.973 4 9V4c0-.552.448-1 1-1h3z" />
+                                </svg>
+                                <span class="side-menu__label">Blood Bank</span>
+                            </a>
+                        </li>
+                        <?php endif; ?>
+
+
+
 
                         <?php if(auth()->user()->can('Set Up')): ?>
                         <li class="slide">
@@ -312,6 +340,28 @@ $login_details = DB::table('users')
                                 </li>
                                 <?php endif; ?>
 
+                                <?php if(auth()->user()->can('front office')): ?>
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Front Office</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('purpose')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-purpose-in-front-office')); ?>">Purpose</a></li>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('complain type')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-complain-type-in-front-office')); ?>">Complain Type</a></li>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('source')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-source-in-front-office')); ?>">Source</a></li>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('appointment priority')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-appointment-priority-in-front-office')); ?>">Appointment Priority</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </li>
+                                <?php endif; ?>
+
+
+
                                 <?php if(auth()->user()->can('charges package')): ?>
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Charges Package</span><i class="sub-angle fe fe-chevron-down"></i></a>
@@ -329,12 +379,72 @@ $login_details = DB::table('users')
                                 </li>
                                 <?php endif; ?>
 
+                                <?php if(auth()->user()->can('Setup Inventory')): ?>
+                                <li class="sub-slide">
+                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Inventory</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('inventory-item-list')); ?>">Item</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Catagory')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-inventory-item-catagory')); ?>">Item Catagory</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Unit')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-inventory-item-unit')); ?>">Item Unit</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Brand')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-inventory-item-brand')); ?>">Item Brand</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Manufacture')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-inventory-manufacture')); ?>">Manufacture</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Type')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-inventory-item-type')); ?>">Item Type</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Store Room')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-inventory-item-store-room')); ?>">Item Store Room</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Attribute')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('inventory-item-attribute')); ?>">Item Attribute</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                    <ul class="sub-slide-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Vendor')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('inventory-vendor')); ?>">Vendor</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </li>
+                                <?php endif; ?>
+
                                 <?php if(auth()->user()->can('setup pharmacy')): ?>
                                 <li class="sub-slide">
                                     <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Pharmacy</span><i class="sub-angle fe fe-chevron-down"></i></a>
                                     <ul class="sub-slide-menu">
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine catagory')): ?>
-                                        <li><a class="sub-slide-item" href="<?php echo e(route('medicine-catagory-details')); ?>">Medicine Catagory</a></li>
+
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine storeroom')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('medicine-store-room-details')); ?>">Store Room</a></li>
+                                        <?php endif; ?>
+
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine store')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('medicine-store-details')); ?>">Medicine Store</a></li>
+                                        <?php endif; ?>
+
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine rack')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('medicine-rack-details')); ?>">Medicine Rack</a></li>
                                         <?php endif; ?>
 
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine supplier')): ?>
@@ -355,6 +465,10 @@ $login_details = DB::table('users')
 
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('dose duration')): ?>
                                         <li><a class="sub-slide-item" href="<?php echo e(route('dose-duration-details')); ?>">Duration </a></li>
+                                        <?php endif; ?>
+
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine vendor')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('medicine-vendor-details')); ?>">Vendor</a></li>
                                         <?php endif; ?>
                                     </ul>
                                 </li>
@@ -469,6 +583,9 @@ $login_details = DB::table('users')
                                         <li><a class="sub-slide-item" href="<?php echo e(route('blood-bank-product-details')); ?>">Product</a></li>
                                         <?php endif; ?>
 
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Blood unit type')): ?>
+                                        <li><a class="sub-slide-item" href="<?php echo e(route('add-blood-unit-type')); ?>">Unit Types</a></li>
+                                        <?php endif; ?>
                                     </ul>
                                 </li>
                                 <?php endif; ?>

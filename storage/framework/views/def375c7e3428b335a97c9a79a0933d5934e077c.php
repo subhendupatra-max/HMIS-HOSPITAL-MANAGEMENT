@@ -10,15 +10,15 @@
                 <div class="col-md-6 text-right">
                     <div class="d-block">
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                        <a href="<?php echo e(route('import-medicine')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i>Import Medicines</a>
+                        <a href="<?php echo e(route('import-medicine')); ?>" class="btn btn-primary btn-sm "><i class="fa fa-upload mr-1"></i>Import Medicines</a>
                         <?php endif; ?>
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add medicine')): ?>
-                        <a href="<?php echo e(route('add-medicine-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i>Add Medicine</a>
+                        <a href="<?php echo e(route('add-medicine-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus mr-1"></i>Add Medicine</a>
                         <?php endif; ?>
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                        <a href="<?php echo e(route('all-medicine-listing')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Purchase </a>
+                        <a href="<?php echo e(route('all-medicine-requisition-listing')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Purchase </a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -37,7 +37,6 @@
                                 <th class="border-bottom-0">Medicine Company </th>
                                 <th class="border-bottom-0">Medicine Composition</th>
                                 <th class="border-bottom-0">Medicine Group </th>
-                                <th class="border-bottom-0">Unit</th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine','delete medicine')): ?>
                                 <th>Action</th>
                                 <?php endif; ?>
@@ -52,17 +51,16 @@
                                 <td><?php echo e(@$item->medicine_company); ?> </td>
                                 <td><?php echo e(@$item->medicine_composition); ?> </td>
                                 <td><?php echo e(@$item->medicine_group); ?> </td>
-                                <td><?php echo e(@$item->unit); ?> </td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('edit-medicine-details',['id'=>$item->id])); ?>"><i class="fa fa-edit"></i> Edit</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('edit-medicine-details',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
                                             <?php endif; ?>
 
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('delete-medicine-details',['id'=>$item->id])); ?>"><i class="fa fa-trash"></i> Delete</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('delete-medicine-details',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                             <?php endif; ?>
                                         </div>
                                     </div>

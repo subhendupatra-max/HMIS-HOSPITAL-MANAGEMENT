@@ -1744,36 +1744,35 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::get('opd-registation/{id}', [OpdController::class, 'opd_registation'])->name('opd-registation');
         Route::post('add-opd-registation', [OpdController::class, 'add_opd_registation'])->name('add-opd-registation');
     });
-    Route::post('patient_search-in-opd', [OpdController::class, 'patient_search_in_opd'])->name('patient_search-in-opd');
-    Route::post('find-symptoms-title-by-symptoms-type', [OpdController::class, 'find_symptoms_title_by_symptoms_type'])->name('find-symptoms-title-by-symptoms-type');
-    Route::group(['middleware' => ['permission:OPD registation']], function () {
-        Route::get('opd-profile/{id}', [OpdController::class, 'profile'])->name('opd-profile');
+    //================================= OPD profile ==================================
+    Route::group(['middleware' => ['permission:OPD registation'],'prefix' => 'opd-profile'], function () {
+        Route::get('profile/{id}', [OpdController::class, 'profile'])->name('opd-profile');
     });
-    Route::group(['middleware' => ['permission:Admission From OPD']], function () {
-        Route::get('admission-from-opd/{id}', [OpdController::class, 'admission_from_opd'])->name('ipd-registation-from-opd');
-    });
-});
-Route::get('payment-list/{id}', [OpdController::class, 'payment_list'])->name('payment-list');
-Route::post('find-doctor-by-department', [OpdController::class, 'find_doctor_by_department'])->name('find-doctor-by-department');
-Route::post('patient-edit-age', [OpdController::class, 'patient_edit_age'])->name('patient-age-edit');
+    //================================= OPD profile ====================================
+    //================================= OPD billing ====================================
+    Route::get('opd-billing/{id}', [TimelineController::class, 'timeline_listing_opd'])->name('opd-billing');
+    //================================= OPD billing ====================================
 
-// =============================== Timeline opd ==================================================
-Route::group(['middleware' => ['permission:timeline list opd'], 'prefix' => 'opd'], function () {
-    Route::get('timeline-lisitng-in-opd/{id}', [TimelineController::class, 'timeline_listing_opd'])->name('timeline-lisitng-in-opd');
-    Route::group(['middleware' => ['permission:add timeline list opd']], function () {
-        Route::get('add-timeline-lisitng-in-opd/{id}', [TimelineController::class, 'add_timeline_listing_opd'])->name('add-timeline-lisitng-in-opd');
-        Route::post('save-timeline-lisitng-in-opd', [TimelineController::class, 'save_timeline_listing_opd'])->name('save-timeline-lisitng-in-opd');
+    //================================= OPD timeline ====================================
+    Route::group(['middleware' => ['permission:timeline list opd'], 'prefix' => 'opd-timeline'], function () {
+        Route::get('timeline-lisitng-in-opd/{id}', [TimelineController::class, 'timeline_listing_opd'])->name('timeline-lisitng-in-opd');
+        Route::group(['middleware' => ['permission:add timeline list opd']], function () {
+            Route::get('add-timeline-lisitng-in-opd/{id}', [TimelineController::class, 'add_timeline_listing_opd'])->name('add-timeline-lisitng-in-opd');
+            Route::post('save-timeline-lisitng-in-opd', [TimelineController::class, 'save_timeline_listing_opd'])->name('save-timeline-lisitng-in-opd');
+        });
+        Route::group(['middleware' => ['permission:delete timeline list opd']], function () {
+            Route::get('delete-timeline-lisitng-in-opd/{id}', [TimelineController::class, 'delete_timeline_listing_opd'])->name('delete-timeline-lisitng-in-opd');
+        });
+        Route::group(['middleware' => ['permission:edit timeline list opd']], function () {
+            Route::get('edit-timeline-lisitng-in-opd/{id}/{opd_id}', [TimelineController::class, 'edit_timeline_listing_opd'])->name('edit-timeline-lisitng-in-opd');
+            Route::post('update-timeline-lisitng-in-opd', [TimelineController::class, 'update_timeline_listing_opd'])->name('update-timeline-lisitng-in-opd');
+            Route::post('find-timeline-details', [TimelineController::class, 'find_timeline_details'])->name('find-timeline-details');
+        });
     });
-    Route::group(['middleware' => ['permission:delete timeline list opd']], function () {
-        Route::get('delete-timeline-lisitng-in-opd/{id}', [TimelineController::class, 'delete_timeline_listing_opd'])->name('delete-timeline-lisitng-in-opd');
-    });
-    Route::group(['middleware' => ['permission:edit timeline list opd']], function () {
-        Route::get('edit-timeline-lisitng-in-opd/{id}', [TimelineController::class, 'edit_timeline_listing_opd'])->name('edit-timeline-lisitng-in-opd');
-        Route::post('update-timeline-lisitng-in-opd', [TimelineController::class, 'update_timeline_listing_opd'])->name('update-timeline-lisitng-in-opd');
-        Route::post('find-timeline-details', [TimelineController::class, 'find_timeline_details'])->name('find-timeline-details');
-    });
-    // =============================== payment opd ==================================================
-    Route::group(['middleware' => ['permission:opd payment']], function () {
+    //================================= OPD timeline ====================================
+
+    //================================= OPD payment ====================================
+    Route::group(['middleware' => ['permission:opd payment'], 'prefix' => 'opd-payment'], function () {
         Route::get('payment-listing-in-opd/{id}', [OpdPaymentController::class, 'payment_listing_in_opd'])->name('payment-listing-in-opd');
         Route::group(['middleware' => ['permission:add opd payment']], function () {
             Route::get('add-payment-in-opd/{id}', [OpdPaymentController::class, 'add_payment_in_opd'])->name('add-payment-in-opd');
@@ -1783,13 +1782,32 @@ Route::group(['middleware' => ['permission:timeline list opd'], 'prefix' => 'opd
             Route::get('delete-payment-in-opd/{id}', [OpdPaymentController::class, 'delete_payment_in_opd'])->name('delete-payment-in-opd');
         });
         Route::group(['middleware' => ['permission:edit opd payment']], function () {
-            Route::get('edit-payment-in-opd/{id}', [OpdPaymentController::class, 'edit_payment_in_opd'])->name('edit-payment-in-opd');
+            Route::get('edit-payment-in-opd/{id}/{opd_id}', [OpdPaymentController::class, 'edit_payment_in_opd'])->name('edit-payment-in-opd');
             Route::post('update-payment-in-opd', [OpdPaymentController::class, 'update_payment_in_opd'])->name('update-payment-in-opd');
         });
     });
-    // =============================== payment opd ====================================================
+    //================================= OPD payment ====================================
+
+    //================================= ipd admission from opd ==========================
+    Route::group(['middleware' => ['permission:Admission From OPD']], function () {
+        Route::get('admission-from-opd/{id}', [OpdController::class, 'admission_from_opd'])->name('ipd-registation-from-opd');
+    });
+    //================================= ipd admission from opd ==========================
+
+
+
+
+
+
+    Route::post('patient_search-in-opd', [OpdController::class, 'patient_search_in_opd'])->name('patient_search-in-opd');
+    Route::post('find-symptoms-title-by-symptoms-type', [OpdController::class, 'find_symptoms_title_by_symptoms_type'])->name('find-symptoms-title-by-symptoms-type');
+
+// Route::get('payment-list/{id}', [OpdController::class, 'payment_list'])->name('payment-list');
+Route::post('find-doctor-by-department', [OpdController::class, 'find_doctor_by_department'])->name('find-doctor-by-department');
+Route::post('patient-edit-age', [OpdController::class, 'patient_edit_age'])->name('patient-age-edit');
+
 });
-// =============================== Timeline opd ====================================================
+
 
 //================================= OPD ===================================================
 

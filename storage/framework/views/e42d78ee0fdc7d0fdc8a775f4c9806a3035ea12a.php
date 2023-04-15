@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -54,6 +53,8 @@
                         </div>
                     </div>
 
+
+
                     <div class="form-group col-md-2">
                         <label for="marital_status">Marital Status </label>
                         <select name="marital_status" class="form-control select2-show-search" id="marital_status">
@@ -107,16 +108,28 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="phone">Phone <span class="text-danger">*</span></label>
                         <input type="number" class="form-control" value="<?php echo e(old('phone')); ?>" id="phone" name="phone" placeholder="Enter Your Phone No.">
                         <small class="text-danger"><?php echo e($errors->first('phone')); ?></small>
                     </div>
 
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-3">
                         <label for="phone">Email </label>
                         <input type="email" class="form-control" value="<?php echo e(old('email')); ?>" id="email" name="email" placeholder="Enter Your Eamil">
                         <small class="text-danger"><?php echo e($errors->first('email')); ?></small>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="local_guardian_name">Local Gurdian Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="local_guardian_name" value="<?php echo e(old('local_guardian_name')); ?>" name="local_guardian_name" placeholder="Enter Local Gurdian Name">
+                        <small class="text-danger"><?php echo e($errors->first('local_guardian_name')); ?></small>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="local_guardian_contact_no">Local Gurdian Contact No <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="local_guardian_contact_no" value="<?php echo e(old('local_guardian_contact_no')); ?>" name="local_guardian_contact_no" placeholder="Enter Local Gurdian Name">
+                        <small class="text-danger"><?php echo e($errors->first('local_guardian_contact_no')); ?></small>
                     </div>
 
                     <div class="form-group col-md-12">
@@ -139,7 +152,7 @@
                     <div class="form-group col-md-3">
                         <label for="district">District <span class="text-danger">*</span></label>
                         <select name="district" class="form-control select2-show-search" id="district" required>
-                            <option value="" >Select District...</option>
+                            <option value="">Select District...</option>
                         </select>
                         <small class="text-danger"><?php echo e($errors->first('district')); ?></small>
                     </div>
@@ -182,9 +195,9 @@
                     <div class="form-group col-md-6">
                         <label for="type"> <SPAN style="color:blue;font-weight: 600;">TYPE</SPAN> </label>
                         <select name="type" class="form-control select2-show-search" id="type">
-                            <option value="" <?php if(isset($type)): ?> <?php echo e($type == '' ? 'selected' : ''); ?> <?php endif; ?> >Select One.....</option>
-                            <option value="opd" <?php if(isset($type)): ?> <?php echo e($type == 'opd' ? 'selected' : ''); ?> <?php endif; ?> >OPD Registation</option>
-                            <option value="emg" <?php if(isset($type)): ?> <?php echo e($type == 'emg' ? 'selected' : ''); ?> <?php endif; ?> >EMG Registation</option>
+                            <option value="" <?php if(isset($type)): ?> <?php echo e($type == '' ? 'selected' : ''); ?> <?php endif; ?>>Select One.....</option>
+                            <option value="opd" <?php if(isset($type)): ?> <?php echo e($type == 'opd' ? 'selected' : ''); ?> <?php endif; ?>>OPD Registation</option>
+                            <option value="emg" <?php if(isset($type)): ?> <?php echo e($type == 'emg' ? 'selected' : ''); ?> <?php endif; ?>>EMG Registation</option>
                         </select>
 
                     </div>

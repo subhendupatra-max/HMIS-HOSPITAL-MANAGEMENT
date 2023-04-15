@@ -17,14 +17,16 @@ class TimelineController extends Controller
         //dd($id);
         $opd_id = base64_decode($id);
         $opdTimeline = OpdTimeline::all();
+        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
         $timelineDetails =  OpdTimeline::where('opd_id', $opd_id)->get();
-        return view('OPD.timeline.timeline-listing', compact('opdTimeline', 'opd_id', 'timelineDetails'));
+        return view('OPD.timeline.timeline-listing', compact('opdTimeline', 'opd_id', 'timelineDetails','opd_patient_details'));
     }
 
     public function add_timeline_listing_opd($id)
     {
         $opd_id = base64_decode($id);
-        return view('OPD.timeline.add-timeline', compact('opd_id'));
+        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
+        return view('OPD.timeline.add-timeline', compact('opd_id','opd_patient_details'));
     }
 
     public function save_timeline_listing_opd(Request $request)
@@ -56,13 +58,15 @@ class TimelineController extends Controller
         }
     }
 
-    public function edit_timeline_listing_opd($id)
+    public function edit_timeline_listing_opd($id,$opd_id)
     {
         $id = base64_decode($id);
+        $opd_id = base64_decode($opd_id);
         $timeline = OpdTimeline::all();
+        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
         $editTimeline = OpdTimeline::where('id', $id)->first();
 
-        return view('OPD.timeline.edit-timeline', compact('timeline', 'editTimeline'));
+        return view('OPD.timeline.edit-timeline', compact('timeline', 'editTimeline','opd_patient_details'));
     }
 
     public function update_timeline_listing_opd(Request $request)
