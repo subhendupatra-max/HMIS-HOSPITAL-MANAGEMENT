@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-xl-3 col-lg-3 col-md-12">
 
-                        <a href="{{ route('opd-registation', base64_encode($patient_details->id)) }}" style="{{ Request::segment(1) == 'opd-registation' ? 'color:#705ec8' : '' }}" data-toggle="tooltip" data-placement="top" title="OPD Registation"><i class="fa fa-file-invoice fa-lg"></i></a>
+                        <a href="{{ route('opd-registration', base64_encode($patient_details->id)) }}" style="{{ Request::segment(1) == 'opd-registration' ? 'color:#705ec8' : '' }}" data-toggle="tooltip" data-placement="top" title="OPD Registation"><i class="fa fa-file-invoice fa-lg"></i></a>
 
                         <a href="{{ route('emg-registation', base64_encode($patient_details->id)) }}" style="{{ Request::segment(1) == 'emg-registation' ? 'color:#705ec8' : '' }};margin-left: 10px" data-toggle="tooltip" data-placement="top" title="Emergency Registation"><i class="fa fa-file-alt fa-lg" style="color:#705ec8"></i></a>
                         <span style=" color: #6f6f6f;font-size: 18px;font-weight: 500; margin-left: 24px;">Emergency

@@ -24,7 +24,7 @@ class PatientController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('setup.patient.patient_list', compact('all_patient'));
+        return view('setup.patient.patient_list', compact('all_patient'));  
     }
 
     public function add_new_patient()
@@ -93,7 +93,7 @@ class PatientController extends Controller
 
             DB::commit();
             if ($request->type == "opd") {
-                return redirect()->route('opd-registation', base64_encode($patient->id))->with('success', 'Patient Created Sucessfully');
+                return redirect()->route('opd-registration', base64_encode($patient->id))->with('success', 'Patient Created Sucessfully');
             } elseif ($request->type == "emg") {
                 return redirect()->route('emg-registation', base64_encode($patient->id))->with('success', 'Patient Created Sucessfully');
             } else {

@@ -65,7 +65,7 @@
                                             <a class="dropdown-item" href="{{ route('delete-patient-details', base64_encode($all_patients->id)) }}"><i class="fa fa-trash"></i> Delete</a>
                                             @endcan
                                             @can('OPD registation')
-                                            <a class="dropdown-item" href="{{ route('opd-registation', base64_encode($all_patients->id)) }}"><i class="fa fa-file-alt"></i> OPD Registation</a>
+                                            <a class="dropdown-item" href="{{ route('opd-registration', base64_encode($all_patients->id)) }}"><i class="fa fa-file-alt"></i> OPD Registation</a>
                                             @endcan
                                             @can('Emg registation')
                                             <a class="dropdown-item" href="{{ route('emg-registation', base64_encode($all_patients->id)) }}"><i class="fa fa-file-alt"></i> EMG Registation</a>

@@ -111,19 +111,19 @@ class OpdController extends Controller
     public function index()
     {
         $opd_registaion_list = OpdDetails::get();
-        return view('OPD.opd-patient-list',compact('opd_registaion_list'));
+        return view('OPD.opd-patient-list', compact('opd_registaion_list'));
     }
     public function after_new_old(Request $request)
     {
         $patient_type = $request->patient_type;
-        if($patient_type == 'new_patient'){
+        if ($patient_type == 'new_patient') {
             $blood_group = BloodGroup::all();
             $state = State::all();
             $districts = District::all();
             $type = 'opd';
-            return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts','type'));
+            return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts', 'type'));
         } else {
-            return redirect()->route('patient_details');
+            return redirect()->route('opd-registration');
         }
     }
     public function patient_search_in_opd(Request $request)
@@ -134,33 +134,29 @@ class OpdController extends Controller
     }
     public function opd_registation($patientid)
     {
-        $patient_id =base64_decode($patientid);
-        $patient_details = Patient::where('id','=',$patient_id)->first();
+        $patient_id = base64_decode($patientid);
+        $patient_details = Patient::where('id', '=', $patient_id)->first();
         $tpa_management = TpaManagement::get();
         $referer = Referral::get();
-        $departments = Department::where('is_active','1')->get();
+        $departments = Department::where('is_active', '1')->get();
         $symptoms_types = SymptomsType::get();
         $ticket_fees = OpdSetup::first();
 
-        return view('OPD.opd_registation', compact('symptoms_types','ticket_fees','departments','referer','patient_details', 'patient_id','tpa_management'));
-
+        return view('OPD.opd_registation', compact('symptoms_types', 'ticket_fees', 'departments', 'referer', 'patient_details', 'patient_id', 'tpa_management'));
     }
     public function find_doctor_by_department(Request $request)
     {
-        $opd_units = OpdUnit::select('opd_unit_details.unit_name')->join('opd_unit_details','opd_unit_details.opd_unit_id','=','opd_units.id')->where('opd_units.days',date("l"))->where('opd_units.department_id',$request->department_id)->get();
+        $opd_units = OpdUnit::select('opd_unit_details.unit_name')->join('opd_unit_details', 'opd_unit_details.opd_unit_id', '=', 'opd_units.id')->where('opd_units.days', date("l"))->where('opd_units.department_id', $request->department_id)->get();
 
         $ticket_type = OpdSetup::select('ticket_no_calculate')->first();
-        if($ticket_type == 'By-Doctor')
-        {
-
-        }
-        else
-        {
-            $opd_ticket_no_by_department = OpdVisitDetails::where('appointment_date', 'like', '%'. date('Y-m-d') .'%')->where('department_id',$request->department_id)->max('ticket_no');
+        if ($ticket_type == 'By-Doctor') {
+        } else {
+            $opd_ticket_no_by_department = OpdVisitDetails::where('appointment_date', 'like', '%' . date('Y-m-d') . '%')->where('department_id', $request->department_id)->max('ticket_no');
         }
         $cons_doctor = User::where('is_active', '1')->where('role', 'Doctor')->where('department', $request->department_id)->get();
+        // dd($cons_doctor);
 
-        return response()->json(['cons_doctor'=>$cons_doctor,'opd_units'=>$opd_units,'opd_ticket_no_by_department'=>($opd_ticket_no_by_department + 1)]);
+        return response()->json(['cons_doctor' => $cons_doctor, 'opd_units' => $opd_units, 'opd_ticket_no_by_department' => ($opd_ticket_no_by_department + 1)]);
     }
 
     public function patient_edit_age(Request $request)
@@ -171,7 +167,7 @@ class OpdController extends Controller
         $month = $request->month;
         $days = $request->day;
         Patient::where('id', $patient_id)->update(['date_of_birth' => $dob, 'year' => $year, 'month' => $month, 'day' => $days]);
-        return redirect('opd/opd-registation/' . base64_encode($patient_id));
+        return redirect('opd/opd-registration');
     }
 
     public function find_symptoms_title_by_symptoms_type(Request $request)
@@ -192,7 +188,7 @@ class OpdController extends Controller
         ]);
         try {
             DB::beginTransaction();
-            $opd_prefix = Prefix::where('name','opd')->first();
+            $opd_prefix = Prefix::where('name', 'opd')->first();
 
             //SAVE in CASE reference
             $caseReference = new caseReference;
@@ -217,8 +213,8 @@ class OpdController extends Controller
             $opd_visit_details->unit                        = $request->unit;
             $opd_visit_details->case_type                   = $request->case;
             $opd_visit_details->patient_type                = $request->patient_type;
-            $opd_visit_details->ticket_fees                = $request->ticket_fees;
-            $opd_visit_details->ticket_no                = $request->ticket_no;
+            $opd_visit_details->ticket_fees                 = $request->ticket_fees;
+            $opd_visit_details->ticket_no                   = $request->ticket_no;
             $opd_visit_details->tpa_organization            = $request->tpa_organization;
             $opd_visit_details->type_no                     = $request->type_no;
             $opd_visit_details->appointment_date            = $request->appointment_date;
@@ -239,16 +235,14 @@ class OpdController extends Controller
             //SAVE in opd Visit details
 
             DB::commit();
-            if($request->save == 'save_and_print'){
+            if ($request->save == 'save_and_print') {
                 $pdf = PDF::loadView('OPD._print.opd_prescription');
-                return $pdf->stream('opd_prescription.pdf',array('Attachment'=>0));
+                return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
                 // return $pdf->download('opd_prescription.pdf')->redirect()->back()->with('success', 'OPD Registation Sucessfully');
+            } else {
+                return redirect()->route('OPD-Patient-list')->with('success', 'OPD Registation Sucessfully');
             }
-            else{
-               return redirect()->route('OPD-Patient-list')->with('success', 'OPD Registation Sucessfully');
-            }
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->back()->with('error', $th->getMessage());
         }
@@ -257,19 +251,19 @@ class OpdController extends Controller
     public function profile($id)
     {
         $opd_id = base64_decode($id);
-        $timelineDetails =  OpdTimeline::where('opd_id',$opd_id)->get();
-        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
+        $timelineDetails =  OpdTimeline::where('opd_id', $opd_id)->get();
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
         // $opd_visit_details = OpdVisitDetails::where('opd_details_id',$opd_id)->get();
-        $opd_visit_details = OpdVisitDetails::where('opd_details_id',$opd_id)->first();
-        return view('OPD.opd-patient-profile',compact('opd_patient_details','opd_visit_details','timelineDetails'));
+        $opd_visit_details = OpdVisitDetails::where('opd_details_id', $opd_id)->first();
+        return view('OPD.opd-patient-profile', compact('opd_patient_details', 'opd_visit_details', 'timelineDetails'));
     }
 
     //opd setup
 
     public function opd_setup_details()
     {
-       $opdSetup = OpdSetup::first();
-       return view('setup.opd.opd-setup.opd-setup-listing', compact('opdSetup'));
+        $opdSetup = OpdSetup::first();
+        return view('setup.opd.opd-setup.opd-setup-listing', compact('opdSetup'));
     }
 
     public function save_opd_setup_details(Request $request)
@@ -366,12 +360,42 @@ class OpdController extends Controller
         $units = BedUnit::where('is_active', '1')->get();
         $symptoms_types = SymptomsType::get();
         $visit_details = OpdDetails::where('id', '=', $emg_opd_id)->first();
-        $patient_source_id = $visit_details->opd_prefix.''.$visit_details->id;
+        $patient_source_id = $visit_details->opd_prefix . '' . $visit_details->id;
         $case_id = $visit_details->case_id;
         $patient_source = 'OPD';
 
-        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management','patient_source_id','case_id','patient_source','emg_opd_id','units'));
+        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units'));
     }
 
 
+    public function opd_registation_not_id(Request $request)
+    {
+           
+        $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
+        $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
+
+     
+
+        // $patient_details = Patient::where('id', '=', $patient_id)->first();
+        $tpa_management = TpaManagement::get();
+        $referer = Referral::get();
+        $departments = Department::where('is_active', '1')->get();
+        $symptoms_types = SymptomsType::get();
+        $ticket_fees = OpdSetup::first();
+
+        return view('OPD.opd_registation',compact('all_patient', 'patient_details_information','tpa_management','referer','departments','symptoms_types','ticket_fees'));
+    }
+
+
+
+
+
+    // public function add_patient_details_in_opd_resgistration(Request $request)
+    // {
+    //     $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
+    //     $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
+
+
+    //     return view('OPD.opd_registation', compact('all_patient', 'patient_details_information'));
+    // }
 }

@@ -1741,11 +1741,13 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     Route::get('OPD-Patient-list', [OpdController::class, 'index'])->name('OPD-Patient-list');
     Route::group(['middleware' => ['permission:OPD registation']], function () {
         Route::post('after-new-old', [OpdController::class, 'after_new_old'])->name('after-new-old');
-        Route::get('opd-registation/{id}', [OpdController::class, 'opd_registation'])->name('opd-registation');
-        Route::post('add-opd-registation', [OpdController::class, 'add_opd_registation'])->name('add-opd-registation');
+        Route::post('add-opd-registration', [OpdController::class, 'add_opd_registation'])->name('add-opd-registration');
+              
+        Route::any('opd-registration', [OpdController::class, 'opd_registation_not_id'])->name('opd-registration');
+
     });
     //================================= OPD profile ==================================
-    Route::group(['middleware' => ['permission:OPD registation'],'prefix' => 'opd-profile'], function () {
+    Route::group(['middleware' => ['permission:OPD registation'], 'prefix' => 'opd-profile'], function () {
         Route::get('profile/{id}', [OpdController::class, 'profile'])->name('opd-profile');
     });
     //================================= OPD profile ====================================
@@ -1802,10 +1804,9 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     Route::post('patient_search-in-opd', [OpdController::class, 'patient_search_in_opd'])->name('patient_search-in-opd');
     Route::post('find-symptoms-title-by-symptoms-type', [OpdController::class, 'find_symptoms_title_by_symptoms_type'])->name('find-symptoms-title-by-symptoms-type');
 
-// Route::get('payment-list/{id}', [OpdController::class, 'payment_list'])->name('payment-list');
-Route::post('find-doctor-by-department', [OpdController::class, 'find_doctor_by_department'])->name('find-doctor-by-department');
-Route::post('patient-edit-age', [OpdController::class, 'patient_edit_age'])->name('patient-age-edit');
-
+    // Route::get('payment-list/{id}', [OpdController::class, 'payment_list'])->name('payment-list');
+    Route::post('find-doctor-by-department', [OpdController::class, 'find_doctor_by_department'])->name('find-doctor-by-department');
+    Route::post('patient-edit-age', [OpdController::class, 'patient_edit_age'])->name('patient-age-edit');
 });
 
 
