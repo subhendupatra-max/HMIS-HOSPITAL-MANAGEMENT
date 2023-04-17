@@ -29,9 +29,4 @@ class Charge extends Model
     {
         return $this->belongsTo(ChargesSubCatagory::class, 'charges_sub_catagory_id', 'id');
     }
-
-    public function charges_unit()
-    {
-        return $this->belongsTo(ChargesUnit::class, 'charges_unit_id', 'id');
-    }
 }

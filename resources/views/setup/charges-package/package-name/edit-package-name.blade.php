@@ -11,6 +11,21 @@
                 @csrf
                 <div class="row">
                     <input type="hidden" name="id" value="{{ $editPackageName->id }}" />
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="type" class="form-label">Type <span class="text-danger">*</span></label>
+                            <select id="type" class="form-control" name="type">
+                                <option value=" ">Select type </option>
+                                @foreach (Config::get('static.charges_type') as $lang => $charges_type)
+                                    <option value="{{ $charges_type }}" {{ @$charges_type == $editPackageName->type ? 'selected' : ' ' }} > {{ $charges_type }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('type')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="form-group col-md-4">
                         <label for="charge_package_catagory_id" class="form-label">Charges Package Catagory <span class="text-danger">*</span></label>
                         <select id="charge_package_catagory_id" class="form-control" name="charge_package_catagory_id" onchange="getChargersPackageCatagoryId(this.value)" data-subCatagory_id="{{$editPackageName->charge_package_sub_catagory_id}}">
@@ -27,7 +42,7 @@
                     <div class="form-group col-md-4">
                         <label for="charge_package_sub_catagory_id" class="form-label">Charges Package Sub Catagory <span class="text-danger">*</span></label>
                         <select id="charge_package_sub_catagory_id" class="form-control" name="charge_package_sub_catagory_id">
-                          
+
                         </select>
                         @error('charge_package_sub_catagory_id')
                         <span class="text-danger">{{ $message }}</span>
@@ -67,7 +82,7 @@
 
                     <div class="form-group col-md-3">
                         <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="total_amount" name="total_amount" value="{{ $editPackageName->total_amount }}" readonly>
+                        <input type="text" class="form-control" id="total_amount" name="total_amount" value="{{ $editPackageName->total_amount }}" >
                         <small class="text-danger">{{ $errors->first('total_amount') }}</small>
                     </div>
                 </div>
@@ -116,13 +131,13 @@
                         </td>
                         <td>
                         <input type="text" class="form-control" name="charge_amount[]" id="charge_amount${i}" />
-                       
+
                         </td>
-                               
+
                         <td>
                         <button type="button" class="btn btn-danger" onclick="removerow(${i})"><i class="fa fa-trash"></i></button>
                         </td>
-                       
+
                         </tr>`;
 
         $('#subhendu').append(html);
@@ -160,7 +175,7 @@
     function getChargersPackageCatagoryId(chargeCatagoryId) {
         $('#charge_package_sub_catagory_id').html('<option value="" >Select...</option>');
         let subCatagory = $(this).attr("data-subCatagory_id");
-      
+
         $.ajax({
             url: "{{ route('find-charges-package-sub-catagory-by-charges-package-catagory') }}",
             type: "POST",

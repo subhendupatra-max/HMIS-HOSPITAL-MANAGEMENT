@@ -35,6 +35,7 @@ class ChargesPackageNameController extends Controller
             'charge_package_sub_catagory_id'  => 'required',
             'charge_package_catagory_id'      => 'required',
             'package_name'                    => 'required',
+            'type'                                    => 'required',
             'total_amount'                    => 'required',
         ]);
         try {
@@ -44,6 +45,7 @@ class ChargesPackageNameController extends Controller
             $chargeName->charge_package_sub_catagory_id    = $request->charge_package_sub_catagory_id;
             $chargeName->charge_package_catagory_id        = $request->charge_package_catagory_id;
             $chargeName->package_name                      = $request->package_name;
+            $chargeName->type                      = $request->type;
             $chargeName->total_amount                      = $request->total_amount;
             $chargeName->tax                               = $request->tax;
             $status = $chargeName->save();
@@ -58,7 +60,7 @@ class ChargesPackageNameController extends Controller
 
 
             if ($status) {
-                return back()->with('success', " Charges Package Sub Catagory Added Succesfully ");
+                return redirect()->route('charges-package-name-details')->with('success', " Charges Package Sub Catagory Added Succesfully ");
             } else {
                 return back()->with('error', "Something Went Wrong");
             }
@@ -83,6 +85,7 @@ class ChargesPackageNameController extends Controller
             'charge_package_sub_catagory_id'  => 'required',
             'charge_package_catagory_id'      => 'required',
             'package_name'                    => 'required',
+            'type'                                    => 'required',
             'total_amount'                    => 'required',
         ]);
         try {
@@ -93,6 +96,7 @@ class ChargesPackageNameController extends Controller
             $chargeName->charge_package_catagory_id        = $request->charge_package_catagory_id;
             $chargeName->package_name                      = $request->package_name;
             $chargeName->total_amount                      = $request->total_amount;
+            $chargeName->type                      = $request->type;
             $chargeName->tax                               = $request->tax;
             $status = $chargeName->save();
 
@@ -107,7 +111,7 @@ class ChargesPackageNameController extends Controller
             }
 
             if ($status) {
-                return back()->with('success', " Charges Package Updated Succesfully ");
+                return redirect()->route('charges-package-name-details')->with('success', " Charges Package Updated Succesfully ");
             } else {
                 return back()->with('error', "Something Went Wrong");
             }

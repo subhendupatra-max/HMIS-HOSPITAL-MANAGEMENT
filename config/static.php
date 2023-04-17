@@ -23,4 +23,5 @@ return[
     'complain_source' => ['Online Advertising','From visitors','Front Office'],
     'operation_status' => ['Pending','Approved'],
     'permission_type' => ['Parallal','Sequential'],
+    'charges_type' => ['General','Sastha-Swathi','ESI','Star Health','IOCL'],
 ];

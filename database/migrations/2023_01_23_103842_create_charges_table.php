@@ -17,7 +17,7 @@ class CreateChargesTable extends Migration
             $table->id();
             $table->string('charges_catagory_id')->nullable();
             $table->string('charges_sub_catagory_id')->nullable();
-            $table->string('charges_unit_id')->nullable();
+            $table->string('type')->nullable();
             $table->string('charges_name')->nullable();
             $table->string('standard_charges')->nullable();
             $table->date('date')->nullable();
