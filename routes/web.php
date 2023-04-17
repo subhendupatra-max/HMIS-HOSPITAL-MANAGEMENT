@@ -1734,7 +1734,11 @@ Route::group(['middleware' => ['permission:ambulance']], function () {
     });
 });
 // ================================== Ambulance =================
-Route::post('get-charge-category', [OpdController::class, 'get_charge_category'])->name('get-charge-category');
+// Route::post('get-charge-category', [OpdController::class, 'get_charge_category'])->name('get-charge-category');
+Route::post('get-subcategory-by-category', [BillingController::class, 'get_subcategory_by_category'])->name('get-subcategory-by-category');
+Route::post('get-charge-name', [BillingController::class, 'get_charge_name'])->name('get-charge-name');
+Route::post('get-category', [BillingController::class, 'get_category'])->name('get-category');
+Route::post('get-charge-amount', [BillingController::class, 'get_charge_amount'])->name('get-charge-amount');
 // ===========================================================================
 
 // =============================================================================
@@ -1758,6 +1762,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::get('opd-billing/{id}', [BillingController::class, 'index'])->name('opd-billing');
         Route::group(['middleware' => ['permission:add opd billing']], function () {
             Route::get('add-opd-billing/{id}', [BillingController::class, 'create_billing'])->name('add-opd-billing');
+
         });
     });
     //================================= OPD billing ====================================

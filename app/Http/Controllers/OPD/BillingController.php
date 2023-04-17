@@ -3,6 +3,12 @@
 namespace App\Http\Controllers\OPD;
 
 use App\Http\Controllers\Controller;
+use App\Models\Charge;
+use App\Models\ChargesCatagory;
+use App\Models\ChargesPackageCatagory;
+use App\Models\ChargesPackageName;
+use App\Models\ChargesPackageSubCatagory;
+use App\Models\ChargesSubCatagory;
 use App\Models\OpdDetails;
 use Illuminate\Http\Request;
 
@@ -17,7 +23,58 @@ class BillingController extends Controller
     public function create_billing($id)
     {
         $opd_id = base64_decode($id);
+        $charge_category =  ChargesCatagory::all();
         $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
-        return view('OPD.billing.create-billing',compact('opd_patient_details','opd_id'));
+        return view('OPD.billing.create-billing',compact('opd_patient_details','opd_id','charge_category'));
+    }
+    public function get_category(Request $request)
+    {
+        if($request->chargeSet == 'Normal')
+        {
+            $charge_category =  ChargesCatagory::select('charges_catagories.charges_catagories_name as category_name','charges_catagories.id as category_id')->get();
+        }
+        if($request->chargeSet == 'Package')
+        {
+            $charge_category =  ChargesPackageCatagory::select('charges_package_catagories.charges_package_catagories_name as category_name','charges_package_catagories.id as category_id')->get();
+        }
+        return response()->json($charge_category);
+
+    }
+    public function get_subcategory_by_category(Request $request)
+    {
+        if($request->chargeSet == 'Normal')
+        {
+            $subCategory = ChargesSubCatagory::select('charges_sub_catagories.charges_sub_catagories_name as sub_category_name','charges_sub_catagories.id as sub_category_id')->where('charges_catagories_id',$request->categoryId)->get();
+        }
+        if($request->chargeSet == 'Package')
+        {
+            $subCategory =  ChargesPackageSubCatagory::select('charges_package_sub_catagories.charges_package_sub_catagory_name as sub_category_name','charges_package_sub_catagories.id as sub_category_id')->where('charges_package_catagory_id',$request->categoryId)->get();
+        }
+        return response()->json($subCategory);
+    }
+
+    public function get_charge_name(Request $request)
+    {
+        if($request->chargeSet == 'Normal')
+        {
+            $charge_details = Charge::select('charges.charges_name as charges_name','charges.id as charge_id')->where('charges_catagory_id',$request->chargeCategory)->where('charges_sub_catagory_id',$request->chargeSubCategory)->where('type',$request->chargeType)->get();
+        }
+        if($request->chargeSet == 'Package')
+        {
+            $charge_details = ChargesPackageName::select('charges_package_names.package_name as charges_name','charges_package_names.id as charge_id')->where('charge_package_catagory_id',$request->chargeCategory)->where('charge_package_sub_catagory_id',$request->chargeSubCategory)->where('type',$request->chargeType)->get();
+        }
+        return response()->json($charge_details);
+    }
+    public function get_charge_amount(Request $request)
+    {
+        if($request->chargeSet == 'Normal')
+        {
+            $charge_amount = Charge::select('charges.standard_charges as charge_amount')->where('id',$request->chargeName)->first();
+        }
+        if($request->chargeSet == 'Package')
+        {
+            $charge_amount = ChargesPackageName::select('charges_package_names.total_amount as charge_amount')->where('id',$request->chargeName)->first();
+        }
+        return response()->json($charge_amount);
     }
 }
