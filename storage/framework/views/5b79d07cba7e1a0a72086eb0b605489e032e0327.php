@@ -22,7 +22,7 @@
                     <div class="options px-5 pt-5  border-bottom pb-3">
 
                         <form method="post" action="<?php echo e(route('opd-registration')); ?>">
-                            
+
                             <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-md-12 mb-2">
@@ -57,31 +57,27 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     <div class="options px-5  pb-3">
                         <div class="row">
-                            
-                        <hr class="hr_line">
-                        <div class="widget-user-image mx-auto mt-1"><img alt="User Avatar" class="rounded-circle" src="<?php echo e(asset('public/patient_image/patient_icon.png')); ?>" style="height: 100px;width: 117px;"></div>
-                        <div class="card-body text-center">
-                            <div class="pro-user">
-                                <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
-                                    <?php echo e($patient_details_information->prefix); ?> <?php echo e($patient_details_information->first_name); ?>
 
-                                    <?php echo e($patient_details_information->middle_name); ?> <?php echo e($patient_details_information->last_name); ?>
+                            <hr class="hr_line">
+                            <!-- <div class="widget-user-image mx-auto mt-1"><img alt="User Avatar" class="rounded-circle" src="<?php echo e(asset('public/patient_image/patient_icon.png')); ?>" style="height: 100px;width: 117px;"></div> -->
+                            <div class="card-body text-center">
+                                <div class="pro-user">
+                                    <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
+                                        <?php echo e($patient_details_information->prefix); ?> <?php echo e($patient_details_information->first_name); ?>
 
-                                </h4>
-                                <h6 class="pro-user-desc textlink">
-                                    <?php echo e($patient_details_information->patient_prefix); ?><?php echo e($patient_details_information->id); ?>
+                                        <?php echo e($patient_details_information->middle_name); ?> <?php echo e($patient_details_information->last_name); ?>
 
-                                </h6>
+                                    </h4>
+                                    <h6 class="pro-user-desc textlink">
+                                        <?php echo e($patient_details_information->patient_prefix); ?><?php echo e($patient_details_information->id); ?>
 
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
-                                <a href="<?php echo e(route('edit-patient-details', base64_encode($patient_details_information->id))); ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
-                                <?php endif; ?>
+                                    </h6>
+
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
+                                    <a href="<?php echo e(route('edit-patient-details', base64_encode($patient_details_information->id))); ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                        </div>
-
-
-
-
 
                             <div class="table-responsive">
 
@@ -179,7 +175,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-4">
                                     <label for="height" class="form-label">Case</label>
                                     <input type="text" class="form-control" name="case" value="<?php echo e(old('case')); ?>" required />
 
@@ -427,7 +423,6 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </form>
-
 
 
 <script>

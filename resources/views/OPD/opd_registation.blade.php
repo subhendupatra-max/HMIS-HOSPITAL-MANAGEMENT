@@ -22,7 +22,7 @@
                     <div class="options px-5 pt-5  border-bottom pb-3">
 
                         <form method="post" action="{{route('opd-registration') }}">
-                            
+
                             @csrf
                             <div class="row">
                                 <div class="col-md-12 mb-2">
@@ -50,28 +50,24 @@
                     @enderror
                     <div class="options px-5  pb-3">
                         <div class="row">
-                            
-                        <hr class="hr_line">
-                        <div class="widget-user-image mx-auto mt-1"><img alt="User Avatar" class="rounded-circle" src="{{ asset('public/patient_image/patient_icon.png') }}" style="height: 100px;width: 117px;"></div>
-                        <div class="card-body text-center">
-                            <div class="pro-user">
-                                <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
-                                    {{ $patient_details_information->prefix }} {{ $patient_details_information->first_name }}
-                                    {{ $patient_details_information->middle_name }} {{ $patient_details_information->last_name }}
-                                </h4>
-                                <h6 class="pro-user-desc textlink">
-                                    {{ $patient_details_information->patient_prefix }}{{ $patient_details_information->id }}
-                                </h6>
 
-                                @can('edit patient')
-                                <a href="{{ route('edit-patient-details', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
-                                @endcan
+                            <hr class="hr_line">
+                            <!-- <div class="widget-user-image mx-auto mt-1"><img alt="User Avatar" class="rounded-circle" src="{{ asset('public/patient_image/patient_icon.png') }}" style="height: 100px;width: 117px;"></div> -->
+                            <div class="card-body text-center">
+                                <div class="pro-user">
+                                    <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
+                                        {{ $patient_details_information->prefix }} {{ $patient_details_information->first_name }}
+                                        {{ $patient_details_information->middle_name }} {{ $patient_details_information->last_name }}
+                                    </h4>
+                                    <h6 class="pro-user-desc textlink">
+                                        {{ $patient_details_information->patient_prefix }}{{ $patient_details_information->id }}
+                                    </h6>
+
+                                    @can('edit patient')
+                                    <a href="{{ route('edit-patient-details', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
+                                    @endcan
+                                </div>
                             </div>
-                        </div>
-
-
-
-
 
                             <div class="table-responsive">
 
@@ -153,7 +149,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-3">
+                                <div class="form-group col-md-4">
                                     <label for="height" class="form-label">Case</label>
                                     <input type="text" class="form-control" name="case" value="{{ old('case') }}" required />
 
@@ -373,7 +369,6 @@
         </div>
     </div>
 </form>
-
 
 
 <script>

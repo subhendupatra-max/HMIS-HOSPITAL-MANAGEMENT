@@ -9,8 +9,10 @@ use App\Models\BloodGroup;
 use App\Models\State;
 use App\Models\District;
 use App\Models\Prefix;
+use App\Models\Country;
 use Illuminate\Support\Facades\DB;
 use App\Imports\PatientImport;
+use App\Models\PatientPhysicalDetails;
 use Maatwebsite\Excel\Facades\Excel;
 
 use function PHPSTORM_META\type;
@@ -24,7 +26,7 @@ class PatientController extends Controller
             ->orderBy('id', 'DESC')
             ->get();
 
-        return view('setup.patient.patient_list', compact('all_patient'));  
+        return view('setup.patient.patient_list', compact('all_patient'));
     }
 
     public function add_new_patient()
@@ -32,33 +34,16 @@ class PatientController extends Controller
         $blood_group = BloodGroup::all();
         $state = State::all();
         $districts = District::all();
-        return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts'));
+        $country = Country::all();
+        return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts', 'country'));
     }
 
     public function submit_new_patient_details(Request $request)
     {
 
         $patient_prefix = Prefix::where('name', 'patient')->first();
-        $request->validate([
 
-            'prefix'                     => 'required',
-            'first_name'                 => "required",
-            'last_name'                  => "required",
-            'guardian_name'              => "required",
-            'guardian_name_realation'    => "required",
-            'gender'                     => "required",
-            'date_of_birth'              => "required",
-            'year'                       => "required",
-            'month'                      => "required",
-            'day'                        => "required",
-            'phone'                      => "required",
-            'address'                    => "required",
-            'pin_no'                     => "required",
-            'district'                   => "required",
-            'state'                      => "required",
-
-        ]);
-        // try {
+        try {
 
             DB::beginTransaction();
 
@@ -69,7 +54,7 @@ class PatientController extends Controller
             $patient->middle_name = $request->middle_name;
             $patient->last_name = $request->last_name;
             $patient->guardian_name = $request->guardian_name;
-            $patient->guardian_name_realation = $request->guardian_name_realation;
+            $patient->guardian_contact_no = $request->guardian_contact_no;
             $patient->marital_status = $request->marital_status;
             $patient->blood_group = $request->blood_group;
             $patient->gender = $request->gender;
@@ -83,12 +68,16 @@ class PatientController extends Controller
             $patient->email = $request->email;
             $patient->address = $request->address;
             $patient->state = $request->state;
+            $patient->local_address = $request->local_address;
+            $patient->country_local = $request->country_local;
+            $patient->state_local = $request->state_local;
+            $patient->district_local = $request->district_local;
+            $patient->country = $request->country;
             $patient->district = $request->district;
             $patient->pin_no = $request->pin_no;
+            $patient->local_pin_no = $request->local_pin_no;
             $patient->identification_name = $request->identification_name;
             $patient->identification_number = $request->identification_number;
-            $patient->remarks = $request->remarks;
-            $patient->known_allergies = $request->known_allergies;
             $patient->save();
 
             DB::commit();
@@ -99,10 +88,10 @@ class PatientController extends Controller
             } else {
                 return redirect()->route('patient_details')->with('success', 'Patient Created Sucessfully');
             }
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return redirect()->route('add_new_patient')->with('error', $th->getMessage());
-        // }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('add_new_patient')->with('error', $th->getMessage());
+        }
     }
 
     public function find_fr_district_by_state(Request $request)
@@ -110,6 +99,25 @@ class PatientController extends Controller
         $district_by_state = District::where('state_id', $request->state_id)->get();
 
         return response()->json($district_by_state);
+    }
+    public function find_state_by_country(Request $request)
+    {
+        $country_by_state = State::where('country_id', $request->country_id)->get();
+
+        return response()->json($country_by_state);
+    }
+
+    public function find_local_district_by_state(Request $request)
+    {
+        $district_by_state_local = District::where('state_id', $request->state_ids)->get();
+
+        return response()->json($district_by_state_local);
+    }
+    public function find_local_state_by_country(Request $request)
+    {
+        $country_by_state_local = State::where('country_id', $request->country_id_local)->get();
+
+        return response()->json($country_by_state_local);
     }
 
     public function delete($id)
@@ -140,6 +148,14 @@ class PatientController extends Controller
         return view('setup.patient.view-patient', compact('patient'));
     }
 
+    public function view_patient_details($patient_id, Request $request)
+    {
+        $id = base64_decode($patient_id);
+        $patient_details = Patient::where('id', $id)->first();
+        // dd($patient_details);
+        return view('setup.patient.patient-details', compact('patient_details'));
+    }
+
     public function edit_new_patient($id, Request $request)
     {
         $id = base64_decode($id);
@@ -147,8 +163,10 @@ class PatientController extends Controller
         $state = State::all();
         $districts = District::all();
         $patient = Patient::where('id', '=', $id)->first();
+        // dd($patient);
+        $country = Country::all();
 
-        return view('setup.patient.edit-patient', compact('patient', 'blood_group', 'state', 'districts'));
+        return view('setup.patient.edit-patient', compact('patient', 'blood_group', 'state', 'districts', 'country'));
     }
 
 
@@ -158,35 +176,34 @@ class PatientController extends Controller
         $id = $request->id;
         $patient_prefix = Prefix::where('name', 'patient')->first();
 
-        $request->validate([
+        // $request->validate([
 
-            'prefix'                     => 'required',
-            'first_name'                 => "required",
-            'last_name'                  => "required",
-            'guardian_name'              => "required",
-            'guardian_name_realation'    => "required",
-            'gender'                     => "required",
-            'date_of_birth'              => "required",
-            'year'                       => "required",
-            'month'                      => "required",
-            'day'                        => "required",
-            'phone'                      => "required",
-            'address'                    => "required",
-            'pin_no'                     => "required",
-            'district'                   => "required",
-            'state'                      => "required",
+        //     'prefix'                     => 'required',
+        //     'first_name'                 => "required",
+        //     'last_name'                  => "required",
+        //     'guardian_name'              => "required",
+        //     'gender'                     => "required",
+        //     'date_of_birth'              => "required",
+        //     'year'                       => "required",
+        //     'month'                      => "required",
+        //     'day'                        => "required",
+        //     'phone'                      => "required",
+        //     'address'                    => "required",
+        //     'pin_no'                     => "required",
+        //     'district'                   => "required",
+        //     'state'                      => "required",
 
-        ]);
+        // ]);
         try {
             DB::beginTransaction();
             $patient = Patient::where('id', $id)->first();
-            $patient->prefix = $request->prefix;
             $patient->patient_prefix =  $patient_prefix->prefix;
+            $patient->prefix = $request->prefix;
             $patient->first_name = $request->first_name;
             $patient->middle_name = $request->middle_name;
             $patient->last_name = $request->last_name;
             $patient->guardian_name = $request->guardian_name;
-            $patient->guardian_name_realation = $request->guardian_name_realation;
+            $patient->guardian_contact_no = $request->guardian_contact_no;
             $patient->marital_status = $request->marital_status;
             $patient->blood_group = $request->blood_group;
             $patient->gender = $request->gender;
@@ -194,18 +211,22 @@ class PatientController extends Controller
             $patient->year = $request->year;
             $patient->month = $request->month;
             $patient->day = $request->day;
-            $patient->local_guardian_name            = $request->local_guardian_name;
-            $patient->phlocal_guardian_contact_noone = $request->local_guardian_contact_no;
+            $patient->local_guardian_name = $request->local_guardian_name;
+            $patient->local_guardian_contact_no = $request->local_guardian_contact_no;
             $patient->phone = $request->phone;
             $patient->email = $request->email;
             $patient->address = $request->address;
             $patient->state = $request->state;
+            $patient->local_address = $request->local_address;
+            $patient->country_local = $request->country_local;
+            $patient->state_local = $request->state_local;
+            $patient->district_local = $request->district_local;
+            $patient->country = $request->country;
             $patient->district = $request->district;
             $patient->pin_no = $request->pin_no;
+            $patient->local_pin_no = $request->local_pin_no;
             $patient->identification_name = $request->identification_name;
             $patient->identification_number = $request->identification_number;
-            $patient->remarks = $request->remarks;
-            $patient->known_allergies = $request->known_allergies;
             $patient->save();
 
             DB::commit();

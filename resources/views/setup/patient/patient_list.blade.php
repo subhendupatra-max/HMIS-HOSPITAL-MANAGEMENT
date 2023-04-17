@@ -40,7 +40,8 @@
                         <tbody>
                             @foreach ($all_patient as $all_patients)
                             <tr>
-                                <td><a href="#" class="textlink">{{ $all_patients->patient_prefix }}{{ $all_patients->id }}</a></td>
+
+                                <td><a href="{{ route('patient-details-profile', base64_encode($all_patients->id)) }}" class="textlink">{{ $all_patients->patient_prefix }}{{ $all_patients->id }}</a></td>
                                 <td>{{ $all_patients->prefix }} {{ $all_patients->first_name }}
                                     {{ $all_patients->middle_name }} {{ $all_patients->last_name }}
                                 </td>
@@ -52,7 +53,9 @@
                                 <td>{{ $all_patients->address }},{{ @$all_patients->_district->name }},<br>{{ @$all_patients->_state->name}},{{ $all_patients->pin_no }}</td>
                                 <td>
 
+
                                     <div class="card-options">
+
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 

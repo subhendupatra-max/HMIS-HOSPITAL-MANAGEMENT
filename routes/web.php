@@ -350,10 +350,10 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
         Route::post('upload-import-patient', [PatientController::class, 'upload_import_patient'])->name('upload-import-patient');
     });
 
-
-
-
     Route::get('view-new-patient/{id}', [PatientController::class, 'view_new_patient'])->name('view-new-patient');
+
+    //show patient detils
+    Route::get('patient-details-profile/{id}', [PatientController::class, 'view_patient_details'])->name('patient-details-profile');
 
 
     Route::group(['middleware' => ['permission:edit patient']], function () {
@@ -368,6 +368,14 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
         Route::post('get-patient-serach', [PatientController::class, 'search_patient'])->name('get-patient-serach');
     });
     Route::post('find-fr-district-by-state', [PatientController::class, 'find_fr_district_by_state'])->name('find-fr-district-by-state');
+
+    Route::post('find-state-by-country', [PatientController::class, 'find_state_by_country'])->name('find-state-by-country');
+
+    Route::post('find-local-state-by-country', [PatientController::class, 'find_state_by_country'])->name('find-local-state-by-country');
+
+    Route::post('find-local-state-by-country', [PatientController::class, 'find_local_state_by_country'])->name('find-local-state-by-country');
+
+    Route::post('find-local-district-by-state', [PatientController::class, 'find_local_district_by_state'])->name('find-local-district-by-state');
     // ====================== Patient Details ==================
 
     // ==================================prefix=================
@@ -869,6 +877,9 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
         Route::get('emg-set-up', [EmgController::class, 'emg_set_up'])->name('emg-set-up');
         Route::post('save-emg-set-up', [EmgController::class, 'add_emg_set_up'])->name('save-emg-setup-details');
     });
+    Route::get('payment-listing-in-emg', [EmgController::class, 'emg_set_up'])->name('payment-listing-in-emg');
+    Route::get('timeline-lisitng-in-emg', [EmgController::class, 'emg_set_up'])->name('timeline-lisitng-in-emg');
+
     //====================== EMG Set Up ================================
 
     // ====================== Setup Pharmacy ==================
@@ -1742,9 +1753,8 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     Route::group(['middleware' => ['permission:OPD registation']], function () {
         Route::post('after-new-old', [OpdController::class, 'after_new_old'])->name('after-new-old');
         Route::post('add-opd-registration', [OpdController::class, 'add_opd_registation'])->name('add-opd-registration');
-              
-        Route::any('opd-registration', [OpdController::class, 'opd_registation_not_id'])->name('opd-registration');
 
+        Route::any('opd-registration', [OpdController::class, 'opd_registation_not_id'])->name('opd-registration');
     });
     //================================= OPD profile ==================================
     Route::group(['middleware' => ['permission:OPD registation'], 'prefix' => 'opd-profile'], function () {
