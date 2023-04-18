@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Imports\PatientImport;
 use App\Models\PatientPhysicalDetails;
 use Maatwebsite\Excel\Facades\Excel;
+use Validator;
 
 use function PHPSTORM_META\type;
 
@@ -42,7 +43,25 @@ class PatientController extends Controller
     {
 
         $patient_prefix = Prefix::where('name', 'patient')->first();
+        $request->validate([
 
+            'prefix'                     => 'required',
+            'first_name'                 => "required",
+            'last_name'                  => "required",
+            'guardian_name'              => "required",
+            'gender'                     => "required",
+            'year'                       => "numeric|max:3|required",
+            'month'                      => "numeric|max:3|required",
+            'day'                        => "numeric|max:3|required",
+            'phone'                      => "max:10|required",
+            'address'                    => "required",
+            'pin_no'                     => "required|max:6",
+            'district'                   => "required",
+            'state'                      => "required",
+            'local_guardian_contact_no'  => "max:10",
+            'guardian_contact_no'        => "max:10",
+
+        ]);
         try {
 
             DB::beginTransaction();
@@ -102,7 +121,7 @@ class PatientController extends Controller
     }
     public function find_state_by_country(Request $request)
     {
-        $country_by_state = State::where('country_id', $request->country_id)->get();
+        $country_by_state = State::where('country_id', $request->countries_id)->get();
 
         return response()->json($country_by_state);
     }
@@ -163,7 +182,6 @@ class PatientController extends Controller
         $state = State::all();
         $districts = District::all();
         $patient = Patient::where('id', '=', $id)->first();
-        // dd($patient);
         $country = Country::all();
 
         return view('setup.patient.edit-patient', compact('patient', 'blood_group', 'state', 'districts', 'country'));
@@ -176,24 +194,25 @@ class PatientController extends Controller
         $id = $request->id;
         $patient_prefix = Prefix::where('name', 'patient')->first();
 
-        // $request->validate([
+        $request->validate([
 
-        //     'prefix'                     => 'required',
-        //     'first_name'                 => "required",
-        //     'last_name'                  => "required",
-        //     'guardian_name'              => "required",
-        //     'gender'                     => "required",
-        //     'date_of_birth'              => "required",
-        //     'year'                       => "required",
-        //     'month'                      => "required",
-        //     'day'                        => "required",
-        //     'phone'                      => "required",
-        //     'address'                    => "required",
-        //     'pin_no'                     => "required",
-        //     'district'                   => "required",
-        //     'state'                      => "required",
+            'prefix'                     => 'required',
+            'first_name'                 => "required",
+            'last_name'                  => "required",
+            'guardian_name'              => "required",
+            'gender'                     => "required",
+            'year'                       => "numeric|max:3|required",
+            'month'                      => "numeric|max:3|required",
+            'day'                        => "numeric|max:3|required",
+            'phone'                      => "max:10|required",
+            'address'                    => "required",
+            'pin_no'                     => "required|max:6",
+            'district'                   => "required",
+            'state'                      => "required",
+            'local_guardian_contact_no'  => "max:10",
+            'guardian_contact_no'        => "max:10",
 
-        // ]);
+        ]);
         try {
             DB::beginTransaction();
             $patient = Patient::where('id', $id)->first();
@@ -227,6 +246,7 @@ class PatientController extends Controller
             $patient->local_pin_no = $request->local_pin_no;
             $patient->identification_name = $request->identification_name;
             $patient->identification_number = $request->identification_number;
+
             $patient->save();
 
             DB::commit();

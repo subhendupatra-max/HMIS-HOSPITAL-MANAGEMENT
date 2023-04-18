@@ -1754,7 +1754,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::post('after-new-old', [OpdController::class, 'after_new_old'])->name('after-new-old');
         Route::post('add-opd-registration', [OpdController::class, 'add_opd_registation'])->name('add-opd-registration');
 
-        Route::any('opd-registration', [OpdController::class, 'opd_registation_not_id'])->name('opd-registration');
+        Route::any('opd-registration', [OpdController::class, 'opd_registation'])->name('opd-registration');
     });
     //================================= OPD profile ==================================
     Route::group(['middleware' => ['permission:OPD registation'], 'prefix' => 'opd-profile'], function () {

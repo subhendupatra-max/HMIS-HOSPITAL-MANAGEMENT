@@ -133,18 +133,18 @@ class OpdController extends Controller
         $patient_patient_name = $request->patient_name;
         $patient_mobile_no = $request->mobile_no;
     }
-    public function opd_registation($patientid)
-    {
-        $patient_id = base64_decode($patientid);
-        $patient_details = Patient::where('id', '=', $patient_id)->first();
-        $tpa_management = TpaManagement::get();
-        $referer = Referral::get();
-        $departments = Department::where('is_active', '1')->get();
-        $symptoms_types = SymptomsType::get();
-        $ticket_fees = OpdSetup::first();
+    // public function opd_registation($patientid)
+    // {
+    //     $patient_id = base64_decode($patientid);
+    //     $patient_details = Patient::where('id', '=', $patient_id)->first();
+    //     $tpa_management = TpaManagement::get();
+    //     $referer = Referral::get();
+    //     $departments = Department::where('is_active', '1')->get();
+    //     $symptoms_types = SymptomsType::get();
+    //     $ticket_fees = OpdSetup::first();
 
-        return view('OPD.opd_registation', compact('symptoms_types', 'ticket_fees', 'departments', 'referer', 'patient_details', 'patient_id', 'tpa_management'));
-    }
+    //     return view('OPD.opd_registation', compact('symptoms_types', 'ticket_fees', 'departments', 'referer', 'patient_details', 'patient_id', 'tpa_management'));
+    // }
     public function find_doctor_by_department(Request $request)
     {
         $opd_units = OpdUnit::select('opd_unit_details.unit_name')->join('opd_unit_details', 'opd_unit_details.opd_unit_id', '=', 'opd_units.id')->where('opd_units.department_id', $request->department_id)->get();
@@ -179,78 +179,89 @@ class OpdController extends Controller
 
     public function add_opd_registation(Request $request)
     {
-        $validate = $request->validate([
-            'appointment_date' => 'required',
-            'patient_type' => 'required',
-            'visit_type' => 'required',
-            'department' => 'required',
-            'cons_doctor' => 'required',
-            'unit' => 'required',
-        ]);
-        // try {
-        //     DB::beginTransaction();
-        $opd_prefix = Prefix::where('name', 'opd')->first();
+        // $validate = $request->validate([
+        //     'appointment_date' => 'required',
+        //     'patient_type' => 'required',
+        //     'visit_type' => 'required',
+        //     'department' => 'required',
+        //     'cons_doctor' => 'required',
+        //     'unit' => 'required',
+        // ]);
+        try {
+            DB::beginTransaction();
+            $opd_prefix = Prefix::where('name', 'opd')->first();
 
-        //SAVE in CASE reference
-        $caseReference = new caseReference;
-        $caseReference->save();
-        //SAVE in CASE reference
+            //SAVE in CASE reference
+            $caseReference = new caseReference;
+            $caseReference->save();
+            //SAVE in CASE reference
 
-        //SAVE in opd details
-        $Opd_details = new OpdDetails;
-        $Opd_details->case_id        = $caseReference->id;
-        $Opd_details->patient_id     = $request->patient_id;
-        $Opd_details->opd_prefix     = $opd_prefix->prefix;
-        $Opd_details->generate_by    = Auth::user()->id;
-        $Opd_details->save();
-        //SAVE in opd details
 
-        //SAVE in opd Visit details
-        $opd_visit_details = new OpdVisitDetails();
-        $opd_visit_details->opd_details_id              = $Opd_details->id;
-        $opd_visit_details->department_id               = $request->department;
-        $opd_visit_details->cons_doctor                 = $request->cons_doctor;
-        $opd_visit_details->visit_type                  = $request->visit_type;
-        $opd_visit_details->unit                        = $request->unit;
-        $opd_visit_details->case_type                   = $request->case;
-        $opd_visit_details->patient_type                = $request->patient_type;
-        $opd_visit_details->ticket_fees                 = $request->ticket_fees;
-        $opd_visit_details->ticket_no                   = $request->ticket_no;
-        $opd_visit_details->tpa_organization            = $request->tpa_organization;
-        $opd_visit_details->type_no                     = $request->type_no;
-        $opd_visit_details->appointment_date            = $request->appointment_date;
-        $opd_visit_details->symptoms_type               = $request->symptoms_type;
-        $opd_visit_details->symptoms                    = $request->symptoms_title;
-        $opd_visit_details->symptoms_description        = $request->symptoms_description;
-        $opd_visit_details->known_allergies             = $request->any_known_allergies;
-        $opd_visit_details->note                        = $request->note;
-        $opd_visit_details->refference                  = $request->reference;
-        $opd_visit_details->generated_by                = Auth::user()->id;
-        $opd_visit_details->save();
-        //SAVE in opd Visit details
+            //SAVE in opd details
+            $Opd_details = new OpdDetails;
+            $Opd_details->case_id        = $caseReference->id;
+            $Opd_details->patient_id     = $request->patient_id;
+            $Opd_details->opd_prefix     = $opd_prefix->prefix;
+            $Opd_details->generate_by    = Auth::user()->id;
+            $Opd_details->save();
+            //SAVE in opd details
 
-        $patient_physical_condition = new PatientPhysicalDetails();
-        $patient_physical_condition->opd_visit_details_id        =  $opd_visit_details->id;
-        $patient_physical_condition->bp                          = $request->bp;
-        $patient_physical_condition->height                      = $request->height;
-        $patient_physical_condition->weight                      = $request->weight;
-        $patient_physical_condition->pulse                       = $request->pulse;
-        $patient_physical_condition->temperature                 = $request->temperature;
-        $patient_physical_condition->respiration                 = $request->respiration;
-        $patient_physical_condition->save();
+            //SAVE in opd Visit details
+            $opd_visit_details = new OpdVisitDetails();
+            $opd_visit_details->opd_details_id              = $Opd_details->id;
+            $opd_visit_details->department_id               = $request->department;
+            $opd_visit_details->cons_doctor                 = $request->cons_doctor;
+            $opd_visit_details->visit_type                  = $request->visit_type;
+            $opd_visit_details->unit                        = $request->unit;
+            $opd_visit_details->case_type                   = $request->case;
+            $opd_visit_details->patient_type                = $request->patient_type;
+            $opd_visit_details->ticket_fees                 = $request->ticket_fees;
+            $opd_visit_details->ticket_no                   = $request->ticket_no;
+            $opd_visit_details->tpa_organization            = $request->tpa_organization;
+            $opd_visit_details->type_no                     = $request->type_no;
+            $opd_visit_details->appointment_date            = $request->appointment_date;
+            $opd_visit_details->symptoms_type               = $request->symptoms_type;
+            $opd_visit_details->symptoms                    = $request->symptoms_title;
+            $opd_visit_details->symptoms_description        = $request->symptoms_description;
+            $opd_visit_details->known_allergies             = $request->any_known_allergies;
+            $opd_visit_details->note                        = $request->note;
+            $opd_visit_details->refference                  = $request->reference;
+            $opd_visit_details->generated_by                = Auth::user()->id;
+            $opd_visit_details->save();
+            //SAVE in opd Visit details
 
-        DB::commit();
-        if ($request->save == 'save_and_print') {
-            $pdf = PDF::loadView('OPD._print.opd_prescription');
-            return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
-            // return $pdf->download('opd_prescription.pdf')->redirect()->back()->with('success', 'OPD Registation Sucessfully');
-        } else {
-            return redirect()->route('OPD-Patient-list')->with('success', 'OPD Registation Sucessfully');
+            $patient_physical_condition = new PatientPhysicalDetails();
+            $patient_physical_condition->opd_visit_details_id        =  $opd_visit_details->id;
+            $patient_physical_condition->bp                          = $request->bp;
+            $patient_physical_condition->height                      = $request->height;
+            $patient_physical_condition->weight                      = $request->weight;
+            $patient_physical_condition->pulse                       = $request->pulse;
+            $patient_physical_condition->temperature                 = $request->temperature;
+            $patient_physical_condition->respiration                 = $request->respiration;
+            $patient_physical_condition->save();
+
+            // $opd_patient_details = OpdDetails::where('id', $Opd_details->id)
+            //     ->join('opd_visit_details', 'opd_visit_details.opd_details_id', '=', 'opd_details.id')
+            //     ->join('patients', 'patients.id', '=', 'opd_details.patient_id')
+            //     ->first();
+            //     OpdVisitDetails
+
+            $opd_patient_details = OpdVisitDetails::where('id', $opd_visit_details->id)
+                ->first();
+
+            dd($opd_patient_details);
+
+            if ($request->save == 'save_and_print') {
+                $pdf = PDF::loadView('OPD._print.opd_prescription', compact('opd_patient_details'));
+                return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
+                return $pdf->download('opd_prescription.pdf')->redirect()->back()->with('success', 'OPD Registation Sucessfully');
+            } else {
+                return redirect()->route('OPD-Patient-list')->with('success', 'OPD Registation Sucessfully');
+            }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', $th->getMessage());
         }
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return redirect()->back()->with('error', $th->getMessage());
-        // }
     }
 
     public function profile($id)
@@ -373,31 +384,20 @@ class OpdController extends Controller
     }
 
 
-    public function opd_registation_not_id(Request $request)
+    public function opd_registation(Request $request)
     {
 
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
 
-
-        // $patient_details = Patient::where('id', '=', $patient_id)->first();
         $tpa_management = TpaManagement::get();
         $referer = Referral::get();
         $departments = Department::where('is_active', '1')->get();
         $symptoms_types = SymptomsType::get();
         $ticket_fees = OpdSetup::first();
 
+
+
         return view('OPD.opd_registation', compact('all_patient', 'patient_details_information', 'tpa_management', 'referer', 'departments', 'symptoms_types', 'ticket_fees'));
     }
-
-
-
-    // public function add_patient_details_in_opd_resgistration(Request $request)
-    // {
-    //     $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
-    //     $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
-
-
-    //     return view('OPD.opd_registation', compact('all_patient', 'patient_details_information'));
-    // }
 }

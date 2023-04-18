@@ -2,17 +2,6 @@
 <?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-    <!--/app header--> <!--Page header-->
-    <div class="page-header">
-        <div class="page-leftheader">
-            <h4 class="page-title mb-0">Add New Patient </h4>
-        </div>
-
-    </div>
-    <!--End Page header-->
-    <!--/app header-->
-
-    <!-- Row -->
     <form action="<?php echo e(route('submit_new_patient_details')); ?>" method="POST">
         <?php echo csrf_field(); ?>
         <div class="row">
@@ -21,8 +10,11 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-7">
                             <div class="card">
+                                <div class="card-header">
+                                    <h4>Add Patient</h4>
+                                </div>
                                 <div class="card-body">
-                                    <h5 class="font-weight-bold">Personal Information</h5>
+                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Personal Information</h5>
                                     <div class="main-profile-bio mb-0">
                                         <div class="row">
                                             <div class="form-group col-md-3">
@@ -124,10 +116,8 @@
                                     </div>
                                 </div>
                                 <div class="card-body border-top">
-                                    <h6 class="font-weight-bold">Is Gurdian And Local Gurdian Same ?
-                                        <input type="checkbox" value="same" onclick="gurdianSame()" />
-                                    </h6>
-                                    <h5 class="font-weight-bold">Gurdian Details</h5>
+
+                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Gurdian Details</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
                                             <div class="form-group col-md-4">
@@ -148,8 +138,10 @@
                                 </div>
 
                                 <div class="card-body border-top">
-
-                                    <h5 class="font-weight-bold">Local Gurdian Name</h5>
+                                    <h6 class="font-weight-bold">Is Gurdian And Local Gurdian Same ?
+                                        <input type="checkbox" id="myCheckbox" onchange="myFunction()" />
+                                    </h6>
+                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Local Gurdian Name</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
                                             <div class="form-group col-md-4">
@@ -169,9 +161,8 @@
                                     </div>
                                 </div>
 
-
                                 <div class="card-body border-top">
-                                    <h5 class="font-weight-bold">Address</h5>
+                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Address</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
                                             <div class="form-group col-md-3">
@@ -182,10 +173,10 @@
 
                                             <div class="form-group col-md-3">
                                                 <label for="country">Country <span class="text-danger">*</span></label>
-                                                <select name="country" class="form-control select2-show-search" id="country">
+                                                <select name="country" class="form-control select2-show-search" id="country" onchange="showDetails(this.value)">
                                                     <option value="">Select Country... </option>
                                                     <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $countrys): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($countrys->id); ?>"><?php echo e($countrys->country_name); ?></option>
+                                                    <option value="<?php echo e($countrys->id); ?>" <?php echo e($countrys->id == '1' ? 'selected' : " "); ?>><?php echo e($countrys->country_name); ?></option>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
                                                 <small class="text-danger"><?php echo e($errors->first('country')); ?></small>
@@ -211,7 +202,7 @@
 
                                             <div class="form-group col-md-2">
                                                 <label for="pin_no">Pin No. <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="pin_no" name="pin_no" value="<?php echo e(old('pin_no')); ?>" required>
+                                                <input type="text" class="form-control" id="pin_no" name="pin_no" value="<?php echo e(old('pin_no')); ?>">
                                                 <small class="text-danger"><?php echo e($errors->first('pin_no')); ?></small>
                                             </div>
                                         </div>
@@ -220,7 +211,10 @@
                                 </div>
 
                                 <div class="card-body border-top">
-                                    <h5 class="font-weight-bold">Local Address</h5>
+                                    <h6 class="font-weight-bold">Is Address And Local Address Same ?
+                                        <input type="checkbox" id="checkboxforaddress" onchange="localAddress()" />
+                                    </h6>
+                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Local Address</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
                                             <div class="form-group col-md-3">
@@ -231,10 +225,10 @@
 
                                             <div class="form-group col-md-3">
                                                 <label for="country_local">Country <span class="text-danger">*</span></label>
-                                                <select name="country_local" class="form-control select2-show-search" id="country_local">
+                                                <select name="country_local" class="form-control select2-show-search" id="country_local" onchange="showDetails(this.value)">
                                                     <option value="">Select Country... </option>
                                                     <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($item->id); ?>"><?php echo e($item->country_name); ?></option>
+                                                    <option value="<?php echo e($item->id); ?>" <?php echo e($item->id == '1' ? 'selected' : " "); ?>><?php echo e($item->country_name); ?></option>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
                                                 <small class="text-danger"><?php echo e($errors->first('country_local')); ?></small>
@@ -258,7 +252,7 @@
 
                                             <div class="form-group col-md-2">
                                                 <label for="local_pin_no">Pin No. <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_pin_no" name="local_pin_no" value="<?php echo e(old('local_pin_no')); ?>" required>
+                                                <input type="text" class="form-control" id="local_pin_no" name="local_pin_no" value="<?php echo e(old('local_pin_no')); ?>">
                                                 <small class="text-danger"><?php echo e($errors->first('local_pin_no')); ?></small>
                                             </div>
                                         </div>
@@ -267,32 +261,30 @@
                                 </div>
 
                                 <div class="card-body border-top">
-                                    <h5 class="font-weight-bold">Other Details</h5>
+                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Other Details</h5>
                                     <div class="main-profile-contact-list ">
-                                        <div class="row">
-                                            <div class="form-group col-md-3">
+                                        <!-- <div class="row"> -->
+                                        <div class="form-group col-md-12 " id="indentification">
+                                            <div class="form-group col-md-5 d-inline-block">
                                                 <label for="identification_name"> Identification Name </label>
                                                 <select name="identification_name" class="form-control select2-show-search" id="identification_name">
-                                                    <option value="">Select</option>
-                                                    <?php $__currentLoopData = Config::get('static.identification_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $identification_names): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($identification_names); ?>"> <?php echo e($identification_names); ?></option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="">Select One...</option>
                                                 </select>
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-5 d-inline-block">
                                                 <label for="identification_number"> National Identification Number </label>
                                                 <input type="text" class="form-control" value="<?php echo e(old('identification_number')); ?>" id="identification_number" name="identification_number" placeholder="Enter National Identification Number">
                                                 <small class="text-danger"><?php echo e($errors->first('phone')); ?></small>
                                             </div>
                                         </div>
+
+                                        <!-- </div> -->
                                     </div>
                                 </div>
 
-
-
                                 <div class="card-body border-top">
-                                    <h5 class="font-weight-bold">Select Type</h5>
+                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Select Type</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="form-group col-md-6">
                                             <label for="type"> <SPAN style="color:blue;font-weight: 600;">TYPE</SPAN> </label>
@@ -390,16 +382,44 @@
 </script>
 
 <script>
-    function gurdianSame() {
+    function myFunction() {
+        if (document.getElementById("myCheckbox").checked) {
+            var GurdianName = $('#guardian_name').val();
+            var GurdianContactNo = $('#guardian_contact_no').val();
 
-        var GurdianName = $('#guardian_name').val();
-        var GurdianContactNo = $('#guardian_contact_no').val();
+            $('#local_guardian_name').val(GurdianName);
+            $('#local_guardian_contact_no').val(GurdianContactNo);
 
-        $('#local_guardian_name').val(GurdianName);
-        $('#local_guardian_contact_no').val(GurdianContactNo);
+        } else {
+            $('#local_guardian_name').val(' ');
+            $('#local_guardian_contact_no').val(' ');
+        }
     }
 </script>
 
+<script>
+    function localAddress() {
+        if (document.getElementById("checkboxforaddress").checked) {
+            var address = $('#address').val();
+            // var country = $('#country').val();
+            // var state = $('#state').val();
+            // var district = $('#district').val();
+            var pin_no = $('#pin_no').val();
+
+            $('#local_address').val(address);
+            // $('#country_local').val(country);
+            // $('#state_local').val(state);
+            // $('#district_local').val(district);
+            $('#local_pin_no').val(pin_no);
+        } else {
+            $('#local_address').val(' ');
+            // $('#country_local').val(' ');
+            // $('#state_local').val(' ');
+            // $('#district_local').val(' ');
+            $('#local_pin_no').val(' ');
+        }
+    }
+</script>
 <script>
     $(document).ready(function() {
         $("#country").change(function(event) {
@@ -413,7 +433,7 @@
                 type: "POST",
                 data: {
                     _token: '<?php echo e(csrf_token()); ?>',
-                    country_id: country,
+                    countries_id: country,
                 },
 
                 success: function(response) {
@@ -429,8 +449,6 @@
         });
     });
 </script>
-
-
 <script>
     $(document).ready(function() {
         $("#country_local").change(function(event) {
@@ -460,8 +478,6 @@
         });
     });
 </script>
-
-
 <script>
     $(document).ready(function() {
         $("#state_local").change(function(event) {
@@ -491,6 +507,25 @@
             });
         });
     });
+</script>
+
+<script>
+    function showDetails(value) {
+
+        let in_india = `<option value="">Select One...</option>
+        <option value="Voter Card">Voter Card</option>
+        <option value="Aadhar Card">Aadhar Card</option>
+        <option value="Ration Card">Ration Card</option>`;
+
+        let out_india = `<option value="Passport">Passport</option>
+        `;
+
+        if (value == '1') {
+            $('#identification_name').html(in_india);
+        } else {
+            $('#identification_name').html(out_india);
+        }
+    }
 </script>
 
 <?php $__env->stopSection(); ?>

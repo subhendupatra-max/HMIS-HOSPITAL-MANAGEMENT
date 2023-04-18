@@ -6,7 +6,6 @@ return[
     'marital_status' => ['Single','Married','Widowed','Separated','Not Specified'],
     'gender' => ['male','female','others'],
     'prefix' => ['Mr.','Mrs.','Baby','Dr.','Miss','Devi','Mst.'],
-    'identification_name' => ['Voter Card',' Aadhar Card',],
     'weeks' => ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'],
     'productType' => ['Blood Group','Component'],
     'patient_types' => ['General','Swasthya Sathi','TPA','Medical Student'],
