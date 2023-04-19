@@ -1,12 +1,21 @@
-
-
 <?php $__env->startSection('content'); ?>
 
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add charges')): ?>
-<div class="col-lg-12 col-xl-4 col-md-12 col-sm-12">
+<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+    <!--div-->
     <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Add Charges</h4>
+        <div class="card-header d-block">
+            <div class="row">
+                <div class="col-md-6 card-title">
+                   Charges List
+                </div>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add charges')): ?>
+                <div class="col-md-6 text-right">
+                    <div class="d-block">
+                        <a href="<?php echo e(route('charges-add')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i>Add Charges</a>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </div>
         </div>
         <?php if(session('success')): ?>
         <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
@@ -15,135 +24,16 @@
         <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
         <?php endif; ?>
         <div class="card-body">
-            <form method="POST" action="<?php echo e(route('save-charges-details')); ?>">
-                <?php echo csrf_field(); ?>
-                <div class="">
-                    <div class="form-group">
-                        <label for="charges_catagory_id" class="form-label">Charges Catagory </label>
-                        <select id="charges_catagory_id" class="form-control" name="charges_catagory_id">
-                            <option value=" ">Select Charges Catagory </option>
-                            <?php $__currentLoopData = $charges_catagory_id; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($item->id); ?>"><?php echo e($item->charges_catagories_name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                        <?php $__errorArgs = ['charges_catagory_id'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                        <span class="text-danger"><?php echo e($message); ?></span>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="charges_sub_catagory_id" class="form-label">Charges Sub Catagory</label>
-                        <select id="charges_sub_catagory_id" class="form-control" name="charges_sub_catagory_id">
-                            <option value=" ">Select Charges Sub Catagory </option>
-                            <?php $__currentLoopData = $charges_sub_catagory_id; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($item->id); ?>"><?php echo e($item->charges_sub_catagories_name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                        <?php $__errorArgs = ['charges_sub_catagory_id'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                        <span class="text-danger"><?php echo e($message); ?></span>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="charges_units_id" class="form-label">Charges Unit</label>
-                        <select id="charges_units_id" class="form-control" name="charges_units_id">
-                            <option value=" ">Select Charges Unit </option>
-                            <?php $__currentLoopData = $charges_units_id; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($item->id); ?>"><?php echo e($item->charges_units_name); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                        <?php $__errorArgs = ['charges_units_id'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                        <span class="text-danger"><?php echo e($message); ?></span>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="charges_name" class="form-label">Charges name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="charges_name" name="charges_name" placeholder="Enter Charges Name" value="<?php echo e(old('charges_name')); ?>" required>
-                        <?php $__errorArgs = ['charges_name'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                        <span class="text-danger"><?php echo e($message); ?></span>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="standard_charges" class="form-label">Standard Charges <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="standard_charges" name="standard_charges" placeholder="Enter Standard Charges" value="<?php echo e(old('standard_charges')); ?>" required>
-                        <?php $__errorArgs = ['standard_charges'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                        <span class="text-danger"><?php echo e($message); ?></span>
-                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    <div class="form-group ">
-                        <label for="standard_charges" class="form-label">Date</label>
-                        <input type="date" class="form-control" id="date" name="date" value="<?php echo e(old('date')); ?>">
-                        <small class="text-danger"><?php echo e($errors->first('date')); ?></small>
-                    </div>
-
-                    <div class="form-group ">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description"> <?php echo e(old('description')); ?> </textarea>
-                        <small class="text-danger"><?php echo e($errors->first('description')); ?></small>
-                    </div>
-
-                </div>
-                <button type="submit" class="btn btn-primary mt-4 mb-0">Add Charges</button>
-            </form>
-        </div>
-    </div>
-</div>
-<?php endif; ?>
-<div class="col-lg-12 col-xl-8 col-md-12 col-sm-12">
-    <!--div-->
-    <div class="card">
-        <div class="card-header">
-            <div class="card-title">Charges List</div>
-        </div>
-        <div class="card-body">
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-borderless text-nowrap key-buttons">
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
+                                <th class="border-bottom-0">Charges name</th>
                                 <th class="border-bottom-0">Catagory Name</th>
                                 <th class="border-bottom-0">Sub Catagory Name</th>
-                                <th class="border-bottom-0">Unit Name</th>
-                                <th class="border-bottom-0">Charges name</th>
+                                <th class="border-bottom-0">Type</th>
                                 <th class="border-bottom-0">Standard Charges </th>
                                 <th class="border-bottom-0">Date</th>
                                 <th class="border-bottom-0">Description</th>
@@ -156,10 +46,11 @@ unset($__errorArgs, $__bag); ?>
                             <?php $__currentLoopData = $charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
+                                <td><?php echo e($item->charges_name); ?></td>
                                 <td><?php echo e($item->charges_catagory->charges_catagories_name); ?></td>
                                 <td><?php echo e($item->charges_sub_catagory->charges_sub_catagories_name); ?></td>
-                                <td><?php echo e(@$item->charges_unit->charges_units_name); ?></td>
-                                <td><?php echo e($item->charges_name); ?></td>
+                                <td><?php echo e(@$item->type); ?></td>
+
                                 <td><?php echo e($item->standard_charges); ?></td>
                                 <td><?php echo e($item->date); ?></td>
                                 <td><?php echo e($item->description); ?></td>
@@ -188,4 +79,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xampp\htdocs\DITS-HMIS\resources\views/setup/charges/charges-listing.blade.php ENDPATH**/ ?>

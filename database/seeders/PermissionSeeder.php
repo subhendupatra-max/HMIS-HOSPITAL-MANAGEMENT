@@ -589,13 +589,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'New Vendor Add in PO section']);
         Permission::create(['name' => 'save feedback']);
 
-        //medicine grn 
+        //medicine grn
         Permission::create(['name' => 'Medicine GRN']);
         Permission::create(['name' => 'Medicine GRN Create']);
         Permission::create(['name' => 'GRN Medicine delete']);
         Permission::create(['name' => 'Stock Update After GRN']);
 
-        //Inventroy 
+        //Inventroy
         Permission::create(['name' => 'Setup Inventory']);
         //Inventory Catagory
         Permission::create(['name' => 'Inventory Item Catagory']);
@@ -628,14 +628,14 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Inventory Store Room Edit']);
         Permission::create(['name' => 'Inventory Store Room Update']);
         Permission::create(['name' => 'Inventory Store Room Delete']);
-        //Inventory Item 
+        //Inventory Item
         Permission::create(['name' => 'Inventory Item']);
         Permission::create(['name' => 'Inventory Item Create']);
         Permission::create(['name' => 'Inventory Item Edit']);
         Permission::create(['name' => 'Inventory Item Update']);
         Permission::create(['name' => 'Inventory Item Delete']);
         Permission::create(['name' => 'Inventory Item View']);
-        //Inventory Item Attribute 
+        //Inventory Item Attribute
         Permission::create(['name' => 'Inventory Item Attribute']);
         Permission::create(['name' => 'Inventory Item Attribute Create']);
         Permission::create(['name' => 'Inventory Item Attribute Edit']);
@@ -677,7 +677,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Update Blood Donar']);
         Permission::create(['name' => 'View Blood Donar']);
 
-        //Front Office setup  // purpose 
+        //Front Office setup  // purpose
         Permission::create(['name' => 'purpose']);
         Permission::create(['name' => 'Add purpose']);
         Permission::create(['name' => 'Edit purpose']);
@@ -705,13 +705,13 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Update appointment priority']);
         Permission::create(['name' => 'Delete appointment priority']);
 
-        //Blood 
+        //Blood
         Permission::create(['name' => 'blood']);
         Permission::create(['name' => 'Add blood']);
         Permission::create(['name' => 'View blood']);
         Permission::create(['name' => 'View blood details']);
 
-        //Blood Unit Type 
+        //Blood Unit Type
         Permission::create(['name' => 'Blood unit type']);
         Permission::create(['name' => 'Add blood unit type']);
         Permission::create(['name' => 'View blood unit type']);
@@ -722,6 +722,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'blood components']);
         Permission::create(['name' => 'Add blood components']);
         Permission::create(['name' => 'View blood components Details']);
-       
+
+        //opd billing
+        Permission::create(['name' => 'opd billing']);
+        Permission::create(['name' => 'add opd billing']);
+
     }
 }

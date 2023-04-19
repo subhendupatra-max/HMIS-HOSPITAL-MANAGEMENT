@@ -11,4 +11,5 @@ class PharmacyController extends Controller
     {
         return view('pharmacy.generate-bill.generate-bill-listing');
     }
+
 }

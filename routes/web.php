@@ -107,7 +107,7 @@ use App\Http\Controllers\bloodBank\ComponentsController;
 use App\Http\Controllers\front_office\PurposeController;
 use App\Http\Controllers\front_office\ComplainTypeController;
 use App\Http\Controllers\front_office\SourceController;
-
+use App\Http\Controllers\OPD\BillingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -262,9 +262,9 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
 
         // ==================================charges sub menu =================
         Route::group(['middleware' => ['permission:charges']], function () {
-
+            Route::get('charges-details', [ChargeController::class, 'charges_details'])->name('charges-details');
             Route::group(['middleware' => ['permission:add charges']], function () {
-                Route::get('charges-details', [ChargeController::class, 'charges_details'])->name('charges-details');
+                Route::get('charges-add', [ChargeController::class, 'charges_add'])->name('charges-add');
                 Route::post('save-charges-details', [ChargeController::class, 'save_charges_details'])->name('save-charges-details');
             });
             Route::group(['middleware' => ['permission:delete charges']], function () {
@@ -1745,6 +1745,14 @@ Route::group(['middleware' => ['permission:ambulance']], function () {
     });
 });
 // ================================== Ambulance =================
+// Route::post('get-charge-category', [OpdController::class, 'get_charge_category'])->name('get-charge-category');
+Route::post('get-subcategory-by-category', [BillingController::class, 'get_subcategory_by_category'])->name('get-subcategory-by-category');
+Route::post('get-charge-name', [BillingController::class, 'get_charge_name'])->name('get-charge-name');
+Route::post('get-category', [BillingController::class, 'get_category'])->name('get-category');
+Route::post('get-charge-amount', [BillingController::class, 'get_charge_amount'])->name('get-charge-amount');
+// ===========================================================================
+
+// ===================================================================s==========
 
 //================================= OPD ===================================================
 
@@ -1762,7 +1770,13 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     });
     //================================= OPD profile ====================================
     //================================= OPD billing ====================================
-    Route::get('opd-billing/{id}', [TimelineController::class, 'timeline_listing_opd'])->name('opd-billing');
+    Route::group(['middleware' => ['permission:opd billing'], 'prefix' => 'opd-billing'], function () {
+        Route::get('opd-billing/{id}', [BillingController::class, 'index'])->name('opd-billing');
+        Route::group(['middleware' => ['permission:add opd billing']], function () {
+            Route::get('add-opd-billing/{id}', [BillingController::class, 'create_billing'])->name('add-opd-billing');
+            Route::post('add-new-opd-billing', [BillingController::class, 'save_new_opd_billing'])->name('add-new-opd-billing');
+        });
+    });
     //================================= OPD billing ====================================
 
     //================================= OPD timeline ====================================

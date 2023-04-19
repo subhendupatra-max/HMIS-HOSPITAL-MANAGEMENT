@@ -33,54 +33,58 @@ class MedicineController extends Controller
 
     public function save_medicine_details(Request $request)
     {
-
         $validate = $request->validate([
             'medicine_name'             => 'required',
             'medicine_catagory'         => 'required',
-            'medicine_company'          => 'required',
-            'medicine_composition'      => 'required',
+            'unit'                       => 'required',
+            'min_level'                   => 'required',
         ]);
-        $filename = '';
-        if ($request->hasfile('medicine_photo')) {
-            $file = $request->file('medicine_photo');
-            $filename = rand() . '.' . $file->getClientOriginalExtension();
-            $fileSave =  $file->move("public/assets/images/medicine/", $filename);
-        }
 
-        $medicine = new Medicine();
-        $medicine->medicine_name            = $request->medicine_name;
-        $medicine->medicine_catagory        = $request->medicine_catagory;
-        $medicine->medicine_company         = $request->medicine_company;
-        $medicine->medicine_composition     = $request->medicine_composition;
-        $medicine->medicine_group           = $request->medicine_group;
-        $medicine->min_level                = $request->min_level;
-        $medicine->re_order_level           = $request->re_order_level;
-        $medicine->tax                      = $request->tax;
-        $medicine->note                     = $request->note;
-        $medicine->medicine_photo           = $filename;
-        $status =  $medicine->save();
+        try {
+            $filename = '';
+            if ($request->hasfile('medicine_photo')) {
+                $file = $request->file('medicine_photo');
+                $filename = rand() . '.' . $file->getClientOriginalExtension();
+                $fileSave =  $file->move("public/assets/images/medicine/", $filename);
+            }
 
-        foreach ($request->medicine_base_unit as $key => $medicine_base_unit) {
-            $baseUnit = new MedicineBaseUnit();
-            $baseUnit->medicine_id                 = $medicine->id;
-            $baseUnit->medicine_base_unit          = $request->medicine_base_unit[$key];
-            $baseUnit->medicine_unit               = $request->medicine_unit[$key];
-            $baseUnit->value                       = $request->value[$key];
-            $status = $baseUnit->save();
-        }
+            $medicine = new Medicine();
+            $medicine->medicine_name            = $request->medicine_name;
+            $medicine->medicine_catagory        = $request->medicine_catagory;
+            $medicine->medicine_company         = $request->medicine_company;
+            $medicine->medicine_composition     = $request->medicine_composition;
+            $medicine->medicine_group           = $request->medicine_group;
+            $medicine->min_level                = $request->min_level;
+            $medicine->unit                     = $request->unit;
+            $medicine->tax                      = $request->tax;
+            $medicine->note                     = $request->note;
+            $medicine->medicine_photo           = $filename;
+            $status =  $medicine->save();
 
+            // foreach ($request->medicine_base_unit as $key => $medicine_base_unit) {
+            //     $baseUnit = new MedicineBaseUnit();
+            //     $baseUnit->medicine_id                 = $medicine->id;
+            //     $baseUnit->medicine_base_unit          = $request->medicine_base_unit[$key];
+            //     $baseUnit->medicine_unit               = $request->medicine_unit[$key];
+            //     $baseUnit->value                       = $request->value[$key];
+            //     $status = $baseUnit->save();
+            // }
 
-        foreach ($request->similiar_medicine_name as $key => $medicine_names) {
-            $similar_medicine = new SimilarMedicine();
-            $similar_medicine->medicine_id                 = $medicine->id;
-            $similar_medicine->medicine_name               = $request->similiar_medicine_name[$key];
-            $status = $similar_medicine->save();
-        }
+            if (@$request->similiar_medicine_name) {
+                foreach ($request->similiar_medicine_name as $key => $medicine_names) {
+                    $similar_medicine = new SimilarMedicine();
+                    $similar_medicine->medicine_id                 = $medicine->id;
+                    $similar_medicine->medicine_name               = $request->similiar_medicine_name[$key];
+                    $status = $similar_medicine->save();
+                }
+            }
 
-
-        if ($status) {
-            return redirect()->route('all-medicine-listing')->with('success', 'Medicine Added Sucessfully');
-        } else {
+            if ($status) {
+                return redirect()->route('all-medicine-listing')->with('success', 'Medicine Added Sucessfully');
+            } else {
+                return redirect()->route('all-medicine-listing')->with('error', "Something Went Wrong");
+            }
+        } catch (\Throwable $th) {
             return redirect()->route('all-medicine-listing')->with('error', "Something Went Wrong");
         }
     }
@@ -105,9 +109,8 @@ class MedicineController extends Controller
         $validate = $request->validate([
             'medicine_name'             => 'required',
             'medicine_catagory'         => 'required',
-            'medicine_company'          => 'required',
-            'medicine_composition'      => 'required',
-            'medicine_group'            => 'required',
+            'unit'                       => 'required',
+            'min_level'                   => 'required',
         ]);
         $filename = '';
         if ($request->hasfile('medicine_photo')) {
@@ -123,7 +126,8 @@ class MedicineController extends Controller
         $medicine->medicine_composition     = $request->medicine_composition;
         $medicine->medicine_group           = $request->medicine_group;
         $medicine->min_level                = $request->min_level;
-        $medicine->re_order_level           = $request->re_order_level;
+        $medicine->unit                     = $request->unit;
+        // $medicine->re_order_level           = $request->re_order_level;
         $medicine->tax                      = $request->tax;
         $medicine->note                     = $request->note;
         $medicine->medicine_photo           = $filename;
@@ -132,23 +136,26 @@ class MedicineController extends Controller
 
         SimilarMedicine::where('medicine_id', $request->id)->delete();
 
-        foreach ($request->similiar_medicine_name as $key => $medicine_names) {
-            $similar_medicine = new SimilarMedicine();
-            $similar_medicine->medicine_id                 = $medicine->id;
-            $similar_medicine->medicine_name               = $request->similiar_medicine_name[$key];
-            $status = $similar_medicine->save();
+        if(@$request->similiar_medicine_name[0]->id) {
+            foreach ($request->similiar_medicine_name as $key => $medicine_names) {
+                $similar_medicine = new SimilarMedicine();
+                $similar_medicine->medicine_id                 = $medicine->id;
+                $similar_medicine->medicine_name               = $request->similiar_medicine_name[$key];
+                $status = $similar_medicine->save();
+            }
         }
 
-        MedicineBaseUnit::where('medicine_id', $request->id)->delete();
 
-        foreach ($request->medicine_base_unit as $key => $medicine_base_unit) {
-            $baseUnit = new MedicineBaseUnit();
-            $baseUnit->medicine_id                 = $medicine->id;
-            $baseUnit->medicine_base_unit          = $request->medicine_base_unit[$key];
-            $baseUnit->medicine_unit               = $request->medicine_unit[$key];
-            $baseUnit->value                       = $request->value[$key];
-            $status = $baseUnit->save();
-        }
+        //    MedicineBaseUnit::where('medicine_id', $request->id)->delete();
+
+        // foreach ($request->medicine_base_unit as $key => $medicine_base_unit) {
+        //     $baseUnit = new MedicineBaseUnit();
+        //     $baseUnit->medicine_id                 = $medicine->id;
+        //     $baseUnit->medicine_base_unit          = $request->medicine_base_unit[$key];
+        //     $baseUnit->medicine_unit               = $request->medicine_unit[$key];
+        //     $baseUnit->value                       = $request->value[$key];
+        //     $status = $baseUnit->save();
+        // }
 
         if ($status) {
             return redirect()->route('all-medicine-listing')->with('success', 'Medicine Updated Sucessfully');

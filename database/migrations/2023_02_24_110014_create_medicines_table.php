@@ -22,7 +22,7 @@ class CreateMedicinesTable extends Migration
             $table->string('medicine_group')->nullable();
             $table->string('unit')->nullable();
             $table->string('min_level')->nullable();
-            $table->string('re_order_level')->nullable();
+            $table->string('unit')->nullable();
             $table->string('tax')->nullable();
             $table->string('note')->nullable();
             $table->string('medicine_photo')->nullable();

@@ -384,6 +384,21 @@ class OpdController extends Controller
         return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units'));
     }
 
+    public function get_charge_category(Request $request)
+    {
+        $chargeType =  $request->charge_type;
+        if($chargeType == 'Normal')
+        {
+
+        }
+        if($chargeType == 'Normal')
+        {
+
+        }
+        $data = SymptomsHead::where('symptoms_type', $request->symptoms_type_id)->get();
+        return response()->json($data);
+    }
+
 
     public function opd_registation(Request $request)
     {
