@@ -26,10 +26,10 @@ class OpdVisitDetails extends Model
     {
         return $this->belongsTo(User::class, 'generated_by', 'id');
     }
-    public function patient_department_details()
+    
+    public function PatientPhisicalCondition()
     {
-        return $this->belongsTo(Department::class,'department_id','id');
+        return $this->belongsTo(PatientPhysicalDetails::class, 'opd_visit_details_id', 'id');
     }
-
 
 }

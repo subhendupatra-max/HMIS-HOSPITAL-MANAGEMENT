@@ -1806,7 +1806,16 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     });
     //================================= ipd admission from opd ==========================
 
+    //qr code in opd
+    Route::get('qr-code-g', function () {
 
+        \QrCode::size(500)
+            ->format('png')
+            ->generate('ItSolutionStuff.com', public_path('images/qrcode.png'));
+
+        return view('qrCode');
+    });
+ //qr code in opd
 
 
 

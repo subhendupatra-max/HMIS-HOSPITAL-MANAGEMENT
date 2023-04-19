@@ -321,8 +321,13 @@
                             </div>
                         </div>
                         <div class="btn-list p-3">
-                            <button class="btn btn-primary btn-sm float-right ml-2" type="submit" name="save"><i class="fa fa-file"></i> Save</button>
-                            <button class="btn btn-primary btn-sm float-right" type="submit" name="save"><i class="fa fa-file" value="save_and_print"></i> Save & Print</button>
+                            <button class="btn btn-primary btn-sm float-right ml-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
+
+                            <!-- <input type="submit" name="save" value="save" class="btn btn-primary btn-sm float-right ml-2"/><i class="fa fa-file" value="Save"></i>
+
+                            <input type="submit" name="save" value="save" class="btn btn-primary btn-sm float-right ml-2"/><i class="fa fa-file" value="save_and_print"></i> -->
+
+                            <button class="btn btn-primary btn-sm float-right" type="submit" name="save" value="save_and_print"><i class="fa fa-file"></i> Save & Print</button>
 
                         </div>
                     </form>

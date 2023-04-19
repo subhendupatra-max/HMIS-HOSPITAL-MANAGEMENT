@@ -6,13 +6,13 @@
 <body>
 
     <style>
-        @page {
+        @page  {
             size: A4 portrait;
             margin: 0;
             / change the margins as you want them to be. /
         }
 
-        @media print {
+        @media  print {
 
             html,
             body {
@@ -52,40 +52,43 @@
         <table style="width: 100%;border-collapse: collapse">
             <tr style="text-align: center;">
                 <td>
-                    <img src="{{ asset('public/assets/images/header') }}/{{$header_image->logo}}" alt="" style="width: 80%;">
+                    <img src="<?php echo e(asset('public/assets/images/header')); ?>/<?php echo e($header_image->logo); ?>" alt="" style="width: 80%;">
                 </td>
             </tr>
             <table>
                 <tr>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-                        <b>UHID No: {{ @$opd_patient_details->patient_prefix }}{{ @$opd_patient_details->patient_id }}</b>
+                        <b>UHID No: <?php echo e(@$opd_patient_details->patient_prefix); ?><?php echo e(@$opd_patient_details->patient_id); ?></b>
+                        <?php echo QrCode::size(250)->generate('ItSolutionStuff.com'); ?>
+
                     </td>
                     <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
 
-                        @php
+                        <?php
                         $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
-                        @endphp
+                        ?>
 
-                        <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$opd_patient_details->patient_prefix @$opd_patient_details->patient_id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 100px;height: 40px;">
+                        <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$opd_patient_details->patient_prefix @$opd_patient_details->patient_id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 100px;height: 40px;">
 
                     </td>
                     <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
 
-                        {!! QrCode::size(200)->generate('@$opd_patient_details->patient_prefix') !!}
+                        <?php echo QrCode::size(200)->generate('llll'); ?>
 
+                      
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
 
-                        <b>Date: {{$opd_patient_details->appointment_date}}</b>
+                        <b>Date: <?php echo e($opd_patient_details->appointment_date); ?></b>
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-                        <b>Cons. Doctor: {{@$opd_patient_details->doctor_first_name}}{{@$opd_patient_details->doctor_last_name}}</b>
+                        <b>Cons. Doctor: <?php echo e(@$opd_patient_details->doctor_first_name); ?><?php echo e(@$opd_patient_details->doctor_last_name); ?></b>
                     </td>
                 </tr>
                 <tr>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>EMG No : EMG/IIMSAR-DR. BCRHH/23041221516 </b></td>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Medico Legal Case: No</b></td>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>Department: {{@$opd_patient_details->department_name}}</b></td>
+                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>Department: <?php echo e(@$opd_patient_details->department_name); ?></b></td>
                 </tr>
             </table>
             <table style="width: 100%; ;margin: 10px 0px 0px 0px;border: 1px solid #899499;border-collapse: collapse;">
@@ -94,22 +97,27 @@
                         Patient Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$opd_patient_details->first_name}}
-                        {{$opd_patient_details->middle_name}}
-                        {{$opd_patient_details->last_name}}
+                        <?php echo e($opd_patient_details->first_name); ?>
+
+                        <?php echo e($opd_patient_details->middle_name); ?>
+
+                        <?php echo e($opd_patient_details->last_name); ?>
+
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Guardian Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$opd_patient_details->guardian_name}}
+                        <?php echo e($opd_patient_details->guardian_name); ?>
+
                     </td>
 
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Mobile No.
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$opd_patient_details->guardian_contact_no}}
+                        <?php echo e($opd_patient_details->guardian_contact_no); ?>
+
                     </td>
                 </tr>
                 <tr>
@@ -117,21 +125,23 @@
                         Age
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$opd_patient_details->year}}Y
-                        {{$opd_patient_details->month}}M
-                        {{$opd_patient_details->day}}D
+                        <?php echo e($opd_patient_details->year); ?>Y
+                        <?php echo e($opd_patient_details->month); ?>M
+                        <?php echo e($opd_patient_details->day); ?>D
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Gender
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$opd_patient_details->gender}}
+                        <?php echo e($opd_patient_details->gender); ?>
+
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Patient Type
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$opd_patient_details->patient_type}}
+                        <?php echo e($opd_patient_details->patient_type); ?>
+
                     </td>
                 </tr>
                 <tr>
@@ -139,19 +149,22 @@
                         Address
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$opd_patient_details->address}}
+                        <?php echo e($opd_patient_details->address); ?>
+
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Blood Group
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$opd_patient_details->blood_group}}
+                        <?php echo e($opd_patient_details->blood_group); ?>
+
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Ticket Fees:
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$opd_patient_details->ticket_fees}}
+                        <?php echo e($opd_patient_details->ticket_fees); ?>
+
                     </td>
                 </tr>
             </table>
@@ -171,19 +184,19 @@
                         <b></b>
                         <div style="height:560px;background:#FFF;"></div>
                         <p style="border-top: 1px solid #899499;padding: 10px 0px 7px 10px;margin: 0px;font-size: 13px;">
-                            <b>Height - {{@$opd_patient_details->height}}</b>
+                            <b>Height - <?php echo e(@$opd_patient_details->height); ?></b>
                         </p>
                         <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
-                            <b>Weight - {{@$opd_patient_details->weight}}</b>
+                            <b>Weight - <?php echo e(@$opd_patient_details->weight); ?></b>
                         </p>
                         <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
-                            <b>BP - {{@$opd_patient_details->bp}}</b>
+                            <b>BP - <?php echo e(@$opd_patient_details->bp); ?></b>
                         </p>
                         <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
-                            <b>RR. - {{@$opd_patient_details->respiration}}</b>
+                            <b>RR. - <?php echo e(@$opd_patient_details->respiration); ?></b>
                         </p>
                         <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
-                            <b>Temperature - {{@$opd_patient_details->temperature}}</b>
+                            <b>Temperature - <?php echo e(@$opd_patient_details->temperature); ?></b>
                         </p>
                         <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px; ">
                             <b>&nbsp;SPO<sub>2</sub> -</b>
@@ -192,7 +205,7 @@
                     </td>
                     </td>
                     <td height="00px" valign="top">
-                        <img src="{{ asset('public/hospital_details/rx.png') }}" style="width: 80px;">
+                        <img src="<?php echo e(asset('public/hospital_details/rx.png')); ?>" style="width: 80px;">
                     </td>
                 </tr>
             </table>
@@ -201,4 +214,4 @@
     </div>
 </body>
 
-</html>
+</html><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/OPD/_print/opd_prescription.blade.php ENDPATH**/ ?>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\OPD;
 
 use App\Http\Controllers\Controller;
+use App\Models\AllHeader;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -187,81 +188,83 @@ class OpdController extends Controller
         //     'cons_doctor' => 'required',
         //     'unit' => 'required',
         // ]);
-        try {
-            DB::beginTransaction();
-            $opd_prefix = Prefix::where('name', 'opd')->first();
+        // try {
+        //     DB::beginTransaction();
+        $opd_prefix = Prefix::where('name', 'opd')->first();
 
-            //SAVE in CASE reference
-            $caseReference = new caseReference;
-            $caseReference->save();
-            //SAVE in CASE reference
+        //SAVE in CASE reference
+        $caseReference = new caseReference;
+        $caseReference->save();
+        //SAVE in CASE reference
 
+        //SAVE in opd details
+        $Opd_details = new OpdDetails;
+        $Opd_details->case_id        = $caseReference->id;
+        $Opd_details->patient_id     = $request->patient_id;
+        $Opd_details->opd_prefix     = $opd_prefix->prefix;
+        $Opd_details->generate_by    = Auth::user()->id;
+        $Opd_details->save();
+        //SAVE in opd details
 
-            //SAVE in opd details
-            $Opd_details = new OpdDetails;
-            $Opd_details->case_id        = $caseReference->id;
-            $Opd_details->patient_id     = $request->patient_id;
-            $Opd_details->opd_prefix     = $opd_prefix->prefix;
-            $Opd_details->generate_by    = Auth::user()->id;
-            $Opd_details->save();
-            //SAVE in opd details
+        //SAVE in opd Visit details
+        $opd_visit_details = new OpdVisitDetails();
+        $opd_visit_details->opd_details_id              = $Opd_details->id;
+        $opd_visit_details->department_id               = $request->department;
+        $opd_visit_details->cons_doctor                 = $request->cons_doctor;
+        $opd_visit_details->visit_type                  = $request->visit_type;
+        $opd_visit_details->unit                        = $request->unit;
+        $opd_visit_details->case_type                   = $request->case;
+        $opd_visit_details->patient_type                = $request->patient_type;
+        $opd_visit_details->ticket_fees                 = $request->ticket_fees;
+        $opd_visit_details->ticket_no                   = $request->ticket_no;
+        $opd_visit_details->tpa_organization            = $request->tpa_organization;
+        $opd_visit_details->type_no                     = $request->type_no;
+        $opd_visit_details->appointment_date            = $request->appointment_date;
+        $opd_visit_details->symptoms_type               = $request->symptoms_type;
+        $opd_visit_details->symptoms                    = $request->symptoms_title;
+        $opd_visit_details->symptoms_description        = $request->symptoms_description;
+        $opd_visit_details->known_allergies             = $request->any_known_allergies;
+        $opd_visit_details->note                        = $request->note;
+        $opd_visit_details->refference                  = $request->reference;
+        $opd_visit_details->generated_by                = Auth::user()->id;
+        $opd_visit_details->save();
+        //SAVE in opd Visit details
 
-            //SAVE in opd Visit details
-            $opd_visit_details = new OpdVisitDetails();
-            $opd_visit_details->opd_details_id              = $Opd_details->id;
-            $opd_visit_details->department_id               = $request->department;
-            $opd_visit_details->cons_doctor                 = $request->cons_doctor;
-            $opd_visit_details->visit_type                  = $request->visit_type;
-            $opd_visit_details->unit                        = $request->unit;
-            $opd_visit_details->case_type                   = $request->case;
-            $opd_visit_details->patient_type                = $request->patient_type;
-            $opd_visit_details->ticket_fees                 = $request->ticket_fees;
-            $opd_visit_details->ticket_no                   = $request->ticket_no;
-            $opd_visit_details->tpa_organization            = $request->tpa_organization;
-            $opd_visit_details->type_no                     = $request->type_no;
-            $opd_visit_details->appointment_date            = $request->appointment_date;
-            $opd_visit_details->symptoms_type               = $request->symptoms_type;
-            $opd_visit_details->symptoms                    = $request->symptoms_title;
-            $opd_visit_details->symptoms_description        = $request->symptoms_description;
-            $opd_visit_details->known_allergies             = $request->any_known_allergies;
-            $opd_visit_details->note                        = $request->note;
-            $opd_visit_details->refference                  = $request->reference;
-            $opd_visit_details->generated_by                = Auth::user()->id;
-            $opd_visit_details->save();
-            //SAVE in opd Visit details
+        $patient_physical_condition = new PatientPhysicalDetails();
+        $patient_physical_condition->opd_visit_details_id        = $opd_visit_details->id;
+        $patient_physical_condition->bp                          = $request->bp;
+        $patient_physical_condition->height                      = $request->height;
+        $patient_physical_condition->weight                      = $request->weight;
+        $patient_physical_condition->pulse                       = $request->pulse;
+        $patient_physical_condition->temperature                 = $request->temperature;
+        $patient_physical_condition->respiration                 = $request->respiration;
+        $patient_physical_condition->save();
 
-            $patient_physical_condition = new PatientPhysicalDetails();
-            $patient_physical_condition->opd_visit_details_id        =  $opd_visit_details->id;
-            $patient_physical_condition->bp                          = $request->bp;
-            $patient_physical_condition->height                      = $request->height;
-            $patient_physical_condition->weight                      = $request->weight;
-            $patient_physical_condition->pulse                       = $request->pulse;
-            $patient_physical_condition->temperature                 = $request->temperature;
-            $patient_physical_condition->respiration                 = $request->respiration;
-            $patient_physical_condition->save();
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
 
-            // $opd_patient_details = OpdDetails::where('id', $Opd_details->id)
-            //     ->join('opd_visit_details', 'opd_visit_details.opd_details_id', '=', 'opd_details.id')
-            //     ->join('patients', 'patients.id', '=', 'opd_details.patient_id')
-            //     ->first();
-            //     OpdVisitDetails
+        $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'patient_physical_details.height', 'patient_physical_details.weight', 'patient_physical_details.bp', 'patient_physical_details.respiration', 'patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date')
+            ->join('opd_details', 'opd_details.id', '=', 'opd_visit_details.opd_details_id')
+            ->join('patients', 'patients.id', '=', 'opd_details.patient_id')
+            ->join('patient_physical_details', 'patient_physical_details.opd_visit_details_id', '=', 'opd_visit_details.id')
+            ->join('users', 'users.id', '=', 'opd_visit_details.cons_doctor')
+            ->join('departments', 'departments.id', '=', 'opd_visit_details.department_id')
+            ->where('opd_visit_details.id', $opd_visit_details->id)
+            ->first();
 
-            $opd_patient_details = OpdVisitDetails::where('id', $opd_visit_details->id)
-                ->first();
+        // dd($opd_patient_details);
+        // dd($request->save);
 
-            dd($opd_patient_details);
-
-            if ($request->save == 'save_and_print') {
-                $pdf = PDF::loadView('OPD._print.opd_prescription', compact('opd_patient_details'));
-                return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
-                return $pdf->download('opd_prescription.pdf')->redirect()->back()->with('success', 'OPD Registation Sucessfully');
-            } else {
-                return redirect()->route('OPD-Patient-list')->with('success', 'OPD Registation Sucessfully');
-            }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->back()->with('error', $th->getMessage());
+        if ($request->save == 'save_and_print') {
+            $pdf = PDF::loadView('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image'));
+            return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
+            return $pdf->download('opd_prescription.pdf')->redirect()->back()->with('success', 'OPD Registation Sucessfully');
+        } else {
+            return redirect()->route('OPD-Patient-list')->with('success', 'OPD Registation Sucessfully');
         }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->back()->with('error', $th->getMessage());
+        // }
     }
 
     public function profile($id)
@@ -299,8 +302,6 @@ class OpdController extends Controller
             return redirect()->back()->with('error', "Something Went Wrong");
         }
     }
-
-
 
     //opd ticket fees
     public function opd_ticket_fees_details()
