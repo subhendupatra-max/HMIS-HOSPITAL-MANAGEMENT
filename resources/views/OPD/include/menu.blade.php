@@ -12,3 +12,5 @@
 <a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}"
     href="{{ route('timeline-lisitng-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i
         class="far fa-calendar-check"></i> Timeline</a>
+<a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}"
+    href="{{ route('timeline-lisitng-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-file"></i> Bill Summary</a>

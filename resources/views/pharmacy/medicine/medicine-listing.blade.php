@@ -5,16 +5,16 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    Medicines Stock
+                    Medicine
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        @can('')
+                        {{-- @can('')
                         <a href="{{ route('import-medicine') }}" class="btn btn-primary btn-sm "><i class="fa fa-upload mr-1"></i>Import Medicines</a>
-                        @endcan
+                        @endcan --}}
 
                         @can('add medicine')
-                        <a href="{{ route('add-medicine-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus mr-1"></i>Add Medicine</a>
+                        <a href="{{ route('add-medicine-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-tablets"></i> Add Medicine</a>
                         @endcan
 
                         @can('')

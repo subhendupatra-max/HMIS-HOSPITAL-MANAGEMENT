@@ -15,13 +15,16 @@ class CreateDiscountsTable extends Migration
     {
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
-            $table->string('bill_amount');
-            $table->string('discount_type'); // flat discount/percentage
-            $table->string('asking_discount_amount');
-            $table->string('given_discount_amount');
-            $table->string('discount_status');
-            $table->string('requested_by');
-            $table->string('discount_given_by');
+            $table->string('bill_amount')->nullable();
+            $table->string('discount_type')->nullable(); // flat discount/percentage
+            $table->string('asking_discount_amount')->nullable();
+            $table->string('given_discount_amount')->nullable();
+            $table->string('discount_status')->nullable();
+            $table->string('requested_by')->nullable();
+            $table->string('discount_given_by')->nullable();
+            $table->string('asking_discount_time')->nullable();
+            $table->string('given_discount_time')->nullable();
+            $table->longText('remark')->nullable();
             $table->timestamps();
         });
     }

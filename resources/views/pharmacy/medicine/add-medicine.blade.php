@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="form-group col-md-3">
                         <label for="medicine_name" class="form-label">Medicine Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="medicine_name" name="medicine_name" value="{{ old('medicine_name') }}" placeholder="Enter Vehicle Number" required>
+                        <input type="text" class="form-control" id="medicine_name" name="medicine_name" value="{{ old('medicine_name') }}" placeholder="Enter Medicine Number" required>
                         @error('medicine_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="medicine_company" class="form-label">Medicine Company <span class="text-danger">*</span></label>
+                        <label for="medicine_company" class="form-label">Medicine Company </label>
                         <input type="text" class="form-control" id="medicine_company" name="medicine_company" value="{{ old('medicine_company') }}" placeholder="Enter Medicine Company ">
                         @error('medicine_company')
                         <span class="text-danger">{{ $message }}</span>
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="medicine_composition" class="form-label">Medicine Composition <span class="text-danger">*</span></label>
+                        <label for="medicine_composition" class="form-label">Medicine Composition </label>
                         <input type="text" class="form-control" id="medicine_composition" name="medicine_composition" value="{{ old('medicine_composition') }}" placeholder="Enter Medicine Composition">
                         @error('medicine_composition')
                         <span class="text-danger">{{ $message }}</span>
@@ -57,29 +57,29 @@
                         @enderror
                     </div>
 
-                    <!-- <div class="form-group col-md-3">
+                  <div class="form-group col-md-3">
                         <label for="unit" class="form-label">Unit <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="unit" name="unit" value="{{ old('unit') }}" placeholder="Enter Unit ">
                         @error('unit')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div> -->
+                    </div>
 
                     <div class="form-group col-md-3">
-                        <label for="min_level" class="form-label">Min Level </label>
+                        <label for="min_level" class="form-label">Low Level <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="min_level" name="min_level" value="{{ old('min_level') }}" placeholder="Enter Min Level">
                         @error('min_level')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
+                    {{-- <div class="form-group col-md-3">
                         <label for="re_order_level" class="form-label">Re-Order Level </label>
                         <input type="text" class="form-control" id="re_order_level" name="re_order_level" value="{{ old('re_order_level') }}" placeholder="Enter Min Level">
                         @error('re_order_level')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>
+                    </div> --}}
 
                     <div class="form-group col-md-3">
                         <label for="tax" class="form-label">Tax</label>
@@ -143,7 +143,7 @@
 
                     <hr class="hr_line">
 
-                    <div class="form-group col-md-8">
+                    {{-- <div class="form-group col-md-8">
                         <table class="table card-table table-vcenter text-nowrap" id="baseUnit">
                             <thead>
                                 <tr>
@@ -158,7 +158,7 @@
                             <tbody>
                             </tbody>
                         </table>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -185,11 +185,11 @@
                         <td>
                         <input type="text" class="form-control" name="medicine_strips_per_box[]" id="stripsBox${i}" />
                         </td>
-                               
+
                         <td>
                         <button type="button" class="btn btn-danger" onclick="removerow(${i})"><i class="fa fa-trash"></i></button>
                         </td>
-                       
+
                         </tr>`;
 
         $('#subhendu').append(html);
@@ -219,11 +219,11 @@
                         @endforeach
                         </select>
                         </td>
-                                                      
+
                         <td>
                         <button type="button" class="btn btn-danger" onclick="removerow(${i})"><i class="fa fa-trash"></i></button>
                         </td>
-                       
+
                         </tr>`;
 
         $('#simiarmedicine').append(html);
@@ -261,15 +261,15 @@
                         @endforeach
                         </select>
                         </td>
-                         
+
                         <td>
                         <input type="text" class="form-control" name="value[]" id="value${p}" />
                         </td>
-                        
+
                         <td>
                         <button type="button" class="btn btn-danger" onclick="removeBaseUnitrow(${p})"><i class="fa fa-trash"></i></button>
                         </td>
-                       
+
                         </tr>`;
 
         $('#baseUnit').append(html);

@@ -1741,7 +1741,7 @@ Route::post('get-category', [BillingController::class, 'get_category'])->name('g
 Route::post('get-charge-amount', [BillingController::class, 'get_charge_amount'])->name('get-charge-amount');
 // ===========================================================================
 
-// =============================================================================
+// ===================================================================s==========
 
 //================================= OPD ===================================================
 
@@ -1762,7 +1762,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::get('opd-billing/{id}', [BillingController::class, 'index'])->name('opd-billing');
         Route::group(['middleware' => ['permission:add opd billing']], function () {
             Route::get('add-opd-billing/{id}', [BillingController::class, 'create_billing'])->name('add-opd-billing');
-
+            Route::post('add-new-opd-billing', [BillingController::class, 'save_new_opd_billing'])->name('add-new-opd-billing');
         });
     });
     //================================= OPD billing ====================================
