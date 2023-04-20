@@ -30,7 +30,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                        <label for="description" class="form-label">Description</label>
                         <textarea name="description" class="form-control"> {{ $editTimeline->description }}</textarea>
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>

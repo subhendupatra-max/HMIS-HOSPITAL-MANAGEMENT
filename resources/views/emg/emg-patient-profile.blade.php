@@ -2,226 +2,149 @@
 @section('content')
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
-        <div class="card-body">
-            <ul class="nav nav-pills nav-pills-circle" id="tabs_2" role="tablist">
-                {{-- ===========================nav menu=========================== --}}
-                <li class="nav-item">
-                    <a class="nav-link border py-2 px-2 m-1" data-toggle="tab" href="#profile" role="tab" aria-selected="false">
-                        <span class="nav-link-icon d-block"><i class="fa fa-th"></i> Profile</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link border py-2 px-2 m-1" data-toggle="tab" href="#billing" role="tab" aria-selected="false">
-                        <span class="nav-link-icon d-block"><i class="fa fa-file-alt"></i> Billing </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link border py-2 px-2 m-1" href="{{ route('payment-listing-in-emg',['id' => base64_encode($emg_patient_details->id)]) }}" role="tab" aria-selected="false">
-                        <span class="nav-link-icon d-block"><i class="fa fa-rupee-sign"></i> Payment </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link border py-2 px-2 m-1" href="{{ route('timeline-lisitng-in-emg',['id' => base64_encode($emg_patient_details->id)]) }}" aria-selected="false">
-                        <span class="nav-link-icon d-block"><i class="far fa-calendar-check"></i> Timeline </span>
-                    </a>
-                </li>
-                {{-- ===========================nav menu=========================== --}}
+        <div class="card-header d-block">
+            <div class="row">
+                <div class="col-md-4 card-title">
+                    Profile
+                </div>
+                <div class="col-md-8 text-right">
+                    <div class="d-block">
+                        <a class="btn btn-primary btn-sm" data-placement="top" data-toggle="tooltip" title="Move to IPD" href="{{ route('ipd-registation-from-emg', ['id' => base64_encode($emg_patient_details->id), 'patient_source' => 'emg', 'source_id' => '$emg_patient_details->id']) }}"><i class="fa fa-address-card"></i> Admission</a>
 
-                {{-- =========================== Button =========================== --}}
-                <li class="nav-item" style="margin-left: auto;">
-                    <a class="btn btn-primary btn-sm" data-placement="top" data-toggle="tooltip" title="Admission" href="{{ route('ipd-registation-from-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-address-card"></i></a>
-                </li>
-                {{-- =========================== Button =========================== --}}
-            </ul>
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right" style="">
+                            @include('emg.include.menu')
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="row no-gutters">
+                {{-- ========================================================================================= --}}
+                <div class="col-lg-6 col-xl-6 border-right">
 
-            <div class="panel-body tabs-menu-body">
-                <div class="tab-content">
-                    {{-- =================== profile =========================== --}}
-                    <div class="tab-pane active" id="profile">
+                    {{-- ================== patient name ====================== --}}
+                    <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12 mb-2">
                                 <span class="profileHeding">{{ @$emg_patient_details->patient_details->first_name }}
                                     {{ @$emg_patient_details->patient_details->middle_name }}
                                     {{ @$emg_patient_details->patient_details->last_name }}({{ @$emg_patient_details->patient_details->patient_prefix }}{{ @$emg_patient_details->patient_details->id }})</span>
-                                <hr class="hr_line">
-                                <div class="col-md-12 mt-3">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <table class="table table_border_none">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="py-2 px-0"><i class="fa fa-venus-mars text-primary"></i></td>
-                                                        <td class="py-2 px-0">
-                                                            <span class="font-weight-semibold w-50">Gender :- </span>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            {{ @$emg_patient_details->patient_details->gender }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="py-2 px-0"><i class="fa fa-users text-primary"></i>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            <span class="font-weight-semibold w-50">Gurdian Name :-
-                                                            </span>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            {{ @$emg_patient_details->patient_details->guardian_name }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="py-2 px-0"><i class="fa fa-mobile-alt text-primary"></i></td>
-                                                        <td class="py-2 px-0">
-                                                            <span class="font-weight-semibold w-50">Mobile No :- </span>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            {{ @$emg_patient_details->patient_details->phone }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="py-2 px-0"><i class="fa fa-calendar text-primary"></i></td>
-                                                        <td class="py-2 px-0">
-                                                            <span class="font-weight-semibold w-50">Age :- </span>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            {{ @$emg_patient_details->patient_details->year }}Y
-                                                            {{ @$emg_patient_details->patient_details->month }}M
-                                                            {{ @$emg_patient_details->patient_details->day }}D
-                                                        </td>
-                                                    </tr>
-                                                    <tr colspan="2">
-                                                        <td class="py-2 px-0"><i class="fa fa-map-pin text-primary"></i>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            <span class="font-weight-semibold w-50">Address :- </span>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            {{ @$emg_patient_details->patient_details->address }},{{ @$emg_patient_details->patient_state->name }}
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <hr class="hr_line">
-                                            <table class="table table_border_none">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="py-2 px-0">
-                                                            <i class="fa fa-rocket text-primary"></i>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            <span class="font-weight-semibold w-50">Emergency Id :- </span>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            {{$emg_patient_details->emg_prefix}}{{$emg_patient_details->id}}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="py-2 px-0">
-                                                            <i class="fa fa-calendar text-primary"></i>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            <span class="font-weight-semibold w-50">Appointment Date :- </span>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-
-                                                            {{ date('d-m-Y h:i A',strtotime($emg_patient_details->all_emg_visit_details->appointment_date)) }}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="py-2 px-0">
-                                                            <i class="fa fa-user-secret text-primary"></i>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            <span class="font-weight-semibold w-50">Medico Legal Case :-
-                                                            </span>
-                                                        </td>
-                                                        <td class="py-2 px-0">
-                                                            {{ @$emg_patient_details->all_emg_visit_details->medico_legal_case }}
-                                                        </td>
-                                                    </tr>
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="hr_line">
-                            <div class="col-md-6 vl_line">
-                                <h5>LAB INVESTIGATION</h5>
-                                <div class="col-md-12 col-lg-12">
-                                    <div class="table-responsive">
-                                        <table class="table card-table table-vcenter text-nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Salary</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <th scope="row">1</th>
-                                                    <td>Joan Powell</td>
-                                                    <td>Associate Developer</td>
-                                                    <td>$450,870</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">2</th>
-                                                    <td>Gavin Gibson</td>
-                                                    <td>Account manager</td>
-                                                    <td>$230,540</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">3</th>
-                                                    <td>Julian Kerr</td>
-                                                    <td>Senior Javascript Developer</td>
-                                                    <td>$55,300</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">4</th>
-                                                    <td>Cedric Kelly</td>
-                                                    <td>Accountant</td>
-                                                    <td>$234,100</td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row">5</th>
-                                                    <td>Samantha May</td>
-                                                    <td>Junior Technical Author</td>
-                                                    <td>$43,198</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    {{-- =================== profile =========================== --}}
+                    {{-- ================== patient name ====================== --}}
 
-                    {{-- =================== billing =========================== --}}
-                    <div class="tab-pane" id="billing">
-                        billing
+                    {{-- ================== patient information ====================== --}}
+                    <div class="options px-5 pt-2  border-bottom pb-1">
+                        <table class="table table_border_none">
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-0"><i class="fa fa-venus-mars text-primary"></i></td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Gender :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        {{ @$emg_patient_details->patient_details->gender }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-0"><i class="fa fa-users text-primary"></i>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Gurdian Name :-
+                                        </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        {{ @$emg_patient_details->patient_details->guardian_name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-0"><i class="fa fa-mobile-alt text-primary"></i></td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Mobile No :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        {{ @$emg_patient_details->patient_details->phone }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-0"><i class="fa fa-calendar text-primary"></i></td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Age :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        {{ @$emg_patient_details->patient_details->year }}Y
+                                        {{ @$emg_patient_details->patient_details->month }}M
+                                        {{ @$emg_patient_details->patient_details->day }}D
+                                    </td>
+                                </tr>
+                                <tr colspan="2">
+                                    <td class="py-2 px-0"><i class="fa fa-map-pin text-primary"></i>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Address :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        {{ @$emg_patient_details->patient_details->address }},{{ @$emg_patient_details->patient_state->name }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    {{-- =================== billing =========================== --}}
+                    {{-- ================== patient information ====================== --}}
 
-                    {{-- =================== payment =========================== --}}
-                    <div class="tab-pane" id="payment">
-                        payment
-                    </div>
-                    {{-- =================== payment =========================== --}}
+                    {{-- ================== patient registation information ====================== --}}
+                    <div class="options px-5 pt-2  border-bottom pb-1">
+                        <table class="table table_border_none">
+                            <tbody>
+                                <tr>
+                                    <td class="py-2 px-0">
+                                        <i class="fa fa-rocket text-primary"></i>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Emg Id :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        {{$emg_patient_details->emg_prefix}}{{$emg_patient_details->id}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-0">
+                                        <i class="fa fa-calendar text-primary"></i>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Appointment Date :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
 
-                    {{-- =================== Timeline =========================== --}}
-                    <div class="tab-pane" id="timeline">
-                        timeline
+                                        {{ date('d-m-Y h:i A',strtotime(@$emg_patient_details->all_emg_visit_details->appointment_date)) }}
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
                     </div>
-                    {{-- =================== Timeline =========================== --}}
+                    {{-- ================== patient registation information ====================== --}}
+
                 </div>
+                {{-- ========================================================================================= --}}
+
+                {{-- ========================================================================================= --}}
+                <div class="col-lg-6 col-xl-6 border-right">
+                    {{-- ================== add new patient ====================== --}}
+                    <div class="options px-5 pt-2  border-bottom pb-1">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- ========================================================================================= --}}
             </div>
-            <!-- <div class="new"> -->
-
-
         </div>
     </div>
 </div>

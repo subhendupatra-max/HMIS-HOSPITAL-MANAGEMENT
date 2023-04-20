@@ -8,6 +8,7 @@ use App\Models\IpdTimeline;
 use Illuminate\Http\Request;
 use App\Models\OpdDetails;
 use App\Models\EmgTimeline;
+use App\Models\EmgDetails;
 
 class TimelineController extends Controller
 {
@@ -17,16 +18,16 @@ class TimelineController extends Controller
         //dd($id);
         $opd_id = base64_decode($id);
         $opdTimeline = OpdTimeline::all();
-        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
         $timelineDetails =  OpdTimeline::where('opd_id', $opd_id)->get();
-        return view('OPD.timeline.timeline-listing', compact('opdTimeline', 'opd_id', 'timelineDetails','opd_patient_details'));
+        return view('OPD.timeline.timeline-listing', compact('opdTimeline', 'opd_id', 'timelineDetails', 'opd_patient_details'));
     }
 
     public function add_timeline_listing_opd($id)
     {
         $opd_id = base64_decode($id);
-        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
-        return view('OPD.timeline.add-timeline', compact('opd_id','opd_patient_details'));
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        return view('OPD.timeline.add-timeline', compact('opd_id', 'opd_patient_details'));
     }
 
     public function save_timeline_listing_opd(Request $request)
@@ -58,15 +59,15 @@ class TimelineController extends Controller
         }
     }
 
-    public function edit_timeline_listing_opd($id,$opd_id)
+    public function edit_timeline_listing_opd($id, $opd_id)
     {
         $id = base64_decode($id);
         $opd_id = base64_decode($opd_id);
         $timeline = OpdTimeline::all();
-        $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
         $editTimeline = OpdTimeline::where('id', $id)->first();
 
-        return view('OPD.timeline.edit-timeline', compact('timeline', 'editTimeline','opd_patient_details'));
+        return view('OPD.timeline.edit-timeline', compact('timeline', 'editTimeline', 'opd_patient_details'));
     }
 
     public function update_timeline_listing_opd(Request $request)
@@ -152,8 +153,9 @@ class TimelineController extends Controller
     {
         $emg_id = base64_decode($id);
         $emgTimeline = EmgTimeline::all();
+        $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
         $timelineDetails =  EmgTimeline::where('emg_id', $emg_id)->get();
-        return view('emg.timeline.timeline-listing', compact('emgTimeline', 'emg_id', 'timelineDetails'));
+        return view('emg.timeline.timeline-listing', compact('emgTimeline', 'emg_id', 'timelineDetails','emg_patient_details'));
     }
 
     public function add_timeline_listing_emg($id)
@@ -191,10 +193,12 @@ class TimelineController extends Controller
         }
     }
 
-    public function edit_timeline_listing_emg($id)
+    public function edit_timeline_listing_emg($id, $emg_id)
     {
         $id = base64_decode($id);
+        $emg_id = base64_decode($emg_id);
         $timeline = EmgTimeline::all();
+        $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
         $editTimeline = EmgTimeline::where('id', $id)->first();
 
         return view('emg.timeline.edit-timeline', compact('timeline', 'editTimeline'));

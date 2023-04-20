@@ -333,9 +333,7 @@ $login_details = DB::table('users')
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('charges sub catagory')): ?>
                                         <li><a class="sub-slide-item" href="<?php echo e(route('charges-sub-catagory-details')); ?>">Sub Catagory</a></li>
                                         <?php endif; ?>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('charges unit')): ?>
-                                        <li><a class="sub-slide-item" href="<?php echo e(route('charges-unit-details')); ?>">Unit</a></li>
-                                        <?php endif; ?>
+                                        
                                     </ul>
                                 </li>
                                 <?php endif; ?>
@@ -977,4 +975,5 @@ $login_details = DB::table('users')
             });
         }
     }
-</script><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/layouts/layout.blade.php ENDPATH**/ ?>
+</script>
+<?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/layouts/layout.blade.php ENDPATH**/ ?>

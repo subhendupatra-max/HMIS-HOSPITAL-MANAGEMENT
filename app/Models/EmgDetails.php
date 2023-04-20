@@ -16,14 +16,19 @@ class EmgDetails extends Model
     }
     public function all_patient_details()
     {
-        return $this->belongsTo(Patient::class,'patient_id','id');
+        return $this->belongsTo(Patient::class, 'patient_id', 'id');
     }
     public function all_emg_visit_details()
     {
-        return $this->belongsTo(EmgPatientDetails::class,'id','emg_details_id');
+        return $this->belongsTo(EmgPatientDetails::class, 'id', 'emg_details_id');
     }
     public function generator_details()
     {
-        return $this->belongsTo(User::class,'generate_by','id');
+        return $this->belongsTo(User::class, 'generate_by', 'id');
     }
+
+    // public function patient_state()
+    // {
+    //     return $this->belongsTo(State::class, 'state', 'id');
+    // }
 }
