@@ -1,0 +1,11 @@
+<a class="dropdown-item {{ Request::segment(2) == 'opd-profile' ? 'active' : '' }}" href="{{ route('opd-profile', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-home"></i>
+    Profile</a>
+@can('opd billing')
+<a class="dropdown-item {{ Request::segment(2) == 'opd-billing' ? 'active' : '' }}" href="#"><i class="fa fa-money-bill"></i>
+    Billing</a>
+@endcan
+<a class="dropdown-item {{ Request::segment(2) == 'opd-payment' ? 'active' : '' }}" href="{{ route('payment-listing-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-rupee-sign"></i> Payment</a>
+<a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('timeline-lisitng-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="far fa-calendar-check"></i> Timeline</a>
+<a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('timeline-lisitng-in-opd', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-file"></i> Bill Summary</a>
+
+<a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('physical-condition-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-file"></i> Physical Conditions</a>

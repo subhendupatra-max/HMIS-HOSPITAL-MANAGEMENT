@@ -51,7 +51,7 @@ class PatientController extends Controller
             'guardian_name'              => "required",
             'gender'                     => "required",
             'year'                       => "numeric|max:3|required",
-            'month'                      => "numeric|max:3|required",
+            'month'                      => "numeric|max:2|required",
             'day'                        => "numeric|max:3|required",
             'phone'                      => "max:10|required",
             'address'                    => "required",

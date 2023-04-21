@@ -732,4 +732,30 @@ class PermissionSeeder extends Seeder
         //discount
         Permission::create(['name' => 'discount']);
 
+
+        //opd physical condition
+        Permission::create(['name' => 'opd physical condition']);
+        Permission::create(['name' => 'add opd physical condition']);
+        Permission::create(['name' => 'edit physical condition']);
+        Permission::create(['name' => 'update opd physical condition']);
+        Permission::create(['name' => 'delete physical condition']);
+
+        //emg physical condition
+        Permission::create(['name' => 'emg physical condition']);
+        Permission::create(['name' => 'add emg physical condition']);
+        Permission::create(['name' => 'edit emg physical condition']);
+        Permission::create(['name' => 'delete emg physical condition']);
+
+        // Emg TimeLine
+        Permission::create(['name' => 'timeline list emg']);
+        Permission::create(['name' => 'add timeline list emg']);
+        Permission::create(['name' => 'edit timeline list emg']);
+        Permission::create(['name' => 'delete timeline list emg']);
+
+        // emg payment
+        Permission::create(['name' => 'emg payment']);
+        Permission::create(['name' => 'add emg payment']);
+        Permission::create(['name' => 'save emg payment']);
+        Permission::create(['name' => 'edit emg payment']);
+        Permission::create(['name' => 'delete emg payment']);
     }

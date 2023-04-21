@@ -26,7 +26,7 @@
                             <div class="d-flex"><span class="time-data">{{ $item->title }}</span><span class="ml-auto text-muted fs-11">
                                     {{ date('d-m-Y h:i A',strtotime( $item->date )) }}
                                     @can('edit emg timeline')
-                                    <a href="{{ route('edit-timeline-lisitng-in-emg',['id'=> base64_encode($item->id)]) }}"> <i class="fa fa-edit ml-4"></i> Edit</a>
+                                    <a href="{{ route('edit-timeline-lisitng-in-emg',['id'=> base64_encode($item->id),'emg_id'=> base64_encode($emg_patient_details->id)]) }}"> <i class="fa fa-edit ml-4"></i> Edit</a>
                                     @endcan
 
                                     @can('delete emg timeline')

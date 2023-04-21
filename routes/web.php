@@ -109,6 +109,8 @@ use App\Http\Controllers\front_office\ComplainTypeController;
 use App\Http\Controllers\front_office\SourceController;
 use App\Http\Controllers\OPD\BillingController;
 
+use App\Http\Controllers\PhysicalConditionController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -877,8 +879,9 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
         Route::get('emg-set-up', [EmgController::class, 'emg_set_up'])->name('emg-set-up');
         Route::post('save-emg-set-up', [EmgController::class, 'add_emg_set_up'])->name('save-emg-setup-details');
     });
+    // ---------
     Route::get('payment-listing-in-emg', [EmgController::class, 'emg_set_up'])->name('payment-listing-in-emg');
-    Route::get('timeline-lisitng-in-emg', [EmgController::class, 'emg_set_up'])->name('timeline-lisitng-in-emg');
+
 
     //====================== EMG Set Up ================================
 
@@ -1821,25 +1824,29 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     });
     //================================= OPD payment ====================================
 
+    //================================= OPD Physical Condition ====================================
+    Route::group(['middleware' => ['permission:opd physical condition'], 'prefix' => 'opd-physical-condition'], function () {
+        Route::get('physical-condition-in-opd/{id}', [PhysicalConditionController::class, 'physical_condition_listing_in_opd'])->name('physical-condition-in-opd');
+        Route::group(['middleware' => ['permission:add opd physical condition']], function () {
+            Route::get('add-physical-condition-in-opd/{id}', [PhysicalConditionController::class, 'add_physical_condition_opd'])->name('add-physical-condition-in-opd');
+            Route::post('save-physical-condition-in-opd', [PhysicalConditionController::class, 'save_physical_condition_opd'])->name('save-physical-condition-in-opd');
+        });
+        Route::group(['middleware' => ['permission:delete physical condition']], function () {
+            Route::get('delete-physical-condition-in-opd/{id}', [PhysicalConditionController::class, 'delete_physical_condition_opd'])->name('delete-physical-condition-in-opd');
+        });
+        Route::group(['middleware' => ['permission:edit physical condition']], function () {
+            Route::get('edit-physical-condition-in-opd/{id}/{opd_id}', [PhysicalConditionController::class, 'edit_physical_condition_opd'])->name('edit-physical-condition-in-opd');
+            Route::post('update-physical-condition-in-opd', [PhysicalConditionController::class, 'update_physical_condition_opd'])->name('update-physical-condition-in-opd');
+            Route::post('find-timeline-details', [PhysicalConditionController::class, 'find_timeline_details'])->name('find-timeline-details');
+        });
+    });
+    //================================= OPD Physical Condition ====================================
+
     //================================= ipd admission from opd ==========================
     Route::group(['middleware' => ['permission:Admission From OPD']], function () {
         Route::get('admission-from-opd/{id}', [OpdController::class, 'admission_from_opd'])->name('ipd-registation-from-opd');
     });
     //================================= ipd admission from opd ==========================
-
-    //qr code in opd
-    Route::get('qr-code-g', function () {
-
-        \QrCode::size(500)
-            ->format('png')
-            ->generate('ItSolutionStuff.com', public_path('images/qrcode.png'));
-
-        return view('qrCode');
-    });
- //qr code in opd
-
-
-
 
     Route::post('patient_search-in-opd', [OpdController::class, 'patient_search_in_opd'])->name('patient_search-in-opd');
     Route::post('find-symptoms-title-by-symptoms-type', [OpdController::class, 'find_symptoms_title_by_symptoms_type'])->name('find-symptoms-title-by-symptoms-type');
@@ -1858,7 +1865,8 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
     Route::get('emg-patient-list', [EmgController::class, 'index'])->name('emg-patient-list');
     Route::group(['middleware' => ['permission:OPD registation']], function () {
         Route::post('emg-after-new-old', [EmgController::class, 'after_new_old'])->name('emg-after-new-old');
-        Route::get('emg-registation/{id}', [EmgController::class, 'emg_registation'])->name('emg-registation');
+
+        Route::any('emg-registation', [EmgController::class, 'emg_registation'])->name('emg-registation');
         Route::post('add-emg-registation', [EmgController::class, 'add_emg_registation'])->name('add-emg-registation');
     });
     Route::group(['middleware' => ['permission:emg patient profile']], function () {
@@ -1868,10 +1876,65 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
         Route::get('admission-from-emg/{id}', [EmgController::class, 'admission_from_emg'])->name('ipd-registation-from-emg');
     });
 });
-//================================= Emg ===================================================
 
 
-//====================== FindingCategory ================================
+//================================= emg Physical Condition ====================================
+Route::group(['middleware' => ['permission:emg physical condition'], 'prefix' => 'emg-physical-condition'], function () {
+    Route::get('physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'physical_condition_listing_in_emg'])->name('physical-condition-in-emg');
+    Route::group(['middleware' => ['permission:add emg physical condition']], function () {
+        Route::get('add-physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'add_physical_condition_emg'])->name('add-physical-condition-in-emg');
+        Route::post('save-physical-condition-in-emg', [PhysicalConditionController::class, 'save_physical_condition_emg'])->name('save-physical-condition-in-emg');
+    });
+    Route::group(['middleware' => ['permission:delete emg physical condition']], function () {
+        Route::get('delete-physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'delete_physical_condition_emg'])->name('delete-physical-condition-in-emg');
+    });
+    Route::group(['middleware' => ['permission:edit emg physical condition']], function () {
+        Route::get('edit-physical-condition-in-emg/{id}/{emg_id}', [PhysicalConditionController::class, 'edit_physical_condition_emg'])->name('edit-physical-condition-in-emg');
+        Route::post('update-physical-condition-in-emg', [PhysicalConditionController::class, 'update_physical_condition_emg'])->name('update-physical-condition-in-emg');
+    });
+});
+//================================= emg Physical Condition ==========================
+
+//================================= emg timeline ====================================
+Route::group(['middleware' => ['permission:timeline list emg'], 'prefix' => 'emg-timeline'], function () {
+    Route::get('timeline-lisitng-in-emg/{id}', [TimelineController::class, 'timeline_listing_emg'])->name('timeline-lisitng-in-emg');
+    Route::group(['middleware' => ['permission:add timeline list emg']], function () {
+        Route::get('add-timeline-lisitng-in-emg/{id}', [TimelineController::class, 'add_timeline_listing_emg'])->name('add-timeline-lisitng-in-emg');
+        Route::post('save-timeline-lisitng-in-emg', [TimelineController::class, 'save_timeline_listing_emg'])->name('save-timeline-lisitng-in-emg');
+    });
+    Route::group(['middleware' => ['permission:delete timeline list emg']], function () {
+        Route::get('delete-timeline-lisitng-in-emg/{id}', [TimelineController::class, 'delete_timeline_listing_emg'])->name('delete-timeline-lisitng-in-emg');
+    });
+    Route::group(['middleware' => ['permission:edit timeline list emg']], function () {
+        Route::get('edit-timeline-lisitng-in-emg/{id}/{emg_id}', [TimelineController::class, 'edit_timeline_listing_emg'])->name('edit-timeline-lisitng-in-emg');
+        Route::post('update-timeline-lisitng-in-emg', [TimelineController::class, 'update_timeline_listing_emg'])->name('update-timeline-lisitng-in-emg');
+        Route::post('find-timeline-details', [TimelineController::class, 'find_timeline_details'])->name('find-timeline-details');
+    });
+});
+
+//================================= emg timeline ===================================
+
+//================================= Emg payment ====================================
+Route::group(['middleware' => ['permission:emg payment'], 'prefix' => 'emg-payment'], function () {
+    Route::get('payment-listing-in-emg/{id}', [EmgPaymentController::class, 'payment_listing_in_emg'])->name('payment-listing-in-emg');
+    Route::group(['middleware' => ['permission:add emg payment']], function () {
+        Route::get('add-payment-in-emg/{id}', [EmgPaymentController::class, 'add_payment_in_emg'])->name('add-payment-in-emg');
+        Route::post('save-payment-in-emg', [EmgPaymentController::class, 'save_payment_in_emg'])->name('save-payment-in-emg');
+    });
+    Route::group(['middleware' => ['permission:delete emg payment']], function () {
+        Route::get('delete-payment-in-emg/{id}', [EmgPaymentController::class, 'delete_payment_in_emg'])->name('delete-payment-in-emg');
+    });
+    Route::group(['middleware' => ['permission:edit emg payment']], function () {
+        Route::get('edit-payment-in-emg/{id}/{emg_id}', [EmgPaymentController::class, 'edit_payment_in_emg'])->name('edit-payment-in-emg');
+        Route::post('update-payment-in-emg', [EmgPaymentController::class, 'update_payment_in_emg'])->name('update-payment-in-emg');
+    });
+});
+//================================= Emg payment ====================================
+
+//================================= Emg ============================================
+
+
+//====================== FindingCategory ===========================================
 Route::group(['middleware' => ['permission:Finding']], function () {
     Route::group(['middleware' => ['permission:finding category']], function () {
         Route::get('finding-category-add', [FindingController::class, 'add'])->name('finding-category-add');
@@ -1899,7 +1962,7 @@ Route::group(['middleware' => ['permission:Finding']], function () {
         Route::get('delete-finding/{id}', [FindingController::class, 'delete_finding'])->name('delete-finding');
     });
 });
-//====================== FindingCategory ================================
+//====================== FindingCategory ========================================
 
 Route::group(['middleware' => ['permission:Patient Master']], function () {
     Route::get('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
