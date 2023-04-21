@@ -80,7 +80,7 @@ $login_details = DB::table('users')
             <aside class="app-sidebar">
                 <div class="app-sidebar__logo">
                     <a class="header-brand" href="{{ route('dashboard') }}">
-                        <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->logo }}" style="width: 241px;  height: 48px;" class="header-brand-img desktop-lgo" alt="{{ @$general_details->software_name }}">
+                        <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->logo }}"  class="header-brand-img desktop-lgo" alt="{{ @$general_details->software_name }}">
                         <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->logo }}" class="header-brand-img dark-logo" alt="{{ @$general_details->software_name }}">
 
                         <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->small_logo }}" class="header-brand-img mobile-logo" alt="{{ @$general_details->software_name }}">
