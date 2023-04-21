@@ -83,8 +83,7 @@ unset($__errorArgs, $__bag); ?>
                                             <textarea class="form-control" name="note"></textarea>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-label">Payment Amount <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="form-label">Payment Amount </label>
                                             <input type="text" name="payment_amount" class="form-control" />
                                             <?php $__errorArgs = ['payment_amount'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -130,7 +129,7 @@ unset($__errorArgs, $__bag); ?>
                                         <input type="text" name="total" readonly id="total_am"
                                             class="form-control myfld">
                                     </div>
-                                    <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" /></span>
+                                    <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" value="yes" /></span>
                                     <div class="d-flex justify-content-end mt-2" id="discount_section" style="display:none !important;">
                                         <span class="biltext">Discount (% / flat)</span>
                                         <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
@@ -150,7 +149,7 @@ unset($__errorArgs, $__bag); ?>
                                         <span class="biltext">Grand Total</span>
                                         <input type="text" name="grand_total" readonly id="grnd_total" value="00"
                                             class="form-control myfld">
-                                        <?php $__errorArgs = ['grnd_total'];
+                                        <?php $__errorArgs = ['grand_total'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -170,9 +169,9 @@ unset($__errorArgs, $__bag); ?>
                     <div class="btn-list p-3">
                         <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
                                 class="fa fa-calculator"></i> Calculate</button>
-                        <button class="btn btn-primary btn-sm float-right " type="submit" name="save"><i
+                        <button class="btn btn-primary btn-sm float-right " type="submit" name="save" value="save"><i
                                 class="fa fa-file"></i> Save</button>
-                        <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit"><i
+                        <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit"  value="save_and_print"><i
                                 class="fa fa-paste"></i> Save & Print</button>
                     </div>
                 </div>

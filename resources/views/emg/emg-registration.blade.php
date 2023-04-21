@@ -1,175 +1,227 @@
 @extends('layouts.layout')
 @section('content')
-<form method="post" action="{{ route('add-emg-registation') }}">
-    @csrf
-    <input type="hidden" name="patient_id" value="{{ $patient_details->id }}" />
-    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-xl-3 col-lg-3 col-md-12">
 
-                        <a href="{{ route('opd-registration', base64_encode($patient_details->id)) }}" style="{{ Request::segment(1) == 'opd-registration' ? 'color:#705ec8' : '' }}" data-toggle="tooltip" data-placement="top" title="OPD Registation"><i class="fa fa-file-invoice fa-lg"></i></a>
-
-                        <a href="{{ route('emg-registation', base64_encode($patient_details->id)) }}" style="{{ Request::segment(1) == 'emg-registation' ? 'color:#705ec8' : '' }};margin-left: 10px" data-toggle="tooltip" data-placement="top" title="Emergency Registation"><i class="fa fa-file-alt fa-lg" style="color:#705ec8"></i></a>
-                        <span style=" color: #6f6f6f;font-size: 18px;font-weight: 500; margin-left: 24px;">Emergency
-                            Registation</span>
-                        <hr class="hr_line">
-                        <div class="widget-user-image mx-auto mt-1"><img alt="User Avatar" class="rounded-circle" src="{{ asset('public/patient_image/patient_icon.png') }}" style="height: 100px;width: 117px;"></div>
-                        <div class="card-body text-center">
-                            <div class="pro-user">
-                                <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
-                                    {{ $patient_details->prefix }} {{ $patient_details->first_name }}
-                                    {{ $patient_details->middle_name }} {{ $patient_details->last_name }}
-                                </h4>
-                                <h6 class="pro-user-desc textlink">
-                                    {{ $patient_details->patient_prefix }}{{ $patient_details->id }}
-                                </h6>
-
-                                @can('edit patient')
-                                <a href="{{ route('edit-patient-details', base64_encode($patient_id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
-                                @endcan
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Emg Registation</div>
+        </div>
+        <div class="card-body p-0">
+            <div class="row no-gutters">
+                <div class="col-lg-4 col-xl-4 border-right">
+                    {{-- ================== add new patient ====================== --}}
+                    <div class="options px-5 pt-2  border-bottom pb-1">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <a class="btn btn-primary btn-sm" href="{{route('add_new_patient')}}"><i class="fa fa-plus"></i> Add New Patient</a>
                             </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <tbody>
-                                    <tr>
-                                        <td class="py-2 px-0">
-                                            <span class="font-weight-semibold w-50">Gender </span>
-                                        </td>
-                                        <td class="py-2 px-0">{{ $patient_details->gender }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2 px-0">
-                                            <span class="font-weight-semibold w-50">Age </span>
-                                        </td>
-                                        <td class="py-2 px-0">{{ $patient_details->year }}y
-                                            {{ $patient_details->month }}m
-                                            {{ $patient_details->day }}d
+                    </div>
+                    {{-- ================== add new patient ====================== --}}
 
-                                            <a href="#" class="btn btn-default btn-sm" data-target="#editAge" data-toggle="modal"><i class="fa fa-edit"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2 px-0">
-                                            <span class="font-weight-semibold w-50">Guardian Name </span>
-                                        </td>
-                                        <td class="py-2 px-0">{{ $patient_details->guardian_name_realation }}
-                                            {{ $patient_details->guardian_name }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2 px-0">
-                                            <span class="font-weight-semibold w-50">Blood Group </span>
-                                        </td>
-                                        <td class="py-2 px-0">{{ $patient_details->blood_group }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="py-2 px-0">
-                                            <span class="font-weight-semibold w-50">Phone </span>
-                                        </td>
-                                        <td class="py-2 px-0">{{ $patient_details->phone }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="options px-5 pt-5  border-bottom pb-3">
+
+                        <form method="post" action="{{route('emg-registation') }}">
+
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                    <select class="form-control  select2-show-search" name="patient_id">
+                                        <option value="">Select One Patient</option>
+                                        @if(isset($all_patient))
+                                        @foreach ($all_patient as $patient)
+                                        <option value="{{@$patient->id}}" {{ @$patient_details_information->id == $patient->id ? 'Selected' : '' }}> {{@$patient->prefix}} {{@$patient->first_name}} {{@$patient->middle_name}} {{@$patient->last_name}} ( {{@$patient->id}} ) </option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Search</button>
+                                </div>
+                            </div>
+                        </form>
+
                     </div>
 
-                    <div class="col-xl-9 col-lg-9 col-md-12 vl_line">
-                        <div class="main-profile-body">
-                            <div class="">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label>
-                                        @if (auth()->user()->can('appointment date'))
-                                        <input type="datetime-local" class="form-control" name="appointment_date" value="{{ old('appointment_date') }}" required />
-                                        @else
-                                        <input type="datetime-local" class="form-control" name="appointment_date" value="{{ old('appointment_date') }}" required />
-                                        @endif
+                    @if(isset($patient_details_information))
+                    {{-- ================== patient Details ====================== --}}
+                    @error('patientId')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                    <div class="options px-5  pb-3">
+                        <div class="row">
 
-                                        @error('appointment_date')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="medico_legal_case" class="form-label">Medico Legal Case <span class="text-danger">*</span></label>
-                                        <input type="radio" name="medico_legal_case" value="yes" class="from-control"><span class="font-weight-bold;">Yes</span>
-                                        <input type="radio" name="medico_legal_case" value="no" class="from-control" checked><span class="fw-bold;">No</span>
-                                        @error('medico_legal_case')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="height" class="form-label">Case</label>
-                                        <input type="text" class="form-control" name="case" value="{{ old('case') }}" required />
+                            <hr class="hr_line">
 
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="patient_type" class="form-label">Patient Type <span class="text-danger">*</span></label>
-                                        <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
-                                            <option value="">Select</option>
-                                            @foreach (Config::get('static.patient_types') as $key => $patient_type)
-                                            <option value="{{ $patient_type }}"> {{ $patient_type }}</option>
-                                            @endforeach
-                                        </select>
+                            <div class="card-body text-center">
+                                <div class="pro-user">
+                                    <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
+                                        {{ $patient_details_information->prefix }} {{ $patient_details_information->first_name }}
+                                        {{ $patient_details_information->middle_name }} {{ $patient_details_information->last_name }}
+                                    </h4>
+                                    <h6 class="pro-user-desc textlink">
+                                        {{ $patient_details_information->patient_prefix }}{{ $patient_details_information->id }}
+                                    </h6>
 
-                                        @error('patient_type')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                    @can('edit patient')
+                                    <a href="{{ route('edit-patient-details', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
+                                    @endcan
+                                </div>
+                            </div>
 
-                                    </div>
-                                    <div class="col-md-6 frefesd" style="display:none">
-                                        <label for="tpa_organization" class="form-label">TPA Organization <span class="text-danger">*</span></label>
-                                        <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
-                                            <option value="">Select</option>
-                                            @foreach ($tpa_management as $key => $tpaManagement)
-                                            <option value="{{ $tpaManagement->id }}">
-                                                {{ $tpaManagement->TPA_name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 frefesds" style="display:none">
-                                        <label for="type_no" class="form-label"><span id="lableName"></span><span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="type_no" value="{{ old('type_no') }}" id="type_no" />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="reference" class="form-label">Reference</label>
-                                        <select name="reference" class="form-control select2-show-search" id="reference">
-                                            <option value="">Select</option>
-                                            @foreach ($referer as $key => $reference)
-                                            <option value="{{ $reference->id }}"> {{ $reference->referral_name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
-                                        <select name="department" class="form-control select2-show-search" id="department">
-                                            @foreach ($department as $departments)
-                                            <option value="{{ $departments->id }}">
-                                                {{ $departments->department_name }}
-                                            </option>
-                                            @endforeach
+                            <div class="table-responsive">
 
-                                        </select>
-                                        @error('department')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="cons_doctor" class="form-label">Consultant Doctor <span class="text-danger">*</span></label>
-                                        <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
-                                            <option value="">Select..</option>
-                                        </select>
-                                        @error('cons_doctor')
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Gender </span>
+                                            </td>
+                                            <td class="py-2 px-5">{{ @$patient_details_information->gender }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Age </span>
+                                            </td>
+                                            <td class="py-2 px-5">{{ @$patient_details_information->year }}y
+                                                {{ @$patient_details_information->month }}m
+                                                {{ @$patient_details_information->day }}d
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Guardian Name </span>
+                                            </td>
+                                            <td class="py-2 px-5">{{ @$patient_details_information->guardian_name_realation }}
+                                                {{ @$patient_details_information->guardian_name }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Blood Group </span>
+                                            </td>
+                                            <td class="py-2 px-5">{{ @$patient_details_information->blood_group }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Phone </span>
+                                            </td>
+                                            <td class="py-2 px-5">{{@$patient_details_information->phone }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- ================== patient Details ====================== --}}
+                    @endif
 
+                </div>
+
+                <div class="col-lg-8 col-xl-8">
+                    <form method="post" action="{{route('add-emg-registation')}}">
+                        @csrf
+                        <div class="options px-5 pt-1  border-bottom pb-3">
+                            <div class="row">
+                                <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
+
+                                <div class="form-group col-md-4">
+                                    <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label>
+                                    @if (auth()->user()->can('appointment date'))
+                                    <input type="datetime-local" class="form-control" name="appointment_date" value="{{ old('appointment_date') }}" required />
+                                    @else
+                                    <input type="datetime-local" class="form-control" name="appointment_date" value="{{ old('appointment_date') }}" required />
+                                    @endif
+
+                                    @error('appointment_date')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
+                                <div class="form-group col-md-4">
+                                    <label for="medico_legal_case" class="form-label">Medico Legal Case <span class="text-danger">*</span></label>
+                                    <input type="radio" name="medico_legal_case" value="yes" class="from-control"><span class="font-weight-bold;">Yes</span>
+                                    <input type="radio" name="medico_legal_case" value="no" class="from-control" checked><span class="fw-bold;">No</span>
+                                    @error('medico_legal_case')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="height" class="form-label">Case</label>
+                                    <input type="text" class="form-control" name="case" value="{{ old('case') }}" required />
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="patient_type" class="form-label">Patient Type <span class="text-danger">*</span></label>
+                                    <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
+                                        <option value="">Select</option>
+                                        @foreach (Config::get('static.patient_types') as $key => $patient_type)
+                                        <option value="{{ $patient_type }}"> {{ $patient_type }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('patient_type')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+                                </div>
+                                <div class="form-group  col-md-4 frefesd" style="display:none">
+                                    <label for="tpa_organization" class="form-label">TPA Organization <span class="text-danger">*</span></label>
+                                    <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
+                                        <option value="">Select</option>
+                                        @foreach ($tpa_management as $key => $tpaManagement)
+                                        <option value="{{ $tpaManagement->id }}">
+                                            {{ $tpaManagement->TPA_name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4 frefesds" style="display:none">
+                                    <label for="type_no" class="form-label"><span id="lableName"></span><span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="type_no" value="{{ old('type_no') }}" id="type_no" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="reference" class="form-label">Reference</label>
+                                    <select name="reference" class="form-control select2-show-search" id="reference">
+                                        <option value="">Select</option>
+                                        @foreach ($referer as $key => $reference)
+                                        <option value="{{ $reference->id }}"> {{ $reference->referral_name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
+                                    <select name="department" class="form-control select2-show-search" id="department">
+                                        @foreach ($department as $departments)
+                                        <option value="{{ $departments->id }}">
+                                            {{ $departments->department_name }}
+                                        </option>
+                                        @endforeach
+
+                                    </select>
+                                    @error('department')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="cons_doctor" class="form-label">Consultant Doctor <span class="text-danger">*</span></label>
+                                    <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
+                                        <option value="">Select..</option>
+                                    </select>
+                                    @error('cons_doctor')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="options px-5">
+                            <div class="container ">
                                 <hr class="hr_line">
                                 <input type="checkbox" onchange="takeTicketFees()" id="show_taketicketFees" /><span style="font-weight: 500;color:blue"> Are You Want to take <b>TICKET FEES</b>
                                     ?</span>
@@ -184,6 +236,7 @@
                                 <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to
                                     Share Patient's Physical Condition
                                     ?</span>
+
 
                                 <div class="row" id="physical_condition" style="display: none">
                                     <div class="col-md-2">
@@ -242,6 +295,8 @@
                                         <textarea class="form-control" name="symptoms_description"></textarea>
                                     </div>
                                 </div>
+
+
                                 <hr class="hr_line">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -253,20 +308,28 @@
                                         <textarea class="form-control" name="any_known_allergies"></textarea>
                                     </div>
                                 </div>
-                                <div class="mt-5 text-right">
-                                    <button name="save" value="save_and_print" class="btn btn-primary" type="submit"><i class="fa fa-print"></i> Save & Print</button>
-                                    <button name="save" value="save" class="btn btn-primary" type="submit"><i class="fa fa-file"></i> Save</button>
-                                </div>
+
+                                <hr class="hr_line">
+                                <input type="checkbox" id="opd_belling" value="emg_belling_from_emg" />
+                                <span style="font-weight: 500;color:blue"> Are You Want To Create <b>Emg Belling</b>
+                                    ?</span>
+
                             </div>
                         </div>
-                    </div>
+                        <div class="btn-list p-3">
+                            <button class="btn btn-primary btn-sm float-right ml-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
+
+                            <button class="btn btn-primary btn-sm float-right" type="submit" name="save" value="save_and_print"><i class="fa fa-file"></i> Save & Print</button>
+
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-</form>
+</div>
 
-<form action="{{ route('patient-age-edit') }}" method="POST">
+<form action="{{route('patient-age-edit')}}" method="POST">
     @csrf
     <div class="modal" id="editAge">
         <div class="modal-dialog modal-sm" role="document">
@@ -276,10 +339,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <input type="hidden" name="patient_id" value="{{ @$patient_details->id }}" />
+                        <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
                         <div class="form-group col-md-12">
                             <label for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="{{ @$patient_details->date_of_birth }}">
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="{{ @$patient_details_information->date_of_birth }}">
                             <small class="text-danger">{{ $errors->first('date_of_birth') }}</small>
                         </div>
 
@@ -287,16 +350,16 @@
                             <label>Age (yy-mm-dd) <span class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" value="{{ @$patient_details->year }}" required>
+                                    <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" value="{{ @$patient_details_information->year }}" required>
                                     <small class="text-danger">{{ $errors->first('date_of_birth_year') }}</small>
                                 </div>
 
                                 <div class="col-lg-4">
-                                    <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" value="{{ @$patient_details->month }}" required>
+                                    <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" value="{{ @$patient_details_information->month }}" required>
                                     <small class="text-danger">{{ $errors->first('date_of_birth_month') }}</small>
                                 </div>
                                 <div class="col-lg-4">
-                                    <input type="text" class="form-control" value="{{ @$patient_details->day }}" id="date_of_birth_day" name="day" placeholder="Day" required>
+                                    <input type="text" class="form-control" value="{{ @$patient_details_information->day }}" id="date_of_birth_day" name="day" placeholder="Day" required>
                                     <small class="text-danger">{{ $errors->first('date_of_birth_day') }}</small>
                                 </div>
                             </div>
@@ -311,7 +374,6 @@
         </div>
     </div>
 </form>
-
 
 <script>
     function takeTicketFees() {
@@ -451,4 +513,7 @@
         });
     });
 </script>
+
+
+
 @endsection

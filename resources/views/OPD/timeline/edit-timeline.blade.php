@@ -10,8 +10,7 @@
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
-                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
                             @include('OPD.include.menu')
                         </div>
@@ -36,14 +35,14 @@
 
                     <div class="form-group col-md-6">
                         <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
-                        <input type="datetime-local" class="form-control" id="date" name="date"  @if(isset($editTimeline->date)) value="{{ date('Y-m-d h:m:s',strtotime($editTimeline->date)) }}" @endif>
+                        <input type="datetime-local" class="form-control" id="date" name="date" @if(isset($editTimeline->date)) value="{{ date('Y-m-d h:m:s',strtotime($editTimeline->date)) }}" @endif>
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                        <label for="description" class="form-label">Description</label>
                         <textarea name="description" class="form-control"> {{ $editTimeline->description }}</textarea>
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
