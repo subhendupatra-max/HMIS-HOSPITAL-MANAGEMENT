@@ -17,6 +17,9 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->string('patient_id');
             $table->string('case_id');
+            $table->string('opd_id');
+            $table->string('emg_id');
+            $table->string('ipd_id');
             $table->string('section');
             $table->string('payment_prefix');
             $table->string('payment_amount');

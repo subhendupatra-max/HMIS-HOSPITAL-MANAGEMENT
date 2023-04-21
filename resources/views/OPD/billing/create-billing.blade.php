@@ -77,8 +77,7 @@
                                             <textarea class="form-control" name="note"></textarea>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="form-label">Payment Amount <span
-                                                    class="text-danger">*</span></label>
+                                            <label class="form-label">Payment Amount </label>
                                             <input type="text" name="payment_amount" class="form-control" />
                                             @error('payment_amount')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -109,7 +108,7 @@
                                         <input type="text" name="total" readonly id="total_am"
                                             class="form-control myfld">
                                     </div>
-                                    <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" /></span>
+                                    <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" value="yes" /></span>
                                     <div class="d-flex justify-content-end mt-2" id="discount_section" style="display:none !important;">
                                         <span class="biltext">Discount (% / flat)</span>
                                         <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
@@ -129,7 +128,7 @@
                                         <span class="biltext">Grand Total</span>
                                         <input type="text" name="grand_total" readonly id="grnd_total" value="00"
                                             class="form-control myfld">
-                                        @error('grnd_total')
+                                        @error('grand_total')
                                             <br>
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

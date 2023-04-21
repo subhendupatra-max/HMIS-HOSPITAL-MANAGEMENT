@@ -103,7 +103,7 @@ use App\Http\Controllers\bloodBank\BloodDonorController;
 use App\Http\Controllers\bloodBank\BloodBPosetiveController;
 use App\Http\Controllers\bloodBank\UnitTypeController;
 use App\Http\Controllers\bloodBank\ComponentsController;
-
+use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\front_office\PurposeController;
 use App\Http\Controllers\front_office\ComplainTypeController;
 use App\Http\Controllers\front_office\SourceController;
@@ -1776,6 +1776,13 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
             Route::get('add-opd-billing/{id}', [BillingController::class, 'create_billing'])->name('add-opd-billing');
             Route::post('add-new-opd-billing', [BillingController::class, 'save_new_opd_billing'])->name('add-new-opd-billing');
         });
+        Route::get('opd-bill-details/{bill_id}', [BillingController::class, 'bill_details'])->name('opd-bill-details');
+        Route::group(['middleware' => ['permission:edit opd billing']], function () {
+            Route::get('edit-opd-bill/{bill_id}', [BillingController::class, 'edit_opd_bill'])->name('edit-opd-bill');
+        });
+        Route::group(['middleware' => ['permission:delete opd billing']], function () {
+            Route::get('delete-opd-bill/{bill_id}', [BillingController::class, 'delete_opd_bill'])->name('delete-opd-bill');
+        });
     });
     //================================= OPD billing ====================================
 
@@ -2120,3 +2127,11 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'IPD'
 
 });
 //================================= Ipd ===================================================
+
+//================================= Discount ===================================================
+Route::group(['middleware' => ['permission:discount'], 'prefix' => 'discount'], function () {
+    Route::get('discount-list', [DiscountController::class, 'discount_list'])->name('discount-list');
+    Route::get('discount-details/{discount_id}', [DiscountController::class, 'discount_details'])->name('view-discount-details');
+    Route::post('given-discount', [DiscountController::class, 'given_discount'])->name('given-discount');
+});
+//================================= Discount ===================================================

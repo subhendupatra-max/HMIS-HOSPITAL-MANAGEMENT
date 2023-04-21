@@ -726,6 +726,10 @@ class PermissionSeeder extends Seeder
         //opd billing
         Permission::create(['name' => 'opd billing']);
         Permission::create(['name' => 'add opd billing']);
+        Permission::create(['name' => 'edit opd billing']);
+        Permission::create(['name' => 'delete opd billing']);
+
+        //discount
+        Permission::create(['name' => 'discount']);
 
     }
-}
