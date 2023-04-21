@@ -13,60 +13,71 @@
 </head>
 <body>
 <!-- =============================login code here========================== -->
-    <div class="container-fluid">
-        <div class="row">
-             <div class="col-lg-12 login_outerarea">
+<div class="login_outerarea">
+    
+        <div class="container-fluid">
+        
+            <div class="row">
+                <div class="col-lg-12 ">
 
-                {{-- background image --}}
+                    {{-- background image --}}
+                   
+                    <video autoplay muted loop>
+                       <source src="http://localhost/HMIS-HOSPITAL-MANAGEMENT/public/assets/images/medical.mp4" type="video/mp4">
+                    </video> 
 
-                 <div class="overlay_backdesign">
-                     <div class="wrap-login100">
-                        <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                                <span class="login100-form-logo">
-                                  <img src="{{asset('public/hospital_content/hospital_logo.png')}}" class="logoame">
-                                </span>
-                                <div class="material-textfield">
-                                   <input placeholder=" " type="email"name="email" :value="old('email')" required autofocus>
-                                   <label>Enter Your Email</label>
-                                   <i class="fas fa-envelope icondesign"></i>
-                                </div>
-                                <div class="material-textfield">
-                                   <input placeholder=" " type="password" name="password"
-                                required autocomplete="current-password"  id="id_password">
-                                   <label>Enter Your Password</label>
-                                   <i class="fas fa-unlock-alt icondesign"></i>
-                                   <i class="fas fa-eye icondesign1" id="togglePassword"></i>
-                                </div>
-                                <div class="rmbrpswrd_area">
-                                     <div class="leftrem_section">
-                                         <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                                         <label class="label-checkbox100 remlbltext" for="ckb1">
-                                                Remember me
-                                         </label>
-                                     </div>
-                                     <div class="rightrem_section">
-                                         <label class="remlbltext1" for="">
-                                                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-                                         </label>
-                                     </div>
-                                </div>
+                    <div class="overlay_backdesign">
+                        <div class="wrap-login100">
+                            <form method="POST" action="{{ route('login') }}">
+                            @csrf
+                                    <span class="login100-form-logo">
+                                    <img src="{{asset('public/hospital_content/hospital_logo.png')}}" class="logoame">
+                                    </span>
+                                    <div class="material-textfield">
+                                    <input placeholder=" " type="email"name="email" :value="old('email')" required autofocus>
+                                    <label>Enter Your Email</label>
+                                    <i class="fas fa-envelope icondesign"></i>
+                                    </div>
+                                    <div class="material-textfield">
+                                    <input placeholder=" " type="password" name="password"
+                                    required autocomplete="current-password"  id="id_password">
+                                    <label>Enter Your Password</label>
+                                    <i class="fas fa-unlock-alt icondesign"></i>
+                                    <i class="fas fa-eye icondesign1" id="togglePassword"></i>
+                                    </div>
+                                    <div class="rmbrpswrd_area">
+                                        <div class="leftrem_section">
+                                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                                            <label class="label-checkbox100 remlbltext" for="ckb1">
+                                                    Remember me
+                                            </label>
+                                        </div>
+                                        <div class="rightrem_section">
+                                            <label class="remlbltext1" for="">
+                                                    @if (Route::has('password.request'))
+                            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                            {{ __('Forgot your password?') }}
+                        </a>
+                        @endif
+                                            </label>
+                                        </div>
+                                    </div>
 
-                                <div class="lgnbtn_outerarea">
-                                   <button class="another_btndesign" >
-                                            {{ __('LOG IN') }}
-                                    </button>
-                                </div>
-                          </form>
-                     </div>
-                 </div>
-             </div>
+                                    <div class="lgnbtn_outerarea">
+                                    <button class="another_btndesign" >
+                                                {{ __('LOG IN') }}
+                                        </button>
+                                    </div>
+                            </form>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    
+<!-- </div> -->
+
 <!-- =============================login code here========================== -->
 <script>
   const togglePassword = document.querySelector('#togglePassword');

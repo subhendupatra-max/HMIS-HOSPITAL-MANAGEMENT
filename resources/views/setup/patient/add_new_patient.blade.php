@@ -14,41 +14,51 @@
                                     <h4>Add Patient</h4>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Personal Information</h5>
+                                    <h5 class="font-weight-bold"><i class="fas fa-user"></i> Personal Information</h5> 
                                     <div class="main-profile-bio mb-0">
                                         <div class="row">
                                             <div class="form-group col-md-3">
-                                                <label for="prefix">Prefix <span class="text-danger">*</span></label>
+                                                <!-- <label-top for="prefix">Prefix <span class="text-danger">*</span></label> -->
                                                 <select name="prefix" class="form-control" id="prefix">
-                                                    <option value="">Select</option>
+                                                    <option value="">prefix<span class="text-danger">*</span></option>
                                                     @foreach (Config::get('static.prefix') as $lang => $prefixs)
                                                     <option value="{{$prefixs}}"> {{$prefixs}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
 
-                                            <div class="form-group col-md-3">
-                                                <label for="first_name">First Name <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="first_name" value="{{ old('first_name') }}" name="first_name" placeholder="Enter first Name">
-                                                <small class="text-danger">{{ $errors->first('first_name') }}</small>
-                                            </div>
+                                            <div class="form-group col-md-3 custom-field">
+                                                    <!-- <label for="first_name">First Name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="first_name" value="{{ old('first_name') }}" name="first_name" placeholder="Enter first Name">   
+                                                <small class="text-danger">{{ $errors->first('first_name') }}</small>    -->
+                                                <input type="text" id="first_name" required />
+                                                <label for="first_name"> Enter Your First name:</label>
+                                             </div>
+                                            
 
                                             <div class="form-group col-md-3">
-                                                <label for="middle_name">Middle Name </label>
-                                                <input type="text" class="form-control" id="middle_name" value="{{ old('middle_name') }}" name="middle_name" placeholder="Enter Middle Name">
-                                                <small class="text-danger">{{ $errors->first('middle_name') }}</small>
+                                                  <!-- <label for="middle_name">Middle Name </label>
+                                                <input type="text" class="form-control" id="middle_name" value="{{ old('middle_name') }}" name="middle_name" placeholder="Enter Middle Name"> -->
+                                                <input type="text" id="middle_name" required />
+                                                <label for="middle_name"> Enter Your Middile name:</label>
+                                                <small class="text-danger">{{ $errors->first('middle_name') }}</small> 
+                                               
                                             </div>
+                                            
 
                                             <div class="form-group col-md-3">
-                                                <label for="last_name">Last Name <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="last_name" value="{{ old('last_name') }}" name="last_name" placeholder="Enter Last Name">
+                                                <!-- <label for="last_name">Last Name <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="last_name" value="{{ old('last_name') }}" name="last_name" placeholder="Enter Last Name"> -->
+                                                <input type="text" id="last_name" required />
+                                                <label for="last_name"> Enter Your Last name:</label>
                                                 <small class="text-danger">{{ $errors->first('last_name') }}</small>
+                                                
                                             </div>
 
                                             <div class="form-group col-md-2">
-                                                <label for="marital_status">Marital Status </label>
+                                                <!-- <label-top for="marital_status">Marital Status </label> -->
                                                 <select name="marital_status" class="form-control select2-show-search" id="marital_status">
-                                                    <option value="">Select</option>
+                                                    <option value="">marital_status</option>
                                                     @foreach (Config::get('static.marital_status') as $lang => $marital)
                                                     <option value="{{$marital}}"> {{$marital}}</option>
                                                     @endforeach
@@ -56,9 +66,9 @@
                                             </div>
 
                                             <div class="form-group col-md-2">
-                                                <label for="blood_group">Blood Group </label>
+                                                 <!-- <label-top for="blood_group">Blood Group </label>  -->
                                                 <select name="blood_group" class="form-control" id="blood_group">
-                                                    <option value="">Select</option>
+                                                    <option value="" for="blood_group">blood_group</option>
                                                     @foreach (Config::get('static.blood_groups') as $lang => $blood_group)
                                                     <option value="{{$blood_group}}"> {{$blood_group}}</option>
                                                     @endforeach
@@ -66,9 +76,9 @@
                                             </div>
 
                                             <div class="form-group col-md-2">
-                                                <label for="gender">Gender <span class="text-danger">*</span></label>
+                                                <!-- <label-top for="gender">Gender <span class="text-danger">*</span></label> -->
                                                 <select name="gender" class="form-control select2-show-search" id="gender">
-                                                    <option value="">Select</option>
+                                                    <option value=""for="gender">gender</option>
                                                     @foreach (Config::get('static.gender') as $lang => $genders)
                                                     <option value="{{$genders}}"> {{$genders}}</option>
                                                     @endforeach
@@ -76,60 +86,68 @@
                                             </div>
 
                                             <div class="form-group col-md-2">
-                                                <label for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label>
-                                                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="{{ old('date_of_birth') }}">
-                                                <small class="text-danger">{{ $errors->first('date_of_birth') }}</small>
+                                                 <!-- <label-top for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label> -->
+                                                <!-- <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="{{ old('date_of_birth') }}"> -->
+                                                <input type="date" id="date_of_birth" required />
+                                                   
+                                                <small class="text-danger">{{ $errors->first('date_of_birth') }}</small> 
+                                               
                                             </div>
 
                                             <div class="form-group col-md-4">
-                                                <label>Age (yy-mm-dd) <span class="text-danger">*</span></label>
-                                                <div class="row">
+                                                 <!-- <label1>Age (yy-mm-dd) <span class="text-danger">*</span></label>  -->
+                                               
+                                             <div class="row">
                                                     <div class="col-lg-4">
-                                                        <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" required>
-                                                        <small class="text-danger">{{ $errors->first('date_of_birth_year') }}</small>
-                                                    </div>
+                                                          <!-- <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" required>  -->
+                                                        <small class="text-danger">{{ $errors->first('date_of_birth_year') }}</small> 
+                                                        <input type="text" id="date_of_birth_year" required />
+                                                        <label for="date_of_birth_year"> Year</label>
+                                                     </div>
 
                                                     <div class="col-lg-4">
-                                                        <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" required>
+                                                        <!-- <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" required>  -->
+                                                        <input type="text" id="date_of_birth_month" required />
+                                                        <label for="date_of_birth_month"> Month</label>
                                                         <small class="text-danger">{{ $errors->first('date_of_birth_month') }}</small>
+                                                       
                                                     </div>
                                                     <div class="col-lg-4">
-                                                        <input type="text" class="form-control" id="date_of_birth_day" name="day" placeholder="Day" required>
-                                                        <small class="text-danger">{{ $errors->first('date_of_birth_day') }}</small>
+                                                          <!-- <input type="text" class="form-control" id="date_of_birth_day" name="day" placeholder="Day" required>  -->
+                                                         <input type="text" id="date_of_birth_day" required />
+                                                        <label for="date_of_birth_day"> Day</label>
+                                                        <small class="text-danger">{{ $errors->first('date_of_birth_day') }}</small> 
+                                                        
                                                     </div>
-                                                </div>
+                                                </div>  
                                             </div>
 
-                                            <div class="form-group col-md-3">
-                                                <label for="phone">Phone <span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" value="{{ old('phone') }}" id="phone" name="phone" placeholder="Enter Your Phone No.">
-                                                <small class="text-danger">{{ $errors->first('phone') }}</small>
-                                            </div>
-
-                                            <div class="form-group col-md-3">
-                                                <label for="email">Email </label>
-                                                <input type="email" class="form-control" value="{{ old('email') }}" id="email" name="email" placeholder="Enter Your Eamil">
-                                                <small class="text-danger">{{ $errors->first('email') }}</small>
-                                            </div>
+                                        
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body border-top">
 
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Gurdian Details</h5>
+                                    <h5 class="font-weight-bold"><i class="fas fa-users-cog"></i> Gurdian Details</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
                                             <div class="form-group col-md-4">
-                                                <label for="address">Gurdian Details <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="guardian_name" value="{{ old('guardian_name') }}" name="guardian_name" placeholder="Enter Guardian Name">
-                                                <small class="text-danger">{{ $errors->first('guardian_name') }}</small>
+                                                 <!-- <label for="address">Gurdian Details <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="guardian_name" value="{{ old('guardian_name') }}" name="guardian_name" placeholder="Enter Guardian Name"> -->
+                                                <input type="guardian_name" id="name" required />
+                                                <label for="guardian_name">Enter Guardian Name<span class="text-danger">*</span></label>
+                                                <small class="text-danger">{{ $errors->first('guardian_name') }}</small> 
+                                               
                                             </div>
 
                                             <div class="form-group col-md-3">
-                                                <label for="guardian_contact_no"> Gurdian Contact No <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="guardian_contact_no" value="{{ old('guardian_contact_no') }}" name="guardian_contact_no" placeholder="Enter Gurdian Phone No">
-                                                <small class="text-danger">{{ $errors->first('guardian_contact_no') }}</small>
+                                                <!-- <label for="guardian_contact_no"> Gurdian Contact No <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="guardian_contact_no" value="{{ old('guardian_contact_no') }}" name="guardian_contact_no" placeholder="Enter Gurdian Phone No"> -->
+                                                <input type="email" id="guardian_contact_no" required />
+                                                <label for="guardian_contact_no">Enter Gurdian Phone No<span class="text-danger">*</span></label>
+                                                <small class="text-danger">{{ $errors->first('guardian_contact_no') }}</small> 
+                                                
                                             </div>
 
                                         </div>
@@ -141,19 +159,25 @@
                                     <h6 class="font-weight-bold">Is Gurdian And Local Gurdian Same ?
                                         <input type="checkbox" id="myCheckbox" onchange="myFunction()" />
                                     </h6>
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Local Gurdian Name</h5>
+                                    <h5 class="font-weight-bold"><i class="fas fa-user-circle"></i> Local Gurdian Name</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
                                             <div class="form-group col-md-4">
-                                                <label for="address"> Local Gurdian Name<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_guardian_name" value="{{ old('local_guardian_name') }}" name="local_guardian_name" placeholder="Enter Guardian Name">
+                                                <!-- <label for="address"> Local Gurdian Name<span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="local_guardian_name" value="{{ old('local_guardian_name') }}" name="local_guardian_name" placeholder="Enter Guardian Name"> -->
+                                                <input type="email" id="local_guardian_name" required />
+                                                <label for="local_guardian_name">Enter  local Gurdian Name<span class="text-danger">*</span></label>
                                                 <small class="text-danger">{{ $errors->first('local_guardian_name') }}</small>
+                                              
                                             </div>
 
                                             <div class="form-group col-md-3">
-                                                <label for="local_guardian_contact_no">Local Gurdian Contact No <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_guardian_contact_no" value="{{ old('local_guardian_contact_no') }}" name="local_guardian_contact_no" placeholder="Enter Local Gurdian Name">
-                                                <small class="text-danger">{{ $errors->first('local_guardian_contact_no') }}</small>
+                                                <!-- <label for="local_guardian_contact_no">Local Gurdian Contact No <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="local_guardian_contact_no" value="{{ old('local_guardian_contact_no') }}" name="local_guardian_contact_no" placeholder="Enter Local Gurdian Name"> -->
+                                                <input type="email" id="Local Gurdian Contact No" required />
+                                                <label for="Local Gurdian Contact No">Enter  local Gurdian Phone No<span class="text-danger">*</span></label>
+                                                <small class="text-danger">{{ $errors->first('local_guardian_contact_no') }}</small> 
+                                           
                                             </div>
 
                                         </div>
@@ -162,17 +186,20 @@
                                 </div>
 
                                 <div class="card-body border-top">
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Address</h5>
+                                    <h5 class="font-weight-bold"><i class="fas fa-map-marker-alt"></i>Address</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
                                             <div class="form-group col-md-3">
-                                                <label for="address">Address <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="address" value="{{ old('address') }}" name="address" placeholder="Enter Address">
-                                                <small class="text-danger">{{ $errors->first('address') }}</small>
+                                                <!-- <label for="address">Address <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="address" value="{{ old('address') }}" name="address" placeholder="Enter Address"> -->
+                                                <input type="email" id="address" required />
+                                                <label for="address">Address<span class="text-danger">*</span></label>
+                                                <small class="text-danger">{{ $errors->first('address') }}</small> 
+                                              
                                             </div>
 
                                             <div class="form-group col-md-3">
-                                                <label for="country">Country <span class="text-danger">*</span></label>
+                                                <!-- <label for="country">Country <span class="text-danger">*</span></label> -->
                                                 <select name="country" class="form-control select2-show-search" id="country" onchange="showDetails(this.value)">
                                                     <option value="">Select Country... </option>
                                                     @foreach($country as $countrys)
@@ -184,7 +211,7 @@
 
 
                                             <div class="form-group col-md-3">
-                                                <label for="state">State <span class="text-danger">*</span></label>
+                                                <!-- <label for="state">State <span class="text-danger">*</span></label> -->
                                                 <select name="state" class="form-control select2-show-search" id="state" required>
                                                     <option value="">Select State...</option>
                                                 </select>
@@ -193,7 +220,7 @@
 
 
                                             <div class="form-group col-md-3">
-                                                <label for="district">District <span class="text-danger">*</span></label>
+                                                <!-- <label for="district">District <span class="text-danger">*</span></label> -->
                                                 <select name="district" class="form-control select2-show-search" id="district" required>
                                                     <option value="">Select District...</option>
                                                 </select>
@@ -201,9 +228,12 @@
                                             </div>
 
                                             <div class="form-group col-md-2">
-                                                <label for="pin_no">Pin No. <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="pin_no" name="pin_no" value="{{ old('pin_no') }}">
-                                                <small class="text-danger">{{ $errors->first('pin_no') }}</small>
+                                                 <!-- <label for="pin_no">Pin No. <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="pin_no" name="pin_no" value="{{ old('pin_no') }}"> -->
+                                                <input type="email" id="pin_no" required />
+                                                <label for="pin_no">Pin No.<span class="text-danger">*</span></label>
+                                                <small class="text-danger">{{ $errors->first('pin_no') }}</small> 
+                                              
                                             </div>
                                         </div>
 
@@ -212,19 +242,23 @@
 
                                 <div class="card-body border-top">
                                     <h6 class="font-weight-bold">Is Address And Local Address Same ?
-                                        <input type="checkbox" id="checkboxforaddress" onchange="localAddress()" />
+                                         <input type="checkbox" id="checkboxforaddress" onchange="localAddress()" />
+                                     
                                     </h6>
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Local Address</h5>
+                                    <h5 class="font-weight-bold"><i class="fas fa-map-marker"></i>Local Address</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
                                             <div class="form-group col-md-3">
-                                                <label for="local_address">Local Address <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_address" value="{{ old('local_address') }}" name="local_address" placeholder="Enter Local Address">
-                                                <small class="text-danger">{{ $errors->first('local_address') }}</small>
+                                                 <!-- <label for="local_address">Local Address <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="local_address" value="{{ old('local_address') }}" name="local_address" placeholder="Enter Local Address"> -->
+                                                <input type="email" id="local_address" required />
+                                                <label for="local_address">Enter Local Address<span class="text-danger">*</span></label>
+                                                <small class="text-danger">{{ $errors->first('local_address') }}</small> 
+                                               
                                             </div>
 
                                             <div class="form-group col-md-3">
-                                                <label for="country_local">Country <span class="text-danger">*</span></label>
+                                                <!-- <label for="country_local">Country <span class="text-danger">*</span></label> -->
                                                 <select name="country_local" class="form-control select2-show-search" id="country_local" onchange="showDetails(this.value)">
                                                     <option value="">Select Country... </option>
                                                     @foreach($country as $item)
@@ -235,7 +269,7 @@
                                             </div>
 
                                             <div class="form-group col-md-3">
-                                                <label for="state_local">State <span class="text-danger">*</span></label>
+                                                <!-- <label for="state_local">State <span class="text-danger">*</span></label> -->
                                                 <select name="state_local" class="form-control select2-show-search" id="state_local">
                                                     <option value="">Select State...</option>
                                                 </select>
@@ -243,7 +277,7 @@
                                             </div>
 
                                             <div class="form-group col-md-3">
-                                                <label for="district_local">District <span class="text-danger">*</span></label>
+                                                <!-- <label for="district_local">District <span class="text-danger">*</span></label> -->
                                                 <select name="district_local" class="form-control select2-show-search" id="district_local">
                                                     <option value="">Select District...</option>
                                                 </select>
@@ -251,9 +285,12 @@
                                             </div>
 
                                             <div class="form-group col-md-2">
-                                                <label for="local_pin_no">Pin No. <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_pin_no" name="local_pin_no" value="{{ old('local_pin_no') }}">
-                                                <small class="text-danger">{{ $errors->first('local_pin_no') }}</small>
+                                                <!-- <label for="local_pin_no">Pin No. <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="local_pin_no" name="local_pin_no" value="{{ old('local_pin_no') }}"> -->
+                                                <input type="email" id="local_pin_no" required />
+                                                <label for="local_pin_no">Pin No.<span class="text-danger">*</span></label>
+                                                <small class="text-danger">{{ $errors->first('local_pin_no') }}</small> 
+                                                
                                             </div>
                                         </div>
 
@@ -261,21 +298,24 @@
                                 </div>
 
                                 <div class="card-body border-top">
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Other Details</h5>
+                                    <h5 class="font-weight-bold"><i class="fas fa-tasks"></i>Other Details</h5>
                                     <div class="main-profile-contact-list ">
                                         <!-- <div class="row"> -->
                                         <div class="form-group col-md-12 " id="indentification">
                                             <div class="form-group col-md-5 d-inline-block">
-                                                <label for="identification_name"> Identification Name </label>
+                                                <!-- <label for="identification_name"> Identification Name </label> -->
                                                 <select name="identification_name" class="form-control select2-show-search" id="identification_name">
                                                     <option value="">Select One...</option>
                                                 </select>
                                             </div>
 
                                             <div class="form-group col-md-5 d-inline-block">
-                                                <label for="identification_number"> National Identification Number </label>
-                                                <input type="text" class="form-control" value="{{ old('identification_number') }}" id="identification_number" name="identification_number" placeholder="Enter National Identification Number">
+                                                <!-- <label for="identification_number"> National Identification Number </label>
+                                                <input type="text" class="form-control" value="{{ old('identification_number') }}" id="identification_number" name="identification_number" placeholder="Enter National Identification Number"> -->
+                                                <input type="email" id="identification_number" required />
+                                                <label for="identification_number">National Identification Number<span class="text-danger">*</span></label>
                                                 <small class="text-danger">{{ $errors->first('phone') }}</small>
+                                              
                                             </div>
                                         </div>
 
@@ -287,7 +327,7 @@
                                     <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Select Type</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="form-group col-md-6">
-                                            <label for="type"> <SPAN style="color:blue;font-weight: 600;">TYPE</SPAN> </label>
+                                            <!-- <label for="type"> <SPAN style="color:blue;font-weight: 600;">TYPE</SPAN> </label> -->
                                             <select name="type" class="form-control select2-show-search" id="type">
                                                 <option value="" @if(isset($type)) {{$type == '' ? 'selected' : ''}} @endif>Select One.....</option>
                                                 <option value="opd" @if(isset($type)) {{$type == 'opd' ? 'selected' : ''}} @endif>OPD Registation</option>

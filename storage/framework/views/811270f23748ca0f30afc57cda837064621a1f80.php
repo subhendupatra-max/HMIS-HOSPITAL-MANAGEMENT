@@ -13,62 +13,73 @@
 </head>
 <body>
 <!-- =============================login code here========================== -->
-    <div class="container-fluid">
-        <div class="row">
-             <div class="col-lg-12 login_outerarea">
+<div class="login_outerarea">
+    
+        <div class="container-fluid">
+        
+            <div class="row">
+                <div class="col-lg-12 ">
 
-                
+                    
+                   
+                    <video autoplay muted loop>
+                       <source src="http://localhost/HMIS-HOSPITAL-MANAGEMENT/public/assets/images/medical.mp4" type="video/mp4">
+                    </video> 
 
-                 <div class="overlay_backdesign">
-                     <div class="wrap-login100">
-                        <form method="POST" action="<?php echo e(route('login')); ?>">
-                        <?php echo csrf_field(); ?>
-                                <span class="login100-form-logo">
-                                  <img src="<?php echo e(asset('public/hospital_content/hospital_logo.png')); ?>" class="logoame">
-                                </span>
-                                <div class="material-textfield">
-                                   <input placeholder=" " type="email"name="email" :value="old('email')" required autofocus>
-                                   <label>Enter Your Email</label>
-                                   <i class="fas fa-envelope icondesign"></i>
-                                </div>
-                                <div class="material-textfield">
-                                   <input placeholder=" " type="password" name="password"
-                                required autocomplete="current-password"  id="id_password">
-                                   <label>Enter Your Password</label>
-                                   <i class="fas fa-unlock-alt icondesign"></i>
-                                   <i class="fas fa-eye icondesign1" id="togglePassword"></i>
-                                </div>
-                                <div class="rmbrpswrd_area">
-                                     <div class="leftrem_section">
-                                         <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
-                                         <label class="label-checkbox100 remlbltext" for="ckb1">
-                                                Remember me
-                                         </label>
-                                     </div>
-                                     <div class="rightrem_section">
-                                         <label class="remlbltext1" for="">
-                                                <?php if(Route::has('password.request')): ?>
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="<?php echo e(route('password.request')); ?>">
-                        <?php echo e(__('Forgot your password?')); ?>
+                    <div class="overlay_backdesign">
+                        <div class="wrap-login100">
+                            <form method="POST" action="<?php echo e(route('login')); ?>">
+                            <?php echo csrf_field(); ?>
+                                    <span class="login100-form-logo">
+                                    <img src="<?php echo e(asset('public/hospital_content/hospital_logo.png')); ?>" class="logoame">
+                                    </span>
+                                    <div class="material-textfield">
+                                    <input placeholder=" " type="email"name="email" :value="old('email')" required autofocus>
+                                    <label>Enter Your Email</label>
+                                    <i class="fas fa-envelope icondesign"></i>
+                                    </div>
+                                    <div class="material-textfield">
+                                    <input placeholder=" " type="password" name="password"
+                                    required autocomplete="current-password"  id="id_password">
+                                    <label>Enter Your Password</label>
+                                    <i class="fas fa-unlock-alt icondesign"></i>
+                                    <i class="fas fa-eye icondesign1" id="togglePassword"></i>
+                                    </div>
+                                    <div class="rmbrpswrd_area">
+                                        <div class="leftrem_section">
+                                            <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                                            <label class="label-checkbox100 remlbltext" for="ckb1">
+                                                    Remember me
+                                            </label>
+                                        </div>
+                                        <div class="rightrem_section">
+                                            <label class="remlbltext1" for="">
+                                                    <?php if(Route::has('password.request')): ?>
+                            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="<?php echo e(route('password.request')); ?>">
+                            <?php echo e(__('Forgot your password?')); ?>
 
-                    </a>
-                <?php endif; ?>
-                                         </label>
-                                     </div>
-                                </div>
+                        </a>
+                        <?php endif; ?>
+                                            </label>
+                                        </div>
+                                    </div>
 
-                                <div class="lgnbtn_outerarea">
-                                   <button class="another_btndesign" >
-                                            <?php echo e(__('LOG IN')); ?>
+                                    <div class="lgnbtn_outerarea">
+                                    <button class="another_btndesign" >
+                                                <?php echo e(__('LOG IN')); ?>
 
-                                    </button>
-                                </div>
-                          </form>
-                     </div>
-                 </div>
-             </div>
+                                        </button>
+                                    </div>
+                            </form>
+                        </div>
+                    
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    
+<!-- </div> -->
+
 <!-- =============================login code here========================== -->
 <script>
   const togglePassword = document.querySelector('#togglePassword');
