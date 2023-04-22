@@ -14887,10 +14887,9 @@ button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-mo
 
 button:focus, textarea:focus {
   outline: 0; }
-
-input[type="radio"], input[type="checkbox"] {
+ /* input[type="radio"], input[type="checkbox"] {
   box-sizing: border-box;
-  padding: 0; }
+   } */
 
 input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"] {
   -webkit-appearance: listbox; }
@@ -16626,7 +16625,7 @@ div.dataTables_wrapper div.dataTables_filter input {
   border: 2px solid #000;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-radius: 5px; } */
-  
+
   .form-control {
     display: block;
     width: 100%;
@@ -16649,7 +16648,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 .select2-container--default .select2-selection--single {
   background-color: #e5d9d96b;
-  border: 1px solid #e3e4e9 !important;
+  /* border: 1px solid #e3e4e9 !important; */
   border-radius: 4px; }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
@@ -16736,7 +16735,7 @@ select.form-control:not([size]):not([multiple]) {
     line-height: 35px !important;
     font-size: 12px;
     background-color: #;
-    border-bottom: 1px solid #330985;
+    border-bottom: 2px solid #330985;
     border-radius: 0px;
     border-top: none;
     border-left: none;
@@ -16835,9 +16834,9 @@ select.form-control-lg:not([size]):not([multiple]) {
 .input-group-lg > select.form-control:not([size]):not([multiple]), .input-group-lg > .input-group-prepend > select.input-group-text:not([size]):not([multiple]), .input-group-lg > .input-group-append > select.input-group-text:not([size]):not([multiple]), .input-group-lg > .input-group-prepend > select.btn:not([size]):not([multiple]), .input-group-lg > .input-group-append > select.btn:not([size]):not([multiple]) {
   height: calc(2.6875rem + 2px); }
 
-.form-group 
+.form-group
 {
-  margin-bottom: 1rem; 
+  margin-bottom: 1rem;
 }
 
 .form-text {
@@ -18428,7 +18427,7 @@ button.bg-dark:hover, button.bg-dark:focus {
   border: 1px solid #ebecf1 !important; }
 
  .border-top {
-  border-top: 1px solid #ebecf1 !important; }  
+  border-top: 1px solid #ebecf1 !important; }
 
 .border-right {
   border-right: 1px solid #ebecf1 !important; }
@@ -22308,7 +22307,7 @@ a.icon {
 .card {
   position: relative;
   display: -ms-flexbox;
-  margin: 27px 0px;
+  /* margin: 27px 0px; */
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -22317,7 +22316,7 @@ a.icon {
   background-color: #fff;
   background-clip: border-box;
   position: relative;
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   width: 100%;
   border: 1px solid #dbe2eb;
   box-shadow: 0px 6px 8px rgba(4, 4, 7, 0.1);
@@ -22342,13 +22341,13 @@ a.icon {
 .card-link:hover {
   text-decoration: none; }
 
-.card-header:before {
+/* .card-header:before {
   content: "";
   position: absolute;
   left: 0px;
   padding: 3px;
   border-radius: 0 50px 50px 0;
-  height: 20px; }
+  height: 20px; } */
 
 .card-header:first-child {
   border-radius: calc(3px - 1px) calc(3px - 1px) 0 0; }
@@ -22511,8 +22510,8 @@ a.icon {
   flex: 1 1 auto;
   margin: 0;
   padding: 1.5rem 1.5rem;
-  position: relative; 
-  
+  position: relative;
+
 }
   .card-body + .card-body {
     border-top: 1px solid #ebecf1; }
@@ -22521,7 +22520,7 @@ a.icon {
   font-size: 62px; }
 
 .card-body > :last-child {
-  margin-bottom: 0; 
+  margin-bottom: 0;
 
 }
 
@@ -22534,13 +22533,13 @@ a.icon {
 
 .log {
   margin-top: -26px; }
- 
+
 .card-header {
   background: transparent;
   padding: 0.5rem 1.5rem;
   display: -ms-flexbox;
   display: flex;
-  
+
   -ms-flex-align: center;
   align-items: center;
   margin-bottom: 0;
@@ -22549,7 +22548,7 @@ a.icon {
   .card-header .card-title {
     margin-bottom: 0; }
   .card-header.border-0 + .card-body {
-    padding-top: 0; } 
+    padding-top: 0; }
 
 .card-title {
   line-height: 1.2;
@@ -25960,6 +25959,10 @@ margin:15px 0px;
   margin-bottom: 0.5rem;
   font-weight: 800;
 } */
+.hospital_allcardbodydesign
+{
+  padding: 15px 15px 0px 15px;
+}
 /* -----------------new-input--------------------- */
 label {
   position: absolute;
@@ -25969,6 +25972,7 @@ label {
   color: #000;
   transition: 0.2s all;
   cursor: text;
+  font-size: 12px;
 }
 input {
   width: 100%;
@@ -25995,3 +25999,6 @@ input:valid~label {
   color: #ff5f15;
 }
 /* -----------------new input----------- */
+option span{
+    color: #ff5f15;
+}
