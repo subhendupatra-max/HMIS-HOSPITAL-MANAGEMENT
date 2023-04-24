@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('content'); ?>
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
         <div class="card">
@@ -54,51 +55,51 @@
                         <div class="options px-5 pt-2  border-bottom pb-1">
                             <div class="row">
 
-                                        <div class="table-responsive">
-                                            <table class="table table-striped card-table table-vcenter text-nowrap">
-                                                <thead>
+                                <div class="table-responsive">
+                                    <table class="table table-striped card-table table-vcenter text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Charge Name</th>
+                                                <th>Charge Amount</th>
+                                                <th>Tax</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php if(isset($patient_charge_details) && $patient_charge_details != ''): ?>
+                                                <?php $__currentLoopData = $patient_charge_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $charge): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>Charge Name</th>
-                                                        <th>Charge Amount</th>
-                                                        <th>Tax</th>
-                                                        <th>Total</th>
+                                                        <th scope="row"><?php echo e($loop->iteration); ?></th>
+                                                        <td><?php echo e(@$charge->charge_details->charges_name); ?></td>
+                                                        <td><?php echo e(@$charge->standard_charges); ?></td>
+                                                        <td><?php echo e(@$charge->tax); ?></td>
+                                                        <td><?php echo e(@$charge->amount); ?></td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php if(isset($patient_charge_details) && $patient_charge_details != ''): ?>
-                                                        <?php $__currentLoopData = $patient_charge_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $charge): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <tr>
-                                                                <th scope="row"><?php echo e($loop->iteration); ?></th>
-                                                                <td><?php echo e(@$charge->charge_details->charges_name); ?></td>
-                                                                <td><?php echo e(@$charge->standard_charges); ?></td>
-                                                                <td><?php echo e(@$charge->tax); ?></td>
-                                                                <td><?php echo e(@$charge->amount); ?></td>
-                                                            </tr>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    <?php endif; ?>
-                                                </tbody>
-                                            </table>
-                                            <hr>
-                                            <div class="container mt-5" style="margin-left: -53px;">
-                                                <div class="d-flex justify-content-end">
-                                                    <span class="bilpo_name">Total </span><span class="bilpo_value"> :
-                                                        <?php echo e(@$bill_details->total_amount); ?></span>
-                                                </div>
-                                                <div class="d-flex justify-content-end">
-                                                    <span class="bilpo_name">Discount </span><span class="bilpo_value"> :
-                                                        00</span>
-                                                </div>
-                                                <div class="d-flex justify-content-end">
-                                                    <span class="bilpo_name">Tax </span><span class="bilpo_value"> :
-                                                        <?php echo e(@$bill_details->tax); ?></span>
-                                                </div>
-                                                <div class="d-flex justify-content-end">
-                                                    <span class="bilpo_name">Grand Total </span><span class="bilpo_value"> :
-                                                        <?php echo e(number_format((float) $bill_details->grand_total, 2, '.', '')); ?></span>
-                                                </div>
-                                            </div>
-                                        </div><!-- bd -->
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
+                                    <hr>
+                                    <div class="container mt-5" style="margin-left: -53px;">
+                                        <div class="d-flex justify-content-end">
+                                            <span class="bilpo_name">Total </span><span class="bilpo_value"> :
+                                                <?php echo e(@$bill_details->total_amount); ?></span>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <span class="bilpo_name">Discount </span><span class="bilpo_value"> :
+                                                00</span>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <span class="bilpo_name">Tax </span><span class="bilpo_value"> :
+                                                <?php echo e(@$bill_details->tax); ?></span>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <span class="bilpo_name">Grand Total </span><span class="bilpo_value"> :
+                                                <?php echo e(number_format((float) $bill_details->grand_total, 2, '.', '')); ?></span>
+                                        </div>
+                                    </div>
+                                </div><!-- bd -->
 
                             </div>
                         </div>

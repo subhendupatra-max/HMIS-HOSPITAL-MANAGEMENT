@@ -80,7 +80,7 @@ $login_details = DB::table('users')
             <aside class="app-sidebar">
                 <div class="app-sidebar__logo">
                     <a class="header-brand" href="<?php echo e(route('dashboard')); ?>">
-                        <img src="<?php echo e(asset('public/assets/images/brand')); ?>/<?php echo e(@$general_details->logo); ?>" style="width: 241px;  height: 48px;" class="header-brand-img desktop-lgo" alt="<?php echo e(@$general_details->software_name); ?>">
+                        <img src="<?php echo e(asset('public/assets/images/brand')); ?>/<?php echo e(@$general_details->logo); ?>"  class="header-brand-img desktop-lgo" alt="<?php echo e(@$general_details->software_name); ?>">
                         <img src="<?php echo e(asset('public/assets/images/brand')); ?>/<?php echo e(@$general_details->logo); ?>" class="header-brand-img dark-logo" alt="<?php echo e(@$general_details->software_name); ?>">
 
                         <img src="<?php echo e(asset('public/assets/images/brand')); ?>/<?php echo e(@$general_details->small_logo); ?>" class="header-brand-img mobile-logo" alt="<?php echo e(@$general_details->software_name); ?>">

@@ -437,6 +437,7 @@ class PermissionSeeder extends Seeder
         // Pharmacy Bill
         Permission::create(['name' => 'pharmacy bill']);
         Permission::create(['name' => 'add pharmacy bill']);
+        Permission::create(['name' => 'medicine stock']);
 
         //medicine
         Permission::create(['name' => 'medicine']);
@@ -759,3 +760,4 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'edit emg payment']);
         Permission::create(['name' => 'delete emg payment']);
     }
+}

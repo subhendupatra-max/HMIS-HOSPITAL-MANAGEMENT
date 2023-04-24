@@ -1376,8 +1376,15 @@ Route::group(['middleware' => ['permission:Bed Status']], function () {
 
 // ================================== Pharmacy Main =================
 Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmacy'], function () {
-
-    Route::get('pharmacy-bill-listing', [PharmacyController::class, 'pharmacy_bill_listing'])->name('pharmacy-bill-listing');
+    Route::group(['middleware' => ['permission:pharmacy bill']], function () {
+        Route::get('pharmacy-bill-listing', [PharmacyController::class, 'pharmacy_bill_listing'])->name('pharmacy-bill-listing');
+        Route::group(['middleware' => ['permission:add pharmacy bill']], function () {
+            Route::get('pharmacy-bill-add', [PharmacyController::class, 'pharmacy_bill_add'])->name('pharmacy-bill-add');
+        });
+    });
+    Route::group(['middleware' => ['permission:medicine stock']], function () {
+        Route::get('all-medicine-stock', [PharmacyController::class, 'all_medicine_stock'])->name('all-medicine-stock');
+    });
 
     //================================= medicine ===================================================
     Route::group(['middleware' => ['permission:medicine']], function () {
