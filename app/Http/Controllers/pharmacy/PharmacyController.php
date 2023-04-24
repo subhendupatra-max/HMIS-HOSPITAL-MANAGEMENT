@@ -15,7 +15,7 @@ class PharmacyController extends Controller
 
     public function all_medicine_stock()
     {
-        $emdicine_stock = MedicineStock::
+        $emdicine_stock = MedicineStock::get();
         return view('pharmacy.medicine-stock');
     }
 
