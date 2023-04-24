@@ -1,5 +1,4 @@
-@extends('layouts.layout')
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
         <div class="card">
             <div class="card-header d-block">
@@ -9,26 +8,26 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="d-block">
-                            @can('add pathology test')
-                                <a href="{{ route('add-pathology-test') }}" class="btn btn-primary btn-sm">
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add pathology test')): ?>
+                                <a href="<?php echo e(route('add-pathology-test')); ?>" class="btn btn-primary btn-sm">
                                     <i class="fa fa-plus"></i> Add Pathology Test</a>
-                            @endcan
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {{-- ============= message ================ --}}
-            @if (session('success'))
+            
+            <?php if(session('success')): ?>
                 <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert"
-                        aria-hidden="true">×</button>{{ session('success') }}</div>
-            @endif
-            @if (session()->has('error'))
+                        aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
+            <?php endif; ?>
+            <?php if(session()->has('error')): ?>
                 <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert"
-                        aria-hidden="true">×</button>{{ session('error') }}</div>
-            @endif
-            {{-- ============= message ================ --}}
-            @can('view pathology group test')
+                        aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
+            <?php endif; ?>
+            
+            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view pathology group test')): ?>
                 <div class="card-body">
                     <div class="">
                         <div class="table-responsive">
@@ -43,12 +42,12 @@
                                 </thead>
 
                                 <tbody>
-                                    @if (isset($all_test))
-                                    @foreach ($all_test as $value)
+                                    <?php if(isset($all_test)): ?>
+                                    <?php $__currentLoopData = $all_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
-                                            <td>{{$loop->iteration}}</td>
-                                            <td><a class="textlink" href="">{{$value->test_name}}({{$value->short_name}})</a></td>
-                                            <td>{{$value->total_amount}}</td>
+                                            <td><?php echo e($loop->iteration); ?></td>
+                                            <td><a class="textlink" href=""><?php echo e($value->test_name); ?>(<?php echo e($value->short_name); ?>)</a></td>
+                                            <td><?php echo e($value->total_amount); ?></td>
                                             <td>
                                                 <div class="card-options">
                                                     <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
@@ -58,20 +57,20 @@
                                                         <a class="dropdown-item"
                                                             href=""><i
                                                                 class="fa fa-eye"></i> View</a>
-                                                        @can('')
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
                                                             <a class="dropdown-item"
                                                                 href=""><i
                                                                     class="fa fa-edit"></i> Edit</a>
-                                                        @endcan
-                                                        @can('')
+                                                        <?php endif; ?>
+                                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
                                                             <a class="dropdown-item"
                                                                 href=""><i
                                                                     class="fa fa-trash"></i> Delete</a>
-                                                        @endcan
+                                                        <?php endif; ?>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                    @endif
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
 
                                 </tbody>
                             </table>
@@ -79,6 +78,8 @@
                         </div>
                     </div>
                 </div>
-            @endcan
+            <?php endif; ?>
         </div>
-    @endsection
+    <?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\HMIS-HOSPITAL-MANAGEMENT\resources\views/pathology/test/list.blade.php ENDPATH**/ ?>

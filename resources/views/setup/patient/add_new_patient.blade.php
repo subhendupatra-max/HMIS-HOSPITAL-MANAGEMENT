@@ -201,11 +201,7 @@
                                             </div>
 
                                             <div class="col-lg-6">
-
-
-
-
-                                                <h5 class="font-weight-bold"> <i class="fas fa-user-circle"></i> Local
+                                             <h5 class="font-weight-bold">  <input type="checkbox" /> <i class="fas fa-user-circle"></i> Local
                                                     Gurdian Name</h5>
                                                 <div class="main-profile-contact-list ">
                                                     <div class="row">
@@ -302,9 +298,13 @@
                                     </div>
 
                                     <div class="card-body border-top hospital_allcardbodydesign">
-                                        <h6 class="font-weight-bold">Is Address And Local Address Same ?
+                                        {{-- <input type="checkbox" id="opd_belling" value="emg_belling_from_emg" />
+                                        <h6 class="font-weight-bold">Is Address And Local Address Same ? --}}
+                                            <input type="checkbox" />
+                                            <span style="font-weight: bold !important;
+                                            font-size: 15px;color:#0a1272; margin-bottom:3px;">Is Address And Local Address Same ?
+                                                </span>
 
-                                        </h6>
 
                                         <h5 class="font-weight-bold"><i class="fas fa-map-marker"></i>Local Address</h5>
                                         <div class="main-profile-contact-list ">

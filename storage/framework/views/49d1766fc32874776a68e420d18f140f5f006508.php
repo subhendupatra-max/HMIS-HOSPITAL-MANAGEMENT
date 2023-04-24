@@ -1,5 +1,4 @@
-@extends('layouts.layout')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
@@ -7,20 +6,20 @@
         </div>
 
 
-        <form method="POST" action="{{route('save-grn')}}" enctype="multipart/form-data">
-            @csrf
+        <form method="POST" action="<?php echo e(route('save-grn')); ?>" enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
             <div class="card-body">
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-4">
-                            {{-- <label class="requisition_header">Purchase Order <span class="text-danger">*</span></label> --}}
+                            
                             <select class="form-control select2-show-search" onchange="findPOdetails(this.value)" name="po_no" id="po">
                                 <option value="">Select One<span class="text-danger">*</span></option>
-                                @if(!empty($po_list))
-                                @foreach($po_list as $valu)
-                                <option value="{{$valu->po_id}}">{{$valu->po_prefix}}{{$valu->po_id}}</option>
-                                @endforeach
-                                @endif
+                                <?php if(!empty($po_list)): ?>
+                                <?php $__currentLoopData = $po_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $valu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($valu->po_id); ?>"><?php echo e($valu->po_prefix); ?><?php echo e($valu->po_id); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
                             </select>
                         </div>
 
@@ -28,51 +27,55 @@
                             <label class="requisition_header1">Medicine Rec. Date<span class="text-danger">*</span></label>
                             <input type="date" name="medicine_rec_date" class="form-control">
 
-                            @error('medicine_rec_date')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['medicine_rec_date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="col-md-4">
                             <label class="requisition_header1">Bill Rec. Date</label>
                             <input type="date" name="bill_rec_date" class="form-control">
-                            @error('bill_rec_date')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['bill_rec_date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="col-md-4 newadd">
-                            {{-- <label class="requisition_header">Challan No.</label>
-                            <input type="text" name="challan_no" class="form-control"> --}}
+                            
                             <input type="text" id="challan_no"  name="challan_no" required="">
                             <label for="Challan No."> Challan No.</label>
                         </div>
                         <div class="col-md-4 newadd">
-                            {{-- <label class="requisition_header">Challan Date (DD-MM-YYYY)</label>
-                            <input type="text" name="challan_date" class="form-control"> --}}
+                            
                             <input type="text" id="challan_date"  name="challan_date" required="">
                             <label for="challan_date">Challan Date </label>
                         </div>
-                        {{-- <div class="col-md-4">
-                <label  class="requisition_header">Challan Copy</label>
-                <input type="file" name="challan_copy">
-            </div> --}}
+                        
 
 
                         <div class="col-md-4 newadd">
-                            {{-- <label class="requisition_header">Invoice No.</label>
-                            <input type="text" name="invoice_no" class="form-control"> --}}
+                            
                             <input type="text" id="invoice_no"  name="challan_date" required="">
                             <label for="invoice_no">Invoice No. </label>
                         </div>
                         <div class="col-md-4 newadd">
-                            {{-- <label class="requisition_header">Invoice Date (DD-MM-YYYY)</label>
-                            <input type="text" name="invoice_date" class="form-control"> --}}
+                            
                             <input type="text" id="invoice_date"  name="invoice_date" required="">
                             <label for="Invoice Date">Invoice Date  </label>
                         </div>
-                        {{-- <div class="col-md-4">
-                <label  class="requisition_header">Invoice Copy</label>
-                <input type="file" name="invoice_copy">
-            </div> --}}
+                        
 
 
 
@@ -139,8 +142,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6">
-                            {{-- <label class="form-label">Note</label>
-                            <textarea name="note" class="form-control"></textarea> --}}
+                            
                             <input type="text" id="note"  name="note" required="">
                             <label for="note">Note  </label>
                         </div>
@@ -193,7 +195,7 @@
     function findPOdetails(po_id) {
         $.ajax({
 
-            url: "{{ route('get-po-item-details') }}/" + po_id,
+            url: "<?php echo e(route('get-po-item-details')); ?>/" + po_id,
             type: "get",
             dataType: 'json',
             success: function(resp) {
@@ -245,4 +247,6 @@
     }
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\HMIS-HOSPITAL-MANAGEMENT\resources\views/pharmacy/purchase/grn/grn-create.blade.php ENDPATH**/ ?>

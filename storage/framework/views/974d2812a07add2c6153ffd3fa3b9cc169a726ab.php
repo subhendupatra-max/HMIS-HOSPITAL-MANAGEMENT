@@ -1,22 +1,27 @@
-@extends('layouts.layout')
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">Add New Pathology Test Master</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('save-pathology-test-master-details') }}" method="POST">
-                @csrf
+            <form action="<?php echo e(route('save-pathology-test-master-details')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="form-group col-md-12">
-                        {{-- <label for="test_name" class="form-label"> Test Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="test_name" name="test_name" placeholder="Enter Test Name" value="{{ old('test_name') }}" required> --}}
+                        
                         <input type="text" id="test_name"name="test_name" required />
                     <label for="test_name"> Test Name<span class="text-danger">*</span> </label>
-                        @error('test_name')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <?php $__errorArgs = ['test_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
                 </div>
                 <div class="row">
@@ -64,9 +69,9 @@
                         <td><select id="test_parameter_name${i}" onchange="getParameter(${i})" class="form-control select2-show-search"
                         name="test_parameter_name[]">
                         <option value="">Select Parameter Name</option>
-                        @foreach ($parameter as $item)
-                        <option value="{{ $item->id }}">{{ $item->parameter_name }}</option>
-                        @endforeach
+                        <?php $__currentLoopData = $parameter; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->parameter_name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                         </td>
                         <td>
@@ -85,10 +90,10 @@
     function getParameter(i) {
         var parameter = $('#test_parameter_name' + i).val();
         $.ajax({
-            url: "{{ route('find-range-by-parameter') }}",
+            url: "<?php echo e(route('find-range-by-parameter')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 parameter_id: parameter,
             },
 
@@ -115,10 +120,10 @@
             // alert(state);
             $('#charge_sub_category').html('<option vaule="" >Select Sub Catagory...</option>');
             $.ajax({
-                url: "{{ route('find-sub-catagory-by-catagory') }}",
+                url: "<?php echo e(route('find-sub-catagory-by-catagory')); ?>",
                 type: "POST",
                 data: {
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                     catagory_id: catagory,
                 },
 
@@ -148,10 +153,10 @@
 
             $("#charge").html('<option value=" ">Select Charge...</option>');
             $.ajax({
-                url: "{{ route('find-charge-by-sub-catagory') }}",
+                url: "<?php echo e(route('find-charge-by-sub-catagory')); ?>",
                 type: "POST",
                 data: {
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                     charge_id: charge,
                 },
 
@@ -178,10 +183,10 @@
             let charge = $(this).val();
 
             $.ajax({
-                url: "{{ route('find-charge-by-statndard-charges') }}",
+                url: "<?php echo e(route('find-charge-by-statndard-charges')); ?>",
                 type: "POST",
                 data: {
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                     charges: charge,
                 },
 
@@ -220,4 +225,6 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\HMIS-HOSPITAL-MANAGEMENT\resources\views/pathology/test-master/add-pathology-test-master.blade.php ENDPATH**/ ?>

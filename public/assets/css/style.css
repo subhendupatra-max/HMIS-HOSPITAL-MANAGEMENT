@@ -16308,8 +16308,8 @@ div.dataTables_wrapper div.dataTables_filter input {
   display: block;
   margin-bottom: .375rem;
   font-weight: 500;
-  font-size: 14px;
-  margin:3px 0px 0px 0px;
+  font-size: 12px;
+  margin:3px 0px 0px 2px;
 }
 
 .form-label-small {
@@ -25452,15 +25452,17 @@ object, embed, video {
 }
 .biltext
 {
-    font-size: 20px;
+    font-size: 15px;
     padding: 0px 20px 0px 0px;
-    font-weight: 700;
+    font-weight: 900;
     letter-spacing: 1px;
+    color:#0a1272;
 }
 .myfld
 {
     width: 20%;
 }
+
 .myfld1
 {
    width: 20%;
@@ -25964,7 +25966,7 @@ margin:15px 0px;
   padding: 15px 15px 0px 15px;
 }
 /* -----------------new-input--------------------- */
-label {
+ label {
   position: absolute;
   top: 0;
   left: 0;
@@ -25995,10 +25997,68 @@ input:valid {
 input:focus~label,
 input:valid~label {
   font-size: 14px;
-  top: -13px;
+  top: -11px;
   color: #ff5f15;
 }
 /* -----------------new input----------- */
 option span{
     color: #ff5f15;
 }
+.add-pathologydesign{
+    width: 100%;
+    margin: 0px 0px 0px 20px;
+}
+input[type=checkbox] {
+    position: relative;
+      border: 2px solid #000;
+      border-radius: 2px;
+      background: none;
+      cursor: pointer;
+      line-height: 0;
+      margin: 0 .6em 0 0;
+      outline: 0;
+      padding: 0 !important;
+      vertical-align: text-top;
+      height: 16px;
+      width: 16px;
+      -webkit-appearance: none;
+    opacity: .5;
+
+  }
+
+  input[type=checkbox]:hover {
+    opacity: 1;
+  }
+
+  input[type=checkbox]:checked {
+    background-color: #000;
+    opacity: 1;
+  }
+
+  input[type=checkbox]:before {
+    content: '';
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    width: 4px;
+    height: 10px;
+    border: solid #FFF;
+    border-width: 0 2px 2px 0;
+    margin: -1px -1px 0 -1px;
+    transform: rotate(45deg) translate(-50%, -50%);
+    z-index: 2;
+  }
+  .requisition_header1{
+    font-weight: 700;
+    font-size: 13px;
+    color: #444;
+    margin: -10px 0px 0px 0px;
+  }
+  .newadd{
+    margin: 11px 0px 0px 0px;
+  }
+  #datepicker {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

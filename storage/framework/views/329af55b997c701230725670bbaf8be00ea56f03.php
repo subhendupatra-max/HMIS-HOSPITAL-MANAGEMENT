@@ -1,5 +1,4 @@
-@extends('layouts.layout')
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -7,70 +6,98 @@
             <h4 class="card-title">Add Requisition</h4>
         </div>
         <div class="card-body">
-            <form action="{{ route('save-medicine-requisition-details') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+            <form action="<?php echo e(route('save-medicine-requisition-details')); ?>" method="POST" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
                 <div class="row">
 
                     <div class="col-md-3">
                         <label class="form-label">Checked By <span class="text-danger">*</span></label>
                         <select name="checked_by" class="form-control select2-show-search">
                             <option value="">Select One</option>
-                            @if($user_list)
-                            @foreach($user_list as $value)
-                            <option value="{{$value->id}}">{{$value->first_name}} {{$value->last_name}}</option>
-                            @endforeach
-                            @endif
+                            <?php if($user_list): ?>
+                            <?php $__currentLoopData = $user_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($value->id); ?>"><?php echo e($value->first_name); ?> <?php echo e($value->last_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </select>
-                        @error('checked_by')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <?php $__errorArgs = ['checked_by'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="col-md-3">
                         <label class="form-label">Requested By <span class="text-danger">*</span></label>
                         <select name="requested_by" class="form-control select2-show-search ">
                             <option value="">Select One</option>
-                            @if($user_list)
-                            @foreach($user_list as $value)
-                            <option value="{{$value->id}}">{{$value->first_name}} {{$value->last_name}}</option>
-                            @endforeach
-                            @endif
+                            <?php if($user_list): ?>
+                            <?php $__currentLoopData = $user_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($value->id); ?>"><?php echo e($value->first_name); ?> <?php echo e($value->last_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </select>
-                        @error('requested_by')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <?php $__errorArgs = ['requested_by'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="col-md-3">
                         <label for="store_room" class="form-label">Store Room <span class="text-danger">*</span></label>
                         <select name="store_room" class="select2-show-search">
                             <option value="">Select One</option>
-                            @if($store_room_list)
-                            @foreach($store_room_list as $value)
-                            <option value="{{$value->id}}">{{$value->name}}</option>
-                            @endforeach
-                            @endif
+                            <?php if($store_room_list): ?>
+                            <?php $__currentLoopData = $store_room_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($value->id); ?>"><?php echo e($value->name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </select>
                     </div>
 
                     <div class="col-md-3">
-                        {{-- <label for="date" class="form-label">Date <span class="text-danger">*</span></label> --}}
+                        
                         <input type="datetime-local" class="form-control" id="date" name="date" required>
-                        @error('date')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <?php $__errorArgs = ['date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-3">
-                        {{-- <label for="need_permission" class="form-label">Need permission <span class="text-danger">*</span></label> --}}
+                        
                         <select id="need_permission" class="form-control" name="need_permission" onclick="fdsfds(this.value)">
                             <option value=" ">Select Permission</option>
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
                         </select>
-                        @error('need_permission')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <?php $__errorArgs = ['need_permission'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-7" style="display:none;" id="pop">
@@ -79,28 +106,42 @@
                             <label class="form-label">Permission Authority <span class="text-danger">*</span></label>
                             <select name="permission_authority[]" multiple="multiple" class="multi-select select2-show-search">
                                 <option value="">Select One</option>
-                                @if($user_list)
-                                @foreach($user_list as $value)
-                                <option value="{{$value->id}}">{{$value->first_name}} {{$value->last_name}}</option>
-                                @endforeach
-                                @endif
+                                <?php if($user_list): ?>
+                                <?php $__currentLoopData = $user_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($value->id); ?>"><?php echo e($value->first_name); ?> <?php echo e($value->last_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
                             </select>
-                            @error('permission_authority')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['permission_authority'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div class="form-group col-md-5 d-inline-block">
                             <label class="form-label">Permission Type <span class="text-danger">*</span></label>
                             <select name="permission_type" class="select2-show-search">
                                 <option value="">Select</option>
-                                @foreach (Config::get('static.permission_type') as $lang => $permissiton_types)
-                                <option value="{{$permissiton_types}}"> {{$permissiton_types}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = Config::get('static.permission_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $permissiton_types): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($permissiton_types); ?>"> <?php echo e($permissiton_types); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
-                            @error('permission_type')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['permission_type'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
 
@@ -124,37 +165,37 @@
                                 </tr>
                             </thead>
                             <tbody id="trLength">
-                                @if(isset($medicinedata ) && !empty($medicinedata))
+                                <?php if(isset($medicinedata ) && !empty($medicinedata)): ?>
                                 <?php $i = 0; ?>
-                                @foreach($medicinedata as $item)
+                                <?php $__currentLoopData = $medicinedata; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
-                                <tr id="rowid{{$loop->iteration}}">
+                                <tr id="rowid<?php echo e($loop->iteration); ?>">
                                     <td>
 
-                                        <input type="hidden" class="form-control" name="medicine_catagory[]" value="{{$item->catagory_id}}" />
+                                        <input type="hidden" class="form-control" name="medicine_catagory[]" value="<?php echo e($item->catagory_id); ?>" />
 
-                                        <input type="text" readonly class="form-control" value="{{$item->medicine_catagory_name}}" />
+                                        <input type="text" readonly class="form-control" value="<?php echo e($item->medicine_catagory_name); ?>" />
                                     </td>
                                     <td>
-                                        <input type="hidden" class="form-control" name="medicine_name[]"value="{{$item->medicine_id}}" />
+                                        <input type="hidden" class="form-control" name="medicine_name[]"value="<?php echo e($item->medicine_id); ?>" />
 
-                                        <input type="text" readonly class="form-control"  value="{{$item->medicine_name}}" />
+                                        <input type="text" readonly class="form-control"  value="<?php echo e($item->medicine_name); ?>" />
                                     </td>
                                     <td>
-                                    <input type="hidden"  class="form-control" name="medicine_unit[]" value="{{$item->unit_id}}" />
+                                    <input type="hidden"  class="form-control" name="medicine_unit[]" value="<?php echo e($item->unit_id); ?>" />
 
-                                        <input type="text" readonly class="form-control"  value="{{$item->medicine_unit_name}}" />
+                                        <input type="text" readonly class="form-control"  value="<?php echo e($item->medicine_unit_name); ?>" />
                                     </td>
                                     <td>
                                         <input type="text" class="form-control" name="qty[]" />
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger" onclick="removerow({{$loop->iteration}})"><i class="fa fa-trash"></i></button>
+                                        <button type="button" class="btn btn-danger" onclick="removerow(<?php echo e($loop->iteration); ?>)"><i class="fa fa-trash"></i></button>
                                     </td>
                                 </tr>
                                 <?php $i = $i + 1; ?>
-                                @endforeach
-                                @endif
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
@@ -186,8 +227,8 @@
             <div class="modal-body pd-20">
                 <h5 class=" lh-3"><a href="#" class="font-weight-bold">Add Medicine</a></h5>
 
-                <form id="myForm" action="{{ route('add-medicine-catagory-and-medicine-name') }}" method="POST">
-                    @csrf
+                <form id="myForm" action="<?php echo e(route('add-medicine-catagory-and-medicine-name')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
 
                     <div class="table-responsive">
                         <table id="example1" class="table table-borderless text-nowrap key-buttons">
@@ -199,19 +240,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($medicine as $value)
+                                <?php $__currentLoopData = $medicine; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td>
-                                        <input type="checkbox" name="seleteMedicine[]" id="seleteMedicine" value="{{$value->id}}" />
+                                        <input type="checkbox" name="seleteMedicine[]" id="seleteMedicine" value="<?php echo e($value->id); ?>" />
                                     </td>
                                     <td>
-                                        {{ $value->catagory_name->medicine_catagory_name }}
+                                        <?php echo e($value->catagory_name->medicine_catagory_name); ?>
+
                                     </td>
                                     <td>
-                                        {{ $value->medicine_name}}
+                                        <?php echo e($value->medicine_name); ?>
+
                                     </td>
                                 </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
                     </div>
@@ -239,12 +282,12 @@
         var html = `
                         <tr id="rowid${i}">
                         <td>
-                        <select class="form-control select2-show-search " value="{{ old('medicine_catagory') }}" onchange="getCatagoryId(this.value,${i})" name="medicine_catagory[]" id="medicine_catagory${i}" required>
+                        <select class="form-control select2-show-search " value="<?php echo e(old('medicine_catagory')); ?>" onchange="getCatagoryId(this.value,${i})" name="medicine_catagory[]" id="medicine_catagory${i}" required>
                             <optgroup>
                                 <option value=" ">Select Medicine Catagory </option>
-                                @foreach ($medicine_catagory as $item)
-                                <option value="{{$item->id}}">{{$item->medicine_catagory_name}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $medicine_catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($item->id); ?>"><?php echo e($item->medicine_catagory_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </optgroup>
                         </select>
                         </td>
@@ -290,10 +333,10 @@
         $('#medicine_name' + rowid).html('<option value="" >Select...</option>');
 
         $.ajax({
-            url: "{{ route('find-medicine-name-by-medicine-catagory-in-requisition') }}",
+            url: "<?php echo e(route('find-medicine-name-by-medicine-catagory-in-requisition')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 catagory_id: catagory,
             },
             success: function(response) {
@@ -316,10 +359,10 @@
         $('#medicine_unit' + lineid).html('<option value="" >Select...</option>');
 
         $.ajax({
-            url: "{{ route('find-medicine-unit-by-medicine-name-in-requisition') }}",
+            url: "<?php echo e(route('find-medicine-unit-by-medicine-name-in-requisition')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 medicineName_id: medicineName,
             },
             success: function(response) {
@@ -351,4 +394,6 @@
     }
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\HMIS-HOSPITAL-MANAGEMENT\resources\views/pharmacy/purchase/requisition/add-medicine-requisition.blade.php ENDPATH**/ ?>
