@@ -14887,10 +14887,9 @@ button::-moz-focus-inner, [type="button"]::-moz-focus-inner, [type="reset"]::-mo
 
 button:focus, textarea:focus {
   outline: 0; }
-
-input[type="radio"], input[type="checkbox"] {
+ /* input[type="radio"], input[type="checkbox"] {
   box-sizing: border-box;
-  padding: 0; }
+   } */
 
 input[type="date"], input[type="time"], input[type="datetime-local"], input[type="month"] {
   -webkit-appearance: listbox; }
@@ -16309,8 +16308,8 @@ div.dataTables_wrapper div.dataTables_filter input {
   display: block;
   margin-bottom: .375rem;
   font-weight: 500;
-  font-size: 14px;
-  margin:3px 0px 0px 0px;
+  font-size: 12px;
+  margin:3px 0px 0px 2px;
 }
 
 .form-label-small {
@@ -16649,7 +16648,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 
 .select2-container--default .select2-selection--single {
   background-color: #e5d9d96b;
-  border: 1px solid #e3e4e9 !important;
+  /* border: 1px solid #e3e4e9 !important; */
   border-radius: 4px; }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
@@ -16736,7 +16735,7 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-place
     line-height: 35px !important;
     font-size: 12px;
     background-color: #;
-    border-bottom: 1px solid #330985;
+    border-bottom: 2px solid #330985;
     border-radius: 0px;
     border-top: none;
     border-left: none;
@@ -22308,7 +22307,7 @@ a.icon {
 .card {
   position: relative;
   display: -ms-flexbox;
-  margin: 27px 0px;
+  /* margin: 27px 0px; */
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -22317,7 +22316,7 @@ a.icon {
   background-color: #fff;
   background-clip: border-box;
   position: relative;
-  margin-bottom: 1.5rem;
+  /* margin-bottom: 1.5rem; */
   width: 100%;
   border: 1px solid #dbe2eb;
   box-shadow: 0px 6px 8px rgba(4, 4, 7, 0.1);
@@ -22342,13 +22341,13 @@ a.icon {
 .card-link:hover {
   text-decoration: none; }
 
-.card-header:before {
+/* .card-header:before {
   content: "";
   position: absolute;
   left: 0px;
   padding: 3px;
   border-radius: 0 50px 50px 0;
-  height: 20px; }
+  height: 20px; } */
 
 .card-header:first-child {
   border-radius: calc(3px - 1px) calc(3px - 1px) 0 0; }
@@ -25453,15 +25452,17 @@ object, embed, video {
 }
 .biltext
 {
-    font-size: 20px;
+    font-size: 15px;
     padding: 0px 20px 0px 0px;
-    font-weight: 700;
+    font-weight: 900;
     letter-spacing: 1px;
+    color:#0a1272;
 }
 .myfld
 {
     width: 20%;
 }
+
 .myfld1
 {
    width: 20%;
@@ -25960,8 +25961,12 @@ margin:15px 0px;
   margin-bottom: 0.5rem;
   font-weight: 800;
 } */
+.hospital_allcardbodydesign
+{
+  padding: 15px 15px 0px 15px;
+}
 /* -----------------new-input--------------------- */
-label {
+ label {
   position: absolute;
   top: 0;
   left: 0;
@@ -25969,6 +25974,7 @@ label {
   color: #000;
   transition: 0.2s all;
   cursor: text;
+  font-size: 12px;
 }
 input {
   width: 100%;
@@ -25991,10 +25997,73 @@ input:valid {
 input:focus~label,
 input:valid~label {
   font-size: 14px;
-  top: -13px;
+  top: -11px;
   color: #ff5f15;
 }
 /* -----------------new input----------- */
+<<<<<<< HEAD
+option span{
+    color: #ff5f15;
+}
+.add-pathologydesign{
+    width: 100%;
+    margin: 0px 0px 0px 20px;
+}
+input[type=checkbox] {
+    position: relative;
+      border: 2px solid #000;
+      border-radius: 2px;
+      background: none;
+      cursor: pointer;
+      line-height: 0;
+      margin: 0 .6em 0 0;
+      outline: 0;
+      padding: 0 !important;
+      vertical-align: text-top;
+      height: 16px;
+      width: 16px;
+      -webkit-appearance: none;
+    opacity: .5;
+
+  }
+
+  input[type=checkbox]:hover {
+    opacity: 1;
+  }
+
+  input[type=checkbox]:checked {
+    background-color: #000;
+    opacity: 1;
+  }
+
+  input[type=checkbox]:before {
+    content: '';
+    position: absolute;
+    right: 50%;
+    top: 50%;
+    width: 4px;
+    height: 10px;
+    border: solid #FFF;
+    border-width: 0 2px 2px 0;
+    margin: -1px -1px 0 -1px;
+    transform: rotate(45deg) translate(-50%, -50%);
+    z-index: 2;
+  }
+  .requisition_header1{
+    font-weight: 700;
+    font-size: 13px;
+    color: #444;
+    margin: -10px 0px 0px 0px;
+  }
+  .newadd{
+    margin: 11px 0px 0px 0px;
+  }
+  #datepicker {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+=======
 .avlqty_text
 {
     margin: 0px;
@@ -26007,3 +26076,4 @@ input:valid~label {
 {
     padding: 18px 0px 0px 0px !important;
 }
+>>>>>>> 2a6aa10d9bc17ad1455b872e85b9d725572adcfc

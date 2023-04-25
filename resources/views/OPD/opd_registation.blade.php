@@ -126,7 +126,7 @@
                                 <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
 
                                 <div class="form-group col-md-4">
-                                    <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label>
+                                    {{-- <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label> --}}
                                     @if (auth()->user()->can('appointment date'))
                                     <input type="datetime-local" class="form-control" name="appointment_date" value="{{ old('appointment_date') }}" required />
                                     @else
@@ -139,7 +139,7 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="visit_type" class="form-label">Visit Type</label>
+                                    {{-- <label for="visit_type" class="form-label">Visit Type</label> --}}
                                     <select name="visit_type" class="form-control select2-show-search" id="visit_type">
                                         <option value="New Visit" selected>New-Visit</option>
                                         <option value="Revisit">Revisit</option>
@@ -155,9 +155,9 @@
 
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="patient_type" class="form-label">Patient Type <span class="text-danger">*</span></label>
+                                    {{-- <label for="patient_type" class="form-label">Patient Type <span class="text-danger">*</span></label> --}}
                                     <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
-                                        <option value="">Select</option>
+                                        <option value="">patient type <span class="text-danger">*</span></option>
                                         @foreach (Config::get('static.patient_types') as $key => $patient_type)
                                         <option value="{{$patient_type}}"> {{$patient_type}}</option>
                                         @endforeach
@@ -169,9 +169,9 @@
 
                                 </div>
                                 <div class="form-group  col-md-4 frefesd" style="display:none">
-                                    <label for="tpa_organization" class="form-label">TPA Organization <span class="text-danger">*</span></label>
+                                    {{-- <label for="tpa_organization" class="form-label">TPA Organization <span class="text-danger">*</span></label> --}}
                                     <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
-                                        <option value="">Select</option>
+                                        <option value="">tpa organization<span class="text-danger">*</span></option>
                                         @foreach ($tpa_management as $key => $tpaManagement)
                                         <option value="{{$tpaManagement->id}}"> {{$tpaManagement->TPA_name}}</option>
                                         @endforeach
@@ -182,9 +182,9 @@
                                     <input type="text" class="form-control" name="type_no" value="{{ old('type_no') }}" id="type_no" />
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="reference" class="form-label">Reference</label>
+                                    {{-- <label for="reference" class="form-label">Reference</label> --}}
                                     <select name="reference" class="form-control select2-show-search" id="reference">
-                                        <option value="">Select</option>
+                                        <option value="">reference</option>
                                         @foreach ($referer as $key => $reference)
                                         <option value="{{$reference->id}}"> {{$reference->referral_name}}</option>
                                         @endforeach
@@ -192,9 +192,9 @@
 
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
+                                    {{-- <label for="department" class="form-label">Department <span class="text-danger">*</span></label> --}}
                                     <select name="department" class="form-control select2-show-search" id="department">
-                                        <option value="">Select</option>
+                                        <option value="">department</option>
                                         @foreach ($departments as $key => $department)
                                         <option value="{{$department->id}}"> {{$department->department_name}}</option>
                                         @endforeach
@@ -205,18 +205,18 @@
                                 </div>
 
                                 <div class="form-group col-md-4">
-                                    <label for="cons_doctor" class="form-label">Consultant Doctor <span class="text-danger">*</span></label>
+                                    {{-- <label for="cons_doctor" class="form-label">Consultant Doctor <span class="text-danger">*</span></label> --}}
                                     <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
-                                        <option value="">Select..</option>
+                                        <option value="">cons_doctor</option>
                                     </select>
                                     @error('cons_doctor')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="unit" class="form-label">Unit <span class="text-danger">*</span></label>
+                                    {{-- <label for="unit" class="form-label">Unit <span class="text-danger">*</span></label> --}}
                                     <select name="unit" class="form-control select2-show-search" id="unit">
-                                        <option value="">Select..</option>
+                                        <option value="">unit</option>
                                     </select>
                                     @error('unit')
                                     <span class="text-danger">{{ $message }}</span>
@@ -230,7 +230,7 @@
                         <div class="options px-5">
                             <div class="container ">
                                 <hr class="hr_line">
-                                <input type="checkbox" onchange="takeTicketFees()" id="show_taketicketFees" /><span style="font-weight: 500;color:blue"> Are You Want to take <b>TICKET FEES</b> ?</span>
+                                <input type="checkbox" id="cb01"><span style="font-weight: 500;color:blue"> Are You Want to take <b>TICKET FEES</b> ?</span>
 
                                 <div class="row" id="taketicketFees" style="display: none">
                                     <div class="form-group col-md-4">
@@ -279,9 +279,9 @@
 
                                 <div class="row" id="show_Symptoms" style="display: none">
                                     <div class="col-md-3">
-                                        <label for="symptoms_type" class="form-label">Symptoms Type</label>
+                                        {{-- <label for="symptoms_type" class="form-label">Symptoms Type</label> --}}
                                         <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type">
-                                            <option value="">Select</option>
+                                            <option value="">symptoms type</option>
                                             @foreach ($symptoms_types as $key => $symptoms_type)
                                             <option value="{{$symptoms_type->id}}"> {{$symptoms_type->symptoms_type_name}}</option>
                                             @endforeach
@@ -289,15 +289,17 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <label for="symptoms_title" class="form-label">Symptoms Title</label>
+                                        {{-- <label for="symptoms_title" class="form-label">Symptoms Title</label> --}}
 
                                         <select name="symptoms_title" id="symptoms_title" class="form-control select2-show-search">
-                                            <option value="">Select</option>
+                                            <option value="">symptoms_title</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label for="symptoms_description" class="form-label">Symptoms Description</label>
-                                        <textarea class="form-control" name="symptoms_description"></textarea>
+                                        {{-- <label for="symptoms_description" class="form-label">Symptoms Description</label>
+                                        <textarea class="form-control" name="symptoms_description"></textarea> --}}
+                                        <input type="text" id="symptoms_description" name="symptoms_description" required="">
+                                        <label for="Symptoms Description">Symptoms Description <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
 
@@ -305,12 +307,16 @@
                                 <hr class="hr_line">
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label class="form-label">Note</label>
-                                        <textarea class="form-control" name="note"></textarea>
+                                        {{-- <label class="form-label">Note</label>
+                                        <textarea class="form-control" name="note"></textarea> --}}
+                                        <input type="text" id="note" name="note" required="">
+                                        <label for="note">Note <span class="text-danger">*</span></label>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label class="form-label">Any Known Allergies</label>
-                                        <textarea class="form-control" name="any_known_allergies"></textarea>
+                                        {{-- <label class="form-label">Any Known Allergies</label>
+                                        <textarea class="form-control" name="any_known_allergies"></textarea> --}}
+                                        <input type="text" id="any_known_allergies" name="any_known_allergies" required="">
+                                        <label for="any_known_allergies">Any Known Allergies <span class="text-danger">*</span></label>
                                     </div>
                                 </div>
                                 <hr class="hr_line">
@@ -322,7 +328,7 @@
                         </div>
                         <div class="btn-list p-3">
                             <button class="btn btn-primary btn-sm float-right ml-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
-                           
+
                             <button class="btn btn-primary btn-sm float-right" type="submit" name="save" value="save_and_print"><i class="fa fa-file"></i> Save & Print</button>
 
                         </div>

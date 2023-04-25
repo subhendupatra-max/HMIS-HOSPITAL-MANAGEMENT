@@ -120,19 +120,26 @@
                         </div>
                         <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
                         <div class="options px-5 pt-5  border-bottom pb-3">
+
+                                <div class=" add-pathologydesign">
                             <div class="container mt-5">
                                 <div class="d-flex justify-content-end">
                                     <span class="biltext">Total</span>
-                                    <input type="text" name="total" readonly id="total_am" class="form-control myfld">
+                                     {{-- <input type="text" name="total" readonly id="total_am" class="form-control myfld"> --}}
+                                    <input type="text"  id="total_am" name="total" required  class="form-control myfld" />
+                                    {{-- <label for="doctor_fees"> Enter Doctor Fees<span class="text-danger">*</span></label> --}}
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <input type="text" name="extra_charges_name" placeholder="Enter Extra Charges Name" class="form-control myfld2">
+                                    {{-- <input type="text" name="extra_charges_name" placeholder="Enter Extra Charges Name" class="form-control myfld2"> --}}
+
+                                    <input type="text"  id="Enter Extra Charges Name"placeholder="Enter Extra Charges Name" name="extra_charges_name"class="form-control myfld2" required />
                                     <input onkeyup="gettotal()" type="text" name="extra_charges_value" value="00" class="form-control myfld1" id="extra_chages">
                                 </div>
                                 <div class="d-flex justify-content-end mt-2">
                                     <span class="biltext">Discount (% / flat)</span>
-                                    <input type="text" name="total_discount" onkeyup="gettotal()" value="0" id="total_discount" class="form-control myfld">
+                                <input type="text" name="total_discount" onkeyup="gettotal()" value="0" id="total_discount" class="form-control myfld">
+                                    {{-- <input type="text" onkeyup="gettotal()" value="0"  id="total_discount" name="total_discount"class="form-control myfld" required /> --}}
                                     <select name="discount_type" onchange="gettotal()" id="discount_type" class="form-control myfld" style="width: 75px">
                                         <option value="percentage" selected>%</option>
                                         <option value="flat">Flat</option>
@@ -140,17 +147,21 @@
                                 </div>
                                 <div class="d-flex justify-content-end mt-2">
                                     <span class="biltext">Tax</span>
-                                    <input type="text" name="total_tax" onkeyup="gettotal()" value="0" id="total_tax" class="form-control myfld">
+                                    {{-- <input type="text" name="total_tax" onkeyup="gettotal()" value="0" id="total_tax" class="form-control myfld"> --}}
+                                    <input type="text" onkeyup="gettotal()" value="0"  id="total_tax" name="total_tax" class="form-control myfld"required />
                                 </div>
                                 <div class="d-flex justify-content-end thrdarea">
                                     <span class="biltext">Grand Total</span>
-                                    <input type="text" name="grand_total" readonly id="grnd_total" value="00" class="form-control myfld">
+                                    {{-- <input type="text" name="grand_total" readonly id="grnd_total" value="00" class="form-control myfld"> --}}
+                                    <input type="text" onkeyup="gettotal()" value="0"  id="grand_total" name="grand_total"class="form-control myfld" required />
                                     @error('grnd_total')
                                     <br>
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
+                                </div>
+
                         </div>
                         <div class="btn-list p-3">
                             <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button>

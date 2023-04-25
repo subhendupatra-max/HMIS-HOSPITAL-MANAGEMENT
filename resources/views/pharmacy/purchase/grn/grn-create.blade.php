@@ -13,9 +13,9 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-4">
-                            <label class="requisition_header">Purchase Order <span class="text-danger">*</span></label>
+                            {{-- <label class="requisition_header">Purchase Order <span class="text-danger">*</span></label> --}}
                             <select class="form-control select2-show-search" onchange="findPOdetails(this.value)" name="po_no" id="po">
-                                <option value="">Select One</option>
+                                <option value="">Select One<span class="text-danger">*</span></option>
                                 @if(!empty($po_list))
                                 @foreach($po_list as $valu)
                                 <option value="{{$valu->po_id}}">{{$valu->po_prefix}}{{$valu->po_id}}</option>
@@ -25,26 +25,31 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label class="requisition_header">Medicine Rec. Date<span class="text-danger">*</span></label>
+                            <label class="requisition_header1">Medicine Rec. Date<span class="text-danger">*</span></label>
                             <input type="date" name="medicine_rec_date" class="form-control">
+
                             @error('medicine_rec_date')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="col-md-4">
-                            <label class="requisition_header">Bill Rec. Date</label>
+                            <label class="requisition_header1">Bill Rec. Date</label>
                             <input type="date" name="bill_rec_date" class="form-control">
                             @error('bill_rec_date')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-4">
-                            <label class="requisition_header">Challan No.</label>
-                            <input type="text" name="challan_no" class="form-control">
+                        <div class="col-md-4 newadd">
+                            {{-- <label class="requisition_header">Challan No.</label>
+                            <input type="text" name="challan_no" class="form-control"> --}}
+                            <input type="text" id="challan_no"  name="challan_no" required="">
+                            <label for="Challan No."> Challan No.</label>
                         </div>
-                        <div class="col-md-4">
-                            <label class="requisition_header">Challan Date (DD-MM-YYYY)</label>
-                            <input type="text" name="challan_date" class="form-control">
+                        <div class="col-md-4 newadd">
+                            {{-- <label class="requisition_header">Challan Date (DD-MM-YYYY)</label>
+                            <input type="text" name="challan_date" class="form-control"> --}}
+                            <input type="text" id="challan_date"  name="challan_date" required="">
+                            <label for="challan_date">Challan Date </label>
                         </div>
                         {{-- <div class="col-md-4">
                 <label  class="requisition_header">Challan Copy</label>
@@ -52,13 +57,17 @@
             </div> --}}
 
 
-                        <div class="col-md-4">
-                            <label class="requisition_header">Invoice No.</label>
-                            <input type="text" name="invoice_no" class="form-control">
+                        <div class="col-md-4 newadd">
+                            {{-- <label class="requisition_header">Invoice No.</label>
+                            <input type="text" name="invoice_no" class="form-control"> --}}
+                            <input type="text" id="invoice_no"  name="challan_date" required="">
+                            <label for="invoice_no">Invoice No. </label>
                         </div>
-                        <div class="col-md-4">
-                            <label class="requisition_header">Invoice Date (DD-MM-YYYY)</label>
-                            <input type="text" name="invoice_date" class="form-control">
+                        <div class="col-md-4 newadd">
+                            {{-- <label class="requisition_header">Invoice Date (DD-MM-YYYY)</label>
+                            <input type="text" name="invoice_date" class="form-control"> --}}
+                            <input type="text" id="invoice_date"  name="invoice_date" required="">
+                            <label for="Invoice Date">Invoice Date  </label>
                         </div>
                         {{-- <div class="col-md-4">
                 <label  class="requisition_header">Invoice Copy</label>
@@ -67,7 +76,7 @@
 
 
 
-                        <div class="col-md-12">
+                        <div class="col-md-12 newadd">
                             <span class="requisition_header">Purchase Order : </span><span id="po_no" class="requisition_header" style="color:blue"></span>
                         </div>
                         <div class="col-md-4">
@@ -114,7 +123,8 @@
                 <div class="container mt-5">
                     <div class="d-flex justify-content-end">
                         <span class="biltext">Invoice Value</span>
-                        <input type="text" name="invoice_value" id="invoice_value" class="form-control myfld">
+                         <input type="text" name="invoice_value" id="invoice_value" class="form-control myfld">
+
                     </div>
                     <div class="d-flex justify-content-end thrdarea">
                         <span class="biltext">PO. Value</span>
@@ -129,8 +139,10 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="form-label">Note</label>
-                            <textarea name="note" class="form-control"></textarea>
+                            {{-- <label class="form-label">Note</label>
+                            <textarea name="note" class="form-control"></textarea> --}}
+                            <input type="text" id="note"  name="note" required="">
+                            <label for="note">Note  </label>
                         </div>
                     </div>
                 </div>
@@ -144,7 +156,6 @@
 </form>
 </div>
 </div>
-
 
 
 <script type="text/javascript">
