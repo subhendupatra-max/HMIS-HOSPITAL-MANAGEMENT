@@ -11,40 +11,48 @@
                 @csrf
                 <div class="row">
 
-                    <div class="form-group col-md-4">
-                        <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required>
+                    <div class="form-group col-md-4 newaddcalltext">
+                        <!-- <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required> -->
+                        <input type="text"  id="name" name="name" required="">
+                        <label for="name">Enter Name<span class="text-danger">*</span></label>
                         @error('name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone" required>
+                    <div class="form-group col-md-4 newaddcalltext">
+                        <!-- <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone" required> -->
+                        <input type="text"  id="phone" name="phone" required="">
+                        <label for="phone">Enter Phone<span class="text-danger">*</span></label>
                         @error('phone')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                        <!-- <label for="date" class="form-label">Date<span class="text-danger">*</span></label> -->
+                        <h6>Date<span class="text-danger">*</span></h6>
                         <input type="date" class="form-control" id="date" name="date">
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" id="description" name="description"> </textarea>
+                    <div class="form-group col-md-4 newaddcalltext">
+                        <!-- <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description"> </textarea> -->
+                        <input type="text"  id="description" name="description" required="">
+                        <label for="description">Description</label>
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="next_fllow_up_date" class="form-label">Next Follow Up Date<span class="text-danger">*</span></label>
+                        <!-- <label for="next_fllow_up_date" class="form-label">Next Follow Up Date<span class="text-danger">*</span></label> -->
+                        <h6>Next Follow Up Date<span class="text-danger">*</span></h6>
                         <input type="date" class="form-control" id="next_fllow_up_date" name="next_fllow_up_date">
                         @error('next_fllow_up_date')
                         <span class="text-danger">{{ $message }}</span>
@@ -52,9 +60,11 @@
                     </div>
 
 
-                    <div class="form-group col-md-4">
-                        <label for="call_duraiton" class="form-label">Call Duraiton<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="call_duraiton" name="call_duraiton" placeholder="Enter Call Duraiton">
+                    <div class="form-group col-md-4 newaddcalltext ">
+                        <!-- <label for="call_duraiton" class="form-label">Call Duraiton<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="call_duraiton" name="call_duraiton" placeholder="Enter Call Duraiton"> -->
+                        <input type="text"  id="call_duraiton" name="call_duraiton" required="">
+                        <label for="call_duraiton">Call Duraiton<span class="text-danger">*</span></label>
                         @error('call_duraiton')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -70,8 +80,10 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="note" class="form-label">Note</label>
-                        <textarea class="form-control" id="note" name="note"> </textarea>
+                        <!-- <label for="note" class="form-label">Note</label>
+                        <textarea class="form-control" id="note" name="note"> </textarea> -->
+                        <input type="text"  id="note" name="note" required="">
+                        <label for="note">Note<span class="text-danger">*</span></label>
                         @error('note')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

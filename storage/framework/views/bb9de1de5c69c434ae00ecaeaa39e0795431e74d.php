@@ -25,8 +25,10 @@
 
 
                         <div class="col-md-2">
-                            <label class="form-label">Employee Id <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="employee_id" value="<?php echo e($user_details->employee_id); ?>" name="employee_id" placeholder="Employee Id">
+                            <!-- <label class="form-label">Employee Id <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="employee_id" value="<?php echo e($user_details->employee_id); ?>" name="employee_id" placeholder="Employee Id"> -->
+                            <input type="text" id="employee_id"value="<?php echo e($user_details->employee_id); ?>"  name="employee_id" required="">
+                            <label for="employee_id"> Employee Id <span class="text-danger">*</span></label>
                             <?php $__errorArgs = ['employee_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -64,8 +66,10 @@ unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div class="col-md-2">
-                            <label class="form-label">Designation</label>
-                            <input type="text" class="form-control" id="designation" value="<?php echo e($user_details->designation); ?>" name="designation" placeholder="Designation">
+                            <!-- <label class="form-label">Designation</label>
+                            <input type="text" class="form-control" id="designation" value="<?php echo e($user_details->designation); ?>" name="designation" placeholder="Designation"> -->
+                            <input type="text" id="designation"value="<?php echo e($user_details->designation); ?>"  name="designation" required="">
+                            <label for="first_name"> Designation </label>
                             <?php $__errorArgs = ['designation'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -101,8 +105,10 @@ unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div class="col-md-3">
-                            <label class="form-label">Specialist </label>
-                            <input type="text" class="form-control" id="specialist" value="<?php echo e($user_details->specialist); ?>" name="specialist" placeholder="Specialist">
+                            <!-- <label class="form-label">Specialist </label>
+                            <input type="text" class="form-control" id="specialist" value="<?php echo e($user_details->specialist); ?>" name="specialist" placeholder="Specialist"> -->
+                            <input type="text" id="specialist" value="<?php echo e($user_details->specialist); ?>"   name="specialist" required="">
+                            <label for="specialist"> Specialist </label>
                             <?php $__errorArgs = ['specialist'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -116,8 +122,10 @@ unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">First Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="first_name" value="<?php echo e($user_details->first_name); ?>" id="first_name" placeholder="First Name">
+                             <label class="form-label">First Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="first_name" value="<?php echo e($user_details->first_name); ?>" id="first_name" placeholder="First Name"> 
+                            <!-- <input type="text" name="first_name" value="<?php echo e($user_details->first_name); ?>" id="first_name" required="">
+                            <label for="specialist"> First Name </label> -->
                             <?php $__errorArgs = ['first_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -131,8 +139,10 @@ unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Last Name </label>
-                            <input type="text" class="form-control" value="<?php echo e($user_details->last_name); ?>" name="last_name" id="last_name" placeholder="Last Name">
+                             <!-- <label class="form-label">Last Name </label>
+                            <input type="text" class="form-control" value="<?php echo e($user_details->last_name); ?>" name="last_name" id="last_name" placeholder="Last Name"> -->
+                            <input type="text" name="first_name" value="<?php echo e($user_details->first_name); ?>" id="first_name" required="">
+                            <label for="specialist"> First Name </label>
                             <?php $__errorArgs = ['last_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -174,10 +184,10 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Gender <span class="text-danger">*</span></label>
+                        <div class="col-md-3 newadd">
+                            <!-- <label class="form-label">Gender <span class="text-danger">*</span></label> -->
                             <select name="gender" class="form-control" id="gender">
-                                <option value="">Select</option>
+                                <option value="">Gender <span class="text-danger">*</span></option>
 
                                 <?php $__currentLoopData = Config::get('static.gender'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $genders): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($genders); ?>" <?php echo e(@$genders == $user_details->gender ? 'selected' : " "); ?>> <?php echo e($genders); ?></option>
@@ -195,10 +205,10 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label">Metrial Status </label>
+                        <div class="col-md-3 newadd">
+                            <!-- <label class="form-label">Metrial Status </label> -->
                             <select name="marital_status" class="form-control" id="marital_status">
-                                <option value="">Select</option>
+                                <option value="">Metrial Status</option>
                                 <?php $__currentLoopData = Config::get('static.marital_status'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $marital): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($marital); ?>" <?php echo e(@$marital == $user_details->marital_status ? 'selected' : " "); ?>> <?php echo e($marital); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -215,21 +225,23 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="blood_group" class="form-label">Blood Group </label>
+                        <div class="form-group col-md-3 newadd">
+                            <!-- <label for="blood_group" class="form-label">Blood Group </label> -->
                             <select name="blood_group" class="form-control" id="blood_group">
-                                <option value="">Select</option>
+                                <option value="">Blood Group</option>
                                 <?php $__currentLoopData = Config::get('static.blood_groups'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $blood_group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($blood_group); ?>" <?php echo e(@$blood_group == $user_details->blood_group ? 'selected' : " "); ?>> <?php echo e($blood_group); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label">Date Of Birth <span class="text-danger">*</span></label>
+                        <div class="col-md-3 newadd">
+                             <!-- <label class="form-label">Date Of Birth <span class="text-danger">*</span></label>
 
-                            <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" <?php if(isset($user_details->date_of_birth)): ?> value="<?php echo e(date('Y-m-d',strtotime($user_details->date_of_birth))); ?>" <?php endif; ?>>
+                            <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" <?php if(isset($user_details->date_of_birth)): ?> value="<?php echo e(date('Y-m-d',strtotime($user_details->date_of_birth))); ?>" <?php endif; ?>> --> 
 
+                            <input type="date"  name="date_of_birth" id="first_name" id="date_of_birth" <?php if(isset($user_details->date_of_birth)): ?> value="<?php echo e(date('Y-m-d',strtotime($user_details->date_of_birth))); ?>" <?php endif; ?> >
+                            <label for="specialist">Date Of Birth</label>
                             <?php $__errorArgs = ['date_of_birth'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

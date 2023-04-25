@@ -127,6 +127,7 @@
 
                                 <div class="form-group col-md-4">
                                     {{-- <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label> --}}
+                                    <h6 class="dateappointment">Appointment Date <span class="text-danger">*</span></h6>
                                     @if (auth()->user()->can('appointment date'))
                                     <input type="datetime-local" class="form-control" name="appointment_date" value="{{ old('appointment_date') }}" required />
                                     @else
@@ -141,13 +142,14 @@
                                 <div class="form-group col-md-4">
                                     <label for="medico_legal_case" class="form-label">Medico Legal Case <span class="text-danger">*</span></label>
                                     <input type="radio" name="medico_legal_case" value="yes" class="from-control"><span class="font-weight-bold;">Yes</span>
-                                    <input type="radio" name="medico_legal_case" value="no" class="from-control" checked><span class="fw-bold;">No</span>
+                                    <input type="radio" name="medico_legal_case" value="no" class="from-control" checked><span class="fw-bold;">No</span> 
+                                    
                                     @error('medico_legal_case')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 newaddappon">
                                     {{-- <label for="height" class="form-label">Case</label>
                                     <input type="text" class="form-control" name="case" value="{{ old('case') }}" required /> --}}
                                     <input type="text" id="case"  name="case" value="{{ old('case') }}" required="">

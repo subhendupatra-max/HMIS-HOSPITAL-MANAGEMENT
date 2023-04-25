@@ -125,12 +125,13 @@
                             <div class="row">
                                 <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
 
-                                <div class="form-group col-md-4">
-                                    {{-- <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label> --}}
+                                <div class="form-group col-md-4 ">
+                                 <!-- <label class="date-format">Appointment Date <span class="text-danger">*</span></label>  -->
+                                 <h6 class="dateappointment">Appointment Date <span class="text-danger">*</span></h6>
                                     @if (auth()->user()->can('appointment date'))
-                                    <input type="datetime-local" class="form-control" name="appointment_date" value="{{ old('appointment_date') }}" required />
+                                    <input type="datetime-local"  name="appointment_date" value="{{ old('appointment_date') }}" required />
                                     @else
-                                    <input type="datetime-local" class="form-control" name="appointment_date" value="{{ old('appointment_date') }}" required />
+                                    <input type="datetime-local"  name="appointment_date" value="{{ old('appointment_date') }}" required />
                                     @endif
 
                                     @error('appointment_date')
@@ -138,7 +139,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 newaddappon">
                                     {{-- <label for="visit_type" class="form-label">Visit Type</label> --}}
                                     <select name="visit_type" class="form-control select2-show-search" id="visit_type">
                                         <option value="New Visit" selected>New-Visit</option>
@@ -149,7 +150,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 newaddappon">
                                     <label for="height" class="form-label">Case</label>
                                     <input type="text" class="form-control" name="case" value="{{ old('case') }}" required />
 

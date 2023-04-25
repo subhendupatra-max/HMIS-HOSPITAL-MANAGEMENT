@@ -10,7 +10,7 @@
             <form action="<?php echo e(route('save-ambulance-call-details')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 newaddappon">
                         <label for="vehicle_model" class="form-label">Vehicle Model <span class="text-danger">*</span></label>
                         <select class="form-control select2-show-search select2-hidden-accessible" value="<?php echo e(old('vehicle_model')); ?>" name="vehicle_model" id="vehicle_model" required>
                             <optgroup>
@@ -32,9 +32,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="driver_name" class="form-label">Driver Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="driver_name" name="driver_name" required>
+                    <div class="form-group col-md-4 newaddappon">
+                        <!-- <label for="driver_name">Driver Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="driver_name" name="driver_name" required> -->
+                        <input type="text" name="driver_name" id="driver_name"required="">
+                        <label for="driver_name">Driver Name  <span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['driver_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -48,7 +50,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                        <!-- <label for="date" class="form-label">Date<span class="text-danger">*</span></label> -->
+                        <h6 >Date<span class="text-danger">*</span></h6>
                         <input type="date" class="form-control" id="date" name="date" >
                         <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -117,9 +120,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="standard_charges" class="form-label">Standard Charge<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="standard_charges" onkeydown="fdsfds()" onkeyup="totalAmount()" name="standard_charges" required>
-
+                        <!-- <label for="standard_charges" class="form-label">Standard Charge<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="standard_charges" onkeydown="fdsfds()" onkeyup="totalAmount()" name="standard_charges" required> -->
+                        <input type="text"  id="standard_charges" onkeydown="fdsfds()" onkeyup="totalAmount()" name="standard_charges"required="">
+                        <label for="standard_charges">Standard Charge<span class="text-danger">*</span></label>
                         <div class="mt-3" style="display:none;" id="pop">
                             <input type="checkbox" value="on" id="button1" name="button1" style="margin-right: 5px;" /><label for="permission" class="textlink">Are You Want To Change This ? </label>
                         </div>
@@ -137,8 +141,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="tax" class="form-label">Tax<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tax" value="<?php echo e(old('tax')); ?>" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax" required>
+                        <!-- <label for="tax">Tax<span class="text-danger">*</span></label>
+                        <input type="text"  id="tax" value="<?php echo e(old('tax')); ?>" onkeyup="totalAmount()" name="tax" required=""> -->
+                        <input type="text"  id="tax" value="<?php echo e(old('tax')); ?>" onkeyup="totalAmount()" name="tax" required="">
+                        <label for="tax">Tax<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['tax'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -151,9 +157,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4 ">
-                        <label for="total_amount" class="form-label">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="total_amount" name="total_amount" required readonly>
+                     <div class="form-group col-md-4 ">
+                        <!-- <label for="total_amount" class="form-label">Total Amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="total_amount" name="total_amount" required readonly> -->
+                        <input type="text" id="total_amount" name="total_amount"   required="">
+                        <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['total_amount'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -167,8 +175,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4 ">
-                        <label for="net_amount" class="form-label">Net Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="net_amount" name="net_amount" required readonly>
+                        <!-- <label for="net_amount" class="form-label">Net Amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="net_amount" name="net_amount" required readonly> -->
+                        <input type="text" id="net_amount" name="net_amount"   required="">
+                        <label for="net_amount">Net Amount<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['net_amount'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -182,9 +192,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="payment_mode" class="form-label">Payment Mode </label>
+                        <!-- <label for="payment_mode" class="form-label">Payment Mode </label> -->
                         <select id="payment_mode" class="form-control" name="payment_mode" onchange="paymentMode(this.value)" required>
-                            <option value="">Select</option>
+                            <option value="">Payment Mode</option>
                             <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -202,8 +212,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4 ">
-                        <label for="payment_amount" class="form-label">Payment Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="payment_amount" name="payment_amount" readonly required>
+                        <!-- <label for="payment_amount" class="form-label">Payment Amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="payment_amount" name="payment_amount" readonly required> -->
+                        <input type="text" id="payment_amountt" name="payment_amount"   required="">
+                        <label for="payment_amount">Payment Amount<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['payment_amount'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -256,9 +268,11 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="note" class="form-label"> Note <span class="text-danger">*</span></label>
-                        <textarea name="note" class="form-control"> </textarea>
+                     <div class="form-group col-md-4">
+                        <!-- <label for="note" class="form-label"> Note <span class="text-danger">*</span></label>
+                        <textarea name="note" class="form-control"> </textarea>  -->
+                        <input type="text" id="note" name="note"   required="">
+                        <label for="note">Note<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['note'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

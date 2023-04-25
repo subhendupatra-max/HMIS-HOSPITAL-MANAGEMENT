@@ -24,33 +24,39 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required>
+                        <!-- <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required> -->
+                        <input type="text" id="name" name="name"required="">
+                        <label for="name"> Enter Name<span class="text-danger">*</span></label>
                         @error('name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone" required>
+                        <!-- <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone" required> -->
+                        <input type="text" id="phone" name="phone"required="">
+                        <label for="phone"> Enter Phone No<span class="text-danger">*</span></label>
                         @error('phone')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="id_card" class="form-label">ID Card<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="id_card" name="id_card" placeholder="Enter ID Card" >
+                        <!-- <label for="id_card" class="form-label">ID Card<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="id_card" name="id_card" placeholder="Enter ID Card" > -->
+                        <input type="text" id="id_card" name="id_card"required="">
+                        <label for="id_card"> Enter ID Card<span class="text-danger">*</span></label>
                         @error('id_card')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="visit_to" class="form-label">Visit To<span class="text-danger">*</span></label>
+                        <!-- <label for="visit_to" class="form-label">Visit To<span class="text-danger">*</span></label> -->
                         <select id="visit_to" class="form-control" name="visit_to" onchange="visitWith(this.value)">
-                            <option value="">Select...</option>
+                            <option value="">Visit To<span class="text-danger">*</span></option>
                             @foreach (Config::get('static.visit_to') as $lang => $item)
                             <option value="{{$item}}"> {{$item}}</option>
                             @endforeach
@@ -68,16 +74,19 @@
                         <small class="text-danger">{{ $errors->first('visit_to_name') }}</small>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="number_of_person" class="form-label"> Number Of Person<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="number_of_person" name="number_of_person" >
+                    <div class="form-group col-md-4 newaddvisitext">
+                        <!-- <label for="number_of_person" class="form-label"> Number Of Person<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="number_of_person" name="number_of_person" > -->
+                        <input type="text" id="number_of_person" name="number_of_person" required="">
+                        <label for="number_of_person">  Number Of Person<span class="text-danger">*</span></label>
                         @error('number_of_person')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                        <!-- <label for="date" class="form-label">Date<span class="text-danger">*</span></label> -->
+                        <h6>Date<span class="text-danger">*</span></h6>
                         <input type="date" class="form-control" id="date" name="date">
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
@@ -85,7 +94,8 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="in_time" class="form-label">In Time<span class="text-danger">*</span></label>
+                        <!-- <label for="in_time" class="form-label">In Time<span class="text-danger">*</span></label> -->
+                        <h6>In Time<span class="text-danger">*</span></h6>
                         <input type="time"  class="form-control" id="in_time" name="in_time">
                         @error('in_time')
                         <span class="text-danger">{{ $message }}</span>
@@ -93,23 +103,27 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="out_time" class="form-label">Out Time<span class="text-danger">*</span></label>
+                        <!-- <label for="out_time" class="form-label">Out Time<span class="text-danger">*</span></label> -->
+                        <h6>Out Time<span class="text-danger">*</span></h6>
                         <input type="time"  class="form-control" id="out_time" name="out_time">
                         @error('out_time')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="note" class="form-label">Note</label>
-                        <textarea class="form-control" id="note" name="note"> </textarea>
+                    <div class="form-group col-md-4 newaddvisitext">
+                        <!-- <label for="note" class="form-label">Note</label>
+                        <textarea class="form-control" id="note" name="note"> </textarea> -->
+                        <input type="text" id="note" name="note" required="">
+                        <label for="note">Note<span class="text-danger">*</span></label>
                         @error('note')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="attach_document" class="form-label">Attach Document</label>
+                        <!-- <label for="attach_document" class="form-label">Attach Document</label> -->
+                        <h6>Attach Document</h6>
                         <input type="file" id="attach_document" name="attach_document">
                         @error('attach_document')
                         <span class="text-danger">{{ $message }}</span>

@@ -13,9 +13,9 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-4">
-                            <label class="requisition_header">Purchase Order <span class="text-danger">*</span></label>
+                            
                             <select class="form-control select2-show-search" onchange="findPOdetails(this.value)" name="po_no" id="po">
-                                <option value="">Select One</option>
+                                <option value="">Select One<span class="text-danger">*</span></option>
                                 <?php if(!empty($po_list)): ?>
                                 <?php $__currentLoopData = $po_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $valu): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($valu->po_id); ?>"><?php echo e($valu->po_prefix); ?><?php echo e($valu->po_id); ?></option>
@@ -25,8 +25,9 @@
                         </div>
 
                         <div class="col-md-4">
-                            <label class="requisition_header">Medicine Rec. Date<span class="text-danger">*</span></label>
+                            <label class="requisition_header1">Medicine Rec. Date<span class="text-danger">*</span></label>
                             <input type="date" name="medicine_rec_date" class="form-control">
+
                             <?php $__errorArgs = ['medicine_rec_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -39,7 +40,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="col-md-4">
-                            <label class="requisition_header">Bill Rec. Date</label>
+                            <label class="requisition_header1">Bill Rec. Date</label>
                             <input type="date" name="bill_rec_date" class="form-control">
                             <?php $__errorArgs = ['bill_rec_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -52,30 +53,34 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-4">
-                            <label class="requisition_header">Challan No.</label>
-                            <input type="text" name="challan_no" class="form-control">
+                        <div class="col-md-4 newadd">
+                            
+                            <input type="text" id="challan_no"  name="challan_no" required="">
+                            <label for="Challan No."> Challan No.</label>
                         </div>
-                        <div class="col-md-4">
-                            <label class="requisition_header">Challan Date (DD-MM-YYYY)</label>
-                            <input type="text" name="challan_date" class="form-control">
-                        </div>
-                        
-
-
-                        <div class="col-md-4">
-                            <label class="requisition_header">Invoice No.</label>
-                            <input type="text" name="invoice_no" class="form-control">
-                        </div>
-                        <div class="col-md-4">
-                            <label class="requisition_header">Invoice Date (DD-MM-YYYY)</label>
-                            <input type="text" name="invoice_date" class="form-control">
+                        <div class="col-md-4 newadd">
+                            
+                            <input type="text" id="challan_date"  name="challan_date" required="">
+                            <label for="challan_date">Challan Date </label>
                         </div>
                         
 
 
+                        <div class="col-md-4 newadd">
+                            
+                            <input type="text" id="invoice_no"  name="challan_date" required="">
+                            <label for="invoice_no">Invoice No. </label>
+                        </div>
+                        <div class="col-md-4 newadd">
+                            
+                            <input type="text" id="invoice_date"  name="invoice_date" required="">
+                            <label for="Invoice Date">Invoice Date  </label>
+                        </div>
+                        
 
-                        <div class="col-md-12">
+
+
+                        <div class="col-md-12 newadd">
                             <span class="requisition_header">Purchase Order : </span><span id="po_no" class="requisition_header" style="color:blue"></span>
                         </div>
                         <div class="col-md-4">
@@ -122,7 +127,8 @@ unset($__errorArgs, $__bag); ?>
                 <div class="container mt-5">
                     <div class="d-flex justify-content-end">
                         <span class="biltext">Invoice Value</span>
-                        <input type="text" name="invoice_value" id="invoice_value" class="form-control myfld">
+                         <input type="text" name="invoice_value" id="invoice_value" class="form-control myfld">
+
                     </div>
                     <div class="d-flex justify-content-end thrdarea">
                         <span class="biltext">PO. Value</span>
@@ -137,8 +143,9 @@ unset($__errorArgs, $__bag); ?>
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="form-label">Note</label>
-                            <textarea name="note" class="form-control"></textarea>
+                            
+                            <input type="text" id="note"  name="note" required="">
+                            <label for="note">Note  </label>
                         </div>
                     </div>
                 </div>
@@ -152,7 +159,6 @@ unset($__errorArgs, $__bag); ?>
 </form>
 </div>
 </div>
-
 
 
 <script type="text/javascript">
@@ -243,4 +249,5 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pharmacy/purchase/grn/grn-create.blade.php ENDPATH**/ ?>

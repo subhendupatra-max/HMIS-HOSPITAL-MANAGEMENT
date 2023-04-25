@@ -23,8 +23,10 @@
 
                         <div class="col-md-6">
                             <div class="col-md-10">
-                                <label class="form-label">Referral Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="<?php echo e(old('referral_name')); ?>" name="referral_name" id="referral_name" placeholder="Referral Name">
+                                <!-- <label class="form-label">Referral Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="<?php echo e(old('referral_name')); ?>" name="referral_name" id="referral_name" placeholder="Referral Name"> -->
+                                <input type="text"value="<?php echo e(old('referral_name')); ?>" name="referral_name" id="referral_name"required="">
+                                <label for="referral_name">Referral Name <span class="text-danger">*</span></label>
                                 <?php $__errorArgs = ['referral_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -37,9 +39,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
 
-                            <div class="col-md-10">
-                                <label class="form-label">contact No<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="<?php echo e(old('phone_no')); ?>" name="phone_no" id="phone_no" placeholder="Enter Phone No">
+                            <div class="col-md-10 newaddappon ">
+                                <!-- <label class="form-label">contact No<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="<?php echo e(old('phone_no')); ?>" name="phone_no" id="phone_no" placeholder="Enter Phone No"> -->
+                                <input type="text" value="<?php echo e(old('phone_no')); ?>" name="phone_no" id="phone_no"required="">
+                                <label for="phone_no">Enter Phone No<span class="text-danger">*</span></label>
                                 <?php $__errorArgs = ['phone_no'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -52,9 +56,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
 
-                            <div class="col-md-10">
-                                <label class="form-label">Standard Commission (%)<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="<?php echo e(old('standard_commission')); ?>" name="standard_commission" id="standard_commission" placeholder="Standard Commission">
+                            <div class="col-md-10 newaddappon">
+                                <!-- <label class="form-label">Standard Commission (%)<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="<?php echo e(old('standard_commission')); ?>" name="standard_commission" id="standard_commission" placeholder="Standard Commission"> -->
+                                <input type="text"  value="<?php echo e(old('standard_commission')); ?>" name="standard_commission" id="standard_commission"required="">
+                                <label for="standard_commission">Standard Commission (%)<span class="text-danger">*</span></label>
                                 <?php $__errorArgs = ['standard_commission'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

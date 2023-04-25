@@ -32,7 +32,7 @@
                 <div class="card-body">
                     <div class="">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap" id="example2">
+                            <table class="table table-bordered text-nowrap" id="example">
                                 <thead>
                                     <tr>
                                         <th class="border-bottom-0">Sl. No</th>

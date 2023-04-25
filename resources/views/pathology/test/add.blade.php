@@ -10,31 +10,37 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="test_name" class="form-label"> Test Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="test_name" name="test_name" placeholder="Enter Test Name" value="{{ old('test_name') }}" required>
+                        <!-- <label for="test_name" class="form-label"> Test Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="test_name" name="test_name" placeholder="Enter Test Name" value="{{ old('test_name') }}" required> -->
+                        <input type="text" id="test_name" value="{{ old('test_name') }}" name="test_name" required="">
+                        <label for="test_name">Test Name <span class="text-danger">*</span></label>
                         @error('test_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="short_name" class="form-label">Short Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="short_name" name="short_name" placeholder="Enter Short Name" value="{{ old('short_name') }}" required>
+                        <!-- <label for="short_name" class="form-label">Short Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="short_name" name="short_name" placeholder="Enter Short Name" value="{{ old('short_name') }}" required> -->
+                        <input type="text" id="short_name"  value="{{ old('short_name') }}" name="short_name" required="">
+                        <label for="short_name">Short Name<span class="text-danger">*</span></label>
                         @error('short_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="test_type" class="form-label">Test Type<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="test_type" name="test_type" placeholder="Enter Test Type" value="{{ old('test_type') }}" required>
+                        <!-- <label for="test_type" class="form-label">Test Type<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="test_type" name="test_type" placeholder="Enter Test Type" value="{{ old('test_type') }}" required> -->
+                        <input type="text" id="test_type" name="test_type"   value="{{ old('test_type') }}" required="">
+                        <label for="test_type">Test Type<span class="text-danger">*</span></label>
                         @error('test_type')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="catagory_id" class="form-label">Category<span class="text-danger">*</span></label>
+                        <!-- <label for="catagory_id" class="form-label">Category<span class="text-danger">*</span></label> -->
                         <select id="catagory_id" class="form-control" name="catagory_id">
                             <option value=" ">Select Category</option>
                             @foreach ($catagory as $item)
@@ -47,31 +53,37 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="sub_catagory" class="form-label"> Sub Catagory<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="sub_catagory" name="sub_catagory" placeholder="Enter Sub Catagory Name" value="{{ old('sub_catagory') }}" required>
+                        <!-- <label for="sub_catagory" class="form-label"> Sub Catagory<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="sub_catagory" name="sub_catagory" placeholder="Enter Sub Catagory Name" value="{{ old('sub_catagory') }}" required> -->
+                        <input type="text"id="sub_catagory" name="sub_catagory"value="{{ old('sub_catagory') }}"  required="">
+                        <label for="sub_catagory">Sub Catagory<span class="text-danger">*</span></label>
                         @error('sub_catagory')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="method" class="form-label"> Method <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="method" name="method" placeholder="Enter Sub Catagory Name" value="{{ old('method') }}" required>
+                        <!-- <label for="method" class="form-label"> Method <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="method" name="method" placeholder="Enter Sub Catagory Name" value="{{ old('method') }}" required> -->
+                        <input type="text" id="method" name="method"  value="{{ old('method') }}" required="">
+                        <label for="method">Method<span class="text-danger">*</span></label>
                         @error('method')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="report_days" class="form-label"> Report Days <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="report_days" name="report_days" placeholder="Enter Report Days" value="{{ old('report_days') }}" required>
+                        <!-- <label for="report_days" class="form-label"> Report Days <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="report_days" name="report_days" placeholder="Enter Report Days" value="{{ old('report_days') }}" required> -->
+                        <input type="text"  id="report_days" name="report_days"  value="{{ old('report_days') }}" required="">
+                        <label for="report_days">Report Days <span class="text-danger">*</span></label>
                         @error('report_days')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="charge_category" class="form-label">Charges Catagory <span class="text-danger">*</span></label>
+                        <!-- <label for="charge_category" class="form-label">Charges Catagory <span class="text-danger">*</span></label> -->
                         <select id="charge_category" class="form-control select2-show-search" name="charge_category">
                             <option value=" ">Select Catagory</option>
                             @foreach ($chargeCatagory as $item)
@@ -84,7 +96,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="charge_sub_category">Charges Sub Catagory <span class="text-danger">*</span></label>
+                        <!-- <label for="charge_sub_category">Charges Sub Catagory <span class="text-danger">*</span></label> -->
                         <select name="charge_sub_category" class="form-control select2-show-search" id="charge_sub_category" required>
                             <option value="">Select Sub Catagory...</option>
                         </select>
@@ -92,7 +104,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="charge">Charges <span class="text-danger">*</span></label>
+                        <!-- <label for="charge">Charges <span class="text-danger">*</span></label> -->
                         <select name="charge" class="form-control select2-show-search" id="charge" required>
                             <option value="">Select charge...</option>
                         </select>
@@ -100,20 +112,26 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="tax">Tax<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax">
+                        <!-- <label for="tax">Tax<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax"> -->
+                        <input type="text"  id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax"  required="">
+                        <label for="tax">Tax <span class="text-danger">*</span></label>
                         <small class="text-danger">{{ $errors->first('tax') }}</small>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="standard_charges">Charge Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="standard_charges" onkeyup="totalAmount()" name="standard_charges">
+                        <!-- <label for="standard_charges">Charge Amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="standard_charges" onkeyup="totalAmount()" name="standard_charges"> -->
+                        <input type="text" id="standard_charges" onkeyup="totalAmount()" name="standard_charges"  required="">
+                        <label for="standard_charges">Charge Amount <span class="text-danger">*</span></label>
                         <small class="text-danger">{{ $errors->first('standard_charges') }}</small>
                     </div>
 
                     <div class="form-group col-md-4 ">
-                        <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="total_amount" name="total_amount" readonly>
+                        <!-- <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="total_amount" name="total_amount" readonly> -->
+                        <input type="text" id="total_amount" name="total_amount" readonly required="">
+                        <label for="total_amount">Total Amount <span class="text-danger">*</span></label>
                         <small class="text-danger">{{ $errors->first('total_amount') }}</small>
                     </div>
                 </div>

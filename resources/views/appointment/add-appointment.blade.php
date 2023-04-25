@@ -51,14 +51,16 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        {{-- <label for="appointment_date" class="form-label">Appointment Date<span class="text-danger">*</span></label> --}}
-                        <input type="date" class="form-control" id="appointment_date" name="appointment_date">
+                         <!-- <label for="appointment_date" class="form-label">Appointment Date<span class="text-danger">*</span></label> 
+                        <input type="date" class="form-control" id="appointment_date" name="appointment_date"> -->
+                        <lable class="dateformat">Appointment Date<span class="text-danger">*</span></lable>
+                        <input type="date"  id="appointment_date" name="appointment_date">
                         @error('appointment_date')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 newwformat">
                         {{-- <label for="slot" class="form-label">Slot <span class="text-danger">*</span></label> --}}
                         <select class="form-control select2-show-search select2-hidden-accessible" value="{{ old('slot') }}" name="slot" id="slot" required>
                             <optgroup>
@@ -73,7 +75,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 newwformat ">
                         {{-- <label for="appointment_priority" class="form-label">Appointment Priority<span class="text-danger">*</span></label> --}}
                         <select id="appointment_priority" class="form-control" name="appointment_priority">
                             <option value="">Select Appointment Priority</option>

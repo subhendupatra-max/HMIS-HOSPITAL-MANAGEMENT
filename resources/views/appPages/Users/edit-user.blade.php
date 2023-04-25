@@ -25,8 +25,10 @@
 
 
                         <div class="col-md-2">
-                            <label class="form-label">Employee Id <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="employee_id" value="{{ $user_details->employee_id}}" name="employee_id" placeholder="Employee Id">
+                            <!-- <label class="form-label">Employee Id <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="employee_id" value="{{ $user_details->employee_id}}" name="employee_id" placeholder="Employee Id"> -->
+                            <input type="text" id="employee_id"value="{{ $user_details->employee_id}}"  name="employee_id" required="">
+                            <label for="employee_id"> Employee Id <span class="text-danger">*</span></label>
                             @error('employee_id')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -50,8 +52,10 @@
                         </div>
 
                         <div class="col-md-2">
-                            <label class="form-label">Designation</label>
-                            <input type="text" class="form-control" id="designation" value="{{ $user_details->designation}}" name="designation" placeholder="Designation">
+                            <!-- <label class="form-label">Designation</label>
+                            <input type="text" class="form-control" id="designation" value="{{ $user_details->designation}}" name="designation" placeholder="Designation"> -->
+                            <input type="text" id="designation"value="{{ $user_details->designation}}"  name="designation" required="">
+                            <label for="first_name"> Designation </label>
                             @error('designation')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -73,24 +77,30 @@
                         </div>
 
                         <div class="col-md-3">
-                            <label class="form-label">Specialist </label>
-                            <input type="text" class="form-control" id="specialist" value="{{ $user_details->specialist}}" name="specialist" placeholder="Specialist">
+                            <!-- <label class="form-label">Specialist </label>
+                            <input type="text" class="form-control" id="specialist" value="{{ $user_details->specialist}}" name="specialist" placeholder="Specialist"> -->
+                            <input type="text" id="specialist" value="{{ $user_details->specialist}}"   name="specialist" required="">
+                            <label for="specialist"> Specialist </label>
                             @error('specialist')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">First Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="first_name" value="{{ $user_details->first_name}}" id="first_name" placeholder="First Name">
+                             <label class="form-label">First Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="first_name" value="{{ $user_details->first_name}}" id="first_name" placeholder="First Name"> 
+                            <!-- <input type="text" name="first_name" value="{{ $user_details->first_name}}" id="first_name" required="">
+                            <label for="specialist"> First Name </label> -->
                             @error('first_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Last Name </label>
-                            <input type="text" class="form-control" value="{{ $user_details->last_name}}" name="last_name" id="last_name" placeholder="Last Name">
+                             <!-- <label class="form-label">Last Name </label>
+                            <input type="text" class="form-control" value="{{ $user_details->last_name}}" name="last_name" id="last_name" placeholder="Last Name"> -->
+                            <input type="text" name="first_name" value="{{ $user_details->first_name}}" id="first_name" required="">
+                            <label for="specialist"> First Name </label>
                             @error('last_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -111,10 +121,10 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-3">
-                            <label class="form-label">Gender <span class="text-danger">*</span></label>
+                        <div class="col-md-3 newadd">
+                            <!-- <label class="form-label">Gender <span class="text-danger">*</span></label> -->
                             <select name="gender" class="form-control" id="gender">
-                                <option value="">Select</option>
+                                <option value="">Gender <span class="text-danger">*</span></option>
 
                                 @foreach (Config::get('static.gender') as $lang => $genders)
                                 <option value="{{$genders}}" {{ @$genders == $user_details->gender ? 'selected' : " " }}> {{$genders}}</option>
@@ -125,10 +135,10 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label">Metrial Status </label>
+                        <div class="col-md-3 newadd">
+                            <!-- <label class="form-label">Metrial Status </label> -->
                             <select name="marital_status" class="form-control" id="marital_status">
-                                <option value="">Select</option>
+                                <option value="">Metrial Status</option>
                                 @foreach (Config::get('static.marital_status') as $lang => $marital)
                                 <option value="{{$marital}}" {{ @$marital == $user_details->marital_status ? 'selected' : " "}}> {{$marital}}</option>
                                 @endforeach
@@ -138,21 +148,23 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="blood_group" class="form-label">Blood Group </label>
+                        <div class="form-group col-md-3 newadd">
+                            <!-- <label for="blood_group" class="form-label">Blood Group </label> -->
                             <select name="blood_group" class="form-control" id="blood_group">
-                                <option value="">Select</option>
+                                <option value="">Blood Group</option>
                                 @foreach (Config::get('static.blood_groups') as $lang => $blood_group)
                                 <option value="{{$blood_group}}" {{ @$blood_group == $user_details->blood_group ? 'selected' : " "}}> {{$blood_group}}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                        <div class="col-md-3">
-                            <label class="form-label">Date Of Birth <span class="text-danger">*</span></label>
+                        <div class="col-md-3 newadd">
+                             <!-- <label class="form-label">Date Of Birth <span class="text-danger">*</span></label>
 
-                            <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" @if(isset($user_details->date_of_birth)) value="{{ date('Y-m-d',strtotime($user_details->date_of_birth)) }}" @endif>
+                            <input type="date" class="form-control" name="date_of_birth" id="date_of_birth" @if(isset($user_details->date_of_birth)) value="{{ date('Y-m-d',strtotime($user_details->date_of_birth)) }}" @endif> --> 
 
+                            <input type="date"  name="date_of_birth" id="first_name" id="date_of_birth" @if(isset($user_details->date_of_birth)) value="{{ date('Y-m-d',strtotime($user_details->date_of_birth)) }}" @endif >
+                            <label for="specialist">Date Of Birth</label>
                             @error('date_of_birth')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror

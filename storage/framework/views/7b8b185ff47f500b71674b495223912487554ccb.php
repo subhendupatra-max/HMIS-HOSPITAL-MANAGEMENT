@@ -11,7 +11,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="doctor" class="form-label">Doctor<span class="text-danger">*</span></label>
+                        
                         <select class="form-control select2-show-search select2-hidden-accessible" value="<?php echo e(old('doctor')); ?>" name="doctor" id="doctor" required>
                             <optgroup>
                                 <option value=" ">Select Doctor</option>
@@ -33,8 +33,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="doctor_fees" class="form-label">Doctor Fees<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="doctor_fees" name="doctor_fees" placeholder="Enter Doctor Fees" required>
+                        
+                        
+                        <input type="text"  id="doctor_fees" name="doctor_fees" required />
+                        <label for="doctor_fees"> Enter Doctor Fees<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['doctor_fees'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -48,10 +50,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="shift" class="form-label">Shift <span class="text-danger">*</span></label>
+                        
                         <select class="form-control select2-show-search select2-hidden-accessible" value="<?php echo e(old('vehicle_model')); ?>" name="shift" id="shift" required>
                             <optgroup>
-                                <option value=" ">Select Shift </option>
+                                <option value=" ">Select Shift <span class="text-danger">*</span></option>
                                 <?php $__currentLoopData = $shift; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($item->id); ?>"><?php echo e($item->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -70,8 +72,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="appointment_date" class="form-label">Appointment Date<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" id="appointment_date" name="appointment_date">
+                         <!-- <label for="appointment_date" class="form-label">Appointment Date<span class="text-danger">*</span></label> 
+                        <input type="date" class="form-control" id="appointment_date" name="appointment_date"> -->
+                        <lable class="dateformat">Appointment Date<span class="text-danger">*</span></lable>
+                        <input type="date"  id="appointment_date" name="appointment_date">
                         <?php $__errorArgs = ['appointment_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -84,11 +88,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="slot" class="form-label">Slot <span class="text-danger">*</span></label>
+                    <div class="form-group col-md-4 newwformat">
+                        
                         <select class="form-control select2-show-search select2-hidden-accessible" value="<?php echo e(old('slot')); ?>" name="slot" id="slot" required>
                             <optgroup>
-                                <option value=" ">Select Slot </option>
+                                <option value=" ">Select Slot <span class="text-danger">*</span></option>
                                 <?php $__currentLoopData = $slot; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($item->id); ?>"><?php echo e($item->name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -106,8 +110,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="appointment_priority" class="form-label">Appointment Priority<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-4 newwformat ">
+                        
                         <select id="appointment_priority" class="form-control" name="appointment_priority">
                             <option value="">Select Appointment Priority</option>
                             <?php $__currentLoopData = Config::get('static.appointment_priority'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -127,9 +131,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="payment_mode" class="form-label">Payment Mode<span class="text-danger">*</span></label>
+                        
                         <select id="payment_mode" class="form-control" name="payment_mode">
-                            <option value="">Select Appointment Priority</option>
+                            <option value="">Select Appointment Priority<span class="text-danger">*</span></option>
                             <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -147,9 +151,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
+                        
                         <select id="status" class="form-control" name="status">
-                            <option value="">Select Appointment Priority</option>
+                            <option value="">Select Appointment Priority<span class="text-danger">*</span></option>
                             <?php $__currentLoopData = Config::get('static.status'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -167,8 +171,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
-                        <textarea name="message" id="message" class="form-control"></textarea>
+                        
+                         <input type="text"  id="message" name="message" required />
+                         <label for="Message"> Message<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['message'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -182,9 +187,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="live_consultant" class="form-label">Live Consultant<span class="text-danger">*</span></label>
+                        
                         <select id="live_consultant" class="form-control" name="live_consultant">
-                            <option value="">Select Appointment Priority</option>
+                            <option value="">Select Appointment Priority<span class="text-danger">*</span></option>
                             <?php $__currentLoopData = Config::get('static.ans'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -202,8 +207,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="alternate_address" class="form-label">Alternate Address <span class="text-danger">*</span></label>
-                        <textarea name="alternate_address" id="alternate_address" class="form-control"></textarea>
+                        
+                        <input type="text"  id="alternate_address" name="alternate_addresss" required />
+                        <label for="Alternate Address"> Alternate Address<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['alternate_address'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -256,4 +262,5 @@ unset($__errorArgs, $__bag); ?>
     });
 </script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/appointment/add-appointment.blade.php ENDPATH**/ ?>
