@@ -16626,7 +16626,7 @@ div.dataTables_wrapper div.dataTables_filter input {
   border: 2px solid #000;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   border-radius: 5px; } */
-  
+
   .form-control {
     display: block;
     width: 100%;
@@ -16716,8 +16716,8 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-place
     background-color: #e9e9eb;
     opacity: 1; }
 
-select.form-control:not([size]):not([multiple]) {
-  height: 2.375rem; }
+/* select.form-control:not([size]):not([multiple]) {
+  height: 2.375rem; } */
 
 .select2-container .select2-selection--single {
   height: 2.375rem !important; }
@@ -16835,9 +16835,9 @@ select.form-control-lg:not([size]):not([multiple]) {
 .input-group-lg > select.form-control:not([size]):not([multiple]), .input-group-lg > .input-group-prepend > select.input-group-text:not([size]):not([multiple]), .input-group-lg > .input-group-append > select.input-group-text:not([size]):not([multiple]), .input-group-lg > .input-group-prepend > select.btn:not([size]):not([multiple]), .input-group-lg > .input-group-append > select.btn:not([size]):not([multiple]) {
   height: calc(2.6875rem + 2px); }
 
-.form-group 
+.form-group
 {
-  margin-bottom: 1rem; 
+  margin-bottom: 1rem;
 }
 
 .form-text {
@@ -18428,7 +18428,7 @@ button.bg-dark:hover, button.bg-dark:focus {
   border: 1px solid #ebecf1 !important; }
 
  .border-top {
-  border-top: 1px solid #ebecf1 !important; }  
+  border-top: 1px solid #ebecf1 !important; }
 
 .border-right {
   border-right: 1px solid #ebecf1 !important; }
@@ -22511,8 +22511,8 @@ a.icon {
   flex: 1 1 auto;
   margin: 0;
   padding: 1.5rem 1.5rem;
-  position: relative; 
-  
+  position: relative;
+
 }
   .card-body + .card-body {
     border-top: 1px solid #ebecf1; }
@@ -22521,7 +22521,7 @@ a.icon {
   font-size: 62px; }
 
 .card-body > :last-child {
-  margin-bottom: 0; 
+  margin-bottom: 0;
 
 }
 
@@ -22534,13 +22534,13 @@ a.icon {
 
 .log {
   margin-top: -26px; }
- 
+
 .card-header {
   background: transparent;
   padding: 0.5rem 1.5rem;
   display: -ms-flexbox;
   display: flex;
-  
+
   -ms-flex-align: center;
   align-items: center;
   margin-bottom: 0;
@@ -22549,7 +22549,7 @@ a.icon {
   .card-header .card-title {
     margin-bottom: 0; }
   .card-header.border-0 + .card-body {
-    padding-top: 0; } 
+    padding-top: 0; }
 
 .card-title {
   line-height: 1.2;
@@ -25995,3 +25995,15 @@ input:valid~label {
   color: #ff5f15;
 }
 /* -----------------new input----------- */
+.avlqty_text
+{
+    margin: 0px;
+    padding: 4px 0px 2px 0px;
+    font-size: 11px;
+    text-align: center;
+    color: blue;
+}
+.avlqty_area
+{
+    padding: 18px 0px 0px 0px !important;
+}

@@ -1379,7 +1379,11 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
     Route::group(['middleware' => ['permission:pharmacy bill']], function () {
         Route::get('pharmacy-bill-listing', [PharmacyController::class, 'pharmacy_bill_listing'])->name('pharmacy-bill-listing');
         Route::group(['middleware' => ['permission:add pharmacy bill']], function () {
-            Route::get('pharmacy-bill-add', [PharmacyController::class, 'pharmacy_bill_add'])->name('pharmacy-bill-add');
+            Route::get('generate-medicine-bill', [PharmacyController::class, 'pharmacy_bill_add'])->name('generate-medicine-bill');
+            Route::post('add-pharmacy-billing-for-a-patient', [PharmacyController::class, 'add_pharmacy_billing_for_a_patient'])->name('add-pharmacy-billing-for-a-patient');
+            Route::post('find-medicine-name-by-category', [PharmacyController::class, 'medicine_name_by_medicine_category'])->name('find-medicine-name-by-category');
+            Route::post('find-medicine-batch-by-medicine-name', [PharmacyController::class, 'find_medicine_batch_by_medicine_name'])->name('find-medicine-batch-by-medicine-name');
+            Route::post('find-medicine-details-by-medicine-batch', [PharmacyController::class, 'find_medicine_details_by_medicine_batch'])->name('find-medicine-details-by-medicine-batch');
         });
     });
     Route::group(['middleware' => ['permission:medicine stock']], function () {
