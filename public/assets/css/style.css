@@ -26001,7 +26001,6 @@ input:valid~label {
   color: #ff5f15;
 }
 /* -----------------new input----------- */
-<<<<<<< HEAD
 option span{
     color: #ff5f15;
 }
@@ -26063,7 +26062,6 @@ input[type=checkbox] {
     border: 1px solid #ccc;
     border-radius: 4px;
   }
-=======
 .avlqty_text
 {
     margin: 0px;
@@ -26076,4 +26074,3 @@ input[type=checkbox] {
 {
     padding: 18px 0px 0px 0px !important;
 }
->>>>>>> 2a6aa10d9bc17ad1455b872e85b9d725572adcfc

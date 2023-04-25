@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('content'); ?>
 
     <div class="col-md-12">
@@ -63,7 +64,7 @@ unset($__errorArgs, $__bag); ?>
                                     <div class="options px-5  pb-3">
                                         <div class="row">
                                             <div class="table-responsive">
-                                                <table class="table btrnone">
+                                                <table class="table">
                                                     <tbody>
                                                         <tr>
                                                             <td class="py-2 px-5">
