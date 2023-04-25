@@ -54,7 +54,7 @@
                     </div>
 
                     <div class="col-md-3">
-                        <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+                        {{-- <label for="date" class="form-label">Date <span class="text-danger">*</span></label> --}}
                         <input type="datetime-local" class="form-control" id="date" name="date" required>
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="need_permission" class="form-label">Need permission <span class="text-danger">*</span></label>
+                        {{-- <label for="need_permission" class="form-label">Need permission <span class="text-danger">*</span></label> --}}
                         <select id="need_permission" class="form-control" name="need_permission" onclick="fdsfds(this.value)">
                             <option value=" ">Select Permission</option>
                             <option value="yes">Yes</option>
@@ -137,7 +137,7 @@
                                     </td>
                                     <td>
                                         <input type="hidden" class="form-control" name="medicine_name[]"value="{{$item->medicine_id}}" />
-                                        
+
                                         <input type="text" readonly class="form-control"  value="{{$item->medicine_name}}" />
                                     </td>
                                     <td>
@@ -236,7 +236,7 @@
     i = i + 1;
 
     function addnewrow() {
-        var html = `   
+        var html = `
                         <tr id="rowid${i}">
                         <td>
                         <select class="form-control select2-show-search " value="{{ old('medicine_catagory') }}" onchange="getCatagoryId(this.value,${i})" name="medicine_catagory[]" id="medicine_catagory${i}" required>
@@ -264,11 +264,11 @@
                         <td>
                         <input type="text" class="form-control" id="qty${i}" name="qty[]" required>
                         </td>
-                                                     
+
                         <td>
                         <button type="button" class="btn btn-danger" onclick="removerow(${i})"><i class="fa fa-trash"></i></button>
                         </td>
-                       
+
                         </tr>`;
 
         $('#trLength').append(html);

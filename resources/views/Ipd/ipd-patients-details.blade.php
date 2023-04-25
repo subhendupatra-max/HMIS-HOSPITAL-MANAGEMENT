@@ -13,6 +13,7 @@
         </div>
 
         <div class="card-body">
+        <div class="table-responsive">
             <table id="example" class="table table-borderless text-nowrap key-buttons">
                 <thead>
                     <tr>
@@ -103,6 +104,7 @@
                     @endif
                 </tbody>
             </table>
+        </div>
         </div>
 
     </div>

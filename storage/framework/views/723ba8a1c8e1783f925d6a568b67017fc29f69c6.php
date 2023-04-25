@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-md-12">
@@ -129,19 +128,26 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                         <input type="hidden" name="patientId" value="<?php echo e(@$patient_details_information->id); ?>" />
                         <div class="options px-5 pt-5  border-bottom pb-3">
+
+                                <div class=" add-pathologydesign">
                             <div class="container mt-5">
                                 <div class="d-flex justify-content-end">
                                     <span class="biltext">Total</span>
-                                    <input type="text" name="total" readonly id="total_am" class="form-control myfld">
+                                     
+                                    <input type="text"  id="total_am" name="total" required  class="form-control myfld" />
+                                    
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <input type="text" name="extra_charges_name" placeholder="Enter Extra Charges Name" class="form-control myfld2">
+                                    
+
+                                    <input type="text"  id="Enter Extra Charges Name"placeholder="Enter Extra Charges Name" name="extra_charges_name"class="form-control myfld2" required />
                                     <input onkeyup="gettotal()" type="text" name="extra_charges_value" value="00" class="form-control myfld1" id="extra_chages">
                                 </div>
                                 <div class="d-flex justify-content-end mt-2">
                                     <span class="biltext">Discount (% / flat)</span>
-                                    <input type="text" name="total_discount" onkeyup="gettotal()" value="0" id="total_discount" class="form-control myfld">
+                                <input type="text" name="total_discount" onkeyup="gettotal()" value="0" id="total_discount" class="form-control myfld">
+                                    
                                     <select name="discount_type" onchange="gettotal()" id="discount_type" class="form-control myfld" style="width: 75px">
                                         <option value="percentage" selected>%</option>
                                         <option value="flat">Flat</option>
@@ -149,11 +155,13 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="d-flex justify-content-end mt-2">
                                     <span class="biltext">Tax</span>
-                                    <input type="text" name="total_tax" onkeyup="gettotal()" value="0" id="total_tax" class="form-control myfld">
+                                    
+                                    <input type="text" onkeyup="gettotal()" value="0"  id="total_tax" name="total_tax" class="form-control myfld"required />
                                 </div>
                                 <div class="d-flex justify-content-end thrdarea">
                                     <span class="biltext">Grand Total</span>
-                                    <input type="text" name="grand_total" readonly id="grnd_total" value="00" class="form-control myfld">
+                                    
+                                    <input type="text" onkeyup="gettotal()" value="0"  id="grand_total" name="grand_total"class="form-control myfld" required />
                                     <?php $__errorArgs = ['grnd_total'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -167,6 +175,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
+                                </div>
+
                         </div>
                         <div class="btn-list p-3">
                             <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button>
@@ -247,4 +257,5 @@ unset($__errorArgs, $__bag); ?>
 
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\HMIS-HOSPITAL-MANAGEMENT\resources\views/pathology/pathology-add-billing.blade.php ENDPATH**/ ?>

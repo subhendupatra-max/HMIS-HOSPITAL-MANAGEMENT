@@ -10,8 +10,10 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <label for="test_name" class="form-label"> Test Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="test_name" name="test_name" placeholder="Enter Test Name" value="{{ old('test_name') }}" required>
+                        {{-- <label for="test_name" class="form-label"> Test Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="test_name" name="test_name" placeholder="Enter Test Name" value="{{ old('test_name') }}" required> --}}
+                        <input type="text" id="test_name"name="test_name" required />
+                    <label for="test_name"> Test Name<span class="text-danger">*</span> </label>
                         @error('test_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

@@ -20,11 +20,35 @@
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">Medicine Name</th>
+                                <th class="border-bottom-0">Category</th>
+                                <th class="border-bottom-0">Medicine Composition</th>
                                 <th class="border-bottom-0">Stock </th>
                             </tr>
                         </thead>
                         <tbody>
+                            @if(@$medicine_stock)
+                            @foreach ($medicine_stock as $value)
 
+                            <?php if($value->available_quantity <= $value->min_level && $value->available_quantity > 0)
+                            {
+                                $stock_status = $value->available_quantity.' '.$value->medicine_unit_name.' <span class="badge badge-warning">Low Stock</span>';
+                            }
+                            elseif ($value->available_quantity <= 0 ) {
+                                $stock_status = ' <span class="badge badge-danger">Out Of Stock</span>';
+                            }
+                            else {
+                                $stock_status = $value->available_quantity .' '.$value->medicine_unit_name;
+                            }
+
+                             ?>
+                                <tr>
+                                    <td><a href="#" class="text-info">{{$value->medicine_name}}</a></td>
+                                    <td>{{$value->medicine_catagory_name}}</td>
+                                    <td>{{$value->medicine_composition}}</td>
+                                    <td>{!!$stock_status!!}</td>
+                                </tr>
+                            @endforeach
+                            @endif
                         </tbody>
                     </table>
 
