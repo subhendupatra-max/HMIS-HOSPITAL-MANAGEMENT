@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -268,8 +269,8 @@
                                 </div>
                                 <div class="col-md-6 text-right">
                                     <div class="d-block">
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add pathology test')): ?>
-                                        <a href="" class="btn btn-primary btn-sm"><i class="fa fa-exchange"></i>Add Charges</a>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add ipd charges')): ?>
+                                        <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#openChargesModal"><i class="fa fa-user"></i> Add Charges </a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -411,7 +412,122 @@
 
                     
                     <div class="tab-pane" id="operation">
-                        operation
+                        <div class="row">
+                            <div class="col-md-6 card-title">
+                                Operation
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <div class="d-block">
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
+                                    <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addOperationModal"><i class="fa fa-user"></i> Add Medication </a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr_line" />
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap" id="example1">
+                                <thead>
+                                    <tr>
+                                        <th class="border-bottom-0">Sl. No</th>
+                                        <th class="border-bottom-0">Operation Department</th>
+                                        <th class="border-bottom-0">Operation Name</th>
+                                        <th class="border-bottom-0">Consultant Doctor</th>
+                                        <th class="border-bottom-0">Date</th>
+                                        <th class="border-bottom-0">Status</th>
+                                        <th class="border-bottom-0">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $__currentLoopData = $operation_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr>
+                                        <td class="border-bottom-0"><?php echo e($loop->iteration); ?></td>
+                                        <td class="border-bottom-0"><?php echo e(@$item->operation_departments->department_name); ?> </td>
+                                        <td class="border-bottom-0"><?php echo e(@$item->operation_name); ?></td>
+                                        <td class="border-bottom-0"><?php echo e(@$item->consultant_doctor); ?></td>
+                                        <td class="border-bottom-0"><?php echo e(@$item->operation_date); ?></td>
+                                        <td class="border-bottom-0"> <?php echo e(@$item->status); ?> </td>
+                                        <td class="border-bottom-0">
+                                            <div class="card-options">
+                                                <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right" style="">
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit operation theatre')): ?>
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="fa fa-edit"></i> Edit</a>
+                                                    <?php endif; ?>
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete operation theatre')): ?>
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                                                    <?php endif; ?>
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('change status operation theatre')): ?>
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Change Status</a>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+
+                    
+                    <div class="tab-pane" id="payment">
+                        <div class="row">
+                            <div class="col-md-6 card-title">
+                                Payment
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <div class="d-block">
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
+                                    <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addPaymentModal"><i class="fa fa-user"></i> Add Payment </a>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr_line" />
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-nowrap" id="example1">
+                                <thead>
+                                    <tr>
+                                        <th class="border-bottom-0">Sl. No</th>
+                                        <th class="border-bottom-0">Date</th>
+                                        <th class="border-bottom-0">Amount</th>
+                                        <th class="border-bottom-0">Payement Mode</th>
+                                        <th class="border-bottom-0">Note</th>
+                                        <th class="border-bottom-0">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $__currentLoopData = $paymentDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr>
+                                        <td class="border-bottom-0"><?php echo e($loop->iteration); ?></td>
+                                        <td class="border-bottom-0"><?php echo e(@$item->payment_date); ?> </td>
+                                        <td class="border-bottom-0"><?php echo e(@$item->amount); ?></td>
+                                        <td class="border-bottom-0"><?php echo e(@$item->payment_mode); ?></td>
+                                        <td class="border-bottom-0"><?php echo e(@$item->note); ?></td>
+                                        <td class="border-bottom-0">
+                                            <div class="card-options">
+                                                <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right" style="">
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit ipd payment')): ?>
+                                                    <a class="dropdown-item" href="#">
+                                                        <i class="fa fa-edit"></i> Edit</a>
+                                                    <?php endif; ?>
+
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete ipd payment')): ?>
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                                                    <?php endif; ?>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     
 
@@ -502,8 +618,8 @@
                             </div>
                         </div>
                         <hr class="hr_line" />
-                        <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap" id="example2">
+                        <diav class="table-responsive">
+                            <table class="table table-bordered text-nowrap" id="example1">
                                 <thead>
                                     <tr>
                                         <th class="border-bottom-0">Sl. No</th>
@@ -526,22 +642,27 @@
                                         <td class="border-bottom-0"><?php echo e(@$item->dosage_name->dose); ?></td>
 
                                         <td class="border-bottom-0">
-
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check(' ')): ?>
-                                            <a onclick="editMedicationModal(<?php echo $item->id ?>)" class="btn btn-danger btn-sm"><i class="fa fa-edit ml-4"></i> Edit</a>
-                                            <?php endif; ?>
-
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                                            <a onclick="deleteMedicationModal('<?php echo $item->id  ?>')" class="btn btn-danger btn-sm"> <i class="fa fa-trash"></i> </a>
-                                            <?php endif; ?>
-
-
+                                            <div class="card-options">
+                                                <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right" style="">
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit operation theatre')): ?>
+                                                    <a class="dropdown-item" onclick="editMedicationModal(<?php echo $item->id ?>)">
+                                                        <i class="fa fa-edit"></i> Edit</a>
+                                                    <?php endif; ?>
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete operation theatre')): ?>
+                                                    <a class="dropdown-item" onclick="deleteMedicationModal('<?php echo $item->id  ?>')"><i class="fa fa-trash"></i> Delete</a>
+                                                    <?php endif; ?>
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('change status operation theatre')): ?>
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-edit"></i> Change Status</a>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
-                        </div>
+                        </diav>
                     </div>
                     
 
@@ -565,7 +686,7 @@
                                 <ul class="timeline mb-0">
                                     <?php $__currentLoopData = $nurseNoteDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <li class="mt-0">
-                                        <div class="d-flex"><span class="time-data"><?php echo e($item->nurseNames->first_name); ?> <?php echo e($item->nurseNames->last_name); ?>
+                                        <div class="d-flex"><span class="time-data"><?php echo e(@$item->nurseNames->first_name); ?> <?php echo e(@$item->nurseNames->last_name); ?>
 
                                                 <p class="text-muted fs-12"> <?php echo e($item->note); ?></p>
                                             </span><span class="ml-auto text-muted fs-11">
@@ -587,6 +708,284 @@
         </div>
     </div>
 </div>
+
+<!-- ============================= add operation modal ============================ -->
+<div class="modal fade" id="addOperationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Add Operation
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo e(route('save-ipd-operation-details')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <input type="hidden" name="ipd_details_id" value="<?php echo e($ipd_details->id); ?>" />
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label for="operation_department" class="form-label">operation_department <span class="text-danger">*</span></label>
+                            <select name="operation_department" class="form-control select2-show-search" id="operation_department" onchange="getOperation_Department(this.value)">
+                                <option value="">Select</option>
+                                <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($department->id); ?>"> <?php echo e($department->department_name); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <?php $__errorArgs = ['operation_department'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="operation_catagory" class="form-label"> Operation Category <span class="text-danger">*</span></label>
+                            <select name="operation_catagory" class="form-control select2-show-search" id="operation_catagory" onchange="getCatagory(this.value)">
+                                <option value="">Select..</option>
+                            </select>
+                            <?php $__errorArgs = ['operation_catagory'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="operation_type" class="form-label"> Operation Type <span class="text-danger">*</span></label>
+                            <select name="operation_type" class="form-control select2-show-search" id="operation_type">
+                                <option value="">Select..</option>
+                            </select>
+                            <?php $__errorArgs = ['operation_type'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="operation_name" class="form-label"> Operation Name <span class="text-danger">*</span></label>
+                            <input type="text" name="operation_name" class="form-control" id="operation_name" />
+                            <?php $__errorArgs = ['operation_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="operation_date" class="form-label">Operation Date <span class="text-danger">*</span></label>
+                            <input type="datetime-local" class="form-control" id="operation_date" name="operation_date" required>
+                            <?php $__errorArgs = ['operation_date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="consultant_doctor" class="form-label">Consultant Doctor<span class="text-danger">*</span></label>
+                            <select name="consultant_doctor" class="form-control select2-show-search" id="consultant_doctor">
+                                <option value="">Select Consultant Doctor...</option>
+                                <?php $__currentLoopData = $cons_doctor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $doctor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($doctor->id); ?>"> <?php echo e($doctor->first_name); ?>
+
+                                    <?php echo e($doctor->first_name); ?> <?php echo e($doctor->last_name); ?>
+
+                                </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <?php $__errorArgs = ['consultant_doctor'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="ass_consultant_1" class="form-label">Assistant Consultant 1 </label>
+                            <input type="text" class="form-control" id="ass_consultant_1" name="ass_consultant_1">
+                            <?php $__errorArgs = ['ass_consultant_1'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="ass_consultant_1" class="form-label">Medicine Name </label>
+                            <input type="text" class="form-control" id="ass_consultant_1" name="ass_consultant_1">
+                            <?php $__errorArgs = ['ass_consultant_1'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="ass_consultant_2" class="form-label">Assistant Consultant 2 </label>
+                            <input type="text" class="form-control" id="ass_consultant_2" name="ass_consultant_2">
+                            <?php $__errorArgs = ['ass_consultant_2'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="anesthetist" class="form-label"> Anesthetist </label>
+                            <input type="text" class="form-control" id="anesthetist" name="anesthetist" value="<?php echo e(old('anesthetist')); ?>">
+                            <?php $__errorArgs = ['anesthetist'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="anaethesia_type" class="form-label"> Anesthesia Type </label>
+                            <input type="text" class="form-control" id="anaethesia_type" name="anaethesia_type" value="<?php echo e(old('anaethesia_type')); ?>">
+                            <?php $__errorArgs = ['anaethesia_type'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="ot_technician" class="form-label"> OT Technician </label>
+                            <input type="text" class="form-control" id="ot_technician" name="ot_technician" value="<?php echo e(old('ot_technician')); ?>">
+                            <?php $__errorArgs = ['ot_technician'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="ot_assistant" class="form-label"> OT Assistant </label>
+                            <input type="text" class="form-control" id="ot_assistant" name="ot_assistant" value="<?php echo e(old('ot_assistant')); ?>">
+                            <?php $__errorArgs = ['ot_assistant'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="status" class="form-label">Status</label>
+                            <select id="status" class="form-control" name="status">
+                                <option value="">Select</option>
+                                <?php $__currentLoopData = Config::get('static.operation_status'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <?php $__errorArgs = ['status'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="remark" class="form-label">Remarks </label>
+                            <textarea name="remark" id="remark" class="form-control"> </textarea>
+                            <?php $__errorArgs = ['remark'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Operation</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- ============================= add operation modal ============================ -->
 
 <!-- ============================= add timeline modal ============================ -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -859,7 +1258,7 @@ unset($__errorArgs, $__bag); ?>
                             <label for="m_medicine_catagory_id" class="form-label">Medicine Category <span class="text-danger">*</span></label>
                             <select class="form-control select2-show-search" name="m_medicine_catagory_id" id="m_medicine_catagory_id" required>
 
-                                    <option value=" ">Select Medicine Category</option>
+                                <option value=" ">Select Medicine Category</option>
 
                             </select>
                             <?php $__errorArgs = ['m_medicine_catagory_id'];
@@ -1194,12 +1593,201 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 <!-- ============================= add nurse note modal ============================ -->
+<!-- ============================= add payment modal ============================ -->
+<div class="modal fade" id="addPaymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Add Payment
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo e(route('save-ipd-payment-details')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <input type="hidden" name="ipd_id" value="<?php echo e($ipd_details->id); ?>" />
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label for="payment_date" class="form-label">Date <span class="text-danger">*</span></label>
+                            <input type="datetime-local" class="form-control" id="payment_date" name="payment_date" required>
+                            <?php $__errorArgs = ['payment_date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="amount" class="form-label">Amount<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="amount" name="amount" value="<?php echo e(old('amount')); ?>">
+                            <?php $__errorArgs = ['amount'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="payment_mode" class="form-label">Payment Mode </label>
+                            <select id="payment_mode" class="form-control" name="payment_mode">
+                                <option value="">Select Payment Mode... </option>
+                                <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__errorArgs = ['payment_mode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="note" class="form-label">Note </label>
+                            <textarea name="note" id="note" class="form-control"> </textarea>
+                            <?php $__errorArgs = ['note'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Payment</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- ============================= add payment modal ============================ -->
+
+<!-- ============================= add charges modal ============================ -->
+<div class="modal fade" id="openChargesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Add Charges
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo e(route('save-ipd-charges-details')); ?>" method="POST">
+                    <?php echo csrf_field(); ?>
+                    <input type="hidden" name="ipd_id" value="<?php echo e($ipd_details->id); ?>" />
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <label for="charge_type_id" class="form-label">Date <span class="text-danger">*</span></label>
+
+                            <?php $__errorArgs = ['charge_type_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="amount" class="form-label">Amount<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="amount" name="amount" value="<?php echo e(old('amount')); ?>">
+                            <?php $__errorArgs = ['amount'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="payment_mode" class="form-label">Payment Mode </label>
+                            <select id="payment_mode" class="form-control" name="payment_mode">
+                                <option value="">Select Payment Mode... </option>
+                                <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__errorArgs = ['payment_mode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="note" class="form-label">Note </label>
+                            <textarea name="note" id="note" class="form-control"> </textarea>
+                            <?php $__errorArgs = ['note'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save Payment</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- ============================= add charges modal ============================ -->
 <script>
     function getDoctor_ward(department, ward) {
 
         $('#bed_ward').html('<option value="" >Select...</option>');
 
-        alert(bed_ward_id);
+        // alert(bed_ward_id);
         $.ajax({
             url: "<?php echo e(route('find-doctor-and-ward-by-department-in-ipd')); ?>",
             type: "POST",
@@ -1210,7 +1798,7 @@ unset($__errorArgs, $__bag); ?>
             success: function(response) {
                 console.log(response);
                 $.each(response.ward, function(key, values) {
-                    $('#bed_ward').append(`<option value="${values.id}"  ${sel} >${values.ward_name}</option>`);
+                    $('#bed_ward').append(`<option value="${values.id}"  >${values.ward_name}</option>`);
                 });
             },
             error: function(error) {
@@ -1438,13 +2026,12 @@ unset($__errorArgs, $__bag); ?>
             },
             success: function(response) {
                 $.each(response.edit_medicine_catagory, function(key, value) {
-                        if(response.edit_medication_dose.medicine_catagory_id == value.id)
-                        {
-                            var sel = "selected";
-                        }
-                        $('#m_medicine_catagory_id').append(`<option value="${value.id}" ${sel}>${value.medicine_catagory_name}</option>`);
+                    if (response.edit_medication_dose.medicine_catagory_id == value.id) {
+                        var sel = "selected";
+                    }
+                    $('#m_medicine_catagory_id').append(`<option value="${value.id}" ${sel}>${value.medicine_catagory_name}</option>`);
                 });
-                medicine_name_and_dose('response.edit_medication_dose.medicine_name','response.edit_medication_dose.dosage');
+                medicine_name_and_dose('response.edit_medication_dose.medicine_name', 'response.edit_medication_dose.dosage');
 
 
 
@@ -1456,8 +2043,8 @@ unset($__errorArgs, $__bag); ?>
                 $('#m_edit_date').val(newDate);
                 $('#m_edit_time').val(response.ipd_id);
 
-              //  $('#m_e_medicine_name').val(response.medicine_name);
-               // $('#m_e_dosage').val(response.dosage);
+                //  $('#m_e_medicine_name').val(response.medicine_name);
+                // $('#m_e_dosage').val(response.dosage);
                 $('#m_e_remarks').val(response.remarks);
             },
             error: function(error) {
@@ -1469,10 +2056,9 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <script>
-    function medicine_name_and_dose(medicine_name=null,dosage=null)
-    {
-         let medicine_catagory_id = $('#m_medicine_catagory_id').val();
-         //alert('uy'+medicine_catagory_id);
+    function medicine_name_and_dose(medicine_name = null, dosage = null) {
+        let medicine_catagory_id = $('#m_medicine_catagory_id').val();
+        //alert('uy'+medicine_catagory_id);
         $("#dosage").html('<option value=" ">Select Dose...</option>');
         $.ajax({
             url: "<?php echo e(route('find-dosage-and-name-by-medicine-catagory')); ?>",
@@ -1485,11 +2071,10 @@ unset($__errorArgs, $__bag); ?>
             success: function(response) {
                 console.log(response);
                 $.each(response.dosage, function(key, value) {
-                    if(dosage == value.id)
-                    {
+                    if (dosage == value.id) {
                         var sel = "selected";
                     }
-                    $('#m_e_dosage').append(`<option value="${value.id}" ${sel} >${value.dose}</option>`);
+                    $('#m_e_dosage').append(`<option value="${value.id}" ${sel}>${value.dose}</option>`);
                 });
             },
             error: function(error) {
@@ -1497,10 +2082,64 @@ unset($__errorArgs, $__bag); ?>
             }
         });
     }
+</script>
 
+<script>
+    function getCatagory(catagory) {
+        // alert(catagory);
+        $.ajax({
+            url: "<?php echo e(route('find-operation-name-by-operation-catagory')); ?>",
+            type: "POST",
+            data: {
+                _token: '<?php echo e(csrf_token()); ?>',
+                catagory_id: catagory,
+            },
+            success: function(response) {
+                console.log(response);
+
+                $('#operation_name').val(response.operation_name);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
 </script>
 
 
-<?php $__env->stopSection(); ?>
+<script>
+    function getOperation_Department(department) {
+        $('#operation_type').html('<option value="" >Select...</option>');
+        $('#operation_catagory').html('<option value="" >Select...</option>');
+        // alert(department);
+        var div_data = '';
+        $.ajax({
+            url: "<?php echo e(route('find-operation-type-and-catagory-by-department')); ?>",
+            type: "POST",
+            data: {
+                _token: '<?php echo e(csrf_token()); ?>',
+                department_id: department,
+            },
+            success: function(response) {
+                console.log(response);
 
+                if (department == '60') {
+                    div_data = "<option value='Normal'>Normal</option><option value='Cesarean '>Cesarean</option>";
+                } else {
+                    div_data = "<option value='Mejor'>Mejor</option><option value='Minor'>Minor</option>";
+                }
+                $('#operation_type').append(div_data);
+
+                $.each(response, function(key, values) {
+                    $('#operation_catagory').append(`<option value="${values.id}"> ${values.operation_catagory_name} </option>`);
+                });
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xampp\htdocs\DITS-HMIS\resources\views/Ipd/ipd-profile.blade.php ENDPATH**/ ?>

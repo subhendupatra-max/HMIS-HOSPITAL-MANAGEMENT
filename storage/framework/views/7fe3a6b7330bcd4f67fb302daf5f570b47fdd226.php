@@ -12,13 +12,9 @@
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add timeline list opd')): ?>
                         <a href="<?php echo e(route('add-timeline-lisitng-in-opd',['id' => base64_encode($opd_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Timeline </a>
                         <?php endif; ?>
-                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-profile' ? 'active' : ''); ?>" href="<?php echo e(route('opd-profile',['id'=>base64_encode($opd_patient_details->id)])); ?>"><i class="fa fa-home"></i> Profile</a>
-                            <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-billing' ? 'active' : ''); ?>" href="<?php echo e(route('opd-billing',['id'=>base64_encode($opd_patient_details->id)])); ?>"><i class="fa fa-money-bill"></i> Billing</a>
-                            <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-payment' ? 'active' : ''); ?>" href="<?php echo e(route('payment-listing-in-opd',['id'=>base64_encode($opd_patient_details->id)])); ?>"><i class="fa fa-rupee-sign"></i> Payment</a>
-                            <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-timeline' ? 'active' : ''); ?>" href="<?php echo e(route('timeline-lisitng-in-opd',['id'=>base64_encode($opd_patient_details->id)])); ?>"><i class="far fa-calendar-check"></i> Timeline</a>
+                            <?php echo $__env->make('OPD.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
                     </div>
                 </div>
@@ -53,5 +49,4 @@
         </div>
     </div>
     <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH E:\xampp\htdocs\DITS-HMIS\resources\views/OPD/timeline/timeline-listing.blade.php ENDPATH**/ ?>

@@ -10,7 +10,11 @@
                 <div class="col-md-6 text-right">
                     <div class="d-block">
                         @can('add pharmacy bill')
-                        <a href="{{ route('all-medicine-listing') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Generate Bill</a>
+                        <a href="{{ route('generate-medicine-bill') }}" class="btn btn-primary btn-sm"><i class="fa fa-file-invoice-dollar"></i> Generate Bill</a>
+                        @endcan
+
+                        @can('medicine stock')
+                        <a href="{{ route('all-medicine-stock') }}" class="btn btn-primary btn-sm"><i class="fa fa-capsules"></i> Medicine Stock</a>
                         @endcan
 
                         @can('medicine')

@@ -16715,8 +16715,8 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-place
     background-color: #e9e9eb;
     opacity: 1; }
 
-select.form-control:not([size]):not([multiple]) {
-  height: 2.375rem; }
+/* select.form-control:not([size]):not([multiple]) {
+  height: 2.375rem; } */
 
 .select2-container .select2-selection--single {
   height: 2.375rem !important; }
@@ -26001,6 +26001,7 @@ input:valid~label {
   color: #ff5f15;
 }
 /* -----------------new input----------- */
+<<<<<<< HEAD
 option span{
     color: #ff5f15;
 }
@@ -26062,3 +26063,17 @@ input[type=checkbox] {
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+=======
+.avlqty_text
+{
+    margin: 0px;
+    padding: 4px 0px 2px 0px;
+    font-size: 11px;
+    text-align: center;
+    color: blue;
+}
+.avlqty_area
+{
+    padding: 18px 0px 0px 0px !important;
+}
+>>>>>>> 2a6aa10d9bc17ad1455b872e85b9d725572adcfc
