@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use App\Models\OpdDetails;
 use App\Models\EmgTimeline;
 use App\Models\EmgDetails;
+use App\Models\IpdDetails;
+
 
 class TimelineController extends Controller
 {
@@ -145,6 +147,22 @@ class TimelineController extends Controller
         } else {
             return back()->with('error', "Something Went Wrong");
         }
+    }
+
+    public function timeline_listing_ipd($ipd_id)
+    {
+        $ipdId = base64_decode($ipd_id);
+        $ipd_details = IpdDetails::where('id', $ipdId)->first();
+        $timelineDetails =  IpdTimeline::where('ipd_id', $ipdId)->get();
+        return view('ipd.timeline', compact('timelineDetails', 'ipd_details'));
+
+    }
+    public function add_timeline_ipd($ipd_id)
+    {
+        $ipdId = base64_decode($ipd_id);
+        $ipd_details = IpdDetails::where('id', $ipdId)->first();
+        $timelineDetails =  IpdTimeline::where('ipd_id', $ipdId)->get();
+        return view('ipd.add-timeline', compact('timelineDetails', 'ipd_details'));
     }
     //============= timeline for ipd ====================
 

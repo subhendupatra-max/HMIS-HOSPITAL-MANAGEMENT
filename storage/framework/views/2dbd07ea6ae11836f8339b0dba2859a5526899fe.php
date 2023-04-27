@@ -277,26 +277,21 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-
+                                <div class="form-group col-md-4">
+                                    <label class="form-label">Ticket No</label>
+                                    <input type="text" readonly name="ticket_no" id="ticket_no" class="form-control" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="form-label">Ticket Fees</label>
+                                    <input type="text" name="ticket_fees" value="<?php echo e($ticket_fees->ticket_fees); ?>" class="form-control" />
+                                </div>
 
                             </div>
                         </div>
 
-                        <div class="options px-5">
-                            <div class="container ">
-                                <hr class="hr_line">
-                                <input type="checkbox" id="cb01"><span style="font-weight: 500;color:blue"> Are You Want to take <b>TICKET FEES</b> ?</span>
-
-                                <div class="row" id="taketicketFees" style="display: none">
-                                    <div class="form-group col-md-4">
-                                        <label class="form-label">Ticket No</label>
-                                        <input type="text" readonly name="ticket_no" id="ticket_no" class="form-control" />
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                        <label class="form-label">Ticket Fees</label>
-                                        <input type="text" name="ticket_fees" value="<?php echo e($ticket_fees->ticket_fees); ?>" class="form-control" />
-                                    </div>
-                                </div>
+                        
+                               
+                                
 
                                 <hr class="hr_line">
                                 <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Physical Condition
@@ -373,7 +368,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <hr class="hr_line">
                                 <input type="checkbox" id="opd_belling" value="opd_belling_from_opd" />
-                                <span style="font-weight: 500;color:blue"> Are You Want To Create <b>Opd Belling</b>
+                                <span style="font-weight: 500;color:blue"> Are You Want To Create <b>Opd Billing</b>
                                     ?</span>
 
                             </div>

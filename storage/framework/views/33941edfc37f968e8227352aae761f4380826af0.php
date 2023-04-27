@@ -1,312 +1,334 @@
 
 <?php $__env->startSection('content'); ?>
-    <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
-        <form action="<?php echo e(route('submit_new_patient_details')); ?>" method="POST">
-            <?php echo csrf_field(); ?>
-            <div class="row">
-                <div class="col-xl-12 col-lg-12 col-md-12">
-                    <div class="border-0">
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab-7">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h4>Add Patient</h4>
-                                    </div>
-                                    <div class="card-body hospital_allcardbodydesign">
-                                        <h5 class="font-weight-bold"><i class="fas fa-user"></i> Personal Information</h5>
-                                        <div class="main-profile-bio mb-0">
-                                            <div class="row">
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label-top for="prefix">Prefix <span class="text-danger">*</span></label> -->
-                                                    <select name="prefix" class="form-control" id="prefix">
-                                                        <option value="">prefix<span class="text-danger">*</span>
-                                                        </option>
-                                                        <?php $__currentLoopData = Config::get('static.prefix'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $prefixs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <option value="<?php echo e($prefixs); ?>"> <?php echo e($prefixs); ?>
-
-                                                            </option>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-2 custom-field">
-                                                    <!-- <label for="first_name">First Name <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="first_name" value="<?php echo e(old('first_name')); ?>" name="first_name" placeholder="Enter first Name">
-                                                        <small class="text-danger"><?php echo e($errors->first('first_name')); ?></small>    -->
-                                                    <input type="text" id="first_name" value="<?php echo e(old('first_name')); ?>"
-                                                        name="first_name" required />
-                                                    <label for="first_name"> Enter Your First name<span
-                                                            class="text-danger">*</span> </label>
-                                                </div>
-
-
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label for="middle_name">Middle Name </label>
-                                                        <input type="text" class="form-control" id="middle_name" value="<?php echo e(old('middle_name')); ?>" name="middle_name" placeholder="Enter Middle Name"> -->
-                                                    <input type="text"id="middle_name" value="<?php echo e(old('middle_name')); ?>"
-                                                        name="middle_name" required />
-                                                    <label for="middle_name"> Enter Your Middile name <span
-                                                            class="text-danger">*</span></label>
-                                                    <small class="text-danger"><?php echo e($errors->first('middle_name')); ?></small>
-
-                                                </div>
-
-
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label for="last_name">Last Name <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="last_name" value="<?php echo e(old('last_name')); ?>" name="last_name" placeholder="Enter Last Name"> -->
-                                                    <input type="text" id="last_name" value="<?php echo e(old('last_name')); ?>"
-                                                        name="last_name" required />
-                                                    <label for="last_name"> Enter Your Last name <span
-                                                            class="text-danger">*</span></label>
-                                                    <small class="text-danger"><?php echo e($errors->first('last_name')); ?></small>
-
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label for="last_name">Last Name <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="last_name" value="<?php echo e(old('last_name')); ?>" name="last_name" placeholder="Enter Last Name"> -->
-                                                    <input type="email" id="email_no" value="<?php echo e(old('email_no')); ?>"
-                                                        name="email_no" required />
-                                                    <label for="email_no"> Enter Your Email_no<span
-                                                            class="text-danger">*</span></label>
-                                                    <small class="text-danger"><?php echo e($errors->first('last_name')); ?></small>
-
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label for="last_name">Last Name <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="last_name" value="<?php echo e(old('last_name')); ?>" name="last_name" placeholder="Enter Last Name"> -->
-                                                    <input type="text" id="Phone_no" required />
-                                                    <label for="phone_no"> Enter Your Phone No<span
-                                                            class="text-danger">*</span></label>
-                                                    <small class="text-danger"><?php echo e($errors->first('last_name')); ?></small>
-
-                                                </div>
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label-top for="marital_status">Marital Status </label> -->
-                                                    <select name="marital_status" class="form-control select2-show-search"
-                                                        id="marital_status">
-                                                        <option value="">marital_status</option>
-                                                        <?php $__currentLoopData = Config::get('static.marital_status'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $marital): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <option value="<?php echo e($marital); ?>"> <?php echo e($marital); ?>
-
-                                                            </option>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label-top for="blood_group">Blood Group </label>  -->
-                                                    <select name="blood_group" class="form-control" id="blood_group">
-                                                        <option value="" for="blood_group">blood_group</option>
-                                                        <?php $__currentLoopData = Config::get('static.blood_groups'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $blood_group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <option value="<?php echo e($blood_group); ?>"> <?php echo e($blood_group); ?>
-
-                                                            </option>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label-top for="gender">Gender <span class="text-danger">*</span></label> -->
-                                                    <select name="gender" class="form-control select2-show-search"
-                                                        id="gender">
-                                                        <option value=""for="gender">gender</option>
-                                                        <?php $__currentLoopData = Config::get('static.gender'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $genders): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <option value="<?php echo e($genders); ?>"> <?php echo e($genders); ?>
-
-                                                            </option>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label-top for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label> -->
-                                                    <!-- <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="<?php echo e(old('date_of_birth')); ?>"> -->
-                                                    <input type="date"class="form-control"
-                                                        id="date_of_birth"id="date_of_birth" name="date_of_birth"
-                                                        onchange="getage(this.value)" value="<?php echo e(old('date_of_birth')); ?>"
-                                                        required />
-
-                                                    <small
-                                                        class="text-danger"><?php echo e($errors->first('date_of_birth')); ?></small>
-
-                                                </div>
-
-                                                <div class="form-group col-md-4">
-                                                    <!-- <label1>Age (yy-mm-dd) <span class="text-danger">*</span></label>  -->
-
-                                                    <div class="row">
-                                                        <div class="col-lg-4">
-                                                            <!-- <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" required>  -->
-                                                            <small
-                                                                class="text-danger"><?php echo e($errors->first('date_of_birth_year')); ?></small>
-                                                            <input type="text" id="date_of_birth_year" required />
-                                                            <label for="date_of_birth_year"> Year</label>
-                                                        </div>
-
-                                                        <div class="col-lg-4">
-                                                            <!-- <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" required>  -->
-                                                            <input type="text" id="date_of_birth_month" required />
-                                                            <label for="date_of_birth_month"> Month</label>
-                                                            <small
-                                                                class="text-danger"><?php echo e($errors->first('date_of_birth_month')); ?></small>
-
-                                                        </div>
-                                                        <div class="col-lg-4">
-                                                            <!-- <input type="text" class="form-control" id="date_of_birth_day" name="day" placeholder="Day" required>  -->
-                                                            <input type="text" id="date_of_birth_day" required />
-                                                            <label for="date_of_birth_day"> Day</label>
-                                                            <small
-                                                                class="text-danger"><?php echo e($errors->first('date_of_birth_day')); ?></small>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body border-top hospital_allcardbodydesign">
-
+<div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
+    <form action="<?php echo e(route('submit_new_patient_details')); ?>" method="POST">
+        <?php echo csrf_field(); ?>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12">
+                <div class="border-0">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-7">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Add Patient</h4>
+                                </div>
+                                <div class="card-body hospital_allcardbodydesign">
+                                    <h5 class="font-weight-bold"><i class="fas fa-user"></i> Personal Information</h5>
+                                    <div class="main-profile-bio mb-0">
                                         <div class="row">
-                                            <div class="col-lg-6 ">
-                                                <h5 class="font-weight-bold"><i class="fas fa-users-cog"></i> Gurdian
-                                                    Details</h5>
-                                                <div class="main-profile-contact-list ">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-6">
+                                            <div class="form-group col-md-2">
+                                                <select name="prefix" required class="form-control" id="prefix">
+                                                    <option value="">Prefix <span class="text-danger">*</span>
+                                                    </option>
+                                                    <?php $__currentLoopData = Config::get('static.prefix'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $prefixs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($prefixs); ?>"> <?php echo e($prefixs); ?>
 
-                                                            <input type="text" id="guardian_name"
-                                                                value="<?php echo e(old('guardian_name')); ?>" name="guardian_name"
-                                                                required />
-                                                            <label for="guardian_name">Enter Guardian Name<span
-                                                                    class="text-danger">*</span></label>
-                                                            <small
-                                                                class="text-danger"><?php echo e($errors->first('guardian_name')); ?></small>
+                                                    </option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                                <?php $__errorArgs = ['prefix'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
 
-                                                        </div>
+                                            <div class="form-group col-md-2 custom-field">
+                                                <input type="text" style="text-transform: capitalize;" id="first_name"
+                                                    value="<?php echo e(old('first_name')); ?>" name="first_name" required />
+                                                <label for="first_name"> Patient's First Name <span
+                                                        class="text-danger">*</span> </label>
+                                                <?php $__errorArgs = ['first_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
 
-                                                        <div class="form-group col-md-6">
-                                                            <!-- <label for="guardian_contact_no"> Gurdian Contact No <span class="text-danger">*</span></label>
+                                            <div class="form-group col-md-2">
+                                                <input type="text" id="middle_name" style="text-transform:capitalize;"  value="<?php echo e(old('middle_name')); ?>" name="middle_name" />
+                                                <label for="middle_name"> Patient's Middle Name <span
+                                                        class="text-danger">*</span></label>
+                                                <?php $__errorArgs = ['middle_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <input type="text" style="text-transform: capitalize;" id="last_name"
+                                                    value="<?php echo e(old('last_name')); ?>" name="last_name" required />
+                                                <label for="last_name"> Patient's Last name <span
+                                                        class="text-danger">*</span></label>
+                                                <?php $__errorArgs = ['last_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+
+                                                <input type="email" id="email_no" value="<?php echo e(old('email_no')); ?>"
+                                                    name="email_no" />
+                                                <label for="email_no"> Email No</label>
+
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="text" id="Phone_no" required />
+                                                <label for="phone_no"> Patient's Phone No<span
+                                                        class="text-danger">*</span></label>
+                                                <?php $__errorArgs = ['Phone_no'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+
+                                            </div>
+                                            <div class="form-group col-md-2">
+                                                <select name="marital_status" class="form-control select2-show-search"
+                                                    id="marital_status">
+                                                    <option value="">Marital Status</option>
+                                                    <?php $__currentLoopData = Config::get('static.marital_status'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $marital): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($marital); ?>"> <?php echo e($marital); ?>
+
+                                                    </option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <!-- <label-top for="blood_group">Blood Group </label>  -->
+                                                <select name="blood_group" class="form-control" id="blood_group">
+                                                    <option value="" for="blood_group">blood_group</option>
+                                                    <?php $__currentLoopData = Config::get('static.blood_groups'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang =>
+                                                    $blood_group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($blood_group); ?>"> <?php echo e($blood_group); ?>
+
+                                                    </option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <!-- <label-top for="gender">Gender <span class="text-danger">*</span></label> -->
+                                                <select name="gender" class="form-control select2-show-search"
+                                                    id="gender">
+                                                    <option value="" for="gender">gender</option>
+                                                    <?php $__currentLoopData = Config::get('static.gender'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $genders): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($genders); ?>"> <?php echo e($genders); ?>
+
+                                                    </option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <!-- <label-top for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label> -->
+                                                <!-- <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="<?php echo e(old('date_of_birth')); ?>"> -->
+                                                <input type="date" class="form-control" id="date_of_birth"
+                                                    id="date_of_birth" name="date_of_birth"
+                                                    onchange="getage(this.value)" value="<?php echo e(old('date_of_birth')); ?>"
+                                                    required />
+
+                                                <small class="text-danger"><?php echo e($errors->first('date_of_birth')); ?></small>
+
+                                            </div>
+
+                                            <div class="form-group col-md-4">
+                                                <!-- <label1>Age (yy-mm-dd) <span class="text-danger">*</span></label>  -->
+
+                                                <div class="row">
+                                                    <div class="col-lg-4">
+                                                        <!-- <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" required>  -->
+                                                        <small class="text-danger"><?php echo e($errors->first('date_of_birth_year')); ?></small>
+                                                        <input type="text" id="date_of_birth_year" required />
+                                                        <label for="date_of_birth_year"> Year</label>
+                                                    </div>
+
+                                                    <div class="col-lg-4">
+                                                        <!-- <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" required>  -->
+                                                        <input type="text" id="date_of_birth_month" required />
+                                                        <label for="date_of_birth_month"> Month</label>
+                                                        <small class="text-danger"><?php echo e($errors->first('date_of_birth_month')); ?></small>
+
+                                                    </div>
+                                                    <div class="col-lg-4">
+                                                        <!-- <input type="text" class="form-control" id="date_of_birth_day" name="day" placeholder="Day" required>  -->
+                                                        <input type="text" id="date_of_birth_day" required />
+                                                        <label for="date_of_birth_day"> Day</label>
+                                                        <small class="text-danger"><?php echo e($errors->first('date_of_birth_day')); ?></small>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body border-top hospital_allcardbodydesign">
+
+                                    <div class="row">
+                                        <div class="col-lg-6 ">
+                                            <h5 class="font-weight-bold"><i class="fas fa-users-cog"></i> Gurdian
+                                                Details</h5>
+                                            <div class="main-profile-contact-list ">
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+
+                                                        <input type="text" id="guardian_name"
+                                                            value="<?php echo e(old('guardian_name')); ?>" name="guardian_name"
+                                                            required />
+                                                        <label for="guardian_name">Enter Guardian Name<span
+                                                                class="text-danger">*</span></label>
+                                                        <small class="text-danger"><?php echo e($errors->first('guardian_name')); ?></small>
+
+                                                    </div>
+
+                                                    <div class="form-group col-md-6">
+                                                        <!-- <label for="guardian_contact_no"> Gurdian Contact No <span class="text-danger">*</span></label>
                                                  <input type="text" class="form-control" id="guardian_contact_no" value="<?php echo e(old('guardian_contact_no')); ?>" name="guardian_contact_no" placeholder="Enter Gurdian Phone No"> -->
-                                                            <input type="text" id="guardian_contact_no"
-                                                                value="<?php echo e(old('guardian_contact_no')); ?>"
-                                                                name="guardian_contact_no"required />
-                                                            <label for="guardian_contact_no">Enter Gurdian Phone No<span
-                                                                    class="text-danger">*</span></label>
-                                                            <small
-                                                                class="text-danger"><?php echo e($errors->first('guardian_contact_no')); ?></small>
+                                                        <input type="text" id="guardian_contact_no"
+                                                            value="<?php echo e(old('guardian_contact_no')); ?>"
+                                                            name="guardian_contact_no" required />
+                                                        <label for="guardian_contact_no">Enter Gurdian Phone No<span
+                                                                class="text-danger">*</span></label>
+                                                        <small class="text-danger"><?php echo e($errors->first('guardian_contact_no')); ?></small>
 
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
 
-                                            <div class="col-lg-6">
-                                             <h5 class="font-weight-bold">  <input type="checkbox" /> <i class="fas fa-user-circle"></i> Local
-                                                    Gurdian Name</h5>
-                                                <div class="main-profile-contact-list ">
-                                                    <div class="row">
-                                                        <div class="form-group col-md-6">
+                                        <div class="col-lg-6">
+                                            <h5 class="font-weight-bold"> <input type="checkbox" /> <i
+                                                    class="fas fa-user-circle"></i> Local
+                                                Gurdian Name</h5>
+                                            <div class="main-profile-contact-list ">
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
 
-                                                            <input type="text" id="local_guardian_name"
-                                                                value="<?php echo e(old('local_guardian_name')); ?>"
-                                                                name="local_guardian_name" required />
-                                                            <label for="local_guardian_name">Enter local Gurdian Name<span
-                                                                    class="text-danger">*</span></label>
-                                                            <small
-                                                                class="text-danger"><?php echo e($errors->first('local_guardian_name')); ?></small>
+                                                        <input type="text" id="local_guardian_name"
+                                                            value="<?php echo e(old('local_guardian_name')); ?>"
+                                                            name="local_guardian_name" required />
+                                                        <label for="local_guardian_name">Enter local Gurdian Name<span
+                                                                class="text-danger">*</span></label>
+                                                        <small class="text-danger"><?php echo e($errors->first('local_guardian_name')); ?></small>
 
-                                                        </div>
+                                                    </div>
 
-                                                        <div class="form-group col-md-6">
+                                                    <div class="form-group col-md-6">
 
-                                                            <input type="text" id="local_guardian_contact_no"
-                                                                value="<?php echo e(old('local_guardian_contact_no')); ?>"
-                                                                name="local_guardian_contact_no" required />
-                                                            <label for="Local Gurdian Contact No">Enter local Gurdian Phone
-                                                                No<span class="text-danger">*</span></label>
-                                                            <small
-                                                                class="text-danger"><?php echo e($errors->first('local_guardian_contact_no')); ?></small>
+                                                        <input type="text" id="local_guardian_contact_no"
+                                                            value="<?php echo e(old('local_guardian_contact_no')); ?>"
+                                                            name="local_guardian_contact_no" required />
+                                                        <label for="Local Gurdian Contact No">Enter local Gurdian Phone
+                                                            No<span class="text-danger">*</span></label>
+                                                        <small class="text-danger"><?php echo e($errors->first('local_guardian_contact_no')); ?></small>
 
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body border-top hospital_allcardbodydesign">
-                                        <h5 class="font-weight-bold"><i class="fas fa-map-marker-alt"></i>Address</h5>
-                                        <div class="main-profile-contact-list ">
-                                            <div class="row">
-                                                <div class="form-group col-md-4">
-                                                    <!-- <label for="address">Address <span class="text-danger">*</span></label>
+                                </div>
+                                <div class="card-body border-top hospital_allcardbodydesign">
+                                    <h5 class="font-weight-bold"><i class="fas fa-map-marker-alt"></i>Address</h5>
+                                    <div class="main-profile-contact-list ">
+                                        <div class="row">
+                                            <div class="form-group col-md-4">
+                                                <!-- <label for="address">Address <span class="text-danger">*</span></label>
                                                         <input type="text" class="form-control" id="address" value="<?php echo e(old('address')); ?>" name="address" placeholder="Enter Address"> -->
-                                                    <input type="text" id="address" value="<?php echo e(old('address')); ?>"
-                                                        name="address" required />
-                                                    <label for="address">Address<span
-                                                            class="text-danger">*</span></label>
-                                                    <small class="text-danger"><?php echo e($errors->first('address')); ?></small>
+                                                <input type="text" id="address" value="<?php echo e(old('address')); ?>"
+                                                    name="address" required />
+                                                <label for="address">Address<span class="text-danger">*</span></label>
+                                                <small class="text-danger"><?php echo e($errors->first('address')); ?></small>
 
-                                                </div>
-
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label for="country">Country <span class="text-danger">*</span></label> -->
-                                                    <select name="country" class="form-control select2-show-search"
-                                                        id="country" onchange="showDetails(this.value)">
-                                                        <option value="">Select Country... </option>
-                                                        <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $countrys): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <option value="<?php echo e($countrys->id); ?>"
-                                                                <?php echo e($countrys->id == '1' ? 'selected' : ' '); ?>>
-                                                                <?php echo e($countrys->country_name); ?></option>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    </select>
-                                                    <small class="text-danger"><?php echo e($errors->first('country')); ?></small>
-                                                </div>
-
-
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label for="state">State <span class="text-danger">*</span></label> -->
-                                                    <select name="state" class="form-control select2-show-search"
-                                                        id="state" required>
-                                                        <option value="">Select State...</option>
-                                                    </select>
-                                                    <small class="text-danger"><?php echo e($errors->first('state')); ?></small>
-                                                </div>
-
-
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label for="district">District <span class="text-danger">*</span></label> -->
-                                                    <select name="district" class="form-control select2-show-search"
-                                                        id="district" required>
-                                                        <option value="">Select District...</option>
-                                                    </select>
-                                                    <small class="text-danger"><?php echo e($errors->first('district')); ?></small>
-                                                </div>
-
-                                                <div class="form-group col-md-2">
-                                                    <!-- <label for="pin_no">Pin No. <span class="text-danger">*</span></label>
-                                                        <input type="text" class="form-control" id="pin_no" name="pin_no" value="<?php echo e(old('pin_no')); ?>"> -->
-                                                    <input type="text" id="pin_no"id="pin_no" name="pin_no"
-                                                        value="<?php echo e(old('pin_no')); ?>" required />
-                                                    <label for="pin_no">Pin No.<span
-                                                            class="text-danger">*</span></label>
-                                                    <small class="text-danger"><?php echo e($errors->first('pin_no')); ?></small>
-
-                                                </div>
                                             </div>
 
-                                        </div>
-                                    </div>
+                                            <div class="form-group col-md-2">
+                                                <!-- <label for="country">Country <span class="text-danger">*</span></label> -->
+                                                <select name="country" class="form-control select2-show-search"
+                                                    id="country" onchange="showDetails(this.value)">
+                                                    <option value="">Select Country... </option>
+                                                    <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $countrys): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($countrys->id); ?>" <?php echo e($countrys->id == '1' ?
+                                                        'selected' : ' '); ?>>
+                                                        <?php echo e($countrys->country_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                                <small class="text-danger"><?php echo e($errors->first('country')); ?></small>
+                                            </div>
 
-                                    <div class="card-body border-top hospital_allcardbodydesign">
-                                        
-                                            <input type="checkbox" />
-                                            <span style="font-weight: bold !important;
-                                            font-size: 15px;color:#0a1272; margin-bottom:3px;">Is Address And Local Address Same ?
-                                                </span>
+
+                                            <div class="form-group col-md-2">
+                                                <!-- <label for="state">State <span class="text-danger">*</span></label> -->
+                                                <select name="state" class="form-control select2-show-search" id="state"
+                                                    required>
+                                                    <option value="">Select State...</option>
+                                                </select>
+                                                <small class="text-danger"><?php echo e($errors->first('state')); ?></small>
+                                            </div>
+
+
+                                            <div class="form-group col-md-2">
+                                                <!-- <label for="district">District <span class="text-danger">*</span></label> -->
+                                                <select name="district" class="form-control select2-show-search"
+                                                    id="district" required>
+                                                    <option value="">Select District...</option>
+                                                </select>
+                                                <small class="text-danger"><?php echo e($errors->first('district')); ?></small>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <!-- <label for="pin_no">Pin No. <span class="text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="pin_no" name="pin_no" value="<?php echo e(old('pin_no')); ?>"> -->
+                                                <input type="text" id="pin_no" id="pin_no" name="pin_no"
+                                                    value="<?php echo e(old('pin_no')); ?>" required />
+                                                <label for="pin_no">Pin No.<span class="text-danger">*</span></label>
+                                                <small class="text-danger"><?php echo e($errors->first('pin_no')); ?></small>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="card-body border-top hospital_allcardbodydesign">
+                                    
+                                        <input type="checkbox" />
+                                        <span style="font-weight: bold !important;
+                                            font-size: 15px;color:#0a1272; margin-bottom:3px;">Is Address And Local
+                                            Address Same ?
+                                        </span>
 
 
                                         <h5 class="font-weight-bold"><i class="fas fa-map-marker"></i>Local Address</h5>
@@ -320,24 +342,23 @@
                                                         required />
                                                     <label for="local_address">Enter Local Address<span
                                                             class="text-danger">*</span></label>
-                                                    <small
-                                                        class="text-danger"><?php echo e($errors->first('local_address')); ?></small>
+                                                    <small class="text-danger"><?php echo e($errors->first('local_address')); ?></small>
 
                                                 </div>
 
                                                 <div class="form-group col-md-2">
                                                     <!-- <label for="country_local">Country <span class="text-danger">*</span></label> -->
-                                                    <select name="country_local" class="form-control select2-show-search"
-                                                        id="country_local" onchange="showDetails(this.value)">
+                                                    <select name="country_local"
+                                                        class="form-control select2-show-search" id="country_local"
+                                                        onchange="showDetails(this.value)">
                                                         <option value="">Select Country... </option>
                                                         <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <option value="<?php echo e($item->id); ?>"
-                                                                <?php echo e($item->id == '1' ? 'selected' : ' '); ?>>
-                                                                <?php echo e($item->country_name); ?></option>
+                                                        <option value="<?php echo e($item->id); ?>" <?php echo e($item->id == '1' ? 'selected'
+                                                            : ' '); ?>>
+                                                            <?php echo e($item->country_name); ?></option>
                                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                     </select>
-                                                    <small
-                                                        class="text-danger"><?php echo e($errors->first('country_local')); ?></small>
+                                                    <small class="text-danger"><?php echo e($errors->first('country_local')); ?></small>
                                                 </div>
 
                                                 <div class="form-group col-md-2">
@@ -351,12 +372,11 @@
 
                                                 <div class="form-group col-md-2">
                                                     <!-- <label for="district_local">District <span class="text-danger">*</span></label> -->
-                                                    <select name="district_local" class="form-control select2-show-search"
-                                                        id="district_local">
+                                                    <select name="district_local"
+                                                        class="form-control select2-show-search" id="district_local">
                                                         <option value="">Select District...</option>
                                                     </select>
-                                                    <small
-                                                        class="text-danger"><?php echo e($errors->first('district_local')); ?></small>
+                                                    <small class="text-danger"><?php echo e($errors->first('district_local')); ?></small>
                                                 </div>
 
                                                 <div class="form-group col-md-2">
@@ -366,84 +386,80 @@
                                                         value="<?php echo e(old('local_pin_no')); ?>" required />
                                                     <label for="local_pin_no">Pin No.<span
                                                             class="text-danger">*</span></label>
-                                                    <small
-                                                        class="text-danger"><?php echo e($errors->first('local_pin_no')); ?></small>
+                                                    <small class="text-danger"><?php echo e($errors->first('local_pin_no')); ?></small>
 
                                                 </div>
                                             </div>
 
                                         </div>
-                                    </div>
+                                </div>
 
-                                    <div class="card-body border-top hospital_allcardbodydesign">
-                                        <h5 class="font-weight-bold"><i class="fas fa-tasks"></i>Identification</h5>
-                                        <div class="main-profile-contact-list ">
-                                            <!-- <div class="row"> -->
-                                            <div class="form-group col-md-12 " id="indentification">
-                                                <div class="form-group col-md-5 d-inline-block">
-                                                    <!-- <label for="identification_name"> Identification Name </label> -->
-                                                    <select name="identification_name"
-                                                        class="form-control select2-show-search" id="identification_name">
-                                                        <option value="">Select One...</option>
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group col-md-5 d-inline-block">
-                                                    <!-- <label for="identification_number"> National Identification Number </label>
-                                                        <input type="text" class="form-control" value="<?php echo e(old('identification_number')); ?>" id="identification_number" name="identification_number" placeholder="Enter National Identification Number"> -->
-                                                    <input type="email" value="<?php echo e(old('identification_number')); ?>"
-                                                        id="identification_number" name="identification_number"
-                                                        required />
-                                                    <label for="identification_number">National Identification Number<span
-                                                            class="text-danger">*</span></label>
-                                                    <small class="text-danger"><?php echo e($errors->first('phone')); ?></small>
-
-                                                </div>
-                                            </div>
-
-                                            <!-- </div> -->
-                                        </div>
-                                    </div>
-
-                                    <div class="card-body border-top hospital_allcardbodydesign">
-                                        <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Registration</h5>
-                                        <div class="main-profile-contact-list ">
-                                            <div class="form-group col-md-6">
-                                                <!-- <label for="type"> <SPAN style="color:blue;font-weight: 600;">TYPE</SPAN> </label> -->
-                                                <select name="type" class="form-control select2-show-search"
-                                                    id="type">
-                                                    <option value=""
-                                                        <?php if(isset($type)): ?> <?php echo e($type == '' ? 'selected' : ''); ?> <?php endif; ?>>
-                                                        Select One.....</option>
-                                                    <option value="opd"
-                                                        <?php if(isset($type)): ?> <?php echo e($type == 'opd' ? 'selected' : ''); ?> <?php endif; ?>>
-                                                        OPD Registation</option>
-                                                    <option value="emg"
-                                                        <?php if(isset($type)): ?> <?php echo e($type == 'emg' ? 'selected' : ''); ?> <?php endif; ?>>
-                                                        EMG Registation</option>
+                                <div class="card-body border-top hospital_allcardbodydesign">
+                                    <h5 class="font-weight-bold"><i class="fas fa-tasks"></i>Identification</h5>
+                                    <div class="main-profile-contact-list ">
+                                        <!-- <div class="row"> -->
+                                        <div class="form-group col-md-12 " id="indentification">
+                                            <div class="form-group col-md-5 d-inline-block">
+                                                <!-- <label for="identification_name"> Identification Name </label> -->
+                                                <select name="identification_name"
+                                                    class="form-control select2-show-search" id="identification_name">
+                                                    <option value="">Select One...</option>
                                                 </select>
-
                                             </div>
 
-                                        </div>
-                                    </div>
+                                            <div class="form-group col-md-5 d-inline-block">
+                                                <!-- <label for="identification_number"> National Identification Number </label>
+                                                        <input type="text" class="form-control" value="<?php echo e(old('identification_number')); ?>" id="identification_number" name="identification_number" placeholder="Enter National Identification Number"> -->
+                                                <input type="email" value="<?php echo e(old('identification_number')); ?>"
+                                                    id="identification_number" name="identification_number" required />
+                                                <label for="identification_number">National Identification Number<span
+                                                        class="text-danger">*</span></label>
+                                                <small class="text-danger"><?php echo e($errors->first('phone')); ?></small>
 
-                                    <div class="modal-footer justify-content-center">
-                                        <button class="btn btn-indigo" type="submit">Save</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- </div> -->
                                     </div>
+                                </div>
+
+                                <div class="card-body border-top hospital_allcardbodydesign">
+                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Registration</h5>
+                                    <div class="main-profile-contact-list ">
+                                        <div class="form-group col-md-6">
+                                            <!-- <label for="type"> <SPAN style="color:blue;font-weight: 600;">TYPE</SPAN> </label> -->
+                                            <select name="type" class="form-control select2-show-search" id="type">
+                                                <option value="" <?php if(isset($type)): ?> <?php echo e($type=='' ? 'selected' : ''); ?>
+
+                                                    <?php endif; ?>>
+                                                    Select One.....</option>
+                                                <option value="opd" <?php if(isset($type)): ?> <?php echo e($type=='opd' ? 'selected' : ''); ?> <?php endif; ?>>
+                                                    OPD Registation</option>
+                                                <option value="emg" <?php if(isset($type)): ?> <?php echo e($type=='emg' ? 'selected' : ''); ?> <?php endif; ?>>
+                                                    EMG Registation</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer justify-content-center">
+                                    <button class="btn btn-indigo" type="submit">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+    </form>
 
 
-    </div>
+</div>
 
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
             $("#state").change(function(event) {
                 // alert('ok')
                 event.preventDefault();
@@ -473,10 +489,10 @@
                 });
             });
         });
-    </script>
+</script>
 
-    <script>
-        function getage(dob_) {
+<script>
+    function getage(dob_) {
             const dob = new Date(dob_);
             const nw = new Date();
 
@@ -513,10 +529,10 @@
             }
 
         }
-    </script>
+</script>
 
-    <script>
-        function myFunction() {
+<script>
+    function myFunction() {
             if (document.getElementById("myCheckbox").checked) {
                 var GurdianName = $('#guardian_name').val();
                 var GurdianContactNo = $('#guardian_contact_no').val();
@@ -529,10 +545,10 @@
                 $('#local_guardian_contact_no').val(' ');
             }
         }
-    </script>
+</script>
 
-    <script>
-        function localAddress() {
+<script>
+    function localAddress() {
             if (document.getElementById("checkboxforaddress").checked) {
                 var address = $('#address').val();
                 // var country = $('#country').val();
@@ -553,9 +569,9 @@
                 $('#local_pin_no').val(' ');
             }
         }
-    </script>
-    <script>
-        $(document).ready(function() {
+</script>
+<script>
+    $(document).ready(function() {
             $("#country").change(function(event) {
                 // alert('ok')
                 event.preventDefault();
@@ -584,9 +600,9 @@
                 });
             });
         });
-    </script>
-    <script>
-        $(document).ready(function() {
+</script>
+<script>
+    $(document).ready(function() {
             $("#country_local").change(function(event) {
                 // alert('ok')
                 event.preventDefault();
@@ -615,9 +631,9 @@
                 });
             });
         });
-    </script>
-    <script>
-        $(document).ready(function() {
+</script>
+<script>
+    $(document).ready(function() {
             $("#state_local").change(function(event) {
                 // alert('ok')
                 event.preventDefault();
@@ -647,10 +663,10 @@
                 });
             });
         });
-    </script>
+</script>
 
-    <script>
-        function showDetails(value) {
+<script>
+    function showDetails(value) {
 
             let in_india = `<option value="">Select One...</option>
         <option value="Voter Card">Voter Card</option>
@@ -666,7 +682,6 @@
                 $('#identification_name').html(out_india);
             }
         }
-    </script>
+</script>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/patient/add_new_patient.blade.php ENDPATH**/ ?>

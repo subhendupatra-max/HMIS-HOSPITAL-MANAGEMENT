@@ -342,7 +342,9 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
     // ====================== All Header ==================
 
     // ====================== Patient Details  ==================
-
+    Route::group(['middleware' => ['permission:Patient Master']], function () {
+        Route::get('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
+    });
     Route::group(['middleware' => ['permission:add patient']], function () {
         Route::get('add-new-patient', [PatientController::class, 'add_new_patient'])->name('add_new_patient');
         Route::post('submit_new_patient_details', [PatientController::class, 'submit_new_patient_details'])->name('submit_new_patient_details');
@@ -1384,6 +1386,8 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
             Route::post('find-medicine-name-by-category', [PharmacyController::class, 'medicine_name_by_medicine_category'])->name('find-medicine-name-by-category');
             Route::post('find-medicine-batch-by-medicine-name', [PharmacyController::class, 'find_medicine_batch_by_medicine_name'])->name('find-medicine-batch-by-medicine-name');
             Route::post('find-medicine-details-by-medicine-batch', [PharmacyController::class, 'find_medicine_details_by_medicine_batch'])->name('find-medicine-details-by-medicine-batch');
+            Route::post('save-pharmacy-billing', [PharmacyController::class, 'save_pharmacy_billing'])->name('save-pharmacy-billing');
+            
         });
     });
     Route::group(['middleware' => ['permission:medicine stock']], function () {
@@ -1975,13 +1979,6 @@ Route::group(['middleware' => ['permission:Finding']], function () {
 });
 //====================== FindingCategory ========================================
 
-Route::group(['middleware' => ['permission:Patient Master']], function () {
-    Route::get('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
-});
-
-
-
-
 //================================= Appointment ===================================================
 Route::group(['middleware' => ['permission:appointment main']], function () {
     Route::get('all-appointments-details', [AppointmentController::class, 'appointments_details'])->name('all-appointments-details');
@@ -2097,17 +2094,17 @@ Route::group(['middleware' => ['permission:front office']], function () {
 //================================= Front Office ============================================
 
 //================================= Ipd ===================================================
-Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'IPD'], function () {
+Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'], function () {
     Route::get('ipd-patient-listing', [IpdController::class, 'index'])->name('ipd-patient-listing');
 
     Route::group(['middleware' => ['permission:IPD registation']], function () {
         Route::post('ipd-registation', [IpdController::class, 'ipd_registation'])->name('ipd-registation');
     });
 
-    Route::group(['middleware' => ['permission:IPD profile']], function () {
+    Route::group(['middleware' => ['permission:IPD profile'], 'prefix' => 'ipd-profile'], function () {
         Route::get('ipd-profile/{id}', [IpdController::class, 'profile'])->name('ipd-profile');
-        Route::post('ipd-patient-status-change', [IpdController::class, 'ipd_patient_status_change'])->name('ipd-patient-status-change');
     });
+    Route::post('ipd-patient-status-change', [IpdController::class, 'ipd_patient_status_change'])->name('ipd-patient-status-change');
 
     Route::post('find-doctor-and-ward-by-department-in-ipd', [IpdController::class, 'find_doctor_and_ward_by_department_in_opd'])->name('find-doctor-and-ward-by-department-in-ipd');
 
@@ -2115,13 +2112,17 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'IPD'
 
     // Route::post('find-bed-type-by-department-in-ipd', [IpdController::class, 'find_bed_type_by_department_in_opd'])->name('find-bed-type-by-department-in-ipd');
 
-
-
     // =============================== Timeline ipd ==================================================
-
-    Route::group(['middleware' => ['permission:add timeline list ipd']], function () {
-        Route::post('save-timeline-lisitng-in-ipd', [TimelineController::class, 'save_timeline_listing_ipd'])->name('save-timeline-lisitng-in-ipd');
+    Route::group(['middleware' => ['permission:ipd timeline'], 'prefix' => 'ipd-timeline'], function () {
+        Route::group(['middleware' => ['permission:timeline list ipd']], function () {
+            Route::get('timeline-lisitng-in-ipd/{ipd_id}', [TimelineController::class, 'timeline_listing_ipd'])->name('timeline-lisitng-in-ipd');
+        });
+        Route::group(['middleware' => ['permission:add timeline ipd']], function () {
+            Route::get('add-timeline-ipd/{ipd_id}', [TimelineController::class, 'add_timeline_ipd'])->name('add-timeline-ipd');
+            Route::post('save-timeline-lisitng-in-ipd', [TimelineController::class, 'save_timeline_listing_ipd'])->name('save-timeline-lisitng-in-ipd');
+        });
     });
+
     Route::group(['middleware' => ['permission:delete timeline list ipd']], function () {
         Route::get('delete-timeline-lisitng-in-ipd/{id}', [TimelineController::class, 'delete_timeline_listing_ipd'])->name('delete-timeline-lisitng-in-ipd');
     });

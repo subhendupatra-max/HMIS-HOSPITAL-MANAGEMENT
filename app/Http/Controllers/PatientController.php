@@ -141,10 +141,10 @@ class PatientController extends Controller
 
     public function delete($id)
     {
-        Patient::where('id', $id)->update(['is_active' => '0', 'is_delete' => '1']);
-        return redirect()->back()->with('msg', 'deleted successfully...');
+        $p_id = base64_decode($id);
+        Patient::where('id', $p_id)->update(['is_active' => '0', 'is_delete' => '1']);
+        return redirect()->back()->with('success', 'Patient Delected Successfully...');
     }
-
     public function search_patient(Request $req)
     {
 
