@@ -391,7 +391,7 @@
                                                                         <input type="text" class="form-control" value="{{ old('identification_number') }}" id="identification_number" name="identification_number" placeholder="Enter National Identification Number"> -->
                                                     <input type="email" value="{{ old('identification_number') }}"
                                                         id="identification_number" name="identification_number"
-                                                        required />
+                                                        >
                                                     <label for="identification_number">National Identification Number<span
                                                             class="text-danger">*</span></label>
                                                     <small class="text-danger">{{ $errors->first('phone') }}</small>

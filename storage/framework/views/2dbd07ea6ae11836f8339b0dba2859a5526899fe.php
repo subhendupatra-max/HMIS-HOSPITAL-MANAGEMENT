@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-md-12">
@@ -137,9 +136,9 @@ unset($__errorArgs, $__bag); ?>
                             <div class="row">
                                 <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
 
-                                <div class="form-group col-md-4 ">
-                                 <!-- <label class="date-format">Appointment Date <span class="text-danger">*</span></label>  -->
-                                 <h6 class="dateappointment">Appointment Date <span class="text-danger">*</span></h6>
+                                <div class="form-group col-md-4 opd-bladedesign ">
+                                  <label class="date-format">Appointment Date <span class="text-danger">*</span></label>
+
                                     <?php if(auth()->user()->can('appointment date')): ?>
                                     <input type="datetime-local"  name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
                                     <?php else: ?>
@@ -159,7 +158,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
 
                                 <div class="form-group col-md-4 newaddappon">
-                                    
+                                     <label for="visit_type">Visit Type</label>
                                     <select name="visit_type" class="form-control select2-show-search" id="visit_type">
                                         <option value="New Visit" selected>New-Visit</option>
                                         <option value="Revisit">Revisit</option>
@@ -176,13 +175,13 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
 
-                                <div class="form-group col-md-4 newaddappon">
-                                    <label for="height" class="form-label">Case</label>
-                                    <input type="text" class="form-control" name="case" value="<?php echo e(old('case')); ?>" required />
+                                <div class="form-group col-md-4  opd-bladedesignin  ">
+                                    <label for="height">Case</label>
+                                    <input type="text" class="form-control" name="case" value="<?php echo e(old('case')); ?>">
 
                                 </div>
-                                <div class="form-group col-md-4">
-                                    
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="patient_type">Patient Type <span class="text-danger">*</span></label>
                                     <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
                                         <option value="">patient type <span class="text-danger">*</span></option>
                                         <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $patient_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -202,8 +201,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
 
                                 </div>
-                                <div class="form-group  col-md-4 frefesd" style="display:none">
-                                    
+                                <div class="form-group  col-md-4 frefesd newaddappon " style="display:none">
+                                     <label for="tpa_organization">TPA Organization <span class="text-danger">*</span></label>
                                     <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
                                         <option value="">tpa organization<span class="text-danger">*</span></option>
                                         <?php $__currentLoopData = $tpa_management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tpaManagement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -212,11 +211,11 @@ unset($__errorArgs, $__bag); ?>
                                     </select>
                                 </div>
                                 <div class="form-group  col-md-4 frefesds" style="display:none">
-                                    <label for="type_no" class="form-label"><span id="lableName"></span><span class="text-danger">*</span></label>
+                                    <label for="type_no"><span id="lableName"></span><span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>" id="type_no" />
                                 </div>
-                                <div class="form-group col-md-4">
-                                    
+                                <div class="form-group col-md-4 newaddappon ">
+                                     <label for="reference" class="form-label">Reference</label>
                                     <select name="reference" class="form-control select2-show-search" id="reference">
                                         <option value="">reference</option>
                                         <?php $__currentLoopData = $referer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $reference): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -225,8 +224,8 @@ unset($__errorArgs, $__bag); ?>
                                     </select>
 
                                 </div>
-                                <div class="form-group col-md-4">
-                                    
+                                <div class="form-group col-md-4 newaddappon">
+                                     <label for="department" >Department <span class="text-danger">*</span></label>
                                     <select name="department" class="form-control select2-show-search" id="department">
                                         <option value="">department</option>
                                         <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -245,8 +244,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
 
-                                <div class="form-group col-md-4">
-                                    
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="cons_doctor" >Consultant Doctor <span class="text-danger">*</span></label>
                                     <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
                                         <option value="">cons_doctor</option>
                                     </select>
@@ -261,8 +260,8 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    
+                                <div class="form-group col-md-4 newaddappon ">
+                                    <label for="unit" >Unit <span class="text-danger">*</span></label>
                                     <select name="unit" class="form-control select2-show-search" id="unit">
                                         <option value="">unit</option>
                                     </select>
@@ -303,27 +302,27 @@ unset($__errorArgs, $__bag); ?>
                                     ?</span>
 
                                 <div class="row" id="physical_condition" style="display: none">
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 opd-condition">
                                         <label for="height" class="form-label">Height(cm)</label>
                                         <input type="text" class="form-control" id="height" name="height" value="<?php echo e(old('height')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 opd-condition">
                                         <label for="weight" class="form-label">Weight(kg)</label>
                                         <input type="text" class="form-control" id="weight" name="weight" value="<?php echo e(old('weight')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 opd-condition">
                                         <label for="bp" class="form-label">BP</label>
                                         <input type="text" class="form-control" id="bp" name="bp" value="<?php echo e(old('bp')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 opd-condition1">
                                         <label for="pulse" class="form-label">Pulse</label>
                                         <input type="text" class="form-control" id="pulse" name="pulse" value="<?php echo e(old('pulse')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 opd-condition1">
                                         <label for="temperature" class="form-label">Temperature</label>
                                         <input type="text" class="form-control" id="temperature" name="temperature" value="<?php echo e(old('temperature')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 opd-condition1">
                                         <label for="respiration" class="form-label">Respiration</label>
                                         <input type="text" class="form-control" id="respiration" name="respiration" value="<?php echo e(old('respiration')); ?>" />
                                     </div>
@@ -333,8 +332,8 @@ unset($__errorArgs, $__bag); ?>
                                 <input type="checkbox" onchange="show_Symptoms()" id="show_Symptoms_button" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Symptoms ?</span>
 
                                 <div class="row" id="show_Symptoms" style="display: none">
-                                    <div class="col-md-3">
-                                        
+                                    <div class="col-md-3 newaddappon ">
+                                         <label for="symptoms_type" class="form-label">Symptoms Type</label>
                                         <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type">
                                             <option value="">symptoms type</option>
                                             <?php $__currentLoopData = $symptoms_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $symptoms_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -343,14 +342,14 @@ unset($__errorArgs, $__bag); ?>
                                         </select>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        
+                                    <div class="col-md-3 newaddappon">
+                                         <label for="symptoms_title" class="form-label">Symptoms Title</label>
 
                                         <select name="symptoms_title" id="symptoms_title" class="form-control select2-show-search">
                                             <option value="">symptoms_title</option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-4 opd-bladedesigninin">
                                         
                                         <input type="text" id="symptoms_description" name="symptoms_description" required="">
                                         <label for="Symptoms Description">Symptoms Description <span class="text-danger">*</span></label>
@@ -360,12 +359,12 @@ unset($__errorArgs, $__bag); ?>
 
                                 <hr class="hr_line">
                                 <div class="row">
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-4 opd-condition">
                                         
                                         <input type="text" id="note" name="note" required="">
                                         <label for="note">Note <span class="text-danger">*</span></label>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-4 opd-condition">
                                         
                                         <input type="text" id="any_known_allergies" name="any_known_allergies" required="">
                                         <label for="any_known_allergies">Any Known Allergies <span class="text-danger">*</span></label>
