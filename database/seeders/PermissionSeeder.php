@@ -759,5 +759,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'save emg payment']);
         Permission::create(['name' => 'edit emg payment']);
         Permission::create(['name' => 'delete emg payment']);
+
+        //ipd timeline
+        Permission::create(['name' => 'ipd tismeline']);
+        Permission::create(['name' => 'add timeline list ipd']); 
+        Permission::create(['name' => 'edit timeline ipd']);  
+        Permission::create(['name' => 'add timeline ipd']); 
     }
 }

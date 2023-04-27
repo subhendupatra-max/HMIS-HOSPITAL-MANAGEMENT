@@ -70,4 +70,14 @@ class PharmacyController extends Controller
 
         return response()->json(['medicine_details'=>$medicine_details,'medicine_stock'=>$medicine_stock]);
     }
+    public function save_pharmacy_billing(Request $request)
+    {
+        $validate = $request->validate([
+            'patientId'             => 'required',
+            'total'         => 'required',
+        ]);
+        dd($request->all());
+
+
+    }
 }

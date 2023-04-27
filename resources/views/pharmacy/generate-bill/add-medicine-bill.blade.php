@@ -1,200 +1,204 @@
 @extends('layouts.layout')
 @section('content')
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">Medicine Billing</div>
-            </div>
-            <div class="card-body p-0">
-                <div class="row no-gutters">
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Medicine Billing</div>
+        </div>
+        <div class="card-body p-0">
+            <div class="row no-gutters">
 
 
-                    <div class="col-lg-12 col-xl-12">
-                        <div class="options px-5 pt-1  border-bottom pb-3">
-                            <div class="row">
-                                {{-- ================== Search patient ====================== --}}
-                                <div class="options px-5 pt-5  border-right pb-3">
-                                    <form method="post" action="{{ route('add-pharmacy-billing-for-a-patient') }}">
-                                        @csrf
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <select class="form-control  select2-show-search" name="patient_id">
-                                                    <option value="">Search Patient...</option>
-                                                    @if (isset($all_patient))
-                                                        @foreach ($all_patient as $patient)
-                                                            <option value="{{ @$patient->id }}"
-                                                                {{ @$patient_details_information->id == $patient->id ? 'Selected' : '' }}>
-                                                                {{ @$patient->prefix }} {{ @$patient->first_name }}
-                                                                {{ @$patient->middle_name }}
-                                                                {{ @$patient->last_name }} (
-                                                                {{ @$patient->id }} ) </option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 mb-2">
-                                                <input type="text" id="prescription_no" />
-                                                <label for="prescription_no">Search By Prescription No.</label>
-                                            </div>
-                                            <div class="col-md-12 mb-2">
-                                                <button type="submit" class="btn btn-primary btn-sm"><i
-                                                        class="fa fa-search"></i>
-                                                    Search</button>
-                                            </div>
+                <div class="col-lg-12 col-xl-12">
+                    <div class="options px-5 pt-1  border-bottom pb-3">
+                        <div class="row">
+                            {{-- ================== Search patient ====================== --}}
+                            <div class="options px-5 pt-5  border-right pb-3">
+                                <form method="post" action="{{ route('add-pharmacy-billing-for-a-patient') }}">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <select class="form-control  select2-show-search" name="patient_id">
+                                                <option value="">Search Patient...</option>
+                                                @if (isset($all_patient))
+                                                @foreach ($all_patient as $patient)
+                                                <option value="{{ @$patient->id }}" {{ @$patient_details_information->id
+                                                    == $patient->id ? 'Selected' : '' }}>
+                                                    {{ @$patient->prefix }} {{ @$patient->first_name }}
+                                                    {{ @$patient->middle_name }}
+                                                    {{ @$patient->last_name }} (
+                                                    {{ @$patient->id }} ) </option>
+                                                @endforeach
+                                                @endif
+                                            </select>
+                                            @error('patientId')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
-                                    </form>
-                                </div>
-                                {{-- ================== Search patient ====================== --}}
-
-                                @if (isset($patient_details_information))
-                                    {{-- ================== patient Details ====================== --}}
-                                    @error('patientId')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                    <div class="options px-5  pb-3">
-                                        <div class="row">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="py-2 px-5">
-                                                                <span class="font-weight-semibold w-50">Gender </span>
-                                                            </td>
-                                                            <td class="py-2 px-5">
-                                                                {{ @$patient_details_information->gender }}</td>
-                                                            <td class="py-2 px-5">
-                                                                <span class="font-weight-semibold w-50">Age </span>
-                                                            </td>
-                                                            <td class="py-2 px-5">
-                                                                {{ @$patient_details_information->year }}y
-                                                                {{ @$patient_details_information->month }}m
-                                                                {{ @$patient_details_information->day }}d
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="py-2 px-5">
-                                                                <span class="font-weight-semibold w-50">Guardian Name
-                                                                </span>
-                                                            </td>
-                                                            <td class="py-2 px-5">
-                                                                {{ @$patient_details_information->guardian_name_realation }}
-                                                                {{ @$patient_details_information->guardian_name }}
-                                                            </td>
-
-                                                            <td class="py-2 px-5">
-                                                                <span class="font-weight-semibold w-50">Phone </span>
-                                                            </td>
-                                                            <td class="py-2 px-5">
-                                                                {{ @$patient_details_information->phone }}</td>
-                                                        </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        <div class="col-md-6 mb-2">
+                                            <input type="text" id="prescription_no" />
+                                            <label for="prescription_no">Search By Prescription No.</label>
+                                        </div>
+                                        <div class="col-md-12 mb-2">
+                                            <button type="submit" class="btn btn-primary btn-sm"><i
+                                                    class="fa fa-search"></i>
+                                                Search</button>
                                         </div>
                                     </div>
-                                    {{-- ================== patient Details ====================== --}}
-                                @endif
-
+                                </form>
                             </div>
-                        </div>
-                        <form method="post" action="{{ route('save-pathology-billing') }}">
-                            @csrf
+                            {{-- ================== Search patient ====================== --}}
 
-                            <div class="options px-5 pt-1  border-bottom pb-3">
+                            @if (isset($patient_details_information))
+                            {{-- ================== patient Details ====================== --}}
+
+                            <div class="options px-5  pb-3">
                                 <div class="row">
                                     <div class="table-responsive">
-                                        <table class="table card-table table-vcenter text-nowrap">
-                                            <thead>
+                                        <table class="table">
+                                            <tbody>
                                                 <tr>
-                                                    <th scope="col" style="width: 10%">Category <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 20%">Name <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 10%">Batch No <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 10%">Expiry Date <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">MRP <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Sale Price <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Qty <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Unit <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Tax <span
-                                                                class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Amount <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 2%">
-                                                        <button class="btn btn-success btn-sm" type="button"
-                                                            onclick="addnewrow()"><i class="fa fa-plus"></i></button>
-                                                    </th>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Gender </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        {{ @$patient_details_information->gender }}</td>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Age </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        {{ @$patient_details_information->year }}y
+                                                        {{ @$patient_details_information->month }}m
+                                                        {{ @$patient_details_information->day }}d
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody id="subhendu">
 
-                                                <!-- dynamic row -->
+                                                <tr>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Guardian Name
+                                                        </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        {{ @$patient_details_information->guardian_name_realation }}
+                                                        {{ @$patient_details_information->guardian_name }}
+                                                    </td>
+
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Phone </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        {{ @$patient_details_information->phone }}</td>
+                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
-                            <div class="options px-5 pt-5  border-bottom pb-3">
-                                <div class="container mt-5">
-                                    <div class="d-flex justify-content-end">
-                                        <span class="biltext">Total</span>
-                                        <input type="text" name="total" readonly id="total_am"
-                                            class="form-control myfld">
-                                    </div>
-                                    <div class="d-flex justify-content-end mt-2">
-                                        <span class="biltext">Discount (% / flat)</span>
-                                        <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
-                                            id="total_discount" class="form-control myfld">
-                                        <select name="discount_type" onchange="gettotal()" id="discount_type"
-                                            class="form-control myfld" style="width: 75px">
-                                            <option value="percentage" selected>%</option>
-                                            <option value="flat">Flat</option>
-                                        </select>
-                                    </div>
-                                    <div class="d-flex justify-content-end mt-2">
-                                        <span class="biltext">Tax</span>
-                                        <input type="text" name="total_tax" onkeyup="gettotal()" value="0"
-                                            id="total_tax" class="form-control myfld">
-                                    </div>
-                                    <div class="d-flex justify-content-end thrdarea">
-                                        <span class="biltext">Grand Total</span>
-                                        <input type="text" name="grand_total" readonly id="grnd_total" value="00"
-                                            class="form-control myfld">
-                                        @error('grnd_total')
-                                            <br>
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
+                            {{-- ================== patient Details ====================== --}}
+                            @endif
+
+                        </div>
+                    </div>
+                    <form method="post" action="{{ route('save-pharmacy-billing') }}">
+                        @csrf
+
+                        <div class="options px-5 pt-1  border-bottom pb-3">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="width: 10%">Category <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 20%">Name <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 10%">Batch No <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 10%">Expiry Date <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 8%">MRP <span class="text-danger">*</span>
+                                                </th>
+                                                <th scope="col" style="width: 8%">Sale Price <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 8%">Qty <span class="text-danger">*</span>
+                                                </th>
+                                                <th scope="col" style="width: 8%">Unit <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 8%">Tax <span class="text-danger">*</span>
+                                                </th>
+                                                <th scope="col" style="width: 8%">Amount <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 2%">
+                                                    <button class="btn btn-success btn-sm" type="button"
+                                                        onclick="addnewrow()"><i class="fa fa-plus"></i></button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="subhendu">
+
+                                            <!-- dynamic row -->
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="btn-list p-3">
-                                <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
-                                        class="fa fa-calculator"></i> Calculate</button>
-                                <button class="btn btn-primary btn-sm float-right " type="submit" name="save"><i
-                                        class="fa fa-file"></i> Save</button>
-                                <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print"
-                                    type="submit"><i class="fa fa-paste"></i> Save & Print</button>
+                        </div>
+                        <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
+                        <div class="options px-5 pt-5  border-bottom pb-3">
+                            <div class="container mt-5">
+                                <div class="d-flex justify-content-end">
+                                    <span class="biltext">Total</span>
+                                    <input type="text" name="total" readonly id="total_am" class="form-control myfld">
+                                </div>
+                                @error('total')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                                {{-- <div class="d-flex justify-content-end mt-2">
+                                    <span class="biltext">Discount (% / flat)</span>
+                                    <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
+                                        id="total_discount" class="form-control myfld">
+                                    <select name="discount_type" onchange="gettotal()" id="discount_type"
+                                        class="form-control myfld" style="width: 75px">
+                                        <option value="percentage" selected>%</option>
+                                        <option value="flat">Flat</option>
+                                    </select>
+                                </div> --}}
+                                {{-- <div class="d-flex justify-content-end mt-2">
+                                    <span class="biltext">Tax</span>
+                                    <input type="text" name="total_tax" onkeyup="gettotal()" value="0" id="total_tax"
+                                        class="form-control myfld">
+                                </div> --}}
+                                {{-- <div class="d-flex justify-content-end thrdarea">
+                                    <span class="biltext">Grand Total</span>
+                                    <input type="text" name="grand_total" readonly id="grnd_total" value="00"
+                                        class="form-control myfld">
+                                    @error('grnd_total')
+                                    <br>
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div> --}}
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div class="btn-list p-3">
+                            <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
+                                    class="fa fa-calculator"></i> Calculate</button>
+                            <button class="btn btn-primary btn-sm float-right " type="submit" value="save"
+                                name="save"><i class="fa fa-file"></i> Save</button>
+                            <button class="btn btn-primary btn-sm float-right mr-2" value="save_and_print"
+                                name="save_and_print" type="submit"><i class="fa fa-paste"></i> Save & Print</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- ===========================Add New Item Using New Row=========================== -->
-    <script type="text/javascript">
-        var i = 0;
+<!-- ===========================Add New Item Using New Row=========================== -->
+<script type="text/javascript">
+    var i = 0;
+
         function addnewrow() {
             var html = `  <tr id="row${i}">
                         <td>
@@ -234,7 +238,7 @@
                             <input class="form-control" readonly id="amount${i}" name="amount[]" type="text" />
                         </td>
                         <td>
-                            <button class="btn btn-danger btn-sm" type="button" onclick="removerow()"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-danger btn-sm" type="button" onclick="removerow(${i})"><i class="fa fa-times"></i></button>
                         </td>
                     </tr>`;
             $('#subhendu').append(html);
@@ -242,14 +246,13 @@
 
         }
 
-        function getamount(rowid)
-        {
-            var qty = $('#qty'+rowid).val();
-            var tax = $('#tax'+rowid).val();
-            var price = $('#sale_price'+rowid).val();
+        function getamount(rowid) {
+            var qty = $('#qty' + rowid).val();
+            var tax = $('#tax' + rowid).val();
+            var price = $('#sale_price' + rowid).val();
             var qty_p = parseFloat(qty) * parseFloat(price);
-            var tax_a = parseFloat(qty_p)*(parseFloat(tax)/100);
-           var amount = parseFloat(qty_p) + parseFloat(tax_a);
+            var tax_a = parseFloat(qty_p) * (parseFloat(tax) / 100);
+            var amount = parseFloat(qty_p) + parseFloat(tax_a);
 
             $('#amount' + rowid).val(amount);
         }
@@ -321,23 +324,25 @@
                     $('#sale_price' + rowid).val(response.medicine_details.sale_price);
                     $('#unit' + rowid).val(response.medicine_details.medicine_unit_name);
                     $('#unit_id' + rowid).val(response.medicine_details.unit_id);
-                    $('#avi_qty' + rowid).html('<h6 class="avlqty_text">Available Qty :'+response.medicine_stock.available_quantity+' '+response.medicine_details.medicine_unit_name+' </h6>')
+                    $('#avi_qty' + rowid).html('<h6 class="avlqty_text">Available Qty :' + response
+                        .medicine_stock.available_quantity + ' ' + response.medicine_details
+                        .medicine_unit_name + ' </h6>')
                 },
                 error: function(error) {
                     console.log(error);
                 }
             });
         }
-    </script>
-    <!-- ===========================Add New Item Using New Row=========================== -->
-    <script type="text/javascript">
-        function removerow(i) {
-            $('#rowid' + i).remove();
+</script>
+<!-- ===========================Add New Item Using New Row=========================== -->
+<script type="text/javascript">
+    function removerow(i) {
+            $('#row' + i).remove();
             gettotal();
         }
-    </script>
-    <script type="text/javascript">
-        function gettotal() {
+</script>
+<script type="text/javascript">
+    function gettotal() {
             var no_of_row = $('#subhendu tr').length;
             console.log('aaa=>', no_of_row);
 
@@ -347,24 +352,9 @@
             }).get();
             $('#total_am').val(t);
 
-            var total_discount = $('#total_discount').val();
-            if ($('#discount_type').val() == 'percentage') {
-                var r = parseFloat(t) + ((parseFloat(t)) * (parseFloat(
-                    total_discount) / 100));
-            } else {
-                var r = parseFloat(t) + parseFloat(total_discount);
-            }
-            var total_tax = $('#total_tax').val();
-            if (total_tax != 0) {
-                var grnd_total = r + (r * (total_tax / 100));
-            } else {
-                var grnd_total = r;
-            }
-
-            $('#grnd_total').val(grnd_total);
 
         }
-    </script>
+</script>
 
 
 @endsection

@@ -172,15 +172,24 @@
                                                     <div class="row">
                                                         <div class="form-group col-md-6 newuserchangee">
 
-                                                            <input type="text" id="guardian_name"
-                                                                value="{{ old('guardian_name') }}" name="guardian_name"
-                                                                required />
-                                                            <label for="guardian_name">Enter Guardian Name<span
-                                                                    class="text-danger">*</span></label>
-                                                            <small
-                                                                class="text-danger">{{ $errors->first('guardian_name') }}</small>
+                                            <div class="form-group col-md-2 custom-field">
+                                                <input type="text" style="text-transform: capitalize;" id="first_name"
+                                                    value="{{ old('first_name') }}" name="first_name" required />
+                                                <label for="first_name"> Patient's First Name <span
+                                                        class="text-danger">*</span> </label>
+                                                @error('first_name')
+                                                <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
 
-                                                        </div>
+                                            <div class="form-group col-md-2">
+                                                <input type="text" id="middle_name" style="text-transform:capitalize;"  value="{{ old('middle_name') }}" name="middle_name" />
+                                                <label for="middle_name"> Patient's Middle Name <span
+                                                        class="text-danger">*</span></label>
+                                                @error('middle_name')
+                                                <small class="text-danger">{{ $message }}</small>
+                                                @enderror
+                                            </div>
 
                                                         <div class="form-group col-md-6 newuserchangee">
                                                             <!-- <label for="guardian_contact_no"> Gurdian Contact No <span class="text-danger">*</span></label>
@@ -193,10 +202,10 @@
                                                             <small
                                                                 class="text-danger">{{ $errors->first('guardian_contact_no') }}</small>
 
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
 
                                             <div class="col-lg-6">
                                                 <h5 class="font-weight-bold"> <input type="checkbox"> <i
@@ -214,7 +223,7 @@
                                                             <small
                                                                 class="text-danger">{{ $errors->first('local_guardian_name') }}</small>
 
-                                                        </div>
+                                                    </div>
 
                                                         <div class="form-group col-md-6 newuserchangeedesign ">
 
@@ -226,7 +235,6 @@
                                                             <small
                                                                 class="text-danger">{{ $errors->first('local_guardian_contact_no') }}</small>
 
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -293,8 +301,19 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-                                    </div>
+                                            <div class="form-group col-md-2">
+                                                <!-- <label for="country">Country <span class="text-danger">*</span></label> -->
+                                                <select name="country" class="form-control select2-show-search"
+                                                    id="country" onchange="showDetails(this.value)">
+                                                    <option value="">Select Country... </option>
+                                                    @foreach ($country as $countrys)
+                                                    <option value="{{ $countrys->id }}" {{ $countrys->id == '1' ?
+                                                        'selected' : ' ' }}>
+                                                        {{ $countrys->country_name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <small class="text-danger">{{ $errors->first('country') }}</small>
+                                            </div>
 
                                     <div class="card-body border-top hospital_allcardbodydesign">
                                         {{-- <input type="checkbox" id="opd_belling" value="emg_belling_from_emg" />
@@ -318,8 +337,8 @@
                                                     >
                                                     <label for="local_address">Enter Local Address<span
                                                             class="text-danger">*</span></label>
-                                                    <small
-                                                        class="text-danger">{{ $errors->first('local_address') }}</small>
+                                                    <small class="text-danger">{{ $errors->first('local_address')
+                                                        }}</small>
 
                                                 </div>
 
@@ -329,13 +348,13 @@
                                                         id="country_local" onchange="showDetails(this.value)">
                                                         <option value="">Select Country... </option>
                                                         @foreach ($country as $item)
-                                                            <option value="{{ $item->id }}"
-                                                                {{ $item->id == '1' ? 'selected' : ' ' }}>
-                                                                {{ $item->country_name }}</option>
+                                                        <option value="{{ $item->id }}" {{ $item->id == '1' ? 'selected'
+                                                            : ' ' }}>
+                                                            {{ $item->country_name }}</option>
                                                         @endforeach
                                                     </select>
-                                                    <small
-                                                        class="text-danger">{{ $errors->first('country_local') }}</small>
+                                                    <small class="text-danger">{{ $errors->first('country_local')
+                                                        }}</small>
                                                 </div>
 
                                                 <div class="form-group col-md-2 addpatientdesignpin  ">
@@ -344,7 +363,8 @@
                                                         id="state_local">
                                                         <option value="">Select State...</option>
                                                     </select>
-                                                    <small class="text-danger">{{ $errors->first('state_local') }}</small>
+                                                    <small class="text-danger">{{ $errors->first('state_local')
+                                                        }}</small>
                                                 </div>
 
                                                 <div class="form-group col-md-2 addpatientdesignpin">
@@ -353,8 +373,8 @@
                                                         id="district_local">
                                                         <option value="">Select District...</option>
                                                     </select>
-                                                    <small
-                                                        class="text-danger">{{ $errors->first('district_local') }}</small>
+                                                    <small class="text-danger">{{ $errors->first('district_local')
+                                                        }}</small>
                                                 </div>
 
                                                 <div class="form-group col-md-2 addpin">
@@ -364,14 +384,14 @@
                                                         value="{{ old('local_pin_no') }}" >
                                                     <label for="local_pin_no">Pin No.<span
                                                             class="text-danger">*</span></label>
-                                                    <small
-                                                        class="text-danger">{{ $errors->first('local_pin_no') }}</small>
+                                                    <small class="text-danger">{{ $errors->first('local_pin_no')
+                                                        }}</small>
 
                                                 </div>
                                             </div>
 
                                         </div>
-                                    </div>
+                                </div>
 
                                     <div class="card-body border-top hospital_allcardbodydesign">
                                         <h5 class="font-weight-bold"><i class="fas fa-tasks"></i>Identification</h5>
@@ -420,28 +440,62 @@
                                                         @if (isset($type)) {{ $type == 'emg' ? 'selected' : '' }} @endif>
                                                         EMG Registation</option>
                                                 </select>
-
                                             </div>
 
-                                        </div>
-                                    </div>
+                                            <div class="form-group col-md-5 d-inline-block">
+                                                <!-- <label for="identification_number"> National Identification Number </label>
+                                                        <input type="text" class="form-control" value="{{ old('identification_number') }}" id="identification_number" name="identification_number" placeholder="Enter National Identification Number"> -->
+                                                <input type="email" value="{{ old('identification_number') }}"
+                                                    id="identification_number" name="identification_number" required />
+                                                <label for="identification_number">National Identification Number<span
+                                                        class="text-danger">*</span></label>
+                                                <small class="text-danger">{{ $errors->first('phone') }}</small>
 
-                                    <div class="modal-footer justify-content-center">
-                                        <button class="btn btn-indigo" type="submit">Save</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- </div> -->
                                     </div>
+                                </div>
+
+                                <div class="card-body border-top hospital_allcardbodydesign">
+                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Registration</h5>
+                                    <div class="main-profile-contact-list ">
+                                        <div class="form-group col-md-6">
+                                            <!-- <label for="type"> <SPAN style="color:blue;font-weight: 600;">TYPE</SPAN> </label> -->
+                                            <select name="type" class="form-control select2-show-search" id="type">
+                                                <option value="" @if (isset($type)) {{ $type=='' ? 'selected' : '' }}
+                                                    @endif>
+                                                    Select One.....</option>
+                                                <option value="opd" @if (isset($type)) {{ $type=='opd' ? 'selected' : ''
+                                                    }} @endif>
+                                                    OPD Registation</option>
+                                                <option value="emg" @if (isset($type)) {{ $type=='emg' ? 'selected' : ''
+                                                    }} @endif>
+                                                    EMG Registation</option>
+                                            </select>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer justify-content-center">
+                                    <button class="btn btn-indigo" type="submit">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+    </form>
 
 
-    </div>
+</div>
 
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
             $("#state").change(function(event) {
                 // alert('ok')
                 event.preventDefault();
@@ -471,10 +525,10 @@
                 });
             });
         });
-    </script>
+</script>
 
-    <script>
-        function getage(dob_) {
+<script>
+    function getage(dob_) {
             const dob = new Date(dob_);
             const nw = new Date();
 
@@ -511,10 +565,10 @@
             }
 
         }
-    </script>
+</script>
 
-    <script>
-        function myFunction() {
+<script>
+    function myFunction() {
             if (document.getElementById("myCheckbox").checked) {
                 var GurdianName = $('#guardian_name').val();
                 var GurdianContactNo = $('#guardian_contact_no').val();
@@ -527,10 +581,10 @@
                 $('#local_guardian_contact_no').val(' ');
             }
         }
-    </script>
+</script>
 
-    <script>
-        function localAddress() {
+<script>
+    function localAddress() {
             if (document.getElementById("checkboxforaddress").checked) {
                 var address = $('#address').val();
                 // var country = $('#country').val();
@@ -551,9 +605,9 @@
                 $('#local_pin_no').val(' ');
             }
         }
-    </script>
-    <script>
-        $(document).ready(function() {
+</script>
+<script>
+    $(document).ready(function() {
             $("#country").change(function(event) {
                 // alert('ok')
                 event.preventDefault();
@@ -582,9 +636,9 @@
                 });
             });
         });
-    </script>
-    <script>
-        $(document).ready(function() {
+</script>
+<script>
+    $(document).ready(function() {
             $("#country_local").change(function(event) {
                 // alert('ok')
                 event.preventDefault();
@@ -613,9 +667,9 @@
                 });
             });
         });
-    </script>
-    <script>
-        $(document).ready(function() {
+</script>
+<script>
+    $(document).ready(function() {
             $("#state_local").change(function(event) {
                 // alert('ok')
                 event.preventDefault();
@@ -645,10 +699,10 @@
                 });
             });
         });
-    </script>
+</script>
 
-    <script>
-        function showDetails(value) {
+<script>
+    function showDetails(value) {
 
             let in_india = `<option value="">Select One...</option>
         <option value="Voter Card">Voter Card</option>
@@ -664,5 +718,5 @@
                 $('#identification_name').html(out_india);
             }
         }
-    </script>
+</script>
 @endsection

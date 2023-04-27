@@ -10,7 +10,8 @@
                     @csrf
                     <div class="row">
                         <div class="form-group col-md-3">
-
+                            {{-- <label for="medicine_name" class="form-label">Medicine Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="medicine_name" name="medicine_name" value="{{ old('medicine_name') }}" placeholder="Enter Medicine Number" required> --}}
                             <input type="text" id="medicine_name" name="medicine_name" value="{{ old('medicine_name') }}"
                                 required />
                             <label for="medicine_name">Medicine Name<span class="text-danger">*</span> </label>
@@ -20,7 +21,7 @@
                         </div>
 
                         <div class="form-group col-md-3">
-
+                            {{-- <label for="medicine_catagory" class="form-label">Medicine Category <span class="text-danger">*</span></label> --}}
                             <select class="form-control select2-show-search select2-hidden-accessible"
                                 value="{{ old('medicine_catagory') }}" name="medicine_catagory" id="medicine_catagory"
                                 required>
