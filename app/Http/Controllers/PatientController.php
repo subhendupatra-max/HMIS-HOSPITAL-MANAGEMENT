@@ -41,31 +41,28 @@ class PatientController extends Controller
 
     public function submit_new_patient_details(Request $request)
     {
-
         $patient_prefix = Prefix::where('name', 'patient')->first();
         $request->validate([
-
             'prefix'                     => 'required',
             'first_name'                 => "required",
             'last_name'                  => "required",
             'guardian_name'              => "required",
             'gender'                     => "required",
-            'year'                       => "numeric|max:3|required",
-            'month'                      => "numeric|max:2|required",
-            'day'                        => "numeric|max:3|required",
-            'phone'                      => "max:10|required",
+            'date_of_birth'              => "required",
+            'date_of_birth_year'         => "numeric|max:130|required",
+            'date_of_birth_month'        => "numeric|max:13|required",
+            'date_of_birth_day'          => "numeric|max:32|required",
+            'phone'                      => "max:9999999999|required",
             'address'                    => "required",
-            'pin_no'                     => "required|max:6",
+            'pin_no'                     => "required|max:999999",
             'district'                   => "required",
             'state'                      => "required",
-            'local_guardian_contact_no'  => "max:10",
-            'guardian_contact_no'        => "max:10",
-
+            'local_guardian_contact_no'  => "max:9999999999",
+            'guardian_contact_no'        => "max:9999999999",
+            'local_guardian_name'        => "required",
         ]);
         try {
-
             DB::beginTransaction();
-
             $patient = new Patient();
             $patient->patient_prefix =  $patient_prefix->prefix;
             $patient->prefix = $request->prefix;
@@ -78,25 +75,35 @@ class PatientController extends Controller
             $patient->blood_group = $request->blood_group;
             $patient->gender = $request->gender;
             $patient->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
-            $patient->year = $request->year;
-            $patient->month = $request->month;
-            $patient->day = $request->day;
+            $patient->year = $request->date_of_birth_year;
+            $patient->month = $request->date_of_birth_month;
+            $patient->day = $request->date_of_birth_day;
             $patient->local_guardian_name = $request->local_guardian_name;
             $patient->local_guardian_contact_no = $request->local_guardian_contact_no;
             $patient->phone = $request->phone;
             $patient->email = $request->email;
             $patient->address = $request->address;
             $patient->state = $request->state;
-            $patient->local_address = $request->local_address;
-            $patient->country_local = $request->country_local;
-            $patient->state_local = $request->state_local;
-            $patient->district_local = $request->district_local;
             $patient->country = $request->country;
             $patient->district = $request->district;
             $patient->pin_no = $request->pin_no;
-            $patient->local_pin_no = $request->local_pin_no;
             $patient->identification_name = $request->identification_name;
             $patient->identification_number = $request->identification_number;
+            if(!empty($request->localaddress_and_address_are_same))
+            {  
+                $patient->local_address = $request->local_address;     
+                $patient->country_local = $request->country_local;
+                $patient->state_local = $request->state_local;
+                $patient->district_local = $request->district_local;
+                $patient->local_pin_no = $request->local_pin_no;
+            }
+            else{
+                $patient->local_address = $request->address;
+                $patient->country_local = $request->country;
+                $patient->state_local = $request->state;
+                $patient->district_local = $request->district;
+                $patient->local_pin_no = $request->pin_no;
+            }
             $patient->save();
 
             DB::commit();
