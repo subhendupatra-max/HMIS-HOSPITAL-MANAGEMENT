@@ -135,18 +135,18 @@ class OpdController extends Controller
         $patient_patient_name = $request->patient_name;
         $patient_mobile_no = $request->mobile_no;
     }
-    // public function opd_registation($patientid)
-    // {
-    //     $patient_id = base64_decode($patientid);
-    //     $patient_details = Patient::where('id', '=', $patient_id)->first();
-    //     $tpa_management = TpaManagement::get();
-    //     $referer = Referral::get();
-    //     $departments = Department::where('is_active', '1')->get();
-    //     $symptoms_types = SymptomsType::get();
-    //     $ticket_fees = OpdSetup::first();
+    public function opd_registation($patientid)
+    {
+        $patient_id = base64_decode($patientid);
+        $patient_details = Patient::where('id', '=', $patient_id)->first();
+        $tpa_management = TpaManagement::get();
+        $referer = Referral::get();
+        $departments = Department::where('is_active', '1')->get();
+        $symptoms_types = SymptomsType::get();
+        $ticket_fees = OpdSetup::first();
 
-    //     return view('OPD.opd_registation', compact('symptoms_types', 'ticket_fees', 'departments', 'referer', 'patient_details', 'patient_id', 'tpa_management'));
-    // }
+        return view('OPD.opd_registation', compact('symptoms_types', 'ticket_fees', 'departments', 'referer', 'patient_details', 'patient_id', 'tpa_management'));
+    }
     public function find_doctor_by_department(Request $request)
     {
         $opd_units = OpdUnit::select('opd_unit_details.unit_name')->join('opd_unit_details', 'opd_unit_details.opd_unit_id', '=', 'opd_units.id')->where('opd_units.department_id', $request->department_id)->get();

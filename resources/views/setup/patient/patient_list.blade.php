@@ -69,7 +69,7 @@
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
                                             <a class="dropdown-item"
-                                                href="{{ route('view-new-patient', base64_encode($all_patients->id)) }}"><i
+                                                href="{{ route('patient-details-profile', base64_encode($all_patients->id)) }}"><i
                                                     class="fa fa-eye"></i> View</a>
                                             @can('edit patient')
                                             <a class="dropdown-item"

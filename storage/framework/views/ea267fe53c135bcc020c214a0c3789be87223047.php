@@ -67,7 +67,7 @@
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
                                             <a class="dropdown-item"
-                                                href="<?php echo e(route('view-new-patient', base64_encode($all_patients->id))); ?>"><i
+                                                href="<?php echo e(route('patient-details-profile', base64_encode($all_patients->id))); ?>"><i
                                                     class="fa fa-eye"></i> View</a>
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
                                             <a class="dropdown-item"
