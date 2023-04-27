@@ -16635,7 +16635,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     color: #6b6f80;
     background-color: ;
     background-clip: padding-box;
-    border-bottom: 2px solid #330985;
+    border-bottom: 1px solid #330985;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     border-radius: 0px;
     border-top: none;
@@ -16732,10 +16732,10 @@ input::-webkit-input-placeholder, input::-moz-placeholder, input:-ms-input-place
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #444;
-    line-height: 35px !important;
+    line-height: 33px !important;
     font-size: 12px;
     background-color: #;
-    border-bottom: 2px solid #330985;
+    border-bottom: 1px solid #330985;
     border-radius: 0px;
     border-top: none;
     border-left: none;
@@ -17115,7 +17115,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 
 /*-- Select2 Styles --*/
 .select2-lg .select2-container .select2-selection--single {
-  height: 2.875rem !important; }
+  height: 0.375rem !important; }
 
 .select2-lg .select2-container--default .select2-selection--single .select2-selection__rendered {
   line-height: 45px !important; }
@@ -25963,44 +25963,48 @@ margin:15px 0px;
 } */
 .hospital_allcardbodydesign
 {
-  padding: 15px 15px 0px 15px;
+  padding: 15px 15px 8px 15px;
 }
 /* -----------------new-input--------------------- */
- label {
+   label {
   position: absolute;
-  top: 0;
-  left: 20px;
+  top: -20px;
+  left: 4px;
   width: 100%;
-  color: #000;
-  transition: 0.2s all;
+  color:#116466;
+font-weight: 900;
   cursor: text;
-  font-size: 12px;
+  font-size: 13px;
 }
 input  {
   width: 100%;
   border: 0;
   outline: 0;
   padding: 0.5rem 0;
-  border-bottom: 2px solid #d3d3d3;
+  border-bottom: 1px solid #000;
   box-shadow: none;
   color: #111;
+  margin-top: -8px;
 }
-
+/* input[type=value]{
+    left: 20px;
+}
 input:invalid {
   outline: 0;
-   color: #330985;
-    border-color: #330985;
+   color: #000;
+    border-color: #000;
 }
 input:focus,
 input:valid {
-  border-color: #ff5f15;
+  border-color: #000;
 }
 input:focus~label,
 input:valid~label {
-  font-size: 14px;
+  font-size: 13px;
   top: -11px;
-  color: #ff5f15;
-}
+  color: #000;
+} */
+
 /* -----------------new input----------- */
 option span{
     color: #ff5f15;
@@ -26075,24 +26079,94 @@ input[type=checkbox] {
 {
     padding: 18px 0px 0px 0px !important;
 }
-<<<<<<< HEAD
-.newwformat{
+.newwformat
+{
   margin: 20px 0px 0px 0px;
 }
-.date-format{
+.date-format
+{
   padding: 0px 0px;
 }
-.dateappointment{
+.dateappointment
+{
  font-size: 13px;
 }
-.newaddappon{
-  margin: 22px 0px 0px 0px;
+.newaddappon
+{
+  margin: 28px 0px 0px 0px;
 }
-.newaddvisitext{
+.newaddvisitext
+{
   margin: 20px 0px 0px 0px;
 }
-.newaddcalltext{
+.newaddcalltext
+{
   margin: 20px 0px 0px 0px;
 }
-=======
->>>>>>> 9365f016b4d795d95b758b2ea8dd4718ceb6fd27
+.newuserlistchange
+{
+margin: 15px 0px 0px 0px;
+}
+.newuserchange
+{
+margin: 23px 0px 0px 0px;
+}
+.Heading
+{
+font-size: 12px;
+padding: 6px 0px;
+}
+input[type="date"] {
+    -webkit-appearance: listbox;
+    padding: 0px 0px;
+}
+
+.newuserlisttchange{
+    margin: 20px 0px 0px 0px;
+}
+input[type="file"]{
+    padding: 3px 0px;
+}
+.newuserrchange
+{
+margin: 29px 0px 0px 0px;
+}
+.newwformatt{
+    margin: 6px 0px 0px 0px;
+}
+.newuserchangee{
+    margin: 17px 0px 0px 0px;
+}
+.newuserchangeeli{
+    margin: 18px 0px 0px 0px;
+}
+.datetypeform{
+    margin: 12px 0px 0px 0px;
+}
+.newdesign{
+    margin: 21px 0px 7px 0px;
+}
+.newdesignadd{
+    margin: 26px 0px 0px 0px;
+}
+.addpatientdesign{
+    margin: 11px 0px 0px 0px;
+}
+.addpatientdesignpin {
+    margin: 15px 0px 0px 0px;
+}
+.addpatientdesignaddress {
+    margin: 20px 0px 0px 0px;
+}
+.addpin{
+    margin: 19px 0px 0px 0px;
+}
+.addpatientdesignin{
+    margin: 12px 0px 0px 0px;
+}
+.addpatientdesigntype{
+    margin: 19px 0px 0px 0px;
+}
+.newuserchangeedesign{
+    margin: 16px 0px 0px 0px;
+}
