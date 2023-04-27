@@ -111,7 +111,7 @@ unset($__errorArgs, $__bag); ?>
 
                             </div>
                         </div>
-                        <form method="post" action="<?php echo e(route('save-pathology-billing')); ?>">
+                        <form method="post" action="<?php echo e(route('save-pharmacy-billing')); ?>">
                             <?php echo csrf_field(); ?>
 
                             <div class="options px-5 pt-1  border-bottom pb-3">
@@ -137,7 +137,7 @@ unset($__errorArgs, $__bag); ?>
                                                     <th scope="col" style="width: 8%">Unit <span
                                                             class="text-danger">*</span></th>
                                                     <th scope="col" style="width: 8%">Tax <span
-                                                                class="text-danger">*</span></th>
+                                                            class="text-danger">*</span></th>
                                                     <th scope="col" style="width: 8%">Amount <span
                                                             class="text-danger">*</span></th>
                                                     <th scope="col" style="width: 2%">
@@ -162,45 +162,17 @@ unset($__errorArgs, $__bag); ?>
                                         <input type="text" name="total" readonly id="total_am"
                                             class="form-control myfld">
                                     </div>
-                                    <div class="d-flex justify-content-end mt-2">
-                                        <span class="biltext">Discount (% / flat)</span>
-                                        <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
-                                            id="total_discount" class="form-control myfld">
-                                        <select name="discount_type" onchange="gettotal()" id="discount_type"
-                                            class="form-control myfld" style="width: 75px">
-                                            <option value="percentage" selected>%</option>
-                                            <option value="flat">Flat</option>
-                                        </select>
-                                    </div>
-                                    <div class="d-flex justify-content-end mt-2">
-                                        <span class="biltext">Tax</span>
-                                        <input type="text" name="total_tax" onkeyup="gettotal()" value="0"
-                                            id="total_tax" class="form-control myfld">
-                                    </div>
-                                    <div class="d-flex justify-content-end thrdarea">
-                                        <span class="biltext">Grand Total</span>
-                                        <input type="text" name="grand_total" readonly id="grnd_total" value="00"
-                                            class="form-control myfld">
-                                        <?php $__errorArgs = ['grnd_total'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                            <br>
-                                            <span class="text-danger"><?php echo e($message); ?></span>
-                                        <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                    </div>
+                                    
+                                    
+                                    
                                 </div>
                             </div>
                             <div class="btn-list p-3">
                                 <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
                                         class="fa fa-calculator"></i> Calculate</button>
-                                <button class="btn btn-primary btn-sm float-right " type="submit" name="save"><i
+                                <button class="btn btn-primary btn-sm float-right " type="submit" value="save" name="save"><i
                                         class="fa fa-file"></i> Save</button>
-                                <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print"
+                                <button class="btn btn-primary btn-sm float-right mr-2" value="save_and_print" name="save_and_print"
                                     type="submit"><i class="fa fa-paste"></i> Save & Print</button>
                             </div>
                         </form>
@@ -213,6 +185,7 @@ unset($__errorArgs, $__bag); ?>
     <!-- ===========================Add New Item Using New Row=========================== -->
     <script type="text/javascript">
         var i = 0;
+
         function addnewrow() {
             var html = `  <tr id="row${i}">
                         <td>
@@ -252,7 +225,7 @@ unset($__errorArgs, $__bag); ?>
                             <input class="form-control" readonly id="amount${i}" name="amount[]" type="text" />
                         </td>
                         <td>
-                            <button class="btn btn-danger btn-sm" type="button" onclick="removerow()"><i class="fa fa-times"></i></button>
+                            <button class="btn btn-danger btn-sm" type="button" onclick="removerow(${i})"><i class="fa fa-times"></i></button>
                         </td>
                     </tr>`;
             $('#subhendu').append(html);
@@ -260,14 +233,13 @@ unset($__errorArgs, $__bag); ?>
 
         }
 
-        function getamount(rowid)
-        {
-            var qty = $('#qty'+rowid).val();
-            var tax = $('#tax'+rowid).val();
-            var price = $('#sale_price'+rowid).val();
+        function getamount(rowid) {
+            var qty = $('#qty' + rowid).val();
+            var tax = $('#tax' + rowid).val();
+            var price = $('#sale_price' + rowid).val();
             var qty_p = parseFloat(qty) * parseFloat(price);
-            var tax_a = parseFloat(qty_p)*(parseFloat(tax)/100);
-           var amount = parseFloat(qty_p) + parseFloat(tax_a);
+            var tax_a = parseFloat(qty_p) * (parseFloat(tax) / 100);
+            var amount = parseFloat(qty_p) + parseFloat(tax_a);
 
             $('#amount' + rowid).val(amount);
         }
@@ -339,7 +311,9 @@ unset($__errorArgs, $__bag); ?>
                     $('#sale_price' + rowid).val(response.medicine_details.sale_price);
                     $('#unit' + rowid).val(response.medicine_details.medicine_unit_name);
                     $('#unit_id' + rowid).val(response.medicine_details.unit_id);
-                    $('#avi_qty' + rowid).html('<h6 class="avlqty_text">Available Qty :'+response.medicine_stock.available_quantity+' '+response.medicine_details.medicine_unit_name+' </h6>')
+                    $('#avi_qty' + rowid).html('<h6 class="avlqty_text">Available Qty :' + response
+                        .medicine_stock.available_quantity + ' ' + response.medicine_details
+                        .medicine_unit_name + ' </h6>')
                 },
                 error: function(error) {
                     console.log(error);
@@ -350,7 +324,7 @@ unset($__errorArgs, $__bag); ?>
     <!-- ===========================Add New Item Using New Row=========================== -->
     <script type="text/javascript">
         function removerow(i) {
-            $('#rowid' + i).remove();
+            $('#row' + i).remove();
             gettotal();
         }
     </script>
@@ -365,21 +339,6 @@ unset($__errorArgs, $__bag); ?>
             }).get();
             $('#total_am').val(t);
 
-            var total_discount = $('#total_discount').val();
-            if ($('#discount_type').val() == 'percentage') {
-                var r = parseFloat(t) + ((parseFloat(t)) * (parseFloat(
-                    total_discount) / 100));
-            } else {
-                var r = parseFloat(t) + parseFloat(total_discount);
-            }
-            var total_tax = $('#total_tax').val();
-            if (total_tax != 0) {
-                var grnd_total = r + (r * (total_tax / 100));
-            } else {
-                var grnd_total = r;
-            }
-
-            $('#grnd_total').val(grnd_total);
 
         }
     </script>

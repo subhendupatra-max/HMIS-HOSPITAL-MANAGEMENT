@@ -4,18 +4,23 @@
     <div class="card">
         <div class="card-header d-block">
             <div class="row">
-                <div class="col-md-6 card-title">
-                    Timeline List
+                <div class="col-md-4 card-title">
+                    Timeline
                 </div>
-                <div class="col-md-6 text-right">
+                <div class="col-md-8 text-right">
                     <div class="d-block">
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add timeline list opd')): ?>
                         <a href="<?php echo e(route('add-timeline-lisitng-in-opd',['id' => base64_encode($opd_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Timeline </a>
                         <?php endif; ?>
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right" style="">
+                            <?php echo $__env->make('OPD.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <div class="card-body">
             <div class="col-xl-12 col-lg-12 col-md-12">
@@ -27,7 +32,7 @@
                                     <?php echo e(date('d-m-Y h:i A',strtotime( $item->date ))); ?>
 
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                                    <a href="<?php echo e(route('edit-timeline-lisitng-in-opd',['id'=> base64_encode($item->id)])); ?>"> <i class="fa fa-edit ml-4"></i> Edit</a>
+                                    <a href="<?php echo e(route('edit-timeline-lisitng-in-opd',['id'=> base64_encode($item->id),'opd_id'=> base64_encode($opd_patient_details->id)])); ?>"> <i class="fa fa-edit ml-4"></i> Edit</a>
                                     <?php endif; ?>
 
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>

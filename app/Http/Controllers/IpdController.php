@@ -56,7 +56,6 @@ class IpdController extends Controller
     {
         $ipd_id = base64_decode($id);
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
-        $timelineDetails =  IpdTimeline::where('ipd_id', $ipd_id)->get();
         $bed_history_details = PatientBedHistory::where('id', $ipd_id)->first();
         $departments = Department::where('is_active', '1')->get();
         $units = BedUnit::all();
@@ -72,7 +71,7 @@ class IpdController extends Controller
         $paymentDetails = IpdPayment::all();
         
 
-        return view('Ipd.ipd-profile', compact('paymentDetails','operation_details','cons_doctor','medication_details','medicine_catagory', 'oxygen_monitering', 'ipd_details', 'timelineDetails', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails'));
+        return view('Ipd.ipd-profile', compact('paymentDetails','operation_details','cons_doctor','medication_details','medicine_catagory', 'oxygen_monitering', 'ipd_details','bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails'));
     }
 
     public function find_doctor_and_ward_by_department_in_opd(Request $request)

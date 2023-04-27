@@ -9,6 +9,7 @@
                     <?php echo csrf_field(); ?>
                     <div class="row">
                         <div class="form-group col-md-3">
+<<<<<<< HEAD
 
                             <input type="text" id="medicine_name" name="medicine_name" value="<?php echo e(old('medicine_name')); ?>"
                                 required />
@@ -27,6 +28,26 @@ unset($__errorArgs, $__bag); ?>
 
                         <div class="form-group col-md-3">
 
+=======
+                            
+                            <input type="text" id="medicine_name" name="medicine_name" value="<?php echo e(old('medicine_name')); ?>"
+                                required />
+                            <label for="medicine_name">Medicine Name<span class="text-danger">*</span> </label>
+                            <?php $__errorArgs = ['medicine_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            
+>>>>>>> subhendu-patra
                             <select class="form-control select2-show-search select2-hidden-accessible"
                                 value="<?php echo e(old('medicine_catagory')); ?>" name="medicine_catagory" id="medicine_catagory"
                                 required>
@@ -153,7 +174,11 @@ unset($__errorArgs, $__bag); ?>
                         </div>
 
 
+<<<<<<< HEAD
                         <div class="form-group col-md-3 newuserrchange ">
+=======
+                        <div class="form-group col-md-3">
+>>>>>>> subhendu-patra
                             
                             <input type="text" id="note" name="note" required />
                             <label for="note">Note</label>
@@ -171,10 +196,16 @@ unset($__errorArgs, $__bag); ?>
 
                         <div class="form-group col-md-6">
                             
+<<<<<<< HEAD
                             <h6 class="Heading">Medicine Photo</h6>
                             <input type="file" id="medicine_photo" name="medicine_photo"
                                 value="<?php echo e(old('medicine_photo')); ?>" required />
                             
+=======
+                            <input type="file" id="medicine_photo" class="form-control" name="medicine_photo"
+                                value="<?php echo e(old('medicine_photo')); ?>" required />
+                            <label for="medicine_photo">Medicine Photo</label>
+>>>>>>> subhendu-patra
                             <?php $__errorArgs = ['medicine_photo'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -190,6 +221,7 @@ unset($__errorArgs, $__bag); ?>
                         <hr class="hr_line" />
 
                         <!-- <div class="form-group col-md-6">
+<<<<<<< HEAD
                                 <table class="table card-table table-vcenter text-nowrap" id="subhendu">
                                     <thead>
                                         <tr>
@@ -205,6 +237,23 @@ unset($__errorArgs, $__bag); ?>
                                     </tbody>
                                 </table>
                             </div> -->
+=======
+                            <table class="table card-table table-vcenter text-nowrap" id="subhendu">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 30%">Box/Strip<span class="text-danger">*</span></th>
+                                        <th scope="col" style="width: 40%">Strip/Box<span class="text-danger">*</span></th>
+                                        </th>
+                                        <th scope="col" style="width: 2%">
+                                            <button type="button" class="btn btn-success" onclick="addnewrow()"><i class="fa fa-plus"></i></button>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div> -->
+>>>>>>> subhendu-patra
 
                         <div class="form-group col-md-4 mb-2">
                             <table class="table card-table table-vcenter text-nowrap" id="simiarmedicine">
