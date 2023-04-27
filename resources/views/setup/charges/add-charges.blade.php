@@ -20,9 +20,9 @@
                         @csrf
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-4">
+                             <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="type" class="form-label">Type <span
+                                        <label for="type">Type <span
                                             class="text-danger">*</span></label>
                                         <select id="type" class="form-control" name="type">
                                             <option value=" ">Select type </option>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="charges_catagory_id" class="form-label">Charges Catagory <span
+                                        <label for="charges_catagory_id">Charges Catagory <span
                                             class="text-danger">*</span></label>
                                         <select id="charges_catagory_id" class="form-control" name="charges_catagory_id">
                                             <option value=" ">Select Charges Catagory </option>
@@ -53,8 +53,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="charges_sub_catagory_id" class="form-label">Charges Sub Catagory <span
+                                     <div class="form-group">
+                                        <label for="charges_sub_catagory_id">Charges Sub Catagory <span
                                             class="text-danger">*</span></label>
                                         <select id="charges_sub_catagory_id" class="form-control"
                                             name="charges_sub_catagory_id">
@@ -71,10 +71,12 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="charges_name" class="form-label">Charges name <span
+                                        {{--  <label for="charges_name">Charges name <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="charges_name" name="charges_name"
-                                            placeholder="Enter Charges Name" value="{{ old('charges_name') }}" required>
+                                            placeholder="Enter Charges Name" value="{{ old('charges_name') }}" required>  --}}
+                                            <input type="text" value="{{ old('charges_name') }}"id="charges_name" name="charges_name">
+                                            <label for="charges_name">Enter Charges Name <span class="text-danger">*</span></label>
                                         @error('charges_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
