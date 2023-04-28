@@ -363,8 +363,10 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
     Route::group(['middleware' => ['permission:edit patient']], function () {
         Route::get('edit-new-patient/{id}', [PatientController::class, 'edit_new_patient'])->name('edit-patient-details');
         Route::get('edit-new-patient-opd/{id}', [PatientController::class, 'edit_opd_new_patient'])->name('edit-new-patient-opd');
+        Route::get('edit-patient-details-emg/{id}', [PatientController::class, 'edit_emg_new_patient'])->name('edit-patient-details-emg');
         Route::post('update-new-patient-details', [PatientController::class, 'update_new_patient_details'])->name('update-new-patient-details');
         Route::post('update-new-patient-details-opd', [PatientController::class, 'update_new_patient_details_opd'])->name('update-new-patient-details-opd');
+        Route::post('update-new-patient-details-emg', [PatientController::class, 'update_new_patient_details_emg'])->name('update-new-patient-details-emg');
     });
 
     Route::group(['middleware' => ['permission:delete patient']], function () {
@@ -1883,7 +1885,7 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
     Route::group(['middleware' => ['permission:OPD registation']], function () {
         Route::post('emg-after-new-old', [EmgController::class, 'after_new_old'])->name('emg-after-new-old');
 
-        Route::any('emg-registation', [EmgController::class, 'emg_registation'])->name('emg-registation');
+        Route::any('emg-registation/{patientid?}', [EmgController::class, 'emg_registation'])->name('emg-registation');
         Route::post('add-emg-registation', [EmgController::class, 'add_emg_registation'])->name('add-emg-registation');
     });
     Route::group(['middleware' => ['permission:emg patient profile']], function () {

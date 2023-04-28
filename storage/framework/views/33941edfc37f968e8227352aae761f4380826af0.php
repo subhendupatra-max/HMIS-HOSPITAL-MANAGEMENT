@@ -259,8 +259,7 @@ unset($__errorArgs, $__bag); ?>
                                                     id="country" onchange="showDetails(this.value)" required>
                                                     <option value="">Select Country... </option>
                                                     <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $countrys): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($countrys->id); ?>" <?php echo e($countrys->id == '1' ?
-                                                        'selected' : ' '); ?>>
+                                                    <option value="<?php echo e($countrys->id); ?>" >
                                                         <?php echo e($countrys->country_name); ?></option>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
