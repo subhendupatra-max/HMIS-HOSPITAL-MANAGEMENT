@@ -1,11 +1,11 @@
-@extends('layouts.layout')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
 
-    <form action="{{ route('update-new-patient-details') }}" method="POST">
-        @csrf
-        <input name="id" value="{{ $patient->id }}" type="hidden">
+    <form action="<?php echo e(route('update-new-patient-details-emg')); ?>" method="POST">
+        <?php echo csrf_field(); ?>
+        <input name="id" value="<?php echo e($patient->id); ?>" type="hidden">
         <div class="row">
             <div class="col-xl-12 col-lg-12 col-md-12">
                 <div class="border-0">
@@ -23,27 +23,34 @@
                                                 <label for="prefix">Prefix <span class="text-danger">*</span></label>
                                                 <select name="prefix" class="form-control" id="prefix">
                                                     <option value="">Select</option>
-                                                    @foreach (Config::get('static.prefix') as $lang => $prefixs)
-                                                    <option value="{{$prefixs}}" {{ @$prefixs==$patient->prefix ?
-                                                        'selected' : " " }}> {{$prefixs}}</option>
-                                                    @endforeach
+                                                    <?php $__currentLoopData = Config::get('static.prefix'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $prefixs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($prefixs); ?>" <?php echo e(@$prefixs==$patient->prefix ?
+                                                        'selected' : " "); ?>> <?php echo e($prefixs); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
-                                                @error('prefix')
-                                                <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <?php $__errorArgs = ['prefix'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
 
                                             <div class="form-group col-md-2 newdesignadd ">
-                                                <input type="text" id="first_name" value="{{ @$patient->first_name }}"
+                                                <input type="text" id="first_name" value="<?php echo e(@$patient->first_name); ?>"
                                                     name="first_name">
                                                 <label for="first_name"> Pateient's First name<span
                                                         class="text-danger">*</span> </label>
-                                                <small class="text-danger">{{ $errors->first('first_name') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('first_name')); ?></small>
                                             </div>
 
                                             <div class="form-group col-md-2 newdesignadd">
 
-                                                <input type="text" id="middle_name" value="{{ @$patient->middle_name }}"
+                                                <input type="text" id="middle_name" value="<?php echo e(@$patient->middle_name); ?>"
                                                     name="middle_name">
                                                 <label for="middle_name"> Pateient's Middile name </label>
 
@@ -51,17 +58,17 @@
 
                                             <div class="form-group col-md-2 newdesignadd">
 
-                                                <input type="text" id="last_name" value="{{ @$patient->last_name }}"
+                                                <input type="text" id="last_name" value="<?php echo e(@$patient->last_name); ?>"
                                                     name="last_name">
                                                 <label for="last_name"> Pateient's Last name <span
                                                         class="text-danger">*</span></label>
-                                                <small class="text-danger">{{ $errors->first('last_name') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('last_name')); ?></small>
                                             </div>
 
 
                                             <div class="form-group col-md-2 newdesignadd">
 
-                                                <input type="email" id="email_no" value="{{ @$patient->email }}"
+                                                <input type="email" id="email_no" value="<?php echo e(@$patient->email); ?>"
                                                     name="email_no">
                                                 <label for="email_no"> Email Id </label>
 
@@ -70,10 +77,10 @@
                                             <div class="form-group col-md-2 newdesignadd">
 
                                                 <input type="text" id="Phone_no" name="phone"
-                                                    value="{{ @$patient->phone }}">
+                                                    value="<?php echo e(@$patient->phone); ?>">
                                                 <label for="phone_no"> Pateient's Phone No<span
                                                         class="text-danger">*</span></label>
-                                                <small class="text-danger">{{ $errors->first('phone') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('phone')); ?></small>
                                             </div>
 
                                             <div class="form-group col-md-2 newdesign ">
@@ -81,10 +88,10 @@
                                                 <select name="marital_status" class="form-control select2-show-search"
                                                     id="marital_status">
                                                     <option value="">Select One...</option>
-                                                    @foreach (Config::get('static.marital_status') as $lang => $marital)
-                                                    <option value="{{$marital}}" {{ @$marital==$patient->marital_status
-                                                        ? 'selected' : " "}}> {{$marital}}</option>
-                                                    @endforeach
+                                                    <?php $__currentLoopData = Config::get('static.marital_status'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $marital): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($marital); ?>" <?php echo e(@$marital==$patient->marital_status
+                                                        ? 'selected' : " "); ?>> <?php echo e($marital); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
                                             </div>
 
@@ -92,11 +99,11 @@
                                                 <label for="blood_group">Blood Group </label>
                                                 <select name="blood_group" class="form-control" id="blood_group">
                                                     <option value="">Select One...</option>
-                                                    @foreach (Config::get('static.blood_groups') as $lang =>
-                                                    $blood_group)
-                                                    <option value="{{$blood_group}}" {{ @$blood_group==$patient->
-                                                        blood_group ? 'selected' : " "}}> {{$blood_group}}</option>
-                                                    @endforeach
+                                                    <?php $__currentLoopData = Config::get('static.blood_groups'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang =>
+                                                    $blood_group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($blood_group); ?>" <?php echo e(@$blood_group==$patient->
+                                                        blood_group ? 'selected' : " "); ?>> <?php echo e($blood_group); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
                                             </div>
 
@@ -105,14 +112,21 @@
                                                 <select name="gender" required class="form-control select2-show-search"
                                                     id="gender">
                                                     <option value="">Select</option>
-                                                    @foreach (Config::get('static.gender') as $lang => $genders)
-                                                    <option value="{{$genders}}" {{ @$genders==$patient->gender ?
-                                                        'selected' : " "}}> {{$genders}}</option>
-                                                    @endforeach
+                                                    <?php $__currentLoopData = Config::get('static.gender'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $genders): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($genders); ?>" <?php echo e(@$genders==$patient->gender ?
+                                                        'selected' : " "); ?>> <?php echo e($genders); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
-                                                @error('gender')
-                                                <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <?php $__errorArgs = ['gender'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
 
                                             <div class="form-group col-md-2 newaddappon">
@@ -120,10 +134,10 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="date" class="form-control" id="date_of_birth"
                                                     name="date_of_birth" onchange="getagefromdate(this.value)"
-                                                    value="{{ date('Y-m-d',strtotime($patient->date_of_birth)) }}"
+                                                    value="<?php echo e(date('Y-m-d',strtotime($patient->date_of_birth))); ?>"
                                                     required>
 
-                                                <small class="text-danger">{{ $errors->first('date_of_birth') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('date_of_birth')); ?></small>
                                             </div>
 
                                             <div class="form-group col-md-4 newdesignadd">
@@ -132,33 +146,29 @@
                                                     <div class="col-lg-4">
 
                                                         <input type="text" id="date_of_birth_year" onkeyup="getage()"
-                                                            required name="date_of_birth_year" value=" {{
-                                                            @$patient->year }}">
+                                                            required name="date_of_birth_year" value=" <?php echo e(@$patient->year); ?>">
                                                         <label for="date_of_birth_year"> Year <span
                                                                 class="text-danger">*</span></label>
-                                                        <small class="text-danger">{{
-                                                            $errors->first('date_of_birth_year') }}</small>
+                                                        <small class="text-danger"><?php echo e($errors->first('date_of_birth_year')); ?></small>
                                                     </div>
 
                                                     <div class="col-lg-4 ">
 
                                                         <input type="text" id="date_of_birth_month"
-                                                            value="{{ @$patient->month }}" onkeyup="getage()" required
+                                                            value="<?php echo e(@$patient->month); ?>" onkeyup="getage()" required
                                                             name="date_of_birth_month">
                                                         <label for="date_of_birth_month"> Month <span
                                                                 class="text-danger">*</span></label>
-                                                        <small class="text-danger">{{
-                                                            $errors->first('date_of_birth_month') }}</small>
+                                                        <small class="text-danger"><?php echo e($errors->first('date_of_birth_month')); ?></small>
                                                     </div>
                                                     <div class="col-lg-4  ">
 
                                                         <input type="text" id="date_of_birth_day" onkeyup="getage()"
                                                             required name="date_of_birth_day"
-                                                            value="{{ @$patient->day }}">
+                                                            value="<?php echo e(@$patient->day); ?>">
                                                         <label for="date_of_birth_day"> Day <span
                                                                 class="text-danger">*</span></label>
-                                                        <small class="text-danger">{{
-                                                            $errors->first('date_of_birth_day') }}</small>
+                                                        <small class="text-danger"><?php echo e($errors->first('date_of_birth_day')); ?></small>
                                                     </div>
                                                 </div>
                                             </div>
@@ -178,24 +188,22 @@
                                                     <div class="form-group col-md-6 newuserchangee">
 
                                                         <input type="text" id="guardian_name"
-                                                            value="{{ @$patient->guardian_name }}" name="guardian_name"
+                                                            value="<?php echo e(@$patient->guardian_name); ?>" name="guardian_name"
                                                             required />
                                                         <label for="guardian_name"> Guardian's Name<span
                                                                 class="text-danger">*</span></label>
-                                                        <small class="text-danger">{{ $errors->first('guardian_name')
-                                                            }}</small>
+                                                        <small class="text-danger"><?php echo e($errors->first('guardian_name')); ?></small>
 
                                                     </div>
 
                                                     <div class="form-group col-md-6 newuserchangee">
 
                                                         <input type="text" id="guardian_contact_no"
-                                                            value="{{ @$patient->guardian_contact_no }}"
+                                                            value="<?php echo e(@$patient->guardian_contact_no); ?>"
                                                             name="guardian_contact_no">
                                                         <label for="guardian_contact_no"> Guardian's Phone No<span
                                                                 class="text-danger">*</span></label>
-                                                        <small class="text-danger">{{
-                                                            $errors->first('guardian_contact_no') }}</small>
+                                                        <small class="text-danger"><?php echo e($errors->first('guardian_contact_no')); ?></small>
 
                                                     </div>
                                                 </div>
@@ -211,24 +219,22 @@
                                                     <div class="form-group col-md-6 newuserchangeedesign">
 
                                                         <input type="text" id="local_guardian_name"
-                                                            value="{{ @$patient->local_guardian_name }}"
+                                                            value="<?php echo e(@$patient->local_guardian_name); ?>"
                                                             name="local_guardian_name">
                                                         <label for="local_guardian_name"> Local Guardian's Name<span
                                                                 class="text-danger">*</span></label>
-                                                        <small class="text-danger">{{
-                                                            $errors->first('local_guardian_name') }}</small>
+                                                        <small class="text-danger"><?php echo e($errors->first('local_guardian_name')); ?></small>
 
                                                     </div>
 
                                                     <div class="form-group col-md-6 newuserchangeedesign ">
 
                                                         <input type="text" id="local_guardian_contact_no"
-                                                            value="{{ @$patient->local_guardian_contact_no }}"
+                                                            value="<?php echo e(@$patient->local_guardian_contact_no); ?>"
                                                             name="local_guardian_contact_no">
                                                         <label for="Local Gurdian Contact No"> Local Guardian's Phone
                                                             No<span class="text-danger">*</span></label>
-                                                        <small class="text-danger">{{
-                                                            $errors->first('local_guardian_contact_no') }}</small>
+                                                        <small class="text-danger"><?php echo e($errors->first('local_guardian_contact_no')); ?></small>
 
                                                     </div>
                                                 </div>
@@ -242,35 +248,34 @@
                                         <div class="row">
                                             <div class="form-group col-md-4 newuserchangee ">
 
-                                                <input type="text" id="address" value="{{ @$patient->address }}"
+                                                <input type="text" id="address" value="<?php echo e(@$patient->address); ?>"
                                                     name="address" required>
                                                 <label for="address">Address<span class="text-danger">*</span></label>
-                                                <small class="text-danger">{{ $errors->first('address') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('address')); ?></small>
                                             </div>
 
                                             <div class="form-group col-md-2 addpatientdesign">
                                                 <label for="country">Country <span class="text-danger">*</span></label>
                                                 <select name="country" class="form-control select2-show-search"
                                                     id="country"
-                                                    onchange="getCountry(this.value,{{$patient->state}} , {{$patient->district}})"
+                                                    onchange="getCountry(this.value,<?php echo e($patient->state); ?> , <?php echo e($patient->district); ?>)"
                                                     required>
                                                     <option value="">Select Country... </option>
-                                                    @foreach($country as $countrys)
-                                                    <option value="{{$countrys->id}}" {{ @$countrys->id ==
-                                                        @$patient->country ? 'selected' : " "}}>{{
-                                                        $countrys->country_name }}</option>
-                                                    @endforeach
+                                                    <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $countrys): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($countrys->id); ?>" <?php echo e(@$countrys->id ==
+                                                        @$patient->country ? 'selected' : " "); ?>><?php echo e($countrys->country_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
-                                                <small class="text-danger">{{ $errors->first('country') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('country')); ?></small>
                                             </div>
 
                                             <div class="form-group col-md-2 addpatientdesign">
                                                 <label for="state">State <span class="text-danger">*</span></label>
                                                 <select name="state" class="form-control select2-show-search" id="state"
-                                                    onchange="getDistricts(this.value,{{$patient->district}})" required>
+                                                    onchange="getDistricts(this.value,<?php echo e($patient->district); ?>)" required>
                                                     <option value="">Select State...</option>
                                                 </select>
-                                                <small class="text-danger">{{ $errors->first('state') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('state')); ?></small>
                                             </div>
 
 
@@ -281,15 +286,15 @@
                                                     id="district" required>
                                                     <option value="">Select District...</option>
                                                 </select>
-                                                <small class="text-danger">{{ $errors->first('district') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('district')); ?></small>
                                             </div>
 
                                             <div class="form-group col-md-2 addpatientdesignpin ">
 
                                                 <input type="text" id="pin_no" id="pin_no" name="pin_no"
-                                                    value="{{ @$patient->pin_no }}" required>
+                                                    value="<?php echo e(@$patient->pin_no); ?>" required>
                                                 <label for="pin_no">Pin No.<span class="text-danger">*</span></label>
-                                                <small class="text-danger">{{ $errors->first('pin_no') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('pin_no')); ?></small>
                                             </div>
                                         </div>
 
@@ -311,10 +316,10 @@
                                             <div class="form-group col-md-4 addpatientdesignaddress  ">
 
                                                 <input type="text" id="local_address"
-                                                    value="{{ @$patient->local_address }}" name="local_address">
+                                                    value="<?php echo e(@$patient->local_address); ?>" name="local_address">
                                                 <label for="local_address">Enter Local Address<span
                                                         class="text-danger">*</span></label>
-                                                <small class="text-danger">{{ $errors->first('local_address') }}</small>
+                                                <small class="text-danger"><?php echo e($errors->first('local_address')); ?></small>
 
                                             </div>
 
@@ -323,13 +328,12 @@
                                                         class="text-danger">*</span></label>
                                                 <select name="country_local" class="form-control select2-show-search"
                                                     id="country_local"
-                                                    onchange="getLocalCountry(this.value,{{$patient->state}} , {{$patient->district}})">
+                                                    onchange="getLocalCountry(this.value,<?php echo e($patient->state); ?> , <?php echo e($patient->district); ?>)">
                                                     <option value="">Select Country... </option>
-                                                    @foreach($country as $item)
-                                                    <option value="{{$item->id}}" {{ @$item->id ==
-                                                        $patient->country_local ? 'selected' : " "}}>{{
-                                                        $item->country_name }}</option>
-                                                    @endforeach
+                                                    <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($item->id); ?>" <?php echo e(@$item->id ==
+                                                        $patient->country_local ? 'selected' : " "); ?>><?php echo e($item->country_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
 
                                             </div>
@@ -340,7 +344,7 @@
                                                         class="text-danger">*</span></label>
                                                 <select name="state_local" class="form-control select2-show-search"
                                                     id="state_local"
-                                                    onchange="getLocalDistricts(this.value,{{$patient->district}})">
+                                                    onchange="getLocalDistricts(this.value,<?php echo e($patient->district); ?>)">
                                                     <option value="">Select State...</option>
                                                 </select>
 
@@ -361,7 +365,7 @@
                                                 <label for="local_pin_no">Pin No. <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" class="form-control" id="local_pin_no"
-                                                    name="local_pin_no" value="{{ $patient->local_pin_no }}">
+                                                    name="local_pin_no" value="<?php echo e($patient->local_pin_no); ?>">
 
 
                                             </div>
@@ -379,17 +383,17 @@
                                                 <select name="identification_name"
                                                     class="form-control select2-show-search" id="identification_name">
                                                     <option value="">Select One...</option>
-                                <option value="Voter Card" @if( $patient->identification_name ==
-                                    'Voter Card') selected @endif>Voter Card</option>
-                                <option value="Aadhar Card" @if( $patient->identification_name ==
-                                    'Aadhar Card') selected @endif>Aadhar Card</option>
-                                <option value="Ration Card" @if( $patient->identification_name ==
-                                    'Ration Card') selected @endif>Ration Card</option>
+                                <option value="Voter Card" <?php if( $patient->identification_name ==
+                                    'Voter Card'): ?> selected <?php endif; ?>>Voter Card</option>
+                                <option value="Aadhar Card" <?php if( $patient->identification_name ==
+                                    'Aadhar Card'): ?> selected <?php endif; ?>>Aadhar Card</option>
+                                <option value="Ration Card" <?php if( $patient->identification_name ==
+                                    'Ration Card'): ?> selected <?php endif; ?>>Ration Card</option>
                                                 </select>
                                             </div>
 
                                             <div class="form-group col-md-5 addpatientdesign d-inline-block">
-                                                <input type="text" value="{{ $patient->identification_number }}"
+                                                <input type="text" value="<?php echo e($patient->identification_number); ?>"
                                                     id="identification_number" name="identification_number">
                                                 <label for="identification_number">National Identification Number
                                                 </label>
@@ -461,10 +465,10 @@
         $("#state").html("<option value=''>Select... </option>");
         $("#district").html("<option value=''>Select... </option>");
         $.ajax({
-            url: "{{ route('find-state-by-country') }}",
+            url: "<?php echo e(route('find-state-by-country')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 countries_id: country_id,
             },
 
@@ -491,10 +495,10 @@
         $("#district").html("<option value=''>Select District... </option>");
         var ijij = $('#state').val();
         $.ajax({
-            url: "{{ route('find-fr-district-by-state') }}",
+            url: "<?php echo e(route('find-fr-district-by-state')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 state_id: state,
             },
             success: function(response) {
@@ -579,10 +583,10 @@
             // alert(states_id);
             $('#state').html('<option vaule="" >Select State...</option>');
             $.ajax({
-                url: "{{ route('find-state-by-country') }}",
+                url: "<?php echo e(route('find-state-by-country')); ?>",
                 type: "POST",
                 data: {
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                     country_id: country,
                 },
 
@@ -605,10 +609,10 @@
         $('#state_local').val('');
         $("#state_local").html("<option value='l'>Select... </option>");
         $.ajax({
-            url: "{{ route('find-local-state-by-country') }}",
+            url: "<?php echo e(route('find-local-state-by-country')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 country_id_local: local_country_id,
             },
 
@@ -635,10 +639,10 @@
         $("#district_local").html("<option value='l'>Select District... </option>");
         var ijij = $('#state_local').val();
         $.ajax({
-            url: "{{ route('find-local-district-by-state') }}",
+            url: "<?php echo e(route('find-local-district-by-state')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 state_ids: state_local,
             },
             success: function(response) {
@@ -670,4 +674,5 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/emg/patient-edit.blade.php ENDPATH**/ ?>

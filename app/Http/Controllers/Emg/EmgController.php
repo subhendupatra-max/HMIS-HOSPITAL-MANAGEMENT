@@ -51,8 +51,14 @@ class EmgController extends Controller
         }
     }
 
-    public function emg_registation(Request $request)
+    public function emg_registation(Request $request,$patientid=null)
     {
+        if($patientid != null){
+            $patient_id = base64_decode($patientid);
+        }
+        else{
+            $patient_id = $request->patient_id; 
+        }
         $tpa_management = TpaManagement::get();
         $referer = Referral::get();
         $department = Department::where('is_active', '1')->get();
@@ -60,7 +66,7 @@ class EmgController extends Controller
         $ticket_fees = EmgSetup::first();
 
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
-        $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
+        $patient_details_information = Patient::where('id', $patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
 
         return view('emg.emg-registration', compact('ticket_fees', 'symptoms_types', 'department', 'referer',  'tpa_management', 'all_patient', 'patient_details_information'));
     }
