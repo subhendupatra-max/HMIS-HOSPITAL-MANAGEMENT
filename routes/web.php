@@ -1391,7 +1391,6 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
             Route::post('find-medicine-batch-by-medicine-name', [PharmacyController::class, 'find_medicine_batch_by_medicine_name'])->name('find-medicine-batch-by-medicine-name');
             Route::post('find-medicine-details-by-medicine-batch', [PharmacyController::class, 'find_medicine_details_by_medicine_batch'])->name('find-medicine-details-by-medicine-batch');
             Route::post('save-pharmacy-billing', [PharmacyController::class, 'save_pharmacy_billing'])->name('save-pharmacy-billing');
-            
         });
     });
     Route::group(['middleware' => ['permission:medicine stock']], function () {
@@ -2170,6 +2169,11 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
     // =============================== Medication ==================================================
     Route::group(['middleware' => ['permission:save medication']], function () {
+        Route::get('show-medicaiton-dose/{ipd_id}', [MedicationController::class, 'show_medicaiton_dose'])->name('show-medicaiton-dose');
+
+        Route::get('add-medicaiton-dose/{ipd_id}', [MedicationController::class, 'add_medicaiton_dose'])->name('add-medicaiton-dose');
+
+
         Route::post('save-medicaiton-dose', [MedicationController::class, 'save_medicaiton_dose'])->name('save-medicaiton-dose');
         Route::post('find-medicine-name-by-medicine-catagory', [MedicationController::class, 'find_medicine_name_by_medicine_catagory'])->name('find-medicine-name-by-medicine-catagory');
         Route::post('find-dosage-by-medicine-catagory', [MedicationController::class, 'find_dosage_by_medicine_catagory'])->name('find-dosage-by-medicine-catagory');
@@ -2180,7 +2184,12 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
     // =============================== OxygenMonitoring ==================================================
     Route::group(['middleware' => ['permission:save oxygen monitoring']], function () {
+        Route::get('add-oxygen-monitoring-details/{ipd_id}', [OxygenMonitoringController::class, 'add_oxygen_monitoring_details'])->name('add-oxygen-monitoring-details');
+
         Route::post('save-oxygen-monitoring-details', [OxygenMonitoringController::class, 'save_oxygen_monitoring_details'])->name('save-oxygen-monitoring-details');
+
+
+        Route::get('delete-oxygen-monitoring/{id}', [OxygenMonitoringController::class, 'delete_oxygen_monitoring'])->name('delete-oxygen-monitoring');
     });
     // ================================= OxygenMonitoring ==================================================
 
