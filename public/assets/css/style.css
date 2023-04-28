@@ -26329,6 +26329,49 @@ input[type=search]{
     left: 15px;
 }
 /* ------------------------purpose add---------------------- */
+/* ------------------------emgpatient----------------------- */
+.emgdesign{
+    margin: 22px  0px 0px 0px;
+}
+input[type=radio]{
+    width: 10%;
+    margin: 10px 0px 0px 0px;
+}
+.emgregischeck{
+    margin: 23px 0px 0px 0px;
+}
+.emgregistext{
+    margin: 20px 0px 0px 0px;
+}
+.emgdesignselect{
+    margin: 24px 0px 0px 0px ;
+}
+.emgdesignin{
+margin: 33px 0px 0px 0px;
+}
+.emgcondition{
+    margin: 20px 0px 0px 0px;
+}
+.emgdesignnin{
+    margin: 29px 0px 0px 0px;
+}
+/* ------------------------emgpatient----------------------- */
+/* ------------------------opd-setup------------------------ */
+.opdsetupdesign{
+    margin: 8px 0px 0px 0px;
+}
+.opdunitedit{
+    padding: 11px 0px 0px 0px;
+}
+.opdunitone{
+    top: 21%;
+    left: 15px;
+}
+.opdunittwo{
+    top: 50%;
+    left: 15px;
+}
+/* ------------------------opd-setup------------------------ */
 @media (max-width: 768px)
 {
     .newuserchangee {

@@ -18,10 +18,10 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('save-opd-setup-details') }}">
                         @csrf
-                        <div class="">
+                        <div class="row">
                             <input type="hidden" value="1" name="id">
-                            <div class="col-md-4 form-group">
-                                <label for="ticket_no_calculate" class="form-label"> Ticket No Calculate <span
+                            <div class="col-md-6 form-group">
+                                <label for="ticket_no_calculate" class=""> Ticket No Calculate <span
                                         class="text-danger">*</span></label>
                                 <select name="ticket_no_calculate" class="form-control select2-show-search"
                                     id="ticket_no_calculate">
@@ -36,7 +36,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-md-4 form-group">
+                            <div class="col-md-6 form-group opdsetupdesign">
                                 <label for="ticket_fees" class="form-label">Ticket Fees<span
                                         class="text-danger">*</span></label>
                                 <input name="ticket_fees" type="text" class="form-control" />
