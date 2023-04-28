@@ -20,9 +20,9 @@
                         @csrf
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-4">
+                             <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="type" class="form-label">Type <span
+                                        <label for="type">Type <span
                                             class="text-danger">*</span></label>
                                         <select id="type" class="form-control" name="type">
                                             <option value=" ">Select type </option>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="charges_catagory_id" class="form-label">Charges Catagory <span
+                                        <label for="charges_catagory_id">Charges Catagory <span
                                             class="text-danger">*</span></label>
                                         <select id="charges_catagory_id" class="form-control" name="charges_catagory_id">
                                             <option value=" ">Select Charges Catagory </option>
@@ -53,8 +53,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="charges_sub_catagory_id" class="form-label">Charges Sub Catagory <span
+                                     <div class="form-group">
+                                        <label for="charges_sub_catagory_id">Charges Sub Catagory <span
                                             class="text-danger">*</span></label>
                                         <select id="charges_sub_catagory_id" class="form-control"
                                             name="charges_sub_catagory_id">
@@ -69,41 +69,47 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="charges_name" class="form-label">Charges name <span
+                                <div class="col-md-4 addchargedesign">
+                                    <div class="form-group ">
+                                        {{--  <label for="charges_name">Charges name <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="charges_name" name="charges_name"
-                                            placeholder="Enter Charges Name" value="{{ old('charges_name') }}" required>
+                                            placeholder="Enter Charges Name" value="{{ old('charges_name') }}" required>  --}}
+                                            <input type="text" value="{{ old('charges_name') }}"id="charges_name" name="charges_name">
+                                            <label for="charges_name">Enter Charges Name <span class="text-danger">*</span></label>
                                         @error('charges_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesign">
                                     <div class="form-group">
-                                        <label for="standard_charges" class="form-label">Standard Charges <span
+                                        {{--  <label for="standard_charges" class="form-label">Standard Charges <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="standard_charges" name="standard_charges"
                                             placeholder="Enter Standard Charges" value="{{ old('standard_charges') }}"
-                                            required>
+                                            required>  --}}
+                                            <input type="text" value="{{ old('standard_charges') }}"id="standard_charges" name="standard_charges">
+                                            <label for="standard_charges">Enter Charges Name <span class="text-danger">*</span></label>
                                         @error('standard_charges')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesignin">
                                     <div class="form-group ">
-                                        <label for="standard_charges" class="form-label">Date</label>
+                                        <label for="standard_charges">Date</label>
                                         <input type="date" class="form-control" id="date" name="date"
                                             value="{{ old('date') }}">
                                         <small class="text-danger">{{ $errors->first('date') }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesign">
                                     <div class="form-group ">
-                                        <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" name="description"> {{ old('description') }} </textarea>
+                                        {{--  <label for="description" class="form-label">Description</label>
+                                        <textarea class="form-control" id="description" name="description"> {{ old('description') }} </textarea>  --}}
+                                        <input type="text" value=" {{ old('description') }} "id="sdescription" name="description">
+                                        <label for="description">Description <span class="text-danger">*</span></label>
                                         <small class="text-danger">{{ $errors->first('description') }}</small>
                                     </div>
                                 </div>

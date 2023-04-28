@@ -24,8 +24,9 @@ class CreateBillingsTable extends Migration
             $table->string('emg_id')->nullable();
             $table->string('ipd_id')->nullable();
             $table->string('total_amount');
+            $table->string('tax')->nullable();
+            $table->string('grand_total')->nullable();
             $table->string('payment_status')->nullable();
-            $table->string('billing_status')->nullable();
             $table->string('status')->nullable();
             $table->string('is_delete')->default(0);
             $table->string('created_by');

@@ -137,51 +137,53 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
+
                     <hr>
-                    <!-- <div class="row">
-                    <div class="col-md-4">
-                        <label class="form-label">PO Permission Percentage  <span class="text-danger">*</span></label>
-                        <input type="text" required class="form-control" value="<?php echo e(@$general_details->    po_permission_percentage); ?>"  name="po_permission_percentage" placeholder="PO Permission Percentage">
-                        <?php $__errorArgs = ['po_permission_percentage'];
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">PO Permission Percentage <span class="text-danger">*</span></label>
+                            <input type="text" required class="form-control" value="<?php echo e($general_details->po_permission_percentage); ?>" name="po_permission_percentage" placeholder="PO Permission Percentage">
+                            <?php $__errorArgs = ['po_permission_percentage'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
                             <span class="text-danger"><?php echo e($message); ?></span>
-                        <?php unset($message);
+                            <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">Requisition Permission Percentage  <span class="text-danger">*</span></label>
-                        <input type="text" required class="form-control"  name="rfq_permission_percentage" value="<?php echo e(@$general_details->  req_permission_percentage); ?>" placeholder="Requisition Permission Percentage">
-                        <?php $__errorArgs = ['rfq_permission_percentage'];
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Requisition Permission Percentage <span class="text-danger">*</span></label>
+                            <input type="text" required class="form-control" name="rfq_permission_percentage" value="<?php echo e($general_details->req_permission_percentage); ?>" placeholder="Requisition Permission Percentage">
+                            <?php $__errorArgs = ['rfq_permission_percentage'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
                             <span class="text-danger"><?php echo e($message); ?></span>
-                        <?php unset($message);
+                            <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="form-label">PUC Alert Days <span class="text-danger">*</span></label>
-                        <input type="text" required class="form-control"  value="<?php echo e(@$general_details->  puc_alert_days); ?>"  name="puc_alert_days" placeholder="PUC Alert Days">
-                        <?php $__errorArgs = ['puc_alert_days'];
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">PUC Alert Days <span class="text-danger">*</span></label>
+                            <input type="text" required class="form-control" value="<?php echo e($general_details->puc_alert_days); ?>" name="puc_alert_days" placeholder="PUC Alert Days">
+                            <?php $__errorArgs = ['puc_alert_days'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
                             <span class="text-danger"><?php echo e($message); ?></span>
-                        <?php unset($message);
+                            <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
-                    </div> -->
+
 
                     <div class="row">
                         <div class="col-md-9 mt-5">

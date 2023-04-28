@@ -126,7 +126,8 @@
                                 <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
 
                                 <div class="form-group col-md-4">
-                                    <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label>
+                                    {{-- <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label> --}}
+                                    <h6 class="dateappointment">Appointment Date <span class="text-danger">*</span></h6>
                                     @if (auth()->user()->can('appointment date'))
                                     <input type="datetime-local" class="form-control" name="appointment_date" value="{{ old('appointment_date') }}" required />
                                     @else
@@ -141,21 +142,23 @@
                                 <div class="form-group col-md-4">
                                     <label for="medico_legal_case" class="form-label">Medico Legal Case <span class="text-danger">*</span></label>
                                     <input type="radio" name="medico_legal_case" value="yes" class="from-control"><span class="font-weight-bold;">Yes</span>
-                                    <input type="radio" name="medico_legal_case" value="no" class="from-control" checked><span class="fw-bold;">No</span>
+                                    <input type="radio" name="medico_legal_case" value="no" class="from-control" checked><span class="fw-bold;">No</span> 
+                                    
                                     @error('medico_legal_case')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-4">
-                                    <label for="height" class="form-label">Case</label>
-                                    <input type="text" class="form-control" name="case" value="{{ old('case') }}" required />
-
+                                <div class="form-group col-md-4 newaddappon">
+                                    {{-- <label for="height" class="form-label">Case</label>
+                                    <input type="text" class="form-control" name="case" value="{{ old('case') }}" required /> --}}
+                                    <input type="text" id="case"  name="case" value="{{ old('case') }}" required="">
+                                    <label for="height"> case<span class="text-danger">*</span> </label>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="patient_type" class="form-label">Patient Type <span class="text-danger">*</span></label>
+                                    {{-- <label for="patient_type" class="form-label">Patient Type <span class="text-danger">*</span></label> --}}
                                     <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
-                                        <option value="">Select</option>
+                                        <option value="">Patient Type <span class="text-danger">*</span> </option>
                                         @foreach (Config::get('static.patient_types') as $key => $patient_type)
                                         <option value="{{ $patient_type }}"> {{ $patient_type }}</option>
                                         @endforeach
@@ -167,9 +170,9 @@
 
                                 </div>
                                 <div class="form-group  col-md-4 frefesd" style="display:none">
-                                    <label for="tpa_organization" class="form-label">TPA Organization <span class="text-danger">*</span></label>
+                                    {{-- <label for="tpa_organization" class="form-label">TPA Organization <span class="text-danger">*</span></label> --}}
                                     <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
-                                        <option value="">Select</option>
+                                        <option value="">Tpa organization<span class="text-danger">*</span></option>
                                         @foreach ($tpa_management as $key => $tpaManagement)
                                         <option value="{{ $tpaManagement->id }}">
                                             {{ $tpaManagement->TPA_name }}
@@ -182,9 +185,9 @@
                                     <input type="text" class="form-control" name="type_no" value="{{ old('type_no') }}" id="type_no" />
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="reference" class="form-label">Reference</label>
+                                    {{-- <label for="reference" class="form-label">Reference</label> --}}
                                     <select name="reference" class="form-control select2-show-search" id="reference">
-                                        <option value="">Select</option>
+                                        <option value="">Reference</option>
                                         @foreach ($referer as $key => $reference)
                                         <option value="{{ $reference->id }}"> {{ $reference->referral_name }}
                                         </option>
@@ -271,9 +274,9 @@
 
                                 <div class="row" id="show_Symptoms" style="display: none">
                                     <div class="col-md-3">
-                                        <label for="symptoms_type" class="form-label">Symptoms Type</label>
+                                        {{-- <label for="symptoms_type" class="form-label">Symptoms Type</label> --}}
                                         <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type">
-                                            <option value="">Select</option>
+                                            <option value="">Symptoms Type</option>
                                             @foreach ($symptoms_types as $key => $symptoms_type)
                                             <option value="{{ $symptoms_type->id }}">
                                                 {{ $symptoms_type->symptoms_type_name }}
@@ -283,16 +286,19 @@
                                     </div>
 
                                     <div class="col-md-3">
-                                        <label for="symptoms_title" class="form-label">Symptoms Title</label>
+                                        {{-- <label for="symptoms_title" class="form-label">Symptoms Title</label> --}}
 
                                         <select name="symptoms_title" id="symptoms_title" class="form-control select2-show-search">
-                                            <option value="">Select</option>
+                                            <option value="">Symptoms Title</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="symptoms_description" class="form-label">Symptoms
+                                        {{-- <label for="symptoms_description" class="form-label">Symptoms
                                             Description</label>
-                                        <textarea class="form-control" name="symptoms_description"></textarea>
+                                        <textarea class="form-control" name="symptoms_description"></textarea> --}}
+                                        <input type="text" id="symptoms_description"  name="symptoms_description"  required="">
+                                        <label for="symptoms_description"> Symptoms
+                                            Description<span class="text-danger">*</span> </label>
                                     </div>
                                 </div>
 
@@ -300,12 +306,16 @@
                                 <hr class="hr_line">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label class="form-label">Note</label>
-                                        <textarea class="form-control" name="note"></textarea>
+                                        {{-- <label class="form-label">Note</label>
+                                        <textarea class="form-control" name="note"></textarea> --}}
+                                        <input type="text" id="Note"  name="Note"  required="">
+                                        <label for="Note">Note<span class="text-danger">*</span> </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-label">Any Known Allergies</label>
-                                        <textarea class="form-control" name="any_known_allergies"></textarea>
+                                        {{-- <label class="form-label">Any Known Allergies</label>
+                                        <textarea class="form-control" name="any_known_allergies"></textarea> --}}
+                                        <input type="text" id="any_known_allergies"  name="any_known_allergies"  required="">
+                                        <label for="Any Known Allergies">Any Known Allergies<span class="text-danger">*</span> </label>
                                     </div>
                                 </div>
 

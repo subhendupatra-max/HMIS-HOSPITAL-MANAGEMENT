@@ -23,24 +23,30 @@
 
                         <div class="col-md-6">
                             <div class="col-md-10">
-                                <label class="form-label">Referral Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ old('referral_name') }}" name="referral_name" id="referral_name" placeholder="Referral Name">
+                                <!-- <label class="form-label">Referral Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{ old('referral_name') }}" name="referral_name" id="referral_name" placeholder="Referral Name"> -->
+                                <input type="text"value="{{ old('referral_name') }}" name="referral_name" id="referral_name"required="">
+                                <label for="referral_name">Referral Name <span class="text-danger">*</span></label>
                                 @error('referral_name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <div class="col-md-10">
-                                <label class="form-label">contact No<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ old('phone_no') }}" name="phone_no" id="phone_no" placeholder="Enter Phone No">
+                            <div class="col-md-10 newaddappon ">
+                                <!-- <label class="form-label">contact No<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{ old('phone_no') }}" name="phone_no" id="phone_no" placeholder="Enter Phone No"> -->
+                                <input type="text" value="{{ old('phone_no') }}" name="phone_no" id="phone_no"required="">
+                                <label for="phone_no">Enter Phone No<span class="text-danger">*</span></label>
                                 @error('phone_no')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
-                            <div class="col-md-10">
-                                <label class="form-label">Standard Commission (%)<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" value="{{ old('standard_commission') }}" name="standard_commission" id="standard_commission" placeholder="Standard Commission">
+                            <div class="col-md-10 newaddappon">
+                                <!-- <label class="form-label">Standard Commission (%)<span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" value="{{ old('standard_commission') }}" name="standard_commission" id="standard_commission" placeholder="Standard Commission"> -->
+                                <input type="text"  value="{{ old('standard_commission') }}" name="standard_commission" id="standard_commission"required="">
+                                <label for="standard_commission">Standard Commission (%)<span class="text-danger">*</span></label>
                                 @error('standard_commission')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror

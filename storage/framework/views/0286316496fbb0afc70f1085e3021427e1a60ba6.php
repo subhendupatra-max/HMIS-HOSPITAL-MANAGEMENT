@@ -91,10 +91,9 @@ unset($__errorArgs, $__bag); ?>
                                     <th scope="col" style="width: 7%">GST <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 13%">Rate <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 15%">Amount <span class="text-danger">*</span></th>
-
                                 </tr>
                             </thead>
-                            <tbody id="alltextre">
+                            <tbody id="alltextre">   
 
                                 <?php if(isset($po_item ) && !empty($po_item)): ?>
                                 <?php $i = 0; ?>

@@ -15,194 +15,280 @@
                                 <div class="card-header">
                                     <h4>Edit Patient</h4>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body hospital_allcardbodydesign">
                                     <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Personal Information</h5>
                                     <div class="main-profile-bio mb-0">
                                         <div class="row">
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-2 newdesign">
                                                 <label for="prefix">Prefix <span class="text-danger">*</span></label>
                                                 <select name="prefix" class="form-control" id="prefix">
                                                     <option value="">Select</option>
                                                     @foreach (Config::get('static.prefix') as $lang => $prefixs)
-                                                    <option value="{{$prefixs}}" {{ @$prefixs == $patient->prefix ? 'selected' : " " }}> {{$prefixs}}</option>
+                                                    <option value="{{$prefixs}}" {{ @$prefixs==$patient->prefix ?
+                                                        'selected' : " " }}> {{$prefixs}}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('prefix')
+                                                <small class="text-danger">{{ $message }}</small>
+                                                @enderror
                                             </div>
 
-                                            <div class="form-group col-md-3">
-                                                <label for="first_name">First Name <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="first_name" value="{{ @$patient->first_name }}" name="first_name" placeholder="Enter first Name">
+                                            <div class="form-group col-md-2 newdesignadd ">
+                                                <input type="text" id="first_name" value="{{ @$patient->first_name }}"
+                                                    name="first_name">
+                                                <label for="first_name"> Pateient's First name<span
+                                                        class="text-danger">*</span> </label>
                                                 <small class="text-danger">{{ $errors->first('first_name') }}</small>
                                             </div>
 
-                                            <div class="form-group col-md-3">
-                                                <label for="middle_name">Middle Name </label>
-                                                <input type="text" class="form-control" id="middle_name" value="{{ @$patient->middle_name }}" name="middle_name" placeholder="Enter Middle Name">
-                                                <small class="text-danger">{{ $errors->first('middle_name') }}</small>
+                                            <div class="form-group col-md-2 newdesignadd">
+
+                                                <input type="text" id="middle_name" value="{{ @$patient->middle_name }}"
+                                                    name="middle_name">
+                                                <label for="middle_name"> Pateient's Middile name </label>
+
                                             </div>
 
-                                            <div class="form-group col-md-3">
-                                                <label for="last_name">Last Name <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="last_name" value="{{ @$patient->last_name }}" name="last_name" placeholder="Enter Last Name">
+                                            <div class="form-group col-md-2 newdesignadd">
+
+                                                <input type="text" id="last_name" value="{{ @$patient->last_name }}"
+                                                    name="last_name">
+                                                <label for="last_name"> Pateient's Last name <span
+                                                        class="text-danger">*</span></label>
                                                 <small class="text-danger">{{ $errors->first('last_name') }}</small>
                                             </div>
 
-                                            <div class="form-group col-md-2">
+
+                                            <div class="form-group col-md-2 newdesignadd">
+
+                                                <input type="email" id="email_no" value="{{ @$patient->email }}"
+                                                    name="email_no">
+                                                <label for="email_no"> Email Id </label>
+
+                                            </div>
+
+                                            <div class="form-group col-md-2 newdesignadd">
+
+                                                <input type="text" id="Phone_no" name="phone"
+                                                    value="{{ @$patient->phone }}">
+                                                <label for="phone_no"> Pateient's Phone No<span
+                                                        class="text-danger">*</span></label>
+                                                <small class="text-danger">{{ $errors->first('phone') }}</small>
+                                            </div>
+
+                                            <div class="form-group col-md-2 newdesign ">
                                                 <label for="marital_status">Marital Status </label>
-                                                <select name="marital_status" class="form-control select2-show-search" id="marital_status">
-                                                    <option value="">Select</option>
+                                                <select name="marital_status" class="form-control select2-show-search"
+                                                    id="marital_status">
+                                                    <option value="">Select One...</option>
                                                     @foreach (Config::get('static.marital_status') as $lang => $marital)
-                                                    <option value="{{$marital}}" {{ @$marital == $patient->marital_status ? 'selected' : " "}}> {{$marital}}</option>
+                                                    <option value="{{$marital}}" {{ @$marital==$patient->marital_status
+                                                        ? 'selected' : " "}}> {{$marital}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
 
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-md-2 newdesign  ">
                                                 <label for="blood_group">Blood Group </label>
                                                 <select name="blood_group" class="form-control" id="blood_group">
-                                                    <option value="">Select</option>
-                                                    @foreach (Config::get('static.blood_groups') as $lang => $blood_group)
-                                                    <option value="{{$blood_group}}" {{ @$blood_group == $patient->blood_group ? 'selected' : " "}}> {{$blood_group}}</option>
+                                                    <option value="">Select One...</option>
+                                                    @foreach (Config::get('static.blood_groups') as $lang =>
+                                                    $blood_group)
+                                                    <option value="{{$blood_group}}" {{ @$blood_group==$patient->
+                                                        blood_group ? 'selected' : " "}}> {{$blood_group}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
 
-                                            <div class="form-group col-md-2">
+                                            <div class="form-group col-md-2 newuserlisttchange">
                                                 <label for="gender">Gender <span class="text-danger">*</span></label>
-                                                <select name="gender" class="form-control select2-show-search" id="gender">
+                                                <select name="gender" required class="form-control select2-show-search"
+                                                    id="gender">
                                                     <option value="">Select</option>
                                                     @foreach (Config::get('static.gender') as $lang => $genders)
-                                                    <option value="{{$genders}}" {{ @$genders == $patient->gender ? 'selected' : " "}}> {{$genders}}</option>
+                                                    <option value="{{$genders}}" {{ @$genders==$patient->gender ?
+                                                        'selected' : " "}}> {{$genders}}</option>
                                                     @endforeach
                                                 </select>
+                                                @error('gender')
+                                                <small class="text-danger">{{ $message }}</small>
+                                                @enderror
                                             </div>
 
-                                            <div class="form-group col-md-2">
-                                                <label for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label>
-                                                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="{{ old('date_of_birth') }}">
+                                            <div class="form-group col-md-2 newaddappon">
+                                                <label for="date_of_birth">Date Of Birth <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="date" class="form-control" id="date_of_birth"
+                                                    name="date_of_birth" onchange="getagefromdate(this.value)"
+                                                    value="{{ date('Y-m-d',strtotime($patient->date_of_birth)) }}"
+                                                    required>
+
                                                 <small class="text-danger">{{ $errors->first('date_of_birth') }}</small>
                                             </div>
 
-                                            <div class="form-group col-md-4">
-                                                <label>Age (yy-mm-dd) <span class="text-danger">*</span></label>
+                                            <div class="form-group col-md-4 newdesignadd">
+
                                                 <div class="row">
                                                     <div class="col-lg-4">
-                                                        <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" required value="{{ @$patient->year }}">
-                                                        <small class="text-danger">{{ $errors->first('date_of_birth_year') }}</small>
+
+                                                        <input type="text" id="date_of_birth_year" onkeyup="getage()"
+                                                            required name="date_of_birth_year" value=" {{
+                                                            @$patient->year }}">
+                                                        <label for="date_of_birth_year"> Year <span
+                                                                class="text-danger">*</span></label>
+                                                        <small class="text-danger">{{
+                                                            $errors->first('date_of_birth_year') }}</small>
                                                     </div>
 
-                                                    <div class="col-lg-4">
-                                                        <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" required value="{{ @$patient->month }}">
-                                                        <small class="text-danger">{{ $errors->first('date_of_birth_month') }}</small>
+                                                    <div class="col-lg-4 ">
+
+                                                        <input type="text" id="date_of_birth_month"
+                                                            value="{{ @$patient->month }}" onkeyup="getage()" required
+                                                            name="date_of_birth_month">
+                                                        <label for="date_of_birth_month"> Month <span
+                                                                class="text-danger">*</span></label>
+                                                        <small class="text-danger">{{
+                                                            $errors->first('date_of_birth_month') }}</small>
                                                     </div>
-                                                    <div class="col-lg-4">
-                                                        <input type="text" class="form-control" id="date_of_birth_day" name="day" placeholder="Day" required value="{{ @$patient->day }}">
-                                                        <small class="text-danger">{{ $errors->first('date_of_birth_day') }}</small>
+                                                    <div class="col-lg-4  ">
+
+                                                        <input type="text" id="date_of_birth_day" onkeyup="getage()"
+                                                            required name="date_of_birth_day"
+                                                            value="{{ @$patient->day }}">
+                                                        <label for="date_of_birth_day"> Day <span
+                                                                class="text-danger">*</span></label>
+                                                        <small class="text-danger">{{
+                                                            $errors->first('date_of_birth_day') }}</small>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group col-md-3">
-                                                <label for="phone">Phone <span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" value="{{ @$patient->phone }}" id="phone" name="phone" placeholder="Enter Your Phone No.">
-                                                <small class="text-danger">{{ $errors->first('phone') }}</small>
-                                            </div>
-
-                                            <div class="form-group col-md-3">
-                                                <label for="email">Email </label>
-                                                <input type="email" class="form-control" value="{{ @$patient->email }}" id="email" name="email" placeholder="Enter Your Eamil">
-                                                <small class="text-danger">{{ $errors->first('email') }}</small>
-                                            </div>
 
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body border-top">
-                                    <h6 class="font-weight-bold">Is Gurdian And Local Gurdian Same ?
+                                <div class="card-body border-top hospital_allcardbodydesign">
 
-                                        <input type="checkbox" id="myCheckbox" onchange="myFunction()" />
-                                    </h6>
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube"></i> Gurdian Details</h5>
-                                    <div class="main-profile-contact-list ">
-                                        <div class="row">
-                                            <div class="form-group col-md-4">
-                                                <label for="address">Gurdian Details <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="guardian_name" value="{{ @$patient->guardian_name }}" name="guardian_name" placeholder="Enter Guardian Name">
-                                                <small class="text-danger">{{ $errors->first('guardian_name') }}</small>
+                                    <div class="row">
+                                        <div class="col-lg-6 ">
+                                            <h5 class="font-weight-bold"><i class="fas fa-users-cog"></i> Gurdian
+                                                Details</h5>
+                                            <div class="main-profile-contact-list ">
+                                                <div class="row">
+                                                    <div class="form-group col-md-6 newuserchangee">
+
+                                                        <input type="text" id="guardian_name"
+                                                            value="{{ @$patient->guardian_name }}" name="guardian_name"
+                                                            required />
+                                                        <label for="guardian_name"> Guardian's Name<span
+                                                                class="text-danger">*</span></label>
+                                                        <small class="text-danger">{{ $errors->first('guardian_name')
+                                                            }}</small>
+
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 newuserchangee">
+
+                                                        <input type="text" id="guardian_contact_no"
+                                                            value="{{ @$patient->guardian_contact_no }}"
+                                                            name="guardian_contact_no">
+                                                        <label for="guardian_contact_no"> Guardian's Phone No<span
+                                                                class="text-danger">*</span></label>
+                                                        <small class="text-danger">{{
+                                                            $errors->first('guardian_contact_no') }}</small>
+
+                                                    </div>
+                                                </div>
                                             </div>
-
-                                            <div class="form-group col-md-3">
-                                                <label for="guardian_contact_no"> Gurdian Contact No <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="guardian_contact_no" value="{{ @$patient->guardian_contact_no }}" name="guardian_contact_no" placeholder="Enter Gurdian Phone No">
-                                                <small class="text-danger">{{ $errors->first('guardian_contact_no') }}</small>
-                                            </div>
-
                                         </div>
 
-                                    </div>
-                                </div>
-                                <div class="card-body border-top">
+                                        <div class="col-lg-6">
+                                            <h5 class="font-weight-bold"> <input type="checkbox" id="myCheckbox"
+                                                    onchange="myFunction()"> <i class="fas fa-user-circle"></i> Local
+                                                Gurdian Name</h5>
+                                            <div class="main-profile-contact-list ">
+                                                <div class="row">
+                                                    <div class="form-group col-md-6 newuserchangeedesign">
 
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube"></i> Local Gurdian Name</h5>
-                                    <div class="main-profile-contact-list ">
-                                        <div class="row">
-                                            <div class="form-group col-md-4">
-                                                <label for="address"> Local Gurdian Name<span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_guardian_name" value="{{ @$patient->local_guardian_name }}" name="local_guardian_name" placeholder="Enter Guardian Name">
-                                                <small class="text-danger">{{ $errors->first('local_guardian_name') }}</small>
+                                                        <input type="text" id="local_guardian_name"
+                                                            value="{{ @$patient->local_guardian_name }}"
+                                                            name="local_guardian_name">
+                                                        <label for="local_guardian_name"> Local Guardian's Name<span
+                                                                class="text-danger">*</span></label>
+                                                        <small class="text-danger">{{
+                                                            $errors->first('local_guardian_name') }}</small>
+
+                                                    </div>
+
+                                                    <div class="form-group col-md-6 newuserchangeedesign ">
+
+                                                        <input type="text" id="local_guardian_contact_no"
+                                                            value="{{ @$patient->local_guardian_contact_no }}"
+                                                            name="local_guardian_contact_no">
+                                                        <label for="Local Gurdian Contact No"> Local Guardian's Phone
+                                                            No<span class="text-danger">*</span></label>
+                                                        <small class="text-danger">{{
+                                                            $errors->first('local_guardian_contact_no') }}</small>
+
+                                                    </div>
+                                                </div>
                                             </div>
-
-                                            <div class="form-group col-md-3">
-                                                <label for="local_guardian_contact_no">Local Gurdian Contact No <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_guardian_contact_no" value="{{ @$patient->local_guardian_contact_no }}" name="local_guardian_contact_no" placeholder="Enter Local Gurdian Name">
-                                                <small class="text-danger">{{ $errors->first('local_guardian_contact_no') }}</small>
-                                            </div>
-
                                         </div>
-
                                     </div>
                                 </div>
-                                <div class="card-body border-top">
+                                <div class="card-body border-top hospital_allcardbodydesign">
                                     <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Address</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
-                                            <div class="form-group col-md-3">
-                                                <label for="address">Address <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="address" value="{{ @$patient->address }}" name="address" placeholder="Enter Address">
+                                            <div class="form-group col-md-4 newuserchangee ">
+
+                                                <input type="text" id="address" value="{{ @$patient->address }}"
+                                                    name="address" required>
+                                                <label for="address">Address<span class="text-danger">*</span></label>
                                                 <small class="text-danger">{{ $errors->first('address') }}</small>
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-2 addpatientdesign">
                                                 <label for="country">Country <span class="text-danger">*</span></label>
-                                                <select name="country" class="form-control select2-show-search" id="country" onchange="getCountry(this.value,{{$patient->state}} , {{$patient->district}})" onchange="showDetails(this.value)">
+                                                <select name="country" class="form-control select2-show-search"
+                                                    id="country"
+                                                    onchange="getCountry(this.value,{{$patient->state}} , {{$patient->district}})"
+                                                    required>
                                                     <option value="">Select Country... </option>
                                                     @foreach($country as $countrys)
-                                                    <option value="{{$countrys->id}}" {{ @$countrys->id == $patient->country ? 'selected' : " "}}>{{ $countrys->country_name }}</option>
+                                                    <option value="{{$countrys->id}}" {{ @$countrys->id ==
+                                                        @$patient->country ? 'selected' : " "}}>{{
+                                                        $countrys->country_name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <small class="text-danger">{{ $errors->first('country') }}</small>
                                             </div>
 
-                                            <div class="form-group col-md-3">
+                                            <div class="form-group col-md-2 addpatientdesign">
                                                 <label for="state">State <span class="text-danger">*</span></label>
-                                                <select name="state" class="form-control select2-show-search" id="state" onchange="getDistricts(this.value,{{$patient->district}})" required>
+                                                <select name="state" class="form-control select2-show-search" id="state"
+                                                    onchange="getDistricts(this.value,{{$patient->district}})" required>
                                                     <option value="">Select State...</option>
                                                 </select>
                                                 <small class="text-danger">{{ $errors->first('state') }}</small>
                                             </div>
 
 
-                                            <div class="form-group col-md-3">
-                                                <label for="district">District <span class="text-danger">*</span></label>
-                                                <select name="district" class="form-control select2-show-search" id="district" required>
+                                            <div class="form-group col-md-2 addpatientdesign ">
+                                                <label for="district">District <span
+                                                        class="text-danger">*</span></label>
+                                                <select name="district" class="form-control select2-show-search"
+                                                    id="district" required>
                                                     <option value="">Select District...</option>
                                                 </select>
                                                 <small class="text-danger">{{ $errors->first('district') }}</small>
                                             </div>
 
-                                            <div class="form-group col-md-2">
-                                                <label for="pin_no">Pin No. <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="pin_no" name="pin_no" value="{{ @$patient->pin_no }}" required>
+                                            <div class="form-group col-md-2 addpatientdesignpin ">
+
+                                                <input type="text" id="pin_no" id="pin_no" name="pin_no"
+                                                    value="{{ @$patient->pin_no }}" required>
+                                                <label for="pin_no">Pin No.<span class="text-danger">*</span></label>
                                                 <small class="text-danger">{{ $errors->first('pin_no') }}</small>
                                             </div>
                                         </div>
@@ -210,96 +296,109 @@
                                     </div>
                                 </div>
 
-                                <div class="card-body border-top">
-                                    <h6 class="font-weight-bold">Is Address And Local Address Same ?
-                                        <input type="checkbox" id="checkboxforaddress" onchange="localAddress()" />
-                                    </h6>
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Local Address</h5>
+                                <div class="card-body border-top hospital_allcardbodydesign">
+                                    <input type="checkbox" name="localaddress_and_address_are_same"
+                                        onchange="same_as_address_localaddress()" id="vjrvervre" value="yes" />
+                                    <span style="font-weight: bold !important;
+                                        font-size: 15px;color:#0a1272; margin-bottom:3px;">Is
+                                        Address And Local Address Same ?
+                                    </span>
+                                </div>
+                                <div class="card-body border-top hospital_allcardbodydesign" id="same_address">
+                                    <h5 class="font-weight-bold"><i class="fas fa-map-marker"></i>Local Address</h5>
                                     <div class="main-profile-contact-list ">
                                         <div class="row">
-                                            <div class="form-group col-md-3">
-                                                <label for="local_address">Local Address <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_address" value="{{ @$patient->local_address }}" name="local_address" placeholder="Enter Local Address">
+                                            <div class="form-group col-md-4 addpatientdesignaddress  ">
+
+                                                <input type="text" id="local_address"
+                                                    value="{{ @$patient->local_address }}" name="local_address">
+                                                <label for="local_address">Enter Local Address<span
+                                                        class="text-danger">*</span></label>
                                                 <small class="text-danger">{{ $errors->first('local_address') }}</small>
+
                                             </div>
 
-                                            <div class="form-group col-md-3">
-                                                <label for="country_local">Country <span class="text-danger">*</span></label>
-                                                <select name="country_local" class="form-control select2-show-search" id="country_local" onchange="getLocalCountry(this.value,{{$patient->state}} , {{$patient->district}})" onchange="showDetails(this.value)">
+                                            <div class="form-group col-md-2 addpatientdesignpin">
+                                                <label for="country_local">Country <span
+                                                        class="text-danger">*</span></label>
+                                                <select name="country_local" class="form-control select2-show-search"
+                                                    id="country_local"
+                                                    onchange="getLocalCountry(this.value,{{$patient->state}} , {{$patient->district}})">
                                                     <option value="">Select Country... </option>
                                                     @foreach($country as $item)
-                                                    <option value="{{$item->id}}" {{ @$item->id == $patient->country_local ? 'selected' : " "}}>{{ $item->country_name }}</option>
+                                                    <option value="{{$item->id}}" {{ @$item->id ==
+                                                        $patient->country_local ? 'selected' : " "}}>{{
+                                                        $item->country_name }}</option>
                                                     @endforeach
                                                 </select>
-                                                <small class="text-danger">{{ $errors->first('country_local') }}</small>
+
                                             </div>
 
-                                            <div class="form-group col-md-3">
-                                                <label for="state_local">State <span class="text-danger">*</span></label>
-                                                <select name="state_local" class="form-control select2-show-search" id="state_local" onchange="getLocalDistricts(this.value,{{$patient->district}})">
+
+                                            <div class="form-group col-md-2 addpatientdesignpin">
+                                                <label for="state_local">State <span
+                                                        class="text-danger">*</span></label>
+                                                <select name="state_local" class="form-control select2-show-search"
+                                                    id="state_local"
+                                                    onchange="getLocalDistricts(this.value,{{$patient->district}})">
                                                     <option value="">Select State...</option>
                                                 </select>
-                                                <small class="text-danger">{{ $errors->first('state_local') }}</small>
+
                                             </div>
 
-                                            <div class="form-group col-md-3">
-                                                <label for="district_local">District <span class="text-danger">*</span></label>
-                                                <select name="district_local" class="form-control select2-show-search" id="district_local">
+
+                                            <div class="form-group col-md-2 addpatientdesignpin">
+                                                <label for="district_local">District <span
+                                                        class="text-danger">*</span></label>
+                                                <select name="district_local" class="form-control select2-show-search"
+                                                    id="district_local">
                                                     <option value="">Select District...</option>
                                                 </select>
-                                                <small class="text-danger">{{ $errors->first('district_local') }}</small>
+
                                             </div>
 
-                                            <div class="form-group col-md-2">
-                                                <label for="local_pin_no">Pin No. <span class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_pin_no" name="local_pin_no" value="{{ $patient->local_pin_no }}">
-                                                <small class="text-danger">{{ $errors->first('local_pin_no') }}</small>
+                                            <div class="form-group col-md-2 addpin">
+                                                <label for="local_pin_no">Pin No. <span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="local_pin_no"
+                                                    name="local_pin_no" value="{{ $patient->local_pin_no }}">
+
+
                                             </div>
                                         </div>
 
                                     </div>
                                 </div>
 
-                                <div class="card-body border-top">
+                                <div class="card-body border-top hospital_allcardbodydesign ">
                                     <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Other Details</h5>
                                     <div class="main-profile-contact-list ">
-                                        <!-- <div class="row"> -->
                                         <div class="form-group col-md-12 " id="indentification">
-                                            <div class="form-group col-md-5 d-inline-block">
+                                            <div class="form-group col-md-5 addpatientdesignin d-inline-block">
                                                 <label for="identification_name"> Identification Name </label>
-                                                <select name="identification_name" class="form-control select2-show-search" id="identification_name">
+                                                <select name="identification_name"
+                                                    class="form-control select2-show-search" id="identification_name">
                                                     <option value="">Select One...</option>
+                                <option value="Voter Card" @if( $patient->identification_name ==
+                                    'Voter Card') selected @endif>Voter Card</option>
+                                <option value="Aadhar Card" @if( $patient->identification_name ==
+                                    'Aadhar Card') selected @endif>Aadhar Card</option>
+                                <option value="Ration Card" @if( $patient->identification_name ==
+                                    'Ration Card') selected @endif>Ration Card</option>
                                                 </select>
                                             </div>
 
-                                            <div class="form-group col-md-5 d-inline-block">
-                                                <label for="identification_number"> National Identification Number </label>
-                                                <input type="text" class="form-control" value="{{ $patient->identification_number }}" id="identification_number" name="identification_number" placeholder="Enter National Identification Number">
-                                                <small class="text-danger">{{ $errors->first('identification_number') }}</small>
+                                            <div class="form-group col-md-5 addpatientdesign d-inline-block">
+                                                <input type="text" value="{{ $patient->identification_number }}"
+                                                    id="identification_number" name="identification_number">
+                                                <label for="identification_number">National Identification Number
+                                                </label>
                                             </div>
                                         </div>
 
                                         <!-- </div> -->
                                     </div>
                                 </div>
-
-
-                                <div class="card-body border-top">
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Select Type</h5>
-                                    <div class="main-profile-contact-list ">
-                                        <div class="form-group col-md-6">
-                                            <label for="type"> <SPAN style="color:blue;font-weight: 600;">TYPE</SPAN> </label>
-                                            <select name="type" class="form-control select2-show-search" id="type">
-                                                <option value="" @if(isset($type)) {{$type == '' ? 'selected' : ''}} @endif>Select One.....</option>
-                                                <option value="opd" @if(isset($type)) {{$type == 'opd' ? 'selected' : ''}} @endif>OPD Registation</option>
-                                                <option value="emg" @if(isset($type)) {{$type == 'emg' ? 'selected' : ''}} @endif>EMG Registation</option>
-                                            </select>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
                                 <div class="modal-footer justify-content-center">
                                     <button class="btn btn-indigo" type="submit">Save</button>
                                 </div>
@@ -313,12 +412,38 @@
 
 </div>
 <script>
-    function showDetails(value) {
-
+    function getage(){
+        var year =  $('#date_of_birth_year').val();
+        var month =  $('#date_of_birth_month').val();
+        var days =  $('#date_of_birth_day').val();
+        // var duration = {years: 40, months: 2, days: 3}; // duration object
+        var currentDate = new Date(); // current date object
+        var date = new Date(currentDate.getFullYear() - year, 
+                    currentDate.getMonth() - month, 
+                    currentDate.getDate() - days); // subtracting duration from current date
+        var yyyy = date.getFullYear().toString(); // extracting year
+        var mm = (date.getMonth() + 1).toString().padStart(2, '0'); // extracting month and padding with 0 if needed
+        var dd = date.getDate().toString().padStart(2, '0'); // extracting day and padding with 0 if needed
+        var formattedDate = yyyy + '-' + mm + '-' + dd; // formatting date string
+        $('#date_of_birth').val(formattedDate);
+    }
+</script>
+<script>
+    function showDetails(value,identification_name=null) {
+        var sel = '';
+        if (identification_name == "Voter Card") {
+            var sel = 'selected';
+        }
+        if (identification_name == "Aadhar Card") {
+            var sel = 'selected';
+        }
+        if (identification_name == "Ration Card") {
+            var sel = 'selected';
+        }
         let in_india = `<option value="">Select One...</option>
-        <option value="Voter Card">Voter Card</option>
-        <option value="Aadhar Card">Aadhar Card</option>
-        <option value="Ration Card">Ration Card</option>`;
+        <option value="Voter Card" ${sel} >Voter Card</option>
+        <option value="Aadhar Card" ${sel} >Aadhar Card</option>
+        <option value="Ration Card" ${sel}>Ration Card</option>`;
 
         let out_india = `<option value="Passport">Passport</option>
         `;
@@ -333,7 +458,8 @@
 <script>
     function getCountry(country_id, state_id, district_id) {
         $('#state').val('');
-        $("#state").html("<option value='l'>Select... </option>");
+        $("#state").html("<option value=''>Select... </option>");
+        $("#district").html("<option value=''>Select... </option>");
         $.ajax({
             url: "{{ route('find-state-by-country') }}",
             type: "POST",
@@ -347,11 +473,13 @@
                     let sel = (value.id == state_id ? 'selected' : '');
                     $('#state').append(`<option value="${value.id}" ${sel}>${value.name}</option>`);
                 });
+                
                 getDistricts(state_id, district_id);
             },
             error: function(error) {
                 console.log(error);
             }
+           
         });
     }
 </script>
@@ -360,7 +488,7 @@
     function getDistricts(state, districts_id) {
         var div_data = '';
         $('#district').val('');
-        $("#district").html("<option value='l'>Select District... </option>");
+        $("#district").html("<option value=''>Select District... </option>");
         var ijij = $('#state').val();
         $.ajax({
             url: "{{ route('find-fr-district-by-state') }}",
@@ -473,7 +601,8 @@
 </script>
 
 <script>
-    function getLocalCountry(local_country_id, local_state_id, local_district_id) {
+    function getLocalCountry(local_country_id, local_state_id, local_district_id,identification_name=null) {
+        alert(local_country_id);
         $('#state_local').val('');
         $("#state_local").html("<option value='l'>Select... </option>");
         $.ajax({
@@ -495,11 +624,13 @@
                 console.log(error);
             }
         });
+       // showDetails(local_country_id,identification_name);
     }
 </script>
 
 <script>
     function getLocalDistricts(state_local, district_local) {
+
         var div_data = '';
         $('#district_local').val('');
         $("#district_local").html("<option value='l'>Select District... </option>");
@@ -529,31 +660,15 @@
 </script>
 
 <script>
-    function localAddress() {
-        if (document.getElementById("checkboxforaddress").checked) {
-            var address = $('#address').val();
-            // var country = $('#country').val();
-            // var state = $('#state').val();
-            // var district = $('#district').val();
-            var pin_no = $('#pin_no').val();
-
-            $('#local_address').val(address);
-            // $('#country_local').val(country);
-            // $('#state_local').val(state);
-            // $('#district_local').val(district);
-            $('#local_pin_no').val(pin_no);
-        } else {
-            $('#local_address').val(' ');
-            // $('#country_local').val(' ');
-            // $('#state_local').val(' ');
-            // $('#district_local').val(' ');
-            $('#local_pin_no').val(' ');
+    function same_as_address_localaddress() {
+            if (document.getElementById("vjrvervre").checked) {;
+                $('#same_address').attr('style','display:none',true);
+            } else {
+                $('#same_address').removeAttr('style',true);
+            }
         }
-    }
 </script>
 
-<script>
 
-</script>
 
 @endsection

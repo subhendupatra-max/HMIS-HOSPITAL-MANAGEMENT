@@ -437,6 +437,7 @@ class PermissionSeeder extends Seeder
         // Pharmacy Bill
         Permission::create(['name' => 'pharmacy bill']);
         Permission::create(['name' => 'add pharmacy bill']);
+        Permission::create(['name' => 'medicine stock']);
 
         //medicine
         Permission::create(['name' => 'medicine']);
@@ -726,6 +727,11 @@ class PermissionSeeder extends Seeder
         //opd billing
         Permission::create(['name' => 'opd billing']);
         Permission::create(['name' => 'add opd billing']);
+        Permission::create(['name' => 'edit opd billing']);
+        Permission::create(['name' => 'delete opd billing']);
+
+        //discount
+        Permission::create(['name' => 'discount']);
 
 
         //opd physical condition
@@ -753,5 +759,11 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'save emg payment']);
         Permission::create(['name' => 'edit emg payment']);
         Permission::create(['name' => 'delete emg payment']);
+
+        //ipd timeline
+        Permission::create(['name' => 'ipd tismeline']);
+        Permission::create(['name' => 'add timeline list ipd']); 
+        Permission::create(['name' => 'edit timeline ipd']);  
+        Permission::create(['name' => 'add timeline ipd']); 
     }
 }

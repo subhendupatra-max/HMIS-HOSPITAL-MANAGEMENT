@@ -1,14 +1,15 @@
+
 <?php $__env->startSection('content'); ?>
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
         <div class="card">
             <div class="card-header d-block">
                 <div class="row">
                     <div class="col-md-4 card-title">
-                        Profile
+                        Profile 
                     </div>
                     <div class="col-md-8 text-right">
                         <div class="d-block">
-                            <a class="btn btn-primary btn-sm" data-placement="top" data-toggle="tooltip" title="Move to IPD" href="<?php echo e(route('ipd-registation-from-opd', ['id' => base64_encode($opd_patient_details->id), 'patient_source' => 'opd', 'source_id' => '$opd_patient_details->emg_details_id'])); ?>"><i class="fa fa-address-card"></i> Admission</a>
+                            <a class="btn btn-primary btn-sm" data-placement="top" data-toggle="tooltip" title="Move to IPD" href="<?php echo e(route('ipd-registation-from-opd', ['id' => base64_encode($opd_patient_details->id), 'patient_source' => 'opd', 'source_id' => '$opd_patient_details->id'])); ?>"><i class="fa fa-address-card"></i> Admission</a>
 
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>

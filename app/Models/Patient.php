@@ -36,6 +36,10 @@ class Patient extends Model
         'remarks',
         'known_allergies',
     ];
+    public function _country()
+    {
+        return $this->belongsTo(Country::class, 'country', 'id');
+    }
 
     public function _state()
     {
@@ -45,6 +49,18 @@ class Patient extends Model
     public function _district()
     {
         return $this->belongsTo(District::class, 'district', 'id');
+    }
+    public function local_state()
+    {
+        return $this->belongsTo(State::class, 'state_local', 'id');
+    }
+    public function local_district()
+    {
+        return $this->belongsTo(District::class, 'district_local', 'id');
+    }
+    public function local_country()
+    {
+        return $this->belongsTo(Country::class, 'country_local', 'id');
     }
 }
 

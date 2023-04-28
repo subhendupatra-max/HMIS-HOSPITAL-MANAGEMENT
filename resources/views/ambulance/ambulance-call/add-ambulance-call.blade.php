@@ -10,7 +10,7 @@
             <form action="{{ route('save-ambulance-call-details') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 newaddappon">
                         <label for="vehicle_model" class="form-label">Vehicle Model <span class="text-danger">*</span></label>
                         <select class="form-control select2-show-search select2-hidden-accessible" value="{{ old('vehicle_model') }}" name="vehicle_model" id="vehicle_model" required>
                             <optgroup>
@@ -25,16 +25,19 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="driver_name" class="form-label">Driver Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="driver_name" name="driver_name" required>
+                    <div class="form-group col-md-4 newaddappon">
+                        <!-- <label for="driver_name">Driver Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="driver_name" name="driver_name" required> -->
+                        <input type="text" name="driver_name" id="driver_name"required="">
+                        <label for="driver_name">Driver Name  <span class="text-danger">*</span></label>
                         @error('driver_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                        <!-- <label for="date" class="form-label">Date<span class="text-danger">*</span></label> -->
+                        <h6 >Date<span class="text-danger">*</span></h6>
                         <input type="date" class="form-control" id="date" name="date" >
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
@@ -75,9 +78,10 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="standard_charges" class="form-label">Standard Charge<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="standard_charges" onkeydown="fdsfds()" onkeyup="totalAmount()" name="standard_charges" required>
-
+                        <!-- <label for="standard_charges" class="form-label">Standard Charge<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="standard_charges" onkeydown="fdsfds()" onkeyup="totalAmount()" name="standard_charges" required> -->
+                        <input type="text"  id="standard_charges" onkeydown="fdsfds()" onkeyup="totalAmount()" name="standard_charges"required="">
+                        <label for="standard_charges">Standard Charge<span class="text-danger">*</span></label>
                         <div class="mt-3" style="display:none;" id="pop">
                             <input type="checkbox" value="on" id="button1" name="button1" style="margin-right: 5px;" /><label for="permission" class="textlink">Are You Want To Change This ? </label>
                         </div>
@@ -88,33 +92,39 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="tax" class="form-label">Tax<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax" required>
+                        <!-- <label for="tax">Tax<span class="text-danger">*</span></label>
+                        <input type="text"  id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" required=""> -->
+                        <input type="text"  id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" required="">
+                        <label for="tax">Tax<span class="text-danger">*</span></label>
                         @error('tax')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4 ">
-                        <label for="total_amount" class="form-label">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="total_amount" name="total_amount" required readonly>
+                     <div class="form-group col-md-4 ">
+                        <!-- <label for="total_amount" class="form-label">Total Amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="total_amount" name="total_amount" required readonly> -->
+                        <input type="text" id="total_amount" name="total_amount"   required="">
+                        <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
                         @error('total_amount')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4 ">
-                        <label for="net_amount" class="form-label">Net Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="net_amount" name="net_amount" required readonly>
+                        <!-- <label for="net_amount" class="form-label">Net Amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="net_amount" name="net_amount" required readonly> -->
+                        <input type="text" id="net_amount" name="net_amount"   required="">
+                        <label for="net_amount">Net Amount<span class="text-danger">*</span></label>
                         @error('net_amount')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="payment_mode" class="form-label">Payment Mode </label>
+                        <!-- <label for="payment_mode" class="form-label">Payment Mode </label> -->
                         <select id="payment_mode" class="form-control" name="payment_mode" onchange="paymentMode(this.value)" required>
-                            <option value="">Select</option>
+                            <option value="">Payment Mode</option>
                             @foreach (Config::get('static.payment_mode_name') as $lang => $item)
                             <option value="{{$item}}"> {{$item}}</option>
                             @endforeach
@@ -125,8 +135,10 @@
                     </div>
 
                     <div class="form-group col-md-4 ">
-                        <label for="payment_amount" class="form-label">Payment Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="payment_amount" name="payment_amount" readonly required>
+                        <!-- <label for="payment_amount" class="form-label">Payment Amount<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="payment_amount" name="payment_amount" readonly required> -->
+                        <input type="text" id="payment_amountt" name="payment_amount"   required="">
+                        <label for="payment_amount">Payment Amount<span class="text-danger">*</span></label>
                         @error('payment_amount')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -158,9 +170,11 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="note" class="form-label"> Note <span class="text-danger">*</span></label>
-                        <textarea name="note" class="form-control"> </textarea>
+                     <div class="form-group col-md-4">
+                        <!-- <label for="note" class="form-label"> Note <span class="text-danger">*</span></label>
+                        <textarea name="note" class="form-control"> </textarea>  -->
+                        <input type="text" id="note" name="note"   required="">
+                        <label for="note">Note<span class="text-danger">*</span></label>
                         @error('note')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
