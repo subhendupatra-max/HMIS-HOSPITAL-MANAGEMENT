@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-md-12">
@@ -278,20 +277,20 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-label">Ticket No</label>
-                                    <input type="text" readonly name="ticket_no" id="ticket_no" class="form-control" />
+                                <div class="form-group col-md-4 newaddticket">
+                                    <input type="text"  id="ticket_no"  name="ticket_no">
+                                    <label for="ticket_no">Ticket No</label>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-label">Ticket Fees</label>
-                                    <input type="text" name="ticket_fees" value="<?php echo e($ticket_fees->ticket_fees); ?>" class="form-control" />
+                                <div class="form-group col-md-4 newaddappon ">
+                                   <input type="text"  id="ticket_fees"  name="ticket_fees">
+                                    <label for="ticket_fees">Ticket Fees</label>
                                 </div>
 
                             </div>
                         </div>
 
                         
-                               
+
                                 
 
                                 <hr class="hr_line">

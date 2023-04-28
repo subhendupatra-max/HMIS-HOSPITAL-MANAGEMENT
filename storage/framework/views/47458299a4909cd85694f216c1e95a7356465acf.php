@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add radiology catagory')): ?>
@@ -18,10 +16,10 @@
             <form method="POST" action="<?php echo e(route('save-radiology-catagory-details')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="">
-                  
+
                     <div class="form-group">
-                        <label for="catagory_name" class="form-label">Radiology Catagory name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="catagory_name" name="catagory_name" placeholder="Enter Charges Caragory Name" value="<?php echo e(old('catagory_name')); ?>" required>
+                        <label for="catagory_name" class="medicinelabel">Radiology Catagory name <span class="text-danger">*</span></label>
+                        <input type="text"  id="catagory_name" name="catagory_name"  value="<?php echo e(old('catagory_name')); ?>" required>
                         <?php $__errorArgs = ['catagory_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -33,7 +31,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
-                  
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Catagory</button>
             </form>
@@ -90,4 +88,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/radiology/catagory/catagory-listing.blade.php ENDPATH**/ ?>

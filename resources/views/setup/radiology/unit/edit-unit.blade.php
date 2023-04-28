@@ -20,8 +20,10 @@
                 <div class="">
                   <input type="hidden" name="id" value="{{ $editUnit->id }}">
                     <div class="form-group">
-                        <label for="unit_name" class="form-label">Radiology Unit name <span class="text-danger">*</span></label>
-                        <textarea class="content" id="unit_name" name="unit_name" name="example" required >{{ $editUnit->unit_name }}</textarea>
+                        {{--  <label for="unit_name" class="medicinelabel">Radiology Unit name <span class="text-danger">*</span></label>
+                        <textarea class="content" id="unit_name" name="unit_name" name="example" required >{{ $editUnit->unit_name }}</textarea>  --}}
+                        <input type="text"id="unit_name" name="unit_name" value="{{ $editUnit->unit_name }}">
+                        <label class="medicinelabel" for="unit_name">Radiology Unit name  </label>
                         @error('unit_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

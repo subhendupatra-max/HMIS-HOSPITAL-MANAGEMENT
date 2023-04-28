@@ -18,10 +18,11 @@
             <form method="POST" action="{{ route('update-medicine-dosage-details') }}">
                 @csrf
                 <div class="">
-         
+
                     <div class="form-group">
-                        <label for="medicine_catagory_id" class="form-label"> Medicine Catagory <span class="text-danger">*</span></label>
+                        <label for="medicine_catagory_id" class="medicinelabel"> Medicine Catagory <span class="text-danger">*</span></label>
                         <select name="medicine_catagory_id" class="form-control select2-show-search" id="medicine_catagory_id">
+
                             <option value="">Select Catagory Name ... </option>
                             @foreach($catagory as $items)
                             <option value="{{$items->id}}" {{ $items->id == $id ? 'selected' : " " }}>{!! $items->medicine_catagory_name !!}</option>
@@ -38,7 +39,7 @@
                                 <th scope="col">Dose<span class="text-danger">*</span></th>
                                 <th scope="col">Unit <span class="text-danger">*</span></th>
                                 <th scope="col" style="width: 2%">
-                                        
+
                                 </th>
                             </tr>
                         </thead>
@@ -48,7 +49,7 @@
 
                             <tr id="rowid0">
                                 <td>
-                                    <input type="text" class="form-control" id="dose" name="dose[]" value="{{ @$value->dose }}" required>
+                                    <input type="text" id="dose" name="dose[]" value="{{ @$value->dose }}" required>
                                 </td>
                                 <td>
                                     <select name="medicine_unit_id[]" class="form-control select2-show-search" id="medicine_unit_id">

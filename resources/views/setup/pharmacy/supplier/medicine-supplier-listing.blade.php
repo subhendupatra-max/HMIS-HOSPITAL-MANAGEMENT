@@ -18,55 +18,77 @@
             <form method="POST" action="{{ route('save-medicine-supplier-details') }}">
                 @csrf
                 <div class="">
-                  
+
                     <div class="form-group">
-                        <label for="supplier_name" class="form-label"> Supplier Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier Name" value="{{ old('supplier_name')}}" required>
+                        {{--  <label for="supplier_name" class="form-label"> Supplier Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier Name" value="{{ old('supplier_name')}}" required>  --}}
+                        <input type="text"  id="supplier_name" name="supplier_name"value="{{ old('supplier_name')}}" >
+                        <label  class="suppilerinput"for="supplier_name">Enter Supplier Name <span class="text-danger">*</span></label>
                         @error('supplier_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="supplier_contact" class="form-label">Supplier Contact <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="supplier_contact" name="supplier_contact" placeholder="Enter Supplier Contact" value="{{ old('supplier_contact')}}" required>
+                        <div class="supplieredit">
+                        {{--  <label for="supplier_contact" class="form-label">Supplier Contact <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="supplier_contact" name="supplier_contact" placeholder="Enter Supplier Contact" value="{{ old('supplier_contact')}}" required>  --}}
+                        <input type="text"  id="supplier_contact" name="supplier_contact"value="{{ old('supplier_contact')}}"  >
+                        <label  class="suppilerinputone"for="supplier_contact">Enter Supplier Contact <span class="text-danger">*</span></label>
                         @error('supplier_contact')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="contact_person_name" class="form-label">Contact Person Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="contact_person_name" name="contact_person_name" placeholder="Enter Contact Person Name" value="{{ old('contact_person_name')}}" required>
+                        <div class="supplieredit">
+                        {{--  <label for="contact_person_name" class="form-label">Contact Person Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="contact_person_name" name="contact_person_name" placeholder="Enter Contact Person Name" value="{{ old('contact_person_name')}}" required>  --}}
+                        <input type="text"  id="contact_person_name" name="contact_person_name"value="{{ old('contact_person_name')}}"  >
+                        <label  class="suppilerinputtwo"for="contact_person_name">Enter Contact Person Name <span class="text-danger">*</span></label>
                         @error('contact_person_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="contact_person_phone" class="form-label">Contact Person Phone <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="contact_person_phone" name="contact_person_phone" placeholder="Enter Contact Person Phone" value="{{ old('contact_person_phone')}}" required>
+                        <div class="supplieredit">
+                        {{--  <label for="contact_person_phone" class="form-label">Contact Person Phone <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="contact_person_phone" name="contact_person_phone" placeholder="Enter Contact Person Phone" value="{{ old('contact_person_phone')}}" required>  --}}
+                        <input type="text"  id="contact_person_phone" name="contact_person_phone"value="{{ old('contact_person_phone')}}"   >
+                        <label  class="suppilerinputthree"for="contact_person_phone">Enter Contact Person  Phone<span class="text-danger">*</span></label>
                         @error('contact_person_phone')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="drug_license_number" class="form-label">Drug License Number<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="drug_license_number" name="drug_license_number" placeholder="Enter Drug License Number" value="{{ old('drug_license_number')}}" required>
+                        <div class="supplieredit">
+                        {{--  <label for="drug_license_number" class="form-label">Drug License Number<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="drug_license_number" name="drug_license_number" placeholder="Enter Drug License Number" value="{{ old('drug_license_number')}}" required>  --}}
+                        <input type="text"  id="drug_license_number" name="drug_license_number"value="{{ old('drug_license_number')}}"  >
+                        <label  class="suppilerinputfour"for="drug_license_number">Enter Drug License Number<span class="text-danger">*</span></label>
                         @error('drug_license_number')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="address" class="form-label">Address<span class="text-danger">*</span></label>
-                        <textarea name="address"  class="form-control"> </textarea>
+                        <div class="supplieredit">
+                        {{--  <label for="address" class="form-label">Address<span class="text-danger">*</span></label>
+                        <textarea name="address"  class="form-control"> </textarea>  --}}
+                        <input type="text"  id="address" name="address" >
+                        <label  class="suppilerinputfive"for="address">Address<span class="text-danger">*</span></label>
                         @error('address')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
-                    
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Supplier</button>
             </form>

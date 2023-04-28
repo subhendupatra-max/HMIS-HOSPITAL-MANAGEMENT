@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add pathology unit')): ?>
@@ -19,8 +17,9 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="unit_name" class="form-label">Pathology Unit name <span class="text-danger">*</span></label>
-                        <textarea class="content" id="unit_name" name="unit_name" required ></textarea>
+                        
+                        <input type="text"id="unit_name" name="unit_name">
+                        <label class="medicinelabel" for="unit_name">Pathology Unit name</label>
                         <?php $__errorArgs = ['unit_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

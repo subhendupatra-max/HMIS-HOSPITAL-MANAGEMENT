@@ -20,7 +20,7 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="medicine_unit_name" class="form-label">Medicine Unit name <span class="text-danger">*</span></label>
+                        <label for="medicine_unit_name" class="medicinelabel">Medicine Unit name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="medicine_unit_name" name="medicine_unit_name" value="{{ old('medicine_unit_name') }}" required>
                         @error('medicine_unit_name')
                         <span class="text-danger">{{ $message }}</span>

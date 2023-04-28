@@ -20,24 +20,30 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="parameter_name" class="form-label">Radiology Parameter name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="parameter_name" name="parameter_name" placeholder="Enter Parameter Name" value="{{ old('parameter_name')}}" required>
+                        {{--  <label for="parameter_name" class="form-label">Radiology Parameter name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="parameter_name" name="parameter_name" placeholder="Enter Parameter Name" value="{{ old('parameter_name')}}" required>  --}}
+                        <input type="text"id="unit_name" name="unit_name">
+                        <label class="medicinelabel" for="unit_name">Radiology Parameter name</label>
                         @error('parameter_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="reference_range" class="form-label">Reference Range </label>
-                        <textarea  class="content" id="reference_range" name="reference_range" > </textarea>
-
+                        <div class="parameteredit">
+                        {{--  <label for="reference_range" class="form-label">Reference Range </label>
+                        <textarea  class="content" id="reference_range" name="reference_range" > </textarea>  --}}
+                        <input type="text"id="reference_range" name="reference_range">
+                        <label class="parameterlabel" for="reference_range">Reference Range </label>
                         @error('reference_range')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="unit_id" class="form-label">Unit Name </label>
+                        <div class="parameteredit">
+                        <label for="unit_id" class="parameterlabelthree">Unit Name </label>
                         <select name="unit_id" class="form-control select2-show-search" id="unit_id">
                             <option value="">Select Unit Name ... </option>
                             @foreach($unit as $items)
@@ -47,14 +53,19 @@
                         @error('unit_id')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description </label>
-                        <textarea  class="form-control" id="description" name="description"> {{ old('description') }} </textarea>
+                        <div class="parameteredit">
+                        {{--  <label for="description" class="form-label">Description </label>
+                        <textarea  class="form-control" id="description" name="description"> {{ old('description') }} </textarea>  --}}
+                        <input type="text"id="description" name="description" value="{{ old('description') }}">
+                        <label class="parameterlabelone" for="description">Description </label>
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Parameter</button>

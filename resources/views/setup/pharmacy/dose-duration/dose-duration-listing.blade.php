@@ -18,16 +18,16 @@
             <form method="POST" action="{{ route('save-dose-duration-details') }}">
                 @csrf
                 <div class="">
-                  
+
                     <div class="form-group">
-                        <label for="dose_duration" class="form-label">Duration <span class="text-danger">*</span></label>
+                        <label for="dose_duration" class="medicinelabel">Duration <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="dose_duration" name="dose_duration" placeholder="Enter Duration" value="{{ old('dose_duration')}}" required>
                         @error('dose_duration')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    
-                    
+
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Duration</button>
             </form>
