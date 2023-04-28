@@ -141,9 +141,9 @@ class OpdController extends Controller
             $patient_id = base64_decode($patientid);
         }
         else{
-            $patient_id = $request->patient_id; 
+            $patient_id = $request->patient_id;
         }
-        
+
         $patient_details_information = Patient::where('id', '=', $patient_id)->first();
         $tpa_management = TpaManagement::get();
         $referer = Referral::get();

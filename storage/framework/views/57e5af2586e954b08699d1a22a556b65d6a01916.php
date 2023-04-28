@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <!-- INTERNAL Select2 css -->
@@ -22,9 +20,10 @@
                 <?php echo csrf_field(); ?>
 
                 <div class="">
-                    <div class="form-group">
-                        <label for="name" class="form-label">Store Room Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Store Room Name" value="<?php echo e($editStoreRoom->name); ?>" required>
+                    <div class="">
+                        
+                        <input type="text"id="name" name="name" value="<?php echo e($editStoreRoom->name); ?>"  >
+                        <label for="name">Enter Your Email</label>
                         <input type="hidden" name="store_room_id" value="<?php echo e($editStoreRoom->id); ?>">
                         <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -71,15 +70,15 @@ unset($__errorArgs, $__bag); ?>
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
-                                <th class="border-bottom-0">Store Room Address</th>
-                                <th class="border-bottom-0">Store Room Name
+                                <th class="border-bottom-0">Store Room Name</th>
+                                <th class="border-bottom-0">Store Room Address
 
                                 </th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine storeroom')): ?>
-                                <th class="border-bottom-0">Remove StoreRoom</th>
+                                <th class="border-bottom-0">Remove</th>
                                 <?php endif; ?>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine storeroom')): ?>
-                                <th class="border-bottom-0">Edit StoreRoom</th>
+                                <th class="border-bottom-0">Edit</th>
                                 <?php endif; ?>
                             </tr>
                         </thead>
@@ -117,4 +116,5 @@ unset($__errorArgs, $__bag); ?>
 <script src="<?php echo e(asset('assets/plugins/select2/select2.full.min.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/js/select2.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/pharmacy/store-room/edit-store-room.blade.php ENDPATH**/ ?>

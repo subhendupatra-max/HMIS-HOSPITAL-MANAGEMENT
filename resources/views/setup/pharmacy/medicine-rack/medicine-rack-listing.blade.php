@@ -20,8 +20,10 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="medicine_rack_name" class="form-label">Medicine Rack name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="medicine_rack_name" name="medicine_rack_name" placeholder="Enter Medicine Store Name" value="{{ old('medicine_rack_name')}}" required>
+                        {{--  <label for="medicine_rack_name" class="form-label">Medicine Rack name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="medicine_rack_name" name="medicine_rack_name" placeholder="Enter Medicine Store Name" value="{{ old('medicine_rack_name')}}" required>  --}}
+                        <input type="text"  id="medicine_rack_name"  name="medicine_rack_name"value="{{ old('medicine_rack_name')}}">
+                        <label class="medicinerackinput" for="medicine_rack_name">Enter Medicine Rack name</label>
                         @error('medicine_rack_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

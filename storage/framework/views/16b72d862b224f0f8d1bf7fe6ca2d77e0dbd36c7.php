@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('content'); ?>
     <form method="post" action="<?php echo e(route('ipd-registation')); ?>">
         <?php echo csrf_field(); ?>

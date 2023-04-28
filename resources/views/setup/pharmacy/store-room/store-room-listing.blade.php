@@ -21,26 +21,38 @@
             <form method="POST" action="{{ route('save-medicine-store-room-details') }}">
                 @csrf
 
-                <div class="">
+
+                    <div class="">
+
                     <div class="form-group">
-                        <label for="name" class="form-label">Store Room Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Store Room Name" value="{{ old('name') }}" required>
+                        <div class="editstoredesign">
+                        {{--  <label for="name" class="form-label">Store Room Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Store Room Name" value="{{ old('name') }}" required>  --}}
+                        <input type="text" value="{{ old('name') }}"="sdescription" id="name"  name="name">
+                        <label class="edit-storeinput" for="name">Enter Store Room Name</label>
                         @error('name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
-                    </div>
-
-                    <div>
-                        <div class="form-group">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control mb-4" id="address" name="address" placeholder="Store Room Address" rows="3">{{ old('address') }}</textarea>
                         </div>
                     </div>
 
                     <div>
                         <div class="form-group">
-                            <label for="desc" class="form-label">Description</label>
-                            <textarea class="form-control mb-4" id="desc" name="desc" placeholder="Store Room Description" rows="3">{{ old('desc') }}</textarea>
+                            <div class="editstoredesign">
+                            {{--  <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control mb-4" id="address" name="address" placeholder="Store Room Address" rows="3">{{ old('address') }}</textarea>  --}}
+                            <input type="text" value="{{ old('address') }}" id="address"  name="address">
+                            <label class="edit-store1input" for="address">Store Room Address</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group">
+                            {{--  <label for="desc" class="form-label">Description</label>
+                            <textarea class="form-control mb-4" id="desc" name="desc" placeholder="Store Room Description" rows="3">{{ old('desc') }}</textarea>  --}}
+                            <input type="text" value="{{ old('desc') }}" id="desc"  name="desc">
+                            <label class="edit-store3input" for="desc">Store Room Description</label>
                         </div>
                     </div>
                 </div>

@@ -26226,6 +26226,66 @@ input[type=search]{
     margin: 30px 0px 0px 0px;
 }
 /* ------------------ipd-registration----------------------- */
+/* -------------------------edit-medicine-store-room--------------------------------- */
+.editstoredesign{
+    margin: 4px 0px 30px 0px;
+}
+.edit-storeinput{
+    position: absolute;
+    top: 8px;
+    left: 15px;
+    width: 100%;
+    color: #116466;
+    font-weight: 900;
+    cursor: text;
+    font-size: 13px;
+}
+.edit-store1input{
+    position: absolute;
+    top: 66px;
+    left: 15px;
+    width: 100%;
+    color: #116466;
+    font-weight: 900;
+    cursor: text;
+    font-size: 13px;
+}
+.edit-store3input{
+    position: absolute;
+    top: 45%;
+    left: 15px;
+    width: 100%;
+    color: #116466;
+    font-weight: 900;
+    cursor: text;
+    font-size: 13px;
+}
+/* -------------------------edit-medicine-store-room--------------------------------- */
+/* -------------------------medicine-store----------------------------- */
+.medicine-storeinput{
+    position: absolute;
+    top: 2px;
+    left: 15px;
+    width: 100%;
+    color: #116466;
+    font-weight: 900;
+    cursor: text;
+    font-size: 13px;
+}
+
+/* -------------------------medicine-store----------------------------- */
+/* -------------------------medicine-rack------------------------------ */
+.medicinerackinput{
+    position: absolute;
+    top: 2px;
+    left: 15px;
+    width: 100%;
+    color: #116466;
+    font-weight: 900;
+    cursor: text;
+    font-size: 13px;
+}
+/* -------------------------medicine-rack------------------------------ */
 @media (max-width: 768px)
 {
     .newuserchangee {
