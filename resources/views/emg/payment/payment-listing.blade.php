@@ -10,7 +10,7 @@
                 <div class="col-md-6 text-right">
                     <div class="d-block">
                         @can('opd payment')
-                            <a href="{{ route('add-payment-in-emg',['id'=> base64_encode($emg_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Payment </a>
+                        <a href="{{ route('add-payment-in-emg',['id'=> base64_encode($emg_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Payment </a>
                         @endcan
                     </div>
                 </div>
@@ -57,7 +57,6 @@
                             @endforeach
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>

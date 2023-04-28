@@ -3,7 +3,7 @@
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
 
-    <form action="{{ route('update-new-patient-details') }}" method="POST">
+    <form action="{{ route('update-new-patient-details-opd') }}" method="POST">
         @csrf
         <input name="id" value="{{ $patient->id }}" type="hidden">
         <div class="row">

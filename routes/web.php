@@ -362,7 +362,9 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
 
     Route::group(['middleware' => ['permission:edit patient']], function () {
         Route::get('edit-new-patient/{id}', [PatientController::class, 'edit_new_patient'])->name('edit-patient-details');
+        Route::get('edit-new-patient-opd/{id}', [PatientController::class, 'edit_opd_new_patient'])->name('edit-new-patient-opd');
         Route::post('update-new-patient-details', [PatientController::class, 'update_new_patient_details'])->name('update-new-patient-details');
+        Route::post('update-new-patient-details-opd', [PatientController::class, 'update_new_patient_details_opd'])->name('update-new-patient-details-opd');
     });
 
     Route::group(['middleware' => ['permission:delete patient']], function () {

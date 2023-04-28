@@ -135,17 +135,24 @@ class OpdController extends Controller
         $patient_patient_name = $request->patient_name;
         $patient_mobile_no = $request->mobile_no;
     }
-    public function opd_registation($patientid)
+    public function opd_registation(Request $request,$patientid = null)
     {
-        $patient_id = base64_decode($patientid);
-        $patient_details = Patient::where('id', '=', $patient_id)->first();
+        if($patientid != null){
+            $patient_id = base64_decode($patientid);
+        }
+        else{
+            $patient_id = $request->patient_id;
+        }
+
+        $patient_details_information = Patient::where('id', '=', $patient_id)->first();
         $tpa_management = TpaManagement::get();
         $referer = Referral::get();
         $departments = Department::where('is_active', '1')->get();
         $symptoms_types = SymptomsType::get();
         $ticket_fees = OpdSetup::first();
+        $all_patient = Patient::all();
 
-        return view('OPD.opd_registation', compact('symptoms_types', 'ticket_fees', 'departments', 'referer', 'patient_details', 'patient_id', 'tpa_management'));
+        return view('OPD.opd_registation', compact('symptoms_types', 'ticket_fees', 'departments', 'referer', 'patient_details_information', 'patient_id', 'tpa_management','all_patient'));
     }
     public function find_doctor_by_department(Request $request)
     {
@@ -394,5 +401,4 @@ class OpdController extends Controller
         $data = SymptomsHead::where('symptoms_type', $request->symptoms_type_id)->get();
         return response()->json($data);
     }
-
 }

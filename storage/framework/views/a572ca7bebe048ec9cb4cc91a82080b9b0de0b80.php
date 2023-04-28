@@ -37,9 +37,17 @@
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Age </span>
                                         </td>
-                                        <td class="py-2 px-5"><?php echo e(@$patient_details->year); ?>y
+                                        <td class="py-2 px-5">
+                                            <?php if($patient_details->year != 0): ?>
+                                                 <?php echo e(@$patient_details->year); ?>y
+                                            <?php endif; ?>
+                                            <?php if($patient_details->month != 0): ?>
                                             <?php echo e(@$patient_details->month); ?>m
+                                            <?php endif; ?>
+                                            <?php if($patient_details->day != 0): ?>
                                             <?php echo e(@$patient_details->day); ?>d
+                                            <?php endif; ?>
+
                                         </td>
                                     </tr>
                                     <tr>

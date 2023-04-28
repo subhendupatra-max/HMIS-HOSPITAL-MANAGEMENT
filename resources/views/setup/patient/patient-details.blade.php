@@ -38,9 +38,17 @@
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Age </span>
                                         </td>
-                                        <td class="py-2 px-5">{{ @$patient_details->year }}y
+                                        <td class="py-2 px-5">
+                                            @if ($patient_details->year != 0)
+                                                 {{ @$patient_details->year }}y
+                                            @endif
+                                            @if ($patient_details->month != 0)
                                             {{ @$patient_details->month }}m
+                                            @endif
+                                            @if ($patient_details->day != 0)
                                             {{ @$patient_details->day }}d
+                                            @endif
+
                                         </td>
                                     </tr>
                                     <tr>
