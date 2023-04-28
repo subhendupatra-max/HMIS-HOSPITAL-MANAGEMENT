@@ -64,7 +64,7 @@
                                     </h6>
 
                                     @can('edit patient')
-                                    <a href="{{ route('edit-patient-details', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('edit-patient-details-emg', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
                                     @endcan
                                 </div>
                             </div>
