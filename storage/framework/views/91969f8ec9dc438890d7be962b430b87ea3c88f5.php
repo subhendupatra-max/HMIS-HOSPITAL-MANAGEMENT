@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add medicine unit')): ?>
@@ -20,7 +18,7 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="medicine_unit_name" class="form-label">Medicine Unit name <span class="text-danger">*</span></label>
+                        <label for="medicine_unit_name" class="medicinelabel">Medicine Unit name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="medicine_unit_name" name="medicine_unit_name" value="<?php echo e(old('medicine_unit_name')); ?>" required>
                         <?php $__errorArgs = ['medicine_unit_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -91,4 +89,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/pharmacy/medicine-unit/medicine-unit-listing.blade.php ENDPATH**/ ?>

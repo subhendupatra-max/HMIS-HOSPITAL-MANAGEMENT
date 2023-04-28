@@ -20,14 +20,14 @@
                 <div class="">
                   <input type="hidden" name="id" value="{{ $editUnit->id }}" />
                     <div class="form-group">
-                        <label for="medicine_unit_name" class="form-label">Medicine Unit name <span class="text-danger">*</span></label>
+                        <label for="medicine_unit_name" class="medicinelabel">Medicine Unit name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="medicine_unit_name" name="medicine_unit_name" value="{{ $editUnit->medicine_unit_name }}" required>
                         @error('medicine_unit_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    
-                    
+
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Unit</button>
             </form>

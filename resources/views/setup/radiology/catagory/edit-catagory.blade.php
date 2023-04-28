@@ -20,13 +20,13 @@
                 <div class="">
                   <input type="hidden" name="id" value="{{ $editCatagory->id }}" >
                     <div class="form-group">
-                        <label for="catagory_name" class="form-label">Radiology Catagory name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="catagory_name" name="catagory_name" placeholder="Enter Charges Caragory Name" value="{{ $editCatagory->catagory_name }}" required>
+                        <label for="catagory_name" class="medicinelabel">Radiology Catagory name <span class="text-danger">*</span></label>
+                        <input type="text"  id="catagory_name" name="catagory_name"  value="{{ $editCatagory->catagory_name }}" required>
                         @error('catagory_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                  
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Catagory</button>
             </form>
