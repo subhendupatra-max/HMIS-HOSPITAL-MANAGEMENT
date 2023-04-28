@@ -91,8 +91,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
+                                <div class="col-md-4 addchargedesign">
+                                    <div class="form-group ">
                                         
                                             <input type="text" value="<?php echo e(old('charges_name')); ?>"id="charges_name" name="charges_name">
                                             <label for="charges_name">Enter Charges Name <span class="text-danger">*</span></label>
@@ -108,13 +108,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesign">
                                     <div class="form-group">
-                                        <label for="standard_charges" class="form-label">Standard Charges <span
-                                                class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="standard_charges" name="standard_charges"
-                                            placeholder="Enter Standard Charges" value="<?php echo e(old('standard_charges')); ?>"
-                                            required>
+                                        
+                                            <input type="text" value="<?php echo e(old('standard_charges')); ?>"id="standard_charges" name="standard_charges">
+                                            <label for="standard_charges">Enter Charges Name <span class="text-danger">*</span></label>
                                         <?php $__errorArgs = ['standard_charges'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -127,18 +125,19 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesignin">
                                     <div class="form-group ">
-                                        <label for="standard_charges" class="form-label">Date</label>
+                                        <label for="standard_charges">Date</label>
                                         <input type="date" class="form-control" id="date" name="date"
                                             value="<?php echo e(old('date')); ?>">
                                         <small class="text-danger"><?php echo e($errors->first('date')); ?></small>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesign">
                                     <div class="form-group ">
-                                        <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" name="description"> <?php echo e(old('description')); ?> </textarea>
+                                        
+                                        <input type="text" value=" <?php echo e(old('description')); ?> "id="sdescription" name="description">
+                                        <label for="description">Description <span class="text-danger">*</span></label>
                                         <small class="text-danger"><?php echo e($errors->first('description')); ?></small>
                                     </div>
                                 </div>

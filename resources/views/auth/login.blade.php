@@ -37,20 +37,24 @@
                                     <img src="{{ asset('public/hospital_content/hospital_logo.png') }}" class="logoame">
                                 </span>
                                 <div class="material-textfield">
-                                    <input placeholder=" " type="email"name="email" :value="old('email')" required
+                                    {{--  <input placeholder=" " type="email"name="email" :value="old('email')" required
                                         autofocus>
-                                    <label>Enter Your Email</label>
+                                    <label>Enter Your Email</label>  --}}
+                                    <input type="email"id="email" name="email":value="old('email')" >
+                                    <label for="email">Enter Your Email</label>
                                     <i class="fas fa-envelope icondesign"></i>
-
+                                    <small class="text-danger">{{ $errors->first('') }}</small>
 
                                 </div>
                                 <div class="material-textfield">
-                                    <input placeholder=" " type="password" name="password" required
+                                    {{--  <input placeholder=" " type="password" name="password" required
                                         autocomplete="current-password" id="id_password">
-                                    <label>Enter Your Password</label>
+                                    <label>Enter Your Password</label>  --}}
+                                    <input type="password"id="id_password" name="password" autocomplete="current-password" >
+                                    <label for="email">Enter Your Password</label>
                                     <i class="fas fa-unlock-alt icondesign"></i>
                                     <i class="fas fa-eye icondesign1" id="togglePassword"></i>
-
+                                    <small class="text-danger">{{ $errors->first('') }}</small>
                                 </div>
                                 @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">
