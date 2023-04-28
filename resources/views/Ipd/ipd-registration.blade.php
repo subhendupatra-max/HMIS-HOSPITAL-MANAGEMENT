@@ -90,15 +90,15 @@
                             <div class="main-profile-body">
                                 <div class="">
                                     <div class="row">
-                                        <div class="col-md-4">
-                                            <label for="height" class="form-label">Admission Date <span
+                                        <div class="col-md-4 ipd-registrationproaddd">
+                                            <label for="height">Admission Date <span
                                                     class="text-danger">*</span></label>
                                             @if (auth()->user()->can('appointment date'))
-                                                <input type="datetime-local" class="form-control" name="appointment_date"
-                                                    value="{{ old('appointment_date') }}" required />
+                                                {{--  <input type="datetime-local" class="form-control" name="appointment_date"
+                                                    value="{{ old('appointment_date') }}" required />  --}}
+                                                    <input type="datetime-local"value="{{ old('appointment_date') }}" id="appointment_date" name="appointment_date">
                                             @else
-                                                <input type="datetime-local" class="form-control" name="appointment_date"
-                                                    value="{{ old('appointment_date') }}" required />
+                                                    <input type="datetime-local"value="{{ old('appointment_date') }}" id="appointment_date" name="appointment_date">
                                             @endif
 
                                             @error('appointment_date')
@@ -106,15 +106,16 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <label for="credit_limit" class="form-label">Credit Limit</label>
+                                        <div class="col-md-4 ipd-registrationproaddin">
+                                            {{--  <label for="credit_limit" class="form-label">Credit Limit</label>
                                             <input type="text" class="form-control" name="credit_limit"
-                                                value="{{ 20000 }}" />
-
+                                                value="{{ 20000 }}" />  --}}
+                                                <input type="text"  value="{{ 20000 }}"id="credit_limit" name="credit_limit">
+                                                <label for="credit_limit">Credit Limit <span class="text-danger">*</span></label>
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <label for="patient_type" class="form-label">Patient Type <span
+                                        <div class="col-md-4 ipd-registrationproadd">
+                                            <label for="patient_type">Patient Type <span
                                                     class="text-danger">*</span></label>
                                             <select name="patient_type" onchange="getDetailsAccordingType(this.value)"
                                                 class="form-control select2-show-search" id="patient_type">
@@ -129,8 +130,8 @@
                                             @enderror
 
                                         </div>
-                                        <div class="col-md-4 frefesd" style="display:none">
-                                            <label for="tpa_organization" class="form-label">TPA Organization <span
+                                        <div class="col-md-4 frefesd ipd-registrationproadd" style="display:none">
+                                            <label for="tpa_organization">TPA Organization <span
                                                     class="text-danger">*</span></label>
                                             <select name="tpa_organization" class="form-control select2-show-search"
                                                 id="tpa_organization">
@@ -141,14 +142,14 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-4 frefesds" style="display:none">
-                                            <label for="type_no" class="form-label"><span id="lableName"></span><span
+                                        <div class="col-md-4 frefesds ipd-registrationproadd" style="display:none">
+                                            <label for="type_no"><span id="lableName"></span><span
                                                     class="text-danger">*</span></label>
                                             <input type="text" class="form-control" name="type_no"
                                                 value="{{ old('type_no') }}" id="type_no" />
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="reference" class="form-label">Reference</label>
+                                        <div class="col-md-4 ipd-registrationproadd">
+                                            <label for="reference">Reference</label>
                                             <select name="reference" class="form-control select2-show-search"
                                                 id="reference">
                                                 <option value="">Select</option>
@@ -158,8 +159,8 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="department" class="form-label">Department <span
+                                        <div class="col-md-4 ipd-registrationproadd ">
+                                            <label for="department">Department <span
                                                     class="text-danger">*</span></label>
                                             <select name="department" class="form-control select2-show-search"
                                                 id="department" onchange="getDoctor_ward(this.value)">
@@ -174,8 +175,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <label for="cons_doctor" class="form-label"> Doctor <span
+                                        <div class="col-md-4 ipd-registrationproadd">
+                                            <label for="cons_doctor"> Doctor <span
                                                     class="text-danger">*</span></label>
                                             <select name="cons_doctor" class="form-control select2-show-search"
                                                 id="cons_doctor">
@@ -186,8 +187,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <label for="ward" class="form-label"> Ward <span
+                                        <div class="col-md-4 ipd-registrationproadd">
+                                            <label for="ward"> Ward <span
                                                     class="text-danger">*</span></label>
                                             <select name="ward" onchange="getBed()"
                                                 class="form-control select2-show-search" id="bed_ward">
@@ -198,8 +199,8 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-4">
-                                            <label for="unit" class="form-label"> Unit <span
+                                        <div class="col-md-4 ipd-registrationproadd">
+                                            <label for="unit"> Unit <span
                                                     class="text-danger">*</span></label>
                                             <select name="unit" onchange="getBed()"
                                                 class="form-control select2-show-search" id="unit">
@@ -215,8 +216,8 @@
                                         </div>
 
 
-                                        <div class="col-md-4">
-                                            <label class="form-label"> Bed <span class="text-danger">*</span></label>
+                                        <div class="col-md-4 ipd-registrationproadd">
+                                            <label> Bed <span class="text-danger">*</span></label>
                                             <select name="bed" class="form-control select2-show-search"
                                                 id="bed">
                                                 <option value="">Select..</option>
@@ -235,33 +236,33 @@
                                         ?</span>
 
                                     <div class="row" id="physical_condition" style="display: none">
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 ipd-condition">
                                             <label for="height" class="form-label">Height(cm)</label>
                                             <input type="text" class="form-control" id="height" name="height"
                                                 value="{{ old('height') }}" />
 
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 ipd-condition">
                                             <label for="weight" class="form-label">Weight(kg)</label>
                                             <input type="text" class="form-control" id="weight" name="weight"
                                                 value="{{ old('weight') }}" />
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 ipd-condition">
                                             <label for="bp" class="form-label">BP</label>
                                             <input type="text" class="form-control" id="bp" name="bp"
                                                 value="{{ old('bp') }}" />
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 ipd-condition">
                                             <label for="pulse" class="form-label">Pulse</label>
                                             <input type="text" class="form-control" id="pulse" name="pulse"
                                                 value="{{ old('pulse') }}" />
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 ipd-condition">
                                             <label for="temperature" class="form-label">Temperature</label>
                                             <input type="text" class="form-control" id="temperature"
                                                 name="temperature" value="{{ old('temperature') }}" />
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-2 ipd-condition">
                                             <label for="respiration" class="form-label">Respiration</label>
                                             <input type="text" class="form-control" id="respiration"
                                                 name="respiration" value="{{ old('respiration') }}" />
@@ -274,8 +275,8 @@
                                         ?</span>
 
                                     <div class="row" id="show_Symptoms" style="display: none">
-                                        <div class="col-md-3">
-                                            <label for="symptoms_type" class="form-label">Symptoms Type</label>
+                                        <div class="col-md-3 ipd-registrationpro">
+                                            <label for="symptoms_type">Symptoms Type</label>
                                             <select name="symptoms_type" class="form-control select2-show-search"
                                                 id="symptoms_type">
                                                 <option value="">Select</option>
@@ -286,29 +287,35 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <label for="symptoms_title" class="form-label">Symptoms Title</label>
+                                        <div class="col-md-3 ipd-registrationpro">
+                                            <label for="symptoms_title">Symptoms Title</label>
 
                                             <select name="symptoms_title" id="symptoms_title"
                                                 class="form-control select2-show-search">
                                                 <option value="">Select</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label for="symptoms_description" class="form-label">Symptoms
+                                        <div class="col-md-6 ipd-symtomsadd">
+                                            {{--  <label for="symptoms_description" class="form-label">Symptoms
                                                 Description</label>
-                                            <textarea class="form-control" name="symptoms_description"></textarea>
+                                            <textarea class="form-control" name="symptoms_description"></textarea>  --}}
+                                            <input type="text"id="symptoms_description" name="symptoms_description">
+                                            <label for="symptoms_description">Symptoms Description</label>
                                         </div>
                                     </div>
                                     <hr class="hr_line">
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="form-label">Note</label>
-                                            <textarea class="form-control" name="note"></textarea>
+                                        <div class="col-md-6 ipd-registrationproaddd">
+                                            {{--  <label class="form-label">Note</label>
+                                            <textarea class="form-control" name="note"></textarea>  --}}
+                                            <input type="text"id="note" name="note">
+                                            <label for="note">Note</label>
                                         </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Any Known Allergies</label>
-                                            <textarea class="form-control" name="any_known_allergies"></textarea>
+                                        <div class="col-md-6 ipd-registrationproaddd">
+                                            {{--  <label class="form-label">Any Known Allergies</label>
+                                            <textarea class="form-control" name="any_known_allergies"></textarea>  --}}
+                                            <input type="text"id="any_known_allergies" name="any_known_allergies">
+                                            <label for="any_known_allergies">Any Known Allergies</label>
                                         </div>
                                     </div>
                                     <div class="mt-5 text-right">

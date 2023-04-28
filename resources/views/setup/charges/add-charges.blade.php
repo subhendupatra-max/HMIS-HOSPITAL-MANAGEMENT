@@ -69,8 +69,8 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
+                                <div class="col-md-4 addchargedesign">
+                                    <div class="form-group ">
                                         {{--  <label for="charges_name">Charges name <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="charges_name" name="charges_name"
@@ -82,30 +82,34 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesign">
                                     <div class="form-group">
-                                        <label for="standard_charges" class="form-label">Standard Charges <span
+                                        {{--  <label for="standard_charges" class="form-label">Standard Charges <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="standard_charges" name="standard_charges"
                                             placeholder="Enter Standard Charges" value="{{ old('standard_charges') }}"
-                                            required>
+                                            required>  --}}
+                                            <input type="text" value="{{ old('standard_charges') }}"id="standard_charges" name="standard_charges">
+                                            <label for="standard_charges">Enter Charges Name <span class="text-danger">*</span></label>
                                         @error('standard_charges')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesignin">
                                     <div class="form-group ">
-                                        <label for="standard_charges" class="form-label">Date</label>
+                                        <label for="standard_charges">Date</label>
                                         <input type="date" class="form-control" id="date" name="date"
                                             value="{{ old('date') }}">
                                         <small class="text-danger">{{ $errors->first('date') }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesign">
                                     <div class="form-group ">
-                                        <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" name="description"> {{ old('description') }} </textarea>
+                                        {{--  <label for="description" class="form-label">Description</label>
+                                        <textarea class="form-control" id="description" name="description"> {{ old('description') }} </textarea>  --}}
+                                        <input type="text" value=" {{ old('description') }} "id="sdescription" name="description">
+                                        <label for="description">Description <span class="text-danger">*</span></label>
                                         <small class="text-danger">{{ $errors->first('description') }}</small>
                                     </div>
                                 </div>
