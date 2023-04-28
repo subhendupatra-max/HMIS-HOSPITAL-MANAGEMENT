@@ -5,16 +5,14 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    Medicines Stock
+                    Medicine
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                        <a href="<?php echo e(route('import-medicine')); ?>" class="btn btn-primary btn-sm "><i class="fa fa-upload mr-1"></i>Import Medicines</a>
-                        <?php endif; ?>
+                        
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add medicine')): ?>
-                        <a href="<?php echo e(route('add-medicine-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus mr-1"></i>Add Medicine</a>
+                        <a href="<?php echo e(route('add-medicine-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-tablets"></i> Add Medicine</a>
                         <?php endif; ?>
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
@@ -77,4 +75,5 @@
 
 
     <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/pharmacy/medicine/medicine-listing.blade.php ENDPATH**/ ?>
