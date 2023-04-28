@@ -9804,7 +9804,7 @@ table.table-bordered.dataTable td:first-child {
   color: #5c678f;
   fill: #5c678f;
   width: 20px;
-  height: 20px; }
+  height:41px; }
 
 .header-icon2 {
   color: #1a1630;
@@ -26198,6 +26198,34 @@ input[type=search]{
     margin: 6px 0px 0px 0px;
  }
 /* ------------------generalsettings-------------------------- */
+/* ------------------Add Charge------------------------------- */
+.addchargedesign{
+    margin: 11px 0px 0px 0px;
+}
+.addchargedesignin{
+    margin: 13px 0px 0px 0px;
+}
+/* ------------------Add Charge------------------------------- */
+/* ------------------ipd-registration-----------------------*/
+.ipd-registrationproadd{
+    margin: 17px 0px 0px 0px;
+}
+.ipd-registrationproaddin{
+    margin: 22px 0px 0px 0px;
+}
+.ipd-registrationproaddd{
+    margin: 20px 0px 0px 0px;
+}
+.ipd-condition{
+    margin: 19px 0px 0px 0px;
+}
+.ipd-registrationpro{
+    margin: 25px 0px 0px 0px;
+}
+.ipd-symtomsadd{
+    margin: 30px 0px 0px 0px;
+}
+/* ------------------ipd-registration----------------------- */
 @media (max-width: 768px)
 {
     .newuserchangee {
