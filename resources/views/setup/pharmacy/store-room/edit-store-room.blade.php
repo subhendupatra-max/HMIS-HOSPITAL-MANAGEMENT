@@ -23,8 +23,10 @@
 
                 <div class="">
                     <div class="form-group">
-                        <label for="name" class="form-label">Store Room Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Store Room Name" value="{{ $editStoreRoom->name }}" required>
+                        {{--  <label for="name" class="form-label">Store Room Name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Store Room Name" value="{{ $editStoreRoom->name }}" required>  --}}
+                        <input type="text"id="name" name="name" value="{{ $editStoreRoom->name }}"  >
+                        <label for="name">Enter Store Room Name</label>
                         <input type="hidden" name="store_room_id" value="{{ $editStoreRoom->id }}">
                         @error('name')
                         <span class="text-danger">{{ $message }}</span>

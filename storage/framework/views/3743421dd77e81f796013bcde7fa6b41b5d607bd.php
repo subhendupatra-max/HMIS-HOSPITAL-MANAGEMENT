@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <!-- INTERNAL Select2 css -->
@@ -21,10 +19,14 @@
             <form method="POST" action="<?php echo e(route('save-medicine-store-room-details')); ?>">
                 <?php echo csrf_field(); ?>
 
-                <div class="">
+
+                    <div class="">
+
                     <div class="form-group">
-                        <label for="name" class="form-label">Store Room Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Store Room Name" value="<?php echo e(old('name')); ?>" required>
+                        <div class="editstoredesign">
+                        
+                        <input type="text" value="<?php echo e(old('name')); ?>"="sdescription" id="name"  name="name">
+                        <label class="edit-storeinput" for="name">Enter Store Room Name</label>
                         <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -35,19 +37,24 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    </div>
-
-                    <div>
-                        <div class="form-group">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control mb-4" id="address" name="address" placeholder="Store Room Address" rows="3"><?php echo e(old('address')); ?></textarea>
                         </div>
                     </div>
 
                     <div>
                         <div class="form-group">
-                            <label for="desc" class="form-label">Description</label>
-                            <textarea class="form-control mb-4" id="desc" name="desc" placeholder="Store Room Description" rows="3"><?php echo e(old('desc')); ?></textarea>
+                            <div class="editstoredesign">
+                            
+                            <input type="text" value="<?php echo e(old('address')); ?>" id="address"  name="address">
+                            <label class="edit-store1input" for="address">Store Room Address</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="form-group">
+                            
+                            <input type="text" value="<?php echo e(old('desc')); ?>" id="desc"  name="desc">
+                            <label class="edit-store3input" for="desc">Store Room Description</label>
                         </div>
                     </div>
                 </div>
@@ -116,4 +123,5 @@ unset($__errorArgs, $__bag); ?>
 <script src="<?php echo e(asset('assets/plugins/select2/select2.full.min.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/js/select2.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/pharmacy/store-room/store-room-listing.blade.php ENDPATH**/ ?>

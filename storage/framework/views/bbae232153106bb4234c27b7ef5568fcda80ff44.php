@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine store')): ?>
@@ -20,8 +18,9 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="medicine_store_name" class="form-label">Medicine Store name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="medicine_store_name" name="medicine_store_name" placeholder="Enter Medicine Store Name" value="<?php echo e(old('medicine_store_name')); ?>" required>
+                        
+                            <input type="text" value="<?php echo e(old('medicine_store_name')); ?>" id="medicine_store_name"  name="medicine_store_name">
+                            <label class="medicine-storeinput" for="medicine_store_name">Enter Medicine Store Name</label>
                         <?php $__errorArgs = ['medicine_store_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -89,4 +88,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/pharmacy/medicine-store/medicine-store-listing.blade.php ENDPATH**/ ?>

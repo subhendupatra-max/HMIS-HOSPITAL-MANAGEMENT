@@ -1,14 +1,11 @@
+
 <?php $__env->startSection('content'); ?>
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
         <div class="card">
             <div class="card-header d-block">
                 <div class="row">
                     <div class="col-md-4 card-title">
-<<<<<<< HEAD
-                        Profile 
-=======
                         Profile
->>>>>>> sucharitaroy
                     </div>
                     <div class="col-md-8 text-right">
                         <div class="d-block">
