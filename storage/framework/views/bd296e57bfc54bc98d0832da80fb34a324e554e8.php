@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 
@@ -19,8 +17,9 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="vendor_name" class="form-label">Vendor Name</label>
-                        <input type="text" value="" class="form-control" id="name" name="name" placeholder="Enter Vendor Name" required>
+                        
+                        <input type="text"id="name" name="name">
+                        <label  class="medicinelabel"for="name">Enter Vendor Name</label>
                         <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -34,9 +33,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="row row-sm">
-                        <div class="col-lg">
-                            <label for="role" class="form-label">Vendor Email</label>
-                            <input class="form-control mb-4" placeholder="Enter Vendor Email" id="email" name="email" type="text">
+                        <div class="col-lg vendordesign">
+                            
+                            <input type="email"id="email" name="email">
+                            <label for="email">Enter Vendor Email</label>
                             <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -48,9 +48,10 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-lg">
-                            <label for="role" class="form-label">Vendor Phone no.</label>
-                            <input class="form-control mb-4" placeholder="Enter Vendor Mobile No" id="pnno" name="pnno" type="text">
+                        <div class="col-lg vendordesign">
+                            
+                            <input type="text"id="pnno" name="pnno">
+                            <label for="pnno">Enter Vendor Mobile No</label>
                             <?php $__errorArgs = ['pnno'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -62,9 +63,10 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-lg">
-                            <label for="role" class="form-label">Pincode.</label>
-                            <input class="form-control mb-4" placeholder="Vendor pincode" id="pin" name="pin" type="text">
+                        <div class="col-lg vendordesign">
+                            
+                            <input type="text"id="pin" name="pin">
+                            <label for="pin">Vendor pincode</label>
                             <?php $__errorArgs = ['pin'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -79,9 +81,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="row row-sm">
-                        <div class="col-lg">
-                            <label for="role" class="form-label">GSTIN</label>
-                            <input class="form-control mb-4" placeholder="Input box" id="gst" name="gst" value="" type="text">
+                        <div class="col-lg vendordesignone">
+                            
+                            <input type="text"id="gst" name="gst">
+                            <label for="gst">GSTIN</label>
                             <?php $__errorArgs = ['gst'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -93,9 +96,10 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-lg">
-                            <label for="role" class="form-label">Contact Person name</label>
-                            <input class="form-control mb-4" placeholder="Input box" value="" name="contact_name" type="text">
+                        <div class="col-lg vendordesignone">
+                            
+                            <input type="text"id="contact_name" name="contact_name">
+                            <label for="role">Contact Person name</label>
                             <?php $__errorArgs = ['contact_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -110,9 +114,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="row row-sm">
-                        <div class="col-lg">
-                            <label for="vendor_address" class="form-label">Vendor Address</label>
-                            <textarea class="form-control mb-4" placeholder="Enter Vendor Address" id="address" name="address" rows="3"></textarea>
+                        <div class="col-lg vendordesignone">
+                            
+                            <input type="text"id="address" name="address">
+                            <label for="vendor_address">Enter Vendor Address</label>
                         </div>
                         <?php $__errorArgs = ['address'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -134,4 +139,5 @@ unset($__errorArgs, $__bag); ?>
 
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/pharmacy/medicine-vendor/add-vendor.blade.php ENDPATH**/ ?>

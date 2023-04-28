@@ -74,7 +74,7 @@ unset($__errorArgs, $__bag); ?>
                                     </h6>
 
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
-                                    <a href="<?php echo e(route('edit-patient-details', base64_encode($patient_details_information->id))); ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
+                                    <a href="<?php echo e(route('edit-patient-details-emg', base64_encode($patient_details_information->id))); ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
                                     <?php endif; ?>
                                 </div>
                             </div>

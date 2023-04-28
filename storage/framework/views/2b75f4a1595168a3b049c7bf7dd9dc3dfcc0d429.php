@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add medicine dosage')): ?>
@@ -18,10 +16,11 @@
             <form method="POST" action="<?php echo e(route('update-medicine-dosage-details')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="">
-         
+
                     <div class="form-group">
-                        <label for="medicine_catagory_id" class="form-label"> Medicine Catagory <span class="text-danger">*</span></label>
+                        <label for="medicine_catagory_id" class="medicinelabel"> Medicine Catagory <span class="text-danger">*</span></label>
                         <select name="medicine_catagory_id" class="form-control select2-show-search" id="medicine_catagory_id">
+
                             <option value="">Select Catagory Name ... </option>
                             <?php $__currentLoopData = $catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $items): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($items->id); ?>" <?php echo e($items->id == $id ? 'selected' : " "); ?>><?php echo $items->medicine_catagory_name; ?></option>
@@ -45,7 +44,7 @@ unset($__errorArgs, $__bag); ?>
                                 <th scope="col">Dose<span class="text-danger">*</span></th>
                                 <th scope="col">Unit <span class="text-danger">*</span></th>
                                 <th scope="col" style="width: 2%">
-                                        
+
                                 </th>
                             </tr>
                         </thead>
@@ -55,7 +54,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <tr id="rowid0">
                                 <td>
-                                    <input type="text" class="form-control" id="dose" name="dose[]" value="<?php echo e(@$value->dose); ?>" required>
+                                    <input type="text" id="dose" name="dose[]" value="<?php echo e(@$value->dose); ?>" required>
                                 </td>
                                 <td>
                                     <select name="medicine_unit_id[]" class="form-control select2-show-search" id="medicine_unit_id">
@@ -166,4 +165,5 @@ unset($__errorArgs, $__bag); ?>
     }
 </script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/pharmacy/medicine-dosage/edit-medicine-dosage.blade.php ENDPATH**/ ?>

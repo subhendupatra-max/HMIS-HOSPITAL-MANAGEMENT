@@ -20,8 +20,10 @@
                 <div class="">
                     <input type="hidden" name="id" value="{{ $editMedicineRack->id }}" />
                     <div class="form-group">
-                        <label for="medicine_rack_name" class="form-label">Medicine Rack name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="medicine_rack_name" name="medicine_rack_name" value="{{ $editMedicineRack->medicine_rack_name }}" required>
+                        {{--  <label for="medicine_rack_name" class="form-label">Medicine Rack name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="medicine_rack_name" name="medicine_rack_name" value="{{ $editMedicineRack->medicine_rack_name }}" required>  --}}
+                        <input type="text" value="{{ $editMedicineRack->medicine_rack_name }}" id="medicine_rack_name"  name="medicine_rack_name">
+                        <label class="medicinerackinput" for="medicine_store_name">Enter Medicine Rack name</label>
                         @error('medicine_rack_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

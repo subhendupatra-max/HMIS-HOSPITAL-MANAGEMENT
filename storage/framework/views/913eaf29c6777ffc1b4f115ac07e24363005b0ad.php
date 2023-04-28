@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add medicine dosage')): ?>
@@ -20,7 +18,7 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="medicine_catagory_id" class="form-label"> Medicine Catagory <span class="text-danger">*</span></label>
+                        <label for="medicine_catagory_id" class="medicinelabel"> Medicine Catagory <span class="text-danger">*</span></label>
                         <select name="medicine_catagory_id" class="form-control select2-show-search" id="medicine_catagory_id">
                             <option value="">Select Catagory Name ... </option>
                             <?php $__currentLoopData = $catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $items): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -161,4 +159,5 @@ unset($__errorArgs, $__bag); ?>
     }
 </script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/pharmacy/medicine-dosage/medicine-dosage-listing.blade.php ENDPATH**/ ?>

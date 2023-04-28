@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add medicine supplier')): ?>
@@ -18,10 +16,11 @@
             <form method="POST" action="<?php echo e(route('save-medicine-supplier-details')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="">
-                  
+
                     <div class="form-group">
-                        <label for="supplier_name" class="form-label"> Supplier Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="supplier_name" name="supplier_name" placeholder="Enter Supplier Name" value="<?php echo e(old('supplier_name')); ?>" required>
+                        
+                        <input type="text"  id="supplier_name" name="supplier_name"value="<?php echo e(old('supplier_name')); ?>" >
+                        <label  class="suppilerinput"for="supplier_name">Enter Supplier Name <span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['supplier_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -35,8 +34,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="supplier_contact" class="form-label">Supplier Contact <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="supplier_contact" name="supplier_contact" placeholder="Enter Supplier Contact" value="<?php echo e(old('supplier_contact')); ?>" required>
+                        <div class="supplieredit">
+                        
+                        <input type="text"  id="supplier_contact" name="supplier_contact"value="<?php echo e(old('supplier_contact')); ?>"  >
+                        <label  class="suppilerinputone"for="supplier_contact">Enter Supplier Contact <span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['supplier_contact'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -47,11 +48,14 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="contact_person_name" class="form-label">Contact Person Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="contact_person_name" name="contact_person_name" placeholder="Enter Contact Person Name" value="<?php echo e(old('contact_person_name')); ?>" required>
+                        <div class="supplieredit">
+                        
+                        <input type="text"  id="contact_person_name" name="contact_person_name"value="<?php echo e(old('contact_person_name')); ?>"  >
+                        <label  class="suppilerinputtwo"for="contact_person_name">Enter Contact Person Name <span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['contact_person_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -62,11 +66,14 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="contact_person_phone" class="form-label">Contact Person Phone <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="contact_person_phone" name="contact_person_phone" placeholder="Enter Contact Person Phone" value="<?php echo e(old('contact_person_phone')); ?>" required>
+                        <div class="supplieredit">
+                        
+                        <input type="text"  id="contact_person_phone" name="contact_person_phone"value="<?php echo e(old('contact_person_phone')); ?>"   >
+                        <label  class="suppilerinputthree"for="contact_person_phone">Enter Contact Person  Phone<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['contact_person_phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -77,11 +84,14 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="drug_license_number" class="form-label">Drug License Number<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="drug_license_number" name="drug_license_number" placeholder="Enter Drug License Number" value="<?php echo e(old('drug_license_number')); ?>" required>
+                        <div class="supplieredit">
+                        
+                        <input type="text"  id="drug_license_number" name="drug_license_number"value="<?php echo e(old('drug_license_number')); ?>"  >
+                        <label  class="suppilerinputfour"for="drug_license_number">Enter Drug License Number<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['drug_license_number'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -92,11 +102,14 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="address" class="form-label">Address<span class="text-danger">*</span></label>
-                        <textarea name="address"  class="form-control"> </textarea>
+                        <div class="supplieredit">
+                        
+                        <input type="text"  id="address" name="address" >
+                        <label  class="suppilerinputfive"for="address">Address<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['address'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -107,8 +120,9 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
-                    
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Supplier</button>
             </form>
@@ -175,4 +189,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/pharmacy/supplier/medicine-supplier-listing.blade.php ENDPATH**/ ?>

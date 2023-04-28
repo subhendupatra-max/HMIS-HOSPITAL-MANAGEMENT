@@ -19,8 +19,10 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="unit_name" class="form-label">Radiology Unit name <span class="text-danger">*</span></label>
-                        <textarea class="content" id="unit_name" name="unit_name" required ></textarea>
+                        {{--  <label for="unit_name" class="form-label">Radiology Unit name <span class="text-danger">*</span></label>
+                        <textarea class="content" id="unit_name" name="unit_name" required ></textarea>  --}}
+                        <input type="text"id="unit_name" name="unit_name">
+                        <label class="medicinelabel" for="unit_name">Radiology Unit name  </label>
                         @error('unit_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

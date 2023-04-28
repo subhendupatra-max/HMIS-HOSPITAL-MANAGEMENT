@@ -20,14 +20,14 @@
                 <div class="">
                     <input type="hidden" name="id"  value="{{ $editDoseInterval->id }}" />
                     <div class="form-group">
-                        <label for="dose_interval" class="form-label">Interval <span class="text-danger">*</span></label>
+                        <label for="dose_interval" class="medicinelabel">Interval <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="dose_interval" name="dose_interval" placeholder="Enter Interval" value="{{ $editDoseInterval->dose_interval }}" required>
                         @error('dose_interval')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    
-                    
+
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Interval</button>
             </form>

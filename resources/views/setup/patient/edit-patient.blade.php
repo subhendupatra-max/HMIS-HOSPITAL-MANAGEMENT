@@ -515,7 +515,7 @@
 </script>
 
 <script>
-    function getage(dob_) {
+    function getagefromdate(dob_) {
         const dob = new Date(dob_);
         const nw = new Date();
 
@@ -602,7 +602,6 @@
 
 <script>
     function getLocalCountry(local_country_id, local_state_id, local_district_id,identification_name=null) {
-        alert(local_country_id);
         $('#state_local').val('');
         $("#state_local").html("<option value='l'>Select... </option>");
         $.ajax({

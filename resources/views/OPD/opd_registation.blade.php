@@ -6,6 +6,7 @@
         <div class="card-header">
             <div class="card-title">OPD Registation</div>
         </div>
+        @include('message.notification')
         <div class="card-body p-0">
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
@@ -64,7 +65,7 @@
                                     </h6>
 
                                     @can('edit patient')
-                                    <a href="{{ route('edit-patient-details', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('edit-new-patient-opd', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
                                     @endcan
                                 </div>
                             </div>
@@ -223,13 +224,13 @@
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-label">Ticket No</label>
-                                    <input type="text" readonly name="ticket_no" id="ticket_no" class="form-control" />
+                                <div class="form-group col-md-4 newaddticket">
+                                    <input type="text"  id="ticket_no"  name="ticket_no">
+                                    <label for="ticket_no">Ticket No</label>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-label">Ticket Fees</label>
-                                    <input type="text" name="ticket_fees" value="{{$ticket_fees->ticket_fees}}" class="form-control" />
+                                <div class="form-group col-md-4 newaddappon ">
+                                   <input type="text"  id="ticket_fees"  name="ticket_fees">
+                                    <label for="ticket_fees">Ticket Fees</label>
                                 </div>
 
                             </div>
@@ -241,7 +242,7 @@
                                 <input type="checkbox" onchange="takeTicketFees()" checked id="cb01"><span style="font-weight: 500;color:blue"> Are You Want to take <b>TICKET FEES</b> ?</span>
 
                                 <div class="row" id="taketicketFees" style="display: none"> --}}
-                               
+
                                 {{-- </div> --}}
 
                                 <hr class="hr_line">

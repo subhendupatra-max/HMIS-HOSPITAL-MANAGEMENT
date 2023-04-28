@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine rack')): ?>
@@ -20,8 +18,9 @@
                 <div class="">
                     <input type="hidden" name="id" value="<?php echo e($editMedicineRack->id); ?>" />
                     <div class="form-group">
-                        <label for="medicine_rack_name" class="form-label">Medicine Rack name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="medicine_rack_name" name="medicine_rack_name" value="<?php echo e($editMedicineRack->medicine_rack_name); ?>" required>
+                        
+                        <input type="text" value="<?php echo e($editMedicineRack->medicine_rack_name); ?>" id="medicine_rack_name"  name="medicine_rack_name">
+                        <label class="medicinerackinput" for="medicine_store_name">Enter Medicine Rack name</label>
                         <?php $__errorArgs = ['medicine_rack_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -89,4 +88,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/pharmacy/medicine-rack/edit-medicine-rack.blade.php ENDPATH**/ ?>

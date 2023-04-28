@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-md-12">
@@ -6,6 +5,7 @@
         <div class="card-header">
             <div class="card-title">OPD Registation</div>
         </div>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body p-0">
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
@@ -74,7 +74,7 @@ unset($__errorArgs, $__bag); ?>
                                     </h6>
 
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
-                                    <a href="<?php echo e(route('edit-patient-details', base64_encode($patient_details_information->id))); ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
+                                    <a href="<?php echo e(route('edit-new-patient-opd', base64_encode($patient_details_information->id))); ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
                                     <?php endif; ?>
                                 </div>
                             </div>
@@ -277,20 +277,20 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-label">Ticket No</label>
-                                    <input type="text" readonly name="ticket_no" id="ticket_no" class="form-control" />
+                                <div class="form-group col-md-4 newaddticket">
+                                    <input type="text"  id="ticket_no"  name="ticket_no">
+                                    <label for="ticket_no">Ticket No</label>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label class="form-label">Ticket Fees</label>
-                                    <input type="text" name="ticket_fees" value="<?php echo e($ticket_fees->ticket_fees); ?>" class="form-control" />
+                                <div class="form-group col-md-4 newaddappon ">
+                                   <input type="text"  id="ticket_fees"  name="ticket_fees">
+                                    <label for="ticket_fees">Ticket Fees</label>
                                 </div>
 
                             </div>
                         </div>
 
                         
-                               
+
                                 
 
                                 <hr class="hr_line">

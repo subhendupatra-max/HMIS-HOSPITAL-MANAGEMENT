@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Add purpose')): ?>
@@ -20,8 +18,9 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="purpose" class="form-label">Purpose <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="purpose" name="purpose" placeholder="Enter Purpose" value="<?php echo e(old('purpose')); ?>" required>
+                        
+                        <input type="text"id="purpose" name="purpose" value="<?php echo e(old('purpose')); ?>">
+                        <label class="purposelabel" for="purpose">Purpose<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['purpose'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -35,8 +34,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="description" name="description"></textarea>
+                        
+                        <input type="text"id="description" name="description">
+                        <label class="purposelabelone" for="description">Description <span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -89,7 +89,7 @@ unset($__errorArgs, $__bag); ?>
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine catagory')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('edit-purpose-in-front-office',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
                                             <?php endif; ?>
- 
+
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine catagory')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('delete-purpose-in-front-office',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                             <?php endif; ?>
@@ -107,4 +107,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/front-office/purpose/all-purpose-listing.blade.php ENDPATH**/ ?>

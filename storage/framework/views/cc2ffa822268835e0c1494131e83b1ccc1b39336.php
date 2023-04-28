@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add pathology parameter')): ?>
@@ -20,8 +18,9 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="parameter_name" class="form-label">Pathology Parameter name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="parameter_name" name="parameter_name" placeholder="Enter Parameter Name" value="<?php echo e(old('parameter_name')); ?>" required>
+                        
+                        <input type="text"id="parameter_name" name="parameter_name">
+                        <label class="medicinelabel" for="parameter_name">Pathology Parameter name </label>
                         <?php $__errorArgs = ['parameter_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -35,8 +34,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="reference_range" class="form-label">Reference Range </label>
-                        <textarea  class="content" id="reference_range" name="reference_range" > </textarea>
+                        <div class="parameteredit">
+                        
+                        <input type="text"id="reference_range" name="reference_range">
+                        <label class="parameterlabel" for="reference_range">Reference Range </label>
 
                         <?php $__errorArgs = ['reference_range'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -48,10 +49,12 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="unit_id" class="form-label">Unit Name </label>
+                        <div class="parameteredit">
+                        <label class="parameterlabelthree" for="unit_id">Unit Name </label>
                         <select name="unit_id" class="form-control select2-show-search" id="unit_id">
                             <option value="">Select Unit Name ... </option>
                             <?php $__currentLoopData = $unit; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $items): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -68,11 +71,14 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description </label>
-                        <textarea  class="form-control" id="description" name="description"> <?php echo e(old('description')); ?> </textarea>
+                        <div class="parameteredit">
+                        
+                        <input type="text"id="description" name="description" value="<?php echo e(old('description')); ?>">
+                        <label class="parameterlabelone" for="description">Description </label>
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -83,6 +89,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Parameter</button>

@@ -20,7 +20,7 @@
                 <div class="">
                     <input type="hidden" name="id" value="{{ $editDoseDuration->id }}" />
                     <div class="form-group">
-                        <label for="dose_duration" class="form-label">Duration <span class="text-danger">*</span></label>
+                        <label for="dose_duration" class="medicinelabel">Duration <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="dose_duration" name="dose_duration" value="{{ $editDoseDuration->dose_duration }}" required>
                         @error('dose_duration')
                         <span class="text-danger">{{ $message }}</span>

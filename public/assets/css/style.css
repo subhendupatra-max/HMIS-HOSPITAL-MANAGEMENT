@@ -26189,6 +26189,9 @@ input[type=search]{
 .opd-bladedesigninin{
     margin: 33px 0px 0px 0px;
 }
+.newaddticket{
+    margin: 32px 0px 0px 0px;
+}
 /* -------------------opd-registration------------------------ */
 /* ------------------generalsettings-------------------------- */
  .generaldesignadd{
@@ -26226,6 +26229,106 @@ input[type=search]{
     margin: 30px 0px 0px 0px;
 }
 /* ------------------ipd-registration----------------------- */
+/* -------------------------edit-medicine-store-room--------------------------------- */
+.editstoredesign{
+    margin: 4px 0px 30px 0px;
+}
+.edit-storeinput{
+    top: 8px;
+    left: 15px;
+    }
+.edit-store1input{
+    top: 66px;
+    left: 15px;
+}
+.edit-store3input{
+    top: 45%;
+    left: 15px;
+  }
+/* -------------------------edit-medicine-store-room--------------------------------- */
+/* -------------------------medicine-store----------------------------- */
+.medicine-storeinput{
+    top: 2px;
+    left: 15px;
+   }
+
+/* -------------------------medicine-store----------------------------- */
+/* -------------------------medicine-rack------------------------------ */
+.medicinerackinput{
+    top: 2px;
+    left: 15px;
+   }
+/* -------------------------medicine-rack------------------------------ */
+/* ------------------------suppiler add-------------------------------- */
+.suppilerinput{
+    top: 2px;
+    left: 15px;
+   }
+.suppilerinputone{
+    top: 14%;
+    left: 15px;
+   }
+.supplieredit{
+    padding: 11px 0px 0px 0px;
+}
+.suppilerinputtwo{
+    top: 27%;
+    left: 15px;
+}
+.suppilerinputthree{
+    top: 40%;
+    left: 15px;
+}
+.suppilerinputfour{
+    top: 54%;
+    left: 15px;
+}
+.suppilerinputfive{
+    top: 67%;
+    left: 15px;
+}
+/* ------------------------suppiler add-------------------------------- */
+/* ------------------------medicine dosage add------------------------- */
+.medicinelabel{
+    top: 0px;
+    left: 15px;
+}
+/* ------------------------medicine dosage add------------------------- */
+/* ------------------------Add Vendor----------------------- */
+.vendordesign{
+    margin: 10px 0px 0px 0px;
+}
+.vendordesignone{
+    margin: 24px 0px 0px 0px;
+}
+/* ------------------------Add Vendor----------------------- */
+/* ------------------------parameter------------------------ */
+.parameterlabel{
+   top: 17%;
+   left: 15px;
+}
+.parameteredit{
+    padding: 11px 0px 0px 0px;
+}
+.parameterlabelone{
+    top: 54%;
+   left: 15px;
+}
+.parameterlabelthree{
+    top: 36%;
+   left: 15px;
+}
+/* ------------------------parameter------------------------ */
+/* ------------------------purpose add---------------------- */
+.purposelabel{
+    top: 2%;
+    left: 15px;
+}
+.purposelabelone{
+    top: 28%;
+    left: 15px;
+}
+/* ------------------------purpose add---------------------- */
 @media (max-width: 768px)
 {
     .newuserchangee {
