@@ -227,8 +227,7 @@
                                                     id="country" onchange="showDetails(this.value)" required>
                                                     <option value="">Select Country... </option>
                                                     @foreach ($country as $countrys)
-                                                    <option value="{{ $countrys->id }}" {{ $countrys->id == '1' ?
-                                                        'selected' : ' ' }}>
+                                                    <option value="{{ $countrys->id }}" >
                                                         {{ $countrys->country_name }}</option>
                                                     @endforeach
                                                 </select>

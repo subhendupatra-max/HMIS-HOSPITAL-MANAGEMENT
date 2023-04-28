@@ -6,6 +6,7 @@
         <div class="card-header">
             <div class="card-title">OPD Registation</div>
         </div>
+        @include('message.notification')
         <div class="card-body p-0">
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
@@ -64,7 +65,7 @@
                                     </h6>
 
                                     @can('edit patient')
-                                    <a href="{{ route('edit-patient-details', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
+                                    <a href="{{ route('edit-new-patient-opd', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
                                     @endcan
                                 </div>
                             </div>
