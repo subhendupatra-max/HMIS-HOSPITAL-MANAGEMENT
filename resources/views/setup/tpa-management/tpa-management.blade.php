@@ -19,7 +19,7 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="TPA_name" class="form-label">TPA Name</label>
+                        <label for="TPA_name" class="medicinelabel">TPA Name</label>
                         <input type="text" class="form-control" id="TPA_name" name="TPA_name" placeholder="Enter Tpa Name" value="{{ old('TPA_name')}}" required>
                         @error('TPA_name')
                         <span class="text-danger">{{ $message }}</span>
@@ -27,19 +27,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="contact_person_name" class="form-label">Contact Person Name</label>
+                        <div class="tpamanagementedit">
+                        <label for="contact_person_name" class="tpamanagementlabel">Contact Person Name</label>
                         <input type="text" class="form-control" id="contact_person_name" name="contact_person_name" placeholder="Enter Contact Person Name " value="{{ old('contact_person_name')}}" required>
                         @error('contact_person_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="contact_person_ph_no" class="form-label">Contact Person Phone No</label>
+                        <div class="tpamanagementedit">
+                        <label for="contact_person_ph_no" class="tpamanagementlabelone">Contact Person Phone No</label>
                         <input type="text" class="form-control" id="contact_person_ph_no" name="contact_person_ph_no" placeholder="Enter Contact Person Ph No" value="{{ old('contact_person_ph_no')}}" required>
                         @error('contact_person_ph_no')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                 </div>

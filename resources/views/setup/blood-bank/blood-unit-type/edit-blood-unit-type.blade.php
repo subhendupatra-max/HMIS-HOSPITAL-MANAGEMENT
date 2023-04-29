@@ -6,7 +6,7 @@
 <div class="col-lg-12 col-xl-4 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Edit Uint Types</h4>
+            <h4 class="card-title">Edit Unit Types</h4>
         </div>
         @if (session('success'))
         <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{session('success')}}</div>
@@ -20,7 +20,7 @@
                 <div class="">
                     <input type="hidden" name="id" value="{{$editUnitType->id}}" />
                     <div class="form-group">
-                        <label for="blood_unit_types" class="form-label">Unit Type <span class="text-danger">*</span></label>
+                        <label for="blood_unit_types" class="medicinelabel">Unit Type <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="blood_unit_types" name="blood_unit_types" placeholder="Enter Product Name" value="{{ $editUnitType->blood_unit_types }}" required>
                         @error('blood_unit_types')
                         <span class="text-danger">{{ $message }}</span>

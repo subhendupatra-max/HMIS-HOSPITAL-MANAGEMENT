@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="type" class="form-label">Type <span class="text-danger">*</span></label>
+                            <label for="type">Type <span class="text-danger">*</span></label>
                             <select id="type" class="form-control" name="type">
                                 <option value=" ">Select type </option>
                                 @foreach (Config::get('static.charges_type') as $lang => $charges_type)
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="charge_package_catagory_id" class="form-label">Charges Package Catagory <span class="text-danger">*</span></label>
+                        <label for="charge_package_catagory_id" >Charges Package Catagory <span class="text-danger">*</span></label>
                         <select id="charge_package_catagory_id" class="form-control" name="charge_package_catagory_id" onchange="getChargersPackageCatagoryId(this.value)">
                             <option value=" ">Select Charges Package Catagory </option>
                             @foreach ($catagory as $item)
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="charge_package_sub_catagory_id" class="form-label">Charges Package Sub Catagory <span class="text-danger">*</span></label>
+                        <label for="charge_package_sub_catagory_id">Charges Package Sub Catagory <span class="text-danger">*</span></label>
                         <select id="charge_package_sub_catagory_id" class="form-control" name="charge_package_sub_catagory_id">
                             <option value=" ">Select Charges Package Sub Catagory... </option>
                         </select>
@@ -48,20 +48,20 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
-                        <label for="package_name" class="form-label">Charges Package Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="package_name" name="package_name" placeholder="Enter Charges Package Name" value="{{ old('package_name')}}" required>
+                    <div class="form-group col-md-3 packageedit">
+                        <label for="package_name">Enter Charges Package Name<span class="text-danger">*</span></label>
+                        <input type="text" id="package_name" name="package_name"value="{{ old('package_name')}}" required>
                         @error('package_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-12">
-                        <table class="table card-table table-vcenter text-nowrap" id="subhendu">
+                    <div class="form-group col-md-12 newtabledesign">
+                        <table class="table card-table table-vcenter text-nowrap " id="subhendu">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 30%">Charge Name<span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 40%">Charge Amount<span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 40%">Charge Name<span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 30%">Charge Amount<span class="text-danger">*</span></th>
                                     </th>
                                     <th scope="col" style="width: 2%">
                                         <button type="button" class="btn btn-success" onclick="addnewrow()"><i class="fa fa-plus"></i></button>
@@ -74,14 +74,14 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="tax">Tax<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tax" value="{{ 0 }}" name="tax" placeholder="Enter Tax">
+                        <label for="tax">Enter Tax<span class="text-danger">*</span></label>
+                        <input type="text" id="tax" value="{{ 0 }}" name="tax">
                         <small class="text-danger">{{ $errors->first('tax') }}</small>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="total_amount" name="total_amount" >
+                        <input type="text" id="total_amount" name="total_amount" >
                         <small class="text-danger">{{ $errors->first('total_amount') }}</small>
                     </div>
                 </div>
@@ -97,7 +97,7 @@
 </div>
 
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
     function gettotal() {
         var t = 0;

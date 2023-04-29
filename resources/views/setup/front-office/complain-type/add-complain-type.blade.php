@@ -20,19 +20,21 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="complain_type" class="form-label">Complain Type <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="complain_type" name="complain_type" placeholder="Enter Complain Type" value="{{ old('complain_type')}}" required>
+                        <label for="complain_type" class="medicinelabel"> Enter Complain Type <span class="text-danger">*</span></label>
+                        <input type="text" id="complain_type" name="complain_type"  value="{{ old('complain_type')}}" required>
                         @error('complain_type')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description </label>
-                        <textarea class="form-control" id="description" name="description"></textarea>
+                        <div class="descriptionadd">
+                        <label for="description" class="descriptiononelabel">Description </label>
+                        <input type="text"id="description" name="description" >
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                 </div>

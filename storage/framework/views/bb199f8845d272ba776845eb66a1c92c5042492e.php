@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add permission')): ?>
     <div class="col-md-6">
@@ -16,10 +14,11 @@
                 <!-- Floating Labels Form -->
                 <form class="row g-3" method="POST" action="<?php echo e(route('addPermission')); ?>">
                     <?php echo csrf_field(); ?>
-                    <div class="col-md-12">
+                    <div class="col-md-12 permissionedit">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="permission" name="permission"
-                                placeholder="Enter Permission" required>
+                            <label for="permission" class="permisionlabel">Enter Permission </label>
+                            <input type="text"  id="permission" name="permission"
+                             required>
                             <?php $__errorArgs = ['permission'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

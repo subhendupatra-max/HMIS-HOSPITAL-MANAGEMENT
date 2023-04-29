@@ -20,7 +20,7 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="operation_department" class="form-label">Department</label>
+                        <label for="operation_department" class="medicinelabel">Department</label>
                         <select id="operation_department" class="form-control" name="operation_department">
                             <option value=" ">Select Department</option>
                             @foreach ($department as $item)
@@ -33,7 +33,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="operation_catagory" class="form-label">Operation Catagory</label>
+                        <div class="operationcatagoryedit">
+                        <label for="operation_catagory" class="operationlabel">Operation Catagory</label>
                         <select id="operation_catagory" class="form-control" name="operation_catagory">
                             <option value=" ">Select Operation Catagory</option>
                             @foreach ($operation_catagory as $item)
@@ -44,13 +45,16 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
+                    </div>
 
                     <div class="form-group">
-                        <label for="operation_name" class="form-label">Operation Name <span class="text-danger">*</span></label>
+                        <div class="operationcatagoryedit">
+                        <label for="operation_name" class="operationlabelone">Operation Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="operation_name" name="operation_name" placeholder="Enter Operation Name" value="{{ old('operation_name')}}" required>
                         @error('operation_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                 </div>

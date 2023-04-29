@@ -19,8 +19,8 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="ward_name" class="form-label"></label>
-                        <input type="text" class="form-control" id="ward_name" name="ward_name" placeholder="Enter Ward Name" value="{{ old('ward_name')}}" required>
+                        <label for="ward_name" class="medicinelabel">Enter Ward Name</label>
+                        <input type="text" id="ward_name" name="ward_name" placeholder="Enter Ward Name" value="{{ old('ward_name')}}" required>
                         @error('ward_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

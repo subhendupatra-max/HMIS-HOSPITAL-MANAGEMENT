@@ -19,7 +19,7 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="department_name" class="form-label">Department Name</label>
+                        <label for="department_name" class="medicinelabel">Department Name</label>
                         <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Enter Department Name" value="{{ old('department_name')}}" required>
                         @error('department_name')
                         <span class="text-danger">{{ $message }}</span>
@@ -27,11 +27,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="department_code" class="form-label">Department Code</label>
+                        <div class="departmentedit">
+                        <label for="department_code" class="departmentadd">Department Code</label>
                         <input type="text" class="form-control" id="department_code" name="department_code" placeholder="Enter Department Code" value="{{ old('department_code')}}" required>
                         @error('department_code')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                 </div>

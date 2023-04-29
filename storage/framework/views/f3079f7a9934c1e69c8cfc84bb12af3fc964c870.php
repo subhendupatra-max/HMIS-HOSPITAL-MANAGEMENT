@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('charges edit sub catagory')): ?>
@@ -20,8 +18,8 @@
                 <div class="">
                 <input type="hidden" name="id" value="<?php echo e($editSubCatagory->id); ?>">
                     <div class="form-group">
-                        <label for="charges_sub_catagories_name" class="form-label">Sub Catagory name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="charges_sub_catagories_name" name="charges_sub_catagories_name" value="<?php echo e($editSubCatagory->charges_sub_catagories_name); ?>" required>
+                        <label for="charges_sub_catagories_name" class="medicinelabel">Sub Catagory name <span class="text-danger">*</span></label>
+                        <input type="text"  id="charges_sub_catagories_name" name="charges_sub_catagories_name" value="<?php echo e($editSubCatagory->charges_sub_catagories_name); ?>" required>
                         <?php $__errorArgs = ['charges_sub_catagories_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -33,9 +31,10 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="charges_catagories_id" class="form-label">Catagory <span class="text-danger">*</span></label>
+                        <div class="subcatagoryedit">
+                        <label for="charges_catagories_id" class="subcatagorylabel">Catagory <span class="text-danger">*</span></label>
                         <select id="charges_catagories_id" class="form-control" name="charges_catagories_id">
                             <option value=" ">Select Charges Catagory </option>
                             <?php $__currentLoopData = $catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -52,12 +51,15 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                     </div>
                     </div>
 
                     <div class="form-group ">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea  class="form-control" id="description" name="description"> <?php echo e($editSubCatagory->description); ?> </textarea>
+                        <div class="subcatagoryedit">
+                        <label for="description" class="subdescriptionlabel">Description</label>
+                        <input type="text"id="description" name="description"value="<?php echo e($editSubCatagory->description); ?>">
                         <small class="text-danger"><?php echo e($errors->first('description')); ?></small>
+                        </div>
                     </div>
 
                 </div>
@@ -120,4 +122,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/charges-sub-catagory/edit-sub-catagory.blade.php ENDPATH**/ ?>

@@ -20,7 +20,7 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="symptoms_head_name" class="form-label">Symptoms Head Name</label>
+                        <label for="symptoms_head_name" class="medicinelabel">Symptoms Head Name</label>
                         <input type="text" class="form-control" id="symptoms_head_name" name="symptoms_head_name" placeholder="Enter Symptoms Head Name" value="{{ old('symptoms_head_name')}}" required>
                         @error('symptoms_head_name')
                         <span class="text-danger">{{ $message }}</span>
@@ -28,7 +28,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="symptoms_type" class="form-label">Symptoms Type<span class="text-danger">*</span></label>
+                        <div class="symtomsedit">
+                        <label for="symptoms_type" class="symtomadd">Symptoms Type<span class="text-danger">*</span></label>
                         <select id="symptoms_type" class="form-control" name="symptoms_type">
                             <option value=" ">Select Symptoms Type</option>
                             @foreach ($symptomsType as $item)
@@ -38,10 +39,11 @@
                         @error('symptoms_type')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                       </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description</label>
+                        <label for="description" class="symtomaddone">Description</label>
                         <textarea name="description" class="form-control"> </textarea>
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>

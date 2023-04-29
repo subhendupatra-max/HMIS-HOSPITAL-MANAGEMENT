@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <!--div-->
@@ -173,7 +172,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <div class="col-md-6 mb-3">
                                 <div class="input-group">
-                                    <label class="form-label">Manufacturer<span class="required"> *</span></label>
+                                    <label class="form-label">Manufacture<span class="required"> *</span></label>
                                     <div class="input-group">
                                         <select name="manufacturer" class="form-control select2">
                                             <option value="" selected>---Select---</option>
@@ -354,4 +353,5 @@ unset($__errorArgs, $__bag); ?>
     }
 </script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/Inventory/item/add-item.blade.php ENDPATH**/ ?>

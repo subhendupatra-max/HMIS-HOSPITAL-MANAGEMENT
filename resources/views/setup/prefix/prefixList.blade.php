@@ -19,27 +19,31 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="role" class="form-label">Name</label>
+                        <label for="role" class="medicinelabel">Name</label>
                         <input type="text" class="form-control" id="prefix_name" name="prefix_name" placeholder="Enter Name" value="{{ old('prefix_name')}}" required>
                         @error('prefix_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="role" class="form-label">Prefix</label>
-                        <input type="text" class="form-control" id="prefix" name="prefix" placeholder="Enter prefix" required>
+                        <div class="prefixedit">
+                        <label for="role" class="prefixlabel">Prefix</label>
+                        <input type="text" class="form-control" id="prefix" name="prefix" required>
                         @error('prefix')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="role" class="form-label">Year</label>
-                        <input type="text" class="form-control" id="year" name="year" value="{{ date('Y') }}" placeholder="Enter Year" required readonly>
+                        <div class="prefixedit">
+                        <label for="role" class="prefixlabelone">Year</label>
+                        <input type="text"id="year" name="year" value="{{ date('Y') }}" required readonly>
                         @error('year')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Prefix</button>
@@ -71,7 +75,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($allPrefix as $item)    
+                            @foreach ($allPrefix as $item)
                                 <tr>
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{ $item->name }}</td>

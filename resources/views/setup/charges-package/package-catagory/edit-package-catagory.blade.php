@@ -20,8 +20,8 @@
                 <div class="">
                     <input type="hidden" value="{{ $editCatagory->id }}" name="id" />
                     <div class="form-group">
-                        <label for="charges_package_catagories_name" class="form-label">Charges Package Catagory Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="charges_package_catagories_name" name="charges_package_catagories_name" value="{{ $editCatagory->charges_package_catagories_name }}" required>
+                        <label for="charges_package_catagories_name" class="medicinelabel">Charges Package Catagory Name<span class="text-danger">*</span></label>
+                        <input type="text"  id="charges_package_catagories_name" name="charges_package_catagories_name" value="{{ $editCatagory->charges_package_catagories_name }}" required>
                         @error('charges_package_catagories_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

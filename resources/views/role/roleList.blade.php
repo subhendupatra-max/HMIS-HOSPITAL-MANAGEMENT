@@ -19,8 +19,8 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" id="role" name="role" placeholder="Enter Role" required>
+                        <label for="role" class="medicinelabel">Role</label>
+                        <input type="text"  id="role" name="role"  required>
                         @error('role')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -64,8 +64,8 @@
                                     <td>{{ $item->name }}</td>
                                     @can('asign roleBasedPermission')
                                         <td>
-                                            <a href="{{ route('PermissionAsign',['role'=>base64_encode($item->name)]) }}" class="btn btn-info"  data-toggle="tooltip-primary" data-bs-placement="top" title="Asign Permission To This Role"><i class="fa fa-check"></i></a> 
-                                        </td> 
+                                            <a href="{{ route('PermissionAsign',['role'=>base64_encode($item->name)]) }}" class="btn btn-info"  data-toggle="tooltip-primary" data-bs-placement="top" title="Asign Permission To This Role"><i class="fa fa-check"></i></a>
+                                        </td>
                                     @endcan
                                     @can('delete role')
                                       <td>

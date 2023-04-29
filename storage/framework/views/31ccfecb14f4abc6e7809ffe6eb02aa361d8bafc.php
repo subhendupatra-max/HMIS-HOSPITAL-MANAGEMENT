@@ -1,12 +1,10 @@
-
-
 <?php $__env->startSection('content'); ?>
 
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('charges add catagory')): ?>
+<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit package catagory')): ?>
 <div class="col-lg-12 col-xl-4 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Add Charges Package Catagory</h4>
+            <h4 class="card-title">Edit Charges Package Catagory</h4>
         </div>
         <?php if(session('success')): ?>
         <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
@@ -18,10 +16,10 @@
             <form method="POST" action="<?php echo e(route('update-charges-package-catagory-details')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="">
-                    <input type="hidden" value="<?php echo e($editCatagory->id); ?>" name="id"/>
+                    <input type="hidden" value="<?php echo e($editCatagory->id); ?>" name="id" />
                     <div class="form-group">
-                        <label for="charges_package_catagories_name" class="form-label">Charges Package Catagory Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="charges_package_catagories_name" name="charges_package_catagories_name"  value="<?php echo e($editCatagory->charges_package_catagories_name); ?>" required>
+                        <label for="charges_package_catagories_name" class="medicinelabel">Charges Package Catagory Name<span class="text-danger">*</span></label>
+                        <input type="text"  id="charges_package_catagories_name" name="charges_package_catagories_name" value="<?php echo e($editCatagory->charges_package_catagories_name); ?>" required>
                         <?php $__errorArgs = ['charges_package_catagories_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -33,7 +31,6 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
-
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Catagory</button>
             </form>
@@ -55,7 +52,7 @@ unset($__errorArgs, $__bag); ?>
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Catagory Name</th>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('charges edit catagory','charges delete catagory')): ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit package catagory','delete package catagory')): ?>
                                 <th>Action</th>
                                 <?php endif; ?>
                             </tr>
@@ -69,11 +66,11 @@ unset($__errorArgs, $__bag); ?>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit package sub catagory')): ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit package catagory')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('edit-charges-package-catagory-details',['id'=>$item->id])); ?>"><i class="fa fa-edit"></i> Edit</a>
                                             <?php endif; ?>
 
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete package sub catagory')): ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete package catagory')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('delete-charges-package-catagory-details',['id'=>$item->id])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                             <?php endif; ?>
                                         </div>
@@ -90,4 +87,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/charges-package/package-catagory/edit-package-catagory.blade.php ENDPATH**/ ?>

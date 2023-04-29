@@ -20,16 +20,17 @@
                 <div class="">
                     <input type="hidden" name="id" value="{{ $editPurpose->id }}"/>
                     <div class="form-group">
-                        <label for="purpose" class="form-label">Purpose <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="purpose" name="purpose" placeholder="Enter Purpose" value="{{ $editPurpose->purpose }}" required>
+                        <label for="purpose" class="purposelabel">Purpose <span class="text-danger">*</span></label>
+                        <input type="text"  id="purpose" name="purpose" placeholder="Enter Purpose" value="{{ $editPurpose->purpose }}" required>
                         @error('purpose')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="description" name="description"> {{$editPurpose->description }}</textarea>
+                        <label for="description" class="purposelabelone">Description <span class="text-danger">*</span></label>
+                        {{--  <textarea class="form-control" id="description" name="description"> {{$editPurpose->description }}</textarea>  --}}
+                        <input type="text"id="description" name="description" value="{{$editPurpose->description }}">
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -75,7 +76,7 @@
                                             @can('edit medicine catagory')
                                             <a class="dropdown-item" href="{{ route('edit-purpose-in-front-office',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-edit"></i> Edit</a>
                                             @endcan
- 
+
                                             @can('delete medicine catagory')
                                             <a class="dropdown-item" href="{{ route('delete-purpose-in-front-office',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
                                             @endcan

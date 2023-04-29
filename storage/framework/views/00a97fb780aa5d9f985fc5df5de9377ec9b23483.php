@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add department')): ?>
@@ -19,7 +17,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="department_name" class="form-label">Department Name</label>
+                        <label for="department_name" class="medicinelabel">Department Name</label>
                         <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Enter Department Name" value="<?php echo e(old('department_name')); ?>" required>
                         <?php $__errorArgs = ['department_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -34,7 +32,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="department_code" class="form-label">Department Code</label>
+                        <div class="departmentedit">
+                        <label for="department_code" class="departmentadd">Department Code</label>
                         <input type="text" class="form-control" id="department_code" name="department_code" placeholder="Enter Department Code" value="<?php echo e(old('department_code')); ?>" required>
                         <?php $__errorArgs = ['department_code'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -46,6 +45,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                 </div>
@@ -106,4 +106,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/department/department-listing.blade.php ENDPATH**/ ?>

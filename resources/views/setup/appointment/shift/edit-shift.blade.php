@@ -20,7 +20,7 @@
                 <div class="">
                   <input name="id" type="hidden" value="{{$editShift->id}}">
                     <div class="form-group">
-                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <label for="name" class="medicinelabel">Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="{{ $editShift->name }}" required>
                         @error('name')
                         <span class="text-danger">{{ $message }}</span>
@@ -28,22 +28,26 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="from_time" class="form-label">From Time<span class="text-danger">*</span></label>
+                        <div class="appoinmentedit">
+                        <label for="from_time" class="appoimmentlabel">From Time<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" id="from_time" name="from_time" required  @if(isset($editShift->from_time)) value="{{ date('Y-m-d',strtotime($editShift->from_time)) }}" @endif>
                         @error('from_time')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="from_to" class="form-label">From To<span class="text-danger">*</span></label>
+                        <div class="appoinmentedit">
+                        <label for="from_to" class="appoimmentlabelone">From To<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" id="from_to" name="from_to"  required @if(isset($editShift->from_to)) value="{{ date('Y-m-d',strtotime($editShift->from_to)) }}" @endif>
                         @error('from_to')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
-                    
-                   
+
+
 
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Shift</button>

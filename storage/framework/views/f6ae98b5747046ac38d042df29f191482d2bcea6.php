@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit department')): ?>
@@ -20,8 +18,8 @@
                 <input type="hidden" name="id" value="<?php echo e($editDepartment->id); ?>">
                 <div class="">
                     <div class="form-group">
-                        <label for="department_name" class="form-label"></label>
-                        <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Enter Department Name" value="<?php echo e($editDepartment->department_name); ?>" required>
+                        <label for="department_name" class="medicinelabel">Enter Department Name</label>
+                        <input type="text" class="form-control" id="department_name" name="department_name" value="<?php echo e($editDepartment->department_name); ?>" required>
                         <?php $__errorArgs = ['department_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -35,8 +33,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="department_code" class="form-label"></label>
-                        <input type="text" class="form-control" id="department_code" name="department_code" placeholder="Enter Department Code" value="<?php echo e($editDepartment->department_code); ?>" required>
+                        <div class="departmentedit">
+                        <label for="department_code" class="departmentadd">Enter Department Code</label>
+                        <input type="text" class="form-control" id="department_code" name="department_code" value="<?php echo e($editDepartment->department_code); ?>" required>
                         <?php $__errorArgs = ['department_code'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -47,6 +46,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                 </div>
@@ -97,7 +97,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                                 </td>
                             </tr>
-                           
+
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
@@ -108,4 +108,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/department/department-edit.blade.php ENDPATH**/ ?>

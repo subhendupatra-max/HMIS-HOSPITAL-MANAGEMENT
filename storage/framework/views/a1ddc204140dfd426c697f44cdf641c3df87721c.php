@@ -1,12 +1,10 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Edit blood unit type')): ?>
 <div class="col-lg-12 col-xl-4 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Edit Uint Types</h4>
+            <h4 class="card-title">Edit Unit Types</h4>
         </div>
         <?php if(session('success')): ?>
         <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
@@ -20,7 +18,7 @@
                 <div class="">
                     <input type="hidden" name="id" value="<?php echo e($editUnitType->id); ?>" />
                     <div class="form-group">
-                        <label for="blood_unit_types" class="form-label">Unit Type <span class="text-danger">*</span></label>
+                        <label for="blood_unit_types" class="medicinelabel">Unit Type <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="blood_unit_types" name="blood_unit_types" placeholder="Enter Product Name" value="<?php echo e($editUnitType->blood_unit_types); ?>" required>
                         <?php $__errorArgs = ['blood_unit_types'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -91,4 +89,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/blood-bank/blood-unit-type/edit-blood-unit-type.blade.php ENDPATH**/ ?>

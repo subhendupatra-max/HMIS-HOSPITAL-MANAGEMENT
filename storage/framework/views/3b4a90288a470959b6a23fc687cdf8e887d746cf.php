@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add role')): ?>
@@ -19,8 +17,8 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="role" class="form-label">Role</label>
-                        <input type="text" class="form-control" id="role" name="role" placeholder="Enter Role" required>
+                        <label for="role" class="medicinelabel">Role</label>
+                        <input type="text"  id="role" name="role"  required>
                         <?php $__errorArgs = ['role'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -71,8 +69,8 @@ unset($__errorArgs, $__bag); ?>
                                     <td><?php echo e($item->name); ?></td>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('asign roleBasedPermission')): ?>
                                         <td>
-                                            <a href="<?php echo e(route('PermissionAsign',['role'=>base64_encode($item->name)])); ?>" class="btn btn-info"  data-toggle="tooltip-primary" data-bs-placement="top" title="Asign Permission To This Role"><i class="fa fa-check"></i></a> 
-                                        </td> 
+                                            <a href="<?php echo e(route('PermissionAsign',['role'=>base64_encode($item->name)])); ?>" class="btn btn-info"  data-toggle="tooltip-primary" data-bs-placement="top" title="Asign Permission To This Role"><i class="fa fa-check"></i></a>
+                                        </td>
                                     <?php endif; ?>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete role')): ?>
                                       <td>
@@ -99,4 +97,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div-->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/role/roleList.blade.php ENDPATH**/ ?>

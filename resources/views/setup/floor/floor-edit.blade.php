@@ -20,8 +20,8 @@
                 <input type="hidden" name="id" value="{{ $editFloor->id }}">
                 <div class="">
                     <div class="form-group">
-                        <label for="floor_name" class="form-label"></label>
-                        <input type="text" class="form-control" id="floor_name" name="floor_name" placeholder="Enter Bed Type Name" value="{{ $editFloor->floor_name }}" required>
+                        <label for="floor_name" class="medicinelabel">Enter Bed Type Name</label>
+                        <input type="text"  id="floor_name" name="floor_name"  value="{{ $editFloor->floor_name }}" required>
                         @error('bedType_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -73,7 +73,7 @@
                                 </div>
                                 </td>
                             </tr>
-                           
+
                             @endforeach
                         </tbody>
                     </table>

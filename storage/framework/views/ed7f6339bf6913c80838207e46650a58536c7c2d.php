@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit opd ticket fees')): ?>
@@ -20,7 +18,7 @@
                 <div class="">
                   <input type="hidden" name="id" value="<?php echo e($editTicketFees->id); ?>">
                     <div class="form-group">
-                        <label for="patient_type" class="form-label"> Patient Type <span class="text-danger">*</span></label>
+                        <label for="patient_type" class="medicinelabel"> Patient Type <span class="text-danger">*</span></label>
                         <select name="patient_type" class="form-control select2-show-search" id="patient_type">
                             <option value="">Select</option>
                             <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -40,7 +38,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="ticket_fees" class="form-label">Ticket Fees</label>
+                        <div class="opdunitedit">
+                        <label for="ticket_fees" class="opdticketedit">Ticket Fees</label>
                         <input type="text" class="form-control" id="ticket_fees" name="ticket_fees" placeholder="Enter Ticket Fees" value="<?php echo e($editTicketFees->ticket_fees); ?>" required>
                         <?php $__errorArgs = ['ticket_fees'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -52,8 +51,9 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
-                    
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Ticket Fees</button>
             </form>
@@ -112,4 +112,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/opd/ticket-fees/edit-opd-ticket-fees.blade.php ENDPATH**/ ?>

@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit symptoms type')): ?>
@@ -19,8 +17,9 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <input type="hidden" value="<?php echo e($editSymptomsType->id); ?>" name="id">
+
                     <div class="form-group">
-                        <label for="symptoms_type_name" class="form-label">Symptoms Type Name</label>
+                        <label for="symptoms_type_name" class="medicinelabel">Symptoms Type Name</label>
                         <input type="text" class="form-control" id="symptoms_type_name" name="symptoms_type_name"  value="<?php echo e(@$editSymptomsType->symptoms_type_name); ?>" required>
                         <?php $__errorArgs = ['symptoms_type_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -66,7 +65,7 @@ unset($__errorArgs, $__bag); ?>
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
                                 <td><?php echo e($item->symptoms_type_name); ?></td>
-                                
+
                                 <td>
                                 <div class="card-options">
                                     <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
@@ -92,4 +91,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/symptoms/symptoms-type/edit-type.blade.php ENDPATH**/ ?>

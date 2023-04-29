@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add item unit')): ?>
@@ -19,7 +17,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="role" class="form-label">Name</label>
+                        <label for="role" class="medicinelabel">Name</label>
                         <input type="text" class="form-control" id="prefix_name" name="prefix_name" placeholder="Enter Name" value="<?php echo e(old('prefix_name')); ?>" required>
                         <?php $__errorArgs = ['prefix_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -32,10 +30,11 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="role" class="form-label">Prefix</label>
-                        <input type="text" class="form-control" id="prefix" name="prefix" placeholder="Enter prefix" required>
+                        <div class="prefixedit">
+                        <label for="role" class="prefixlabel">Prefix</label>
+                        <input type="text" class="form-control" id="prefix" name="prefix" required>
                         <?php $__errorArgs = ['prefix'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -46,11 +45,13 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="role" class="form-label">Year</label>
-                        <input type="text" class="form-control" id="year" name="year" value="<?php echo e(date('Y')); ?>" placeholder="Enter Year" required readonly>
+                        <div class="prefixedit">
+                        <label for="role" class="prefixlabelone">Year</label>
+                        <input type="text"id="year" name="year" value="<?php echo e(date('Y')); ?>" required readonly>
                         <?php $__errorArgs = ['year'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -61,6 +62,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Prefix</button>
@@ -92,7 +94,7 @@ unset($__errorArgs, $__bag); ?>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $__currentLoopData = $allPrefix; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>    
+                            <?php $__currentLoopData = $allPrefix; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td><?php echo e($loop->iteration); ?></td>
                                     <td><?php echo e($item->name); ?></td>
@@ -122,4 +124,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/prefix/prefixList.blade.php ENDPATH**/ ?>

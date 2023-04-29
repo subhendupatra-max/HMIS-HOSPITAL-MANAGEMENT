@@ -19,7 +19,7 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="diagonasis_name" class="form-label">Diagonasis Name</label>
+                        <label for="diagonasis_name" class="medicinelabel">Diagonasis Name</label>
                         <input type="text" class="form-control" id="diagonasis_name" name="diagonasis_name" placeholder="Enter Diagonasis Name" value="{{ old('diagonasis_name')}}" required>
                         @error('diagonasis_name')
                         <span class="text-danger">{{ $message }}</span>
@@ -27,7 +27,8 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="department" class="form-label">Department<span class="text-danger">*</span></label>
+                        <div class="diagonasisedit">
+                        <label for="department" class="diagonasislabel">Department<span class="text-danger">*</span></label>
                         <select id="department" class="form-control" name="department">
                             <option value=" ">Select Department</option>
                             @foreach ($department as $item)
@@ -37,14 +38,17 @@
                         @error('department')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                       </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="icd_code" class="form-label">Icd Code</label>
+                        <div class="diagonasisedit">
+                        <label for="icd_code" class="diagonasislabelone">Icd Code</label>
                         <input type="text" class="form-control" id="icd_code" name="icd_code" placeholder="Enter Icd Code" value="{{ old('icd_code')}}" required>
                         @error('icd_code')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                 </div>

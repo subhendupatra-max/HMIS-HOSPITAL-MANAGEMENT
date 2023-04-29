@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Add complain type')): ?>
@@ -20,8 +18,8 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="complain_type" class="form-label">Complain Type <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="complain_type" name="complain_type" placeholder="Enter Complain Type" value="<?php echo e(old('complain_type')); ?>" required>
+                        <label for="complain_type" class="medicinelabel"> Enter Complain Type <span class="text-danger">*</span></label>
+                        <input type="text" id="complain_type" name="complain_type"  value="<?php echo e(old('complain_type')); ?>" required>
                         <?php $__errorArgs = ['complain_type'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -35,8 +33,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description </label>
-                        <textarea class="form-control" id="description" name="description"></textarea>
+                        <div class="descriptionadd">
+                        <label for="description" class="descriptiononelabel">Description </label>
+                        <input type="text"id="description" name="description" >
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -47,6 +46,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                 </div>
@@ -107,4 +107,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/front-office/complain-type/add-complain-type.blade.php ENDPATH**/ ?>

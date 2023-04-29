@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -10,9 +9,31 @@
             <form action="<?php echo e(route('save-charges-package-name-details')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="type">Type <span class="text-danger">*</span></label>
+                            <select id="type" class="form-control" name="type">
+                                <option value=" ">Select type </option>
+                                <?php $__currentLoopData = Config::get('static.charges_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $charges_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($charges_type); ?>" > <?php echo e($charges_type); ?>
 
-                    <div class="form-group col-md-4">
-                        <label for="charge_package_catagory_id" class="form-label">Charges Package Catagory <span class="text-danger">*</span></label>
+                                    </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <?php $__errorArgs = ['type'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="charge_package_catagory_id" >Charges Package Catagory <span class="text-danger">*</span></label>
                         <select id="charge_package_catagory_id" class="form-control" name="charge_package_catagory_id" onchange="getChargersPackageCatagoryId(this.value)">
                             <option value=" ">Select Charges Package Catagory </option>
                             <?php $__currentLoopData = $catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -31,8 +52,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="charge_package_sub_catagory_id" class="form-label">Charges Package Sub Catagory <span class="text-danger">*</span></label>
+                    <div class="form-group col-md-3">
+                        <label for="charge_package_sub_catagory_id">Charges Package Sub Catagory <span class="text-danger">*</span></label>
                         <select id="charge_package_sub_catagory_id" class="form-control" name="charge_package_sub_catagory_id">
                             <option value=" ">Select Charges Package Sub Catagory... </option>
                         </select>
@@ -48,9 +69,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="package_name" class="form-label">Charges Package Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="package_name" name="package_name" placeholder="Enter Charges Package Name" value="<?php echo e(old('package_name')); ?>" required>
+                    <div class="form-group col-md-3 packageedit">
+                        <label for="package_name">Enter Charges Package Name<span class="text-danger">*</span></label>
+                        <input type="text" id="package_name" name="package_name"value="<?php echo e(old('package_name')); ?>" required>
                         <?php $__errorArgs = ['package_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -63,12 +84,12 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-12">
-                        <table class="table card-table table-vcenter text-nowrap" id="subhendu">
+                    <div class="form-group col-md-12 newtabledesign">
+                        <table class="table card-table table-vcenter text-nowrap " id="subhendu">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 30%">Charge Name<span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 40%">Charge Amount<span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 40%">Charge Name<span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 30%">Charge Amount<span class="text-danger">*</span></th>
                                     </th>
                                     <th scope="col" style="width: 2%">
                                         <button type="button" class="btn btn-success" onclick="addnewrow()"><i class="fa fa-plus"></i></button>
@@ -81,14 +102,14 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label for="tax">Tax<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tax" value="<?php echo e(0); ?>" name="tax" placeholder="Enter Tax">
+                        <label for="tax">Enter Tax<span class="text-danger">*</span></label>
+                        <input type="text" id="tax" value="<?php echo e(0); ?>" name="tax">
                         <small class="text-danger"><?php echo e($errors->first('tax')); ?></small>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="total_amount" name="total_amount" readonly>
+                        <input type="text" id="total_amount" name="total_amount" >
                         <small class="text-danger"><?php echo e($errors->first('total_amount')); ?></small>
                     </div>
                 </div>
@@ -104,7 +125,7 @@ unset($__errorArgs, $__bag); ?>
 </div>
 
 </div>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script>
     function gettotal() {
         var t = 0;
@@ -137,13 +158,13 @@ unset($__errorArgs, $__bag); ?>
                         </td>
                         <td>
                         <input type="text" class="form-control" name="charge_amount[]" id="charge_amount${i}" />
-                       
+
                         </td>
-                               
+
                         <td>
                         <button type="button" class="btn btn-danger" onclick="removerow(${i})"><i class="fa fa-trash"></i></button>
                         </td>
-                       
+
                         </tr>`;
 
         $('#subhendu').append(html);
@@ -200,4 +221,5 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/charges-package/package-name/add-charges-package-name.blade.php ENDPATH**/ ?>

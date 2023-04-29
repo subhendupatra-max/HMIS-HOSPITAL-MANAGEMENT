@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add operation')): ?>
@@ -20,7 +18,7 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="operation_department" class="form-label">Department</label>
+                        <label for="operation_department" class="medicinelabel">Department</label>
                         <select id="operation_department" class="form-control" name="operation_department">
                             <option value=" ">Select Department</option>
                             <?php $__currentLoopData = $department; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -40,7 +38,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="operation_catagory" class="form-label">Operation Catagory</label>
+                        <div class="operationcatagoryedit">
+                        <label for="operation_catagory" class="operationlabel">Operation Catagory</label>
                         <select id="operation_catagory" class="form-control" name="operation_catagory">
                             <option value=" ">Select Operation Catagory</option>
                             <?php $__currentLoopData = $operation_catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -58,9 +57,11 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
+                    </div>
 
                     <div class="form-group">
-                        <label for="operation_name" class="form-label">Operation Name <span class="text-danger">*</span></label>
+                        <div class="operationcatagoryedit">
+                        <label for="operation_name" class="operationlabelone">Operation Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="operation_name" name="operation_name" placeholder="Enter Operation Name" value="<?php echo e(old('operation_name')); ?>" required>
                         <?php $__errorArgs = ['operation_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -72,6 +73,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                 </div>
@@ -134,4 +136,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/operations/operation/operation-listing.blade.php ENDPATH**/ ?>

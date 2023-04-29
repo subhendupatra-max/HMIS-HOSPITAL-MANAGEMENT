@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-            
+
 <div class="col-lg-12 col-xl-6 col-md-12 col-sm-12">
     <div class="card">
             @if (session('success'))
@@ -18,8 +18,8 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="role" class="form-label">Role</label>
-                        <input type="text" value="{{  $role->name }}" class="form-control" id="role" name="role" placeholder="Enter Role" required>
+                        <label for="role" class="medicinelabel"> Enter Role</label>
+                        <input type="text" value="{{  $role->name }}"  id="role" name="role"  required>
                         @error('role')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -64,8 +64,8 @@
                                     <td>{{ $item->name }}</td>
                                     @can('asign roleBasedPermission')
                                         <td>
-                                            <a href="{{ route('PermissionAsign',['role'=>base64_encode($item->name)]) }}" class="btn btn-info"  data-toggle="tooltip-primary" data-bs-placement="top" title="Asign Permission To This Role"><i class="fa fa-check"></i></a> 
-                                        </td> 
+                                            <a href="{{ route('PermissionAsign',['role'=>base64_encode($item->name)]) }}" class="btn btn-info"  data-toggle="tooltip-primary" data-bs-placement="top" title="Asign Permission To This Role"><i class="fa fa-check"></i></a>
+                                        </td>
                                     @endcan
                                     @can('delete role')
                                       <td>

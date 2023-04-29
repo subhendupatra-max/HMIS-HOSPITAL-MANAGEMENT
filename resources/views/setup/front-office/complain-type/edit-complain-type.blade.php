@@ -20,19 +20,21 @@
                 <div class="">
                     <input type="hidden" name="id" value="{{ $editComplainType->id }}" />
                     <div class="form-group">
-                        <label for="complain_type" class="form-label">Complain Type <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="complain_type" name="complain_type" placeholder="Enter Complain Type" value="{{ $editComplainType->complain_type }}" required>
+                        <label for="complain_type" class="medicinelabel"> Enter Complain Type <span class="text-danger">*</span></label>
+                        <input type="text"  id="complain_type" name="complain_type" value="{{ $editComplainType->complain_type }}" required>
                         @error('complain_type')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description </label>
-                        <textarea class="form-control" id="description" name="description">{{ $editComplainType->description }}</textarea>
+                        <div class="descriptionadd">
+                        <label for="description" class="descriptiononelabel">Description </label>
+                        <input type="text"id="description" name="description" value="{{ $editComplainType->description }}">
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                 </div>
