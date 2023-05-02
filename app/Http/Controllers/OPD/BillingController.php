@@ -80,6 +80,7 @@ class BillingController extends Controller
 
     public function save_new_opd_billing(Request $request)
     {
+      //  dd($request->all());
         $validate = $request->validate([
             'bill_date'   => 'required',
             'grand_total'   => 'required',
@@ -152,7 +153,6 @@ class BillingController extends Controller
                 $discount_details->save();
                 // ====================== Discount Detaiils ==================================
             }
-
             if ($request->payment_amount != null || $request->payment_amount != 0 || $request->payment_amount != '') {
                 // ====================== add payment =======================================
                 $payment_prefix = Prefix::where('name', 'payment')->first();
@@ -170,11 +170,11 @@ class BillingController extends Controller
                 $payment->payment_recived_by = Auth::user()->id;
                 $payment->payment_mode = $request->payment_mode;
                 $payment->note = $request->note;
+                $payment->save();
                 // ====================== add payment =======================================
-
-                return redirect()->route('opd-billing', ['id' => base64_encode($request->opd_id)])->with('success', "Biliing Successfully");
             }
             DB::commit();
+        return redirect()->route('opd-billing', ['id' => base64_encode($request->opd_id)])->with('success', "Biliing Successfully"); 
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);

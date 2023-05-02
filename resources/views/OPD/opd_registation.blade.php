@@ -53,7 +53,7 @@
                         <div class="row">
 
                             <hr class="hr_line">
-                            <!-- <div class="widget-user-image mx-auto mt-1"><img alt="User Avatar" class="rounded-circle" src="{{ asset('public/patient_image/patient_icon.png') }}" style="height: 100px;width: 117px;"></div> -->
+                      
                             <div class="card-body text-center">
                                 <div class="pro-user">
                                     <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
@@ -123,6 +123,9 @@
                     <form method="post" action="{{route('add-opd-registration')}}">
                         @csrf
                         <div class="options px-5 pt-1  border-bottom pb-3">
+                            @error('patient_id')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
                             <div class="row">
                                 <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
 
@@ -132,34 +135,33 @@
                                     @if (auth()->user()->can('appointment date'))
                                     <input type="datetime-local"  name="appointment_date" value="{{ old('appointment_date') }}" required />
                                     @else
-                                    <input type="datetime-local"  name="appointment_date" value="{{ old('appointment_date') }}" required />
+                                    <input type="datetime-local"  name="appointment_date" value="{{ date('Y-m-d H:s') }}" required />
                                     @endif
-
                                     @error('appointment_date')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
 
                                 <div class="form-group col-md-4 newaddappon">
-                                     <label for="visit_type">Visit Type</label>
-                                    <select name="visit_type" class="form-control select2-show-search" id="visit_type">
+                                     <label for="visit_type">Visit Type <span class="text-danger">*</span></label>
+                                    <select name="visit_type" class="form-control select2-show-search" id="visit_type" required>
                                         <option value="New Visit" selected>New-Visit</option>
                                         <option value="Revisit">Revisit</option>
                                     </select>
                                     @error('visit_type')
-                                    <span class="text-danger">{{ $message }}</span>
+                                    <small class="text-danger">{{ $message }}</sma>
                                     @enderror
                                 </div>
 
-                                <div class="form-group col-md-4  opd-bladedesignin  ">
+                                {{-- <div class="form-group col-md-4  opd-bladedesignin  ">
                                     <label for="height">Case</label>
                                     <input type="text" class="form-control" name="case" value="{{ old('case') }}">
 
-                                </div>
+                                </div> --}}
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="patient_type">Patient Type <span class="text-danger">*</span></label>
-                                    <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
-                                        <option value="">patient type <span class="text-danger">*</span></option>
+                                    <select name="patient_type" required onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
+                                        <option value="">Patient Type </option>
                                         @foreach (Config::get('static.patient_types') as $key => $patient_type)
                                         <option value="{{$patient_type}}"> {{$patient_type}}</option>
                                         @endforeach
@@ -173,20 +175,20 @@
                                 <div class="form-group  col-md-4 frefesd newaddappon " style="display:none">
                                      <label for="tpa_organization">TPA Organization <span class="text-danger">*</span></label>
                                     <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
-                                        <option value="">tpa organization<span class="text-danger">*</span></option>
+                                        <option value="">TPA Organization<span class="text-danger">*</span></option>
                                         @foreach ($tpa_management as $key => $tpaManagement)
                                         <option value="{{$tpaManagement->id}}"> {{$tpaManagement->TPA_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group  col-md-4 frefesds" style="display:none">
+                                <div class="form-group  col-md-4 frefesds newaddappon" style="display:none">
                                     <label for="type_no"><span id="lableName"></span><span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="type_no" value="{{ old('type_no') }}" id="type_no" />
                                 </div>
                                 <div class="form-group col-md-4 newaddappon ">
                                      <label for="reference" class="form-label">Reference</label>
                                     <select name="reference" class="form-control select2-show-search" id="reference">
-                                        <option value="">reference</option>
+                                        <option value="">Referrel Name</option>
                                         @foreach ($referer as $key => $reference)
                                         <option value="{{$reference->id}}"> {{$reference->referral_name}}</option>
                                         @endforeach
@@ -196,7 +198,7 @@
                                 <div class="form-group col-md-4 newaddappon">
                                      <label for="department" >Department <span class="text-danger">*</span></label>
                                     <select name="department" class="form-control select2-show-search" id="department">
-                                        <option value="">department</option>
+                                        <option value="">Department</option>
                                         @foreach ($departments as $key => $department)
                                         <option value="{{$department->id}}"> {{$department->department_name}}</option>
                                         @endforeach
@@ -209,7 +211,7 @@
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="cons_doctor" >Consultant Doctor <span class="text-danger">*</span></label>
                                     <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
-                                        <option value="">cons_doctor</option>
+                                        <option value="">Consultant Doctor</option>
                                     </select>
                                     @error('cons_doctor')
                                     <span class="text-danger">{{ $message }}</span>
@@ -218,7 +220,7 @@
                                 <div class="form-group col-md-4 newaddappon ">
                                     <label for="unit" >Unit <span class="text-danger">*</span></label>
                                     <select name="unit" class="form-control select2-show-search" id="unit">
-                                        <option value="">unit</option>
+                                        <option value="">Unit</option>
                                     </select>
                                     @error('unit')
                                     <span class="text-danger">{{ $message }}</span>
@@ -226,26 +228,26 @@
                                 </div>
                                 <div class="form-group col-md-4 newaddticket">
                                     <input type="text"  id="ticket_no"  name="ticket_no">
-                                    <label for="ticket_no">Ticket No</label>
+                                    <label for="ticket_no">Ticket No <span class="text-danger">*</span></label>
                                 </div>
                                 <div class="form-group col-md-4 newaddappon ">
-                                   <input type="text"  id="ticket_fees"  name="ticket_fees">
-                                    <label for="ticket_fees">Ticket Fees</label>
+                                   <input type="text"  value="{{ $ticket_fees->ticket_fees }}" id="ticket_fees"  name="ticket_fees">
+                                    <label for="ticket_fees">Ticket Fees <span class="text-danger">*</span></label>
                                 </div>
 
                             </div>
                         </div>
 
-                        {{-- <div class="options px-5">
-                            <div class="container ">
-                                <hr class="hr_line">
+                       <div class="options px-5">
+                            <div class="container mt-3">
+                             {{--     <hr class="hr_line">
                                 <input type="checkbox" onchange="takeTicketFees()" checked id="cb01"><span style="font-weight: 500;color:blue"> Are You Want to take <b>TICKET FEES</b> ?</span>
 
                                 <div class="row" id="taketicketFees" style="display: none"> --}}
 
                                 {{-- </div> --}}
 
-                                <hr class="hr_line">
+                                {{-- <hr class="hr_line"> --}}
                                 <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Physical Condition
                                     ?</span>
 
@@ -298,10 +300,9 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4 opd-bladedesigninin">
-                                        {{-- <label for="symptoms_description" class="form-label">Symptoms Description</label>
-                                        <textarea class="form-control" name="symptoms_description"></textarea> --}}
-                                        <input type="text" id="symptoms_description" name="symptoms_description" required="">
-                                        <label for="Symptoms Description">Symptoms Description <span class="text-danger">*</span></label>
+                            
+                                        <input type="text" id="symptoms_description" name="symptoms_description" >
+                                        <label for="Symptoms Description">Symptoms Description </label>
                                     </div>
                                 </div>
 
@@ -309,21 +310,19 @@
                                 <hr class="hr_line">
                                 <div class="row">
                                     <div class="form-group col-md-4 opd-condition">
-                                        {{-- <label class="form-label">Note</label>
-                                        <textarea class="form-control" name="note"></textarea> --}}
-                                        <input type="text" id="note" name="note" required="">
-                                        <label for="note">Note <span class="text-danger">*</span></label>
+                          
+                                        <input type="text" id="note" name="note">
+                                        <label for="note">Note </label>
                                     </div>
                                     <div class="form-group col-md-4 opd-condition">
-                                        {{-- <label class="form-label">Any Known Allergies</label>
-                                        <textarea class="form-control" name="any_known_allergies"></textarea> --}}
-                                        <input type="text" id="any_known_allergies" name="any_known_allergies" required="">
-                                        <label for="any_known_allergies">Any Known Allergies <span class="text-danger">*</span></label>
+                                 
+                                        <input type="text" id="any_known_allergies" name="any_known_allergies">
+                                        <label for="any_known_allergies">Any Known Allergies</label>
                                     </div>
                                 </div>
                                 <hr class="hr_line">
                                 <input type="checkbox" id="opd_belling" value="opd_belling_from_opd" />
-                                <span style="font-weight: 500;color:blue"> Are You Want To Create <b>Opd Billing</b>
+                                <span style="font-weight: 500;color:blue"> Are You Want To do <b> Billing</b>
                                     ?</span>
 
                             </div>
@@ -340,52 +339,6 @@
         </div>
     </div>
 </div>
-
-<form action="{{route('patient-age-edit')}}" method="POST">
-    @csrf
-    <div class="modal" id="editAge">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title">Edit Age</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
-                        <div class="form-group col-md-12">
-                            <label for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="{{ @$patient_details_information->date_of_birth }}">
-                            <small class="text-danger">{{ $errors->first('date_of_birth') }}</small>
-                        </div>
-
-                        <div class="form-group col-md-12">
-                            <label>Age (yy-mm-dd) <span class="text-danger">*</span></label>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" value="{{ @$patient_details_information->year }}" required>
-                                    <small class="text-danger">{{ $errors->first('date_of_birth_year') }}</small>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" value="{{ @$patient_details_information->month }}" required>
-                                    <small class="text-danger">{{ $errors->first('date_of_birth_month') }}</small>
-                                </div>
-                                <div class="col-lg-4">
-                                    <input type="text" class="form-control" value="{{ @$patient_details_information->day }}" id="date_of_birth_day" name="day" placeholder="Day" required>
-                                    <small class="text-danger">{{ $errors->first('date_of_birth_day') }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button class="btn btn-indigo" type="submit">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 
 
 <script>
@@ -463,41 +416,7 @@
         });
     });
 </script>
-<script>
-    function getage(dob_) {
-        const dob = new Date(dob_);
-        const nw = new Date();
 
-        let dob_year = dob.getFullYear();
-        let dob_month = dob.getMonth() + 1;
-        let dob_day = dob.getDate();
-
-        let nw_year = nw.getFullYear();
-        let nw_month = nw.getMonth() + 1;
-        let nw_day = nw.getDate();
-
-        let dob_in_date = ((parseInt(dob_year) * parseInt(365)) + (parseInt(dob_month) * parseInt(30)) + parseInt(dob_day));
-        let now_in_date = ((parseInt(nw_year) * parseInt(365)) + (parseInt(nw_month) * parseInt(30)) + parseInt(nw_day));
-        if (now_in_date >= dob_in_date) {
-            let diffe_date = parseInt(parseInt(now_in_date) - parseInt(dob_in_date));
-
-            let year = parseInt(diffe_date / 365);
-            let remnder = diffe_date % 365;
-
-            let month = parseInt(remnder / 30);
-            let days = remnder % 30;
-
-            $('#date_of_birth_year').val(year);
-            $('#date_of_birth_month').val(month);
-            $('#date_of_birth_day').val(days);
-        } else {
-
-            alert('Enter a Valid Date');
-            $('#date_of_birth').reset();
-        }
-
-    }
-</script>
 <script>
     $(document).ready(function() {
         $("#symptoms_type").change(function(event) {

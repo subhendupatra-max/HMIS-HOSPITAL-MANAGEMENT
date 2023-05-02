@@ -256,6 +256,8 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'OPD registation']);
         Permission::create(['name' => 'OPD profile']);
         Permission::create(['name' => 'Admission From OPD']);
+        Permission::create(['name' => 'delete opd patient']);
+        Permission::create(['name' => 'edit opd patient']);
 
         //past date admission
         Permission::create(['name' => 'appointment date']);

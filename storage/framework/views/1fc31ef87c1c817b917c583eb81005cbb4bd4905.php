@@ -3,8 +3,20 @@
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Add Timeline</h4>
+        <div class="card-header d-block">
+            <div class="row">
+                <div class="col-md-4 card-title">
+                    Add Timeline
+                </div>
+                <div class="col-md-8 text-right">
+                    <div class="d-block">
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right" style="">
+                            <?php echo $__env->make('OPD.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <form action="<?php echo e(route('save-timeline-lisitng-in-opd')); ?>" method="POST" enctype="multipart/form-data">
@@ -43,7 +55,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                        <label for="description" class="form-label">Description</label>
                         <textarea name="description" class="form-control"> </textarea>
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -58,7 +70,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="attach_document" class="form-label">Attach Document <span class="text-danger">*</span></label>
+                        <label for="attach_document" class="form-label">Attach Document </label>
                         <input type="file" id="attach_document" name="attach_document">
                         <?php $__errorArgs = ['attach_document'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
