@@ -26298,7 +26298,7 @@ input[type=search]{
 /* ------------------------medicine dosage add------------------------- */
 /* ------------------------Add Vendor----------------------- */
 .vendordesign{
-    margin: 10px 0px 0px 0px;
+    margin: 10px 0px 10px 0px;
 }
 .vendordesignone{
     margin: 24px 0px 0px 0px;
@@ -26449,10 +26449,10 @@ margin: 33px 0px 0px 0px;
 /* ------------------------tpa-managemnetsetup--------------------- */
 /* ------------------------departmentsetup------------------------- */
 .diagonasisedit{
-    padding: 11px 0px 0px 0px;
+    padding: 17px 0px 0px 0px;
 }
 .diagonasislabel{
-    top:20% ;
+    top:24% ;
     left: 15px;
 }
 .diagonasislabelone{
@@ -26532,15 +26532,21 @@ margin: 33px 0px 0px 0px;
 /* -------------------subcatagory setup------------------ */
 /* --------------------chargespackage-------------------- */
 .packageedit{
-    margin: 5px 0px 0px 0px;
+    margin: 15px 0px 0px 0px;
+}
+.chargespackagead{
+    margin: 15px 0px 15px 0px;
 }
 /* --------------------chargespackage-------------------- */
 /* ------------------------------------------------------- */
 .newtabledesign{
 
         border: 1px solid #564242;
-        margin: 0px 0px 30px 0px;
+        margin: 10px 0px 30px 0px;
 
+}
+.chargespackageadd{
+    margin: 10px 0px 0px 0px;
 }
 /* ------------------------------------------------------- */
 /* ------------------------------------------------------- */
@@ -26628,14 +26634,14 @@ top: -29px;
     left: 15px;
 }
 .findingedit{
-    padding: 19px 0px 0px 0px;
+    padding: 19px 0px 10px 0px;
 }
 .findingaddlabelone{
     top:42% ;
     left: 15px;
 }
 .headersetupedit{
-    margin: 10px 0px 0px 0px;
+    margin: 10px 0px 20px 0px;
 }
 /* ------------------finding setup--------------------- */
 @media (max-width: 768px)
@@ -26660,5 +26666,11 @@ top: -29px;
     }
     .appointtimeedit{
         margin: 22px 0px 0px 0px;
+    }
+    .chargespackageadd{
+        margin: 20px 0px 0px 0px;
+    }
+    .packageedit{
+        margin: 25px 0px 0px 0px;
     }
 }

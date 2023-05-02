@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -147,7 +146,7 @@ unset($__errorArgs, $__bag); ?>
 
                     <hr>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 generaldesignadd">
                             
                             <input type="text"value="<?php echo e($general_details->po_permission_percentage); ?>"id="po_permission_percentage" name="po_permission_percentage">
                             <label for="po_permission_percentage">PO Permission Percentage<span class="text-danger">*</span></label>
@@ -162,7 +161,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 generaldesignadd">
                             
                             <input type="text"value="<?php echo e($general_details->req_permission_percentage); ?>"id="rfq_permission_percentage" name="rfq_permission_percentage">
                             <label for="rfq_permission_percentage">Requisition Permission Percentage <span class="text-danger">*</span></label>
@@ -177,7 +176,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 generaldesignadd ">
                             
                             <input type="text"value="<?php echo e($general_details->puc_alert_days); ?>"id="puc_alert_days" name="puc_alert_days">
                             <label for="puc_alert_days">PUC Alert Days <span class="text-danger">*</span></label>

@@ -34,9 +34,11 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                       </div>
+                      </div>
                     </div>
 
                     <div class="form-group">
+                     <div class="diagonasisedit">
                         <label for="role" class="diagonasislabelone">Enter Year</label>
                         <input type="text"  id="year" name="year" value="{{ date('Y') }}"   required >
                         @error('year')

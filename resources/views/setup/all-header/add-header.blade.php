@@ -29,7 +29,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 ">
                             <label >Logo <span class="text-danger">*</span> (245px x 48px)</label>
                             <input type="file" name="logo" onchange="readURL(this);">
                             <img id="blah" width="50px" height="30px" src="{{ asset('public/assets/images/header') }}/{{@$allheader->logo}}" alt="your image" />
