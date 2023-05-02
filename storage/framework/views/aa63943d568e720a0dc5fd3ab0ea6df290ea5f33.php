@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add symptoms head')): ?>
@@ -20,8 +18,8 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="symptoms_head_name" class="form-label">Symptoms Head Name</label>
-                        <input type="text" class="form-control" id="symptoms_head_name" name="symptoms_head_name" placeholder="Enter Symptoms Head Name" value="<?php echo e(old('symptoms_head_name')); ?>" required>
+                        <label for="symptoms_head_name" class="medicinelabel">Symptoms Head Name</label>
+                        <input type="text"  id="symptoms_head_name" name="symptoms_head_name"  value="<?php echo e(old('symptoms_head_name')); ?>" required>
                         <?php $__errorArgs = ['symptoms_head_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -35,7 +33,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="symptoms_type" class="form-label">Symptoms Type<span class="text-danger">*</span></label>
+                        <div class="symtomsedit">
+                        <label for="symptoms_type" class="symtomadd">Symptoms Type<span class="text-danger">*</span></label>
                         <select id="symptoms_type" class="form-control" name="symptoms_type">
                             <option value=" ">Select Symptoms Type</option>
                             <?php $__currentLoopData = $symptomsType; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -52,11 +51,14 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                       </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea name="description" class="form-control"> </textarea>
+                        <div class="symtomsedit">
+                        <label for="description" class="symtomaddone">Description</label>
+                        
+                        <input type="text" id="description" name="description" >
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -67,6 +69,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
 
@@ -130,4 +133,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/symptoms/symptoms-head/head-listing.blade.php ENDPATH**/ ?>

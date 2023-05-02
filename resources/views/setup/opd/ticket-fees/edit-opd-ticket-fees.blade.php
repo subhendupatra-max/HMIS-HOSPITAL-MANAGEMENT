@@ -20,7 +20,7 @@
                 <div class="">
                   <input type="hidden" name="id" value="{{$editTicketFees->id}}">
                     <div class="form-group">
-                        <label for="patient_type" class="form-label"> Patient Type <span class="text-danger">*</span></label>
+                        <label for="patient_type" class="medicinelabel"> Patient Type <span class="text-danger">*</span></label>
                         <select name="patient_type" class="form-control select2-show-search" id="patient_type">
                             <option value="">Select</option>
                             @foreach (Config::get('static.patient_types') as $lang => $patient)
@@ -33,13 +33,15 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="ticket_fees" class="form-label">Ticket Fees</label>
+                        <div class="opdunitedit">
+                        <label for="ticket_fees" class="opdticketedit">Ticket Fees</label>
                         <input type="text" class="form-control" id="ticket_fees" name="ticket_fees" placeholder="Enter Ticket Fees" value="{{ $editTicketFees->ticket_fees }}" required>
                         @error('ticket_fees')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
-                    
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Ticket Fees</button>
             </form>

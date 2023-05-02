@@ -15,18 +15,18 @@ class CreatePaymentsTable extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->string('patient_id');
-            $table->string('case_id');
-            $table->string('opd_id');
-            $table->string('emg_id');
-            $table->string('ipd_id');
-            $table->string('section');
-            $table->string('payment_prefix');
-            $table->string('payment_amount');
-            $table->string('payment_date');
-            $table->string('payment_recived_by');
-            $table->string('payment_mode');
-            $table->longText('note');
+            $table->string('patient_id')->nullable();
+            $table->string('case_id')->nullable();
+            $table->string('opd_id')->nullable();
+            $table->string('emg_id')->nullable();
+            $table->string('ipd_id')->nullable();
+            $table->string('section')->nullable();
+            $table->string('payment_prefix')->nullable();
+            $table->string('payment_amount')->nullable();
+            $table->string('payment_date')->nullable();
+            $table->string('payment_recived_by')->nullable();
+            $table->string('payment_mode')->nullable();
+            $table->longText('note')->nullable();
             $table->timestamps();
         });
     }

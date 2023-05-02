@@ -21,26 +21,26 @@
                 <input type="hidden" name="id" value="{{ $allheader->id }}">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6">
-                            <label class="form-label">Header Name <span class="text-danger">*</span></label>
-                            <input type="text" required class="form-control" value="{{@$allheader->header_name}}" name="header_name" placeholder="Name">
+                        <div class="col-md-6 headersetupedit ">
+                            <label>Header Name <span class="text-danger">*</span></label>
+                            <input type="text" required  value="{{@$allheader->header_name}}" name="header_name">
                             @error('header_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                      
+
                         <div class="col-md-4">
-                            <label class="form-label">Logo <span class="text-danger">*</span> (245px x 48px)</label>
+                            <label >Logo <span class="text-danger">*</span> (245px x 48px)</label>
                             <input type="file" name="logo" onchange="readURL(this);">
                             <img id="blah" width="50px" height="30px" src="{{ asset('public/assets/images/header') }}/{{@$allheader->logo}}" alt="your image" />
                             @error('logo')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                       
+
                     </div>
                     <hr>
-                    
+
 
                     <div class="row">
                         <div class="col-md-9 mt-5">

@@ -18,19 +18,21 @@
             <form method="POST" action="{{ route('save-charges-catagory-details') }}">
                 @csrf
                 <div class="">
-                  
+
                     <div class="form-group">
-                        <label for="charges_catagories_name" class="form-label">Charges Catagory name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="charges_catagories_name" name="charges_catagories_name" placeholder="Enter Charges Caragory Name" value="{{ old('charges_catagories_name')}}" required>
+                        <label for="charges_catagories_name" class="medicinelabel">Enter Charges Catagory name <span class="text-danger">*</span></label>
+                        <input type="text" id="charges_catagories_name" name="charges_catagories_name" placeholder="Enter Charges Caragory Name" value="{{ old('charges_catagories_name')}}" required>
                         @error('charges_catagories_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    
+
                     <div class="form-group ">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea  class="form-control" id="description" name="description"> {{ old('description') }} </textarea>
+                        <div class="descriptionadd">
+                        <label for="description" class="descriptiononelabel">Description</label>
+                        <input type="text"id="description" name="description"value=" {{ old('description') }} " >
                         <small class="text-danger">{{ $errors->first('description') }}</small>
+                        </div>
                     </div>
 
                 </div>

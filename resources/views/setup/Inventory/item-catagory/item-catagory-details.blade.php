@@ -20,7 +20,7 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="item_catagory_name" class="form-label">Item Catagory name <span class="text-danger">*</span></label>
+                        <label for="item_catagory_name" class="medicinelabel">Item Catagory name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="item_catagory_name" name="item_catagory_name" placeholder="Enter Item Caragory Name" value="{{ old('item_catagory_name')}}" required>
                         @error('item_catagory_name')
                         <span class="text-danger">{{ $message }}</span>

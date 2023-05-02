@@ -19,8 +19,8 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="floor_name" class="form-label"></label>
-                        <input type="text" class="form-control" id="floor_name" name="floor_name" placeholder="Enter Floor Name" value="<?php echo e(old('floor_name')); ?>" required>
+                        <label for="floor_name" class="medicinelabel">Enter Floor Name</label>
+                        <input type="text" class="form-control" id="floor_name" name="floor_name" value="<?php echo e(old('floor_name')); ?>" required>
                         <?php $__errorArgs = ['floor_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -89,4 +89,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/floor/floor-listing.blade.php ENDPATH**/ ?>

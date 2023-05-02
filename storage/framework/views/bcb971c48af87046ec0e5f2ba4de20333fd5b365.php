@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
@@ -20,7 +18,7 @@
                 <div class="">
                     <input type="hidden" name="id" value="<?php echo e($editItemBrand->id); ?>" />
                     <div class="form-group">
-                        <label for="item_brand_name" class="form-label">Item Brand name <span class="text-danger">*</span></label>
+                        <label for="item_brand_name" class="medicinelabel">Item Brand name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="item_brand_name" name="item_brand_name" placeholder="Enter Item Brand Name" value="<?php echo e($editItemBrand->item_brand_name); ?>" required>
                         <?php $__errorArgs = ['item_brand_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -89,4 +87,5 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/Inventory/item-brand/edit-item-brand.blade.php ENDPATH**/ ?>

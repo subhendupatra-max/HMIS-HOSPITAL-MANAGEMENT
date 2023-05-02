@@ -20,15 +20,16 @@
                 <div class="">
                 <input type="hidden" name="id" value="{{ $editSubCatagory->id }}">
                     <div class="form-group">
-                        <label for="charges_sub_catagories_name" class="form-label">Sub Catagory name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="charges_sub_catagories_name" name="charges_sub_catagories_name" value="{{ $editSubCatagory->charges_sub_catagories_name}}" required>
+                        <label for="charges_sub_catagories_name" class="medicinelabel">Sub Catagory name <span class="text-danger">*</span></label>
+                        <input type="text"  id="charges_sub_catagories_name" name="charges_sub_catagories_name" value="{{ $editSubCatagory->charges_sub_catagories_name}}" required>
                         @error('charges_sub_catagories_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="charges_catagories_id" class="form-label">Catagory <span class="text-danger">*</span></label>
+                        <div class="subcatagoryedit">
+                        <label for="charges_catagories_id" class="subcatagorylabel">Catagory <span class="text-danger">*</span></label>
                         <select id="charges_catagories_id" class="form-control" name="charges_catagories_id">
                             <option value=" ">Select Charges Catagory </option>
                             @foreach ($catagory as $item)
@@ -38,12 +39,15 @@
                         @error('charges_catagory_id')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                     </div>
                     </div>
 
                     <div class="form-group ">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea  class="form-control" id="description" name="description"> {{ $editSubCatagory->description }} </textarea>
+                        <div class="subcatagoryedit">
+                        <label for="description" class="subdescriptionlabel">Description</label>
+                        <input type="text"id="description" name="description"value="{{ $editSubCatagory->description }}">
                         <small class="text-danger">{{ $errors->first('description') }}</small>
+                        </div>
                     </div>
 
                 </div>

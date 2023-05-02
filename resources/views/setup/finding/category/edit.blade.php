@@ -19,7 +19,7 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="category_name" class="form-label">Category Name</label>
+                        <label for="category_name" class="medicinelabel">Category Name</label>
                         <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Category Name" value="{{ $finding_category_edit->category_name}}" required>
                         @error('category_name')
                         <span class="text-danger">{{ $message }}</span>

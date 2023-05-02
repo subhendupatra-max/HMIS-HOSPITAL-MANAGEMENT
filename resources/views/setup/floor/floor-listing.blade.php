@@ -19,8 +19,8 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="floor_name" class="form-label"></label>
-                        <input type="text" class="form-control" id="floor_name" name="floor_name" placeholder="Enter Floor Name" value="{{ old('floor_name')}}" required>
+                        <label for="floor_name" class="medicinelabel">Enter Floor Name</label>
+                        <input type="text" class="form-control" id="floor_name" name="floor_name" value="{{ old('floor_name')}}" required>
                         @error('floor_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

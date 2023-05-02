@@ -19,7 +19,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="TPA_name" class="form-label">TPA Name</label>
+                        <label for="TPA_name" class="medicinelabel">TPA Name</label>
                         <input type="text" class="form-control" id="TPA_name" name="TPA_name" placeholder="Enter Tpa Name" value="<?php echo e(old('TPA_name')); ?>" required>
                         <?php $__errorArgs = ['TPA_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -34,7 +34,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="contact_person_name" class="form-label">Contact Person Name</label>
+                        <div class="tpamanagementedit">
+                        <label for="contact_person_name" class="tpamanagementlabel">Contact Person Name</label>
                         <input type="text" class="form-control" id="contact_person_name" name="contact_person_name" placeholder="Enter Contact Person Name " value="<?php echo e(old('contact_person_name')); ?>" required>
                         <?php $__errorArgs = ['contact_person_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -46,10 +47,12 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="contact_person_ph_no" class="form-label">Contact Person Phone No</label>
+                        <div class="tpamanagementedit">
+                        <label for="contact_person_ph_no" class="tpamanagementlabelone">Contact Person Phone No</label>
                         <input type="text" class="form-control" id="contact_person_ph_no" name="contact_person_ph_no" placeholder="Enter Contact Person Ph No" value="<?php echo e(old('contact_person_ph_no')); ?>" required>
                         <?php $__errorArgs = ['contact_person_ph_no'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -61,6 +64,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                 </div>
@@ -123,4 +127,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/tpa-management/tpa-management.blade.php ENDPATH**/ ?>

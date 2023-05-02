@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
@@ -19,7 +17,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="department_id" class="form-label">Department<span class="text-danger">*</span></label>
+                        <label for="department_id" class="medicinelabel">Department<span class="text-danger">*</span></label>
                         <select id="department_id" class="form-control" name="department_id">
                             <option value=" ">Select Department</option>
                             <?php $__currentLoopData = $department; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -39,7 +37,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="department_id" class="form-label">Day<span class="text-danger">*</span></label>
+                        <div class="opdunitedit">
+                        <label for="department_id" class="opdunitlabel">Day<span class="text-danger">*</span></label>
                         <select name="days" class="form-control" id="days">
                             <option value="">Select</option>
                             <?php $__currentLoopData = Config::get('static.weeks'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $week): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -47,15 +46,18 @@ unset($__errorArgs, $__bag); ?>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
+                    </div>
 
                     <div class="form-group">
-                        <label for="department_id" class="form-label">Unit<span class="text-danger">*</span></label>
+                        <div class="opdunitedit">
+                        <label for="department_id" class="opdunitonelabel">Unit<span class="text-danger">*</span></label>
                         <table class="table" id="dynamic_field">
                             <tr id="row1">
-                                <td><input type="text" name="unit[]" placeholder="Enter Unit" class="form-control name_list" /></td>
+                                <td><input type="text" name="unit[]"  class="form-control name_list" /></td>
                                 <td><button type="button" name="add" id="add" class="btn btn-success" onclick="addmore()"><i class="fa fa-plus"></i></button></td>
                             </tr>
                         </table>
+                    </div>
                     </div>
 
                 </div>

@@ -19,13 +19,13 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="finding_name" class="form-label"> Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="finding_name" name="finding_name" placeholder="Enter Finding Name" value="{{ old('finding_name')}}" required>
+                        <label for="finding_name" class="medicinelabel"> Name <span class="text-danger">*</span></label>
+                        <input type="text" id="finding_name" name="finding_name" value="{{ old('finding_name')}}" required>
                         @error('finding_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
-
-                        <label for="finding_category" class="form-label"> Category <span class="text-danger">*</span></label>
+                        <div class="findingedit">
+                        <label for="finding_category" class="findingaddlabel"> Category <span class="text-danger">*</span></label>
                         <select class="form-control" name="finding_category" required>
                             <option value="">Select One</option>
                             @if($finding_category)
@@ -37,12 +37,14 @@
                         @error('finding_category')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
-
-                        <label for="finding_name" class="form-label">Description</label>
-                        <textarea name="description" class="form-control"></textarea>
+                       </div>
+                       <div class="findingedit">
+                        <label for="finding_name" class="findingaddlabelone">Description</label>
+                        <input type="text" id="finding_name" name="finding_name">
                         @error('finding_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                       </div>
                     </div>
 
                 </div>

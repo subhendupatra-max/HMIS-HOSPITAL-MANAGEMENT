@@ -19,7 +19,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="bed_name" class="form-label">Bed Name <span class="text-danger">*</span></label>
+                        <label for="bed_name" class="medicinelabel">Bed Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="bed_name" name="bed_name" placeholder="Enter Bed Name" value="<?php echo e(old('bed_name')); ?>" required>
                         <?php $__errorArgs = ['bed_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -33,7 +33,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="form-group">
-                        <label for="bedType_id" class="form-label">Bed Type</label>
+                      <div class="bededit">
+                        <label for="bedType_id" class="bedlabel">Bed Type</label>
                         <select id="bedType_id" class="form-control" name="bedType_id">
                             <option value=" ">Select Bed Type Id</option>
                             <?php $__currentLoopData = $bedTypeId; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -50,10 +51,12 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                      </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="bedWard_id" class="form-label">Ward <span class="text-danger">*</span></label>
+                        <div class="bededit">
+                        <label for="bedWard_id" class="bedlabelone">Ward <span class="text-danger">*</span></label>
                         <select id="bedWard_id" class="form-control" name="bedWard_id">
                             <option value=" ">Select Ward </option>
                             <?php if(isset($bedWard)): ?>
@@ -73,9 +76,11 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
+                    </div>
 
                     <div class="form-group">
-                        <label for="bedGroup_id" class="form-label">Bed Group</label>
+                      <div class="bededit">
+                        <label for="bedGroup_id" class="bedlabeltwo">Bed Group</label>
                         <select id="bedGroup_id" class="form-control" name="bedGroup_id">
                             <option value=" ">Select Bed Group </option>
                             <?php $__currentLoopData = $bedGroupId; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -92,10 +97,11 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                     </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="bedUnit_id" class="form-label">Bed Unit</label>
+                        <label for="bedUnit_id" class="bedlabelthree">Bed Unit</label>
                         <select id="bedUnit_id" class="form-control" name="bedUnit_id">
                             <option value=" ">Select Bed Unit Id</option>
                             <?php $__currentLoopData = $bedUnitId; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -114,7 +120,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="form-group">
-                        <label for="department_id" class="form-label">Department</label>
+                        <label for="department_id" class="bedlabelfour">Department</label>
                         <select id="department_id" class="form-control" name="department_id">
                             <option value=" ">Select Department</option>
                             <?php $__currentLoopData = $departmentId; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

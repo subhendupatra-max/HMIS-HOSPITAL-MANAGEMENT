@@ -20,8 +20,8 @@
                 <div class="">
                     <input type="hidden" name="id" value="<?php echo e($editSource->id); ?>" />
                     <div class="form-group">
-                        <label for="source" class="form-label">Source <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="source" name="source" placeholder="Enter Source" value="<?php echo e($editSource->source); ?>" required>
+                        <label for="source" class="medicinelabel">Enter Source <span class="text-danger">*</span></label>
+                        <input type="text"  id="source" name="source" value="<?php echo e($editSource->source); ?>" required>
                         <?php $__errorArgs = ['source'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -35,8 +35,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description </label>
-                        <textarea class="form-control" id="description" name="description"><?php echo e($editSource->description); ?></textarea>
+                        <div class="descriptionadd">
+                        <label for="description" class="descriptiononelabel">Description </label>
+                        <input type="text"id="description" name="description"value="<?php echo e($editSource->description); ?>" >
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -47,6 +48,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                 </div>
@@ -107,4 +109,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/front-office/source/edit-source.blade.php ENDPATH**/ ?>

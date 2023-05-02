@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit opd unit')): ?>
@@ -20,7 +18,7 @@
                 <div class="">
                     <input type="hidden" name="id" value="<?php echo e($editOpdUnit->id); ?>">
                     <div class="form-group">
-                        <label for="department_id" class="form-label">Department<span class="text-danger">*</span></label>
+                        <label for="department_id" class="medicinelabel">Department<span class="text-danger">*</span></label>
                         <select id="department_id" class="form-control" name="department_id">
                             <option value=" ">Select Department</option>
                             <?php $__currentLoopData = $department; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -40,7 +38,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="department_id" class="form-label">Days<span class="text-danger">*</span></label>
+                        <div class="opdunitedit">
+                        <label for="department_id" class="opdunittlabel">Days<span class="text-danger">*</span></label>
                         <select name="days" class="form-control" id="days">
                             <option value="">Select</option>
                             <?php $__currentLoopData = Config::get('static.weeks'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $week): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -48,9 +47,10 @@ unset($__errorArgs, $__bag); ?>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
+                    </div>
 
                     <div class="form-group">
-                        <label for="department_id" class="form-label">Unit<span class="text-danger">*</span></label>
+                        <label for="department_id" class="opdunittwolabel">Unit<span class="text-danger">*</span></label>
                         <table class="table" id="dynamic_field">
                         <td><button type="button" name="add" id="add" class="btn btn-success" onclick="addmore()"><i class="fa fa-plus"></i></button></td>
                             <?php $__currentLoopData = $opdUnitDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

@@ -20,7 +20,7 @@
                 <div class="">
                   <input name="id" type="hidden" value="<?php echo e($editShift->id); ?>">
                     <div class="form-group">
-                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <label for="name" class="medicinelabel">Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="<?php echo e($editShift->name); ?>" required>
                         <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -35,7 +35,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="from_time" class="form-label">From Time<span class="text-danger">*</span></label>
+                        <div class="appoinmentedit">
+                        <label for="from_time" class="appoimmentlabel">From Time<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" id="from_time" name="from_time" required  <?php if(isset($editShift->from_time)): ?> value="<?php echo e(date('Y-m-d',strtotime($editShift->from_time))); ?>" <?php endif; ?>>
                         <?php $__errorArgs = ['from_time'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -47,10 +48,12 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="from_to" class="form-label">From To<span class="text-danger">*</span></label>
+                        <div class="appoinmentedit">
+                        <label for="from_to" class="appoimmentlabelone">From To<span class="text-danger">*</span></label>
                         <input type="date" class="form-control" id="from_to" name="from_to"  required <?php if(isset($editShift->from_to)): ?> value="<?php echo e(date('Y-m-d',strtotime($editShift->from_to))); ?>" <?php endif; ?>>
                         <?php $__errorArgs = ['from_to'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -62,9 +65,10 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
-                    
-                   
+
+
 
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Shift</button>
@@ -126,4 +130,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/appointment/shift/edit-shift.blade.php ENDPATH**/ ?>

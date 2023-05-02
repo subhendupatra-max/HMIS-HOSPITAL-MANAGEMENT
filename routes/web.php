@@ -1785,6 +1785,12 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
 
         Route::any('opd-registration/{id?}', [OpdController::class, 'opd_registation'])->name('opd-registration');
     });
+    Route::group(['middleware' => ['permission:delete opd patient']], function () {
+        Route::get('delete-opd-patient/{id}', [OpdController::class, 'deleteOPDdETAILS'])->name('delete-opd-patient');
+    });
+    Route::group(['middleware' => ['permission:edit opd patient']], function () {
+        Route::get('edit-opd-patient/{id}', [OpdController::class, 'editOPDdETAILS'])->name('edit-opd-patient');
+    });
     //================================= OPD profile ==================================
     Route::group(['middleware' => ['permission:OPD registation'], 'prefix' => 'opd-profile'], function () {
         Route::get('profile/{id}', [OpdController::class, 'profile'])->name('opd-profile');

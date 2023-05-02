@@ -20,15 +20,16 @@
                 <div class="">
                   <input type="hidden" name="id" value="{{ $editProduct->id }}">
                     <div class="form-group">
-                        <label for="product_name" class="form-label">Product Name <span class="text-danger">*</span></label>
+                        <label for="product_name" class="medicinelabel">Product Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter Product Name" value="{{ $editProduct->product_name }}" required>
                         @error('product_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    
+
                     <div class="form-group ">
-                        <label for="description" class="form-label">Product Type</label>
+                        <div class="bloodbankedit">
+                        <label for="description" class="bloodbankunit">Product Type</label>
                         <select name="product_type" class="form-control" id="product_type">
                             <option value="">Select</option>
                             @foreach (Config::get('static.productType') as $lang => $item)
@@ -36,6 +37,7 @@
                             @endforeach
                         </select>
                         <small class="text-danger">{{ $errors->first('product_type') }}</small>
+                       </div>
                     </div>
 
                 </div>

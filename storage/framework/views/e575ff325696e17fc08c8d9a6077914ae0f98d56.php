@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <!--div-->
@@ -20,9 +19,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <label class="form-label">Attribute Name<span class="required"> *</span></label>
+                                    <label class="inventoryitemlabel">Attribute Name<span class="required"> *</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="attribute_name" name="attribute_name" placeholder="Enter Attribute Name">
+                                        <input type="text"  id="attribute_name" name="attribute_name" >
                                     </div>
                                     <?php $__errorArgs = ['attribute_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -38,7 +37,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <label class="form-label">Attribute Label Name<span class="required"> *</span></label>
+                                    <label class="inventoryitemlabel">Attribute Label Name<span class="required"> *</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="attribute_label_name" name="attribute_label_name" placeholder="Enter Attribute Label Name">
                                     </div>
@@ -66,5 +65,6 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 <script src="<?php echo e(asset('assets/js/jquery-3.6.0.min.js')); ?>"></script>
-<?php $__env->stopSection(); ?> 
+<?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/Inventory/item-attribute/add-item-attribute.blade.php ENDPATH**/ ?>

@@ -11,7 +11,7 @@
                 @csrf
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="doctor" class="form-label">Doctor <span class="text-danger">*</span></label>
+                        <label for="doctor" >Doctor <span class="text-danger">*</span></label>
                         <select id="doctor" class="form-control" name="doctor">
                             <option value=" ">Select Doctor</option>
                             @foreach ($doctor as $item)
@@ -23,8 +23,8 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="days" class="form-label">Days <span class="text-danger">*</span></label>
+                    <div class="form-group col-md-4 appoinmentdays">
+                        <label for="days">Days <span class="text-danger">*</span></label>
                         <select id="days" class="form-control" name="days">
                             <option value="">Select</option>
                             @foreach (Config::get('static.weeks') as $lang => $item)
@@ -36,24 +36,24 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="from_time" class="form-label">From Time<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-4 appointtimeedit">
+                        <label for="from_time">From Time<span class="text-danger">*</span></label>
                         <input type="time" class="form-control" id="from_time" name="from_time" required>
                         @error('from_time')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="to_time" class="form-label">From To<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-4 appointtimeeditfrom">
+                        <label for="to_time">From To<span class="text-danger">*</span></label>
                         <input type="time" class="form-control" id="to_time" name="to_time" required>
                         @error('to_time')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="charge_category" class="form-label">Charges Catagory <span class="text-danger">*</span></label>
+                    <div class="form-group col-md-4 appoinmentadd">
+                        <label for="charge_category">Charges Catagory <span class="text-danger">*</span></label>
                         <select id="charge_category" class="form-control select2-show-search" name="charge_category">
                             <option value=" ">Select Catagory</option>
                             @foreach ($catagory as $item)
@@ -65,7 +65,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 appoinmentadd">
                         <label for="charge_sub_category">Charges Sub Catagory <span class="text-danger">*</span></label>
                         <select name="charge_sub_category" class="form-control select2-show-search" id="charge_sub_category" required>
                             <option value="">Select Sub Catagory...</option>
@@ -73,7 +73,7 @@
                         <small class="text-danger">{{ $errors->first('charge_sub_category') }}</small>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 appoinmentadd">
                         <label for="charge">Charges <span class="text-danger">*</span></label>
                         <select name="charge" class="form-control select2-show-search" id="charge" required>
                             <option value="">Select charge...</option>
@@ -81,13 +81,13 @@
                         <small class="text-danger">{{ $errors->first('charge') }}</small>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 appoinmentaddd">
                         <label for="tax">Tax<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax">
                         <small class="text-danger">{{ $errors->first('tax') }}</small>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 appoinmentaddd">
                         <label for="standard_charges">Charge Amount<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="standard_charges" onkeydown="fdsfds()" onkeyup="totalAmount()" name="standard_charges">
 
@@ -98,9 +98,9 @@
                         <small class="text-danger">{{ $errors->first('standard_charges') }}</small>
                     </div>
 
-                    <div class="form-group col-md-4 ">
+                    <div class="form-group col-md-4 appoinmentaddd">
                         <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="total_amount" name="total_amount" readonly>
+                        <input type="text" id="total_amount" name="total_amount">
                         <small class="text-danger">{{ $errors->first('total_amount') }}</small>
                     </div>
 

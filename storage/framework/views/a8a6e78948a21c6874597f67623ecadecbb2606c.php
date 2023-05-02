@@ -137,13 +137,13 @@ unset($__errorArgs, $__bag); ?>
                             <div class="row">
                                 <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
 
-                                <div class="form-group col-md-4">
-                                    
-                                    <h6 class="dateappointment">Appointment Date <span class="text-danger">*</span></h6>
+                                <div class="form-group col-md-4 emgdesign">
+                                     <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label>
+
                                     <?php if(auth()->user()->can('appointment date')): ?>
-                                    <input type="datetime-local" class="form-control" name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
+                                    <input type="datetime-local" name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
                                     <?php else: ?>
-                                    <input type="datetime-local" class="form-control" name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
+                                    <input type="datetime-local"name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
                                     <?php endif; ?>
 
                                     <?php $__errorArgs = ['appointment_date'];
@@ -158,11 +158,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
 
-                                <div class="form-group col-md-4">
-                                    <label for="medico_legal_case" class="form-label">Medico Legal Case <span class="text-danger">*</span></label>
-                                    <input type="radio" name="medico_legal_case" value="yes" class="from-control"><span class="font-weight-bold;">Yes</span>
-                                    <input type="radio" name="medico_legal_case" value="no" class="from-control" checked><span class="fw-bold;">No</span> 
+                                <div class="form-group col-md-4 emgregischeck">
+                                    <label for="medico_legal_case">Medico Legal Case <span class="text-danger">*</span></label>
                                     
+                                     <input type="radio"name="medico_legal_case" value="yes"><span class="font-weight-bold;">Yes</span>
+                                     <input type="radio"name="medico_legal_case" value="no"><span class="font-weight-bold;">No</span>
                                     <?php $__errorArgs = ['medico_legal_case'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -175,13 +175,13 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
 
-                                <div class="form-group col-md-4 newaddappon">
+                                <div class="form-group col-md-4 emgregistext">
                                     
                                     <input type="text" id="case"  name="case" value="<?php echo e(old('case')); ?>" required="">
                                     <label for="height"> case<span class="text-danger">*</span> </label>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    
+                                <div class="form-group col-md-4 emgdesignselect">
+                                     <label for="patient_type">Patient Type <span class="text-danger">*</span></label>
                                     <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
                                         <option value="">Patient Type <span class="text-danger">*</span> </option>
                                         <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $patient_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -201,8 +201,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
 
                                 </div>
-                                <div class="form-group  col-md-4 frefesd" style="display:none">
-                                    
+                                <div class="form-group  col-md-4  emgdesignselect" style="display: none">
+                                     <label for="tpa_organization" >TPA Organization <span class="text-danger">*</span></label>
                                     <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
                                         <option value="">Tpa organization<span class="text-danger">*</span></option>
                                         <?php $__currentLoopData = $tpa_management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tpaManagement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -213,12 +213,12 @@ unset($__errorArgs, $__bag); ?>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
-                                <div class="col-md-4 frefesds" style="display:none">
-                                    <label for="type_no" class="form-label"><span id="lableName"></span><span class="text-danger">*</span></label>
+                                <div class="col-md-4" style="display: none">
+                                    <label for="type_no" ><span id="lableName"></span><span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>" id="type_no" />
                                 </div>
-                                <div class="form-group col-md-4">
-                                    
+                                <div class="form-group col-md-4 emgdesignselect">
+                                     <label for="reference" class="form-label">Reference</label>
                                     <select name="reference" class="form-control select2-show-search" id="reference">
                                         <option value="">Reference</option>
                                         <?php $__currentLoopData = $referer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $reference): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -229,7 +229,7 @@ unset($__errorArgs, $__bag); ?>
                                     </select>
 
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 emgdesignselect">
                                     <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
                                     <select name="department" class="form-control select2-show-search" id="department">
                                         <?php $__currentLoopData = $department; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $departments): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -252,7 +252,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
 
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-4 emgdesignselect">
                                     <label for="cons_doctor" class="form-label">Consultant Doctor <span class="text-danger">*</span></label>
                                     <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
                                         <option value="">Select..</option>
@@ -268,22 +268,21 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
+                                <div class="form-group col-md-4 emgdesignin ">
+
+                                        <label class="form-label">Ticket Fees</label>
+                                        <input type="text" name="ticket_fees" value="<?php echo e(@$ticket_fees->ticket_fees); ?>" class="form-control" />
+
+                                </div>
 
                             </div>
                         </div>
 
                         <div class="options px-5">
                             <div class="container ">
-                                <hr class="hr_line">
-                                <input type="checkbox" onchange="takeTicketFees()" id="show_taketicketFees" /><span style="font-weight: 500;color:blue"> Are You Want to take <b>TICKET FEES</b>
-                                    ?</span>
 
-                                <div class="row" id="taketicketFees" style="display: none">
-                                    <div class="col-md-4">
-                                        <label class="form-label">Ticket Fees</label>
-                                        <input type="text" name="ticket_fees" value="<?php echo e(@$ticket_fees->ticket_fees); ?>" class="form-control" />
-                                    </div>
-                                </div>
+
+
                                 <hr class="hr_line">
                                 <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to
                                     Share Patient's Physical Condition
@@ -291,27 +290,27 @@ unset($__errorArgs, $__bag); ?>
 
 
                                 <div class="row" id="physical_condition" style="display: none">
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 emgcondition">
                                         <label for="height" class="form-label">Height(cm)</label>
                                         <input type="text" class="form-control" id="height" name="height" value="<?php echo e(old('height')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 emgcondition">
                                         <label for="weight" class="form-label">Weight(kg)</label>
                                         <input type="text" class="form-control" id="weight" name="weight" value="<?php echo e(old('weight')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 emgcondition">
                                         <label for="bp" class="form-label">BP</label>
                                         <input type="text" class="form-control" id="bp" name="bp" value="<?php echo e(old('bp')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 emgcondition">
                                         <label for="pulse" class="form-label">Pulse</label>
                                         <input type="text" class="form-control" id="pulse" name="pulse" value="<?php echo e(old('pulse')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 emgcondition">
                                         <label for="temperature" class="form-label">Temperature</label>
                                         <input type="text" class="form-control" id="temperature" name="temperature" value="<?php echo e(old('temperature')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 emgcondition">
                                         <label for="respiration" class="form-label">Respiration</label>
                                         <input type="text" class="form-control" id="respiration" name="respiration" value="<?php echo e(old('respiration')); ?>" />
                                     </div>
@@ -322,8 +321,8 @@ unset($__errorArgs, $__bag); ?>
                                     ?</span>
 
                                 <div class="row" id="show_Symptoms" style="display: none">
-                                    <div class="col-md-3">
-                                        
+                                    <div class="col-md-3 emgdesignselect">
+                                         <label for="symptoms_type" class="form-label">Symptoms Type</label>
                                         <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type">
                                             <option value="">Symptoms Type</option>
                                             <?php $__currentLoopData = $symptoms_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $symptoms_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -335,14 +334,14 @@ unset($__errorArgs, $__bag); ?>
                                         </select>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        
+                                    <div class="col-md-3 emgdesignselect ">
+                                         <label for="symptoms_title" class="form-label">Symptoms Title</label>
 
                                         <select name="symptoms_title" id="symptoms_title" class="form-control select2-show-search">
                                             <option value="">Symptoms Title</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 emgdesignnin">
                                         
                                         <input type="text" id="symptoms_description"  name="symptoms_description"  required="">
                                         <label for="symptoms_description"> Symptoms
@@ -353,12 +352,12 @@ unset($__errorArgs, $__bag); ?>
 
                                 <hr class="hr_line">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 emgregistext ">
                                         
                                         <input type="text" id="Note"  name="Note"  required="">
                                         <label for="Note">Note<span class="text-danger">*</span> </label>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 emgregistext">
                                         
                                         <input type="text" id="any_known_allergies"  name="any_known_allergies"  required="">
                                         <label for="Any Known Allergies">Any Known Allergies<span class="text-danger">*</span> </label>

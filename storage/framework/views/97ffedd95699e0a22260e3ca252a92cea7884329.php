@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add package sub catagory')): ?>
@@ -20,7 +18,7 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="charges_package_catagory_id" class="form-label">Charges Package Catagory <span class="text-danger">*</span></label>
+                        <label for="charges_package_catagory_id" class="medicinelabel">Charges Package Catagory <span class="text-danger">*</span></label>
                         <select id="charges_package_catagory_id" class="form-control" name="charges_package_catagory_id">
                             <option value=" ">Select Charges Catagory </option>
                             <?php $__currentLoopData = $catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -40,8 +38,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="charges_package_sub_catagory_name" class="form-label">Charges Package Sub Catagory Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="charges_package_sub_catagory_name" name="charges_package_sub_catagory_name" placeholder="Enter Charges Caragory Name" value="<?php echo e(old('charges_package_sub_catagory_name')); ?>" required>
+                        <div class="subcatagoryedit">
+                        <label for="charges_package_sub_catagory_name" class="packagesublabel">Charges Package Sub Catagory Name<span class="text-danger">*</span></label>
+                        <input type="text"id="charges_package_sub_catagory_name" name="charges_package_sub_catagory_name" placeholder="Enter Charges Caragory Name" value="<?php echo e(old('charges_package_sub_catagory_name')); ?>" required>
                         <?php $__errorArgs = ['charges_package_sub_catagory_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -52,6 +51,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                 </div>
@@ -112,4 +112,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/charges-package/package-sub-catagory/package-sub-catagory-listing.blade.php ENDPATH**/ ?>

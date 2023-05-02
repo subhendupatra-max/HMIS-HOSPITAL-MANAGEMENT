@@ -20,9 +20,9 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="vendor_name" class="form-label">Vendor Name</label>
+                        <label for="vendor_name" class="medicinelabel">Vendor Name</label>
 
-                        <input type="text" class="form-control" id="name" name="name" value="{{$data->vendor_name}}" placeholder="Enter Vendor Name" required>
+                        <input type="text"  id="name" name="name" value="{{$data->vendor_name}}" required>
 
                         <input type="hidden" name="vendor_id" id="vendor_id" value="{{ $data->id }}">
                         @error('vendor_name')
@@ -31,9 +31,9 @@
                     </div>
 
                     <div class="row row-sm">
-                        <div class="col-lg">
-                            <label for="role" class="form-label">Vendor Email</label>
-                            <input class="form-control mb-4" placeholder="Enter Vendor Email" id="email" name="email" type="text" value="{{$data->email}}">
+                        <div class="col-lg addvendoredit">
+                            <label for="role">Vendor Email</label>
+                            <input class=" mb-4" placeholder="Enter Vendor Email" id="email" name="email" type="text" value="{{$data->email}}">
                             @error('email')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror

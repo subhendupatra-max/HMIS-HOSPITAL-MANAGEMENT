@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add finding category')): ?>
@@ -19,7 +17,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="category_name" class="form-label">Category Name</label>
+                        <label for="category_name" class="medicinelabel">Category Name</label>
                         <input type="text" class="form-control" id="category_name" name="category_name" placeholder="Enter Category Name" value="<?php echo e(old('category_name')); ?>" required>
                         <?php $__errorArgs = ['category_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

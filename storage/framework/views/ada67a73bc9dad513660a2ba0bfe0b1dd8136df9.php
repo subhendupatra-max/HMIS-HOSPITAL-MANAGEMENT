@@ -19,7 +19,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="diagonasis_name" class="form-label">Diagonasis Name</label>
+                        <label for="diagonasis_name" class="medicinelabel">Diagonasis Name</label>
                         <input type="text" class="form-control" id="diagonasis_name" name="diagonasis_name" placeholder="Enter Diagonasis Name" value="<?php echo e(old('diagonasis_name')); ?>" required>
                         <?php $__errorArgs = ['diagonasis_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -34,7 +34,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group">
-                        <label for="department" class="form-label">Department<span class="text-danger">*</span></label>
+                        <div class="diagonasisedit">
+                        <label for="department" class="diagonasislabel">Department<span class="text-danger">*</span></label>
                         <select id="department" class="form-control" name="department">
                             <option value=" ">Select Department</option>
                             <?php $__currentLoopData = $department; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -51,10 +52,12 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                       </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="icd_code" class="form-label">Icd Code</label>
+                        <div class="diagonasisedit">
+                        <label for="icd_code" class="diagonasislabelone">Icd Code</label>
                         <input type="text" class="form-control" id="icd_code" name="icd_code" placeholder="Enter Icd Code" value="<?php echo e(old('icd_code')); ?>" required>
                         <?php $__errorArgs = ['icd_code'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -66,6 +69,7 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                        </div>
                     </div>
 
                 </div>
@@ -128,4 +132,5 @@ unset($__errorArgs, $__bag); ?>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/diagonasis/diagonasis-listing.blade.php ENDPATH**/ ?>

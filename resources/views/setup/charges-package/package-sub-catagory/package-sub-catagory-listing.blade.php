@@ -20,7 +20,7 @@
                 <div class="">
 
                     <div class="form-group">
-                        <label for="charges_package_catagory_id" class="form-label">Charges Package Catagory <span class="text-danger">*</span></label>
+                        <label for="charges_package_catagory_id" class="medicinelabel">Charges Package Catagory <span class="text-danger">*</span></label>
                         <select id="charges_package_catagory_id" class="form-control" name="charges_package_catagory_id">
                             <option value=" ">Select Charges Catagory </option>
                             @foreach ($catagory as $item)
@@ -33,11 +33,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="charges_package_sub_catagory_name" class="form-label">Charges Package Sub Catagory Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="charges_package_sub_catagory_name" name="charges_package_sub_catagory_name" placeholder="Enter Charges Caragory Name" value="{{ old('charges_package_sub_catagory_name')}}" required>
+                        <div class="subcatagoryedit">
+                        <label for="charges_package_sub_catagory_name" class="packagesublabel">Charges Package Sub Catagory Name<span class="text-danger">*</span></label>
+                        <input type="text"id="charges_package_sub_catagory_name" name="charges_package_sub_catagory_name" placeholder="Enter Charges Caragory Name" value="{{ old('charges_package_sub_catagory_name')}}" required>
                         @error('charges_package_sub_catagory_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                 </div>

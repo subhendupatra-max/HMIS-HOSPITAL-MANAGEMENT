@@ -19,9 +19,9 @@
                 @csrf
                 <div class="">
                     <input type="hidden" value="{{ $editSymptomsType->id}}" name="id">
-                    
+
                     <div class="form-group">
-                        <label for="symptoms_type_name" class="form-label">Symptoms Type Name</label>
+                        <label for="symptoms_type_name" class="medicinelabel">Symptoms Type Name</label>
                         <input type="text" class="form-control" id="symptoms_type_name" name="symptoms_type_name"  value="{{ @$editSymptomsType->symptoms_type_name }}" required>
                         @error('symptoms_type_name')
                         <span class="text-danger">{{ $message }}</span>
@@ -60,7 +60,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{ $item->symptoms_type_name }}</td>
-                                
+
                                 <td>
                                 <div class="card-options">
                                     <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>

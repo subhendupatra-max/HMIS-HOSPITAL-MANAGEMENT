@@ -18,9 +18,9 @@
             <form method="POST" action="{{ route('save-shift-details') }}">
                 @csrf
                 <div class="">
-                  
+
                     <div class="form-group">
-                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <label for="name" class="medicinelabel">Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" value="{{ old('name')}}" required>
                         @error('name')
                         <span class="text-danger">{{ $message }}</span>
@@ -28,22 +28,26 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="from_time" class="form-label">From Time<span class="text-danger">*</span></label>
+                        <div class="appoinmentedit">
+                        <label for="from_time" class="appoimmentlabel">From Time<span class="text-danger">*</span></label>
                         <input type="time" class="form-control" id="from_time" name="from_time"  required>
                         @error('from_time')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="from_to" class="form-label">From To<span class="text-danger">*</span></label>
+                        <div class="appoinmentedit">
+                        <label for="from_to" class="appoimmentlabelone">From To<span class="text-danger">*</span></label>
                         <input type="time" class="form-control" id="from_to" name="from_to"  required>
                         @error('from_to')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
-                    
-                   
+
+
 
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Shift</button>

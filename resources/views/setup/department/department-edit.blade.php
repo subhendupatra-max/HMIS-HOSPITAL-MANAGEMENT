@@ -20,19 +20,21 @@
                 <input type="hidden" name="id" value="{{ $editDepartment->id }}">
                 <div class="">
                     <div class="form-group">
-                        <label for="department_name" class="form-label"></label>
-                        <input type="text" class="form-control" id="department_name" name="department_name" placeholder="Enter Department Name" value="{{ $editDepartment->department_name }}" required>
+                        <label for="department_name" class="medicinelabel">Enter Department Name</label>
+                        <input type="text" class="form-control" id="department_name" name="department_name" value="{{ $editDepartment->department_name }}" required>
                         @error('department_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="department_code" class="form-label"></label>
-                        <input type="text" class="form-control" id="department_code" name="department_code" placeholder="Enter Department Code" value="{{ $editDepartment->department_code }}" required>
+                        <div class="departmentedit">
+                        <label for="department_code" class="departmentadd">Enter Department Code</label>
+                        <input type="text" class="form-control" id="department_code" name="department_code" value="{{ $editDepartment->department_code }}" required>
                         @error('department_code')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                 </div>
@@ -83,7 +85,7 @@
                                 </div>
                                 </td>
                             </tr>
-                           
+
                             @endforeach
                         </tbody>
                     </table>

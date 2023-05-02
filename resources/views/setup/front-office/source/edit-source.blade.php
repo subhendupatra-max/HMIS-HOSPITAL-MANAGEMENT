@@ -20,19 +20,21 @@
                 <div class="">
                     <input type="hidden" name="id" value="{{ $editSource->id }}" />
                     <div class="form-group">
-                        <label for="source" class="form-label">Source <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="source" name="source" placeholder="Enter Source" value="{{ $editSource->source }}" required>
+                        <label for="source" class="medicinelabel">Enter Source <span class="text-danger">*</span></label>
+                        <input type="text"  id="source" name="source" value="{{ $editSource->source }}" required>
                         @error('source')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="description" class="form-label">Description </label>
-                        <textarea class="form-control" id="description" name="description">{{ $editSource->description }}</textarea>
+                        <div class="descriptionadd">
+                        <label for="description" class="descriptiononelabel">Description </label>
+                        <input type="text"id="description" name="description"value="{{ $editSource->description }}" >
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
                 </div>

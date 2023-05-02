@@ -19,24 +19,26 @@
                 @csrf
                 <div class="">
                     <div class="form-group">
-                        <label for="role" class="form-label">Name</label>
+                        <label for="role" class="medicinelabel">Name</label>
                         <input type="text" class="form-control" id="prefix_name" name="prefix_name" placeholder="Enter Name" value="{{ $prefix->name }}" required>
                         @error('prefix_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="role" class="form-label">Prefix</label>
+                      <div class="diagonasisedit">
+                        <label for="role" class="diagonasislabel"> Enter Prefix</label>
                         <input type="text" class="form-control" id="prefix" name="prefix" placeholder="Enter prefix" value="{{ $prefix->prefix }}" required>
                         @error('prefix')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                      </div>
                     </div>
-                    
+
                     <div class="form-group">
-                        <label for="role" class="form-label">Year</label>
-                        <input type="text" class="form-control" id="year" name="year" value="{{ date('Y') }}" placeholder="Enter Year" value="{{ $prefix->year }}"  required readonly>
+                        <label for="role" class="diagonasislabelone">Enter Year</label>
+                        <input type="text"  id="year" name="year" value="{{ date('Y') }}"   required >
                         @error('year')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -72,7 +74,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($allPrefix as $item)    
+                            @foreach ($allPrefix as $item)
                                 <tr>
                                     <td>dsgfdsf</td>
                                     <td>sdfsdf</td>

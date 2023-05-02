@@ -20,9 +20,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <label class="form-label">Attribute Name<span class="required"> *</span></label>
+                                    <label class="inventoryitemlabel">Attribute Name<span class="required"> *</span></label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="attribute_name" name="attribute_name" placeholder="Enter Attribute Name">
+                                        <input type="text"  id="attribute_name" name="attribute_name" >
                                     </div>
                                     @error('attribute_name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -31,7 +31,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <label class="form-label">Attribute Label Name<span class="required"> *</span></label>
+                                    <label class="inventoryitemlabel">Attribute Label Name<span class="required"> *</span></label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" id="attribute_label_name" name="attribute_label_name" placeholder="Enter Attribute Label Name">
                                     </div>
@@ -52,4 +52,4 @@
     </div>
 </div>
 <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
-@endsection 
+@endsection

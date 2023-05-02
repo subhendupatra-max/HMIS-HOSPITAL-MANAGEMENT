@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add item unit')): ?>
@@ -19,7 +17,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
-                        <label for="role" class="form-label">Item Unit <span class="required" >*</span></label>
+                        <label for="role" class="medicinelabel">Item Unit <span class="required" >*</span></label>
                         <input type="text" class="form-control" id="item_unit" name="item_unit" placeholder="Enter Item Unit" required>
                         <?php $__errorArgs = ['item_Unit'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -34,7 +32,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="form-group">
                         <div class="form-group">
-                            <label class="form-label">Base Unit</label>
+                            <label class="inventoryunitlabel">Base Unit</label>
                             <select class="form-control select2-show-search" data-placeholder="Choose one (with searchbox)" name="base_val" id="base_val">
                                 <optgroup label="Base Unit">
                                     <option value="">--select--</option>
@@ -162,19 +160,20 @@ unset($__errorArgs, $__bag); ?>
 <script>
     $(document).ready(function () {
         $(".optional_value").addClass("d-none");
-        $("#base_val").change(function (e) { 
+        $("#base_val").change(function (e) {
 
             var baseUnit = $("#base_val").val();
             console.log("df");
             if (baseUnit != "") {
                 $(".optional_value").removeClass("d-none");
-                
+
             }else{
                 $(".optional_value").addClass("d-none");
             }
-            
+
         });
     });
 </script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/Inventory/item-unit/item-unit-details.blade.php ENDPATH**/ ?>
