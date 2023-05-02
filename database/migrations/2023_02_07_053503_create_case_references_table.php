@@ -15,7 +15,8 @@ class CreateCaseReferencesTable extends Migration
     {
         Schema::create('case_references', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('case_id');
+            $table->bigInteger('patient_id');
+            $table->string('section');
             $table->timestamps();
         });
     }

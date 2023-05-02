@@ -16,12 +16,12 @@
                             <select id="type" class="form-control" name="type">
                                 <option value=" ">Select type </option>
                                 @foreach (Config::get('static.charges_type') as $lang => $charges_type)
-                                    <option value="{{ $charges_type }}" > {{ $charges_type }}
-                                    </option>
+                                <option value="{{ $charges_type }}"> {{ $charges_type }}
+                                </option>
                                 @endforeach
                             </select>
                             @error('type')
-                                <span class="text-danger">{{ $message }}</span>
+                            <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                     </div>
@@ -81,7 +81,7 @@
 
                     <div class="form-group col-md-3 chargespackagead">
                         <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" id="total_amount" name="total_amount" >
+                        <input type="text" class="form-control" id="total_amount" name="total_amount">
                         <small class="text-danger">{{ $errors->first('total_amount') }}</small>
                     </div>
                 </div>

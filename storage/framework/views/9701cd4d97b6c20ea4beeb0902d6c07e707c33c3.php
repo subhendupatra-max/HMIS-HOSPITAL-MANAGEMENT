@@ -1,7 +1,7 @@
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-profile' ? 'active' : ''); ?>" href=""><i class="fa fa-home"></i> Profile</a>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-profile' ? 'active' : ''); ?>" href="<?php echo e(route('add-oxygen-monitoring-details', ['ipd_id' => base64_encode($ipd_details->id)])); ?>"><i class="fa fa-dna"></i> Oxygen Monitoring</a>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-profile' ? 'active' : ''); ?>" href="<?php echo e(route('show-medicaiton-dose', ['ipd_id' => base64_encode($ipd_details->id)])); ?>"><i class="fa fa-tablets"></i> Medication</a>
-<a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-profile' ? 'active' : ''); ?>" href=""><i class="fa fa-scissors"></i> Operation</a>
+<a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-profile' ? 'active' : ''); ?>" href="<?php echo e(route('show-ipd-operation-details', ['ipd_id' => base64_encode($ipd_details->id)])); ?>"><i class="fa fa-scissors"></i> Operation</a>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-profile' ? 'active' : ''); ?>" href=""><i class="fa fa-user-nurse"></i> Nurse Note</a>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-profile' ? 'active' : ''); ?>" href=""><i class="fa fa-file-alt"></i> Charges</a>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-profile' ? 'active' : ''); ?>" href=""><i class="fa fa-rupee-sign"></i> Payment</a>

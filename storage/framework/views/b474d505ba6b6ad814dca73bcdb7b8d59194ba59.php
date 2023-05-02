@@ -3,9 +3,23 @@
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Add Payment</h4>
+        <div class="card-header d-block">
+            <div class="row">
+                <div class="col-md-4 card-title">
+                    Add Payment
+                </div>
+                <div class="col-md-8 text-right">
+                    <div class="d-block">
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right" style="">
+                            <?php echo $__env->make('OPD.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="card-body">
             <form action="<?php echo e(route('save-payment-in-opd')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
@@ -89,4 +103,5 @@ unset($__errorArgs, $__bag); ?>
 
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/OPD/payment/add-payment.blade.php ENDPATH**/ ?>

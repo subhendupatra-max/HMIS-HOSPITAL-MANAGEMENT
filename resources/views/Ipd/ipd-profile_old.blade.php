@@ -1674,8 +1674,6 @@
                 });
                 medicine_name_and_dose('response.edit_medication_dose.medicine_name', 'response.edit_medication_dose.dosage');
 
-
-
                 var date = new Date(response.date);
                 var newDate = date.toString('yyyy-mm-dd hh:mm:ss');
 

@@ -5,16 +5,9 @@
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Ticket NO Calculate</h4>
+                    <h4 class="card-title">OPD Set-up</h4>
                 </div>
-                @if (session('success'))
-                    <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert"
-                            aria-hidden="true">×</button>{{ session('success') }}</div>
-                @endif
-                @if (session()->has('error'))
-                    <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert"
-                            aria-hidden="true">×</button>{{ session('error') }}</div>
-                @endif
+              @include('message.notification')
                 <div class="card-body">
                     <form method="POST" action="{{ route('save-opd-setup-details') }}">
                         @csrf
@@ -39,14 +32,14 @@
                             <div class="col-md-6 form-group opdsetupdesign">
                                 <label for="ticket_fees" class="form-label">Ticket Fees<span
                                         class="text-danger">*</span></label>
-                                <input name="ticket_fees" type="text" class="form-control" />
+                                <input name="ticket_fees" value="{{ $opdSetup->ticket_fees }}" type="text" class="form-control" />
                                 @error('ticket_fees')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                         </div>
-                        <button type="submit" class="btn btn-primary mt-4 mb-0">Add Setup</button>
+                        <button type="submit" class="btn btn-primary btn-sm mt-4 mb-0">Update OPD Setup</button>
                     </form>
                 </div>
             </div>

@@ -126,13 +126,22 @@
                                             <span class="font-weight-semibold w-50">Appointment Date :- </span>
                                         </td>
                                         <td class="py-2 px-0">
-
-                                            <?php echo e(date('d-m-Y h:i A',strtotime(@$opd_patient_details->all_emg_visit_details->appointment_date))); ?>
+                                            <?php echo e(date('d-m-Y h:i A',strtotime(@$opd_visit_details->appointment_date))); ?>
 
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="py-2 px-0">
+                                            <i class="fa fa-user text-primary"></i>
+                                        </td>
+                                        <td class="py-2 px-0">
+                                            <span class="font-weight-semibold w-50"> Patient Type :- </span>
+                                        </td>
+                                        <td class="py-2 px-0">
+                                            <?php echo e($opd_visit_details->patient_type); ?>
 
-
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -147,7 +156,49 @@
                         <div class="options px-5 pt-2  border-bottom pb-1">
                             <div class="row">
                                 <div class="col-md-12 mb-2">
-
+                                    <h5>Latest Physical Condition</h5>
+                                    <div class="table-responsive">
+										<table class="table card-table table-vcenter text-nowrap table-danger" >
+											<thead  class="bg-danger text-white">
+												<tr>
+                                                    <th class="text-white">Height</th>
+                                                    <th class="text-white">Weight</th>
+                                                    <th class="text-white">Pulse</th>
+                                                    <th class="text-white">BP</th>
+                                                    <th class="text-white">Temp</th>
+                                                    <th class="text-white">Resp</th>
+												</tr>
+											</thead>
+											<tbody>
+                                                <?php if(@$PhysicalDetails): ?>
+                                                <?php $__currentLoopData = $PhysicalDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+												<tr>
+													<td><?php echo e($item->height); ?></td>
+													<td><?php echo e($item->weight); ?></td>
+													<td><?php echo e($item->pulse); ?></td>
+                                                    <td><?php echo e($item->bp); ?></td>
+                                                    <td><?php echo e($item->temperature); ?></td>
+                                                    <td><?php echo e($item->respiration); ?></td>
+												</tr>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>             
+                                                <?php endif; ?>
+											</tbody>
+										</table>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="options px-5 pt-2  border-bottom pb-1">
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                   <span style="font-weight: bold; font-size: 15px;">Total Payment Amount : <?php echo e($payment_amount); ?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="options px-5 pt-2  border-bottom pb-1">
+                            <div class="row">
+                                <div class="col-md-12 mb-2">
+                                   <span style="font-weight: bold; font-size: 15px;">Total Billing Amount : <?php echo e($payment_amount); ?></span>
                                 </div>
                             </div>
                         </div>

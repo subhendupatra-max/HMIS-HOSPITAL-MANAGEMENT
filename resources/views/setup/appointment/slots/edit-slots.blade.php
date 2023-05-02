@@ -198,10 +198,6 @@
     }
 </script>
 
-
-
-
-
 <script>
     function totalAmount() {
         $("#total_amount").val(00);

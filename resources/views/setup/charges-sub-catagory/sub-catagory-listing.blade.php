@@ -83,7 +83,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{ $item->charges_sub_catagories_name}}</td>
-                                <td>{{ $item->charges_catagory->charges_catagories_name}}</td>
+                                <td>{{ @$item->charges_catagory->charges_catagories_name}}</td>
                                 <td>{{ $item->description}}</td>
                                 <td>
                                     <div class="card-options">
