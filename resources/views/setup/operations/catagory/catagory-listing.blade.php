@@ -18,15 +18,15 @@
             <form method="POST" action="{{ route('save-operation-catagory-details') }}">
                 @csrf
                 <div class="">
-                  
+
                     <div class="form-group">
-                        <label for="operation_catagory_name" class="form-label">Charges Catagory name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="operation_catagory_name" name="operation_catagory_name" placeholder="Enter Caragory Name" value="{{ old('operation_catagory_name')}}" required>
+                        <label for="operation_catagory_name" class="medicinelabel">Charges Catagory name <span class="text-danger">*</span></label>
+                        <input type="text"  id="operation_catagory_name" name="operation_catagory_name"  value="{{ old('operation_catagory_name')}}" required>
                         @error('operation_catagory_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                  
+
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Catagory</button>
             </form>
@@ -58,7 +58,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{ $item->operation_catagory_name}}</td>
-                                
+
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>

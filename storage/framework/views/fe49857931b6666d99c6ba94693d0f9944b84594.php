@@ -58,7 +58,8 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group">
                         <div class="symtomsedit">
                         <label for="description" class="symtomaddone">Description</label>
-                        <textarea name="description" class="form-control" > <?php echo e($editSymptomsHead->description); ?> </textarea>
+                        
+                        <input type="text" id="description" name="description" value="<?php echo e($editSymptomsHead->description); ?> " >
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

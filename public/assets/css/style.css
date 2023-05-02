@@ -17442,7 +17442,9 @@ input[type=date].form-control:focus, input[type=datetime-local].form-control:foc
   flex-wrap: wrap;
   -ms-flex-align: stretch;
   align-items: stretch;
-  width: 100%; }
+  width: 100%;
+  top: 23%;
+}
 
 .input-group-addon {
   padding: .5rem .75rem;
@@ -26415,11 +26417,11 @@ margin: 33px 0px 0px 0px;
     padding: 11px 0px 0px 0px;
 }
 .symtomadd{
-    top: 19%;
+    top: 23%;
     left: 15px;
 }
 .symtomaddone{
-    top: 43%;
+    top: 45%;
     left: 15px;
 }
 /* ------------------------symtomsadd------------------------- */
@@ -26560,6 +26562,82 @@ left: 15px;
     left: 15px;
 }
 /* -------------------------------------------------------- */
+/* ------------------------opdunit setup---------------------- */
+.opdunitedit{
+    padding: 11px 0px 0px 0px;
+}
+.opdunitlabel{
+    top:22% ;
+    left: 15px;
+}
+.opdunitonelabel{
+    top:49% ;
+    left: 15px;
+}
+.opdunittlabel{
+    top: 19%;
+    left: 15px;
+}
+.opdunittwolabel{
+    top: 56%;
+    left: 15px;
+    margin-bottom: 10px;
+}
+/* ------------------------opdunit setup---------------------- */
+/* ------------------------inventoery unit setup---------------------- */
+.inventoryunitlabel{
+    top:26% ;
+    left: 15px;
+}
+.inventoryitemlabel{
+top: -29px;
+}
+.inventoryedit{
+    padding: 11px 0px 0px 0px;
+}
+/* -----------------------inventory unit setup------------------------ */
+/* ---------------------add vendor set up----------------------------- */
+.addvendoredit{
+    margin: 10px 0px 0px 0px;
+}
+/* ---------------------add vendor set up----------------------------- */
+/* ----------------------item inventory vendor setup------------------- */
+.inventoryitemedit{
+    top:-25px ;
+
+}
+.itemeditinventory{
+    margin: 5px 0px 0px 0px;
+}
+.itemeditinventoryone{
+    margin: 22px 0px 0px 0px;
+}
+.itemeditinventorytwo{
+    margin: 30px 0px 0px 0px;
+}
+.itemeditinventorythree{
+    margin: 28px 0px 0px 0px;
+}
+.itemeditinventoryonee{
+    margin: 26px 0px 0px 0px;
+}
+/* ----------------------item inventory vendor setup------------------- */
+/* ------------------finding setup--------------------- */
+.findingaddlabel{
+    top:23% ;
+    left: 15px;
+}
+.findingedit{
+    padding: 19px 0px 0px 0px;
+}
+.findingaddlabelone{
+    top:42% ;
+    left: 15px;
+}
+.headersetupedit{
+    margin: 10px 0px 0px 0px;
+}
+/* ------------------finding setup--------------------- */
 @media (max-width: 768px)
 {
     .newuserchangee {

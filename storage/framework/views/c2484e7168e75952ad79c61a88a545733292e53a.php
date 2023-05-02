@@ -13,7 +13,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="input-group">
-                                    <label class="form-label">Item Type<span class="required"> *</span></label>
+                                    <label >Item Type<span class="required"> *</span></label>
                                     <div class="input-group">
                                         <select name="item_type_id" class="form-control">
                                             <option value="">Select One</option>
@@ -38,12 +38,12 @@ unset($__errorArgs, $__bag); ?>
 
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 itemeditinventory">
                                 <div class="input-group">
-                                    <label class="form-label">Item Name<span class="required"> *</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="item_name" name="item_name" placeholder="Enter Item Name">
-                                    </div>
+                                    <label class="inventoryitemedit">Item Name<span class="required"> *</span></label>
+
+                                        <input type="text"  id="item_name" name="item_name">
+
                                     <?php $__errorArgs = ['item_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -57,12 +57,12 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 itemeditinventory">
                                 <div class="input-group">
-                                    <label class="form-label">Part No.<span class="required"> *</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="part_no" name="part_no" required placeholder="Enter Part No">
-                                    </div>
+                                    <label class="inventoryitemedit">Part No.<span class="required"> *</span></label>
+
+                                        <input type="text"  id="part_no" name="part_no" required>
+
                                     <?php $__errorArgs = ['part_no'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -76,9 +76,9 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 itemeditinventoryone">
                                 <div class="input-group">
-                                    <label class="form-label">Item Category<span class="required"> *</span></label>
+                                    <label>Item Category<span class="required"> *</span></label>
                                     <div class="input-group">
                                         <select name="item_categoris[]" required class="form-control select2" multiple>
                                             <option value="">Select One</option>
@@ -103,9 +103,9 @@ unset($__errorArgs, $__bag); ?>
 
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-4 mb-3 itemeditinventoryonee">
                                 <div class="input-group">
-                                    <label class="form-label">Item Unit<span class="required"> *</span></label>
+                                    <label>Item Unit<span class="required"> *</span></label>
                                     <div class="input-group">
                                         <select id="unit" name="unit[]" class="form-control select2" multiple>
                                             <option value="">---Select---</option>
@@ -127,12 +127,12 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-4 mb-3 itemeditinventorytwo">
                                 <div class="input-group">
-                                    <label class="form-label">Loworder Level<span class="required"> *</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="loworder_level" name="loworder_level" placeholder="Enter Loworder Level">
-                                    </div>
+                                    <label>Loworder Level<span class="required"> *</span></label>
+
+                                        <input type="text"  id="loworder_level" name="loworder_level">
+
                                     <?php $__errorArgs = ['loworder_level'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -146,9 +146,9 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 itemeditinventoryone">
                                 <div class="input-group">
-                                    <label class="form-label">Brand<span class="required"> *</span></label>
+                                    <label >Brand<span class="required"> *</span></label>
                                     <div class="input-group">
                                         <select name="brand_id" class="form-control select2">
                                             <option value="">---Select---</option>
@@ -170,7 +170,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 itemeditinventoryone">
                                 <div class="input-group">
                                     <label class="form-label">Manufacture<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -193,12 +193,13 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-6 mb-2 itemeditinventory">
                                 <div class="input-group">
-                                    <label class="form-label">Stored<span class="required"> *</span></label>
-                                    <div class="input-group">
-                                        <textarea name="stored" class="form-control"></textarea>
-                                    </div>
+                                    <label>Stored<span class="required"> *</span></label>
+
+
+                                        <input type="text"  id="stored" name="stored">
+
                                     <?php $__errorArgs = ['stored'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -211,12 +212,10 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-6 mb-2 itemeditinventory">
                                 <div class="input-group">
-                                    <label class="form-label">Uses<span class="required"> *</span></label>
-                                    <div class="input-group">
-                                        <textarea name="uses" class="form-control"></textarea>
-                                    </div>
+                                    <label >Uses<span class="required"> *</span></label>
+                                    <input type="text"  id="Uses" name="Uses">
                                     <?php $__errorArgs = ['uses'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -229,12 +228,12 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 itemeditinventory">
                                 <div class="input-group">
-                                    <label class="form-label">Product Code<span class="required"> *</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="gjhjtihjitji" readonly name="product_code" placeholder="Generate Product code"><button type="button" onclick="genrate_random_number()" class="btn btn-success"><i class="fa fa-random"></i></button>
-                                    </div>
+                                    <label >Product Code<span class="required"> *</span></label>
+
+                                        <input type="text" id="gjhjtihjitji" name="product_code"><button type="button" onclick="genrate_random_number()" class="btn btn-success"><i class="fa fa-random"></i></button>
+
                                     <?php $__errorArgs = ['product_code'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -248,12 +247,12 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 itemeditinventory">
                                 <div class="input-group">
-                                    <label class="form-label">HSN or SAC No<span class="required"> *</span></label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" id="hsn_or_sac_no" name="hsn_or_sac_no" placeholder="Enter HSN or SAC No">
-                                    </div>
+                                    <label >HSN or SAC No<span class="required"> *</span></label>
+
+                                        <input type="text"  id="hsn_or_sac_no" name="hsn_or_sac_no">
+
                                     <?php $__errorArgs = ['hsn_or_sac_no'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -266,8 +265,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <label class="form-label">Item Picture <span class="text-danger">*</span> (245px x 48px)(File size must be less then 5mb)</label>
+                            <div class="col-md-12 itemeditinventorythree">
+                                <label >Item Picture <span class="text-danger">*</span> (245px x 48px)(File size must be less then 5mb)</label>
                                 <input type="file" name="item_pic" onchange="readURL(this);">
                                 <img id="blah" width="50px" height="30px" alt="your image" />
                                 <?php $__errorArgs = ['item_pic'];

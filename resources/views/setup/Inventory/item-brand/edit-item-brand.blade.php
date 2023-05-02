@@ -20,7 +20,7 @@
                 <div class="">
                     <input type="hidden" name="id" value="{{$editItemBrand->id}}" />
                     <div class="form-group">
-                        <label for="item_brand_name" class="form-label">Item Brand name <span class="text-danger">*</span></label>
+                        <label for="item_brand_name" class="medicinelabel">Item Brand name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="item_brand_name" name="item_brand_name" placeholder="Enter Item Brand Name" value="{{ $editItemBrand->item_brand_name }}" required>
                         @error('item_brand_name')
                         <span class="text-danger">{{ $message }}</span>

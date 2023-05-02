@@ -20,8 +20,8 @@
                 <div class="">
                  <input name="id" value="{{ $editCatagory->id }}" type="hidden">
                     <div class="form-group">
-                        <label for="operation_catagory_name" class="form-label">Operation Catagory name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="operation_catagory_name" name="operation_catagory_name"  value="{{ $editCatagory->operation_catagory_name }}" required>
+                        <label for="operation_catagory_name" class="medicinelabel">Operation Catagory name <span class="text-danger">*</span></label>
+                        <input type="text" id="operation_catagory_name" name="operation_catagory_name"  value="{{ $editCatagory->operation_catagory_name }}" required>
                         @error('operation_catagory_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

@@ -46,7 +46,8 @@
                     <div class="form-group">
                         <div class="symtomsedit">
                         <label for="description" class="symtomaddone">Description</label>
-                        <textarea name="description" class="form-control" > {{ $editSymptomsHead->description }} </textarea>
+                        {{--  <textarea name="description" class="form-control" > {{ $editSymptomsHead->description }} </textarea>  --}}
+                        <input type="text" id="description" name="description" value="{{ $editSymptomsHead->description }} " >
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

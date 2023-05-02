@@ -21,7 +21,7 @@
 
                     <div class="form-group">
                         <label for="symptoms_head_name" class="medicinelabel">Symptoms Head Name</label>
-                        <input type="text" class="form-control" id="symptoms_head_name" name="symptoms_head_name" placeholder="Enter Symptoms Head Name" value="{{ old('symptoms_head_name')}}" required>
+                        <input type="text"  id="symptoms_head_name" name="symptoms_head_name"  value="{{ old('symptoms_head_name')}}" required>
                         @error('symptoms_head_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -43,11 +43,14 @@
                     </div>
 
                     <div class="form-group">
+                        <div class="symtomsedit">
                         <label for="description" class="symtomaddone">Description</label>
-                        <textarea name="description" class="form-control"> </textarea>
+                        {{--  <textarea name="description" class="form-control"> </textarea>  --}}
+                        <input type="text" id="description" name="description" >
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
+                        </div>
                     </div>
 
 

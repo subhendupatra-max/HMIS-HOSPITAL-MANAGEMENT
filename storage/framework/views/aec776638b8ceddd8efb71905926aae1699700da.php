@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add opd setup')): ?>
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">

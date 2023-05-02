@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit bed type')): ?>

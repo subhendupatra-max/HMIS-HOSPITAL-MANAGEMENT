@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('content'); ?>
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
         <div class="card">
@@ -301,9 +302,8 @@ unset($__errorArgs, $__bag); ?>
 
                             <div class="col-md-3 newuserlisttchange ">
 
-                                <input type="number" name="emg_phone_no" id="emg_phone_no"
-                                    value="<?php echo e(old('emg_phone_no')); ?>" required="">
-                                <label for="whatsapp_no">Emergency Phone No. </label>
+                                
+
                                 <?php $__errorArgs = ['emg_phone_no'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

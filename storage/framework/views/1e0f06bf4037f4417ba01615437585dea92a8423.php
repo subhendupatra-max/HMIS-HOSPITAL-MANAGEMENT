@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -21,9 +20,9 @@
                 <input type="hidden" name="id" value="<?php echo e($allheader->id); ?>">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6">
-                            <label class="form-label">Header Name <span class="text-danger">*</span></label>
-                            <input type="text" required class="form-control" value="<?php echo e(@$allheader->header_name); ?>" name="header_name" placeholder="Name">
+                        <div class="col-md-6 headersetupedit ">
+                            <label>Header Name <span class="text-danger">*</span></label>
+                            <input type="text" required  value="<?php echo e(@$allheader->header_name); ?>" name="header_name">
                             <?php $__errorArgs = ['header_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -35,9 +34,9 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                      
+
                         <div class="col-md-4">
-                            <label class="form-label">Logo <span class="text-danger">*</span> (245px x 48px)</label>
+                            <label >Logo <span class="text-danger">*</span> (245px x 48px)</label>
                             <input type="file" name="logo" onchange="readURL(this);">
                             <img id="blah" width="50px" height="30px" src="<?php echo e(asset('public/assets/images/header')); ?>/<?php echo e(@$allheader->logo); ?>" alt="your image" />
                             <?php $__errorArgs = ['logo'];
@@ -51,10 +50,10 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                       
+
                     </div>
                     <hr>
-                    
+
 
                     <div class="row">
                         <div class="col-md-9 mt-5">
@@ -87,4 +86,5 @@ unset($__errorArgs, $__bag); ?>
 
 <script src="<?php echo e(asset('assets/js/jquery-3.6.0.min.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/all-header/add-header.blade.php ENDPATH**/ ?>
