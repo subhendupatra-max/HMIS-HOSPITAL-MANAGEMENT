@@ -5,7 +5,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-4 card-title">
-                    Add Medication
+                    Edit Medication
                 </div>
 
                 <div class="col-md-8 text-right">
@@ -21,14 +21,14 @@
         </div>
         @include('message.notification')
         <div class="card-body ">
-            <form action="{{ route('save-medicaiton-dose') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('update-medicaiton-dose') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="ipd_id" value="{{ $ipd_details->id }}" />
+                <input type="hidden" name="id" value="{{ $editMedicationDetails->id }}" />
                 <div class="row">
-
                     <div class="form-group col-md-6">
                         <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" id="date" name="date" required>
+                        <input type="date" class="form-control" id="date" name="date" required @if(isset($editMedicationDetails->date)) value="{{ date('Y-m-d',strtotime($editMedicationDetails->date))}}" @endif>
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -36,7 +36,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="time" class="form-label">Time <span class="text-danger">*</span></label>
-                        <input type="time" class="form-control" id="time" name="time" required>
+                        <input type="time" class="form-control" id="time" name="time" required @if(isset($editMedicationDetails->time)) value="{{ date('h:m:s',strtotime($editMedicationDetails->time))}}" @endif>
                         @error('time')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -44,11 +44,11 @@
 
                     <div class="form-group col-md-6">
                         <label for="medicine_catagory_id" class="form-label">Medicine Category <span class="text-danger">*</span></label>
-                        <select class="form-control select2-show-search select2-hidden-accessible" name="medicine_catagory_id" id="medicine_catagory_id" required>
+                        <select class="form-control select2-show-search select2-hidden-accessible" name="medicine_catagory_id" id="medicine_catagory_id" required onchange="getMedicineCatagory(this.value,{{$editMedicationDetails->medicine_name}})">
                             <optgroup>
                                 <option value=" ">Select Medicine Category</option>
                                 @foreach ($medicine_catagory as $item)
-                                <option value="{{$item->id}}">{{$item->medicine_catagory_name}}</option>
+                                <option value="{{$item->id}}" {{$item->id == $editMedicationDetails->medicine_catagory_id ? 'selected': " "  }}>{{$item->medicine_catagory_name}}</option>
                                 @endforeach
                             </optgroup>
                         </select>
@@ -59,7 +59,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="medicine_name" class="form-label">Medicine Name <span class="text-danger">*</span></label>
-                        <select name="medicine_name" id="medicine_name" class="form-control select2-show-search">
+                        <select name="medicine_name" id="medicine_name" class="form-control select2-show-search" onchange="getMedicineName({{$editMedicationDetails->medicine_catagory_id}} , {{$editMedicationDetails->dosage}})">
                             <option value="">Select Medicine Name</option>
                         </select>
                         @error('medicine_name')
@@ -79,7 +79,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="remarks" class="form-label">Remarks <span class="text-danger">*</span></label>
-                        <textarea name="remarks" id="remarks" class="form-control" rowsapan="1"> </textarea>
+                        <textarea name="remarks" id="remarks" class="form-control" rowsapan="1"> {{ $editMedicationDetails->remarks }}</textarea>
                         @error('remarks')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -97,35 +97,7 @@
     </div>
 </div>
 
-<script>
-    $(document).ready(function() {
-        $("#medicine_catagory_id").change(function(event) {
-            event.preventDefault();
-            let medicine_id = $(this).val();
-
-            $("#medicine_name").html('<option value=" ">Select Medicine Name...</option>');
-            $.ajax({
-                url: "{{ route('find-medicine-name-by-medicine-catagory') }}",
-                type: "POST",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    medicine_catagory_id: medicine_id,
-                },
-
-                success: function(response) {
-                    $.each(response, function(key, value) {
-                        $('#medicine_name').append(`<option value="${value.id}">${value.medicine_name}</option>`);
-                    });
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
-    });
-</script>
-
-<script>
+<!-- <script>
     $(document).ready(function() {
         $("#medicine_catagory_id").change(function(event) {
             event.preventDefault();
@@ -151,28 +123,25 @@
             });
         });
     });
-</script>
+</script> -->
 
-<!-- <script>
-    function medicine_name_and_dose(medicine_name = null, dosage = null) {
-        let medicine_catagory_id = $('#m_medicine_catagory_id').val();
-        //alert('uy'+medicine_catagory_id);
-        $("#dosage").html('<option value=" ">Select Dose...</option>');
+<script>
+    function getMedicineCatagory(medicineCatagoryId, medicineName) {
+        // alert(medicineCatagoryId);
+        $('#medicine_name').val('');
+        $("#medicine_name").html("<option value=''>Select... </option>");
         $.ajax({
-            url: "{{ route('find-dosage-and-name-by-medicine-catagory') }}",
+            url: "{{ route('find-medicine-name-by-medicine-catagory') }}",
             type: "POST",
             data: {
                 _token: '{{ csrf_token() }}',
-                medicine_catagory_id_for_dose: medicine_catagory_id,
+                medicine_catagory_id: medicineCatagoryId,
             },
 
             success: function(response) {
-                console.log(response);
-                $.each(response.dosage, function(key, value) {
-                    if (dosage == value.id) {
-                        var sel = "selected";
-                    }
-                    $('#m_e_dosage').append(`<option value="${value.id}" ${sel}>${value.dose}</option>`);
+                $.each(response, function(key, value) {
+                    let sel = (value.id == medicineName ? 'selected' : '');
+                    $('#medicine_name').append(`<option value="${value.id}" ${sel}>${value.medicine_name}</option>`);
                 });
             },
             error: function(error) {
@@ -180,5 +149,32 @@
             }
         });
     }
-</script> -->
+</script>
+
+<script>
+    function getMedicineName(medicineCatagory, dosage) {
+        // $('#dosage').val('');
+        // alert(medicineCatagory);
+        $("#dosage").html("<option value=''>Select... </option>");
+        $.ajax({
+            url: "{{ route('find-dosage-by-medicine-catagory') }}",
+            type: "POST",
+            data: {
+                _token: '{{ csrf_token() }}',
+                medicine_catagory_id_for_dose: medicineCatagory,
+            },
+
+            success: function(response) {
+                $.each(response, function(key, values) {
+                    let sel = (values.id == dosage ? 'selected' : '');
+                    $('#dosage').append(`<option value="${values.id}" ${sel}>${values.dose}</option>`);
+                });
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+
 @endsection

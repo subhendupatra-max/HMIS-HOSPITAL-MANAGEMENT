@@ -6,13 +6,13 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-4 card-title">
-                    Medication
+                    Operation
                 </div>
 
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         @can('')
-                        <a href="{{ route('add-medicaiton-dose',['ipd_id' => base64_encode($ipd_details->id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Medication</a>
+                        <a href="{{ route('add-ipd-operation-details',['ipd_id' => base64_encode($ipd_details->id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Operation</a>
                         @endcan
 
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
@@ -42,15 +42,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ( $medication_details as $item)
+                                @foreach ( $operation_details as $item)
                                 <tr>
                                     <td class="border-bottom-0">{{ $loop->iteration }}</td>
-                                    <td class="border-bottom-0"> {{ $item->date }} </td>
-                                    <td class="border-bottom-0"> {{ $item->time }} </td>
-                                    <td class="border-bottom-0">{{ @$item->medicine_catagory_name->medicine_catagory_name }}</td>
-                                    <td class="border-bottom-0">{{ @$item->all_medicine_name->medicine_name }}</td>
-                                    <td class="border-bottom-0">{{ @$item->dosage_name->dose }}</td>
-
+                                    <td class="border-bottom-0"> {{ $item->operation_department }} </td>
+                                    <td class="border-bottom-0"> {{ $item->operation_catagory }} </td>
+                                    <td class="border-bottom-0">{{ @$item->operation_type }}</td>
+                                    <td class="border-bottom-0">{{ @$item->operation_name }}</td>
+                                    <td class="border-bottom-0">{{ @$item->operation_date }}</td>
                                     <td class="border-bottom-0">
                                         <div class="card-options">
                                             <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>

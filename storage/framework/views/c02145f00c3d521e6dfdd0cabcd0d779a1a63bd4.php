@@ -6,13 +6,13 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-4 card-title">
-                    Medication
+                    Operation
                 </div>
 
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                        <a href="<?php echo e(route('add-medicaiton-dose',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Medication</a>
+                        <a href="<?php echo e(route('add-ipd-operation-details',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Operation</a>
                         <?php endif; ?>
 
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
@@ -42,15 +42,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $__currentLoopData = $medication_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php $__currentLoopData = $operation_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
                                     <td class="border-bottom-0"><?php echo e($loop->iteration); ?></td>
-                                    <td class="border-bottom-0"> <?php echo e($item->date); ?> </td>
-                                    <td class="border-bottom-0"> <?php echo e($item->time); ?> </td>
-                                    <td class="border-bottom-0"><?php echo e(@$item->medicine_catagory_name->medicine_catagory_name); ?></td>
-                                    <td class="border-bottom-0"><?php echo e(@$item->all_medicine_name->medicine_name); ?></td>
-                                    <td class="border-bottom-0"><?php echo e(@$item->dosage_name->dose); ?></td>
-
+                                    <td class="border-bottom-0"> <?php echo e($item->operation_department); ?> </td>
+                                    <td class="border-bottom-0"> <?php echo e($item->operation_catagory); ?> </td>
+                                    <td class="border-bottom-0"><?php echo e(@$item->operation_type); ?></td>
+                                    <td class="border-bottom-0"><?php echo e(@$item->operation_name); ?></td>
+                                    <td class="border-bottom-0"><?php echo e(@$item->operation_date); ?></td>
                                     <td class="border-bottom-0">
                                         <div class="card-options">
                                             <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
@@ -78,4 +77,4 @@
 
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/Ipd/show-medication-dose.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/Ipd/operation/all-operation-listing.blade.php ENDPATH**/ ?>

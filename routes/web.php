@@ -2173,8 +2173,14 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
         Route::get('add-medicaiton-dose/{ipd_id}', [MedicationController::class, 'add_medicaiton_dose'])->name('add-medicaiton-dose');
 
-
         Route::post('save-medicaiton-dose', [MedicationController::class, 'save_medicaiton_dose'])->name('save-medicaiton-dose');
+
+        Route::get('edit-medicaiton-dose/{ipd_id}/{id}', [MedicationController::class, 'edit_medicaiton_dose'])->name('edit-medicaiton-dose');
+
+        Route::post('update-medicaiton-dose', [MedicationController::class, 'update_medicaiton_dose'])->name('update-medicaiton-dose');
+
+        Route::get('delete-medicaiton-dose/{id}', [MedicationController::class, 'delete_medicaiton_dose'])->name('delete-medicaiton-dose');
+
         Route::post('find-medicine-name-by-medicine-catagory', [MedicationController::class, 'find_medicine_name_by_medicine_catagory'])->name('find-medicine-name-by-medicine-catagory');
         Route::post('find-dosage-by-medicine-catagory', [MedicationController::class, 'find_dosage_by_medicine_catagory'])->name('find-dosage-by-medicine-catagory');
         Route::post('find-medication-details', [MedicationController::class, 'find_medication_details'])->name('find-medication-details');
@@ -2188,14 +2194,34 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
         Route::post('save-oxygen-monitoring-details', [OxygenMonitoringController::class, 'save_oxygen_monitoring_details'])->name('save-oxygen-monitoring-details');
 
-
         Route::get('delete-oxygen-monitoring/{id}', [OxygenMonitoringController::class, 'delete_oxygen_monitoring'])->name('delete-oxygen-monitoring');
     });
     // ================================= OxygenMonitoring ==================================================
 
     // =============================== Ipd - Operation ==================================================
-    Route::group(['middleware' => ['permission:save operation theatre']], function () {
-        Route::post('save-ipd-operation-details', [OperationTheatreController::class, 'save_ipd_operation_details'])->name('save-ipd-operation-details');
+    Route::group(['middleware' => ['permission:operation theatre']], function () {
+
+        Route::get('show-ipd-operation-details/{ipd_id}', [OperationTheatreController::class, 'show_ipd_operation_details'])->name('show-ipd-operation-details');
+
+        Route::group(['middleware' => ['permission:save operation theatre']], function () {
+
+            Route::get('add-ipd-operation-details/{ipd_id}', [OperationTheatreController::class, 'add_ipd_operation_details'])->name('add-ipd-operation-details');
+
+            Route::post('save-ipd-operation-details', [OperationTheatreController::class, 'save_ipd_operation_details'])->name('save-ipd-operation-details');
+        });
+
+        Route::group(['middleware' => ['permission:edit operation theatre']], function () {
+
+            Route::get('edit-ipd-operation-details/{ipd_id}', [OperationTheatreController::class, 'edit_ipd_operation_details'])->name('edit-ipd-operation-details');
+
+            Route::post('update-ipd-operation-details', [OperationTheatreController::class, 'update_ipd_operation_details'])->name('update-ipd-operation-details');
+        });
+
+        Route::group(['middleware' => ['permission:delete operation theatre']], function () {
+
+            Route::get('delete-ipd-operation-details/{ipd_id}', [OperationTheatreController::class, 'delete_ipd_operation_details'])->name('delete-ipd-operation-details');
+        });
+
         Route::post('find-operation-type-and-catagory-by-department', [OperationTheatreController::class, 'find_operation_type_and_name_by_department'])->name('find-operation-type-and-catagory-by-department');
         Route::post('find-operation-name-by-operation-catagory', [OperationTheatreController::class, 'find_operation_name_by_operation_catagory'])->name('find-operation-name-by-operation-catagory');
     });

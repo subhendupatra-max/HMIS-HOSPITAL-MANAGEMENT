@@ -8,7 +8,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                   Charges List
+                    Charges List
                 </div>
                 @can('add charges')
                 <div class="col-md-6 text-right">
@@ -48,14 +48,14 @@
                             @foreach ($charges as $item)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{ $item->charges_name}}</td>
-                                <td>{{ $item->charges_catagory->charges_catagories_name}}</td>
-                                <td>{{ $item->charges_sub_catagory->charges_sub_catagories_name}}</td>
+                                <td>{{ @$item->charges_name}}</td>
+                                <td>{{ @$item->charges_catagory->charges_catagories_name}}</td>
+                                <td>{{ @$item->charges_sub_catagory->charges_sub_catagories_name}}</td>
                                 <td>{{ @$item->type}}</td>
 
-                                <td>{{ $item->standard_charges}}</td>
-                                <td>{{ $item->date}}</td>
-                                <td>{{ $item->description}}</td>
+                                <td>{{ @$item->standard_charges}}</td>
+                                <td>{{ @$item->date}}</td>
+                                <td>{{ @$item->description}}</td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
