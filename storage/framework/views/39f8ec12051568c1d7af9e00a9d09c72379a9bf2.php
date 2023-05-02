@@ -4,7 +4,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <div class="card-title">OPD Registation</div>
+            <div class="card-title">OPD Registation Details Edit</div>
         </div>
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body p-0">
@@ -21,9 +21,7 @@
                     
 
                     <div class="options px-5 pt-5  border-bottom pb-3">
-
                         <form method="post" action="<?php echo e(route('opd-registration')); ?>">
-
                             <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-md-12 mb-2">
@@ -58,9 +56,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     <div class="options px-5  pb-3">
                         <div class="row">
-
                             <hr class="hr_line">
-                      
                             <div class="card-body text-center">
                                 <div class="pro-user">
                                     <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
@@ -73,10 +69,6 @@ unset($__errorArgs, $__bag); ?>
                                         <?php echo e($patient_details_information->patient_prefix); ?><?php echo e($patient_details_information->id); ?>
 
                                     </h6>
-
-                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
-                                    <a href="<?php echo e(route('edit-new-patient-opd', base64_encode($patient_details_information->id))); ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
-                                    <?php endif; ?>
                                 </div>
                             </div>
 
@@ -151,11 +143,9 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="form-group col-md-4 opd-bladedesign ">
                                   <label class="date-format">Appointment Date <span class="text-danger">*</span></label>
 
-                                    <?php if(auth()->user()->can('appointment date')): ?>
-                                    <input type="datetime-local"  name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
-                                    <?php else: ?>
-                                    <input type="datetime-local"  name="appointment_date" value="<?php echo e(date('Y-m-d H:s')); ?>" required />
-                                    <?php endif; ?>
+                                
+                                    <input type="datetime-local"  name="appointment_date" value="<?php echo e(date('Y-m-d H:s',strtotime($opd_visit_details->appointment_date))); ?>" required />
+                                   
                                     <?php $__errorArgs = ['appointment_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -171,8 +161,8 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="form-group col-md-4 newaddappon">
                                      <label for="visit_type">Visit Type <span class="text-danger">*</span></label>
                                     <select name="visit_type" class="form-control select2-show-search" id="visit_type" required>
-                                        <option value="New Visit" selected>New-Visit</option>
-                                        <option value="Revisit">Revisit</option>
+                                        <option value="New Visit" <?php echo e($opd_visit_details->visit_type == 'New Visit' ? 'selected' : ''); ?> >New-Visit</option>
+                                        <option value="Revisit" <?php echo e($opd_visit_details->visit_type == 'Revisit' ? 'selected' : ''); ?>>Revisit</option>
                                     </select>
                                     <?php $__errorArgs = ['visit_type'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -192,7 +182,7 @@ unset($__errorArgs, $__bag); ?>
                                     <select name="patient_type" required onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
                                         <option value="">Patient Type </option>
                                         <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $patient_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($patient_type); ?>"> <?php echo e($patient_type); ?></option>
+                                        <option value="<?php echo e($patient_type); ?>" <?php echo e($opd_visit_details->patient_type == $patient_type ? 'selected' : ''); ?> > <?php echo e($patient_type); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
 
@@ -213,20 +203,20 @@ unset($__errorArgs, $__bag); ?>
                                     <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
                                         <option value="">TPA Organization<span class="text-danger">*</span></option>
                                         <?php $__currentLoopData = $tpa_management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tpaManagement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($tpaManagement->id); ?>"> <?php echo e($tpaManagement->TPA_name); ?></option>
+                                        <option value="<?php echo e($tpaManagement->id); ?>" <?php echo e($tpaManagement->id == $opd_visit_details->tpa_organization ? 'selected' : ''); ?>> <?php echo e($tpaManagement->TPA_name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
                                 <div class="form-group  col-md-4 frefesds newaddappon" style="display:none">
                                     <label for="type_no"><span id="lableName"></span><span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>" id="type_no" />
+                                    <input type="text" class="form-control" name="type_no" value="<?php echo e($opd_visit_details->type_no); ?>" id="type_no" />
                                 </div>
                                 <div class="form-group col-md-4 newaddappon ">
                                      <label for="reference" class="form-label">Reference</label>
                                     <select name="reference" class="form-control select2-show-search" id="reference">
                                         <option value="">Referrel Name</option>
                                         <?php $__currentLoopData = $referer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $reference): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($reference->id); ?>"> <?php echo e($reference->referral_name); ?></option>
+                                        <option value="<?php echo e($reference->id); ?>" <?php echo e($reference->id == $opd_visit_details->refference ? 'selected' : ''); ?> > <?php echo e($reference->referral_name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
 
@@ -502,4 +492,4 @@ unset($__errorArgs, $__bag); ?>
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/OPD/opd_registation.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/OPD/edit-opd-patient.blade.php ENDPATH**/ ?>

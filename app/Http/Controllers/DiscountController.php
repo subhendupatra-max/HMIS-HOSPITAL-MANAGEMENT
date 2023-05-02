@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Discount;
+use App\Models\Billing;
 use App\Models\DiscountDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,8 +28,8 @@ class DiscountController extends Controller
 
     public function given_discount(Request $request)
     {
-        try {
-            DB::beginTransaction();
+        // try {
+        //     DB::beginTransaction();
             $discountId = $request->discount_id;
             $discount_details = Discount::find($discountId);
             $discount_details->discount_status = $request->given_discount_status;
@@ -38,11 +39,20 @@ class DiscountController extends Controller
             $discount_details->given_discount_time = date('Y-m-d h:m:s');
             $discount_details->remark = $request->remark;
             $discount_details->save();
+
+           $discount_details = DiscountDetails::where('discount_id',$discountId)->get();
+           foreach( $discount_details as $value)
+           {
+                $bill = Billing::find($value->bill_id);
+                $bill->status = 'Billing Done';
+                $bill->save();
+           }
+
             DB::commit();
             return redirect()->route('view-discount-details', ['discount_id' => base64_encode($discountId)])->with('success', " Successful !!!");
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return back()->withErrors(['error' => $th->getMessage()]);
-        }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return back()->withErrors(['error' => $th->getMessage()]);
+        // }
     }
 }

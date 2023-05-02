@@ -5,6 +5,7 @@
         <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
             <div class="card">
                 <div class="card-header">
+<<<<<<< HEAD
                     <h4 class="card-title">Ticket NO Calculate</h4>
                 </div>
                 <?php if(session('success')): ?>
@@ -15,13 +16,23 @@
                     <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert"
                             aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
                 <?php endif; ?>
+=======
+                    <h4 class="card-title">OPD Set-up</h4>
+                </div>
+              <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+>>>>>>> subhendu-patra
                 <div class="card-body">
                     <form method="POST" action="<?php echo e(route('save-opd-setup-details')); ?>">
                         <?php echo csrf_field(); ?>
                         <div class="row">
                             <input type="hidden" value="1" name="id">
+<<<<<<< HEAD
                             <div class="col-md-6 form-group">
                                 <label for="ticket_no_calculate" class=""> Ticket No Calculate <span
+=======
+                            <div class="col-md-4 form-group">
+                                <label for="ticket_no_calculate" class="form-label"> Ticket No Calculate <span
+>>>>>>> subhendu-patra
                                         class="text-danger">*</span></label>
                                 <select name="ticket_no_calculate" class="form-control select2-show-search"
                                     id="ticket_no_calculate">
@@ -43,10 +54,17 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
+<<<<<<< HEAD
                             <div class="col-md-6 form-group opdsetupdesign">
                                 <label for="ticket_fees" class="form-label">Ticket Fees<span
                                         class="text-danger">*</span></label>
                                 <input name="ticket_fees" type="text" class="form-control" />
+=======
+                            <div class="col-md-4 form-group">
+                                <label for="ticket_fees" class="form-label">Ticket Fees<span
+                                        class="text-danger">*</span></label>
+                                <input name="ticket_fees" value="<?php echo e($opdSetup->ticket_fees); ?>" type="text" class="form-control" />
+>>>>>>> subhendu-patra
                                 <?php $__errorArgs = ['ticket_fees'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -60,7 +78,11 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                         </div>
+<<<<<<< HEAD
                         <button type="submit" class="btn btn-primary mt-4 mb-0">Add Setup</button>
+=======
+                        <button type="submit" class="btn btn-primary btn-sm mt-4 mb-0">Update OPD Setup</button>
+>>>>>>> subhendu-patra
                     </form>
                 </div>
             </div>
