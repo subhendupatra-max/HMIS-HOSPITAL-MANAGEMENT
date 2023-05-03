@@ -98,7 +98,7 @@
 
                     <hr>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4 generaldesignadd">
                             {{--  <label class="form-label">PO Permission Percentage <span class="text-danger">*</span></label>
                             <input type="text" required class="form-control" value="{{$general_details->po_permission_percentage}}" name="po_permission_percentage" placeholder="PO Permission Percentage">  --}}
                             <input type="text"value="{{$general_details->po_permission_percentage}}"id="po_permission_percentage" name="po_permission_percentage">
@@ -107,7 +107,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 generaldesignadd">
                             {{--  <label class="form-label">Requisition Permission Percentage <span class="text-danger">*</span></label>
                             <input type="text" required class="form-control" name="rfq_permission_percentage" value="{{$general_details->req_permission_percentage}}" placeholder="Requisition Permission Percentage">  --}}
                             <input type="text"value="{{$general_details->req_permission_percentage}}"id="rfq_permission_percentage" name="rfq_permission_percentage">
@@ -116,7 +116,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 generaldesignadd ">
                             {{--  <label class="form-label">PUC Alert Days <span class="text-danger">*</span></label>
                             <input type="text" required class="form-control" value="{{$general_details->puc_alert_days}}" name="puc_alert_days" placeholder="PUC Alert Days">  --}}
                             <input type="text"value="{{$general_details->puc_alert_days}}"id="puc_alert_days" name="puc_alert_days">

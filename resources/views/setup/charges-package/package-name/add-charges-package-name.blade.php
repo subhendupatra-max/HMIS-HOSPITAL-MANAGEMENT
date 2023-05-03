@@ -10,7 +10,7 @@
             <form action="{{ route('save-charges-package-name-details') }}" method="POST">
                 @csrf
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3 chargespackageadd">
                         <div class="form-group">
                             <label for="type">Type <span class="text-danger">*</span></label>
                             <select id="type" class="form-control" name="type">
@@ -25,7 +25,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 chargespackageadd ">
                         <label for="charge_package_catagory_id" >Charges Package Catagory <span class="text-danger">*</span></label>
                         <select id="charge_package_catagory_id" class="form-control" name="charge_package_catagory_id" onchange="getChargersPackageCatagoryId(this.value)">
                             <option value=" ">Select Charges Package Catagory </option>
@@ -38,7 +38,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 chargespackageadd">
                         <label for="charge_package_sub_catagory_id">Charges Package Sub Catagory <span class="text-danger">*</span></label>
                         <select id="charge_package_sub_catagory_id" class="form-control" name="charge_package_sub_catagory_id">
                             <option value=" ">Select Charges Package Sub Catagory... </option>
@@ -73,13 +73,13 @@
                         </table>
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 chargespackagead">
                         <label for="tax">Enter Tax<span class="text-danger">*</span></label>
                         <input type="text" id="tax" value="{{ 0 }}" name="tax">
                         <small class="text-danger">{{ $errors->first('tax') }}</small>
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 chargespackagead">
                         <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="total_amount" name="total_amount">
                         <small class="text-danger">{{ $errors->first('total_amount') }}</small>
