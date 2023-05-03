@@ -114,7 +114,7 @@ class OpdController extends Controller
     }
     public function index()
     {
-        $opd_registaion_list = OpdDetails::orderBy('id','desc')->paginate(25);
+        $opd_registaion_list = OpdDetails::orderBy('id', 'desc')->paginate(25);
         return view('OPD.opd-patient-list', compact('opd_registaion_list'));
     }
     public function after_new_old(Request $request)
@@ -136,12 +136,11 @@ class OpdController extends Controller
         $patient_patient_name = $request->patient_name;
         $patient_mobile_no = $request->mobile_no;
     }
-    public function opd_registation(Request $request,$patientid = null)
+    public function opd_registation(Request $request, $patientid = null)
     {
-        if($patientid != null){
+        if ($patientid != null) {
             $patient_id = base64_decode($patientid);
-        }
-        else{
+        } else {
             $patient_id = $request->patient_id;
         }
         $ticket_fees = OpdSetup::select('ticket_fees')->first();
@@ -152,7 +151,7 @@ class OpdController extends Controller
         $symptoms_types = SymptomsType::get();
         $all_patient = Patient::all();
 
-        return view('OPD.opd_registation', compact('symptoms_types', 'ticket_fees', 'departments', 'referer', 'patient_details_information', 'patient_id', 'tpa_management','all_patient'));
+        return view('OPD.opd_registation', compact('symptoms_types', 'ticket_fees', 'departments', 'referer', 'patient_details_information', 'patient_id', 'tpa_management', 'all_patient'));
     }
     public function find_doctor_by_department(Request $request)
     {
@@ -258,7 +257,7 @@ class OpdController extends Controller
 
             $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
 
-            $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'patient_physical_details.height', 'patient_physical_details.weight', 'patient_physical_details.bp', 'patient_physical_details.respiration', 'patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date','opd_visit_details.id as opd_visit_details_id')
+            $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'patient_physical_details.height', 'patient_physical_details.weight', 'patient_physical_details.bp', 'patient_physical_details.respiration', 'patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date', 'opd_visit_details.id as opd_visit_details_id')
                 ->leftjoin('opd_details', 'opd_details.id', '=', 'opd_visit_details.opd_details_id')
                 ->leftjoin('patients', 'patients.id', '=', 'opd_details.patient_id')
                 ->leftjoin('patient_physical_details', 'patient_physical_details.opd_visit_details_id', '=', 'opd_visit_details.id')
@@ -267,9 +266,9 @@ class OpdController extends Controller
                 ->where('opd_visit_details.id', $opd_visit_details->id)
                 ->first();
 
-                // \QrCode::size(250)
-                // ->format('png')
-                // ->generate('ItSolutionStuff.com', public_path('qr_code/opd'.$opd_visit_details->id.'.png'));
+            // \QrCode::size(250)
+            // ->format('png')
+            // ->generate('ItSolutionStuff.com', public_path('qr_code/opd'.$opd_visit_details->id.'.png'));
 
             DB::commit();
             if ($request->save == 'save_and_print') {
@@ -291,11 +290,10 @@ class OpdController extends Controller
             DB::beginTransaction();
             $opd_visit_id = base64_decode($id);
             $visit_details =  OpdVisitDetails::find($opd_visit_id);
-            OpdDetails::where('id',$visit_details->opd_details_id)->delete();
-            OpdVisitDetails::where('id',$opd_visit_id)->delete();
+            OpdDetails::where('id', $visit_details->opd_details_id)->delete();
+            OpdVisitDetails::where('id', $opd_visit_id)->delete();
             DB::commit();
             return redirect()->route('OPD-Patient-list')->with('success', 'Delected Sucessfully');
-        
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->back()->with('error', $th->getMessage());
@@ -311,7 +309,7 @@ class OpdController extends Controller
         $payment_amount = OpdPayment::where('opd_id', $opd_id)->sum('amount');
         // $opd_visit_details = OpdVisitDetails::where('opd_details_id',$opd_id)->get();
         $opd_visit_details = OpdVisitDetails::where('opd_details_id', $opd_id)->first();
-        return view('OPD.opd-patient-profile', compact('opd_patient_details', 'opd_visit_details', 'timelineDetails','PhysicalDetails','payment_amount'));
+        return view('OPD.opd-patient-profile', compact('opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount'));
     }
 
     //opd setup
@@ -446,8 +444,8 @@ class OpdController extends Controller
         $departments = Department::where('is_active', '1')->get();
         $symptoms_types = SymptomsType::get();
         $all_patient = Patient::all();
-        
 
-        return view('OPD.edit-opd-patient', compact('opd_patient_details', 'opd_visit_details', 'timelineDetails','ticket_fees','tpa_management','referer','departments','symptoms_types','all_patient','patient_details_information'));
+
+        return view('OPD.edit-opd-patient', compact('opd_patient_details', 'opd_visit_details', 'timelineDetails', 'ticket_fees', 'tpa_management', 'referer', 'departments', 'symptoms_types', 'all_patient', 'patient_details_information'));
     }
 }

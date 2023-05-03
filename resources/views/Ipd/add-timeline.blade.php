@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="{{ route('save-timeline-lisitng-in-opd') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('save-timeline-lisitng-in-ipd') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <input type="hidden" name="ipd_id" value="{{ $ipd_details->id }}" />
@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+                        <label for="date" class="form-label">Date </label>
                         <input type="datetime-local" class="form-control" id="date" name="date" required>
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
@@ -47,7 +47,7 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
+ 
                     <div class="form-group col-md-6">
                         <label for="attach_document" class="form-label">Attach Document </label>
                         <input type="file" id="attach_document" name="attach_document">

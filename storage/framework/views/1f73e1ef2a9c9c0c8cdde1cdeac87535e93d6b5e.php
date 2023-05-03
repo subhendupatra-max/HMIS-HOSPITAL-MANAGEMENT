@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add item unit')): ?>
@@ -48,9 +46,11 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                       </div>
+                      </div>
                     </div>
 
                     <div class="form-group">
+                     <div class="diagonasisedit">
                         <label for="role" class="diagonasislabelone">Enter Year</label>
                         <input type="text"  id="year" name="year" value="<?php echo e(date('Y')); ?>"   required >
                         <?php $__errorArgs = ['year'];

@@ -13,98 +13,90 @@
         </div>
 
         <div class="card-body">
-        <div class="table-responsive">
-            <table id="example" class="table table-borderless text-nowrap key-buttons">
-                <thead>
-                    <tr>
-                        <th scope="col">IPD Id</th>
-                        <th scope="col">Patient Information</th>
-                        <th scope="col">Mobile No.</th>
-                        <th scope="col">Admission Information</th>
-                        <th scope="col">Admission Date</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Action</th>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap table-default">
+                    <thead>
+                        <tr>
+                            <th scope="col">IPD Id</th>
+                            <th scope="col">Patient Information</th>
+                            <th scope="col">Mobile No.</th>
+                            <th scope="col">Admission Information</th>
+                            <th scope="col">Admission Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (isset($ipd_patient_list))
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (isset($ipd_patient_list))
                         @foreach ($ipd_patient_list as $value)
-                            <tr>
-                                <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{ @$value->ipd_prefix }}{{ @$value->id }}</a></td>
-                                <td>
-                                    <i class="fa fa-user text-primary"></i> {{ @$value->all_patient_details->prefix }} {{ @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name }} {{ @$value->all_patient_details->last_name }}({{ @$value->all_patient_details->id }})
-                                    <br>
-                                    <i class="fa fa-users text-primary"></i>
-                                    {{ @$value->all_patient_details->guardian_name }}
-                                    <br>
-                                    <i class="fa fa-venus-mars text-primary"></i> {{ @$value->all_patient_details->gender }} //
+                        <tr>
+                            <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{ @$value->ipd_prefix }}{{ @$value->id }}</a></td>
+                            <td>
+                                <i class="fa fa-user text-primary"></i> {{ @$value->all_patient_details->prefix }} {{ @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name }} {{ @$value->all_patient_details->last_name }}({{ @$value->all_patient_details->id }})
+                                <br>
+                                <i class="fa fa-users text-primary"></i>
+                                {{ @$value->all_patient_details->guardian_name }}
+                                <br>
+                                <i class="fa fa-venus-mars text-primary"></i> {{ @$value->all_patient_details->gender }} //
 
 
-                                    <i class="fa fa-calendar-plus-o text-primary"></i> {{ @$value->all_patient_details->year }}Y {{ @$value->all_patient_details->month }}M {{ @$value->all_patient_details->day }}D
+                                <i class="fa fa-calendar-plus-o text-primary"></i> {{ @$value->all_patient_details->year }}Y {{ @$value->all_patient_details->month }}M {{ @$value->all_patient_details->day }}D
 
-                                </td>
-                                <td>{{ @$value->all_patient_details->phone }}</td>
-                                <td>
-                                    @if(isset($value->department_id))
-                                    <i class="fa fa-cubes text-primary"></i>  {{ @$value->department_details->department_name }}(  {{ @$value->department_details->department_code }}) <br>
-                                    @endif
-                                    @if(isset($value->cons_doctor))
-                                    <i class="fas fa-user-md text-primary"></i>  {{ @$value->doctor_details->first_name }} {{ @$value->doctor_details->last_name }} <br>
-                                    @endif
-                                    @if(isset($value->bed_ward_id))
-                                    <i class="fa fa-bed text-primary"></i>  {{ @$value->bed_details->bed_name }} - {{ @$value->ward_details->ward_name }} - {{ @$value->unit_details->bedUnit_name }}
-                                    @endif
-                                </td>
-                                <td>
-                                    {{ date('d-m-Y h:i A',strtotime($value->appointment_date)) }}
-                                </td>
-                                <td>
-                                    @if($value->status == 'admitted')
-                                        <span class="badge badge-success">Admission</span>
-                                    @elseif ($value->status == 'discharged_planed')
-                                        <span class="badge badge-warning">Discharge Planed</span>
-                                    @else
-                                        <span class="badge badge-secondary">Discharged</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="card-options">
-                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right" style="">
-                                            <a class="dropdown-item"
-                                            href=""><i class="fa fa-eye"></i> View</a>
-                                            @can('')
-                                                <a class="dropdown-item"
-                                                    href=""><i
-                                                        class="fa fa-print"></i> Print Admission Form</a>
-                                            @endcan
-                                            @can('')
-                                            <a class="dropdown-item"
-                                                href="#" onclick="statusButton(<?php echo $value->id; ?>)">
-                                                <i class="fa fa-file"></i> Status Change</a>
-                                            @endcan
-                                            @can('')
-                                                <a class="dropdown-item"
-                                                    href="">
-                                                    <i class="fa fa-edit"></i> Edit</a>
-                                            @endcan
-                                            @can('')
-                                                <a class="dropdown-item"
-                                                    href=""><i
-                                                        class="fa fa-trash"></i> Delete</a>
-                                            @endcan
+                            </td>
+                            <td>{{ @$value->all_patient_details->phone }}</td>
+                            <td>
+                                @if(isset($value->department_id))
+                                <i class="fa fa-cubes text-primary"></i> {{ @$value->department_details->department_name }}( {{ @$value->department_details->department_code }}) <br>
+                                @endif
+                                @if(isset($value->cons_doctor))
+                                <i class="fas fa-user-md text-primary"></i> {{ @$value->doctor_details->first_name }} {{ @$value->doctor_details->last_name }} <br>
+                                @endif
+                                @if(isset($value->bed_ward_id))
+                                <i class="fa fa-bed text-primary"></i> {{ @$value->bed_details->bed_name }} - {{ @$value->ward_details->ward_name }} - {{ @$value->unit_details->bedUnit_name }}
+                                @endif
+                            </td>
+                            <td>
+                                {{ date('d-m-Y h:i A',strtotime($value->appointment_date)) }}
+                            </td>
+                            <td>
+                                @if($value->status == 'admitted')
+                                <span class="badge badge-success">Admission</span>
+                                @elseif ($value->status == 'discharged_planed')
+                                <span class="badge badge-warning">Discharge Planed</span>
+                                @else
+                                <span class="badge badge-secondary">Discharged</span>
+                                @endif
+                            </td>
+                            <td>
+                                <div class="card-options">
+                                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right" style="">
+                                        <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
+                                        @can('')
+                                        <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission Form</a>
+                                        @endcan
+                                        @can('')
+                                        <a class="dropdown-item" href="#" onclick="statusButton(<?php echo $value->id; ?>)">
+                                            <i class="fa fa-file"></i> Status Change</a>
+                                        @endcan
+                                        @can('')
+                                        <a class="dropdown-item" href="">
+                                            <i class="fa fa-edit"></i> Edit</a>
+                                        @endcan
+                                        @can('')
+                                        <a class="dropdown-item" href=""><i class="fa fa-trash"></i> Delete</a>
+                                        @endcan
 
-                                        </div>
                                     </div>
-                                </td>
-                            </tr>
+                                </div>
+                            </td>
+                        </tr>
                         @endforeach
-                    @endif
-                </tbody>
-            </table>
-        </div>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
 
     </div>
@@ -124,34 +116,34 @@
                 </button>
             </div>
             <form action="{{ route('save-timeline-lisitng-in-opd') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-body">
-                <input type="hidden" name="ipd_id" value="" />
-                <div class="row">
-                    <div class="form-group col-md-12">
-                        <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                        <select class="form-control" id="status" name="status">
-                            <option value="">Select......</option>
-                            <option value="discharged_planed">Discharged Planed</option>
-                            <option value="discharged">Discharged</option>
-                        </select>
-                        @error('status')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="ipd_id" value="" />
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                            <select class="form-control" id="status" name="status">
+                                <option value="">Select......</option>
+                                <option value="discharged_planed">Discharged Planed</option>
+                                <option value="discharged">Discharged</option>
+                            </select>
+                            @error('status')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
 
-                    <div class="form-group col-md-12">
-                        <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" id="date" name="date" required>
-                        @error('date')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
+                        <div class="form-group col-md-12">
+                            <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                            @error('date')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
             </form>
         </div>
     </div>

@@ -26,8 +26,8 @@ class BillingController extends Controller
     {
         $opd_id = base64_decode($id);
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
-        $opd_billing_details = Billing::where('section','OPD')->where('opd_id',$opd_id)->get();
-        return view('OPD.billing.billing-list', compact('opd_patient_details', 'opd_id','opd_billing_details'));
+        $opd_billing_details = Billing::where('section', 'OPD')->where('opd_id', $opd_id)->get();
+        return view('OPD.billing.billing-list', compact('opd_patient_details', 'opd_id', 'opd_billing_details'));
     }
     public function create_billing($id)
     {
@@ -80,7 +80,7 @@ class BillingController extends Controller
 
     public function save_new_opd_billing(Request $request)
     {
-      //  dd($request->all());
+        //  dd($request->all());
         $validate = $request->validate([
             'bill_date'   => 'required',
             'grand_total'   => 'required',
@@ -174,7 +174,7 @@ class BillingController extends Controller
                 // ====================== add payment =======================================
             }
             DB::commit();
-        return redirect()->route('opd-billing', ['id' => base64_encode($request->opd_id)])->with('success', "Biliing Successfully"); 
+            return redirect()->route('opd-billing', ['id' => base64_encode($request->opd_id)])->with('success', "Biliing Successfully");
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);
@@ -185,8 +185,8 @@ class BillingController extends Controller
         $billId = base64_decode($bill_id);
         $bill_details = Billing::where('id', $billId)->first();
         $patient_charge_details = PatientCharge::where('bill_id', $billId)->get();
-        $opd_patient_details = OpdDetails::where('id',$bill_details->opd_id)->first();
-        return view('OPD.billing.billing-details',compact('bill_details','patient_charge_details','opd_patient_details'));
+        $opd_patient_details = OpdDetails::where('id', $bill_details->opd_id)->first();
+        return view('OPD.billing.billing-details', compact('bill_details', 'patient_charge_details', 'opd_patient_details'));
     }
     public function edit_opd_bill($bill_id)
     {

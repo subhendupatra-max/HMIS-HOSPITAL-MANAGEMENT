@@ -55,14 +55,13 @@
                                         <div class="card-options">
                                             <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                             <div class="dropdown-menu dropdown-menu-right" style="">
-                                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit operation theatre')): ?>
-                                                <a class="dropdown-item">
-                                                    <i class="fa fa-edit"></i> Edit</a>
-                                                <?php endif; ?>
-                                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete operation theatre')): ?>
-                                                <a class="dropdown-item"><i class="fa fa-trash"></i> Delete</a>
+                                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-medication-in-ipd')): ?>
+                                                <a class="dropdown-item" href="<?php echo e(route('edit-medicaiton-dose',['ipd_id'=> base64_encode($ipd_details->id),'id'=> base64_encode($item->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
                                                 <?php endif; ?>
 
+                                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-medication-in-ipd')): ?>
+                                                <a class="dropdown-item" href="<?php echo e(route('delete-medicaiton-dose',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </td>

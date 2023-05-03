@@ -112,6 +112,8 @@ use App\Http\Controllers\OPD\BillingController;
 use App\Http\Controllers\PhysicalConditionController;
 use App\Http\Controllers\false\OpdFalseController;
 
+use App\Http\Controllers\EmgBillingController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -1903,6 +1905,8 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
 });
 
 
+
+
 //================================= emg Physical Condition ====================================
 Route::group(['middleware' => ['permission:emg physical condition'], 'prefix' => 'emg-physical-condition'], function () {
     Route::get('physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'physical_condition_listing_in_emg'])->name('physical-condition-in-emg');
@@ -1938,6 +1942,26 @@ Route::group(['middleware' => ['permission:timeline list emg'], 'prefix' => 'emg
 });
 
 //================================= emg timeline ===================================
+
+//================================= Emg billing ====================================
+Route::group(['middleware' => ['permission:emg billing'], 'prefix' => 'emg-billing'], function () {
+    Route::get('emg-billing/{id}', [EmgBillingController::class, 'index_in_emg'])->name('emg-billing');
+    Route::group(['middleware' => ['permission:add emg billing']], function () {
+        Route::get('add-emg-billing/{id}', [EmgBillingController::class, 'create_billing_in_emg'])->name('add-emg-billing');
+        Route::post('add-new-emg-billing', [EmgBillingController::class, 'save_new_emg_billing'])->name('add-new-emg-billing');
+    });
+    Route::get('emg-bill-details/{bill_id}', [EmgBillingController::class, 'bill_details_in_emg'])->name('emg-bill-details');
+    Route::group(['middleware' => ['permission:edit emg billing']], function () {
+        Route::get('edit-emg-bill/{bill_id}', [EmgBillingController::class, 'edit_emg_bill'])->name('edit-emg-bill');
+    });
+    Route::group(['middleware' => ['permission:delete emg billing']], function () {
+        Route::get('delete-emg-bill/{bill_id}', [EmgBillingController::class, 'delete_emg_bill'])->name('delete-emg-bill');
+    });
+});
+//================================= Emg billing ====================================
+
+
+
 
 //================================= Emg payment ====================================
 Route::group(['middleware' => ['permission:emg payment'], 'prefix' => 'emg-payment'], function () {
@@ -2131,46 +2155,53 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
             Route::get('add-timeline-ipd/{ipd_id}', [TimelineController::class, 'add_timeline_ipd'])->name('add-timeline-ipd');
             Route::post('save-timeline-lisitng-in-ipd', [TimelineController::class, 'save_timeline_listing_ipd'])->name('save-timeline-lisitng-in-ipd');
         });
-    });
-
-    Route::group(['middleware' => ['permission:delete timeline list ipd']], function () {
-        Route::get('delete-timeline-lisitng-in-ipd/{id}', [TimelineController::class, 'delete_timeline_listing_ipd'])->name('delete-timeline-lisitng-in-ipd');
-    });
-    Route::group(['middleware' => ['permission:edit timeline list ipd']], function () {
-        Route::get('edit-timeline-lisitng-in-ipd/{id}', [TimelineController::class, 'edit_timeline_listing_ipd'])->name('edit-timeline-lisitng-in-ipd');
-        Route::post('update-timeline-lisitng-in-ipd', [
-            TimelineController::class,
-            'update_timeline_listing_ipd'
-        ])->name('update-timeline-lisitng-in-ipd');
-
-        Route::post('find-timeline-details-ipd', [TimelineController::class, 'find_timeline_details_ipd'])->name('find-timeline-details-ipd');
+        Route::group(['middleware' => ['permission:edit timeline ipd']], function () {
+            Route::get('edit-timeline-ipd/{ipd_id}/{id}', [TimelineController::class, 'edit_timeline_ipd'])->name('edit-timeline-ipd');
+            Route::post('update-timeline-lisitng-in-ipd', [TimelineController::class, 'update_timeline_listing_ipd'])->name('update-timeline-lisitng-in-ipd');
+        });
+        Route::group(['middleware' => ['permission:delete timeline ipd']], function () {
+            Route::get('delete-timeline-ipd/{id}', [TimelineController::class, 'delete_timeline_ipd'])->name('delete-timeline-ipd');
+        });
     });
 
     // =============================== Timeline ipd ====================================================
 
     // =============================== Bed Transfar ==================================================
 
-    Route::group(['middleware' => ['permission:add bed transfar history']], function () {
-        Route::post('save-bed-transfar-history', [BedTransfarController::class, 'save_bed_transfar_history'])->name('save-bed-transfar-history');
-    });
-    Route::group(['middleware' => ['permission:delete bed transfar history']], function () {
-        Route::get('delete-bed-transfar-history/{id}', [BedTransfarController::class, 'delete_bed_transfar_history'])->name('delete-bed-transfar-history');
-    });
-    Route::group(['middleware' => ['permission:edit bed transfar history']], function () {
-        Route::get('edit-bed-transfar-history/{id}', [BedTransfarController::class, 'edit_bed_transfar_history'])->name('edit-bed-transfar-history');
-        Route::post('update-bed-transfar-history', [
-            BedTransfarController::class,
-            'update_bed_transfar_history'
-        ])->name('update-bed-transfar-history');
+    Route::group(['middleware' => ['permission:ipd timeline'], 'prefix' => 'ipd-bed-history'], function () {
+        Route::group(['middleware' => ['permission:bed transfar history']], function () {
+            Route::get('bed-transfar-history-in-ipd/{ipd_id}', [BedTransfarController::class, 'bed_history_listing'])->name('bed-transfar-history-in-ipd');
+        });
+        Route::group(['middleware' => ['permission:add bed transfar history']], function () {
+            Route::get('add-bed-transfar-history-in-ipd/{ipd_id}', [BedTransfarController::class, 'add_bed_transfar_history'])->name('add-bed-transfar-history-in-ipd');
 
-        Route::post('find-patient-bed-history', [BedTransfarController::class, 'find_bed_history_details_ipd'])->name('find-patient-bed-history');
+            Route::post('save-bed-transfar-history', [BedTransfarController::class, 'save_bed_transfar_history'])->name('save-bed-transfar-history');
+        });
+        Route::group(['middleware' => ['permission:edit bed transfar history']], function () {
+            Route::get('edit-bed-transfar-history/{ipd_id}/{id}', [BedTransfarController::class, 'edit_bed_transfar_history'])->name('edit-bed-transfar-history');
+
+            Route::post('update-bed-transfar-history', [BedTransfarController::class, 'update_bed_transfar_history'])->name('update-bed-transfar-history');
+        });
     });
 
     // =============================== Bed Transfar ====================================================
 
     // =============================== Nurse Note ==================================================
-    Route::group(['middleware' => ['permission:add nurse note']], function () {
-        Route::post('save-nurse-note-details', [NurseNoteController::class, 'save_nurse_note_details'])->name('save-nurse-note-details');
+    Route::group(['middleware' => ['permission:ipd payment'], 'prefix' => 'ipd-nurse-note'], function () {
+        Route::group(['middleware' => ['permission:timeline list ipd']], function () {
+            Route::get('ipd-nurse-note-details/{ipd_id}', [NurseNoteController::class, 'ipd_nurse_note_details'])->name('ipd-nurse-note-details');
+        });
+        Route::group(['middleware' => ['permission:add ipd payment']], function () {
+            Route::get('add-nurse-note-details/{ipd_id}', [NurseNoteController::class, 'add_nurse_note_details'])->name('add-nurse-note-details');
+            Route::post('save-nurse-note-details', [NurseNoteController::class, 'save_nurse_note_details'])->name('save-nurse-note-details');
+        });
+        Route::group(['middleware' => ['permission:edit ipd payment']], function () {
+            Route::get('edit-ipd-nurse-note-details/{ipd_id}/{id}', [NurseNoteController::class, 'edit_nurse_note_details'])->name('edit-ipd-nurse-note-details');
+            Route::post('update-ipd-nurse-note-details', [NurseNoteController::class, 'update_nurse_note_details'])->name('update-ipd-nurse-note-details');
+        });
+        Route::group(['middleware' => ['permission:delete ipd payment']], function () {
+            Route::get('delete-ipd-nurse-note-details/{id}', [NurseNoteController::class, 'delete_nurse_note_details'])->name('delete-ipd-nurse-note-details');
+        });
     });
     // =============================== Nurse Note ==================================================
 
@@ -2180,8 +2211,14 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
         Route::get('add-medicaiton-dose/{ipd_id}', [MedicationController::class, 'add_medicaiton_dose'])->name('add-medicaiton-dose');
 
-
         Route::post('save-medicaiton-dose', [MedicationController::class, 'save_medicaiton_dose'])->name('save-medicaiton-dose');
+
+        Route::get('edit-medicaiton-dose/{ipd_id}/{id}', [MedicationController::class, 'edit_medicaiton_dose'])->name('edit-medicaiton-dose');
+
+        Route::post('update-medicaiton-dose', [MedicationController::class, 'update_medicaiton_dose'])->name('update-medicaiton-dose');
+
+        Route::get('delete-medicaiton-dose/{id}', [MedicationController::class, 'delete_medicaiton_dose'])->name('delete-medicaiton-dose');
+
         Route::post('find-medicine-name-by-medicine-catagory', [MedicationController::class, 'find_medicine_name_by_medicine_catagory'])->name('find-medicine-name-by-medicine-catagory');
         Route::post('find-dosage-by-medicine-catagory', [MedicationController::class, 'find_dosage_by_medicine_catagory'])->name('find-dosage-by-medicine-catagory');
         Route::post('find-medication-details', [MedicationController::class, 'find_medication_details'])->name('find-medication-details');
@@ -2195,23 +2232,58 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
         Route::post('save-oxygen-monitoring-details', [OxygenMonitoringController::class, 'save_oxygen_monitoring_details'])->name('save-oxygen-monitoring-details');
 
-
         Route::get('delete-oxygen-monitoring/{id}', [OxygenMonitoringController::class, 'delete_oxygen_monitoring'])->name('delete-oxygen-monitoring');
     });
     // ================================= OxygenMonitoring ==================================================
 
     // =============================== Ipd - Operation ==================================================
-    Route::group(['middleware' => ['permission:save operation theatre']], function () {
-        Route::post('save-ipd-operation-details', [OperationTheatreController::class, 'save_ipd_operation_details'])->name('save-ipd-operation-details');
+    Route::group(['middleware' => ['permission:operation theatre']], function () {
+
+        Route::get('show-ipd-operation-details/{ipd_id}', [OperationTheatreController::class, 'show_ipd_operation_details'])->name('show-ipd-operation-details');
+
+        Route::group(['middleware' => ['permission:save operation theatre']], function () {
+
+            Route::get('add-ipd-operation-details/{ipd_id}', [OperationTheatreController::class, 'add_ipd_operation_details'])->name('add-ipd-operation-details');
+
+            Route::post('save-ipd-operation-details', [OperationTheatreController::class, 'save_ipd_operation_details'])->name('save-ipd-operation-details');
+        });
+
+        Route::group(['middleware' => ['permission:edit operation theatre']], function () {
+
+            Route::get('edit-ipd-operation-details/{ipd_id}', [OperationTheatreController::class, 'edit_ipd_operation_details'])->name('edit-ipd-operation-details');
+
+            Route::post('update-ipd-operation-details', [OperationTheatreController::class, 'update_ipd_operation_details'])->name('update-ipd-operation-details');
+        });
+
+        Route::group(['middleware' => ['permission:delete operation theatre']], function () {
+
+            Route::get('delete-ipd-operation-details/{ipd_id}', [OperationTheatreController::class, 'delete_ipd_operation_details'])->name('delete-ipd-operation-details');
+        });
+
         Route::post('find-operation-type-and-catagory-by-department', [OperationTheatreController::class, 'find_operation_type_and_name_by_department'])->name('find-operation-type-and-catagory-by-department');
         Route::post('find-operation-name-by-operation-catagory', [OperationTheatreController::class, 'find_operation_name_by_operation_catagory'])->name('find-operation-name-by-operation-catagory');
     });
     // =============================== Ipd - Operation ==================================================
 
     // =============================== ipd payment ==================================================
-    Route::group(['middleware' => ['permission:save ipd payment']], function () {
-        Route::post('save-ipd-payment-details', [IpdPaymentController::class, 'save_ipd_payment_details'])->name('save-ipd-payment-details');
+
+    Route::group(['middleware' => ['permission:ipd payment'], 'prefix' => 'ipd-payment'], function () {
+        Route::group(['middleware' => ['permission:timeline list ipd']], function () {
+            Route::get('ipd-payment-details/{ipd_id}', [IpdPaymentController::class, 'ipd_payment_details'])->name('ipd-payment-details');
+        });
+        Route::group(['middleware' => ['permission:add ipd payment']], function () {
+            Route::get('add-ipd-payment-details/{ipd_id}', [IpdPaymentController::class, 'add_ipd_payment_details'])->name('add-ipd-payment-details');
+            Route::post('save-ipd-payment-details', [IpdPaymentController::class, 'save_ipd_payment_details'])->name('save-ipd-payment-details');
+        });
+        Route::group(['middleware' => ['permission:edit ipd payment']], function () {
+            Route::get('edit-ipd-payment-details/{ipd_id}/{id}', [IpdPaymentController::class, 'edit_ipd_payment_details'])->name('edit-ipd-payment-details');
+            Route::post('update-ipd-payment-details', [IpdPaymentController::class, 'update_ipd_payment_details'])->name('update-ipd-payment-details');
+        });
+        Route::group(['middleware' => ['permission:delete ipd payment']], function () {
+            Route::get('delete-ipd-payment-details/{id}', [IpdPaymentController::class, 'delete_ipd_payment_details'])->name('delete-ipd-payment-details');
+        });
     });
+
     // ================================ ipd payment ==================================================
 
     // =============================== ipd charges ==================================================

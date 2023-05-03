@@ -24,7 +24,8 @@ class MedicationController extends Controller
     {
         $ipdId = base64_decode($ipd_id);
         $ipd_details = IpdDetails::where('id', $ipdId)->first();
-        return view('Ipd.add-medication-dose', compact('ipd_details'));
+        $medicine_catagory = MedicineCatagory::all();
+        return view('Ipd.add-medication-dose', compact('ipd_details', 'medicine_catagory'));
     }
 
     public function save_medicaiton_dose(Request $request)
@@ -45,7 +46,7 @@ class MedicationController extends Controller
         $status = $medication->save();
 
         if ($status) {
-            return redirect()->route('show-medicaiton-dose', ['ipd_id' => ($request->ipd_id)])->with('success', " Medication Dose Added Succesfully ");
+            return redirect()->route('show-medicaiton-dose', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', " Medication Dose Added Succesfully ");
         } else {
             return back()->with('error', "Something Went Wrong");
         }
@@ -54,6 +55,7 @@ class MedicationController extends Controller
     public function find_medicine_name_by_medicine_catagory(Request $request)
     {
         $medicine_name  =  Medicine::where('medicine_catagory', $request->medicine_catagory_id)->get();
+
         return response()->json($medicine_name);
     }
 
@@ -78,5 +80,47 @@ class MedicationController extends Controller
         $dosage = Dosage::where('medicine_catagory_id', $request->medicine_catagory_id_for_dose)->get();
 
         return response()->json(['medicine_name' => $medicine_name, 'dosage' => $dosage]);
+    }
+
+    public function edit_medicaiton_dose(Request $request, $ipd_id, $id)
+    {
+        $ipdId = base64_decode($ipd_id);
+        $id = base64_decode($id);
+        $ipd_details = IpdDetails::where('id', $ipdId)->first();
+        $editMedicationDetails = MedicationDose::where('id', $id)->first();
+        $medicine_catagory = MedicineCatagory::all();
+        return view('Ipd.edit-medication-dose', compact('ipd_details', 'medicine_catagory', 'editMedicationDetails'));
+    }
+
+    public function update_medicaiton_dose(Request $request)
+    {
+        $request->validate([
+            'date' => 'required',
+            'medicine_catagory_id' => 'required',
+        ]);
+
+        $medication                             = MedicationDose::find($request->id);
+        $medication->ipd_id                     = $request->ipd_id;
+        $medication->date                       = \Carbon\Carbon::parse($request->date)->format('Y-m-d h:m:s');
+        $medication->time                       = $request->time;
+        $medication->medicine_catagory_id       = $request->medicine_catagory_id;
+        $medication->medicine_name              = $request->medicine_name;
+        $medication->dosage                     = $request->dosage;
+        $medication->remarks                    = $request->remarks;
+        $status = $medication->save();
+
+        if ($status) {
+            return redirect()->route('show-medicaiton-dose', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', " Medication Dose Updated Succesfully ");
+        } else {
+            return back()->with('error', "Something Went Wrong");
+        }
+    }
+
+    public function delete_medicaiton_dose($id)
+    {
+        $id = base64_decode($id);
+        MedicationDose::where('id', $id)->first()->delete();
+
+        return back()->with('success', 'Medication Dose Deleted Sucessfully');
     }
 }
