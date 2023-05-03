@@ -110,6 +110,7 @@ use App\Http\Controllers\front_office\SourceController;
 use App\Http\Controllers\OPD\BillingController;
 
 use App\Http\Controllers\PhysicalConditionController;
+use App\Http\Controllers\false\OpdFalseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -2229,3 +2230,13 @@ Route::group(['middleware' => ['permission:discount'], 'prefix' => 'discount'], 
     Route::post('given-discount', [DiscountController::class, 'given_discount'])->name('given-discount');
 });
 //================================= Discount ===================================================
+
+//================================= false section ===================================================
+Route::group(['middleware' => ['permission:False Generation'], 'prefix' => 'false-patient'], function () {
+    Route::group(['middleware' => ['permission:OPD False'], 'prefix' => 'opd-false'], function () {
+        Route::get('opd', [OpdFalseController::class, 'index'])->name('opd-false-generation');
+        Route::post('false-opd-registation', [OpdFalseController::class, 'false_opd_registation'])->name('false-opd-registation');
+        Route::post('registation-false-opd', [OpdFalseController::class, 'registation_false_opd'])->name('registation-false-opd');
+    });
+});
+//================================= false section ===================================================
