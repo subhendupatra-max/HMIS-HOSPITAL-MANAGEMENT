@@ -143,7 +143,7 @@ class TimelineController extends Controller
         $status = $timeline->save();
 
         if ($status) {
-            return back()->with('success', " Timeline Added Succesfully ");
+            return redirect()->route('timeline-lisitng-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', " Timeline Added Succesfully ");
         } else {
             return back()->with('error', "Something Went Wrong");
         }
@@ -155,7 +155,6 @@ class TimelineController extends Controller
         $ipd_details = IpdDetails::where('id', $ipdId)->first();
         $timelineDetails =  IpdTimeline::where('ipd_id', $ipdId)->get();
         return view('ipd.timeline', compact('timelineDetails', 'ipd_details'));
-
     }
     public function add_timeline_ipd($ipd_id)
     {
@@ -164,6 +163,54 @@ class TimelineController extends Controller
         $timelineDetails =  IpdTimeline::where('ipd_id', $ipdId)->get();
         return view('ipd.add-timeline', compact('timelineDetails', 'ipd_details'));
     }
+
+
+    public function edit_timeline_ipd(Request $request, $ipd_id, $id)
+    {
+        $ipdId = base64_decode($ipd_id);
+        $id = base64_decode($id);
+        $ipd_details = IpdDetails::where('id', $ipdId)->first();
+        $editTimelineIpd = IpdTimeline::where('id', $id)->first();
+        return view('ipd.edit-timeline', compact('editTimelineIpd', 'ipd_details'));
+    }
+
+    public function update_timeline_listing_ipd(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+        ]);
+
+        $filename = '';
+        if ($request->hasfile('attach_document')) {
+            $file = $request->file('attach_document');
+            $filename = rand() . '.' . $file->getClientOriginalExtension();
+            $fileSave =  $file->move("public/assets/images/ipd-timeline/", $filename);
+        }
+
+        $timeline                   = IpdTimeline::find($request->id);
+        $timeline->ipd_id           = $request->ipd_id;
+        $timeline->title            = $request->title;
+        $timeline->date             = \Carbon\Carbon::parse($request->date)->format('Y-m-d');
+        $timeline->description      = $request->description;
+        $timeline->attach_document  = $filename;
+
+        $status = $timeline->save();
+
+        if ($status) {
+            return redirect()->route('timeline-lisitng-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', " Timeline Updated Succesfully ");
+        } else {
+            return back()->with('error', "Something Went Wrong");
+        }
+    }
+
+    public function delete_timeline_ipd($id)
+    {
+        $id = base64_decode($id);
+        IpdTimeline::where('id', $id)->first()->delete();
+
+        return back()->with('success', 'Timeline Deleted Sucessfully');
+    }
+
     //============= timeline for ipd ====================
 
     //============= timeline for emg ====================
@@ -173,7 +220,7 @@ class TimelineController extends Controller
         $emgTimeline = EmgTimeline::all();
         $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
         $timelineDetails =  EmgTimeline::where('emg_id', $emg_id)->get();
-        return view('emg.timeline.timeline-listing', compact('emgTimeline', 'emg_id', 'timelineDetails','emg_patient_details'));
+        return view('emg.timeline.timeline-listing', compact('emgTimeline', 'emg_id', 'timelineDetails', 'emg_patient_details'));
     }
 
     public function add_timeline_listing_emg($id)

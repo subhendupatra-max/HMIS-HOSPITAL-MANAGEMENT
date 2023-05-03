@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Billing extends Model
 {
     use HasFactory;
+
     public function created_details()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');

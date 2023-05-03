@@ -22,6 +22,7 @@ use App\Models\Prefix;
 use App\Models\EmgSetup;
 use App\Models\PatientPhysicalDetails;
 use App\Models\AllHeader;
+use App\Models\EmgPayment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\EmgPatientPhysicalDetail;
@@ -32,7 +33,7 @@ class EmgController extends Controller
 
     public function index()
     {
-        $emg_registaion_list = EmgDetails::get();
+        $emg_registaion_list = EmgDetails::orderBy('id', 'desc')->paginate(25);
 
         return view('emg.emg-patient-list', compact('emg_registaion_list'));
     }
@@ -51,13 +52,12 @@ class EmgController extends Controller
         }
     }
 
-    public function emg_registation(Request $request,$patientid=null)
+    public function emg_registation(Request $request, $patientid = null)
     {
-        if($patientid != null){
+        if ($patientid != null) {
             $patient_id = base64_decode($patientid);
-        }
-        else{
-            $patient_id = $request->patient_id; 
+        } else {
+            $patient_id = $request->patient_id;
         }
         $tpa_management = TpaManagement::get();
         $referer = Referral::get();
@@ -182,7 +182,9 @@ class EmgController extends Controller
         $emg_id = base64_decode($id);
         $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
         $emg_visit_details = EmgPatientDetails::where('emg_details_id', $emg_id)->get();
-        return view('emg.emg-patient-profile', compact('emg_patient_details', 'emg_visit_details'));
+        $PhysicalDetails  =  EmgPatientPhysicalDetail::where('emg_id', $emg_id)->get();
+        $payment_amount = EmgPayment::where('emg_id', $emg_id)->sum('amount');
+        return view('emg.emg-patient-profile', compact('emg_patient_details', 'emg_visit_details', 'PhysicalDetails', 'payment_amount'));
     }
 
     public function admission_from_emg($id)

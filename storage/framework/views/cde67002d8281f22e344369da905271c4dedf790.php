@@ -10,5 +10,5 @@
 <script>
 setTimeout(function(){
   document.getElementById('message').style.display = 'none';
-}, 5000);
+}, 4000);
 </script><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/message/notification.blade.php ENDPATH**/ ?>
