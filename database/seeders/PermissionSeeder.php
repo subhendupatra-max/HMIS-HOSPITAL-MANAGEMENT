@@ -764,11 +764,23 @@ class PermissionSeeder extends Seeder
 
         //ipd timeline
         Permission::create(['name' => 'ipd tismeline']);
+<<<<<<< HEAD
         Permission::create(['name' => 'add timeline list ipd']);
         Permission::create(['name' => 'edit timeline ipd']);
         Permission::create(['name' => 'add timeline ipd']);
 
         //emg billing
         Permission::create(['name' => 'add emg billing']);
+=======
+        Permission::create(['name' => 'add timeline list ipd']); 
+        Permission::create(['name' => 'edit timeline ipd']);  
+        Permission::create(['name' => 'add timeline ipd']); 
+
+
+        //False Generation
+        Permission::create(['name' => 'False Generation']);
+        Permission::create(['name' => 'OPD False']);
+
+>>>>>>> cb97a404ce19559d68298ae73e960d024b8797a8
     }
 }
