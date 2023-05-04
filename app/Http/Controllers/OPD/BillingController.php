@@ -16,6 +16,7 @@ use App\Models\OpdDetails;
 use App\Models\PatientCharge;
 use App\Models\Payment;
 use App\Models\Prefix;
+use App\Models\DiscountDeatils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class BillingController extends Controller
     {
         $opd_id = base64_decode($id);
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
-        $opd_billing_details = Billing::where('section', 'OPD')->where('opd_id', $opd_id)->get();
+        $opd_billing_details = Billing::where('section', 'OPD')->where('opd_id', $opd_id)->orderBy('id','desc')->paginate(10);
         return view('OPD.billing.billing-list', compact('opd_patient_details', 'opd_id', 'opd_billing_details'));
     }
     public function create_billing($id)
@@ -80,18 +81,28 @@ class BillingController extends Controller
 
     public function save_new_opd_billing(Request $request)
     {
-        //  dd($request->all());
+        // dd($request->all());
         $validate = $request->validate([
             'bill_date'   => 'required',
             'grand_total'   => 'required',
         ]);
         try {
             DB::beginTransaction();
+
             if ($request->take_discount == 'yes') {
-                $status = 'Requested For Discount';
+                $status = 'Done';
+                $tax = $request->total_tax;
+                $tax_total = $request->total + (($request->total)*($tax / 100));
+                $grand_total = number_format((float)($tax_total), 2, '.', '');
+                $discount_status = 'Requested';
             } else {
-                $status = 'Billing Done';
+                $discount_status = 'Not applied';
+                $tax = $request->total_tax;
+                $tax_total = $request->total + (($request->total)*($tax / 100));
+                $grand_total = number_format((float)($tax_total), 2, '.', '');
+                $status = 'Done';
             }
+
             if ($request->payment_amount != null) {
                 if ($request->payment_amount == $request->grand_total) {
                     $payment_status = 'Done';
@@ -110,8 +121,9 @@ class BillingController extends Controller
             $bill->opd_id = $request->opd_id;
             $bill->total_amount = $request->total;
             $bill->tax = $request->total_tax;
-            $bill->grand_total = number_format((float)$request->grand_total, 2, '.', '');
+            $bill->grand_total = $grand_total;
             $bill->payment_status = $payment_status;
+            $bill->discount_status = $discount_status;
             $bill->status =  $status;
             $bill->created_by = Auth::user()->id;
             $bill->note = $request->note;
@@ -152,7 +164,13 @@ class BillingController extends Controller
                 $discount_details->bill_amount = $request->total;
                 $discount_details->save();
                 // ====================== Discount Detaiils ==================================
+                
+                $bill_update = Billing::find($bill->id);
+                $bill_update->discount_id = $discount->id;
+                $bill_update->save();
             }
+
+
             if ($request->payment_amount != null || $request->payment_amount != 0 || $request->payment_amount != '') {
                 // ====================== add payment =======================================
                 $payment_prefix = Prefix::where('name', 'payment')->first();
@@ -184,9 +202,10 @@ class BillingController extends Controller
     {
         $billId = base64_decode($bill_id);
         $bill_details = Billing::where('id', $billId)->first();
+        $discount_details = DiscountDetails::where('bill_id', $billId)->first();
         $patient_charge_details = PatientCharge::where('bill_id', $billId)->get();
         $opd_patient_details = OpdDetails::where('id', $bill_details->opd_id)->first();
-        return view('OPD.billing.billing-details', compact('bill_details', 'patient_charge_details', 'opd_patient_details'));
+        return view('OPD.billing.billing-details', compact('bill_details', 'patient_charge_details', 'opd_patient_details','discount_details'));
     }
     public function edit_opd_bill($bill_id)
     {

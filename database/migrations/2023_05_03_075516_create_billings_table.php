@@ -26,6 +26,8 @@ class CreateBillingsTable extends Migration
             $table->string('total_amount');
             $table->string('tax')->nullable();
             $table->string('grand_total')->nullable();
+            $table->string('discount_status')->nullable();
+            $table->string('discount_id')->nullable();
             $table->string('payment_status')->nullable();
             $table->string('status')->nullable();
             $table->string('is_delete')->default(0);

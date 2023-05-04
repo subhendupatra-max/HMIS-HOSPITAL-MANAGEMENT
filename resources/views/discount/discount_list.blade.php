@@ -21,9 +21,11 @@
         @endif
 
         <div class="card-body">
-            <table id="example" class="table table-borderless text-nowrap key-buttons">
+            <table class="table card-table table-vcenter text-nowrap table-default">
                 <thead>
                     <tr>
+                        <th scope="col">Discount No.</th>
+                        <th scope="col">Bill No.</th>
                         <th scope="col">Patient Name</th>
                         <th scope="col">Section</th>
                         <th scope="col">Mobile No.</th>
@@ -38,9 +40,15 @@
                     @foreach ($discountList as $value)
                     <?php $discount_details = App\Models\DiscountDetails::where('discount_id', $value->id);
                                 $total_bill_amount = $discount_details->sum('bill_amount');
-
+                                $_bill_id = $discount_details->get();
                                 ?>
                     <tr>
+                        <td>{{ $value->id }}</td>
+                        <td>
+                            @foreach ($_bill_id as $values)
+                                <span style="color:brown">{{  $values->bill_id }} </span>
+                            @endforeach
+                        </td>
                         <td>
                             <a href="{{route('view-discount-details',['discount_id'=>base64_encode($value->id)])}}">
                                 <span style="color:blue">{{ $value->patient_details->prefix . ' ' .
@@ -83,6 +91,7 @@
                     @endif
                 </tbody>
             </table>
+            {!! $discountList->links() !!}
         </div>
     </div>
 </div>

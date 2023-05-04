@@ -30,6 +30,7 @@ use App\Models\PatientPhysicalDetails;
 use App\Models\Prefix;
 use App\Models\OpdPatientPhysicalDetail;
 use App\Models\OpdPayment;
+use App\Models\Billing;
 use PDF;
 
 class OpdController extends Controller
@@ -307,9 +308,10 @@ class OpdController extends Controller
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
         $PhysicalDetails  =  OpdPatientPhysicalDetail::where('opd_id', $opd_id)->get();
         $payment_amount = OpdPayment::where('opd_id', $opd_id)->sum('amount');
+        $billing_amount = Billing::where('opd_id', $opd_id)->sum('grand_total');
         // $opd_visit_details = OpdVisitDetails::where('opd_details_id',$opd_id)->get();
         $opd_visit_details = OpdVisitDetails::where('opd_details_id', $opd_id)->first();
-        return view('OPD.opd-patient-profile', compact('opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount'));
+        return view('OPD.opd-patient-profile', compact('billing_amount','opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount'));
     }
 
     //opd setup
