@@ -23,6 +23,10 @@
                                 <th class="border-bottom-0">Category</th>
                                 <th class="border-bottom-0">Medicine Composition</th>
                                 <th class="border-bottom-0">Stock </th>
+                                @can('update stock from back')
+                                    <th class="border-bottom-0">Stock Update</th>
+                                @endcan
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +50,11 @@
                                     <td>{{$value->medicine_catagory_name}}</td>
                                     <td>{{$value->medicine_composition}}</td>
                                     <td>{!!$stock_status!!}</td>
+                                    @can('update stock from back')
+                                    <td>
+                                        <a class="btn btn-success btn-sm" href="{{ route('update-medicine-stock',['medicine_id'=>$value->id]) }}">Update Stock</a>
+                                    </td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             @endif

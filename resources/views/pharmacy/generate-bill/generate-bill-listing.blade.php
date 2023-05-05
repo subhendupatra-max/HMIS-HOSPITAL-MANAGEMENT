@@ -42,7 +42,20 @@
                             </tr>
                         </thead>
                         <tbody>
-
+                            @if(@$medicine_bill)
+                            @foreach ($medicine_bill as $value)
+                                <tr>
+                                    <td>{{ @$value->bill_prefix }}{{ @$value->id }}</td>
+                                    <td>{{ @$value->case_id }}</td>
+                                    <td>{{ date('d-m-Y h:i a',strtotime($value->bill_date)) }}</td>
+                                    <td>{{ @$value->all_patient_details->prefix }} {{ @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name }} {{ @$value->all_patient_details->last_name }}<br>
+                                        {{ @$value->all_patient_details->patient_prefix }}{{ @$value->all_patient_details->id }}
+                                    </td>
+                                    <td>{{ @$value->total_amount }}</td>
+                                    <td>d</td>
+                                </tr>
+                            @endforeach
+                            @endif
                         </tbody>
                     </table>
 

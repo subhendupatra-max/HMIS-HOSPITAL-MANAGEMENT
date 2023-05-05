@@ -96,6 +96,18 @@ unset($__errorArgs, $__bag); ?>
                                             </td>
                                             <td class="py-2 px-5"><?php echo e(@$patient_details_information->phone); ?></td>
                                         </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Section </span>
+                                            </td>
+                                            <td class="py-2 px-5"><?php echo e(@$patient_reg_details->section); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Case Id </span>
+                                            </td>
+                                            <td class="py-2 px-5"><span style="color:blue"><?php echo e(@$patient_reg_details->id); ?></span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

@@ -91,7 +91,7 @@
                                 <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right" style="">
-                                    
+                                    <a class="dropdown-item" href=""><i class="fa fa-file"></i> Bill Summary</a>
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><i
                                             class="fa fa-eye"></i> View</a>

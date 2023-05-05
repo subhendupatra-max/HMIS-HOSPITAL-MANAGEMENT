@@ -26643,7 +26643,17 @@ top: -29px;
 .headersetupedit{
     margin: 10px 0px 20px 0px;
 }
+.add-medicinedesign{
+  margin: 27px 0px 0px 0px;
+}
+.add-medicinedesignn{
+  margin: 23px 0px 0px 16px;
+}
+.add-medicinedesignin{
+  margin: 32px 0px 0px 22px;
+}
 /* ------------------finding setup--------------------- */
+
 @media (max-width: 768px)
 {
     .newuserchangee {

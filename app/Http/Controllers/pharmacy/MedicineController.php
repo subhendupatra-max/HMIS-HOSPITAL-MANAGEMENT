@@ -182,4 +182,10 @@ class MedicineController extends Controller
         $dat = Excel::import(new MedicineImport, request()->file('medicine_file'));
         return redirect()->route('all-medicine-listing')->with('success', 'Medicine Import Sucessful');
     }
+
+    public function update_stock_form($medicine_id)
+    {
+        $medicine_details = Medicine::find($medicine_id);
+        return view('pharmacy.update-stock', compact('medicine_details')); 
+    }
 }

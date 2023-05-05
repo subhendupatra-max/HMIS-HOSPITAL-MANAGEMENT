@@ -36,10 +36,10 @@
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-                                        <div class="col-md-6 mb-2">
+                                        {{-- <div class="col-md-6 mb-2">
                                             <input type="text" id="prescription_no" />
                                             <label for="prescription_no">Search By Prescription No.</label>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-12 mb-2">
                                             <button type="submit" class="btn btn-primary btn-sm"><i
                                                     class="fa fa-search"></i>
@@ -58,6 +58,22 @@
                                     <div class="table-responsive">
                                         <table class="table">
                                             <tbody>
+                                                <tr>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Case Id </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <span style="color:blue">{{ @$patient_details_information->id
+                                                            }}</span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Section </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <span style="color:rgb(36, 136, 11)">{{
+                                                            @$patient_details_information->section }}</span>
+                                                    </td>
+                                                </tr>
                                                 <tr>
                                                     <td class="py-2 px-5">
                                                         <span class="font-weight-semibold w-50">Gender </span>
@@ -89,6 +105,7 @@
                                                     </td>
                                                     <td class="py-2 px-5">
                                                         {{ @$patient_details_information->phone }}</td>
+
                                                 </tr>
 
                                             </tbody>
@@ -143,43 +160,64 @@
                                     </table>
                                 </div>
                             </div>
+
                         </div>
+
                         <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
-                        <div class="options px-5 pt-5  border-bottom pb-3">
-                            <div class="container mt-5">
-                                <div class="d-flex justify-content-end">
-                                    <span class="biltext">Total</span>
-                                    <input type="text" name="total" readonly id="total_am" class="form-control myfld">
+                        <input type="hidden" name="section" value="{{ @$patient_details_information->section }}" />
+                        <input type="hidden" name="case_id" value="{{ @$patient_details_information->id }}" />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-8 add-medicinedesignn">
+                                                <label >Note </label>
+                                                {{-- <textarea  name="note"></textarea> --}}
+                                                <input type="text" name="note" id="note" >
+                                            </div>
+                                            <div class="col-md-4 add-medicinedesignin">
+                                                <label>Payment Amount </label>
+                                                <input type="text" name="payment_amount"  />
+                                                @error('payment_amount')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-md-4 add-medicinedesign">
+                                                <label>Payment Mode</label>
+                                                <select class="form-control" name="payment_mode">
+                                                    <option value="">Select One...</option>
+                                                    @foreach (Config::get('static.payment_mode_name') as $lang => $payment_mode_name)
+                                                        <option value="{{ $payment_mode_name }}"> {{ $payment_mode_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('payment_mode')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="options px-5 pt-5  border-bottom pb-3">
+                                            <div class="container mt-5">
+                                                <div class="d-flex justify-content-end">
+                                                    <span class="biltext">Total</span>
+                                                    <input type="text" name="total" readonly id="total_am"
+                                                        class="form-control myfld">
+                                                </div>
+                                                @error('total')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                @error('total')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                                {{-- <div class="d-flex justify-content-end mt-2">
-                                    <span class="biltext">Discount (% / flat)</span>
-                                    <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
-                                        id="total_discount" class="form-control myfld">
-                                    <select name="discount_type" onchange="gettotal()" id="discount_type"
-                                        class="form-control myfld" style="width: 75px">
-                                        <option value="percentage" selected>%</option>
-                                        <option value="flat">Flat</option>
-                                    </select>
-                                </div> --}}
-                                {{-- <div class="d-flex justify-content-end mt-2">
-                                    <span class="biltext">Tax</span>
-                                    <input type="text" name="total_tax" onkeyup="gettotal()" value="0" id="total_tax"
-                                        class="form-control myfld">
-                                </div> --}}
-                                {{-- <div class="d-flex justify-content-end thrdarea">
-                                    <span class="biltext">Grand Total</span>
-                                    <input type="text" name="grand_total" readonly id="grnd_total" value="00"
-                                        class="form-control myfld">
-                                    @error('grnd_total')
-                                    <br>
-                                    <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div> --}}
                             </div>
                         </div>
+
+
                         <div class="btn-list p-3">
                             <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
                                     class="fa fa-calculator"></i> Calculate</button>

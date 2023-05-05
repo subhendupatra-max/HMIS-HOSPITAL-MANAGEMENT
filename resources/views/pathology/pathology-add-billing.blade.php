@@ -87,6 +87,18 @@
                                             </td>
                                             <td class="py-2 px-5">{{@$patient_details_information->phone }}</td>
                                         </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Section </span>
+                                            </td>
+                                            <td class="py-2 px-5">{{@$patient_reg_details->section }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Case Id </span>
+                                            </td>
+                                            <td class="py-2 px-5"><span style="color:blue">{{@$patient_reg_details->id }}</span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -119,6 +131,9 @@
                             </div>
                         </div>
                         <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
+                        <input type="hidden" name="section" value="{{ @$patient_reg_details->section }}" />
+                        <input type="hidden" name="case_id" value="{{ @$patient_reg_details->id }}" />
+
                         <div class="options px-5 pt-5  border-bottom pb-3">
 
                                 <div class=" add-pathologydesign">

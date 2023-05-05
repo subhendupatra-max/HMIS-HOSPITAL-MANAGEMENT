@@ -178,7 +178,6 @@ class BillingController extends Controller
                 $payment->patient_id = $request->patient_id;
                 $payment->case_id = $request->case_id;
                 $payment->section = $request->section;
-
                 $payment->opd_id = $request->opd_id;
                 $payment->emg_id = $request->emg_id;
                 $payment->ipd_id = $request->ipd_id;

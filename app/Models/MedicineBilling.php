@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Payment extends Model
+class MedicineBilling extends Model
 {
     use HasFactory;
-    public function generated_by()
+    public function all_patient_details()
     {
-        return $this->belongsTo(User::class, 'payment_recived_by', 'id');
+        return $this->belongsTo(Patient::class,'patient_id','id');
     }
 }

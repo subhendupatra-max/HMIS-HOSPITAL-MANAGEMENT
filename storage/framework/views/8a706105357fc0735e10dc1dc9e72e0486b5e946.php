@@ -1,190 +1,269 @@
 
 <?php $__env->startSection('content'); ?>
 
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <div class="card-title">Medicine Billing</div>
-            </div>
-            <div class="card-body p-0">
-                <div class="row no-gutters">
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Medicine Billing</div>
+        </div>
+        <div class="card-body p-0">
+            <div class="row no-gutters">
 
 
-                    <div class="col-lg-12 col-xl-12">
-                        <div class="options px-5 pt-1  border-bottom pb-3">
-                            <div class="row">
-                                
-                                <div class="options px-5 pt-5  border-right pb-3">
-                                    <form method="post" action="<?php echo e(route('add-pharmacy-billing-for-a-patient')); ?>">
-                                        <?php echo csrf_field(); ?>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2">
-                                                <select class="form-control  select2-show-search" name="patient_id">
-                                                    <option value="">Search Patient...</option>
-                                                    <?php if(isset($all_patient)): ?>
-                                                        <?php $__currentLoopData = $all_patient; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                            <option value="<?php echo e(@$patient->id); ?>"
-                                                                <?php echo e(@$patient_details_information->id == $patient->id ? 'Selected' : ''); ?>>
-                                                                <?php echo e(@$patient->prefix); ?> <?php echo e(@$patient->first_name); ?>
+                <div class="col-lg-12 col-xl-12">
+                    <div class="options px-5 pt-1  border-bottom pb-3">
+                        <div class="row">
+                            
+                            <div class="options px-5 pt-5  border-right pb-3">
+                                <form method="post" action="<?php echo e(route('add-pharmacy-billing-for-a-patient')); ?>">
+                                    <?php echo csrf_field(); ?>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-2">
+                                            <select class="form-control  select2-show-search" name="patient_id">
+                                                <option value="">Search Patient...</option>
+                                                <?php if(isset($all_patient)): ?>
+                                                <?php $__currentLoopData = $all_patient; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e(@$patient->id); ?>" <?php echo e(@$patient_details_information->id
+                                                    == $patient->id ? 'Selected' : ''); ?>>
+                                                    <?php echo e(@$patient->prefix); ?> <?php echo e(@$patient->first_name); ?>
 
-                                                                <?php echo e(@$patient->middle_name); ?>
+                                                    <?php echo e(@$patient->middle_name); ?>
 
-                                                                <?php echo e(@$patient->last_name); ?> (
-                                                                <?php echo e(@$patient->id); ?> ) </option>
-                                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                    <?php endif; ?>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 mb-2">
-                                                <input type="text" id="prescription_no" />
-                                                <label for="prescription_no">Search By Prescription No.</label>
-                                            </div>
-                                            <div class="col-md-12 mb-2">
-                                                <button type="submit" class="btn btn-primary btn-sm"><i
-                                                        class="fa fa-search"></i>
-                                                    Search</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                                
-
-                                <?php if(isset($patient_details_information)): ?>
-                                    
-                                    <?php $__errorArgs = ['patientId'];
+                                                    <?php echo e(@$patient->last_name); ?> (
+                                                    <?php echo e(@$patient->id); ?> ) </option>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                <?php endif; ?>
+                                            </select>
+                                            <?php $__errorArgs = ['patientId'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                        <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
+                                            <span class="text-danger"><?php echo e($message); ?></span>
+                                            <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                                    <div class="options px-5  pb-3">
-                                        <div class="row">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="py-2 px-5">
-                                                                <span class="font-weight-semibold w-50">Gender </span>
-                                                            </td>
-                                                            <td class="py-2 px-5">
-                                                                <?php echo e(@$patient_details_information->gender); ?></td>
-                                                            <td class="py-2 px-5">
-                                                                <span class="font-weight-semibold w-50">Age </span>
-                                                            </td>
-                                                            <td class="py-2 px-5">
-                                                                <?php echo e(@$patient_details_information->year); ?>y
-                                                                <?php echo e(@$patient_details_information->month); ?>m
-                                                                <?php echo e(@$patient_details_information->day); ?>d
-                                                            </td>
-                                                        </tr>
-
-                                                        <tr>
-                                                            <td class="py-2 px-5">
-                                                                <span class="font-weight-semibold w-50">Guardian Name
-                                                                </span>
-                                                            </td>
-                                                            <td class="py-2 px-5">
-                                                                <?php echo e(@$patient_details_information->guardian_name_realation); ?>
-
-                                                                <?php echo e(@$patient_details_information->guardian_name); ?>
-
-                                                            </td>
-
-                                                            <td class="py-2 px-5">
-                                                                <span class="font-weight-semibold w-50">Phone </span>
-                                                            </td>
-                                                            <td class="py-2 px-5">
-                                                                <?php echo e(@$patient_details_information->phone); ?></td>
-                                                        </tr>
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-12 mb-2">
+                                            <button type="submit" class="btn btn-primary btn-sm"><i
+                                                    class="fa fa-search"></i>
+                                                Search</button>
                                         </div>
                                     </div>
-                                    
-                                <?php endif; ?>
-
+                                </form>
                             </div>
-                        </div>
-                        <form method="post" action="<?php echo e(route('save-pharmacy-billing')); ?>">
-                            <?php echo csrf_field(); ?>
+                            
 
-                            <div class="options px-5 pt-1  border-bottom pb-3">
+                            <?php if(isset($patient_details_information)): ?>
+                            
+
+                            <div class="options px-5  pb-3">
                                 <div class="row">
                                     <div class="table-responsive">
-                                        <table class="table card-table table-vcenter text-nowrap">
-                                            <thead>
+                                        <table class="table">
+                                            <tbody>
                                                 <tr>
-                                                    <th scope="col" style="width: 10%">Category <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 20%">Name <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 10%">Batch No <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 10%">Expiry Date <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">MRP <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Sale Price <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Qty <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Unit <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Tax <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 8%">Amount <span
-                                                            class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 2%">
-                                                        <button class="btn btn-success btn-sm" type="button"
-                                                            onclick="addnewrow()"><i class="fa fa-plus"></i></button>
-                                                    </th>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Case Id </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <span style="color:blue"><?php echo e(@$patient_details_information->id); ?></span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Section </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <span style="color:rgb(36, 136, 11)"><?php echo e(@$patient_details_information->section); ?></span>
+                                                    </td>
                                                 </tr>
-                                            </thead>
-                                            <tbody id="subhendu">
+                                                <tr>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Gender </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <?php echo e(@$patient_details_information->gender); ?></td>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Age </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <?php echo e(@$patient_details_information->year); ?>y
+                                                        <?php echo e(@$patient_details_information->month); ?>m
+                                                        <?php echo e(@$patient_details_information->day); ?>d
+                                                    </td>
+                                                </tr>
 
-                                                <!-- dynamic row -->
+                                                <tr>
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Guardian Name
+                                                        </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <?php echo e(@$patient_details_information->guardian_name_realation); ?>
+
+                                                        <?php echo e(@$patient_details_information->guardian_name); ?>
+
+                                                    </td>
+
+                                                    <td class="py-2 px-5">
+                                                        <span class="font-weight-semibold w-50">Phone </span>
+                                                    </td>
+                                                    <td class="py-2 px-5">
+                                                        <?php echo e(@$patient_details_information->phone); ?></td>
+
+                                                </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="patientId" value="<?php echo e(@$patient_details_information->id); ?>" />
-                            <div class="options px-5 pt-5  border-bottom pb-3">
-                                <div class="container mt-5">
-                                    <div class="d-flex justify-content-end">
-                                        <span class="biltext">Total</span>
-                                        <input type="text" name="total" readonly id="total_am"
-                                            class="form-control myfld">
-                                    </div>
-                                    
-                                    
-                                    
+                            
+                            <?php endif; ?>
+
+                        </div>
+                    </div>
+                    <form method="post" action="<?php echo e(route('save-pharmacy-billing')); ?>">
+                        <?php echo csrf_field(); ?>
+
+                        <div class="options px-5 pt-1  border-bottom pb-3">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" style="width: 10%">Category <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 20%">Name <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 10%">Batch No <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 10%">Expiry Date <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 8%">MRP <span class="text-danger">*</span>
+                                                </th>
+                                                <th scope="col" style="width: 8%">Sale Price <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 8%">Qty <span class="text-danger">*</span>
+                                                </th>
+                                                <th scope="col" style="width: 8%">Unit <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 8%">Tax <span class="text-danger">*</span>
+                                                </th>
+                                                <th scope="col" style="width: 8%">Amount <span
+                                                        class="text-danger">*</span></th>
+                                                <th scope="col" style="width: 2%">
+                                                    <button class="btn btn-success btn-sm" type="button"
+                                                        onclick="addnewrow()"><i class="fa fa-plus"></i></button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="subhendu">
+
+                                            <!-- dynamic row -->
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="btn-list p-3">
-                                <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
-                                        class="fa fa-calculator"></i> Calculate</button>
-                                <button class="btn btn-primary btn-sm float-right " type="submit" value="save" name="save"><i
-                                        class="fa fa-file"></i> Save</button>
-                                <button class="btn btn-primary btn-sm float-right mr-2" value="save_and_print" name="save_and_print"
-                                    type="submit"><i class="fa fa-paste"></i> Save & Print</button>
+
+                        </div>
+
+                        <input type="hidden" name="patientId" value="<?php echo e(@$patient_details_information->id); ?>" />
+                        <input type="hidden" name="section" value="<?php echo e(@$patient_details_information->section); ?>" />
+                        <input type="hidden" name="case_id" value="<?php echo e(@$patient_details_information->case_id); ?>" />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-8 add-medicinedesignn">
+                                                <label >Note </label>
+                                                
+                                                <input type="text" name="note" id="note" >
+                                            </div>
+                                            <div class="col-md-4 add-medicinedesignin">
+                                                <label>Payment Amount </label>
+                                                <input type="text" name="payment_amount"  />
+                                                <?php $__errorArgs = ['payment_amount'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
+                                            <div class="col-md-4 add-medicinedesign">
+                                                <label>Payment Mode</label>
+                                                <select class="form-control" name="payment_mode">
+                                                    <option value="">Select One...</option>
+                                                    <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $payment_mode_name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($payment_mode_name); ?>"> <?php echo e($payment_mode_name); ?>
+
+                                                        </option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                </select>
+                                                <?php $__errorArgs = ['payment_mode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="options px-5 pt-5  border-bottom pb-3">
+                                            <div class="container mt-5">
+                                                <div class="d-flex justify-content-end">
+                                                    <span class="biltext">Total</span>
+                                                    <input type="text" name="total" readonly id="total_am"
+                                                        class="form-control myfld">
+                                                </div>
+                                                <?php $__errorArgs = ['total'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <span class="text-danger"><?php echo e($message); ?></span>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+
+
+                        <div class="btn-list p-3">
+                            <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
+                                    class="fa fa-calculator"></i> Calculate</button>
+                            <button class="btn btn-primary btn-sm float-right " type="submit" value="save"
+                                name="save"><i class="fa fa-file"></i> Save</button>
+                            <button class="btn btn-primary btn-sm float-right mr-2" value="save_and_print"
+                                name="save_and_print" type="submit"><i class="fa fa-paste"></i> Save & Print</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- ===========================Add New Item Using New Row=========================== -->
-    <script type="text/javascript">
-        var i = 0;
+<!-- ===========================Add New Item Using New Row=========================== -->
+<script type="text/javascript">
+    var i = 0;
 
         function addnewrow() {
             var html = `  <tr id="row${i}">
@@ -320,16 +399,16 @@ unset($__errorArgs, $__bag); ?>
                 }
             });
         }
-    </script>
-    <!-- ===========================Add New Item Using New Row=========================== -->
-    <script type="text/javascript">
-        function removerow(i) {
+</script>
+<!-- ===========================Add New Item Using New Row=========================== -->
+<script type="text/javascript">
+    function removerow(i) {
             $('#row' + i).remove();
             gettotal();
         }
-    </script>
-    <script type="text/javascript">
-        function gettotal() {
+</script>
+<script type="text/javascript">
+    function gettotal() {
             var no_of_row = $('#subhendu tr').length;
             console.log('aaa=>', no_of_row);
 
@@ -341,9 +420,8 @@ unset($__errorArgs, $__bag); ?>
 
 
         }
-    </script>
+</script>
 
 
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pharmacy/generate-bill/add-medicine-bill.blade.php ENDPATH**/ ?>

@@ -31,6 +31,7 @@
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Date</th>
                                 <th class="border-bottom-0">Amount</th>
+                                <th class="border-bottom-0">Received By</th>
                                 <th class="border-bottom-0">Payment Mode</th>
                                 @can('edit opd payment','delete opd payment')
                                 <th>Action</th>
@@ -41,8 +42,9 @@
                             @foreach ($opdPaymentDetails as $item)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{$item->payment_date}}</td>
-                                <td>{{$item->amount}}</td>
+                                <td>{{date('d-m-Y h:i a',strtotime($item->payment_date))}}</td>
+                                <td>{{$item->payment_amount}}</td>
+                                <td>{{$item->generated_by->first_name}} {{$item->generated_by->last_name}}</td>
                                 <td>{{$item->payment_mode}}</td>
                                 <td>
                                     <div class="card-options">
@@ -63,7 +65,7 @@
                             @endforeach
                         </tbody>
                     </table>
-
+                    {!! $opdPaymentDetails->links() !!}
                 </div>
             </div>
         </div>

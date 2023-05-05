@@ -23,6 +23,10 @@
                                 <th class="border-bottom-0">Category</th>
                                 <th class="border-bottom-0">Medicine Composition</th>
                                 <th class="border-bottom-0">Stock </th>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update stock from back')): ?>
+                                    <th class="border-bottom-0">Stock Update</th>
+                                <?php endif; ?>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -46,6 +50,11 @@
                                     <td><?php echo e($value->medicine_catagory_name); ?></td>
                                     <td><?php echo e($value->medicine_composition); ?></td>
                                     <td><?php echo $stock_status; ?></td>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('update stock from back')): ?>
+                                    <td>
+                                        <a class="btn btn-success btn-sm" href="<?php echo e(route('update-medicine-stock',['medicine_id'=>$value->id])); ?>">Update Stock</a>
+                                    </td>
+                                    <?php endif; ?>
                                 </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php endif; ?>
