@@ -31,7 +31,7 @@ class MedicineRequisitionController extends Controller
 
         $medicine_requisition = MedicineRequisition::where('is_delete', 0)
             ->orderBy('medicine_requisitions.id', 'DESC')
-            ->get();
+            ->paginate(20);
 
         return view('pharmacy.purchase.requisition.medicine-requisition-listing', compact('medicine_requisition'));
     }
@@ -133,9 +133,9 @@ class MedicineRequisitionController extends Controller
 
     public function find_medicine_name_by_medicine_name(Request $request)
     {
-        $unit_name = MedicineBaseUnit::where('medicine_id', $request->medicineName_id)
-            ->leftjoin('medicine_units', 'medicine_base_units.medicine_base_unit', '=', 'medicine_units.id')
-            ->get();
+        $unit_name = Medicine::select('medicine_units.medicine_unit_name','medicine_units.id')->where('medicines.id', $request->medicineName_id)
+            ->leftjoin('medicine_units', 'medicines.unit', '=', 'medicine_units.id')
+            ->first();
 
         return response()->json($unit_name);
     }

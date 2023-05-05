@@ -7,25 +7,33 @@ use App\Models\Medicine;
 use App\Models\MedicineCatagory;
 use App\Models\MedicineStock;
 use App\Models\Patient;
+use App\Models\Payment;
+use App\Models\Prefix;
+use App\Models\MedicineBilling;
+use App\Models\MedicineBillingDetails;
+use App\Models\caseReference;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PharmacyController extends Controller
 {
     public function pharmacy_bill_listing()
     {
-        return view('pharmacy.generate-bill.generate-bill-listing');
+        $medicine_bill = MedicineBilling::orderBy('id','desc')->get();
+        return view('pharmacy.generate-bill.generate-bill-listing',compact('medicine_bill'));
     }
 
     public function all_medicine_stock()
     {
-        $medicine_stock = Medicine::select('medicine_units.medicine_unit_name', 'medicines.min_level', 'medicines.medicine_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_composition', DB::raw('SUM(medicine_stocks.quantity) - COALESCE(SUM(issue_medicines.quantity), 0) as available_quantity'))
-            ->leftJoin('medicine_units', 'medicines.unit', '=', 'medicine_units.id')
-            ->leftJoin('medicine_catagories', 'medicines.medicine_catagory', '=', 'medicine_catagories.id')
-            ->leftJoin('medicine_stocks', 'medicines.id', '=', 'medicine_stocks.medicine_name')
-            ->leftJoin('issue_medicines', 'medicines.id', '=', 'issue_medicines.medicine_name')
-            ->groupBy('medicine_units.medicine_unit_name', 'medicines.id', 'medicines.medicine_name', 'medicines.medicine_composition', 'medicine_catagories.medicine_catagory_name', 'medicines.min_level')
-            ->get();
+        $medicine_stock = Medicine::select('medicines.id','medicine_units.medicine_unit_name', 'medicines.min_level', 'medicines.medicine_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_composition', DB::raw('SUM(medicine_stocks.quantity) - COALESCE(SUM(issue_medicines.quantity), 0) as available_quantity'))
+        ->leftJoin('medicine_units', 'medicines.unit', '=', 'medicine_units.id')
+        ->leftJoin('medicine_catagories', 'medicines.medicine_catagory', '=', 'medicine_catagories.id')
+        ->leftJoin('medicine_stocks', 'medicines.id', '=', 'medicine_stocks.medicine_name')
+        ->leftJoin('issue_medicines', 'medicines.id', '=', 'issue_medicines.medicine_name')
+        ->groupBy('medicine_units.medicine_unit_name', 'medicines.id', 'medicines.medicine_name', 'medicines.medicine_composition', 'medicine_catagories.medicine_catagory_name', 'medicines.min_level')
+        ->get();
+
         return view('pharmacy.medicine-stock', compact('medicine_stock'));
     }
 
@@ -38,8 +46,9 @@ class PharmacyController extends Controller
     {
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
+        $patient_reg_details = caseReference::where('patient_id',$request->patient_id)->orderBy('id','desc')->first();
         $medicine_category = MedicineCatagory::all();
-        return view('pharmacy.generate-bill.add-medicine-bill', compact('all_patient', 'patient_details_information', 'medicine_category'));
+        return view('pharmacy.generate-bill.add-medicine-bill', compact('all_patient', 'patient_details_information', 'medicine_category','patient_reg_details'));
     }
 
     public function medicine_name_by_medicine_category(Request $request)
@@ -74,10 +83,68 @@ class PharmacyController extends Controller
     {
         $validate = $request->validate([
             'patientId'             => 'required',
-            'total'         => 'required',
+            'total'                 => 'required',
         ]);
-        dd($request->all());
+        try {
+            DB::beginTransaction();
+            $billing_prefix = Prefix::where('name', 'medicine_bill')->first();
+            $bill = new MedicineBilling;
+            $bill->bill_prefix = $billing_prefix->prefix;
+            $bill->bill_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+            $bill->patient_id = $request->patientId;
+            $bill->section = $request->section;
+            $bill->case_id = $request->case_id;
+            $bill->total_amount = $request->total;
+            $bill->payment_status = '';
+            $bill->status =  'Billing Not Done';
+            $bill->created_by = Auth::user()->id;
+            $bill->note = $request->note;
+            $bill->save();
 
+            foreach ($request->medicine_name as $key => $value) {
+                $patient_charge = new MedicineBillingDetails();
+                $patient_charge->medicine_billing_id = $bill->id;
+                $patient_charge->medicine_category = $request->medicine_category[$key];
+                $patient_charge->medicine_name = $request->medicine_name[$key];
+                $patient_charge->medicine_batch = $request->medicine_batch[$key];
+                $patient_charge->medicine_expiry_date = $request->medicine_expiry_date[$key];
+                $patient_charge->mrp = $request->mrp[$key];
+                $patient_charge->sale_price = $request->sale_price[$key];
+                $patient_charge->qty = $request->qty[$key];
+                $patient_charge->unit_id = $request->unit_id[$key];
+                $patient_charge->tax = $request->tax[$key];
+                $patient_charge->amount = $request->amount[$key];
+                $patient_charge->status = '';
+                $patient_charge->save();
+            }
 
+            if ($request->payment_amount != null || $request->payment_amount != 0 || $request->payment_amount != '') {
+                // ====================== add payment =======================================
+                $payment_prefix = Prefix::where('name', 'payment')->first();
+                $payment = new Payment();
+                $payment->patient_id = $request->patientId;
+                $payment->case_id = $request->case_id;
+                $payment->section = $request->section;
+                $payment->opd_id = $request->opd_id;
+                $payment->emg_id = $request->emg_id;
+                $payment->ipd_id = $request->ipd_id;
+                $payment->payment_prefix = $payment_prefix->prefix;
+                $payment->payment_amount = $request->payment_amount;
+                $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+                $payment->payment_recived_by = Auth::user()->id;
+                $payment->payment_mode = $request->payment_mode;
+                $payment->note = $request->note;
+                $payment->save();
+                // ====================== add payment =======================================
+            }
+        
+            DB::commit();
+            return redirect()->route('pharmacy-bill-listing')->with('success', "Medicine Bill Successfully Created");
+        }
+        catch (\Throwable $th)
+        {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
 }

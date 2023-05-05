@@ -14,7 +14,7 @@ class DiscountController extends Controller
 {
     public function discount_list()
     {
-        $discountList = Discount::all();
+        $discountList = Discount::orderBy('id','desc')->paginate(15);
         return view('discount.discount_list', compact('discountList'));
     }
 
@@ -28,8 +28,9 @@ class DiscountController extends Controller
 
     public function given_discount(Request $request)
     {
-        // try {
-        //     DB::beginTransaction();
+      //  dd($request->all());
+        try {
+            DB::beginTransaction();
             $discountId = $request->discount_id;
             $discount_details = Discount::find($discountId);
             $discount_details->discount_status = $request->given_discount_status;
@@ -41,18 +42,62 @@ class DiscountController extends Controller
             $discount_details->save();
 
            $discount_details = DiscountDetails::where('discount_id',$discountId)->get();
+
            foreach( $discount_details as $value)
            {
-                $bill = Billing::find($value->bill_id);
-                $bill->status = 'Billing Done';
-                $bill->save();
+                if($request->given_discount_status == 'Approved')
+                {
+                    $total_amount = $request->total;
+                    $bill = Billing::find($value->bill_id);
+
+                    if($request->given_discount_type == 'percentage'){
+                    $dis_amnt = $total_amount - ($total_amount * ($request->given_discount_amount / 100));
+                    $tax_amnt = $dis_amnt + ($dis_amnt * ($bill->tax/100));
+                    $grnd_total = number_format((float)($tax_amnt), 2, '.', '') ;
+                    }
+                    elseif($request->given_discount_type == 'flat'){
+                    $dis_amnt = $total_amount - $request->given_discount_amount;
+                    $tax_amnt = $dis_amnt + ($dis_amnt * ($bill->tax/100));
+                    $grnd_total = number_format((float)($tax_amnt), 2, '.', '') ;
+                    }
+
+                    $bill->discount_status = $request->given_discount_status;
+                    $bill->grand_total = $grnd_total;
+                    $bill->save();
+                }
+                else
+                {
+                    $total_amount = $request->total;
+                    $bill = Billing::find($value->bill_id);
+
+                    if($request->given_discount_type == 'percentage'){
+                    $dis_amnt = $total_amount - ($total_amount * ($request->given_discount_amount / 100));
+                    $tax_amnt = $dis_amnt + ($dis_amnt * ($bill->tax/100));
+                    $grnd_total = number_format((float)($tax_amnt), 2, '.', '') ;
+                    }
+                    elseif($request->given_discount_type == 'flat'){
+                    $dis_amnt = $total_amount - $request->given_discount_amount;
+                    $tax_amnt = $dis_amnt + ($dis_amnt * ($bill->tax/100));
+                    $grnd_total = number_format((float)($tax_amnt), 2, '.', '') ;
+                    }
+                    else{
+                        $dis_amnt = $total_amount;
+                        $tax_amnt = $dis_amnt + ($dis_amnt * ($bill->tax/100));
+                        $grnd_total = number_format((float)($tax_amnt), 2, '.', '') ;
+                    }
+
+                    $bill->discount_status = $request->given_discount_status;
+                    $bill->grand_total = $grnd_total;
+                    $bill->save();  
+                }
+
            }
 
             DB::commit();
             return redirect()->route('view-discount-details', ['discount_id' => base64_encode($discountId)])->with('success', " Successful !!!");
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return back()->withErrors(['error' => $th->getMessage()]);
-        // }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
 }

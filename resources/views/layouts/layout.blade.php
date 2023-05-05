@@ -13,7 +13,7 @@ $login_details = DB::table('users')
 
 <head>
     <!-- Jquery cdn -->
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> --}}
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -66,9 +66,6 @@ $login_details = DB::table('users')
 </head>
 
 <body class="app sidebar-mini">
-
-
-
     <!---Global-loader-->
     <div id="global-loader">
         <img src="{{ asset('public/assets/images/svgs/Heart_beat.gif') }}" alt="loader" width="500px" height="200px">
@@ -84,7 +81,6 @@ $login_details = DB::table('users')
                         <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->logo }}" class="header-brand-img dark-logo" alt="{{ @$general_details->software_name }}">
 
                         <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->small_logo }}" class="header-brand-img mobile-logo" alt="{{ @$general_details->software_name }}">
-
                         <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->logo }}" class="header-brand-img darkmobile-logo" alt="{{ @$general_details->software_name }}">
                     </a>
 
@@ -1034,9 +1030,9 @@ $login_details = DB::table('users')
 
     <!-- Switcher js-->
     <script src="{{ asset('public/assets/switcher/js/switcher.js') }}"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
     <script src="{{ asset('public/assets/plugins/notify/js/notifIt.js') }}"></script>
     <!-- INTERNAL WYSIWYG Editor js -->
     <script src="{{ asset('public/assets/plugins/wysiwyag/jquery.richtext.js') }}"></script>

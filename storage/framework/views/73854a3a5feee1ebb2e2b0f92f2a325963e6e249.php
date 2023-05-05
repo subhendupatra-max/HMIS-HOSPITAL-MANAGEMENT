@@ -24,11 +24,11 @@
                 </div>
             </div>
         </div>
-
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
-                    <table id="example" class="table table-bordered text-nowrap key-buttons">
+                    <table class="table card-table table-vcenter text-nowrap table-default">
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
@@ -74,6 +74,7 @@
                         </tbody>
 
                     </table>
+                    <?php echo $medicine_requisition->links(); ?>
 
                 </div>
             </div>

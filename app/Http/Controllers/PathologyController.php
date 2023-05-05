@@ -16,6 +16,7 @@ use App\Models\PathologyTestMaster;
 use App\Models\PathologyTestMasterDetails;
 use App\Models\PathologyUnit;
 use App\Models\Patient;
+use App\Models\caseReference;
 use App\Models\TestWithParameter;
 use Illuminate\Support\Facades\DB;
 
@@ -42,7 +43,8 @@ class PathologyController extends Controller
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $pathology_all_test = PathologyTest::all();
-        return view('pathology.pathology-add-billing', compact('all_patient', 'patient_details_information', 'pathology_all_test'));
+        $patient_reg_details = caseReference::where('patient_id',$request->patient_id)->orderBy('id','desc')->first();
+        return view('pathology.pathology-add-billing', compact('all_patient', 'patient_details_information', 'pathology_all_test','patient_reg_details'));
     }
     public function save_pathology_billing(Request $request)
     {

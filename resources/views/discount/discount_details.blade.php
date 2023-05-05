@@ -97,7 +97,7 @@
                 {{-- ========================================================================= --}}
                 <div class="col-lg-8 col-xl-8 border-right">
                     {{-- ================== add new patient ====================== --}}
-                    <div class="options px-5 pt-2  border-bottom pb-1">
+                    <div class="options px-5 pt-2  pb-1">
                         <div class="row">
 
                             <div class="table-responsive">
@@ -156,10 +156,10 @@
                                             <?php
 
                                                 if ($discount->discount_type == 'percentage') {
-                                                    $discount_rupees = $t_bill * ($discount->asking_discount_amount / 100);
-                                                    echo $discount->asking_discount_amount . ' % (' . $discount_rupees . ' Rs)';
+                                                    $discount_rupees = $t_bill * ($discount->given_discount_amount / 100);
+                                                    echo $discount->given_discount_amount . ' % (' . $discount_rupees . ' Rs)';
                                                 } else {
-                                                    echo $discount->asking_discount_amount . ' Rs';
+                                                    echo $discount->given_discount_amount . ' Rs';
                                                 }
                                                 ?>
                                         </span>
@@ -219,7 +219,7 @@
                         </div>
 
                         <div class="form-group col-md-12">
-                            <input type="text" readonly id="total_amount_with_discount" name="total"
+                            <input type="text" readonly id="total_amount_with_discount"
                                 class="form-control" />
                         </div>
                         <div class="form-group col-md-12">

@@ -86,11 +86,7 @@
                                 <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right" style="">
-                                    {{-- @can('OPD registation')
-                                    <a class="dropdown-item" href="">
-                                        <i class="fas fa-exchange-alt"></i> Recheckup
-                                    </a>
-                                    @endcan --}}
+                                    <a class="dropdown-item" href=""><i class="fa fa-file"></i> Bill Summary</a>
                                     <a class="dropdown-item"
                                         href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}"><i
                                             class="fa fa-eye"></i> View</a>

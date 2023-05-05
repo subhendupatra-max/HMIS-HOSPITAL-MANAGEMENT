@@ -21,9 +21,11 @@
         <?php endif; ?>
 
         <div class="card-body">
-            <table id="example" class="table table-borderless text-nowrap key-buttons">
+            <table class="table card-table table-vcenter text-nowrap table-default">
                 <thead>
                     <tr>
+                        <th scope="col">Discount No.</th>
+                        <th scope="col">Bill No.</th>
                         <th scope="col">Patient Name</th>
                         <th scope="col">Section</th>
                         <th scope="col">Mobile No.</th>
@@ -38,9 +40,15 @@
                     <?php $__currentLoopData = $discountList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <?php $discount_details = App\Models\DiscountDetails::where('discount_id', $value->id);
                                 $total_bill_amount = $discount_details->sum('bill_amount');
-
+                                $_bill_id = $discount_details->get();
                                 ?>
                     <tr>
+                        <td><?php echo e($value->id); ?></td>
+                        <td>
+                            <?php $__currentLoopData = $_bill_id; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $values): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <span style="color:brown"><?php echo e($values->bill_id); ?> </span>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </td>
                         <td>
                             <a href="<?php echo e(route('view-discount-details',['discount_id'=>base64_encode($value->id)])); ?>">
                                 <span style="color:blue"><?php echo e($value->patient_details->prefix . ' ' .
@@ -82,6 +90,8 @@
                     <?php endif; ?>
                 </tbody>
             </table>
+            <?php echo $discountList->links(); ?>
+
         </div>
     </div>
 </div>

@@ -2331,3 +2331,10 @@ Route::group(['middleware' => ['permission:False Generation'], 'prefix' => 'fals
     });
 });
 //================================= false section ===================================================
+
+
+//=================================  Update stock =============================
+Route::group(['middleware' => ['permission:update stock from back']], function () {
+    Route::get('update-medicine-stock/{medicine_id?}', [MedicineController::class, 'update_stock_form'])->name('update-medicine-stock');
+});
+//=================================  Update stock =============================

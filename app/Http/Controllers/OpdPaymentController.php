@@ -7,27 +7,29 @@ use Illuminate\Http\Request;
 use App\Models\OpdPayment;
 use App\Models\OpdTimeline;
 use App\Models\OpdDetails;
+use App\Models\Payment;
+use App\Models\Prefix;
+use Auth;
 
 class OpdPaymentController extends Controller
 {
     public function payment_listing_in_opd($id)
     {
         $opd_id = base64_decode($id);
-        $opdPayment = OpdPayment::all();
+        // $opdPayment = OpdPayment::all();
         $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
-        $opdPaymentDetails =  OpdPayment::where('opd_id', $opd_id)->get();
+        $opdPaymentDetails =  Payment::where('opd_id', $opd_id)->where('section', 'OPD')->paginate(10);
 
-        return view('OPD.payment.payment-listing', compact('opdPayment', 'opd_id', 'opdPaymentDetails','opd_patient_details'));
+        return view('OPD.payment.payment-listing', compact( 'opd_id', 'opdPaymentDetails','opd_patient_details'));
     }
 
     public function add_payment_in_opd($id)
     {
         $opd_id = base64_decode($id);
-        $opdPayment = OpdPayment::all();
+        // $opdPayment = OpdPayment::all();
         $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
-        $opdPaymentDetails =  OpdPayment::where('opd_id', $opd_id)->get();
-
-        return view('OPD.payment.add-payment', compact('opdPayment', 'opd_id', 'opdPaymentDetails','opd_patient_details'));
+        $opdPaymentDetails =  Payment::where('opd_id', $opd_id)->where('section', 'OPD')->get();
+        return view('OPD.payment.add-payment', compact('opd_id', 'opdPaymentDetails','opd_patient_details'));
     }
 
     public function save_payment_in_opd(Request $request)
@@ -38,15 +40,24 @@ class OpdPaymentController extends Controller
             'payment_mode'          => 'required',
         ]);
 
-        $opd_payment                             = new OpdPayment();
-        $opd_payment->opd_id                     = $request->opd_id;
-        $opd_payment->payment_date               = \Carbon\Carbon::parse($request->payment_date)->format('Y-m-d h:m:s');
-        $opd_payment->amount                     = $request->amount;
-        $opd_payment->payment_mode               = $request->payment_mode;
-        $opd_payment->note                       = $request->note;
-        $status = $opd_payment->save();
+        $opd_patient_details = OpdDetails::where('id',$request->opd_id)->first();
+        // ====================== add payment =======================================
+        $payment_prefix = Prefix::where('name', 'payment')->first();
+        $payment = new Payment();
+        $payment->patient_id =  $opd_patient_details->patient_id;
+        $payment->case_id =  $opd_patient_details->case_id;
+        $payment->section = 'OPD';
+        $payment->opd_id = $request->opd_id;
+        $payment->payment_prefix = $payment_prefix->prefix;
+        $payment->payment_amount = $request->amount;
+        $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->payment_date));
+        $payment->payment_recived_by = Auth::user()->id;
+        $payment->payment_mode = $request->payment_mode;
+        $payment->note = $request->note;
+        $payment->save();
+        // ====================== add payment =======================================
 
-        if ($status) {
+        if (@$payment->id) {
             return redirect()->route('payment-listing-in-opd', ['id' => base64_encode($request->opd_id)])->with('success', 'Payment Added Succesfully');
         } else {
             return redirect()->route('payment-listing-in-opd', ['id' => base64_encode($request->opd_id)])->with('error', 'Something Went Wrong');
@@ -59,7 +70,7 @@ class OpdPaymentController extends Controller
         $e_id = base64_decode($id);
         $payment = OpdPayment::all();
         $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
-        $editOpdPaymentDetails = OpdPayment::where('id', $e_id)->first();
+        $editOpdPaymentDetails = Payment::where('id', $e_id)->first();
 
         return view('OPD.payment.edit-payment', compact('payment', 'editOpdPaymentDetails','opd_patient_details'));
     }
@@ -72,13 +83,15 @@ class OpdPaymentController extends Controller
             'payment_mode'          => 'required',
         ]);
 
-        $opd_payment                             = OpdPayment::find($request->id);
-        $opd_payment->opd_id                     = $request->opd_id;
-        $opd_payment->payment_date               = \Carbon\Carbon::parse($request->payment_date)->format('Y-m-d h:m:s');
-        $opd_payment->amount                     = $request->amount;
-        $opd_payment->payment_mode               = $request->payment_mode;
-        $opd_payment->note                       = $request->note;
-        $status = $opd_payment->save();
+        $opd_patient_details = OpdDetails::where('id',$request->opd_id)->first();
+        // ====================== add payment =======================================
+        $payment = Payment::find($request->id);
+        $payment->payment_amount = $request->amount;
+        $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->payment_date));
+        $payment->payment_mode = $request->payment_mode;
+        $payment->note = $request->note;
+        $status = $payment->save();
+        // ====================== add payment =======================================
 
         if ($status) {
             return redirect()->route('payment-listing-in-opd', ['id' => base64_encode($request->opd_id)])->with('success', 'Payment Updated Succesfully');
@@ -90,7 +103,7 @@ class OpdPaymentController extends Controller
     public function delete_payment_in_opd($id)
     {
         $id = base64_decode($id);
-        OpdPayment::find($id)->delete();
+        Payment::find($id)->delete();
 
         return back()->with('success', "Payment Deleted Successfully");
     }

@@ -24,11 +24,11 @@
                 </div>
             </div>
         </div>
-
+        @include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
-                    <table id="example" class="table table-bordered text-nowrap key-buttons">
+                    <table class="table card-table table-vcenter text-nowrap table-default">
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
@@ -74,7 +74,7 @@
                         </tbody>
 
                     </table>
-
+                    {!! $medicine_requisition->links() !!}
                 </div>
             </div>
         </div>

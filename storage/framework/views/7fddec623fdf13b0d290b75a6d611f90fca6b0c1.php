@@ -519,7 +519,7 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <script>
-    function getage(dob_) {
+    function getagefromdate(dob_) {
         const dob = new Date(dob_);
         const nw = new Date();
 
