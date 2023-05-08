@@ -119,7 +119,7 @@ class OpdController extends Controller
     }
     public function index()
     {
-        $opd_registaion_list = OpdDetails::orderBy('id', 'desc')->get();
+        $opd_registaion_list = OpdDetails::where('ins_by','ori')->orderBy('id','desc')->get();
         return view('OPD.opd-patient-list', compact('opd_registaion_list'));
     }
     public function after_new_old(Request $request)

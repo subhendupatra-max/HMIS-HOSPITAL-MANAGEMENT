@@ -17,6 +17,7 @@ class CreateCaseReferencesTable extends Migration
             $table->id();
             $table->bigInteger('patient_id');
             $table->string('section');
+            $table->string('ins_by')->default('ori');
             $table->timestamps();
         });
     }
