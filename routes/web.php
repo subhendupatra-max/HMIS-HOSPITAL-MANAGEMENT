@@ -1794,6 +1794,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     });
     Route::group(['middleware' => ['permission:edit opd patient']], function () {
         Route::get('edit-opd-patient/{id}', [OpdController::class, 'editOPDdETAILS'])->name('edit-opd-patient');
+        Route::get('update-opd-patient', [OpdController::class, 'updateOPDdETAILS'])->name('update-opd-patient');
     });
     //================================= OPD profile ==================================
     Route::group(['middleware' => ['permission:OPD registation'], 'prefix' => 'opd-profile'], function () {
@@ -2336,5 +2337,7 @@ Route::group(['middleware' => ['permission:False Generation'], 'prefix' => 'fals
 //=================================  Update stock =============================
 Route::group(['middleware' => ['permission:update stock from back']], function () {
     Route::get('update-medicine-stock/{medicine_id?}', [MedicineController::class, 'update_stock_form'])->name('update-medicine-stock');
+
+    Route::post('save-update-medicine-stock', [MedicineController::class, 'save_update_stock_form'])->name('save-update-medicine-stock');
 });
 //=================================  Update stock =============================

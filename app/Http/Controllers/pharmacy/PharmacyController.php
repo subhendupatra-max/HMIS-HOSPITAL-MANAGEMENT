@@ -20,19 +20,19 @@ class PharmacyController extends Controller
 {
     public function pharmacy_bill_listing()
     {
-        $medicine_bill = MedicineBilling::orderBy('id','desc')->get();
-        return view('pharmacy.generate-bill.generate-bill-listing',compact('medicine_bill'));
+        $medicine_bill = MedicineBilling::orderBy('id', 'desc')->get();
+        return view('pharmacy.generate-bill.generate-bill-listing', compact('medicine_bill'));
     }
 
     public function all_medicine_stock()
     {
-        $medicine_stock = Medicine::select('medicines.id','medicine_units.medicine_unit_name', 'medicines.min_level', 'medicines.medicine_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_composition', DB::raw('SUM(medicine_stocks.quantity) - COALESCE(SUM(issue_medicines.quantity), 0) as available_quantity'))
-        ->leftJoin('medicine_units', 'medicines.unit', '=', 'medicine_units.id')
-        ->leftJoin('medicine_catagories', 'medicines.medicine_catagory', '=', 'medicine_catagories.id')
-        ->leftJoin('medicine_stocks', 'medicines.id', '=', 'medicine_stocks.medicine_name')
-        ->leftJoin('issue_medicines', 'medicines.id', '=', 'issue_medicines.medicine_name')
-        ->groupBy('medicine_units.medicine_unit_name', 'medicines.id', 'medicines.medicine_name', 'medicines.medicine_composition', 'medicine_catagories.medicine_catagory_name', 'medicines.min_level')
-        ->get();
+        $medicine_stock = Medicine::select('medicines.id', 'medicine_units.medicine_unit_name', 'medicines.min_level', 'medicines.medicine_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_composition', DB::raw('SUM(medicine_stocks.quantity) - COALESCE(SUM(issue_medicines.quantity), 0) as available_quantity'))
+            ->leftJoin('medicine_units', 'medicines.unit', '=', 'medicine_units.id')
+            ->leftJoin('medicine_catagories', 'medicines.medicine_catagory', '=', 'medicine_catagories.id')
+            ->leftJoin('medicine_stocks', 'medicines.id', '=', 'medicine_stocks.medicine_name')
+            ->leftJoin('issue_medicines', 'medicines.id', '=', 'issue_medicines.medicine_name')
+            ->groupBy('medicine_units.medicine_unit_name', 'medicines.id', 'medicines.medicine_name', 'medicines.medicine_composition', 'medicine_catagories.medicine_catagory_name', 'medicines.min_level')
+            ->get();
 
         return view('pharmacy.medicine-stock', compact('medicine_stock'));
     }
@@ -46,9 +46,9 @@ class PharmacyController extends Controller
     {
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
-        $patient_reg_details = caseReference::where('patient_id',$request->patient_id)->orderBy('id','desc')->first();
+        $patient_reg_details = caseReference::where('patient_id', $request->patient_id)->orderBy('id', 'desc')->first();
         $medicine_category = MedicineCatagory::all();
-        return view('pharmacy.generate-bill.add-medicine-bill', compact('all_patient', 'patient_details_information', 'medicine_category','patient_reg_details'));
+        return view('pharmacy.generate-bill.add-medicine-bill', compact('all_patient', 'patient_details_information', 'medicine_category', 'patient_reg_details'));
     }
 
     public function medicine_name_by_medicine_category(Request $request)
@@ -65,19 +65,19 @@ class PharmacyController extends Controller
 
     public function find_medicine_details_by_medicine_batch(Request $request)
     {
-        $medicine_details = MedicineStock::select('medicine_units.id as unit_id','medicine_stocks.expiry_date', 'medicine_stocks.mrp', 'medicine_stocks.sale_price', 'medicine_stocks.purchase_price', 'medicine_units.medicine_unit_name')->join('medicine_units', 'medicine_units.id', '=', 'medicine_stocks.unit')->where('medicine_name', $request->medicineId)->where('batch_no', $request->medicine_batch_no)->groupBy('medicine_stocks.expiry_date', 'medicine_stocks.mrp', 'medicine_stocks.sale_price', 'medicine_stocks.purchase_price', 'medicine_units.medicine_unit_name','medicine_units.id')->first();
+        $medicine_details = MedicineStock::select('medicine_units.id as unit_id', 'medicine_stocks.expiry_date', 'medicine_stocks.mrp', 'medicine_stocks.sale_price', 'medicine_stocks.purchase_price', 'medicine_units.medicine_unit_name')->join('medicine_units', 'medicine_units.id', '=', 'medicine_stocks.unit')->where('medicine_name', $request->medicineId)->where('batch_no', $request->medicine_batch_no)->groupBy('medicine_stocks.expiry_date', 'medicine_stocks.mrp', 'medicine_stocks.sale_price', 'medicine_stocks.purchase_price', 'medicine_units.medicine_unit_name', 'medicine_units.id')->first();
 
-        $medicine_stock = Medicine::select( DB::raw('SUM(medicine_stocks.quantity) - COALESCE(SUM(issue_medicines.quantity), 0) as available_quantity'))
+        $medicine_stock = Medicine::select(DB::raw('SUM(medicine_stocks.quantity) - COALESCE(SUM(issue_medicines.quantity), 0) as available_quantity'))
             ->leftJoin('medicine_units', 'medicines.unit', '=', 'medicine_units.id')
             ->leftJoin('medicine_catagories', 'medicines.medicine_catagory', '=', 'medicine_catagories.id')
             ->leftJoin('medicine_stocks', 'medicines.id', '=', 'medicine_stocks.medicine_name')
             ->leftJoin('issue_medicines', 'medicines.id', '=', 'issue_medicines.medicine_name')
-            ->where('medicine_stocks.medicine_name',$request->medicineId)
-            ->where('medicine_stocks.batch_no',$request->medicine_batch_no)
+            ->where('medicine_stocks.medicine_name', $request->medicineId)
+            ->where('medicine_stocks.batch_no', $request->medicine_batch_no)
             ->groupBy('medicines.id')
             ->first();
 
-        return response()->json(['medicine_details'=>$medicine_details,'medicine_stock'=>$medicine_stock]);
+        return response()->json(['medicine_details' => $medicine_details, 'medicine_stock' => $medicine_stock]);
     }
     public function save_pharmacy_billing(Request $request)
     {
@@ -137,12 +137,10 @@ class PharmacyController extends Controller
                 $payment->save();
                 // ====================== add payment =======================================
             }
-        
+
             DB::commit();
             return redirect()->route('pharmacy-bill-listing')->with('success', "Medicine Bill Successfully Created");
-        }
-        catch (\Throwable $th)
-        {
+        } catch (\Throwable $th) {
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);
         }

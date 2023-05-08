@@ -116,14 +116,14 @@
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Address </span>
                                         </td>
-                                        <td class="py-2 px-5"><?php echo $patient_details->address; ?>,<?php echo $patient_details->pin_no; ?>,<?php echo @$patient_details->_district->name; ?>,<?php echo $patient_details->_state->name; ?>,<?php echo $patient_details->_country->country_name; ?></td>
+                                        <td class="py-2 px-5"><?php echo $patient_details->address; ?>,<?php echo $patient_details->pin_no; ?>,<?php echo @$patient_details->_district->name; ?>,<?php echo @$patient_details->_state->name; ?>,<?php echo @$patient_details->_country->country_name; ?></td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Local Address </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            <?php echo $patient_details->address; ?>,<?php echo $patient_details->pin_no; ?>,<?php echo @$patient_details->local_district->name; ?>,<?php echo $patient_details->local_state->name; ?>,<?php echo $patient_details->local_country->country_name; ?>
+                                            <?php echo $patient_details->address; ?>,<?php echo $patient_details->pin_no; ?>,<?php echo @$patient_details->local_district->name; ?>,<?php echo @$patient_details->local_state->name; ?>,<?php echo @$patient_details->local_country->country_name; ?>
 
                                         </td>
                                     </tr>

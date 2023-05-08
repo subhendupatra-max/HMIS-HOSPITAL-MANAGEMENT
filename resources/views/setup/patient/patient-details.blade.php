@@ -7,14 +7,12 @@
             <div class="row">
                 <div class="col-md-6 card-title">
                     <h4 class="pro-user-username mb-3 font-weight-bold">{{ $patient_details->prefix }} {{
-                        $patient_details->first_name }} {{ $patient_details->last_name }} ( {{ $patient_details->patient_prefix }}{{ $patient_details->id }} ) <i
-                            class="fa fa-check-circle text-success"></i></h4>
+                        $patient_details->first_name }} {{ $patient_details->last_name }} ( {{ $patient_details->patient_prefix }}{{ $patient_details->id }} ) <i class="fa fa-check-circle text-success"></i></h4>
                 </div>
                 @can('edit patient')
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        <a href="{{ route('edit-patient-details', base64_encode($patient_details->id)) }}"
-                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
+                        <a href="{{ route('edit-patient-details', base64_encode($patient_details->id)) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
                     </div>
                 </div>
                 @endcan
@@ -40,7 +38,7 @@
                                         </td>
                                         <td class="py-2 px-5">
                                             @if ($patient_details->year != 0)
-                                                 {{ @$patient_details->year }}y
+                                            {{ @$patient_details->year }}y
                                             @endif
                                             @if ($patient_details->month != 0)
                                             {{ @$patient_details->month }}m
@@ -112,14 +110,14 @@
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Address </span>
                                         </td>
-                                        <td class="py-2 px-5">{!!$patient_details->address!!},{!!$patient_details->pin_no!!},{!!@$patient_details->_district->name!!},{!!$patient_details->_state->name!!},{!!$patient_details->_country->country_name!!}</td>
+                                        <td class="py-2 px-5">{!!$patient_details->address!!},{!!$patient_details->pin_no!!},{!!@$patient_details->_district->name!!},{!! @$patient_details->_state->name!!},{!! @$patient_details->_country->country_name!!}</td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Local Address </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$patient_details->address!!},{!!$patient_details->pin_no!!},{!!@$patient_details->local_district->name!!},{!!$patient_details->local_state->name!!},{!!$patient_details->local_country->country_name!!}
+                                            {!!$patient_details->address!!},{!!$patient_details->pin_no!!},{!!@$patient_details->local_district->name!!},{!!@$patient_details->local_state->name!!},{!!@$patient_details->local_country->country_name!!}
                                         </td>
                                     </tr>
                                     <tr>
@@ -129,7 +127,7 @@
                                         <td class="py-2 px-5">{{ @$patient_details->identification_name }} : {{ @$patient_details->identification_number }}
                                         </td>
                                     </tr>
-                                
+
                                 </tbody>
                             </table>
                         </div>
