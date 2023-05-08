@@ -446,6 +446,7 @@ unset($__errorArgs, $__bag); ?>
             $("#state").change(function(event) {
                 event.preventDefault();
                 let state = $(this).val();
+                
                 $('#district').html('<option vaule="" >Select District...</option>');
                 $.ajax({
                     url: "<?php echo e(route('find-fr-district-by-state')); ?>",

@@ -39,8 +39,8 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="catagory_id" class="form-label">Category<span class="text-danger">*</span></label> -->
+                    <div class="form-group col-md-4 addnew">
+                         <label for="catagory_id" >Category<span class="text-danger">*</span></label>
                         <select id="catagory_id" class="form-control" name="catagory_id">
                             <option value=" ">Select Category</option>
                             @foreach ($catagory as $item)
@@ -52,7 +52,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewblade">
                         <!-- <label for="sub_catagory" class="form-label"> Sub Catagory<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="sub_catagory" name="sub_catagory" placeholder="Enter Sub Catagory Name" value="{{ old('sub_catagory') }}" required> -->
                         <input type="text"id="sub_catagory" name="sub_catagory"value="{{ old('sub_catagory') }}"  required="">
@@ -62,7 +62,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewblade">
                         <!-- <label for="method" class="form-label"> Method <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="method" name="method" placeholder="Enter Sub Catagory Name" value="{{ old('method') }}" required> -->
                         <input type="text" id="method" name="method"  value="{{ old('method') }}" required="">
@@ -72,7 +72,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewbladee ">
                         <!-- <label for="report_days" class="form-label"> Report Days <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="report_days" name="report_days" placeholder="Enter Report Days" value="{{ old('report_days') }}" required> -->
                         <input type="text"  id="report_days" name="report_days"  value="{{ old('report_days') }}" required="">
@@ -82,8 +82,8 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="charge_category" class="form-label">Charges Catagory <span class="text-danger">*</span></label> -->
+                    <div class="form-group col-md-4 addnewde">
+                         <label for="charge_category" >Charges Catagory <span class="text-danger">*</span></label>
                         <select id="charge_category" class="form-control select2-show-search" name="charge_category">
                             <option value=" ">Select Catagory</option>
                             @foreach ($chargeCatagory as $item)
@@ -95,23 +95,23 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="charge_sub_category">Charges Sub Catagory <span class="text-danger">*</span></label> -->
+                    <div class="form-group col-md-4 addnewde">
+                        <label for="charge_sub_category">Charges Sub Catagory <span class="text-danger">*</span></label>
                         <select name="charge_sub_category" class="form-control select2-show-search" id="charge_sub_category" required>
                             <option value="">Select Sub Catagory...</option>
                         </select>
                         <small class="text-danger">{{ $errors->first('charge_sub_category') }}</small>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="charge">Charges <span class="text-danger">*</span></label> -->
+                    <div class="form-group col-md-4 addnewblade">
+                         <label for="charge">Charges <span class="text-danger">*</span></label>
                         <select name="charge" class="form-control select2-show-search" id="charge" required>
                             <option value="">Select charge...</option>
                         </select>
                         <small class="text-danger">{{ $errors->first('charge') }}</small>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewde">
                         <!-- <label for="tax">Tax<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax"> -->
                         <input type="text"  id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax"  required="">
@@ -119,7 +119,7 @@
                         <small class="text-danger">{{ $errors->first('tax') }}</small>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewde">
                         <!-- <label for="standard_charges">Charge Amount<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="standard_charges" onkeyup="totalAmount()" name="standard_charges"> -->
                         <input type="text" id="standard_charges" onkeyup="totalAmount()" name="standard_charges"  required="">
@@ -127,7 +127,7 @@
                         <small class="text-danger">{{ $errors->first('standard_charges') }}</small>
                     </div>
 
-                    <div class="form-group col-md-4 ">
+                    <div class="form-group col-md-4 addnewde">
                         <!-- <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="total_amount" name="total_amount" readonly> -->
                         <input type="text" id="total_amount" name="total_amount" readonly required="">

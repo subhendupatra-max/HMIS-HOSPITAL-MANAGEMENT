@@ -23,8 +23,8 @@
                             <a href="{{ route('pathology-test-master-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
                             @endcan
 
-                            @can('add pathology test to a patient')
-                            <a href="{{ route('add-pathology-test-to-a-patient') }}" class="btn btn-primary btn-sm"><i class="fa fa-file"></i> Add test to Patient </a>
+                            @can('pathology-test-to-a-patient')
+                            <a href="{{ route('pathology-test-charge') }}" class="btn btn-primary btn-sm"><i class="fa fa-microscope"></i> Patient's Test </a>
                             @endcan 
 
                             {{-- @can('pathology Package')

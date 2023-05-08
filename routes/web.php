@@ -1666,6 +1666,20 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
         Route::post('find-test-amount-by-test', [PathologyController::class, 'find_test_amount_by_test'])->name('find-test-amount-by-test');
         Route::post('save-pathology-billing', [PathologyController::class, 'save_pathology_billing'])->name('save-pathology-billing');
     });
+
+    Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
+        Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
+            Route::get('pathology-test-charge', [PathologyController::class, 'pathology_test_charge'])->name('pathology-test-charge');
+        });
+        Route::group(['middleware' => ['permission:add-pathology-test-to-a-patient']], function () {
+            Route::get('add-pathology-test-to-a-patient', [PathologyController::class, 'pathology_test_charge_add'])->name('add-pathology-test-to-a-patient');
+            Route::post('add-pathology-charges-for-a-patient', [PathologyController::class, 'add_pathology_charges_for_a_patient'])->name('add-pathology-charges-for-a-patient');
+            Route::post('save-pathology-charge', [PathologyController::class, 'save_pathology_charge'])->name('save-pathology-charge');
+        });
+    });
+
+
+
     //pathology test
     Route::group(['middleware' => ['permission:pathology test']], function () {
         // ============= pathology master ====================

@@ -949,7 +949,7 @@ $login_details = DB::table('users')
                     <div class="row">
                         @yield('content')
                     </div>
-                </div>
+
             </div>
             <!-- End app-content-->
         </div>
