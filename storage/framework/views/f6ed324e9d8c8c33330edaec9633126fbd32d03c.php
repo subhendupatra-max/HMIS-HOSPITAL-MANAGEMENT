@@ -876,7 +876,7 @@ $login_details = DB::table('users')
                     <div class="row">
                         <?php echo $__env->yieldContent('content'); ?>
                     </div>
-                </div>
+
             </div>
             <!-- End app-content-->
         </div>
