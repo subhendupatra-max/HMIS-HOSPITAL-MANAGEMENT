@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMedicineBillingsTable extends Migration
+class CreatePatientOthersBillingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateMedicineBillingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('medicine_billings', function (Blueprint $table) {
+        Schema::create('patient_others_billings', function (Blueprint $table) {
             $table->id();
             $table->string('bill_prefix');
             $table->string('bill_date');
@@ -25,9 +25,7 @@ class CreateMedicineBillingsTable extends Migration
             $table->string('ipd_id')->nullable();
             $table->string('total_amount');
             $table->string('payment_status')->nullable();
-            $table->string('status')->default(0);
-            $table->string('ins_by')->default('ori');
-            $table->string('bill_id')->nullable();
+            $table->string('status')->nullable();
             $table->string('is_delete')->default(0);
             $table->string('created_by');
             $table->longText('note')->nullable();
@@ -42,6 +40,6 @@ class CreateMedicineBillingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medicine_billings');
+        Schema::dropIfExists('patient_others_billings');
     }
 }

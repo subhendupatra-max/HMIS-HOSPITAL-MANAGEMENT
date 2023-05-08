@@ -390,7 +390,7 @@
         $("#department").change(function(event) {
             event.preventDefault();
             let department = $(this).val();
-            // alert(department);
+            alert(department);
             $('#cons_doctor').html('<option vaule="" >Select...</option>');
             $.ajax({
                 url: "{{ route('find-doctor-by-department') }}",

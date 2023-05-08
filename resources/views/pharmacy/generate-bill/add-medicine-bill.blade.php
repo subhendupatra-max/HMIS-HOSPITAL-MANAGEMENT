@@ -18,7 +18,7 @@
                                 <form method="post" action="{{ route('add-pharmacy-billing-for-a-patient') }}">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-md-6 mb-2">
+                                        <div class="col-md-12 mb-2">
                                             <select class="form-control  select2-show-search" name="patient_id">
                                                 <option value="">Search Patient...</option>
                                                 @if (isset($all_patient))
@@ -47,6 +47,7 @@
                                         </div>
                                     </div>
                                 </form>
+                              
                             </div>
                             {{-- ================== Search patient ====================== --}}
 
@@ -63,23 +64,22 @@
                                                         <span class="font-weight-semibold w-50">Case Id </span>
                                                     </td>
                                                     <td class="py-2 px-5">
-                                                        <span style="color:blue">{{ @$patient_details_information->id
-                                                            }}</span>
+                                                        <span style="color:blue">{{ @$patient_reg_details->id }}</span>
                                                     </td>
                                                     <td class="py-2 px-5">
                                                         <span class="font-weight-semibold w-50">Section </span>
                                                     </td>
                                                     <td class="py-2 px-5">
-                                                        <span style="color:rgb(36, 136, 11)">{{
-                                                            @$patient_details_information->section }}</span>
+                                                        <span style="color:rgb(36, 136, 11)">{{ @$patient_reg_details->section }}</span>
                                                     </td>
-                                                </tr>
-                                                <tr>
                                                     <td class="py-2 px-5">
                                                         <span class="font-weight-semibold w-50">Gender </span>
                                                     </td>
                                                     <td class="py-2 px-5">
                                                         {{ @$patient_details_information->gender }}</td>
+                                                </tr>
+                                                <tr>
+                                                    
                                                     <td class="py-2 px-5">
                                                         <span class="font-weight-semibold w-50">Age </span>
                                                     </td>
@@ -88,9 +88,6 @@
                                                         {{ @$patient_details_information->month }}m
                                                         {{ @$patient_details_information->day }}d
                                                     </td>
-                                                </tr>
-
-                                                <tr>
                                                     <td class="py-2 px-5">
                                                         <span class="font-weight-semibold w-50">Guardian Name
                                                         </span>
@@ -105,7 +102,6 @@
                                                     </td>
                                                     <td class="py-2 px-5">
                                                         {{ @$patient_details_information->phone }}</td>
-
                                                 </tr>
 
                                             </tbody>
@@ -122,6 +118,7 @@
                         @csrf
 
                         <div class="options px-5 pt-1  border-bottom pb-3">
+                          
                             <div class="row">
                                 <div class="table-responsive">
                                     <table class="table card-table table-vcenter text-nowrap">
@@ -163,15 +160,22 @@
 
                         </div>
 
-                        <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
-                        <input type="hidden" name="section" value="{{ @$patient_details_information->section }}" />
-                        <input type="hidden" name="case_id" value="{{ @$patient_details_information->id }}" />
+                        <input type="hidden" name="patientId" value="{{ @$patient_reg_details->patient_id }}" />
+                        <input type="hidden" name="section" value="{{ @$patient_reg_details->section }}" />
+                        <input type="hidden" name="case_id" value="{{ @$patient_reg_details->id }}" />
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row">
+                                            <div class="col-md-8 add-medicinedesignn">
+                                                <label>Billing Date <span class="text-danger">*</span></label>
+                                                <input type="datetime-local" required class="form-control" name="bill_date" value="{{ date('Y-m-d H:i') }}" />
+                                                @error('bill_date')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                             <div class="col-md-8 add-medicinedesignn">
                                                 <label >Note </label>
                                                 {{-- <textarea  name="note"></textarea> --}}

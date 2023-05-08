@@ -12,7 +12,7 @@
                 <div class="col-md-6 text-right">
                     <div class="d-block">
                         <a class="btn btn-primary btn-sm" data-target="#modaldemo2" data-toggle="modal" href="#"><i
-                                class="fa fa-plus"></i> OPD Registaion</a>
+                                class="fa fa-plus"></i> OPD Registation</a>
                     </div>
                 </div>
                 <?php endif; ?>
@@ -23,13 +23,14 @@
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
         <div class="card-body">
-            <table class="table card-table table-vcenter text-nowrap table-default">
+            <table class="table table-bordered text-nowrap" id="example">
                 <thead>
                     <tr>
                         <th scope="col">OPD Id</th>
                         <th scope="col">Patient Name</th>
                         <th scope="col">Gurdian Name</th>
                         <th scope="col">Mobile No.</th>
+                        <th scope="col">Case Id</th>
                         <th scope="col">Last Visit Details</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -39,7 +40,7 @@
                     <?php $__currentLoopData = $opd_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td><a class="textlink"
-                                href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->opd_prefix); ?><?php echo e(@$value->id); ?></a>
+                                href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
                         </td>
                         <td>
                             <?php echo e(@$value->all_patient_details->prefix); ?>
@@ -65,7 +66,7 @@
                         </td>
                         <td><?php echo e(@$value->all_patient_details->guardian_name); ?></td>
                         <td><?php echo e(@$value->all_patient_details->phone); ?></td>
-
+                        <td><?php echo e(@$value->case_id); ?></td>
                         <td>
                             <?php if(isset($value->latest_opd_visit_details_for_patient->department_id)): ?>
                             <i class="fa fa-cubes text-primary"></i>
@@ -122,8 +123,7 @@
                     <?php endif; ?>
                 </tbody>
             </table>
-            <?php echo $opd_registaion_list->links(); ?>
-
+            
         </div>
     </div>
 </div>

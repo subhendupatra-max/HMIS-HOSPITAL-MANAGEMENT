@@ -18,7 +18,7 @@
                                 <form method="post" action="<?php echo e(route('add-pharmacy-billing-for-a-patient')); ?>">
                                     <?php echo csrf_field(); ?>
                                     <div class="row">
-                                        <div class="col-md-6 mb-2">
+                                        <div class="col-md-12 mb-2">
                                             <select class="form-control  select2-show-search" name="patient_id">
                                                 <option value="">Search Patient...</option>
                                                 <?php if(isset($all_patient)): ?>
@@ -53,6 +53,7 @@ unset($__errorArgs, $__bag); ?>
                                         </div>
                                     </div>
                                 </form>
+                              
                             </div>
                             
 
@@ -69,21 +70,22 @@ unset($__errorArgs, $__bag); ?>
                                                         <span class="font-weight-semibold w-50">Case Id </span>
                                                     </td>
                                                     <td class="py-2 px-5">
-                                                        <span style="color:blue"><?php echo e(@$patient_details_information->id); ?></span>
+                                                        <span style="color:blue"><?php echo e(@$patient_reg_details->id); ?></span>
                                                     </td>
                                                     <td class="py-2 px-5">
                                                         <span class="font-weight-semibold w-50">Section </span>
                                                     </td>
                                                     <td class="py-2 px-5">
-                                                        <span style="color:rgb(36, 136, 11)"><?php echo e(@$patient_details_information->section); ?></span>
+                                                        <span style="color:rgb(36, 136, 11)"><?php echo e(@$patient_reg_details->section); ?></span>
                                                     </td>
-                                                </tr>
-                                                <tr>
                                                     <td class="py-2 px-5">
                                                         <span class="font-weight-semibold w-50">Gender </span>
                                                     </td>
                                                     <td class="py-2 px-5">
                                                         <?php echo e(@$patient_details_information->gender); ?></td>
+                                                </tr>
+                                                <tr>
+                                                    
                                                     <td class="py-2 px-5">
                                                         <span class="font-weight-semibold w-50">Age </span>
                                                     </td>
@@ -92,9 +94,6 @@ unset($__errorArgs, $__bag); ?>
                                                         <?php echo e(@$patient_details_information->month); ?>m
                                                         <?php echo e(@$patient_details_information->day); ?>d
                                                     </td>
-                                                </tr>
-
-                                                <tr>
                                                     <td class="py-2 px-5">
                                                         <span class="font-weight-semibold w-50">Guardian Name
                                                         </span>
@@ -111,7 +110,6 @@ unset($__errorArgs, $__bag); ?>
                                                     </td>
                                                     <td class="py-2 px-5">
                                                         <?php echo e(@$patient_details_information->phone); ?></td>
-
                                                 </tr>
 
                                             </tbody>
@@ -128,6 +126,7 @@ unset($__errorArgs, $__bag); ?>
                         <?php echo csrf_field(); ?>
 
                         <div class="options px-5 pt-1  border-bottom pb-3">
+                          
                             <div class="row">
                                 <div class="table-responsive">
                                     <table class="table card-table table-vcenter text-nowrap">
@@ -169,15 +168,29 @@ unset($__errorArgs, $__bag); ?>
 
                         </div>
 
-                        <input type="hidden" name="patientId" value="<?php echo e(@$patient_details_information->id); ?>" />
-                        <input type="hidden" name="section" value="<?php echo e(@$patient_details_information->section); ?>" />
-                        <input type="hidden" name="case_id" value="<?php echo e(@$patient_details_information->case_id); ?>" />
+                        <input type="hidden" name="patientId" value="<?php echo e(@$patient_reg_details->patient_id); ?>" />
+                        <input type="hidden" name="section" value="<?php echo e(@$patient_reg_details->section); ?>" />
+                        <input type="hidden" name="case_id" value="<?php echo e(@$patient_reg_details->id); ?>" />
 
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row">
+                                            <div class="col-md-8 add-medicinedesignn">
+                                                <label>Billing Date <span class="text-danger">*</span></label>
+                                                <input type="datetime-local" required class="form-control" name="bill_date" value="<?php echo e(date('Y-m-d H:i')); ?>" />
+                                                <?php $__errorArgs = ['bill_date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                            </div>
                                             <div class="col-md-8 add-medicinedesignn">
                                                 <label >Note </label>
                                                 

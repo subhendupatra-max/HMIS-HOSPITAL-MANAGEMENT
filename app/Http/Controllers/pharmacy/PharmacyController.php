@@ -48,6 +48,7 @@ class PharmacyController extends Controller
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $patient_reg_details = caseReference::where('patient_id',$request->patient_id)->orderBy('id','desc')->first();
         $medicine_category = MedicineCatagory::all();
+     //   dd( $patient_reg_details);
         return view('pharmacy.generate-bill.add-medicine-bill', compact('all_patient', 'patient_details_information', 'medicine_category','patient_reg_details'));
     }
 
@@ -90,13 +91,15 @@ class PharmacyController extends Controller
             $billing_prefix = Prefix::where('name', 'medicine_bill')->first();
             $bill = new MedicineBilling;
             $bill->bill_prefix = $billing_prefix->prefix;
-            $bill->bill_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+            $bill->bill_date = $request->bill_date;
             $bill->patient_id = $request->patientId;
             $bill->section = $request->section;
             $bill->case_id = $request->case_id;
             $bill->total_amount = $request->total;
             $bill->payment_status = '';
-            $bill->status =  'Billing Not Done';
+            $bill->status =  '0';
+            $bill->ins_by =  'ori';
+            $bill->bill_id =  '';
             $bill->created_by = Auth::user()->id;
             $bill->note = $request->note;
             $bill->save();
@@ -146,5 +149,10 @@ class PharmacyController extends Controller
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);
         }
+    }
+    public function medicine_details($medicine_id)
+    {
+       $medicine_details = Medicine::where('id',$medicine_id)->get();
+       return view('pharmacy.medicine.medicine-details', compact('medicine_details'));
     }
 }

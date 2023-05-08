@@ -782,5 +782,20 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'False Generation']);
         Permission::create(['name' => 'OPD False']);
 
+        // bill summary
+        Permission::create(['name' => 'bill summary']);
+        Permission::create(['name' => 'create bill summary']);
+
+        //medicine 
+        Permission::create(['name' => 'Medicine Details']);
+
+        //charges opd
+        Permission::create(['name' => 'add opd charges']);
+        Permission::create(['name' => 'patient charges']);
+
+        //pathology test add to patient
+        Permission::create(['name' => 'pathology-test-to-a-patient']);
+        Permission::create(['name' => 'add-pathology-test-to-a-patient']);
+
     }
 }

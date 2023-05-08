@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class PathologyBilling extends Model
 {
     use HasFactory;
+    public function all_patient_details()
+    {
+        return $this->belongsTo(Patient::class,'patient_id','id');
+    }
 }

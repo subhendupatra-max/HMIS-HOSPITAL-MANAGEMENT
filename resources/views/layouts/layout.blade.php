@@ -13,7 +13,7 @@ $login_details = DB::table('users')
 
 <head>
     <!-- Jquery cdn -->
-    {{-- <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> --}}
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -96,6 +96,18 @@ $login_details = DB::table('users')
                                     <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".9"></path>
                                 </svg>
                                 <span class="side-menu__label">Dashboard</span>
+                            </a>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('bill summary'))
+                        <li class="slide">
+                            <a class="side-menu__item" href="{{ route('bill-summary') }}">
+                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                    <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
+                                    <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".9"></path>
+                                </svg>
+                                <span class="side-menu__label">Bill Summary</span>
                             </a>
                         </li>
                         @endif

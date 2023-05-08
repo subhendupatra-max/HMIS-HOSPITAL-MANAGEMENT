@@ -18,6 +18,10 @@ use App\Models\PathologyUnit;
 use App\Models\Patient;
 use App\Models\caseReference;
 use App\Models\TestWithParameter;
+use App\Models\PathologyBilling;
+use App\Models\PathologyBillingDetails;
+use App\Models\Prefix;
+use Auth;
 use Illuminate\Support\Facades\DB;
 
 class PathologyController extends Controller
@@ -25,7 +29,8 @@ class PathologyController extends Controller
     // ======================== Pathology Billing =============================
     public function pathology_billing_list()
     {
-        return view('pathology.pathology-billing-list');
+        $pathology_bill_details = PathologyBilling::orderBy('id','desc')->get();
+        return view('pathology.pathology-billing-list',compact('pathology_bill_details'));
     }
     public function add_pathology_bill()
     {
@@ -48,25 +53,49 @@ class PathologyController extends Controller
     }
     public function save_pathology_billing(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         request()->validate(
             [
+                'billing_date' => 'required',
                 'patientId' => 'required',
-                'grnd_total' => 'required',
-                'test_id'    => 'required',
-                'test_id.*'    => 'required',
+                'total' => 'required',
 
             ],
             [
                 'patientId.required' => 'Please Select a Patient!!',
-                'grnd_total.required' => 'Please Calculate !!',
+                'total.required' => 'Please Calculate!!',
             ]
         );
 
         try {
             DB::beginTransaction();
+            $billing_prefix = Prefix::where('name', 'pathology_bill')->first();
+            $bill = new PathologyBilling;
+            $bill->bill_prefix = $billing_prefix->prefix;
+            $bill->bill_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+            $bill->patient_id = $request->patientId;
+            $bill->section = $request->section;
+            $bill->case_id = $request->case_id;
+            $bill->total_amount = $request->total;
+            $bill->payment_status = '';
+            $bill->status =  'Done';
+            $bill->created_by = Auth::user()->id;
+            $bill->note = $request->note;
+            $bill->save();
 
-            DB::commit();
+            foreach ($request->test_id as $key => $value) {
+                $patient_charge = new PathologyBillingDetails();
+                $patient_charge->pathology_billing_id = $bill->id;
+                $patient_charge->pathology_id = $request->test_id[$key];
+                $patient_charge->charge_amount = $request->charge[$key];
+                $patient_charge->qty = $request->qty[$key];
+                $patient_charge->tax = $request->tax[$key];
+                $patient_charge->amount = $request->amount[$key];
+                $patient_charge->status = '';
+                $patient_charge->save();
+            }
+           DB::commit();
+           return redirect()->route('pathology-details')->with('success', "Pathology Bill Successfully Created");
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route('add-pathology-billing')->with('error', "Something Went Wrong");

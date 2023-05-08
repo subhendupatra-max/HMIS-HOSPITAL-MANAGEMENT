@@ -5,7 +5,7 @@
             <div class="card-header d-block">
                 <div class="row">
                     <div class="col-md-4 card-title">
-                        Add Billing
+                        Add Charges
                     </div>
                     <div class="col-md-8 text-right">
                         <div class="d-block">
@@ -18,9 +18,8 @@
                     </div>
                 </div>
             </div>
-            <form method="post" action="{{ route('add-new-opd-billing') }}">
+            <form method="post" action="{{ route('add-new-charges') }}">
                 @csrf
-
                 <input type="hidden" name="case_id" value="{{ $opd_patient_details->case_id }}" />
                 <input type="hidden" name="section" value="OPD" />
                 <input type="hidden" name="opd_id" value="{{ $opd_patient_details->id }}" />
@@ -29,14 +28,15 @@
                     <div class="col-md-12 mb-2">
                         <div class="row">
                             <div class="col-md-4">
-                                <label class="form-label">Billing Date <span class="text-danger">*</span></label>
-                                <input type="datetime-local" required class="form-control" name="bill_date" value="{{ date('Y-m-d H:i') }}" />
-                                @error('bill_date')
+                                <label class="form-label"> Date <span class="text-danger">*</span></label>
+                                <input type="datetime-local" required class="form-control" name="date" value="{{ date('Y-m-d H:i') }}" />
+                                @error('date')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                         </div>
                     </div>
+
                     <div class="border-bottom border-top">
                         <div class="table-responsive">
                             <table class="table card-table table-vcenter text-nowrap">
@@ -62,108 +62,18 @@
                                     </tr>
                                 </thead>
                                 <tbody id="chargeTable">
-                                    @if(@$old_applied_charges)
-                                    @foreach ($old_applied_charges as $key=>$value)
-                                        <tr id="row{{ $key }}" style="background-color:#e6f5ed">
-                                            <input type="hidden" name="old_or_new[]" value="old" />
-                                            <td>
-                                                
-                                                <select class="form-control select2-show-search" name="charge_set[]" id="charge_set{{ $key }}">
-                                                    <option value="{{ @$value->charge_set}} " >{{ @$value->charge_set}} </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type{{ $key }}" >
 
-                                                        <option value="{{ $value->charge_type }}" > {{ $value->charge_type }}
-                                                        </option>
-                                                 
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control select2-show-search"  name="charge_category[]" id="charge_category{{ $key }}">
-                                                    <option value="{{ $value->charge_category }}">{{ $value->charges_category_details->charges_catagories_name }}</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category{{ $key }}" >
-                                                    <option value="{{ $value->charge_sub_category }}">{{ $value->charges_sub_category_details->charges_sub_catagories_name }}</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control select2-show-search" name="charge_name[]" id="charge_name{{ $key }}">
-                                                    <option value={{ $value->charge_name }}>{{ $value->charges_name_details->charges_name }}</option>
-                                                </select>
-                                            </td>
-                
-                                            <td>
-                                                <input class="form-control" name="standard_charges[]" id="standard_charges{{ $key }}" value="{{ $value->standard_charges }}" readonly />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" value="{{ $value->qty }}" readonly  name="qty[]" id="qty{{ $key }}" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" value="{{ $value->tax }}" readonly  name="tax[]" id="tax{{ $key }}" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" value="{{ $value->amount }}" readonly name="amount[]" id="amount{{ $key }}" />
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-danger btn-sm"  type="button"
-                                                        onclick="rowRemove({{ $key }})"><i class="fa fa-times"></i></button>
-                                            </td>
-                                        </tr>                                     
-                                    @endforeach
-                                    @endif
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="border-bottom border-top">
-                       <span style="color: #ff6014;font-size: 14px;"> Are You want to add Medicine Bill ?<input type="checkbox" id="add_medicine_bill" name="add_medicine_bill" onchange="addMedicineBill({{ $opd_patient_details->case_id }})" value="yes" /></span>
-                        <div class="table-responsive" id="fjafiao" style="display: none">
-                            @if(@$medicine_charges[0]->id != null || @$medicine_charges[0]->id != '' )
-                            <table class="table card-table table-vcenter text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
-                                        <th scope="col" style="width: 30%">Medicine Bill No. <span class="text-danger">*</span>
-                                        </th>
-                                        <th scope="col" style="width: 30%">Date <span class="text-danger">*</span>
-                                        </th>
-                                        <th scope="col" style="width: 20%">Amount <span class="text-danger">*</span>
-                                        <th scope="col" style="width: 10%"></th>
-                                
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    
-                                        @foreach ($medicine_charges as $key=>$value)
-                                        <tr id="medicineRow{{ $key }}">
-                                            <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id{{ $key }}" value="{{ $value->id }}" />
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{ $value->bill_prefix }}{{ $value->id }}</td>
-                                            <td>{{ date('d-m-Y h:i a',strtotime($value->bill_date))}}</td>
-                                            <td><input text="text" readonly class="form-control" name="medicine_amount[]" id="medicine_amount{{ $key }}" value="{{ $value->total_amount }}" /></td>
-                                            <td><button class="btn btn-danger btn-sm"  type="button"
-                                                onclick="medicinerowRemove({{ $key }})"><i class="fa fa-times"></i></button></td>
-                                        </tr>
-                                        @endforeach
-                                    
-                                </tbody>
-                            </table>
-                            @else
-                            <span style="color:blue">Don't Have any bill !!</span>
-                            @endif
-                        </div>
-                    </div>
-                     <div class="row border-bottom">
+                    {{-- <div class="row border-bottom">
                         <div class="col-md-6">
                             <div class="options px-5 pt-5 pb-3">
                                 <div class="container mt-5">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label>Note </label>
+                                            <label class="form-label">Note </label>
                                             <textarea class="form-control" name="note"></textarea>
                                         </div>
                                         <div class="col-md-6">
@@ -189,16 +99,16 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
-                         <div class="col-md-6">
+                        </div> --}}
+                        {{-- <div class="col-md-6">
                             <div class="options px-5 pt-5 pb-3">
                                 <div class="container mt-5">
                                     <div class="d-flex justify-content-end">
                                         <span class="biltext">Total</span>
                                         <input type="text" name="total" readonly id="total_am"
                                             class="form-control myfld">
-                                    </div> 
-                                     <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" value="yes" /></span>
+                                    </div> --}}
+                                    {{-- <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" value="yes" /></span>
                                     <div class="d-flex justify-content-end mt-2" id="discount_section" style="display:none !important;">
                                         <span class="biltext">Discount (% / flat)</span>
                                         <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
@@ -208,8 +118,8 @@
                                             <option value="percentage" selected>%</option>
                                             <option value="flat">Flat</option>
                                         </select>
-                                    </div> 
-                                     <div class="d-flex justify-content-end mt-2">
+                                    </div> --}}
+                                    {{-- <div class="d-flex justify-content-end mt-2">
                                         <span class="biltext">Tax</span>
                                         <input type="text" name="total_tax" onkeyup="gettotal()" value="0"
                                             id="total_tax" class="form-control myfld">
@@ -222,20 +132,71 @@
                                             <br>
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
-                                    </div> 
+                                    </div> --}}
+                                {{-- </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    {{-- <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-8 add-medicinedesignn">
+                                            <label >Note </label>
+                                           
+                                            <input type="text" name="note" id="note" >
+                                        </div>
+                                        <div class="col-md-4 add-medicinedesignin">
+                                            <label>Payment Amount </label>
+                                            <input type="text" name="payment_amount"  />
+                                            @error('payment_amount')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 add-medicinedesign">
+                                            <label>Payment Mode</label>
+                                            <select class="form-control" name="payment_mode">
+                                                <option value="">Select One...</option>
+                                                @foreach (Config::get('static.payment_mode_name') as $lang => $payment_mode_name)
+                                                    <option value="{{ $payment_mode_name }}"> {{ $payment_mode_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('payment_mode')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="options px-5 pt-5  border-bottom pb-3">
+                                        <div class="container mt-5">
+                                            <div class="d-flex justify-content-end">
+                                                <span class="biltext">Total</span>
+                                                <input type="text" name="total" readonly id="total_am"
+                                                    class="form-control myfld">
+                                            </div>
+                                            @error('total')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div> 
-                   
+                    </div> --}}
+
 
                     <div class="btn-list p-3">
-                        <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
-                                class="fa fa-calculator"></i> Calculate</button>
-                        <button class="btn btn-primary btn-sm float-right " type="submit" name="save" value="save"><i
+                        <button class="btn btn-primary btn-sm float-right mr-2" type="button" onclick="gettotal()"><i
+                            class="fa fa-file-invoice"></i> Billing</button>
+                        {{-- <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
+                                class="fa fa-calculator"></i> Calculate</button> --}}
+                        <button class="btn btn-primary btn-sm float-right mr-2" type="submit" name="save" value="save"><i
                                 class="fa fa-file"></i> Save</button>
-                        <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit"  value="save_and_print"><i
-                                class="fa fa-paste"></i> Save & Print</button>
+                        {{-- <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit"  value="save_and_print"><i
+                                class="fa fa-paste"></i> Save & Print</button> --}}
                     </div>
                 </div>
             </form>
@@ -245,6 +206,7 @@
     </div>
     <script>
         function takeDiscount() {
+           // alert('ok');
             if (document.getElementById("take_discount").checked) {
                 $('#discount_section').removeAttr('style', true);
 
@@ -255,25 +217,12 @@
             }
         }
     </script>
-    <script>
-        function addMedicineBill(case_id) {
-           // alert('ok');
-            if (document.getElementById("add_medicine_bill").checked) {
-                $('#fjafiao').removeAttr('style',true);
-                gettotal();
-            } else {
-                $('#fjafiao').attr('style','display:none',true);
-                gettotal();
-            }
-        }
-    </script>
 
     <script type="text/javascript">
-        var i = $('#chargeTable tr').length;
-        i = i + 1;
+        var i = 1;
+
         function addNewrow() {
             var html = `<tr id="row${i}">
-                        <input type="hidden" name="old_or_new[]" value="new" />
                             <td>
                                 <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
                                     <option value="" disable >Select One..</option>
@@ -333,15 +282,6 @@
             $('#grnd_total' + row_id).val('0');
             $('#total_tax' + row_id).val('0');
             $(`#row${row_id}`).remove();
-            gettotal();
-        }
-        function medicinerowRemove(row_id) {
-            $('#total_discount' + row_id).val('0');
-            $('#total_am' + row_id).val('0');
-            $('#grnd_total' + row_id).val('0');
-            $('#total_tax' + row_id).val('0');
-            $(`#medicineRow${row_id}`).remove();
-            gettotal();
         }
 
         function getchargetype_details(row_id) {
@@ -501,33 +441,25 @@
             console.log('aaa=>', no_of_row);
 
             var t = 0;
-            var m = 0;
             $("input[name='amount[]']").map(function() {
                 t = t + parseFloat($(this).val());
             }).get();
-            if (document.getElementById("add_medicine_bill").checked) {
-                $("input[name='medicine_amount[]']").map(function() {
-                    m = m + parseFloat($(this).val());
-                }).get();
-            }
+            $('#total_am').val(t);
 
-            var t_m = parseFloat(t) + parseFloat(m)
-            $('#total_am').val(t_m.toFixed(2));
+            // var total_discount = $('#total_discount').val();
+            // if ($('#discount_type').val() == 'percentage') {
+            //     var r = parseFloat(t) - ((parseFloat(t)) * (parseFloat(total_discount) / 100));
+            // } else {
+            //     var r = parseFloat(t) - parseFloat(total_discount);
+            // }
+            // var total_tax = $('#total_tax').val();
+            // if (total_tax != 0) {
+            //     var grnd_total = parseFloat(r + (r * (total_tax / 100)));
+            // } else {
+            //     var grnd_total = parseFloat(r);
+            // }
 
-            var total_discount = $('#total_discount').val();
-            if ($('#discount_type').val() == 'percentage') {
-                var r = parseFloat(t_m) - ((parseFloat(t_m)) * (parseFloat(total_discount) / 100));
-            } else {
-                var r = parseFloat(t_m) - parseFloat(total_discount);
-            }
-            var total_tax = $('#total_tax').val();
-            if (total_tax != 0) {
-                var grnd_total = parseFloat(r + (r * (total_tax / 100)));
-            } else {
-                var grnd_total = parseFloat(r);
-            }
-
-            $('#grnd_total').val(grnd_total);
+            // $('#grnd_total').val(grnd_total);
         }
     </script>
 @endsection

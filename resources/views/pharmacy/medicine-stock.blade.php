@@ -46,7 +46,7 @@
 
                              ?>
                                 <tr>
-                                    <td><a href="#" class="text-info">{{$value->medicine_name}}</a></td>
+                                    <td><a href= "{{ route('medicine-details',['medicine_id'=>$value->id]) }}" class="text-info">{{ $value->medicine_name}}</a></td>
                                     <td>{{$value->medicine_catagory_name}}</td>
                                     <td>{{$value->medicine_composition}}</td>
                                     <td>{!!$stock_status!!}</td>

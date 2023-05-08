@@ -46,7 +46,7 @@
 
                              ?>
                                 <tr>
-                                    <td><a href="#" class="text-info"><?php echo e($value->medicine_name); ?></a></td>
+                                    <td><a href= "<?php echo e(route('medicine-details',['medicine_id'=>$value->id])); ?>" class="text-info"><?php echo e($value->medicine_name); ?></a></td>
                                     <td><?php echo e($value->medicine_catagory_name); ?></td>
                                     <td><?php echo e($value->medicine_composition); ?></td>
                                     <td><?php echo $stock_status; ?></td>

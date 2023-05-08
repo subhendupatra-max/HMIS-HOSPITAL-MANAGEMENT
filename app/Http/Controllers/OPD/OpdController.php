@@ -30,8 +30,10 @@ use App\Models\PatientPhysicalDetails;
 use App\Models\Prefix;
 use App\Models\OpdPatientPhysicalDetail;
 use App\Models\OpdPayment;
+use App\Models\ChargesCatagory;
 use App\Models\Billing;
 use App\Models\Payment;
+use App\Models\PatientCharge;
 use PDF;
 
 class OpdController extends Controller
@@ -116,7 +118,7 @@ class OpdController extends Controller
     }
     public function index()
     {
-        $opd_registaion_list = OpdDetails::orderBy('id', 'desc')->paginate(25);
+        $opd_registaion_list = OpdDetails::orderBy('id','desc')->get();
         return view('OPD.opd-patient-list', compact('opd_registaion_list'));
     }
     public function after_new_old(Request $request)
@@ -450,5 +452,54 @@ class OpdController extends Controller
 
 
         return view('OPD.edit-opd-patient', compact('opd_patient_details', 'opd_visit_details', 'timelineDetails', 'ticket_fees', 'tpa_management', 'referer', 'departments', 'symptoms_types', 'all_patient', 'patient_details_information'));
+    }
+
+    public function charge_list($id = null)
+    {
+        $opd_id = base64_decode($id);
+        $opd_charges_details = PatientCharge::where('ins_by','ori')->get();
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        return view('OPD.charges.charges-list',compact('opd_id','opd_patient_details','opd_charges_details'));
+    }
+    public function add_charges($id)
+    {
+        $opd_id = base64_decode($id);
+        $charge_category =  ChargesCatagory::all();
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        return view('OPD.charges.add-charges', compact('opd_patient_details', 'opd_id', 'charge_category'));
+    }
+    public function save_charges(Request $request)
+    {
+          $validate = $request->validate([
+            'date'   => 'required',
+        ]);
+        try {
+            DB::beginTransaction();
+                foreach ($request->charge_name as $key => $value) {
+                    $patient_charge = new PatientCharge();
+                    $patient_charge->case_id = $request->case_id;
+                    $patient_charge->section = $request->section;
+                    $patient_charge->charges_date = $request->date;
+                    $patient_charge->opd_id = $request->opd_id;
+                    $patient_charge->patient_id = $request->patient_id;
+                    $patient_charge->charge_set = $request->charge_set[$key];
+                    $patient_charge->charge_type = $request->charge_type[$key];
+                    $patient_charge->charge_category = $request->charge_category[$key];
+                    $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
+                    $patient_charge->charge_name = $request->charge_name[$key];
+                    $patient_charge->standard_charges = $request->standard_charges[$key];
+                    $patient_charge->tax = $request->tax[$key];
+                    $patient_charge->qty = $request->qty[$key];
+                    $patient_charge->amount = $request->amount[$key];
+                    $patient_charge->generated_by = Auth::user()->id;
+                    $patient_charge->billing_status = '0';
+                    $patient_charge->save();
+                }
+            DB::commit();
+            return redirect()->route('charges-list', ['id' => base64_encode($request->opd_id)])->with('success', "Charges Added Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
 }

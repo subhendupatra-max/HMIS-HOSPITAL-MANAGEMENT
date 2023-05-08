@@ -14,6 +14,7 @@ use App\Http\Controllers\Bed\FloorController;
 use App\Http\Controllers\Bed\WardController;
 use App\Http\Controllers\BedGroupController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\BillSummaryController;
 use App\Http\Controllers\charges\ChargeController;
 use App\Http\Controllers\ChargesCatagoryController;
 use App\Http\Controllers\ChargesSubCatagoryController;
@@ -1404,6 +1405,10 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
     Route::group(['middleware' => ['permission:medicine']], function () {
         Route::get('all-medicine-listing', [MedicineController::class, 'medicine_details'])->name('all-medicine-listing');
 
+        Route::group(['middleware' => ['permission:Medicine Details']], function () {
+            Route::get('medicine-details/{medicine_id?}', [PharmacyController::class, 'medicine_details'])->name('medicine-details');
+        });
+
         Route::group(['middleware' => ['permission:add medicine']], function () {
             Route::get('add-medicine-details', [MedicineController::class, 'add_medicine_details'])->name('add-medicine-details');
             Route::post('save-medicine-details', [MedicineController::class, 'save_medicine_details'])->name('save-medicine-details');
@@ -1869,6 +1874,16 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     });
     //================================= OPD Physical Condition ====================================
 
+    //================================= OPD charges ====================================
+    Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
+        Route::get('charges-list/{id?}', [OpdController::class, 'charge_list'])->name('charges-list');
+        Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
+            Route::get('add-opd-charges/{id?}', [OpdController::class, 'add_charges'])->name('add-opd-charges');
+            Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
+        });
+    });
+    //================================= OPD charges ====================================
+
     //================================= ipd admission from opd ==========================
     Route::group(['middleware' => ['permission:Admission From OPD']], function () {
         Route::get('admission-from-opd/{id}', [OpdController::class, 'admission_from_opd'])->name('ipd-registation-from-opd');
@@ -2319,3 +2334,15 @@ Route::group(['middleware' => ['permission:update stock from back']], function (
     Route::get('update-medicine-stock/{medicine_id?}', [MedicineController::class, 'update_stock_form'])->name('update-medicine-stock');
 });
 //=================================  Update stock =============================
+
+//================================= Bill Summary ==============================
+Route::group(['middleware' => ['permission:bill summary'], 'prefix' => 'bill-summary'], function () {
+    Route::get('bill-summary', [BillSummary::class, 'bill_summary'])->name('bill-summary');
+    Route::get('create-bill-summary/{id?}/{case_id?}', [BillSummary::class, 'bill_summary'])->name('create-bill-summary');
+});
+//================================= Bill Summary ==============================
+
+//================================= Bill Summary ==============================
+
+
+//================================= Bill Summary ==============================

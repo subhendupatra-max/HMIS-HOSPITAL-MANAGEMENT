@@ -12,7 +12,7 @@
                 <div class="col-md-6 text-right">
                     <div class="d-block">
                         <a class="btn btn-primary btn-sm" data-target="#modaldemo2" data-toggle="modal" href="#"><i
-                                class="fa fa-plus"></i> OPD Registaion</a>
+                                class="fa fa-plus"></i> OPD Registation</a>
                     </div>
                 </div>
                 @endcan
@@ -23,13 +23,14 @@
         @include('message.notification')
 
         <div class="card-body">
-            <table class="table card-table table-vcenter text-nowrap table-default">
+            <table class="table table-bordered text-nowrap" id="example">
                 <thead>
                     <tr>
                         <th scope="col">OPD Id</th>
                         <th scope="col">Patient Name</th>
                         <th scope="col">Gurdian Name</th>
                         <th scope="col">Mobile No.</th>
+                        <th scope="col">Case Id</th>
                         <th scope="col">Last Visit Details</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -39,8 +40,7 @@
                     @foreach ($opd_registaion_list as $value)
                     <tr>
                         <td><a class="textlink"
-                                href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}">{{
-                                @$value->opd_prefix }}{{ @$value->id }}</a>
+                                href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}">{{ @$value->id }}</a>
                         </td>
                         <td>
                             {{ @$value->all_patient_details->prefix }}
@@ -63,7 +63,7 @@
                         </td>
                         <td>{{ @$value->all_patient_details->guardian_name }}</td>
                         <td>{{ @$value->all_patient_details->phone }}</td>
-
+                        <td>{{ @$value->case_id }}</td>
                         <td>
                             @if (isset($value->latest_opd_visit_details_for_patient->department_id))
                             <i class="fa fa-cubes text-primary"></i>
@@ -117,7 +117,7 @@
                     @endif
                 </tbody>
             </table>
-            {!! $opd_registaion_list->links() !!}
+            {{-- {!! $opd_registaion_list->links() !!} --}}
         </div>
     </div>
 </div>

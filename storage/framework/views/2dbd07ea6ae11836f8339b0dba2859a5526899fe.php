@@ -444,7 +444,7 @@ unset($__errorArgs, $__bag); ?>
         $("#department").change(function(event) {
             event.preventDefault();
             let department = $(this).val();
-            // alert(department);
+            alert(department);
             $('#cons_doctor').html('<option vaule="" >Select...</option>');
             $.ajax({
                 url: "<?php echo e(route('find-doctor-by-department')); ?>",

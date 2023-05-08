@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePathologyBillingDetailsTable extends Migration
+class CreatePatientOthersBillingDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreatePathologyBillingDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pathology_billing_details', function (Blueprint $table) {
+        Schema::create('patient_others_billing_details', function (Blueprint $table) {
             $table->id();
-            $table->string('pathology_billing_id')->nullable();
+            $table->string('others_billing_id')->nullable();
             $table->string('type')->nullable();
-            $table->string('pathology_id')->nullable();
+            $table->string('others_category')->nullable();
+            $table->string('others_name')->nullable();
             $table->string('charge_amount')->nullable();
             $table->string('qty')->nullable();
             $table->string('tax')->nullable();
@@ -34,6 +35,6 @@ class CreatePathologyBillingDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pathology_billing_details');
+        Schema::dropIfExists('patient_others_billing_details');
     }
 }
