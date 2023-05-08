@@ -7,8 +7,11 @@ use App\Models\PatientPhysicalDetails;
 use Illuminate\Http\Request;
 use App\Models\OpdDetails;
 use App\Models\EmgDetails;
+use App\Models\IpdDetails;
 use App\Models\OpdPatientPhysicalDetail;
 use App\Models\EmgPatientPhysicalDetail;
+use App\Models\IpdPatientPhysicalDetail;
+
 
 class PhysicalConditionController extends Controller
 {
@@ -188,4 +191,93 @@ class PhysicalConditionController extends Controller
         return back()->with('success', "Payment Deleted Successfully");
     }
     //for emg
+
+    //for ipd
+    public function physical_condition_listing_in_ipd($ipd_id)
+    {
+        $ipd_id = base64_decode($ipd_id);
+        $IpdPatientPhysicalDetails  = IpdPatientPhysicalDetail::all();
+        $ipd_details = IpdDetails::where('id', $ipd_id)->first();
+        $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
+        $PhysicalDetails  =  IpdPatientPhysicalDetail::where('ipd_id', $ipd_id)->get();
+        return view('Ipd.physical-condition.physical-condition-listing', compact('IpdPatientPhysicalDetails', 'ipd_id', 'PhysicalDetails', 'ipd_details', 'ipd_patient_details'));
+    }
+
+    public function add_physical_condition_ipd($ipd_id)
+    {
+        $ipd_id = base64_decode($ipd_id);
+        $IpdPatientPhysicalDetails = IpdPatientPhysicalDetail::all();
+        $ipd_details = IpdDetails::where('id', $ipd_id)->first();
+        $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
+        $PhysicalDetails =  IpdPatientPhysicalDetail::where('ipd_id', $ipd_id)->get();
+
+        return view('Ipd.physical-condition.add-physical-condition', compact('IpdPatientPhysicalDetails', 'ipd_id', 'PhysicalDetails', 'ipd_details', 'ipd_patient_details'));
+    }
+
+    public function save_physical_condition_ipd(Request $request)
+    {
+        $request->validate([
+            'height'          => 'required',
+        ]);
+
+        $ipd_details                             = new IpdPatientPhysicalDetail();
+        $ipd_details->ipd_id                     = $request->ipd_id;
+        $ipd_details->height                     = $request->height;
+        $ipd_details->weight                     = $request->weight;
+        $ipd_details->pulse                      = $request->pulse;
+        $ipd_details->bp                         = $request->bp;
+        $ipd_details->temperature                = $request->temperature;
+        $ipd_details->respiration                = $request->respiration;
+        $status = $ipd_details->save();
+
+        if ($status) {
+            return redirect()->route('physical-condition-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', 'Physical Details Added Succesfully');
+        } else {
+            return redirect()->route('physical-condition-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('error', 'Something Went Wrong');
+        }
+    }
+
+    public function edit_physical_condition_ipd($id, $ipd_id)
+    {
+        $ipd_id = base64_decode($ipd_id);
+        $e_id = base64_decode($id);
+        $PhysicalDetails = IpdPatientPhysicalDetail::all();
+        $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
+        $ipd_details = IpdDetails::where('id', $ipd_id)->first();
+        $editIpdPhysicalDetails = IpdPatientPhysicalDetail::where('id', $e_id)->first();
+
+        return view('Ipd.physical-condition.edit-physical-condition', compact('PhysicalDetails', 'editIpdPhysicalDetails', 'ipd_patient_details', 'ipd_details'));
+    }
+
+    public function update_physical_condition_ipd(Request $request)
+    {
+        $request->validate([
+            'height'          => 'required',
+        ]);
+
+        $ipd_details                             = IpdPatientPhysicalDetail::find($request->id);
+        $ipd_details->ipd_id                     = $request->ipd_id;
+        $ipd_details->height                     = $request->height;
+        $ipd_details->weight                     = $request->weight;
+        $ipd_details->pulse                      = $request->pulse;
+        $ipd_details->bp                         = $request->bp;
+        $ipd_details->temperature                = $request->temperature;
+        $ipd_details->respiration                = $request->respiration;
+        $status = $ipd_details->save();
+
+        if ($status) {
+            return redirect()->route('physical-condition-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', 'Physical Details Updated Succesfully');
+        } else {
+            return redirect()->route('physical-condition-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('error', 'Something Went Wrong');
+        }
+    }
+
+    public function delete_physical_condition_ipd($id)
+    {
+        $id = base64_decode($id);
+        IpdPatientPhysicalDetail::find($id)->delete();
+
+        return back()->with('success', "Physical Condition Deleted Successfully");
+    }
+    //end for ipd
 }

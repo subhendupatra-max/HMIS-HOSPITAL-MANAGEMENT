@@ -379,6 +379,7 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
     Route::group(['middleware' => ['permission:search patient']], function () {
         Route::post('get-patient-serach', [PatientController::class, 'search_patient'])->name('get-patient-serach');
     });
+
     Route::post('find-fr-district-by-state', [PatientController::class, 'find_fr_district_by_state'])->name('find-fr-district-by-state');
 
     Route::post('find-state-by-country', [PatientController::class, 'find_state_by_country'])->name('find-state-by-country');
@@ -1798,6 +1799,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     });
     Route::group(['middleware' => ['permission:edit opd patient']], function () {
         Route::get('edit-opd-patient/{id}', [OpdController::class, 'editOPDdETAILS'])->name('edit-opd-patient');
+        Route::get('update-opd-patient', [OpdController::class, 'updateOPDdETAILS'])->name('update-opd-patient');
     });
     //================================= OPD profile ==================================
     Route::group(['middleware' => ['permission:OPD registation'], 'prefix' => 'opd-profile'], function () {
@@ -2181,6 +2183,24 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
     // =============================== Timeline ipd ====================================================
 
+    //================================= Ipd Physical Condition ====================================
+    Route::group(['middleware' => ['permission:ipd physical condition'], 'prefix' => 'ipd-physical-condition'], function () {
+        Route::get('physical-condition-in-ipd/{ipd_id}', [PhysicalConditionController::class, 'physical_condition_listing_in_ipd'])->name('physical-condition-in-ipd');
+        Route::group(['middleware' => ['permission:add ipd physical condition']], function () {
+            Route::get('add-physical-condition-in-ipd/{ipd_id}', [PhysicalConditionController::class, 'add_physical_condition_ipd'])->name('add-physical-condition-in-ipd');
+            Route::post('save-physical-condition-in-ipd', [PhysicalConditionController::class, 'save_physical_condition_ipd'])->name('save-physical-condition-in-ipd');
+        });
+        Route::group(['middleware' => ['permission:delete physical condition']], function () {
+            Route::get('delete-physical-condition-in-ipd/{id}', [PhysicalConditionController::class, 'delete_physical_condition_ipd'])->name('delete-physical-condition-in-ipd');
+        });
+        Route::group(['middleware' => ['permission:edit physical condition']], function () {
+            Route::get('edit-physical-condition-in-ipd/{id}/{ipd_id}', [PhysicalConditionController::class, 'edit_physical_condition_ipd'])->name('edit-physical-condition-in-ipd');
+            Route::post('update-physical-condition-in-ipd', [PhysicalConditionController::class, 'update_physical_condition_ipd'])->name('update-physical-condition-in-ipd');
+        });
+    });
+
+    //================================= Ipd Physical Condition ====================================
+
     // =============================== Bed Transfar ==================================================
 
     Route::group(['middleware' => ['permission:ipd timeline'], 'prefix' => 'ipd-bed-history'], function () {
@@ -2332,6 +2352,8 @@ Route::group(['middleware' => ['permission:False Generation'], 'prefix' => 'fals
 //=================================  Update stock =============================
 Route::group(['middleware' => ['permission:update stock from back']], function () {
     Route::get('update-medicine-stock/{medicine_id?}', [MedicineController::class, 'update_stock_form'])->name('update-medicine-stock');
+
+    Route::post('save-update-medicine-stock', [MedicineController::class, 'save_update_stock_form'])->name('save-update-medicine-stock');
 });
 //=================================  Update stock =============================
 

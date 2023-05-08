@@ -190,14 +190,14 @@
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <span style="font-weight: bold; font-size: 15px;">Total Payment Amount : <?php echo e($payment_amount); ?></span>
+                                <span style="font-weight: bold; font-size: 15px;">Total Payment Amount : ₹<?php echo e($payment_amount); ?></span>
                             </div>
                         </div>
                     </div>
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <span style="font-weight: bold; font-size: 15px;">Total Billing Amount : <?php echo e($payment_amount); ?></span>
+                                <span style="font-weight: bold; font-size: 15px;">Total Billing Amount : ₹<?php echo e($billing_amount); ?></span>
                             </div>
                         </div>
                     </div>
