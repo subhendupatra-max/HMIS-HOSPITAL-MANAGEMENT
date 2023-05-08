@@ -6,6 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Department;
 use App\Models\FalsePatient;
+use App\Models\Prefix;
+use App\Models\Patient;
+use App\Models\caseReference;
+use App\Models\OpdDetails;
+use App\Models\User;
+use App\Models\OpdVisitDetails;
+use App\Models\OpdUnit;
+use DB;
+use Auth;
 
 class OpdFalseController extends Controller
 {
@@ -23,8 +32,9 @@ class OpdFalseController extends Controller
         $department_id = $request->department_id;
         $date = $request->date;
         $department_details = Department::where('is_active','1')->where('id',$request->department_id)->first();
+        $opd_registaion_list = OpdDetails::where('ins_by','sys')->where('created_at','like','%'.$request->date.'%')->orderBy('id','desc')->get();
         if (@$department_details) {
-            return view('false.opd.false_patient_list',compact('department_details','date','department_id'));
+            return view('false.opd.false_patient_list',compact('department_details','opd_registaion_list','date','department_id'));
         } else {
             return redirect()->back()->with('success', 'Search Again !!!!');
         }
@@ -32,56 +42,51 @@ class OpdFalseController extends Controller
 
     public function registation_false_opd(Request $request)
     {
-        $validate = $request->validate([
-            'department_id'      => 'required',
-            'visit_type' => 'required',
-            'from_age' => 'required',
-            'gender' => 'required',
-            'no_of_patient' => 'required',
-            'date' => 'required',
-            'to_age' => 'required',
-        ]);
+        try {
+        DB::beginTransaction();
         $opd_prefix = Prefix::where('name', 'opd')->first();
         $false_patient = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->limit($request->no_of_patient)->get();
         foreach($false_patient as $value)
         {
             $patient = new Patient();
-            $patient->patient_prefix =  $false_patient->patient_prefix
-            $patient->prefix = $false_patient->prefix;
-            $patient->first_name = $false_patient->first_name;
-            $patient->middle_name = $false_patient->middle_name;
-            $patient->last_name = $false_patient->last_name;
-            $patient->guardian_name = $false_patient->guardian_name;
-            $patient->guardian_contact_no = $false_patient->guardian_contact_no;
-            $patient->marital_status = $false_patient->marital_status;
-            $patient->blood_group = $false_patient->blood_group;
-            $patient->gender = $false_patient->gender;
-            $patient->date_of_birth = \Carbon\Carbon::parse($false_patient->date_of_birth)->format('Y-m-d');
-            $patient->year = $false_patient->year;
-            $patient->month = $false_patient->month;
-            $patient->day = $false_patient->day;
-            $patient->local_guardian_name = $false_patient->local_guardian_name;
-            $patient->local_guardian_contact_no = $false_patient->local_guardian_contact_no;
-            $patient->phone = $false_patient->phone;
-            $patient->email = $false_patient->email;
-            $patient->address = $false_patient->address;
-            $patient->state = $false_patient->state;
-            $patient->country = $false_patient->country;
-            $patient->district = $false_patient->district;
-            $patient->pin_no = $false_patient->pin_no;
-            $patient->identification_name = $false_patient->identification_name;
-            $patient->identification_number = $false_patient->identification_number;
-            $patient->local_address = $false_patient->local_address;     
-            $patient->country_local = $false_patient->country_local;
-            $patient->state_local = $false_patient->state_local;
-            $patient->district_local = $false_patient->district_local;
-            $patient->local_pin_no = $false_patient->local_pin_no;    
+            $patient->patient_prefix =  $value->patient_prefix;
+            $patient->prefix = $value->prefix;
+            $patient->first_name = $value->first_name;
+            $patient->middle_name = $value->middle_name;
+            $patient->last_name = $value->last_name;
+            $patient->guardian_name = $value->guardian_name;
+            $patient->guardian_contact_no = $value->guardian_contact_no;
+            $patient->marital_status = $value->marital_status;
+            $patient->blood_group = $value->blood_group;
+            $patient->gender = $value->gender;
+            $patient->date_of_birth = $value->date_of_birth;
+            $patient->year = $value->year;
+            $patient->month = $value->month;
+            $patient->day = $value->day;
+            $patient->local_guardian_name = $value->local_guardian_name;
+            $patient->local_guardian_contact_no = $value->local_guardian_contact_no;
+            $patient->phone = $value->phone;
+            $patient->email = $value->email;
+            $patient->address = $value->address;
+            $patient->state = $value->state;
+            $patient->country = $value->country;
+            $patient->district = $value->district;
+            $patient->pin_no = $value->pin_no;
+            $patient->identification_name = $value->identification_name;
+            $patient->identification_number = $value->identification_number;
+            $patient->local_address = $value->local_address;     
+            $patient->country_local = $value->country_local;
+            $patient->state_local = $value->state_local;
+            $patient->district_local = $value->district_local;
+            $patient->local_pin_no = $value->local_pin_no;    
+            $patient->ins_by = 'sys';   
             $patient->save();
 
             //SAVE in CASE reference
             $caseReference = new caseReference;
-            $caseReference->patient_id = $request->patient_id;
+            $caseReference->patient_id =$patient->id;
             $caseReference->section = 'OPD';
+            $caseReference->ins_by = 'sys'; 
             $caseReference->save();
             //SAVE in CASE reference
 
@@ -91,47 +96,43 @@ class OpdFalseController extends Controller
             $Opd_details->patient_id     = $patient->id;
             $Opd_details->opd_prefix     = $opd_prefix->prefix;
             $Opd_details->generate_by    = Auth::user()->id;
+            $Opd_details->ins_by = 'sys'; 
             $Opd_details->save();
             //SAVE in opd details
+
+            $cons_doctor = User::where('department',$request->department_id)->inRandomOrder()->first();
 
             //SAVE in opd Visit details
             $opd_visit_details = new OpdVisitDetails();
             $opd_visit_details->opd_details_id              = $Opd_details->id;
-            $opd_visit_details->department_id               = $request->department;
-            $opd_visit_details->cons_doctor                 = $request->cons_doctor;
+            $opd_visit_details->department_id               = $request->department_id;
+            $opd_visit_details->cons_doctor                 = $cons_doctor->id;
             $opd_visit_details->visit_type                  = $request->visit_type;
-            $opd_visit_details->unit                        = $request->unit;
-            $opd_visit_details->case_type                   = $request->case;
-            $opd_visit_details->patient_type                = $request->patient_type;
-            $opd_visit_details->ticket_fees                 = $request->ticket_fees;
-            $opd_visit_details->ticket_no                   = $request->ticket_no;
-            $opd_visit_details->tpa_organization            = $request->tpa_organization;
-            $opd_visit_details->type_no                     = $request->type_no;
-            $opd_visit_details->appointment_date            = $request->appointment_date;
-            $opd_visit_details->symptoms_type               = $request->symptoms_type;
-            $opd_visit_details->symptoms                    = $request->symptoms_title;
-            $opd_visit_details->symptoms_description        = $request->symptoms_description;
-            $opd_visit_details->known_allergies             = $request->any_known_allergies;
-            $opd_visit_details->note                        = $request->note;
-            $opd_visit_details->refference                  = $request->reference;
+            $opd_visit_details->unit                        = 'Unit 1';
+            $opd_visit_details->case_type                   = '';
+            $opd_visit_details->patient_type                = 'General';
+            $opd_visit_details->ticket_fees                 = 00;
+            $opd_visit_details->ticket_no                   = 0;
+            $opd_visit_details->tpa_organization            = '';
+            $opd_visit_details->type_no                     = '';
+            $opd_visit_details->appointment_date            = $request->date.' '.sprintf("%02d", rand(8,13)).':'.sprintf("%02d", rand(00,59)).':'.sprintf("%02d", rand(00,59));
+            $opd_visit_details->symptoms_type               = '';
+            $opd_visit_details->symptoms                    = '';
+            $opd_visit_details->symptoms_description        = '';
+            $opd_visit_details->known_allergies             = '';
+            $opd_visit_details->note                        = '';
+            $opd_visit_details->refference                  = '';
             $opd_visit_details->generated_by                = Auth::user()->id;
             $opd_visit_details->save();
             //SAVE in opd Visit details
             // dd($opd_visit_details);
-
-            $patient_physical_condition = new OpdPatientPhysicalDetail();
-            $patient_physical_condition->opd_id                      = $Opd_details->id;
-            $patient_physical_condition->bp                          = $request->bp;
-            $patient_physical_condition->height                      = $request->height;
-            $patient_physical_condition->weight                      = $request->weight;
-            $patient_physical_condition->pulse                       = $request->pulse;
-            $patient_physical_condition->temperature                 = $request->temperature;
-            $patient_physical_condition->respiration                 = $request->respiration;
-            $patient_physical_condition->save();
-
-
-
-        }
+       }
+        DB::commit();
+        return response()->json(['message'=>'Registation SuccessFully']); 
+    } catch (\Throwable $th) {
+        DB::rollback();
+        return response()->json(['message'=>'Error!! Do it Again']);
+    }
         
     }
 }
