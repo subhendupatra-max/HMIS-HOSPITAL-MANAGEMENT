@@ -163,8 +163,8 @@
                                         <span class="biltext">Total</span>
                                         {{-- <input type="text" name="total" readonly id="total_am"
                                             class="form-control myfld"> --}}
-                                        <input type="text" id="total_am" name="total" required
-                                            class="form-control myfld" />
+                                        <input type="text" id="total_am" name="total"
+                                             class="myfld" />
                                         {{-- <label for="doctor_fees"> Enter Doctor Fees<span
                                                 class="text-danger">*</span></label> --}}
                                         @error('total')
@@ -254,7 +254,7 @@
             },
             success: function(response) {
                 $('#charge' + i).val(response.total_amount);
-                
+
             },
             error: function(error) {
                 console.log(error);

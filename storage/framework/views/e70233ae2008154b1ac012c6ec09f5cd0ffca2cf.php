@@ -97,7 +97,7 @@ unset($__errorArgs, $__bag); ?>
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
                                 <td><?php echo e($item->charges_sub_catagories_name); ?></td>
-                                <td><?php echo e($item->charges_catagory->charges_catagories_name); ?></td>
+                                <td><?php echo e(@$item->charges_catagory->charges_catagories_name); ?></td>
                                 <td><?php echo e($item->description); ?></td>
                                 <td>
                                     <div class="card-options">

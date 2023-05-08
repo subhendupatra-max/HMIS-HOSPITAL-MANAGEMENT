@@ -20,7 +20,7 @@
                         <?php echo csrf_field(); ?>
                         <div class="col-md-12">
                             <div class="row">
-                             <div class="col-md-4">
+                             <div class="col-md-4 addchargedesign">
                                     <div class="form-group">
                                         <label for="type">Type <span
                                             class="text-danger">*</span></label>
@@ -44,7 +44,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesign">
                                     <div class="form-group">
                                         <label for="charges_catagory_id">Charges Catagory <span
                                             class="text-danger">*</span></label>
@@ -68,7 +68,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 addchargedesign">
                                      <div class="form-group">
                                         <label for="charges_sub_catagory_id">Charges Sub Catagory <span
                                             class="text-danger">*</span></label>

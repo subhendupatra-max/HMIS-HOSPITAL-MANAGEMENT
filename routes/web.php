@@ -1813,7 +1813,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     });
     Route::group(['middleware' => ['permission:edit opd patient']], function () {
         Route::get('edit-opd-patient/{id}', [OpdController::class, 'editOPDdETAILS'])->name('edit-opd-patient');
-        Route::get('update-opd-patient', [OpdController::class, 'updateOPDdETAILS'])->name('update-opd-patient');
+        Route::post('update-opd-patient', [OpdController::class, 'updateOPDdETAILS'])->name('update-opd-patient');
     });
     //================================= OPD profile ==================================
     Route::group(['middleware' => ['permission:OPD registation'], 'prefix' => 'opd-profile'], function () {

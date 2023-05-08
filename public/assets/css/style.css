@@ -26660,7 +26660,31 @@ top: -29px;
   margin: 32px 0px 0px 22px;
 }
 /* ------------------finding setup--------------------- */
-<<<<<<< HEAD
+/* ------------------pathology-billing--------------------- */
+.addbilling{
+    margin: 10px 0px 0px 0px;
+}
+.addnew{
+    margin: 20px 0px 0px 0px;
+}
+.addnewblade{
+    margin: 25px 0px 0px 0px;
+}
+.addnewde{
+    margin: 34px 0px 0px 0px;
+}
+.addnewbladee{
+    margin: 39px 0px 0px 0px;
+}
+.adcharge{
+    margin: 23px 0px 0px 0px;
+}
+.adchargee{
+    margin: 20px 0px 0px 0px;
+}
+.adcharged{
+    margin: 25px 0px 0px 0px;
+}
 /* ---------------------------------------------------- */
 .menubox{
     display: flex;
@@ -26756,9 +26780,6 @@ top: -29px;
   }
 
 /* ---------------------------------------------------------- */
-=======
-
->>>>>>> c7c6a8eb766f2024b1be1541bea4407072e37041
 @media (max-width: 768px)
 {
     .newuserchangee {
