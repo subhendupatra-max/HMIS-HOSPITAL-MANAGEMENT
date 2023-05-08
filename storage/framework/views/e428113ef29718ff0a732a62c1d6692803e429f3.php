@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -6,7 +8,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                   Charges List
+                    Charges List
                 </div>
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add charges')): ?>
                 <div class="col-md-6 text-right">
@@ -46,14 +48,14 @@
                             <?php $__currentLoopData = $charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
-                                <td><?php echo e($item->charges_name); ?></td>
-                                <td><?php echo e($item->charges_catagory->charges_catagories_name); ?></td>
-                                <td><?php echo e($item->charges_sub_catagory->charges_sub_catagories_name); ?></td>
+                                <td><?php echo e(@$item->charges_name); ?></td>
+                                <td><?php echo e(@$item->charges_catagory->charges_catagories_name); ?></td>
+                                <td><?php echo e(@$item->charges_sub_catagory->charges_sub_catagories_name); ?></td>
                                 <td><?php echo e(@$item->type); ?></td>
 
-                                <td><?php echo e($item->standard_charges); ?></td>
-                                <td><?php echo e($item->date); ?></td>
-                                <td><?php echo e($item->description); ?></td>
+                                <td><?php echo e(@$item->standard_charges); ?></td>
+                                <td><?php echo e(@$item->date); ?></td>
+                                <td><?php echo e(@$item->description); ?></td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
@@ -79,5 +81,4 @@
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/charges/charges-listing.blade.php ENDPATH**/ ?>

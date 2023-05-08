@@ -23,7 +23,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="type" class="form-label">Type <span class="text-danger">*</span></label>
+                                        <label for="type">Type <span class="text-danger">*</span></label>
                                         <select id="type" class="form-control" name="type">
                                             <option value=" ">Select type </option>
                                             @foreach (Config::get('static.charges_type') as $lang => $charges_type)
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="charges_catagory_id" class="form-label">Charges Catagory <span
+                                        <label for="charges_catagory_id">Charges Catagory <span
                                             class="text-danger">*</span></label>
                                         <select id="charges_catagory_id" class="form-control select2-show-search"
                                             name="charges_catagory_id">
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="charges_sub_catagory_id" class="form-label">Charges Sub Catagory <span
+                                        <label for="charges_sub_catagory_id">Charges Sub Catagory <span
                                             class="text-danger">*</span></label>
                                         <select id="charges_sub_catagory_id" class="form-control select2-show-search"
                                             name="charges_sub_catagory_id">
@@ -73,40 +73,41 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="charges_name" class="form-label">Charges name <span
+                                <div class="col-md-4 chargespackagesetup">
+                                   <div class="form-group">
+                                        <label for="charges_name">Enter Charges Name<span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="charges_name" name="charges_name"
-                                            placeholder="Enter Charges Name" value="{{ $editCharges->charges_name }}" required>
+                                        <input type="text" id="charges_name" name="charges_name"
+                                             value="{{ $editCharges->charges_name }}" required>
                                         @error('charges_name')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+
+                                <div class="col-md-4 chargespackagesetup">
                                     <div class="form-group">
-                                        <label for="standard_charges" class="form-label">Standard Charges <span
+                                        <label for="standard_charges">Standard Charges <span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="standard_charges" name="standard_charges"
+                                        <input type="text" id="standard_charges" name="standard_charges"
                                             value="{{ $editCharges->standard_charges }}" required>
                                         @error('standard_charges')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 chargespackageset">
                                     <div class="form-group ">
-                                        <label for="standard_charges" class="form-label">Date</label>
-                                        <input type="date" class="form-control" id="date" name="date"
+                                        <label for="standard_charges">Date</label>
+                                        <input type="date"id="date" name="date"
                                             @if (isset($editCharges->date)) value="{{ date('Y-m-d', strtotime($editCharges->date)) }}" @endif>
                                         <small class="text-danger">{{ $errors->first('date') }}</small>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 chargespackagesetup">
                                     <div class="form-group ">
-                                        <label for="description" class="form-label">Description</label>
-                                        <textarea class="form-control" id="description" name="description"> {{ @$editCharges->description }} </textarea>
+                                        <label for="description" >Description</label>
+                                        <input type="text"id="description" name="description" value="{{ @$editCharges->description }}">
                                         <small class="text-danger">{{ $errors->first('description') }}</small>
                                     </div>
 
