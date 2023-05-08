@@ -293,6 +293,11 @@ class PathologyController extends Controller
         }
     }
 
+    public function add_test()
+    {
+        
+    }
+
     // =====================pathology test============================
 
 
