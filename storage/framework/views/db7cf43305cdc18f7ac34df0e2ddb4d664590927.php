@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-md-12">
@@ -178,8 +177,8 @@ unset($__errorArgs, $__bag); ?>
                                     <div class="d-flex justify-content-end">
                                         <span class="biltext">Total</span>
                                         
-                                        <input type="text" id="total_am" name="total" required
-                                            class="form-control myfld" />
+                                        <input type="text" id="total_am" name="total"
+                                             class="myfld" />
                                         
                                         <?php $__errorArgs = ['total'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -254,7 +253,7 @@ unset($__errorArgs, $__bag); ?>
             },
             success: function(response) {
                 $('#charge' + i).val(response.total_amount);
-                
+
             },
             error: function(error) {
                 console.log(error);
@@ -340,4 +339,5 @@ unset($__errorArgs, $__bag); ?>
 
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pathology/pathology-add-billing.blade.php ENDPATH**/ ?>

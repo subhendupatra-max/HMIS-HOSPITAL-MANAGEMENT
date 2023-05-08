@@ -120,7 +120,7 @@
                         @csrf
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
-                                <div class="form-group col-md-4 opd-bladedesign ">
+                                <div class="form-group col-md-4 adcharge ">
                                     <label class="date-format">Charge Date <span class="text-danger">*</span></label>
                                     <input type="datetime-local" name="charge_date" value="{{ date('Y-m-d H:s') }}"
                                         required />
@@ -128,7 +128,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 opd-bladedesign ">
+                                <div class="form-group col-md-4 adchargee ">
                                     <label class="date-format">Test Name <span class="text-danger">*</span></label>
                                     <select required class="form-control select2-show-search" name="test_id"
                                         id="test_id" onchange="getTestAmount(this.value)">
@@ -144,7 +144,7 @@
                                     <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 opd-bladedesign ">
+                                <div class="form-group col-md-4 adcharged">
                                     <label class="date-format">Charge<span class="text-danger">*</span></label>
                                     <input type="text" name="charge" id="charge" required />
                                     @error('charge')
@@ -189,7 +189,7 @@
             },
             success: function(response) {
                 $('#charge').val(response.total_amount);
-                
+
             },
             error: function(error) {
                 console.log(error);

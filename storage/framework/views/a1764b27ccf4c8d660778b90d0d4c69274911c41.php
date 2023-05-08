@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-md-12">
@@ -129,7 +128,7 @@ unset($__errorArgs, $__bag); ?>
                         <?php echo csrf_field(); ?>
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
-                                <div class="form-group col-md-4 opd-bladedesign ">
+                                <div class="form-group col-md-4 adcharge ">
                                     <label class="date-format">Charge Date <span class="text-danger">*</span></label>
                                     <input type="datetime-local" name="charge_date" value="<?php echo e(date('Y-m-d H:s')); ?>"
                                         required />
@@ -144,7 +143,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-                                <div class="form-group col-md-4 opd-bladedesign ">
+                                <div class="form-group col-md-4 adchargee ">
                                     <label class="date-format">Test Name <span class="text-danger">*</span></label>
                                     <select required class="form-control select2-show-search" name="test_id"
                                         id="test_id" onchange="getTestAmount(this.value)">
@@ -167,7 +166,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-                                <div class="form-group col-md-4 opd-bladedesign ">
+                                <div class="form-group col-md-4 adcharged">
                                     <label class="date-format">Charge<span class="text-danger">*</span></label>
                                     <input type="text" name="charge" id="charge" required />
                                     <?php $__errorArgs = ['charge'];
@@ -212,7 +211,7 @@ unset($__errorArgs, $__bag); ?>
             },
             success: function(response) {
                 $('#charge').val(response.total_amount);
-                
+
             },
             error: function(error) {
                 console.log(error);
@@ -223,4 +222,5 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pathology/charge/charge-add.blade.php ENDPATH**/ ?>

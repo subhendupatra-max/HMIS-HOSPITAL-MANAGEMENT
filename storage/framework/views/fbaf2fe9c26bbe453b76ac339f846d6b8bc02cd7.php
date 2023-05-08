@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -60,8 +59,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="catagory_id" class="form-label">Category<span class="text-danger">*</span></label> -->
+                    <div class="form-group col-md-4 addnew">
+                         <label for="catagory_id" >Category<span class="text-danger">*</span></label>
                         <select id="catagory_id" class="form-control" name="catagory_id">
                             <option value=" ">Select Category</option>
                             <?php $__currentLoopData = $catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -80,7 +79,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewblade">
                         <!-- <label for="sub_catagory" class="form-label"> Sub Catagory<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="sub_catagory" name="sub_catagory" placeholder="Enter Sub Catagory Name" value="<?php echo e(old('sub_catagory')); ?>" required> -->
                         <input type="text"id="sub_catagory" name="sub_catagory"value="<?php echo e(old('sub_catagory')); ?>"  required="">
@@ -97,7 +96,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewblade">
                         <!-- <label for="method" class="form-label"> Method <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="method" name="method" placeholder="Enter Sub Catagory Name" value="<?php echo e(old('method')); ?>" required> -->
                         <input type="text" id="method" name="method"  value="<?php echo e(old('method')); ?>" required="">
@@ -114,7 +113,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewbladee ">
                         <!-- <label for="report_days" class="form-label"> Report Days <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="report_days" name="report_days" placeholder="Enter Report Days" value="<?php echo e(old('report_days')); ?>" required> -->
                         <input type="text"  id="report_days" name="report_days"  value="<?php echo e(old('report_days')); ?>" required="">
@@ -131,8 +130,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="charge_category" class="form-label">Charges Catagory <span class="text-danger">*</span></label> -->
+                    <div class="form-group col-md-4 addnewde">
+                         <label for="charge_category" >Charges Catagory <span class="text-danger">*</span></label>
                         <select id="charge_category" class="form-control select2-show-search" name="charge_category">
                             <option value=" ">Select Catagory</option>
                             <?php $__currentLoopData = $chargeCatagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -151,23 +150,23 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="charge_sub_category">Charges Sub Catagory <span class="text-danger">*</span></label> -->
+                    <div class="form-group col-md-4 addnewde">
+                        <label for="charge_sub_category">Charges Sub Catagory <span class="text-danger">*</span></label>
                         <select name="charge_sub_category" class="form-control select2-show-search" id="charge_sub_category" required>
                             <option value="">Select Sub Catagory...</option>
                         </select>
                         <small class="text-danger"><?php echo e($errors->first('charge_sub_category')); ?></small>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="charge">Charges <span class="text-danger">*</span></label> -->
+                    <div class="form-group col-md-4 addnewblade">
+                         <label for="charge">Charges <span class="text-danger">*</span></label>
                         <select name="charge" class="form-control select2-show-search" id="charge" required>
                             <option value="">Select charge...</option>
                         </select>
                         <small class="text-danger"><?php echo e($errors->first('charge')); ?></small>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewde">
                         <!-- <label for="tax">Tax<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="tax" value="<?php echo e(old('tax')); ?>" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax"> -->
                         <input type="text"  id="tax" value="<?php echo e(old('tax')); ?>" onkeyup="totalAmount()" name="tax"  required="">
@@ -175,7 +174,7 @@ unset($__errorArgs, $__bag); ?>
                         <small class="text-danger"><?php echo e($errors->first('tax')); ?></small>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4 addnewde">
                         <!-- <label for="standard_charges">Charge Amount<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="standard_charges" onkeyup="totalAmount()" name="standard_charges"> -->
                         <input type="text" id="standard_charges" onkeyup="totalAmount()" name="standard_charges"  required="">
@@ -183,7 +182,7 @@ unset($__errorArgs, $__bag); ?>
                         <small class="text-danger"><?php echo e($errors->first('standard_charges')); ?></small>
                     </div>
 
-                    <div class="form-group col-md-4 ">
+                    <div class="form-group col-md-4 addnewde">
                         <!-- <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="total_amount" name="total_amount" readonly> -->
                         <input type="text" id="total_amount" name="total_amount" readonly required="">
