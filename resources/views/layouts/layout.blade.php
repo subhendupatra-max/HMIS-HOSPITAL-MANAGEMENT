@@ -13,7 +13,8 @@ $login_details = DB::table('users')
 
 <head>
     <!-- Jquery cdn -->
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+   
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -77,7 +78,7 @@ $login_details = DB::table('users')
             <aside class="app-sidebar">
                 <div class="app-sidebar__logo">
                     <a class="header-brand" href="{{ route('dashboard') }}">
-                        <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->logo }}"  class="header-brand-img desktop-lgo" alt="{{ @$general_details->software_name }}">
+                        <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->logo }}" class="header-brand-img desktop-lgo" alt="{{ @$general_details->software_name }}">
                         <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->logo }}" class="header-brand-img dark-logo" alt="{{ @$general_details->software_name }}">
 
                         <img src="{{ asset('public/assets/images/brand') }}/{{ @$general_details->small_logo }}" class="header-brand-img mobile-logo" alt="{{ @$general_details->software_name }}">
@@ -193,7 +194,10 @@ $login_details = DB::table('users')
                         @if (auth()->user()->can('discount'))
                         <li class="slide {{ Request::segment(1) == 'discount' ? 'active' : '' }}">
                             <a class="side-menu__item {{ Request::segment(1) == 'discount' ? 'active' : '' }}" href="{{ route('discount-list') }}">
-                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0V0z" fill="none"></path><path d="M14.25 2.26l-.08-.04-.01.02C13.46 2.09 12.74 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-4.75-3.31-8.72-7.75-9.74zM19.41 9h-7.99l2.71-4.7c2.4.66 4.35 2.42 5.28 4.7zM13.1 4.08L10.27 9l-1.15 2L6.4 6.3C7.84 4.88 9.82 4 12 4c.37 0 .74.03 1.1.08zM5.7 7.09L8.54 12l1.15 2H4.26C4.1 13.36 4 12.69 4 12c0-1.85.64-3.55 1.7-4.91zM4.59 15h7.98l-2.71 4.7c-2.4-.67-4.34-2.42-5.27-4.7zm6.31 4.91L14.89 13l2.72 4.7C16.16 19.12 14.18 20 12 20c-.38 0-.74-.04-1.1-.09zm7.4-3l-4-6.91h5.43c.17.64.27 1.31.27 2 0 1.85-.64 3.55-1.7 4.91z"></path></svg>
+                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                    <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                    <path d="M14.25 2.26l-.08-.04-.01.02C13.46 2.09 12.74 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-4.75-3.31-8.72-7.75-9.74zM19.41 9h-7.99l2.71-4.7c2.4.66 4.35 2.42 5.28 4.7zM13.1 4.08L10.27 9l-1.15 2L6.4 6.3C7.84 4.88 9.82 4 12 4c.37 0 .74.03 1.1.08zM5.7 7.09L8.54 12l1.15 2H4.26C4.1 13.36 4 12.69 4 12c0-1.85.64-3.55 1.7-4.91zM4.59 15h7.98l-2.71 4.7c-2.4-.67-4.34-2.42-5.27-4.7zm6.31 4.91L14.89 13l2.72 4.7C16.16 19.12 14.18 20 12 20c-.38 0-.74-.04-1.1-.09zm7.4-3l-4-6.91h5.43c.17.64.27 1.31.27 2 0 1.85-.64 3.55-1.7 4.91z"></path>
+                                </svg>
                                 <span class="side-menu__label"> Discount</span>
                             </a>
                         </li>
@@ -337,8 +341,8 @@ $login_details = DB::table('users')
                                 @if (auth()->user()->can('IPD False'))
                                 <li><a href="{{ route('user-list') }}" class="slide-item {{ Request::segment(2) == 'ipd-false' ? 'active' : '' }}"> IPD</a></li>
                                 @endif
-                                                               
-                               
+
+
 
                             </ul>
                         </li>
@@ -374,363 +378,364 @@ $login_details = DB::table('users')
                                         <li><a class="sub-slide-item" href="{{ route('charges-sub-catagory-details') }}">Sub Catagory</a></li>
                                         @endcan
                                         {{-- @can('charges unit')
-                                        <li><a class="sub-slide-item" href="{{ route('charges-unit-details') }}">Unit</a></li>
-                                        @endcan --}}
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('front office'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Front Office</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('purpose')
-                                        <li><a class="sub-slide-item" href="{{ route('add-purpose-in-front-office') }}">Purpose</a></li>
-                                        @endcan
-                                        @can('complain type')
-                                        <li><a class="sub-slide-item" href="{{ route('add-complain-type-in-front-office') }}">Complain Type</a></li>
-                                        @endcan
-                                        @can('source')
-                                        <li><a class="sub-slide-item" href="{{ route('add-source-in-front-office') }}">Source</a></li>
-                                        @endcan
-                                        @can('appointment priority')
-                                        <li><a class="sub-slide-item" href="{{ route('add-appointment-priority-in-front-office') }}">Appointment Priority</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-
-
-                                @if (auth()->user()->can('charges package'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Charges Package</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('package name')
-                                        <li><a class="sub-slide-item" href="{{ route('charges-package-name-details') }}">Package Name</a></li>
-                                        @endcan
-                                        @can('package catagory')
-                                        <li><a class="sub-slide-item" href="{{ route('charges-package-catagory-details') }}">Package Catagory</a></li>
-                                        @endcan
-                                        @can('package sub catagory')
-                                        <li><a class="sub-slide-item" href="{{ route('charges-package-sub-catagory-details') }}">Package Sub Catagory</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('Setup Inventory'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Inventory</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('Inventory Item')
-                                        <li><a class="sub-slide-item" href="{{ route('inventory-item-list') }}">Item</a></li>
-                                        @endcan
-                                    </ul>
-                                    <ul class="sub-slide-menu">
-                                        @can('Inventory Item Catagory')
-                                        <li><a class="sub-slide-item" href="{{ route('add-inventory-item-catagory') }}">Item Catagory</a></li>
-                                        @endcan
-                                    </ul>
-                                    <ul class="sub-slide-menu">
-                                        @can('Inventory Item Unit')
-                                        <li><a class="sub-slide-item" href="{{ route('add-inventory-item-unit') }}">Item Unit</a></li>
-                                        @endcan
-                                    </ul>
-                                    <ul class="sub-slide-menu">
-                                        @can('Inventory Item Brand')
-                                        <li><a class="sub-slide-item" href="{{ route('add-inventory-item-brand') }}">Item Brand</a></li>
-                                        @endcan
-                                    </ul>
-                                    <ul class="sub-slide-menu">
-                                        @can('Inventory Item Manufacture')
-                                        <li><a class="sub-slide-item" href="{{ route('add-inventory-manufacture') }}">Manufacture</a></li>
-                                        @endcan
-                                    </ul>
-                                    <ul class="sub-slide-menu">
-                                        @can('Inventory Item Type')
-                                        <li><a class="sub-slide-item" href="{{ route('add-inventory-item-type') }}">Item Type</a></li>
-                                        @endcan
-                                    </ul>
-                                    <ul class="sub-slide-menu">
-                                        @can('Inventory Store Room')
-                                        <li><a class="sub-slide-item" href="{{ route('add-inventory-item-store-room') }}">Item Store Room</a></li>
-                                        @endcan
-                                    </ul>
-                                    <ul class="sub-slide-menu">
-                                        @can('Inventory Item Attribute')
-                                        <li><a class="sub-slide-item" href="{{ route('inventory-item-attribute') }}">Item Attribute</a></li>
-                                        @endcan
-                                    </ul>
-                                    <ul class="sub-slide-menu">
-                                        @can('Inventory Vendor')
-                                        <li><a class="sub-slide-item" href="{{ route('inventory-vendor') }}">Vendor</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('setup pharmacy'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Pharmacy</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-
-                                        @can('medicine storeroom')
-                                        <li><a class="sub-slide-item" href="{{ route('medicine-store-room-details') }}">Store Room</a></li>
-                                        @endcan
-
-                                        @can('medicine store')
-                                        <li><a class="sub-slide-item" href="{{ route('medicine-store-details') }}">Medicine Store</a></li>
-                                        @endcan
-
-                                        @can('medicine rack')
-                                        <li><a class="sub-slide-item" href="{{ route('medicine-rack-details') }}">Medicine Rack</a></li>
-                                        @endcan
-
-                                        @can('medicine supplier')
-                                        <li><a class="sub-slide-item" href="{{ route('medicine-supplier-details') }}"> Supplier </a></li>
-                                        @endcan
-
-                                        @can('medicine dosage')
-                                        <li><a class="sub-slide-item" href="{{ route('medicine-dosage-details') }}"> Medicine Dosage </a></li>
-                                        @endcan
-
-                                        @can('medicine unit')
-                                        <li><a class="sub-slide-item" href="{{ route('medicine-unit-details') }}"> Medicine Unit </a></li>
-                                        @endcan
-
-                                        @can('dose interval')
-                                        <li><a class="sub-slide-item" href="{{ route('dose-interval-details') }}">Interval </a></li>
-                                        @endcan
-
-                                        @can('dose duration')
-                                        <li><a class="sub-slide-item" href="{{ route('dose-duration-details') }}">Duration </a></li>
-                                        @endcan
-
-                                        @can('medicine vendor')
-                                        <li><a class="sub-slide-item" href="{{ route('medicine-vendor-details') }}">Vendor</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('Finding'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Finding</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('Finding')
-                                        <li><a class="sub-slide-item" href="{{ route('finding') }}">Finding</a></li>
-                                        @endcan
-                                        @can('finding category')
-                                        <li><a class="sub-slide-item" href="{{ route('finding-category-add') }}">Catagory</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('All Header'))
-                                <li> <a href="{{ route('all-header-listing') }}" class="slide-item">All Header</a></li>
-                                @endif
-
-                                @if (auth()->user()->can('Master Operation'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Operation</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('')
-                                        <li><a class="sub-slide-item" href="{{ route('operation-details') }}">Operation</a></li>
-                                        @endcan
-                                        @can('')
-                                        <li><a class="sub-slide-item" href="{{ route('operation-catagory-details') }}">Catagory</a></li>
-                                        @endcan
-                                        @can('operation type')
-                                        <li><a class="sub-slide-item" href="{{ route('operation-type-details') }}">Type</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('Opd'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Opd</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('opd unit')
-                                        <li><a class="sub-slide-item" href="{{ route('opd-unit-details') }}">Opd Unit</a></li>
-                                        @endcan
-                                        @can('opd setup')
-                                        <li><a class="sub-slide-item" href="{{ route('opd-setup-details') }}">Opd Setup</a></li>
-                                        @endcan
-                                        @can('opd ticket fees')
-                                        <li><a class="sub-slide-item" href="{{ route('opd-ticket-fees-details') }}">Ticket Fees</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('Emg setUp'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Emg</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        <li><a class="sub-slide-item" href="{{ route('emg-set-up') }}">Setup</a></li>
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('pathology'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Pathology</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('pathology catagory')
-                                        <li><a class="sub-slide-item" href="{{ route('pathology-catagory-details') }}">Catagory</a></li>
-                                        @endcan
-
-                                        @can('pathology unit')
-                                        <li><a class="sub-slide-item" href="{{ route('pathology-unit-details') }}">Unit</a></li>
-                                        @endcan
-
-                                        @can('pathology parameter')
-                                        <li><a class="sub-slide-item" href="{{ route('pathology-parameter-details') }}">Parameter</a></li>
-                                        @endcan
-
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('radiology'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Radiology</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('radiology catagory')
-                                        <li><a class="sub-slide-item" href="{{ route('radiology-catagory-details') }}">Catagory</a></li>
-                                        @endcan
-
-                                        @can('radiology unit')
-                                        <li><a class="sub-slide-item" href="{{ route('radiology-unit-details') }}">Unit</a></li>
-                                        @endcan
-
-                                        @can('radiology parameter')
-                                        <li><a class="sub-slide-item" href="{{ route('radiology-parameter-details') }}">Parameter</a></li>
-                                        @endcan
-
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('blood bank'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Blood Bank</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('blood bank product')
-                                        <li><a class="sub-slide-item" href="{{ route('blood-bank-product-details') }}">Product</a></li>
-                                        @endcan
-
-                                        @can('Blood unit type')
-                                        <li><a class="sub-slide-item" href="{{ route('add-blood-unit-type') }}">Unit Types</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('appointment'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Appointment</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('shift')
-                                        <li><a class="sub-slide-item" href="{{ route('shift-details') }}">Shift</a></li>
-                                        @endcan
-
-                                        @can('slots')
-                                        <li><a class="sub-slide-item" href="{{ route('slots-details') }}">Slot</a></li>
-                                        @endcan
-
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('symptoms'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Symptoms</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('symptoms head')
-                                        <li><a class="sub-slide-item" href="{{ route('symptoms-head-details') }}">Symptoms Head</a></li>
-                                        @endcan
-
-                                        @can('symptoms type')
-                                        <li><a class="sub-slide-item" href="{{ route('symptoms-type-details') }}">Symptoms Type</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('Department'))
-                                <li> <a href="{{ route('department-details') }}" class="slide-item">Department</a></li>
-                                @endif
-
-                                @if (auth()->user()->can('tpa management'))
-                                <li> <a href="{{ route('tpa-management-details') }}" class="slide-item">Tpa Management</a></li>
-                                @endif
-
-                                @if (auth()->user()->can('diagonasis'))
-                                <li> <a href="{{ route('diagonasis-details') }}" class="slide-item">Diagonasis</a></li>
-                                @endif
-
-                                @if (auth()->user()->can('prefix'))
-                                <li><a href="{{ route('prefixList') }}" class="slide-item">Prefix
-                                        Settings</a></li>
-                                @endif
-
-
-                                @if (auth()->user()->can('Bed Master'))
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Bed Details</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('bed')
-                                        <li><a class="sub-slide-item" href="{{ route('bed-details') }}">Bed</a></li>
-                                        @endcan
-                                        @can('bed type')
-                                        <li><a class="sub-slide-item" href="{{ route('bed-type-details') }}">Bed Type</a></li>
-                                        @endcan
-                                        @can('bedUnit')
-                                        <li><a class="sub-slide-item" href="{{ route('bed-unit-details') }}">Bed Unit</a></li>
-                                        @endcan
-                                        @can('bedgroup')
-                                        <li><a class="sub-slide-item" href="{{ route('bedgroup-details') }}">Bed Group</a></li>
-                                        @endcan
-                                        @can('ward')
-                                        <li><a class="sub-slide-item" href="{{ route('ward-details') }}">Ward</a></li>
-                                        @endcan
-                                        @can('floor')
-                                        <li><a class="sub-slide-item" href="{{ route('floor-details') }}">Floor</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endif
-
-                                @if (auth()->user()->can('view role') ||
-                                auth()->user()->can('asign userBasedPermission') ||
-                                auth()->user()->can('view permission') ||
-                                auth()->user()->can('asign roleToUser') ||
-                                auth()->user()->can('view permission'))
-                                <!-- ROLE PERMISSION -->
-
-                                <li class="sub-slide">
-                                    <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Role &
-                                            Permission</span><i class="sub-angle fe fe-chevron-down"></i></a>
-                                    <ul class="sub-slide-menu">
-                                        @can('view role')
-                                        <li><a class="sub-slide-item" href="{{ route('roleList') }}">Role</a>
-                                        </li>
-                                        @endcan
-                                        {{-- @if (auth()->user()->can('revoke roleToUser') ||
-    auth()->user()->can('asign roleToUser'))
-                                        <li><a class="sub-slide-item" href="{{ route('asignRole') }}">User Role management</a>
+                                        <li><a class="sub-slide-item" href="{{ route('charges-unit-details') }}">Unit</a>
                                 </li>
                                 @endcan --}}
+                            </ul>
+                        </li>
+                        @endif
 
-                                @can('view permission')
-                                <li><a class="sub-slide-item" href="{{ route('PermissionList') }}">Permission</a></li>
+                        @if (auth()->user()->can('front office'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Front Office</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('purpose')
+                                <li><a class="sub-slide-item" href="{{ route('add-purpose-in-front-office') }}">Purpose</a></li>
+                                @endcan
+                                @can('complain type')
+                                <li><a class="sub-slide-item" href="{{ route('add-complain-type-in-front-office') }}">Complain Type</a></li>
+                                @endcan
+                                @can('source')
+                                <li><a class="sub-slide-item" href="{{ route('add-source-in-front-office') }}">Source</a></li>
+                                @endcan
+                                @can('appointment priority')
+                                <li><a class="sub-slide-item" href="{{ route('add-appointment-priority-in-front-office') }}">Appointment Priority</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+
+
+                        @if (auth()->user()->can('charges package'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Charges Package</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('package name')
+                                <li><a class="sub-slide-item" href="{{ route('charges-package-name-details') }}">Package Name</a></li>
+                                @endcan
+                                @can('package catagory')
+                                <li><a class="sub-slide-item" href="{{ route('charges-package-catagory-details') }}">Package Catagory</a></li>
+                                @endcan
+                                @can('package sub catagory')
+                                <li><a class="sub-slide-item" href="{{ route('charges-package-sub-catagory-details') }}">Package Sub Catagory</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('Setup Inventory'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Inventory</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('Inventory Item')
+                                <li><a class="sub-slide-item" href="{{ route('inventory-item-list') }}">Item</a></li>
+                                @endcan
+                            </ul>
+                            <ul class="sub-slide-menu">
+                                @can('Inventory Item Catagory')
+                                <li><a class="sub-slide-item" href="{{ route('add-inventory-item-catagory') }}">Item Catagory</a></li>
+                                @endcan
+                            </ul>
+                            <ul class="sub-slide-menu">
+                                @can('Inventory Item Unit')
+                                <li><a class="sub-slide-item" href="{{ route('add-inventory-item-unit') }}">Item Unit</a></li>
+                                @endcan
+                            </ul>
+                            <ul class="sub-slide-menu">
+                                @can('Inventory Item Brand')
+                                <li><a class="sub-slide-item" href="{{ route('add-inventory-item-brand') }}">Item Brand</a></li>
+                                @endcan
+                            </ul>
+                            <ul class="sub-slide-menu">
+                                @can('Inventory Item Manufacture')
+                                <li><a class="sub-slide-item" href="{{ route('add-inventory-manufacture') }}">Manufacture</a></li>
+                                @endcan
+                            </ul>
+                            <ul class="sub-slide-menu">
+                                @can('Inventory Item Type')
+                                <li><a class="sub-slide-item" href="{{ route('add-inventory-item-type') }}">Item Type</a></li>
+                                @endcan
+                            </ul>
+                            <ul class="sub-slide-menu">
+                                @can('Inventory Store Room')
+                                <li><a class="sub-slide-item" href="{{ route('add-inventory-item-store-room') }}">Item Store Room</a></li>
+                                @endcan
+                            </ul>
+                            <ul class="sub-slide-menu">
+                                @can('Inventory Item Attribute')
+                                <li><a class="sub-slide-item" href="{{ route('inventory-item-attribute') }}">Item Attribute</a></li>
+                                @endcan
+                            </ul>
+                            <ul class="sub-slide-menu">
+                                @can('Inventory Vendor')
+                                <li><a class="sub-slide-item" href="{{ route('inventory-vendor') }}">Vendor</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('setup pharmacy'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Pharmacy</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+
+                                @can('medicine storeroom')
+                                <li><a class="sub-slide-item" href="{{ route('medicine-store-room-details') }}">Store Room</a></li>
                                 @endcan
 
-                                {{-- @can('asign userBasedPermission')
+                                @can('medicine store')
+                                <li><a class="sub-slide-item" href="{{ route('medicine-store-details') }}">Medicine Store</a></li>
+                                @endcan
+
+                                @can('medicine rack')
+                                <li><a class="sub-slide-item" href="{{ route('medicine-rack-details') }}">Medicine Rack</a></li>
+                                @endcan
+
+                                @can('medicine supplier')
+                                <li><a class="sub-slide-item" href="{{ route('medicine-supplier-details') }}"> Supplier </a></li>
+                                @endcan
+
+                                @can('medicine dosage')
+                                <li><a class="sub-slide-item" href="{{ route('medicine-dosage-details') }}"> Medicine Dosage </a></li>
+                                @endcan
+
+                                @can('medicine unit')
+                                <li><a class="sub-slide-item" href="{{ route('medicine-unit-details') }}"> Medicine Unit </a></li>
+                                @endcan
+
+                                @can('dose interval')
+                                <li><a class="sub-slide-item" href="{{ route('dose-interval-details') }}">Interval </a></li>
+                                @endcan
+
+                                @can('dose duration')
+                                <li><a class="sub-slide-item" href="{{ route('dose-duration-details') }}">Duration </a></li>
+                                @endcan
+
+                                @can('medicine vendor')
+                                <li><a class="sub-slide-item" href="{{ route('medicine-vendor-details') }}">Vendor</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('Finding'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Finding</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('Finding')
+                                <li><a class="sub-slide-item" href="{{ route('finding') }}">Finding</a></li>
+                                @endcan
+                                @can('finding category')
+                                <li><a class="sub-slide-item" href="{{ route('finding-category-add') }}">Catagory</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('All Header'))
+                        <li> <a href="{{ route('all-header-listing') }}" class="slide-item">All Header</a></li>
+                        @endif
+
+                        @if (auth()->user()->can('Master Operation'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Operation</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('')
+                                <li><a class="sub-slide-item" href="{{ route('operation-details') }}">Operation</a></li>
+                                @endcan
+                                @can('')
+                                <li><a class="sub-slide-item" href="{{ route('operation-catagory-details') }}">Catagory</a></li>
+                                @endcan
+                                @can('operation type')
+                                <li><a class="sub-slide-item" href="{{ route('operation-type-details') }}">Type</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('Opd'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Opd</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('opd unit')
+                                <li><a class="sub-slide-item" href="{{ route('opd-unit-details') }}">Opd Unit</a></li>
+                                @endcan
+                                @can('opd setup')
+                                <li><a class="sub-slide-item" href="{{ route('opd-setup-details') }}">Opd Setup</a></li>
+                                @endcan
+                                @can('opd ticket fees')
+                                <li><a class="sub-slide-item" href="{{ route('opd-ticket-fees-details') }}">Ticket Fees</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('Emg setUp'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Emg</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                <li><a class="sub-slide-item" href="{{ route('emg-set-up') }}">Setup</a></li>
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('pathology'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Pathology</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('pathology catagory')
+                                <li><a class="sub-slide-item" href="{{ route('pathology-catagory-details') }}">Catagory</a></li>
+                                @endcan
+
+                                @can('pathology unit')
+                                <li><a class="sub-slide-item" href="{{ route('pathology-unit-details') }}">Unit</a></li>
+                                @endcan
+
+                                @can('pathology parameter')
+                                <li><a class="sub-slide-item" href="{{ route('pathology-parameter-details') }}">Parameter</a></li>
+                                @endcan
+
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('radiology'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Radiology</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('radiology catagory')
+                                <li><a class="sub-slide-item" href="{{ route('radiology-catagory-details') }}">Catagory</a></li>
+                                @endcan
+
+                                @can('radiology unit')
+                                <li><a class="sub-slide-item" href="{{ route('radiology-unit-details') }}">Unit</a></li>
+                                @endcan
+
+                                @can('radiology parameter')
+                                <li><a class="sub-slide-item" href="{{ route('radiology-parameter-details') }}">Parameter</a></li>
+                                @endcan
+
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('blood bank'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Blood Bank</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('blood bank product')
+                                <li><a class="sub-slide-item" href="{{ route('blood-bank-product-details') }}">Product</a></li>
+                                @endcan
+
+                                @can('Blood unit type')
+                                <li><a class="sub-slide-item" href="{{ route('add-blood-unit-type') }}">Unit Types</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('appointment'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Appointment</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('shift')
+                                <li><a class="sub-slide-item" href="{{ route('shift-details') }}">Shift</a></li>
+                                @endcan
+
+                                @can('slots')
+                                <li><a class="sub-slide-item" href="{{ route('slots-details') }}">Slot</a></li>
+                                @endcan
+
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('symptoms'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Symptoms</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('symptoms head')
+                                <li><a class="sub-slide-item" href="{{ route('symptoms-head-details') }}">Symptoms Head</a></li>
+                                @endcan
+
+                                @can('symptoms type')
+                                <li><a class="sub-slide-item" href="{{ route('symptoms-type-details') }}">Symptoms Type</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('Department'))
+                        <li> <a href="{{ route('department-details') }}" class="slide-item">Department</a></li>
+                        @endif
+
+                        @if (auth()->user()->can('tpa management'))
+                        <li> <a href="{{ route('tpa-management-details') }}" class="slide-item">Tpa Management</a></li>
+                        @endif
+
+                        @if (auth()->user()->can('diagonasis'))
+                        <li> <a href="{{ route('diagonasis-details') }}" class="slide-item">Diagonasis</a></li>
+                        @endif
+
+                        @if (auth()->user()->can('prefix'))
+                        <li><a href="{{ route('prefixList') }}" class="slide-item">Prefix
+                                Settings</a></li>
+                        @endif
+
+
+                        @if (auth()->user()->can('Bed Master'))
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Bed Details</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('bed')
+                                <li><a class="sub-slide-item" href="{{ route('bed-details') }}">Bed</a></li>
+                                @endcan
+                                @can('bed type')
+                                <li><a class="sub-slide-item" href="{{ route('bed-type-details') }}">Bed Type</a></li>
+                                @endcan
+                                @can('bedUnit')
+                                <li><a class="sub-slide-item" href="{{ route('bed-unit-details') }}">Bed Unit</a></li>
+                                @endcan
+                                @can('bedgroup')
+                                <li><a class="sub-slide-item" href="{{ route('bedgroup-details') }}">Bed Group</a></li>
+                                @endcan
+                                @can('ward')
+                                <li><a class="sub-slide-item" href="{{ route('ward-details') }}">Ward</a></li>
+                                @endcan
+                                @can('floor')
+                                <li><a class="sub-slide-item" href="{{ route('floor-details') }}">Floor</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('view role') ||
+                        auth()->user()->can('asign userBasedPermission') ||
+                        auth()->user()->can('view permission') ||
+                        auth()->user()->can('asign roleToUser') ||
+                        auth()->user()->can('view permission'))
+                        <!-- ROLE PERMISSION -->
+
+                        <li class="sub-slide">
+                            <a class="sub-side-menu__item" data-toggle="sub-slide" href="#"><span class="sub-side-menu__label">Role &
+                                    Permission</span><i class="sub-angle fe fe-chevron-down"></i></a>
+                            <ul class="sub-slide-menu">
+                                @can('view role')
+                                <li><a class="sub-slide-item" href="{{ route('roleList') }}">Role</a>
+                                </li>
+                                @endcan
+                                {{-- @if (auth()->user()->can('revoke roleToUser') ||
+    auth()->user()->can('asign roleToUser'))
+                                        <li><a class="sub-slide-item" href="{{ route('asignRole') }}">User Role management</a>
+                        </li>
+                        @endcan --}}
+
+                        @can('view permission')
+                        <li><a class="sub-slide-item" href="{{ route('PermissionList') }}">Permission</a></li>
+                        @endcan
+
+                        {{-- @can('asign userBasedPermission')
                                         <li><a class="sub-slide-item" href="{{ route('userPermissionAsignList') }}">User Permission</a>
                         </li>
                         @endcan --}}

@@ -95,7 +95,7 @@
                                         <i class="fa fa-edit"></i> Edit</a>
                                     @endcan
                                     @can('delete opd patient')
-                                    <a class="dropdown-item" href="{{ route('delete-opd-patient', base64_encode($value->latest_opd_visit_details_for_patient->id)) }}"><i class="fa fa-trash"></i>
+                                    <a class="dropdown-item" href="{{ route('delete-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id)) }}"><i class="fa fa-trash"></i>
                                         Delete</a>
                                     @endcan
                                     @can('opd billing')
