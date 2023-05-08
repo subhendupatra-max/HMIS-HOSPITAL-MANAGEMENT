@@ -28,7 +28,7 @@ class CreateFalsePatientsTable extends Migration
             $table->string('marital_status')->nullable();
             $table->string('blood_group')->nullable();
             $table->string('gender')->nullable();
-            $table->date('date_of_birth')->nullable();
+            $table->string('date_of_birth')->nullable();
             $table->string('year')->nullable();
             $table->string('month')->nullable();
             $table->string('day')->nullable();
