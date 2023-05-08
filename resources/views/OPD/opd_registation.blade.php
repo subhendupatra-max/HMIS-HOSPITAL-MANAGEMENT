@@ -231,7 +231,7 @@
                                     <label for="ticket_no">Ticket No <span class="text-danger">*</span></label>
                                 </div>
                                 <div class="form-group col-md-4 newaddappon ">
-                                   <input type="text"  value="{{ $ticket_fees->ticket_fees }}" id="ticket_fees"  name="ticket_fees">
+                                   <input type="text"  value="{{ @$ticket_fees->ticket_fees }}" id="ticket_fees"  name="ticket_fees">
                                     <label for="ticket_fees">Ticket Fees <span class="text-danger">*</span></label>
                                 </div>
 
@@ -390,7 +390,7 @@
         $("#department").change(function(event) {
             event.preventDefault();
             let department = $(this).val();
-            // alert(department);
+            alert(department);
             $('#cons_doctor').html('<option vaule="" >Select...</option>');
             $.ajax({
                 url: "{{ route('find-doctor-by-department') }}",

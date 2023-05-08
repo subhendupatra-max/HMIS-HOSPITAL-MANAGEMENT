@@ -16,7 +16,17 @@ use App\Models\PathologyTestMaster;
 use App\Models\PathologyTestMasterDetails;
 use App\Models\PathologyUnit;
 use App\Models\Patient;
+use App\Models\caseReference;
 use App\Models\TestWithParameter;
+use App\Models\PathologyBilling;
+use App\Models\PathologyBillingDetails;
+use App\Models\Prefix;
+use Auth;
+use App\Models\PatientCharge;
+use App\Models\PathologyCharge;
+use App\Models\IpdDetails;
+use App\Models\OpdDetails;
+use App\Models\EmgDetails;
 use Illuminate\Support\Facades\DB;
 
 class PathologyController extends Controller
@@ -24,7 +34,8 @@ class PathologyController extends Controller
     // ======================== Pathology Billing =============================
     public function pathology_billing_list()
     {
-        return view('pathology.pathology-billing-list');
+        $pathology_bill_details = PathologyBilling::orderBy('id','desc')->get();
+        return view('pathology.pathology-billing-list',compact('pathology_bill_details'));
     }
     public function add_pathology_bill()
     {
@@ -42,29 +53,54 @@ class PathologyController extends Controller
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $pathology_all_test = PathologyTest::all();
-        return view('pathology.pathology-add-billing', compact('all_patient', 'patient_details_information', 'pathology_all_test'));
+        $patient_reg_details = caseReference::where('patient_id',$request->patient_id)->orderBy('id','desc')->first();
+        return view('pathology.pathology-add-billing', compact('all_patient', 'patient_details_information', 'pathology_all_test','patient_reg_details'));
     }
     public function save_pathology_billing(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
         request()->validate(
             [
+                'billing_date' => 'required',
                 'patientId' => 'required',
-                'grnd_total' => 'required',
-                'test_id'    => 'required',
-                'test_id.*'    => 'required',
+                'total' => 'required',
 
             ],
             [
                 'patientId.required' => 'Please Select a Patient!!',
-                'grnd_total.required' => 'Please Calculate !!',
+                'total.required' => 'Please Calculate!!',
             ]
         );
 
         try {
             DB::beginTransaction();
+            $billing_prefix = Prefix::where('name', 'pathology_bill')->first();
+            $bill = new PathologyBilling;
+            $bill->bill_prefix = $billing_prefix->prefix;
+            $bill->bill_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+            $bill->patient_id = $request->patientId;
+            $bill->section = $request->section;
+            $bill->case_id = $request->case_id;
+            $bill->total_amount = $request->total;
+            $bill->payment_status = '';
+            $bill->status =  'Done';
+            $bill->created_by = Auth::user()->id;
+            $bill->note = $request->note;
+            $bill->save();
 
-            DB::commit();
+            foreach ($request->test_id as $key => $value) {
+                $patient_charge = new PathologyBillingDetails();
+                $patient_charge->pathology_billing_id = $bill->id;
+                $patient_charge->pathology_id = $request->test_id[$key];
+                $patient_charge->charge_amount = $request->charge[$key];
+                $patient_charge->qty = $request->qty[$key];
+                $patient_charge->tax = $request->tax[$key];
+                $patient_charge->amount = $request->amount[$key];
+                $patient_charge->status = '';
+                $patient_charge->save();
+            }
+           DB::commit();
+           return redirect()->route('pathology-details')->with('success', "Pathology Bill Successfully Created");
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route('add-pathology-billing')->with('error', "Something Went Wrong");
@@ -260,6 +296,107 @@ class PathologyController extends Controller
         } else {
             return redirect()->back()->with('error', "Something Went Wrong");
         }
+    }
+
+    public function add_test()
+    {
+
+    }
+
+    public function pathology_test_charge()
+    {
+        return view('pathology.charge.charge-list');
+    }
+    public function pathology_test_charge_add()
+    {
+        $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
+        $pathology_all_test = PathologyTest::all();
+        return view('pathology.charge.charge-add',compact('all_patient','pathology_all_test'));
+    }
+    public function add_pathology_charges_for_a_patient(Request $request)
+    {
+        $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
+        $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
+        $pathology_all_test = PathologyTest::all();
+        $patient_reg_details = caseReference::where('patient_id',$request->patient_id)->orderBy('id','desc')->first();
+        return view('pathology.charge.charge-add', compact('all_patient', 'patient_details_information', 'pathology_all_test','patient_reg_details'));
+    }
+
+    public function save_pathology_charge(Request $request)
+    {
+         dd($request->all());
+        $validate = $request->validate([
+            'charge_date'   => 'required',
+            'test_id'   => 'required',
+            'charge'   => 'required',
+        ]);
+        try {
+            DB::beginTransaction();
+                
+            $patient_charge = new PatientCharge();
+            $pathology_charge = new PathologyCharge();
+
+            $case_details = caseReference::where('id',$request->case_id)->first();
+            if($case_details->section == 'OPD')
+            {
+                $section_details = OpdDetails::where('case_id',$request->case_id)->first();
+              //  dd($section_details);
+                $patient_charge->opd_id = $section_details->id;
+                $pathology_charge->opd_id = $section_details->id;
+            }
+            elseif($case_details->section == 'EMG')
+            {
+                $section_details = EmgDetails::where('case_id',$request->case_id)->first();
+                $patient_charge->emg_id = $section_details->id;
+                $pathology_charge->emg_id = $section_details->id;
+            }
+            else {
+                $section_details = IpdDetails::where('case_id',$request->case_id)->first();
+                $patient_charge->ipd_id = $section_details->id;
+                $pathology_charge->ipd_id = $section_details->id;
+            }
+            
+            $patient_charge->case_id = $request->case_id;
+            $patient_charge->section = $case_details->section;
+            $patient_charge->charges_date = $request->charge_date;
+            $patient_charge->patient_id = $request->patientId;
+            $patient_charge->charge_set = $request->charge_set;
+            $patient_charge->charge_type = $request->charge_type;
+            $patient_charge->charge_category = $request->charge_category;
+            $patient_charge->charge_sub_category = $request->charge_sub_category;
+            $patient_charge->charge_name = $request->test_id;
+            $patient_charge->standard_charges = $request->charge;
+            $patient_charge->tax = '0';
+            $patient_charge->qty = '1';
+            $patient_charge->amount = $request->charge;
+            $patient_charge->generated_by = Auth::user()->id;
+            $patient_charge->billing_status = '0';
+            $patient_charge->save();
+
+            $pathology_charge->case_id = $request->case_id;
+            $pathology_charge->section = $case_details->section;
+            $pathology_charge->charges_date = $request->charge_date;
+            $pathology_charge->patient_id = $request->patientId;
+            $pathology_charge->charge_set = $request->charge_set;
+            $pathology_charge->charge_type = $request->charge_type;
+            $pathology_charge->charge_category = $request->charge_category;
+            $pathology_charge->charge_sub_category = $request->charge_sub_category;
+            $pathology_charge->charge_name = $request->test_id;
+            $pathology_charge->standard_charges = $request->charge;
+            $pathology_charge->tax = '0';
+            $pathology_charge->qty = '1';
+            $pathology_charge->amount = $request->charge;
+            $pathology_charge->generated_by = Auth::user()->id;
+            $pathology_charge->billing_status = '0';
+            $pathology_charge->save();
+                
+            DB::commit();
+            return redirect()->route('pathology-test-charge')->with('success', "Test Added Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
+       
     }
 
     // =====================pathology test============================

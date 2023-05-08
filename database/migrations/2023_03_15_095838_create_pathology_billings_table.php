@@ -15,17 +15,20 @@ class CreatePathologyBillingsTable extends Migration
     {
         Schema::create('pathology_billings', function (Blueprint $table) {
             $table->id();
-            $table->string('billId');
-            $table->string('patientId');
-            $table->string('total');
-            $table->string('extra_charges_name');
-            $table->string('extra_charges_value');
-            $table->string('total_discount');
-            $table->string('discount_type');
-            $table->string('total_tax');
-            $table->string('grand_total');
-            $table->string('discount_status');
-            $table->string('test_status');
+            $table->string('bill_prefix');
+            $table->string('bill_date');
+            $table->string('patient_id');
+            $table->string('section')->nullable();
+            $table->string('case_id')->nullable();
+            $table->string('opd_id')->nullable();
+            $table->string('emg_id')->nullable();
+            $table->string('ipd_id')->nullable();
+            $table->string('total_amount');
+            $table->string('payment_status')->nullable();
+            $table->string('status')->nullable();
+            $table->string('is_delete')->default(0);
+            $table->string('created_by');
+            $table->longText('note')->nullable();
             $table->timestamps();
         });
     }

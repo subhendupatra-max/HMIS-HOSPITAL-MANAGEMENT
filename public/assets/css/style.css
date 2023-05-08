@@ -26650,7 +26650,17 @@ top: -29px;
 .headersetupedit{
     margin: 10px 0px 20px 0px;
 }
+.add-medicinedesign{
+  margin: 27px 0px 0px 0px;
+}
+.add-medicinedesignn{
+  margin: 23px 0px 0px 16px;
+}
+.add-medicinedesignin{
+  margin: 32px 0px 0px 22px;
+}
 /* ------------------finding setup--------------------- */
+<<<<<<< HEAD
 /* ---------------------------------------------------- */
 .menubox{
     display: flex;
@@ -26746,6 +26756,9 @@ top: -29px;
   }
 
 /* ---------------------------------------------------------- */
+=======
+
+>>>>>>> c7c6a8eb766f2024b1be1541bea4407072e37041
 @media (max-width: 768px)
 {
     .newuserchangee {
@@ -26779,4 +26792,8 @@ top: -29px;
 .menu-box{
 width: 100%;
 }
+    .billsummary
+    {
+      margin: 0px 0px 0px 0px;
+    }
 }

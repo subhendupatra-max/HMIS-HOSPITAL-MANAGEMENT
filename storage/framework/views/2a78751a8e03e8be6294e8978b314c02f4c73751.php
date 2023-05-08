@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form action="<?php echo e(route('save-timeline-lisitng-in-opd')); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo e(route('save-timeline-lisitng-in-ipd')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <input type="hidden" name="ipd_id" value="<?php echo e($ipd_details->id); ?>" />
@@ -40,7 +40,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+                        <label for="date" class="form-label">Date </label>
                         <input type="datetime-local" class="form-control" id="date" name="date" required>
                         <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

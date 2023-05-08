@@ -8,6 +8,7 @@ use App\Models\OperationTheatre;
 use App\Models\OperationType;
 use Illuminate\Http\Request;
 use App\Models\IpdDetails;
+use App\Models\MedicineCatagory;
 use DB;
 use Illuminate\Support\Facades\Auth;
 use PhpOffice\PhpSpreadsheet\Calculation\Engine\Operands\Operand;
@@ -27,9 +28,10 @@ class OperationTheatreController extends Controller
     public function add_ipd_operation_details(Request $request, $ipd_id)
     {
         $ipdId = base64_decode($ipd_id);
+        $medicine_catagory = MedicineCatagory::all();
         $ipd_details = IpdDetails::where('id', $ipdId)->first();
 
-        return view('Ipd.add-medication-dose', compact('ipd_details', 'medicine_catagory'));
+        return view('Ipd.add-medication-dose', compact('ipd_details', 'medicine_catagory','medicine_catagory'));
     }
 
     public function save_ipd_operation_details(Request $request)

@@ -4,8 +4,12 @@
 <a class="dropdown-item {{ Request::segment(2) == 'opd-billing' ? 'active' : '' }}" href="{{ route('opd-billing', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-money-bill"></i>
     Billing</a>
 @endcan
+@can('patient charges')
+<a class="dropdown-item {{ Request::segment(2) == 'patient-charge' ? 'active' : '' }}" href="{{ route('charges-list', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-file"></i> Add Charges</a>
+@endcan
 <a class="dropdown-item {{ Request::segment(2) == 'opd-payment' ? 'active' : '' }}" href="{{ route('payment-listing-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-rupee-sign"></i> Payment</a>
 <a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('timeline-lisitng-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="far fa-calendar-check"></i> Timeline</a>
-<a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('timeline-lisitng-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-file"></i> Bill Summary</a>
+
+{{-- <a class="dropdown-item {{ Request::segment(2) == 'bill-summary' ? 'active' : '' }}" href="{{ route('create-bill-summary', ['id' => base64_encode($opd_patient_details->id),'case_id'=>base64_encode($opd_patient_details->case_id)]) }}"><i class="fa fa-file"></i> Bill Summary</a> --}}
 
 <a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('physical-condition-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-file"></i> Physical Conditions</a>

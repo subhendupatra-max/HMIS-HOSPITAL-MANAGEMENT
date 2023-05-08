@@ -21,6 +21,6 @@ return[
     'complain_type' => ['Food quality','Hospital services' ,'Long Wait Times','Billing Discrepancies'],
     'complain_source' => ['Online Advertising','From visitors','Front Office'],
     'operation_status' => ['Pending','Approved'],
-    'permission_type' => ['Parallal','Sequential'],
+    'permission_type' => ['Parallal'],
     'charges_type' => ['General','Sastha-Swathi','ESI','Star Health','IOCL'],
 ];

@@ -23,9 +23,9 @@
                             <a href="{{ route('pathology-test-master-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
                             @endcan
 
-                            {{-- @can('pathology test group')
-                            <a href="{{ route('pathology-group-list') }}" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Group </a>
-                            @endcan --}}
+                            @can('pathology-test-to-a-patient')
+                            <a href="{{ route('pathology-test-charge') }}" class="btn btn-primary btn-sm"><i class="fa fa-microscope"></i> Patient's Test </a>
+                            @endcan 
 
                             {{-- @can('pathology Package')
                             <a href="{{ route('pathology-test-package') }}" class="btn btn-primary btn-sm"><i class="fa fa-microscope"></i> Package </a>
@@ -49,9 +49,7 @@
                                         <th class="border-bottom-0">Sl. No</th>
                                         <th class="border-bottom-0">Bill No.</th>
                                         <th class="border-bottom-0">Patient Details</th>
-                                        <th class="border-bottom-0">Test Details</th>
-                                        <th class="border-bottom-0">Reference Details</th>
-                                        <th class="border-bottom-0">Charges Amount</th>
+                                        <th class="border-bottom-0">Amount</th>
                                         <th class="border-bottom-0">Status</th>
                                         <th class="border-bottom-0">Action</th>
                                     </tr>
@@ -59,14 +57,14 @@
                                 </thead>
 
                                 <tbody>
-                                    {{-- {{$loop->iteration}} --}}
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>subhendu patra(1)</td>
-                                        <td>CVC</td>
-                                        <td>Tithi Das</td>
-                                        <td>100</td>
+                                    @if(isset($pathology_bill_details))
+                                        @foreach ($pathology_bill_details as $value)
+                                            <tr>
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{ @$value->bill_prefix }}{{ @$value->id }}</td>
+                                        <td>{{ @$value->all_patient_details->prefix }} {{ @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name }} {{ @$value->all_patient_details->last_name }}<br>
+                                            {{ @$value->all_patient_details->patient_prefix }}{{ @$value->all_patient_details->id }}</td>
+                                        <td>{{ @$value->total_amount }}</td>
                                         <td><a href="#"><span class="badge badge-danger">Accepted</span></a></td>
                                         <td>
                                             <div class="card-options">
@@ -86,11 +84,14 @@
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> 
+                                        @endforeach                             
+                                    @endif
+                                   
 
                                 </tbody>
                             </table>
-
+{{-- {!! $pathology_bill_details->links() !!} --}}
                         </div>
                     </div>
                 </div>

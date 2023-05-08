@@ -55,17 +55,17 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3">
-                            {{--  <label for="date" class="form-label">Date <span class="text-danger">*</span></label>  --}}
-                            <h6 class="Heading"> Date</h6>
+                        <div class="col-md-3 newuserrchange">
+                             <label for="date" class="form-label">Date <span class="text-danger">*</span></label> 
+                       
                             <input type="datetime-local" class="form-control" id="date" name="date" required>
                             @error('date')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
-                            {{-- <label for="need_permission" class="form-label">Need permission <span class="text-danger">*</span></label> --}}
+                        <div class="form-group col-md-3 newuserrchange">
+                            <label for="need_permission" class="form-label">Need permission <span class="text-danger">*</span></label>
                             <select id="need_permission" class="form-control" name="need_permission"
                                 onclick="fdsfds(this.value)">
                                 <option value=" ">Select Permission</option>
@@ -77,12 +77,12 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-7" style="display:none;" id="pop">
+                        <div class="form-group col-md-7 newuserrchange" style="display:none;" id="pop">
 
                             <div class="form-group col-md-5 d-inline-block">
                                 <label class="form-label">Permission Authority <span class="text-danger">*</span></label>
                                 <select name="permission_authority[]" multiple="multiple"
-                                    class="multi-select select2-show-search">
+                                    class="form-control multi-select select2-show-search">
                                     <option value="">Select One</option>
                                     @if ($user_list)
                                         @foreach ($user_list as $value)
@@ -111,10 +111,10 @@
                         </div>
 
 
-                        <div class="text-center py-4 m-r m-auto mt-3">
+                        {{-- <div class="text-center py-4 m-r m-auto mt-3">
                             <a class="btn btn-primary" data-target="#modaldemo1" data-toggle="modal" href="#">
                                 Medicine</a>
-                        </div>
+                        </div> --}}
 
 
                         <div class="form-group col-md-12">
@@ -129,7 +129,7 @@
                                                 class="text-danger">*</span></th>
                                         <th scope="col" style="width: 30%">Qty<span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 2%">
-                                            <button type="button" class="btn btn-success" onclick="addnewrow()"><i
+                                            <button type="button" class="btn btn-success  btn-sm" onclick="addnewrow()"><i
                                                     class="fa fa-plus"></i></button>
                                         </th>
                                     </tr>
@@ -196,13 +196,13 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content ">
                 <div class="modal-header pd-x-20">
-                    <h6 class="modal-title">All Medicine</h6>
+                    <h5 class=" lh-3"><a href="#" class="font-weight-bold">Add Medicine</a></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body pd-20">
-                    <h5 class=" lh-3"><a href="#" class="font-weight-bold">Add Medicine</a></h5>
+                    
 
                     <form id="myForm" action="{{ route('add-medicine-catagory-and-medicine-name') }}" method="POST">
                         @csrf
@@ -285,7 +285,7 @@
                         </td>
 
                         <td>
-                        <button type="button" class="btn btn-danger" onclick="removerow(${i})"><i class="fa fa-trash"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removerow(${i})"><i class="fa fa-trash"></i></button>
                         </td>
 
                         </tr>`;
@@ -319,6 +319,7 @@
                     $.each(response, function(key, value) {
                         $('#medicine_name' + rowid).append(
                             `<option value="${value.id}">${value.medicine_name}</option>`);
+                       
                     });
                 },
                 error: function(error) {
@@ -331,7 +332,6 @@
 
     <script>
         function getMedicineNameId(medicineName, lineid) {
-
             $('#medicine_unit' + lineid).empty();
             $('#medicine_unit' + lineid).html('<option value="" >Select...</option>');
 
@@ -344,13 +344,8 @@
                 },
                 success: function(response) {
 
-                    // console.log(response);
-                    $.each(response, function(key, value) {
-
                         $('#medicine_unit' + lineid).append(
-                            `<option value="${value.id}">${value.medicine_unit_name}</option>`);
-
-                    });
+                            `<option value="${response.id}">${response.medicine_unit_name}</option>`);
                 },
                 error: function(error) {
                     console.log(error);

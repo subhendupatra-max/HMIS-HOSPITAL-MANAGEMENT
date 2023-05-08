@@ -13,7 +13,7 @@ $login_details = DB::table('users')
 
 <head>
     <!-- Jquery cdn -->
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -66,12 +66,9 @@ $login_details = DB::table('users')
 </head>
 
 <body class="app sidebar-mini">
-
-
-
     <!---Global-loader-->
     <div id="global-loader">
-        <img src="<?php echo e(asset('public/assets/images/svgs/loader.svg')); ?>" alt="loader">
+        <img src="<?php echo e(asset('public/assets/images/svgs/Heart_beat.gif')); ?>" alt="loader" width="500px" height="200px">
     </div>
     <!--- End Global-loader-->
     <!-- Page -->
@@ -84,7 +81,6 @@ $login_details = DB::table('users')
                         <img src="<?php echo e(asset('public/assets/images/brand')); ?>/<?php echo e(@$general_details->logo); ?>" class="header-brand-img dark-logo" alt="<?php echo e(@$general_details->software_name); ?>">
 
                         <img src="<?php echo e(asset('public/assets/images/brand')); ?>/<?php echo e(@$general_details->small_logo); ?>" class="header-brand-img mobile-logo" alt="<?php echo e(@$general_details->software_name); ?>">
-
                         <img src="<?php echo e(asset('public/assets/images/brand')); ?>/<?php echo e(@$general_details->logo); ?>" class="header-brand-img darkmobile-logo" alt="<?php echo e(@$general_details->software_name); ?>">
                     </a>
 
@@ -310,7 +306,31 @@ $login_details = DB::table('users')
                             </a>
                         </li>
                         <?php endif; ?>
+                        <?php if(auth()->user()->can('False Generation')): ?>
+                        <li class="slide  <?php echo e(Request::segment(1) == 'false-patient' ? 'active' : ''); ?>">
+                            <a class="side-menu__item  <?php echo e(Request::segment(1) == 'false-patient' ? 'active' : ''); ?>" data-toggle="slide" href="index-2.html#">
+                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
+                                    </path>
+                                </svg>
+                                <span class="side-menu__label">False Generation</span><i class="angle fa fa-angle-right"></i></a>
+                            <ul class="slide-menu">
+                                <?php if(auth()->user()->can('OPD False')): ?>
+                                <li><a href="<?php echo e(route('opd-false-generation')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'opd-false' ? 'active' : ''); ?>"> OPD</a></li>
+                                <?php endif; ?>
+                                <?php if(auth()->user()->can('EMG False')): ?>
+                                <li><a href="<?php echo e(route('user-list')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'emg-false' ? 'active' : ''); ?>"> EMG</a></li>
+                                <?php endif; ?>
+                                <?php if(auth()->user()->can('IPD False')): ?>
+                                <li><a href="<?php echo e(route('user-list')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'ipd-false' ? 'active' : ''); ?>"> IPD</a></li>
+                                <?php endif; ?>
+                                                               
+                               
 
+                            </ul>
+                        </li>
+                        <?php endif; ?>
 
 
 
@@ -938,9 +958,9 @@ $login_details = DB::table('users')
 
     <!-- Switcher js-->
     <script src="<?php echo e(asset('public/assets/switcher/js/switcher.js')); ?>"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
     <script src="<?php echo e(asset('public/assets/plugins/notify/js/notifIt.js')); ?>"></script>
     <!-- INTERNAL WYSIWYG Editor js -->
     <script src="<?php echo e(asset('public/assets/plugins/wysiwyag/jquery.richtext.js')); ?>"></script>

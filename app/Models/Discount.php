@@ -12,6 +12,10 @@ class Discount extends Model
     {
         return $this->belongsTo(User::class,'requested_by','id');
     }
+    public function given_by_details()
+    {
+        return $this->belongsTo(User::class,'discount_given_by','id');
+    }
     public function patient_details()
     {
         return $this->belongsTo(Patient::class,'patient_id','id');

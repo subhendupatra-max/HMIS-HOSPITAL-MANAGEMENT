@@ -10,8 +10,11 @@ use App\Imports\MedicineImport;
 use App\Models\MedicineBaseUnit;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\MedicineBoxStrip;
+use App\Models\MedicineStock;
+use App\Models\MedicineStoreRoom;
 use App\Models\MedicineUnit;
 use App\Models\SimilarMedicine;
+use Faker\Provider\Medical;
 use Google\Service\ChromePolicy\Resource\Media;
 
 class MedicineController extends Controller
@@ -136,7 +139,7 @@ class MedicineController extends Controller
 
         SimilarMedicine::where('medicine_id', $request->id)->delete();
 
-        if(@$request->similiar_medicine_name[0]->id) {
+        if (@$request->similiar_medicine_name[0]->id) {
             foreach ($request->similiar_medicine_name as $key => $medicine_names) {
                 $similar_medicine = new SimilarMedicine();
                 $similar_medicine->medicine_id                 = $medicine->id;
@@ -181,5 +184,47 @@ class MedicineController extends Controller
     {
         $dat = Excel::import(new MedicineImport, request()->file('medicine_file'));
         return redirect()->route('all-medicine-listing')->with('success', 'Medicine Import Sucessful');
+    }
+
+    public function update_stock_form($medicine_id)
+    {
+        $medicine_details = Medicine::find($medicine_id);
+        $medicine = Medicine::all();
+        $store_room = MedicineStoreRoom::all();
+        $medicine_catagory = MedicineCatagory::all();
+        return view('pharmacy.update-stock', compact('medicine_details', 'medicine', 'store_room', 'medicine_catagory'));
+    }
+
+    public function save_update_stock_form(Request $request)
+    {
+
+        $validate = $request->validate([
+            'medicine_name'             => 'required',
+            'medicine_category'         => 'required',
+        ]);
+
+        try {
+
+            $medicine = new MedicineStock();
+            $medicine->stored_room              = $request->stored_room;
+            $medicine->medicine_category        = $request->medicine_category;
+            $medicine->medicine_name            = $request->medicine_name;
+            $medicine->batch_no                 = $request->batch_no;
+            $medicine->expiry_date              = date('Y-m-d', strtotime($request->expiry_date));
+            $medicine->quantity                 = $request->quantity;
+            $medicine->mrp                      = $request->mrp;
+            $medicine->sale_price               = $request->sale_price;
+            $medicine->purchase_price           = $request->purchase_price;
+            $medicine->amount                   = $request->amount;
+            $status =  $medicine->save();
+
+            if ($status) {
+                return redirect()->route('all-medicine-stock')->with('success', 'Medicine Added Sucessfully');
+            } else {
+                return redirect()->route('all-medicine-stock')->with('error', "Something Went Wrong");
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('all-medicine-stock')->with('error', "Something Went Wrong");
+        }
     }
 }

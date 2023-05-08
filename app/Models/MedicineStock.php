@@ -12,5 +12,4 @@ class MedicineStock extends Model
     {
         return $this->belongsTo(MedicineUnit::class, 'unit', 'id');
     }
-
 }

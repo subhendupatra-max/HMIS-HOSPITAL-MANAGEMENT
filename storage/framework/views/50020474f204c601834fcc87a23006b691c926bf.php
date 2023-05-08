@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('content'); ?>
 
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -70,9 +71,9 @@ unset($__errorArgs, $__bag); ?>
                             </select>
                         </div>
 
-                        <div class="col-md-3">
-                            
-                            <h6 class="Heading"> Date</h6>
+                        <div class="col-md-3 newuserrchange">
+                             <label for="date" class="form-label">Date <span class="text-danger">*</span></label> 
+                       
                             <input type="datetime-local" class="form-control" id="date" name="date" required>
                             <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -86,8 +87,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="form-group col-md-3">
-                            
+                        <div class="form-group col-md-3 newuserrchange">
+                            <label for="need_permission" class="form-label">Need permission <span class="text-danger">*</span></label>
                             <select id="need_permission" class="form-control" name="need_permission"
                                 onclick="fdsfds(this.value)">
                                 <option value=" ">Select Permission</option>
@@ -106,12 +107,12 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="form-group col-md-7" style="display:none;" id="pop">
+                        <div class="form-group col-md-7 newuserrchange" style="display:none;" id="pop">
 
                             <div class="form-group col-md-5 d-inline-block">
                                 <label class="form-label">Permission Authority <span class="text-danger">*</span></label>
                                 <select name="permission_authority[]" multiple="multiple"
-                                    class="multi-select select2-show-search">
+                                    class="form-control multi-select select2-show-search">
                                     <option value="">Select One</option>
                                     <?php if($user_list): ?>
                                         <?php $__currentLoopData = $user_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -155,10 +156,7 @@ unset($__errorArgs, $__bag); ?>
                         </div>
 
 
-                        <div class="text-center py-4 m-r m-auto mt-3">
-                            <a class="btn btn-primary" data-target="#modaldemo1" data-toggle="modal" href="#">
-                                Medicine</a>
-                        </div>
+                        
 
 
                         <div class="form-group col-md-12">
@@ -173,7 +171,7 @@ unset($__errorArgs, $__bag); ?>
                                                 class="text-danger">*</span></th>
                                         <th scope="col" style="width: 30%">Qty<span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 2%">
-                                            <button type="button" class="btn btn-success" onclick="addnewrow()"><i
+                                            <button type="button" class="btn btn-success  btn-sm" onclick="addnewrow()"><i
                                                     class="fa fa-plus"></i></button>
                                         </th>
                                     </tr>
@@ -240,13 +238,13 @@ unset($__errorArgs, $__bag); ?>
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content ">
                 <div class="modal-header pd-x-20">
-                    <h6 class="modal-title">All Medicine</h6>
+                    <h5 class=" lh-3"><a href="#" class="font-weight-bold">Add Medicine</a></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body pd-20">
-                    <h5 class=" lh-3"><a href="#" class="font-weight-bold">Add Medicine</a></h5>
+                    
 
                     <form id="myForm" action="<?php echo e(route('add-medicine-catagory-and-medicine-name')); ?>" method="POST">
                         <?php echo csrf_field(); ?>
@@ -331,7 +329,7 @@ unset($__errorArgs, $__bag); ?>
                         </td>
 
                         <td>
-                        <button type="button" class="btn btn-danger" onclick="removerow(${i})"><i class="fa fa-trash"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="removerow(${i})"><i class="fa fa-trash"></i></button>
                         </td>
 
                         </tr>`;
@@ -365,6 +363,7 @@ unset($__errorArgs, $__bag); ?>
                     $.each(response, function(key, value) {
                         $('#medicine_name' + rowid).append(
                             `<option value="${value.id}">${value.medicine_name}</option>`);
+                       
                     });
                 },
                 error: function(error) {
@@ -377,7 +376,6 @@ unset($__errorArgs, $__bag); ?>
 
     <script>
         function getMedicineNameId(medicineName, lineid) {
-
             $('#medicine_unit' + lineid).empty();
             $('#medicine_unit' + lineid).html('<option value="" >Select...</option>');
 
@@ -390,13 +388,8 @@ unset($__errorArgs, $__bag); ?>
                 },
                 success: function(response) {
 
-                    // console.log(response);
-                    $.each(response, function(key, value) {
-
                         $('#medicine_unit' + lineid).append(
-                            `<option value="${value.id}">${value.medicine_unit_name}</option>`);
-
-                    });
+                            `<option value="${response.id}">${response.medicine_unit_name}</option>`);
                 },
                 error: function(error) {
                     console.log(error);
