@@ -5,18 +5,18 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-4 card-title">
-                    Pathology Test
+                    Radiology Test
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
-                        @can('add-pathology-test-to-a-patient')
-                        <a href="{{ route('add-pathology-test-to-a-patient') }}" class="btn btn-primary btn-sm"><i class="fa fa-money-bill"></i> Add </a>
+                        @can('add-radiology-test-to-a-patient')
+                        <a href="{{ route('add-radiology-test-to-a-patient') }}" class="btn btn-primary btn-sm"><i class="fa fa-money-bill"></i> Add </a>
                         @endcan
-                        @can('pathology test')
-                        <a href="{{ route('pathology-test-list') }}" class="btn btn-primary btn-sm"><i class="fa fa-vials"></i> Pathology Test </a>
+                        @can('radiology test')
+                        <a href="{{ route('radiology-test-list') }}" class="btn btn-primary btn-sm"><i class="fa fa-vials"></i> Radiology Test </a>
                         @endcan
-                        @can('pathology test master')
-                        <a href="{{ route('pathology-test-master-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
+                        @can('radiology test master')
+                        <a href="{{ route('radiology-test-master-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
                         @endcan
 
                     </div>
@@ -42,8 +42,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (@$pathology_patient_test)
-                            @foreach ($pathology_patient_test as $value)
+                            @if (@$radiology_patient_test)
+                            @foreach ($radiology_patient_test as $value)
                             <?php
                             if ($value->section == 'OPD') {
                                 $opd_details = DB::table('opd_details')->where('case_id', $value->case_id)->first();
