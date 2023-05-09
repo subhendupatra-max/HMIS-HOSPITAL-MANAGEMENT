@@ -1818,6 +1818,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     Route::group(['middleware' => ['permission:delete opd patient']], function () {
         Route::get('delete-opd-patient/{id}', [OpdController::class, 'deleteOPDdETAILS'])->name('delete-opd-patient');
     });
+    Route::get('print-opd-patient/{id}', [OpdController::class, 'prescription_print'])->name('print-opd-patient');
     Route::group(['middleware' => ['permission:edit opd patient']], function () {
         Route::get('edit-opd-patient/{id}', [OpdController::class, 'editOPDdETAILS'])->name('edit-opd-patient');
         Route::post('update-opd-patient', [OpdController::class, 'updateOPDdETAILS'])->name('update-opd-patient');
