@@ -86,7 +86,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>EMG No : EMG/IIMSAR-DR. BCRHH/23041221516 </b></td>
+                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>EMG No : Opd/IIMSAR-DR. BCRHH/23041221516 </b></td>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Medico Legal Case: No</b></td>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>Department: {{@$opd_patient_details->department_name}}</b></td>
                 </tr>

@@ -172,4 +172,33 @@ class IpdController extends Controller
         $ipd_details = IpdDetails::where('id', $request->ipdId)->get();
         return response()->json($ipd_details);
     }
+
+    public function admission_from_opd($id)
+    {
+        $emg_opd_id = base64_decode($id);
+        $tpa_management = TpaManagement::get();
+        $referer = Referral::get();
+        $departments = Department::where('is_active', '1')->get();
+        $units = BedUnit::where('is_active', '1')->get();
+        $symptoms_types = SymptomsType::get();
+        $visit_details = OpdDetails::where('id', '=', $emg_opd_id)->first();
+        $patient_source_id = $visit_details->opd_prefix . '' . $visit_details->id;
+        $case_id = $visit_details->case_id;
+        $patient_source = 'OPD';
+
+        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units'));
+    }
+
+    public function edit_ipd_registration($id)
+    {
+        $ipd_id = $id;
+        $tpa_management = TpaManagement::get();
+        $referer = Referral::get();
+        $departments = Department::where('is_active', '1')->get();
+        $units = BedUnit::where('is_active', '1')->get();
+        $visit_details = IpdDetails::where('id', '=', $ipd_id)->first();
+        // dd($visit_details);
+
+        return view('Ipd.edit-ipd-patient', compact('ipd_id', 'departments', 'referer', 'tpa_management', 'visit_details', 'units'));
+    }
 }

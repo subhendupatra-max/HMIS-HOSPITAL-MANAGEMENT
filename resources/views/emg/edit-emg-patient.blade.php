@@ -1,5 +1,5 @@
-
-<?php $__env->startSection('content'); ?>
+@extends('layouts.layout')
+@section('content')
 
 <div class="col-md-12">
     <div class="card">
@@ -9,30 +9,30 @@
         <div class="card-body p-0">
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
-                    
+                    {{-- ================== add new patient ====================== --}}
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <a class="btn btn-primary btn-sm" href="<?php echo e(route('add_new_patient')); ?>"><i class="fa fa-plus"></i> Add New Patient</a>
+                                <a class="btn btn-primary btn-sm" href="{{route('add_new_patient')}}"><i class="fa fa-plus"></i> Add New Patient</a>
                             </div>
                         </div>
                     </div>
-                    
+                    {{-- ================== add new patient ====================== --}}
 
                     <div class="options px-5 pt-5  border-bottom pb-3">
 
-                        <form method="post" action="<?php echo e(route('emg-registation')); ?>">
+                        <form method="post" action="{{route('emg-registation') }}">
 
-                            <?php echo csrf_field(); ?>
+                            @csrf
                             <div class="row">
                                 <div class="col-md-12 mb-2">
                                     <select class="form-control  select2-show-search" name="patient_id">
                                         <option value="">Select One Patient</option>
-                                        <?php if(isset($all_patient)): ?>
-                                        <?php $__currentLoopData = $all_patient; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e(@$patient->id); ?>" <?php echo e(@$patient_details_information->id == $patient->id ? 'Selected' : ''); ?>> <?php echo e(@$patient->prefix); ?> <?php echo e(@$patient->first_name); ?> <?php echo e(@$patient->middle_name); ?> <?php echo e(@$patient->last_name); ?> ( <?php echo e(@$patient->id); ?> ) </option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <?php endif; ?>
+                                        @if(isset($all_patient))
+                                        @foreach ($all_patient as $patient)
+                                        <option value="{{@$patient->id}}" {{ @$patient_details_information->id == $patient->id ? 'Selected' : '' }}> {{@$patient->prefix}} {{@$patient->first_name}} {{@$patient->middle_name}} {{@$patient->last_name}} ( {{@$patient->id}} ) </option>
+                                        @endforeach
+                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-md-12 mb-2">
@@ -43,18 +43,11 @@
 
                     </div>
 
-                    <?php if(isset($patient_details_information)): ?>
-                    
-                    <?php $__errorArgs = ['patientId'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <span class="text-danger"><?php echo e($message); ?></span>
-                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                    @if(isset($patient_details_information))
+                    {{-- ================== patient Details ====================== --}}
+                    @error('patientId')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                     <div class="options px-5  pb-3">
                         <div class="row">
 
@@ -63,19 +56,16 @@ unset($__errorArgs, $__bag); ?>
                             <div class="card-body text-center">
                                 <div class="pro-user">
                                     <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
-                                        <?php echo e($patient_details_information->prefix); ?> <?php echo e($patient_details_information->first_name); ?>
-
-                                        <?php echo e($patient_details_information->middle_name); ?> <?php echo e($patient_details_information->last_name); ?>
-
+                                        {{ $patient_details_information->prefix }} {{ $patient_details_information->first_name }}
+                                        {{ $patient_details_information->middle_name }} {{ $patient_details_information->last_name }}
                                     </h4>
                                     <h6 class="pro-user-desc textlink">
-                                        <?php echo e($patient_details_information->patient_prefix); ?><?php echo e($patient_details_information->id); ?>
-
+                                        {{ $patient_details_information->patient_prefix }}{{ $patient_details_information->id }}
                                     </h6>
 
-                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
-                                    <a href="<?php echo e(route('edit-patient-details-emg', base64_encode($patient_details_information->id))); ?>" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
-                                    <?php endif; ?>
+                                    @can('edit patient')
+                                    <a href="{{ route('edit-patient-details-emg', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
+                                    @endcan
                                 </div>
                             </div>
 
@@ -87,169 +77,138 @@ unset($__errorArgs, $__bag); ?>
                                             <td class="py-2 px-5">
                                                 <span class="font-weight-semibold w-50">Gender </span>
                                             </td>
-                                            <td class="py-2 px-5"><?php echo e(@$patient_details_information->gender); ?></td>
+                                            <td class="py-2 px-5">{{ @$patient_details_information->gender }}</td>
                                         </tr>
                                         <tr>
                                             <td class="py-2 px-5">
                                                 <span class="font-weight-semibold w-50">Age </span>
                                             </td>
-                                            <td class="py-2 px-5"><?php echo e(@$patient_details_information->year); ?>y
-                                                <?php echo e(@$patient_details_information->month); ?>m
-                                                <?php echo e(@$patient_details_information->day); ?>d
+                                            <td class="py-2 px-5">{{ @$patient_details_information->year }}y
+                                                {{ @$patient_details_information->month }}m
+                                                {{ @$patient_details_information->day }}d
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="py-2 px-5">
                                                 <span class="font-weight-semibold w-50">Guardian Name </span>
                                             </td>
-                                            <td class="py-2 px-5"><?php echo e(@$patient_details_information->guardian_name_realation); ?>
-
-                                                <?php echo e(@$patient_details_information->guardian_name); ?>
-
+                                            <td class="py-2 px-5">{{ @$patient_details_information->guardian_name_realation }}
+                                                {{ @$patient_details_information->guardian_name }}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="py-2 px-5">
                                                 <span class="font-weight-semibold w-50">Blood Group </span>
                                             </td>
-                                            <td class="py-2 px-5"><?php echo e(@$patient_details_information->blood_group); ?></td>
+                                            <td class="py-2 px-5">{{ @$patient_details_information->blood_group }}</td>
                                         </tr>
                                         <tr>
                                             <td class="py-2 px-5">
                                                 <span class="font-weight-semibold w-50">Phone </span>
                                             </td>
-                                            <td class="py-2 px-5"><?php echo e(@$patient_details_information->phone); ?></td>
+                                            <td class="py-2 px-5">{{@$patient_details_information->phone }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    
-                    <?php endif; ?>
+                    {{-- ================== patient Details ====================== --}}
+                    @endif
 
                 </div>
 
                 <div class="col-lg-8 col-xl-8">
-                    <form method="post" action="<?php echo e(route('add-emg-registation')); ?>">
-                        <?php echo csrf_field(); ?>
+                    <form method="post" action="{{route('add-emg-registation')}}">
+                        @csrf
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
-                                <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
+                                <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
 
                                 <div class="form-group col-md-4 emgdesign">
                                      <label for="height" class="form-label">Appointment Date <span class="text-danger">*</span></label>
 
-                                    <?php if(auth()->user()->can('appointment date')): ?>
-                                    <input type="datetime-local" name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
-                                    <?php else: ?>
-                                    <input type="datetime-local"name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
-                                    <?php endif; ?>
+                                    @if (auth()->user()->can('appointment date'))
+                                    <input type="datetime-local" name="appointment_date" value="{{ old('appointment_date') }}" required />
+                                    @else
+                                    <input type="datetime-local"name="appointment_date" value="{{ old('appointment_date') }}" required />
+                                    @endif
 
-                                    <?php $__errorArgs = ['appointment_date'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                    @error('appointment_date')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group col-md-4 emgregischeck">
                                     <label for="medico_legal_case">Medico Legal Case <span class="text-danger">*</span></label>
-                                    
+                                    {{--  <input type="radio" name="medico_legal_case" value="yes"><span class="font-weight-bold;">Yes</span>
+                                    <input type="radio" name="medico_legal_case" value="no"  checked><span class="fw-bold;">No</span>  --}}
                                      <input type="radio"name="medico_legal_case" value="yes"><span class="font-weight-bold;">Yes</span>
                                      <input type="radio"name="medico_legal_case" value="no"><span class="font-weight-bold;">No</span>
-                                    <?php $__errorArgs = ['medico_legal_case'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                    @error('medico_legal_case')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group col-md-4 emgregistext">
-                                    
-                                    <input type="text" id="case"  name="case" value="<?php echo e(old('case')); ?>" required="">
+                                    {{-- <label for="height" class="form-label">Case</label>
+                                    <input type="text" class="form-control" name="case" value="{{ old('case') }}" required /> --}}
+                                    <input type="text" id="case"  name="case" value="{{ old('case') }}" required="">
                                     <label for="height"> case<span class="text-danger">*</span> </label>
                                 </div>
                                 <div class="form-group col-md-4 emgdesignselect">
                                      <label for="patient_type">Patient Type <span class="text-danger">*</span></label>
                                     <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
                                         <option value="">Patient Type <span class="text-danger">*</span> </option>
-                                        <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $patient_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($patient_type); ?>"> <?php echo e($patient_type); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        @foreach (Config::get('static.patient_types') as $key => $patient_type)
+                                        <option value="{{ $patient_type }}"> {{ $patient_type }}</option>
+                                        @endforeach
                                     </select>
 
-                                    <?php $__errorArgs = ['patient_type'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                    @error('patient_type')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
 
                                 </div>
                                 <div class="form-group  col-md-4  emgdesignselect" style="display: none">
                                      <label for="tpa_organization" >TPA Organization <span class="text-danger">*</span></label>
                                     <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
                                         <option value="">Tpa organization<span class="text-danger">*</span></option>
-                                        <?php $__currentLoopData = $tpa_management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tpaManagement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($tpaManagement->id); ?>">
-                                            <?php echo e($tpaManagement->TPA_name); ?>
-
+                                        @foreach ($tpa_management as $key => $tpaManagement)
+                                        <option value="{{ $tpaManagement->id }}">
+                                            {{ $tpaManagement->TPA_name }}
                                         </option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-4" style="display: none">
                                     <label for="type_no" ><span id="lableName"></span><span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>" id="type_no" />
+                                    <input type="text" class="form-control" name="type_no" value="{{ old('type_no') }}" id="type_no" />
                                 </div>
                                 <div class="form-group col-md-4 emgdesignselect">
                                      <label for="reference" class="form-label">Reference</label>
                                     <select name="reference" class="form-control select2-show-search" id="reference">
                                         <option value="">Reference</option>
-                                        <?php $__currentLoopData = $referer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $reference): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($reference->id); ?>"> <?php echo e($reference->referral_name); ?>
-
+                                        @foreach ($referer as $key => $reference)
+                                        <option value="{{ $reference->id }}"> {{ $reference->referral_name }}
                                         </option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        @endforeach
                                     </select>
 
                                 </div>
                                 <div class="form-group col-md-4 emgdesignselect">
                                     <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
                                     <select name="department" class="form-control select2-show-search" id="department">
-                                        <?php $__currentLoopData = $department; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $departments): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($departments->id); ?>">
-                                            <?php echo e($departments->department_name); ?>
-
+                                        @foreach ($department as $departments)
+                                        <option value="{{ $departments->id }}">
+                                            {{ $departments->department_name }}
                                         </option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        @endforeach
 
                                     </select>
-                                    <?php $__errorArgs = ['department'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                    @error('department')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group col-md-4 emgdesignselect">
@@ -257,21 +216,14 @@ unset($__errorArgs, $__bag); ?>
                                     <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
                                         <option value="">Select..</option>
                                     </select>
-                                    <?php $__errorArgs = ['cons_doctor'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                    @error('cons_doctor')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-md-4 emgdesignin ">
 
                                         <label class="form-label">Ticket Fees</label>
-                                        <input type="text" name="ticket_fees" value="<?php echo e(@$ticket_fees->ticket_fees); ?>" class="form-control" />
+                                        <input type="text" name="ticket_fees" value="{{@$ticket_fees->ticket_fees}}" class="form-control" />
 
                                 </div>
 
@@ -292,27 +244,27 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="row" id="physical_condition" style="display: none">
                                     <div class="col-md-2 emgcondition">
                                         <label for="height" class="form-label">Height(cm)</label>
-                                        <input type="text" class="form-control" id="height" name="height" value="<?php echo e(old('height')); ?>" />
+                                        <input type="text" class="form-control" id="height" name="height" value="{{ old('height') }}" />
                                     </div>
                                     <div class="col-md-2 emgcondition">
                                         <label for="weight" class="form-label">Weight(kg)</label>
-                                        <input type="text" class="form-control" id="weight" name="weight" value="<?php echo e(old('weight')); ?>" />
+                                        <input type="text" class="form-control" id="weight" name="weight" value="{{ old('weight') }}" />
                                     </div>
                                     <div class="col-md-2 emgcondition">
                                         <label for="bp" class="form-label">BP</label>
-                                        <input type="text" class="form-control" id="bp" name="bp" value="<?php echo e(old('bp')); ?>" />
+                                        <input type="text" class="form-control" id="bp" name="bp" value="{{ old('bp') }}" />
                                     </div>
                                     <div class="col-md-2 emgcondition">
                                         <label for="pulse" class="form-label">Pulse</label>
-                                        <input type="text" class="form-control" id="pulse" name="pulse" value="<?php echo e(old('pulse')); ?>" />
+                                        <input type="text" class="form-control" id="pulse" name="pulse" value="{{ old('pulse') }}" />
                                     </div>
                                     <div class="col-md-2 emgcondition">
                                         <label for="temperature" class="form-label">Temperature</label>
-                                        <input type="text" class="form-control" id="temperature" name="temperature" value="<?php echo e(old('temperature')); ?>" />
+                                        <input type="text" class="form-control" id="temperature" name="temperature" value="{{ old('temperature') }}" />
                                     </div>
                                     <div class="col-md-2 emgcondition">
                                         <label for="respiration" class="form-label">Respiration</label>
-                                        <input type="text" class="form-control" id="respiration" name="respiration" value="<?php echo e(old('respiration')); ?>" />
+                                        <input type="text" class="form-control" id="respiration" name="respiration" value="{{ old('respiration') }}" />
                                     </div>
                                 </div>
 
@@ -325,12 +277,11 @@ unset($__errorArgs, $__bag); ?>
                                          <label for="symptoms_type" class="form-label">Symptoms Type</label>
                                         <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type">
                                             <option value="">Symptoms Type</option>
-                                            <?php $__currentLoopData = $symptoms_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $symptoms_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($symptoms_type->id); ?>">
-                                                <?php echo e($symptoms_type->symptoms_type_name); ?>
-
+                                            @foreach ($symptoms_types as $key => $symptoms_type)
+                                            <option value="{{ $symptoms_type->id }}">
+                                                {{ $symptoms_type->symptoms_type_name }}
                                             </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -342,7 +293,9 @@ unset($__errorArgs, $__bag); ?>
                                         </select>
                                     </div>
                                     <div class="col-md-6 emgdesignnin">
-                                        
+                                        {{-- <label for="symptoms_description" class="form-label">Symptoms
+                                            Description</label>
+                                        <textarea class="form-control" name="symptoms_description"></textarea> --}}
                                         <input type="text" id="symptoms_description"  name="symptoms_description"  required="">
                                         <label for="symptoms_description"> Symptoms
                                             Description<span class="text-danger">*</span> </label>
@@ -353,12 +306,14 @@ unset($__errorArgs, $__bag); ?>
                                 <hr class="hr_line">
                                 <div class="row">
                                     <div class="col-md-6 emgregistext ">
-                                        
+                                        {{-- <label class="form-label">Note</label>
+                                        <textarea class="form-control" name="note"></textarea> --}}
                                         <input type="text" id="Note"  name="Note"  required="">
                                         <label for="Note">Note<span class="text-danger">*</span> </label>
                                     </div>
                                     <div class="col-md-6 emgregistext">
-                                        
+                                        {{-- <label class="form-label">Any Known Allergies</label>
+                                        <textarea class="form-control" name="any_known_allergies"></textarea> --}}
                                         <input type="text" id="any_known_allergies"  name="any_known_allergies"  required="">
                                         <label for="Any Known Allergies">Any Known Allergies<span class="text-danger">*</span> </label>
                                     </div>
@@ -384,8 +339,8 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 
-<form action="<?php echo e(route('patient-age-edit')); ?>" method="POST">
-    <?php echo csrf_field(); ?>
+<form action="{{route('patient-age-edit')}}" method="POST">
+    @csrf
     <div class="modal" id="editAge">
         <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">
@@ -394,28 +349,28 @@ unset($__errorArgs, $__bag); ?>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
+                        <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
                         <div class="form-group col-md-12">
                             <label for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="<?php echo e(@$patient_details_information->date_of_birth); ?>">
-                            <small class="text-danger"><?php echo e($errors->first('date_of_birth')); ?></small>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="{{ @$patient_details_information->date_of_birth }}">
+                            <small class="text-danger">{{ $errors->first('date_of_birth') }}</small>
                         </div>
 
                         <div class="form-group col-md-12">
                             <label>Age (yy-mm-dd) <span class="text-danger">*</span></label>
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" value="<?php echo e(@$patient_details_information->year); ?>" required>
-                                    <small class="text-danger"><?php echo e($errors->first('date_of_birth_year')); ?></small>
+                                    <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" value="{{ @$patient_details_information->year }}" required>
+                                    <small class="text-danger">{{ $errors->first('date_of_birth_year') }}</small>
                                 </div>
 
                                 <div class="col-lg-4">
-                                    <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" value="<?php echo e(@$patient_details_information->month); ?>" required>
-                                    <small class="text-danger"><?php echo e($errors->first('date_of_birth_month')); ?></small>
+                                    <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" value="{{ @$patient_details_information->month }}" required>
+                                    <small class="text-danger">{{ $errors->first('date_of_birth_month') }}</small>
                                 </div>
                                 <div class="col-lg-4">
-                                    <input type="text" class="form-control" value="<?php echo e(@$patient_details_information->day); ?>" id="date_of_birth_day" name="day" placeholder="Day" required>
-                                    <small class="text-danger"><?php echo e($errors->first('date_of_birth_day')); ?></small>
+                                    <input type="text" class="form-control" value="{{ @$patient_details_information->day }}" id="date_of_birth_day" name="day" placeholder="Day" required>
+                                    <small class="text-danger">{{ $errors->first('date_of_birth_day') }}</small>
                                 </div>
                             </div>
                         </div>
@@ -479,10 +434,10 @@ unset($__errorArgs, $__bag); ?>
             let department = $(this).val();
             $('#cons_doctor').html('<option vaule="" >Select...</option>');
             $.ajax({
-                url: "<?php echo e(route('find-doctor-by-department')); ?>",
+                url: "{{ route('find-doctor-by-department') }}",
                 type: "POST",
                 data: {
-                    _token: '<?php echo e(csrf_token()); ?>',
+                    _token: '{{ csrf_token() }}',
                     department_id: department,
                 },
                 success: function(response) {
@@ -548,10 +503,10 @@ unset($__errorArgs, $__bag); ?>
             let symptoms_type = $(this).val();
             $('#symptoms_title').html('<option value="" >Select...</option>');
             $.ajax({
-                url: "<?php echo e(route('find-symptoms-title-by-symptoms-type')); ?>",
+                url: "{{ route('find-symptoms-title-by-symptoms-type') }}",
                 type: "POST",
                 data: {
-                    _token: '<?php echo e(csrf_token()); ?>',
+                    _token: '{{ csrf_token() }}',
                     symptoms_type_id: symptoms_type,
                 },
                 success: function(response) {
@@ -571,6 +526,4 @@ unset($__errorArgs, $__bag); ?>
 
 
 
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/emg/emg-registration.blade.php ENDPATH**/ ?>
+@endsection

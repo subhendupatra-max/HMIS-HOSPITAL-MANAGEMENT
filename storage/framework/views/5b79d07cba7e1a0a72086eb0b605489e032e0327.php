@@ -60,7 +60,7 @@ unset($__errorArgs, $__bag); ?>
                         <div class="row">
 
                             <hr class="hr_line">
-                      
+
                             <div class="card-body text-center">
                                 <div class="pro-user">
                                     <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
@@ -149,12 +149,12 @@ unset($__errorArgs, $__bag); ?>
                                 <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
 
                                 <div class="form-group col-md-4 opd-bladedesign ">
-                                  <label class="date-format">Appointment Date <span class="text-danger">*</span></label>
+                                    <label class="date-format">Appointment Date <span class="text-danger">*</span></label>
 
                                     <?php if(auth()->user()->can('appointment date')): ?>
-                                    <input type="datetime-local"  name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
+                                    <input type="datetime-local" name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
                                     <?php else: ?>
-                                    <input type="datetime-local"  name="appointment_date" value="<?php echo e(date('Y-m-d H:s')); ?>" required />
+                                    <input type="datetime-local" name="appointment_date" value="<?php echo e(date('Y-m-d H:s')); ?>" required />
                                     <?php endif; ?>
                                     <?php $__errorArgs = ['appointment_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -169,7 +169,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
 
                                 <div class="form-group col-md-4 newaddappon">
-                                     <label for="visit_type">Visit Type <span class="text-danger">*</span></label>
+                                    <label for="visit_type">Visit Type <span class="text-danger">*</span></label>
                                     <select name="visit_type" class="form-control select2-show-search" id="visit_type" required>
                                         <option value="New Visit" selected>New-Visit</option>
                                         <option value="Revisit">Revisit</option>
@@ -180,129 +180,130 @@ if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
                                     <small class="text-danger"><?php echo e($message); ?></sma>
-                                    <?php unset($message);
+                                        <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
 
                                 
-                                <div class="form-group col-md-4 newaddappon">
-                                    <label for="patient_type">Patient Type <span class="text-danger">*</span></label>
-                                    <select name="patient_type" required onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
-                                        <option value="">Patient Type </option>
-                                        <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $patient_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($patient_type); ?>"> <?php echo e($patient_type); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
+                            <div class="form-group col-md-4 newaddappon">
+                                <label for="patient_type">Patient Type <span class="text-danger">*</span></label>
+                                <select name="patient_type" required onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
+                                    <option value="">Patient Type </option>
+                                    <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $patient_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($patient_type); ?>"> <?php echo e($patient_type); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
 
-                                    <?php $__errorArgs = ['patient_type'];
+                                <?php $__errorArgs = ['patient_type'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
+                                <span class="text-danger"><?php echo e($message); ?></span>
+                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-
-                                </div>
-                                <div class="form-group  col-md-4 frefesd newaddappon " style="display:none">
-                                     <label for="tpa_organization">TPA Organization <span class="text-danger">*</span></label>
-                                    <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
-                                        <option value="">TPA Organization<span class="text-danger">*</span></option>
-                                        <?php $__currentLoopData = $tpa_management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tpaManagement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($tpaManagement->id); ?>"> <?php echo e($tpaManagement->TPA_name); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                </div>
-                                <div class="form-group  col-md-4 frefesds newaddappon" style="display:none">
-                                    <label for="type_no"><span id="lableName"></span><span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>" id="type_no" />
-                                </div>
-                                <div class="form-group col-md-4 newaddappon ">
-                                     <label for="reference" class="form-label">Reference</label>
-                                    <select name="reference" class="form-control select2-show-search" id="reference">
-                                        <option value="">Referrel Name</option>
-                                        <?php $__currentLoopData = $referer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $reference): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($reference->id); ?>"> <?php echo e($reference->referral_name); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-
-                                </div>
-                                <div class="form-group col-md-4 newaddappon">
-                                     <label for="department" >Department <span class="text-danger">*</span></label>
-                                    <select name="department" class="form-control select2-show-search" id="department">
-                                        <option value="">Department</option>
-                                        <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($department->id); ?>"> <?php echo e($department->department_name); ?></option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    </select>
-                                    <?php $__errorArgs = ['department'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                </div>
-
-                                <div class="form-group col-md-4 newaddappon">
-                                    <label for="cons_doctor" >Consultant Doctor <span class="text-danger">*</span></label>
-                                    <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
-                                        <option value="">Consultant Doctor</option>
-                                    </select>
-                                    <?php $__errorArgs = ['cons_doctor'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                </div>
-                                <div class="form-group col-md-4 newaddappon ">
-                                    <label for="unit" >Unit <span class="text-danger">*</span></label>
-                                    <select name="unit" class="form-control select2-show-search" id="unit">
-                                        <option value="">Unit</option>
-                                    </select>
-                                    <?php $__errorArgs = ['unit'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                </div>
-                                <div class="form-group col-md-4 newaddticket">
-                                    <input type="text"  id="ticket_no"  name="ticket_no">
-                                    <label for="ticket_no">Ticket No <span class="text-danger">*</span></label>
-                                </div>
-                                <div class="form-group col-md-4 newaddappon ">
-                                   <input type="text"  value="<?php echo e(@$ticket_fees->ticket_fees); ?>" id="ticket_fees"  name="ticket_fees">
-                                    <label for="ticket_fees">Ticket Fees <span class="text-danger">*</span></label>
-                                </div>
 
                             </div>
+                            <div class="form-group  col-md-4 frefesd newaddappon " style="display:none">
+                                <label for="tpa_organization">TPA Organization <span class="text-danger">*</span></label>
+                                <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
+                                    <option value="">TPA Organization<span class="text-danger">*</span></option>
+                                    <?php $__currentLoopData = $tpa_management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tpaManagement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($tpaManagement->id); ?>"> <?php echo e($tpaManagement->TPA_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                            <div class="form-group  col-md-4 frefesds newaddappon" style="display:none">
+                                <label for="type_no"><span id="lableName"></span><span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>" id="type_no" />
+                            </div>
+                            <div class="form-group col-md-4 newaddappon ">
+                                <label for="reference" class="form-label">Reference</label>
+                                <select name="reference" class="form-control select2-show-search" id="reference">
+                                    <option value="">Referrel Name</option>
+                                    <?php $__currentLoopData = $referer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $reference): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($reference->id); ?>"> <?php echo e($reference->referral_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+
+                            </div>
+                            <div class="form-group col-md-4 newaddappon">
+                                <label for="department">Department <span class="text-danger">*</span></label>
+                                <select name="department" class="form-control select2-show-search" id="department">
+                                    <option value="">Department</option>
+                                    <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($department->id); ?>"> <?php echo e($department->department_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                                <?php $__errorArgs = ['department'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>
+                            <?php if($opdSetup->registration_type == 'By-Doctor'): ?>
+                            <div class="form-group col-md-4 newaddappon">
+                                <label for="cons_doctor">Consultant Doctor <span class="text-danger">*</span></label>
+                                <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
+                                    <option value="">Consultant Doctor</option>
+                                </select>
+                                <?php $__errorArgs = ['cons_doctor'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>
+                            <?php endif; ?>
+                            <div class="form-group col-md-4 newaddappon ">
+                                <label for="unit">Unit <span class="text-danger">*</span></label>
+                                <select name="unit" class="form-control select2-show-search" id="unit">
+                                    <option value="">Unit</option>
+                                </select>
+                                <?php $__errorArgs = ['unit'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>
+                            <div class="form-group col-md-4 newaddticket">
+                                <input type="text" id="ticket_no" name="ticket_no">
+                                <label for="ticket_no">Ticket No <span class="text-danger">*</span></label>
+                            </div>
+                            <div class="form-group col-md-4 newaddappon ">
+                                <input type="text" value="<?php echo e(@$ticket_fees->ticket_fees); ?>" id="ticket_fees" name="ticket_fees">
+                                <label for="ticket_fees">Ticket Fees <span class="text-danger">*</span></label>
+                            </div>
+
                         </div>
+                </div>
 
-                       <div class="options px-5">
-                            <div class="container mt-3">
-                             
+                <div class="options px-5">
+                    <div class="container mt-3">
+                        
 
-                                
+                        
 
-                                
-                                <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Physical Condition
+                        
+                        <!-- <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Physical Condition
                                     ?</span>
 
                                 <div class="row" id="physical_condition" style="display: none">
@@ -330,12 +331,12 @@ unset($__errorArgs, $__bag); ?>
                                         <label for="respiration" class="form-label">Respiration</label>
                                         <input type="text" class="form-control" id="respiration" name="respiration" value="<?php echo e(old('respiration')); ?>" />
                                     </div>
-                                </div>
+                                </div> -->
 
-                                <hr class="hr_line">
-                                <input type="checkbox" onchange="show_Symptoms()" id="show_Symptoms_button" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Symptoms ?</span>
+                        <!-- <hr class="hr_line"> -->
+                        <!-- <input type="checkbox" onchange="show_Symptoms()" id="show_Symptoms_button" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Symptoms ?</span> -->
 
-                                <div class="row" id="show_Symptoms" style="display: none">
+                        <!-- <div class="row" id="show_Symptoms" style="display: none">
                                     <div class="col-md-3 newaddappon ">
                                          <label for="symptoms_type" class="form-label">Symptoms Type</label>
                                         <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type">
@@ -358,40 +359,40 @@ unset($__errorArgs, $__bag); ?>
                                         <input type="text" id="symptoms_description" name="symptoms_description" >
                                         <label for="Symptoms Description">Symptoms Description </label>
                                     </div>
-                                </div>
+                                </div> -->
 
 
-                                <hr class="hr_line">
-                                <div class="row">
-                                    <div class="form-group col-md-4 opd-condition">
-                          
-                                        <input type="text" id="note" name="note">
-                                        <label for="note">Note </label>
-                                    </div>
-                                    <div class="form-group col-md-4 opd-condition">
-                                 
-                                        <input type="text" id="any_known_allergies" name="any_known_allergies">
-                                        <label for="any_known_allergies">Any Known Allergies</label>
-                                    </div>
-                                </div>
-                                <hr class="hr_line">
-                                <input type="checkbox" id="opd_belling" value="opd_belling_from_opd" />
-                                <span style="font-weight: 500;color:blue"> Are You Want To do <b> Billing</b>
-                                    ?</span>
+                        <!-- <hr class="hr_line"> -->
+                        <div class="row">
+                            <div class="form-group col-md-4 opd-condition">
 
+                                <input type="text" id="note" name="note">
+                                <label for="note">Note </label>
+                            </div>
+                            <div class="form-group col-md-4 opd-condition">
+
+                                <input type="text" id="any_known_allergies" name="any_known_allergies">
+                                <label for="any_known_allergies">Any Known Allergies</label>
                             </div>
                         </div>
-                        <div class="btn-list p-3">
-                            <button class="btn btn-primary btn-sm float-right ml-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
+                        <hr class="hr_line">
+                        <input type="checkbox" id="opd_belling" value="opd_belling_from_opd" />
+                        <span style="font-weight: 500;color:blue"> Are You Want To do <b> Billing</b>
+                            ?</span>
 
-                            <button class="btn btn-primary btn-sm float-right" type="submit" name="save" value="save_and_print"><i class="fa fa-file"></i> Save & Print</button>
-
-                        </div>
-                    </form>
+                    </div>
                 </div>
+                <div class="btn-list p-3">
+                    <button class="btn btn-primary btn-sm float-right ml-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
+
+                    <button class="btn btn-primary btn-sm float-right" type="submit" name="save" value="save_and_print"><i class="fa fa-file"></i> Save & Print</button>
+
+                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -501,5 +502,4 @@ unset($__errorArgs, $__bag); ?>
 
 
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/OPD/opd_registation.blade.php ENDPATH**/ ?>
