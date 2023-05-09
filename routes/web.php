@@ -1728,7 +1728,6 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
     Route::post('find-range-by-parameter', [PathologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter');
     Route::post('find-unit-by-parameter', [PathologyController::class, 'find_unit_by_parameter'])->name('find-unit-by-parameter');
 
-
     Route::group(['middleware' => ['permission:delete pathology test']], function () {
         Route::get('delete-pathology-test-details/{id}', [PathologyController::class, 'delete_pathology_test_details'])->name('delete-pathology-test-details');
     });
@@ -1935,12 +1934,21 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
 //================================= Emg ===================================================
 Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], function () {
     Route::get('emg-patient-list', [EmgController::class, 'index'])->name('emg-patient-list');
-    Route::group(['middleware' => ['permission:OPD registation']], function () {
+    Route::group(['middleware' => ['permission:Emg registation']], function () {
         Route::post('emg-after-new-old', [EmgController::class, 'after_new_old'])->name('emg-after-new-old');
 
         Route::any('emg-registation/{patientid?}', [EmgController::class, 'emg_registation'])->name('emg-registation');
         Route::post('add-emg-registation', [EmgController::class, 'add_emg_registation'])->name('add-emg-registation');
     });
+    Route::group(['middleware' => ['permission:Emg registation']], function () {
+        Route::post('emg-after-new-old', [EmgController::class, 'after_new_old'])->name('emg-after-new-old');
+
+        Route::any('emg-registation/{patientid?}', [EmgController::class, 'emg_registation'])->name('emg-registation');
+        Route::post('add-emg-registation', [EmgController::class, 'add_emg_registation'])->name('add-emg-registation');
+    });
+
+
+
     Route::group(['middleware' => ['permission:emg patient profile']], function () {
         Route::get('emg-profile/{id}', [EmgController::class, 'profile'])->name('emg-patient-profile');
     });
@@ -2178,6 +2186,12 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
     Route::group(['middleware' => ['permission:IPD registation']], function () {
         Route::post('ipd-registation', [IpdController::class, 'ipd_registation'])->name('ipd-registation');
+    });
+
+    Route::group(['middleware' => ['permission:edit IPD registation']], function () {
+        Route::get('edit-ipd-registation/{id}', [IpdController::class, 'edit_ipd_registration'])->name('edit-ipd-registation');
+
+        Route::post('update-ipd-registation', [IpdController::class, 'update_ipd_registation'])->name('update-ipd-registation');
     });
 
     Route::group(['middleware' => ['permission:IPD profile'], 'prefix' => 'ipd-profile'], function () {

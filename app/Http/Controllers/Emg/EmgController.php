@@ -26,6 +26,7 @@ use App\Models\EmgPayment;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\EmgPatientPhysicalDetail;
+use App\Models\Country;
 use PDF;
 
 class EmgController extends Controller
@@ -46,7 +47,8 @@ class EmgController extends Controller
             $state = State::all();
             $districts = District::all();
             $type = 'emg';
-            return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts', 'type'));
+            $country = Country::all();
+            return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts', 'type', 'country'));
         } else {
             return redirect()->route('emg-registation');
         }

@@ -46,6 +46,9 @@
             height: auto;
         }
     </style>
+    <script>
+        window.print()
+    </script>
 
     <div style="padding: 0px 7px 0px 7px;">
         <!-- ==========================================code here================================== -->
@@ -55,12 +58,10 @@
                     <img src="<?php echo e(asset('public/assets/images/header')); ?>/<?php echo e($header_image->logo); ?>" alt="" style="width: 80%;">
                 </td>
             </tr>
-            <table>
+            <table style="width: 100%;border-collapse: collapse" >
                 <tr>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-                        <b>UHID No: <?php echo e(@$opd_patient_details->patient_prefix); ?><?php echo e(@$opd_patient_details->patient_id); ?></b>
-                        <?php echo QrCode::size(250)->generate('ItSolutionStuff.com'); ?>
-
+                        <b>UHID No: dd<?php echo e(@$opd_patient_details->patient_prefix); ?><?php echo e(@$opd_patient_details->patient_id); ?></b>
                     </td>
                     <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
 
@@ -68,18 +69,17 @@
                         $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                         ?>
 
-                        <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$opd_patient_details->patient_prefix @$opd_patient_details->patient_id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 100px;height: 40px;">
+                        <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$opd_patient_details->patient_prefix @$opd_patient_details->patient_id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 150px;height: 40px;">
 
                     </td>
                     <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
 
-                        <?php echo QrCode::size(200)->generate('llll'); ?>
+                       <span><?php echo QrCode::size(50)->generate('ItSolutionStuff.com'); ?></span> 
 
-                      
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
 
-                        <b>Date: <?php echo e($opd_patient_details->appointment_date); ?></b>
+                        <b>Date: <?php echo e(@$opd_patient_details->appointment_date); ?></b>
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
                         <b>Cons. Doctor: <?php echo e(@$opd_patient_details->doctor_first_name); ?><?php echo e(@$opd_patient_details->doctor_last_name); ?></b>
@@ -168,7 +168,7 @@
                     </td>
                 </tr>
             </table>
-            <table style="margin: 10px 0px 0px 0px;width: 100%; border-top-style: dotted;border-right-style: dotted;border-bottom: 1px dotted #000;border-left-style: dotted;border-width: 1px;border-collapse: collapse;">
+            <table style="margin: 10px 0px 0px 0px;width: 100%; border-top-style: dotted;border-right-style: dotted;border-left-style: dotted;border-width: 1px;border-collapse: collapse;">
                 <tr>
                     <td width="50%" style="border-style: dotted;border-width: 1px;text-align: left;font-size: 13px;padding: 10px 10px 10px 10px; ">
                         <b>Clinical Notes</b>
@@ -182,30 +182,30 @@
                 <tr>
                     <td height="00px" valign="top" style="border-right-style: dotted;border-width: 1px;">
                         <b></b>
-                        <div style="height:560px;background:#FFF;"></div>
-                        <p style="border-top: 1px solid #899499;padding: 10px 0px 7px 10px;margin: 0px;font-size: 13px;">
+                        <div style="height:700px;background:#FFF;"></div>
+                        <p style="padding: 10px 0px 7px 10px;margin: 0px;font-size: 13px;">
                             <b>Height - <?php echo e(@$opd_patient_details->height); ?></b>
                         </p>
-                        <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
+                        <p style="padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
                             <b>Weight - <?php echo e(@$opd_patient_details->weight); ?></b>
                         </p>
-                        <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
+                        <p style="padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
                             <b>BP - <?php echo e(@$opd_patient_details->bp); ?></b>
                         </p>
-                        <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
+                        <p style="padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
                             <b>RR. - <?php echo e(@$opd_patient_details->respiration); ?></b>
                         </p>
-                        <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
+                        <p style="padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px;">
                             <b>Temperature - <?php echo e(@$opd_patient_details->temperature); ?></b>
                         </p>
-                        <p style="border-top: 1px solid #899499;padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px; ">
+                        <p style="padding: 7px 0px 7px 10px;margin: 0px;font-size: 13px; ">
                             <b>&nbsp;SPO<sub>2</sub> -</b>
                         </p>
                         <!-- <hr style="height: 1px; clear: both;margin: 10px 0px 10px 0px;">  -->
                     </td>
                     </td>
                     <td height="00px" valign="top">
-                        <img src="<?php echo e(asset('public/hospital_details/rx.png')); ?>" style="width: 80px;">
+                        <img src="<?php echo e(asset('public/hospital_details/rx.png')); ?>" style="width: 40px;">
                     </td>
                 </tr>
             </table>
