@@ -120,18 +120,18 @@
                         @csrf
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
-                                <div class="form-group col-md-4 adcharge ">
-                                    <label class="date-format">Charge Date <span class="text-danger">*</span></label>
-                                    <input type="datetime-local" name="charge_date" value="{{ date('Y-m-d H:s') }}"
+                                <div class="form-group col-md-6 adcharge ">
+                                    <label class="date-format"> Date <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" name="date" value="{{ date('Y-m-d H:s') }}"
                                         required />
-                                    @error('charge_date')
+                                    @error('date')
                                     <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 adchargee ">
+                                <div class="form-group col-md-6 adchargee ">
                                     <label class="date-format">Test Name <span class="text-danger">*</span></label>
                                     <select required class="form-control select2-show-search" name="test_id"
-                                        id="test_id" onchange="getTestAmount(this.value)">
+                                        id="test_id">
                                         <option value="">Select Test Name</option>
                                         @if(isset($pathology_all_test))
                                         @foreach ($pathology_all_test as $key => $value)
@@ -144,13 +144,13 @@
                                     <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 adcharged">
+                                {{-- <div class="form-group col-md-4 adcharged">
                                     <label class="date-format">Charge<span class="text-danger">*</span></label>
                                     <input type="text" name="charge" id="charge" required />
                                     @error('charge')
                                     <small class="text-danger">{{ $message }}</small>
                                     @enderror
-                                </div>
+                                </div> --}}
                                 {{-- <div class="form-group col-md-4 opd-bladedesign ">
                                     <label class="date-format">Billing Date <span class="text-danger">*</span></label>
                                     <input type="datetime-local" name="billing_date" value="{{ date('Y-m-d H:s') }}"
@@ -178,25 +178,6 @@
         </div>
     </div>
 </div>
-<script>
-       function getTestAmount(test_id) {
-        $.ajax({
-            url: "{{ route('find-test-amount-by-test') }}",
-            type: "POST",
-            data: {
-                _token: '{{ csrf_token() }}',
-                testId: test_id,
-            },
-            success: function(response) {
-                $('#charge').val(response.total_amount);
 
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-        gettotal(i);
-    }
-</script>
 
 @endsection
