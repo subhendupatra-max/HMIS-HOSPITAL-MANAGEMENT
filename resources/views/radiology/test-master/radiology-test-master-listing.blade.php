@@ -5,13 +5,12 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    Radiology Test
+                    Radiology Test Master List
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        @can('add radiology test')
-                        <a href="{{ route('add-radiology-test') }}" class="btn btn-primary btn-sm">
-                            <i class="fa fa-plus"></i> Add Radiology Test</a>
+                        @can('add pathology test master')
+                        <a href="{{ route('add-radiology-test-master-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Add Radiology Test Master</a>
                         @endcan
                     </div>
                 </div>
@@ -26,7 +25,7 @@
         <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{ session('error') }}</div>
         @endif
         {{-- ============= message ================ --}}
-        @can('view pathology group test')
+        @can('view pathology test list')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -35,34 +34,35 @@
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Test Name</th>
-                                <th class="border-bottom-0">Charges Amount</th>
-                                <th class="border-bottom-0">Action</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
 
                         <tbody>
-                            @if (isset($all_test))
-                            @foreach ($all_test as $value)
+                            @foreach ($radiologyTest as $item)
                             <tr>
-                                <td>{{$loop->iteration}}</td>
-                                <td><a class="textlink" href="">{{$value->test_name}}({{$value->short_name}})</a></td>
-                                <td>{{$value->total_amount}}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td><a class="textlink" href="{{ route('view-radiology-test-details', ['id' => $item->id]) }}">{{ $item->test_name }}</a></td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
-                                            @can('')
-                                            <a class="dropdown-item" href=""><i class="fa fa-edit"></i> Edit</a>
+                                            <a class="dropdown-item" href="{{ route('view-pathology-test-details', ['id' => $item->id]) }}"><i class="fa fa-eye"></i> View</a>
+
+
+                                            @can('edit pathology test')
+                                            <a class="dropdown-item" href="{{ route('edit-pathology-test-details', ['id' => $item->id]) }}"><i class="fa fa-edit"></i> Edit</a>
                                             @endcan
-                                            @can('')
-                                            <a class="dropdown-item" href=""><i class="fa fa-trash"></i> Delete</a>
+
+                                            @can('delete pathology test')
+                                            <a class="dropdown-item" href="{{ route('delete-pathology-test-details', ['id' => $item->id]) }}"><i class="fa fa-trash"></i> Delete</a>
                                             @endcan
+
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
-                            @endif
-
                         </tbody>
                     </table>
 

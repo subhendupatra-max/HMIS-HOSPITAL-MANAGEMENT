@@ -3,16 +3,16 @@
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Add New Pathology Test Master</h4>
+            <h4 class="card-title">Add New Radiology Test Master</h4>
         </div>
         <div class="card-body">
-            <form action="<?php echo e(route('save-pathology-test-master-details')); ?>" method="POST">
+            <form action="<?php echo e(route('save-radiology-test-master-details')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="form-group col-md-12">
                         
-                        <input type="text" id="test_name"name="test_name" required />
-                    <label for="test_name"> Test Name<span class="text-danger">*</span> </label>
+                        <input type="text" id="test_name" name="test_name" required />
+                        <label for="test_name"> Test Name<span class="text-danger">*</span> </label>
                         <?php $__errorArgs = ['test_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -227,5 +227,4 @@ unset($__errorArgs, $__bag); ?>
     });
 </script>
 <?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/pathology/test-master/add-pathology-test-master.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/radiology/test-master/add-radiology-test-master.blade.php ENDPATH**/ ?>
