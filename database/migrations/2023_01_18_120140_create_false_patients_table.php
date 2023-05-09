@@ -51,6 +51,7 @@ class CreateFalsePatientsTable extends Migration
             $table->string('is_active')->default(1);
             $table->string('is_delete')->default(0);
             $table->string('ins_by')->default('sys');
+            $table->string('last_update')->nullable();
             $table->timestamps();
         });
     }

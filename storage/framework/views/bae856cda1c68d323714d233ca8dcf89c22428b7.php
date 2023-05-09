@@ -125,15 +125,15 @@ unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <div class="col-lg-7 col-xl-8">
-                    <form method="post" action="<?php echo e(route('save-pathology-charge')); ?>">
+                    <form method="post" action="<?php echo e(route('update-pathology-charge')); ?>">
                         <?php echo csrf_field(); ?>
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
                                 <div class="form-group col-md-6 adcharge ">
-                                    <label class="date-format">Charge Date <span class="text-danger">*</span></label>
-                                    <input type="datetime-local" name="charge_date" value="<?php echo e(date('Y-m-d H:s')); ?>"
+                                    <label class="date-format"> Date <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" name="date" value="<?php echo e(date('Y-m-d H:s',strtotime($test_details->date))); ?>"
                                         required />
-                                    <?php $__errorArgs = ['charge_date'];
+                                    <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -147,11 +147,12 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="form-group col-md-6 adchargee ">
                                     <label class="date-format">Test Name <span class="text-danger">*</span></label>
                                     <select required class="form-control select2-show-search" name="test_id"
-                                        id="test_id" onchange="getTestAmount(this.value)">
+                                        id="test_id">
                                         <option value="">Select Test Name</option>
                                         <?php if(isset($pathology_all_test)): ?>
                                         <?php $__currentLoopData = $pathology_all_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($value->id); ?>"><?php echo e($value->test_name); ?></option>
+                                        <option value="<?php echo e($value->id); ?>" <?php echo e(@$test_details->test_id ==
+                                            $value->id ? 'Selected' : ''); ?> ><?php echo e($value->test_name); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         <?php endif; ?>
                                     </select>
@@ -167,15 +168,13 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-                                
-                                
                             </div>
                         </div>
 
                         <input type="hidden" name="patientId" value="<?php echo e(@$patient_details_information->id); ?>" />
                         <input type="hidden" name="section" value="<?php echo e(@$patient_reg_details->section); ?>" />
                         <input type="hidden" name="case_id" value="<?php echo e(@$patient_reg_details->id); ?>" />
-
+                        <input type="hidden" name="pre_test_id" value="<?php echo e(@$test_details->id); ?>" />
 
                         <div class="btn-list p-3">
                             <button class="btn btn-primary btn-sm float-right" value="save" type="submit" name="save"><i
@@ -188,27 +187,7 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </div>
-<script>
-       function getTestAmount(test_id) {
-        $.ajax({
-            url: "<?php echo e(route('find-test-amount-by-test')); ?>",
-            type: "POST",
-            data: {
-                _token: '<?php echo e(csrf_token()); ?>',
-                testId: test_id,
-            },
-            success: function(response) {
-                $('#charge').val(response.total_amount);
 
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-        gettotal(i);
-    }
-</script>
 
 <?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pathology/charge/charge-add.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pathology/patient-test/patient-test-edit.blade.php ENDPATH**/ ?>

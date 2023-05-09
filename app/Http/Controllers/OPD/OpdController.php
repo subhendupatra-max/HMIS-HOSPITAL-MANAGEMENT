@@ -26,6 +26,7 @@ use App\Models\OpdUnit;
 use App\Models\BedUnit;
 use App\Models\OpdSetup;
 use App\Models\OpdTicketFees;
+use App\Models\PathologyPatientTest;
 use App\Models\PatientPhysicalDetails;
 use App\Models\Prefix;
 use App\Models\OpdPatientPhysicalDetail;
@@ -595,5 +596,13 @@ class OpdController extends Controller
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);
         }
+    }
+
+    public function opd_pathology_investigation($id)
+    {
+        $opd_id = base64_decode($id);
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        $pathology_patient_test = PathologyPatientTest::where('ins_by','ori')->where('case_id',$opd_patient_details->case_id)->get();
+        return view('OPD.pathology.test-list', compact('pathology_patient_test', 'opd_patient_details', 'opd_id'));
     }
 }

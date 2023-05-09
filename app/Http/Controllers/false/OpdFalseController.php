@@ -45,9 +45,10 @@ class OpdFalseController extends Controller
         try {
         DB::beginTransaction();
         $opd_prefix = Prefix::where('name', 'opd')->first();
-        $false_patient = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->limit($request->no_of_patient)->get();
+        $false_patient = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->where('last_update',)->limit($request->no_of_patient)->get();
         foreach($false_patient as $value)
         {
+            FalsePatient::where('id', $value->id)->update(['last_update'=>date('Y-m-d')]);
             $patient = new Patient();
             $patient->patient_prefix =  $value->patient_prefix;
             $patient->prefix = $value->prefix;

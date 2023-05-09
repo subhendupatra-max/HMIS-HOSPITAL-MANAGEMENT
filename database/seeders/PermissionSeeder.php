@@ -795,6 +795,12 @@ class PermissionSeeder extends Seeder
         //pathology test add to patient
         Permission::create(['name' => 'pathology-test-to-a-patient']);
         Permission::create(['name' => 'add-pathology-test-to-a-patient']);
+        Permission::create(['name' => 'edit-pathology-test-to-a-patient']);
+        Permission::create(['name' => 'delete-pathology-test-to-a-patient']);
+
+        //OPD Pathology Investigation
+        Permission::create(['name' => 'OPD Pathology Investigation']);
+
 
     }
 }

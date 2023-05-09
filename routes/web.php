@@ -1669,13 +1669,21 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
 
     Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
         Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
-            Route::get('pathology-test-charge', [PathologyController::class, 'pathology_test_charge'])->name('pathology-test-charge');
+            Route::get('pathology-patient-test-list', [PathologyController::class, 'pathology_test_charge'])->name('pathology-test-charge');
         });
         Route::group(['middleware' => ['permission:add-pathology-test-to-a-patient']], function () {
             Route::get('add-pathology-test-to-a-patient', [PathologyController::class, 'pathology_test_charge_add'])->name('add-pathology-test-to-a-patient');
-            Route::post('add-pathology-charges-for-a-patient', [PathologyController::class, 'add_pathology_charges_for_a_patient'])->name('add-pathology-charges-for-a-patient');
-            Route::post('save-pathology-charge', [PathologyController::class, 'save_pathology_charge'])->name('save-pathology-charge');
+            Route::post('add-pathology-test-for-a-patient', [PathologyController::class, 'add_pathology_charges_for_a_patient'])->name('add-pathology-charges-for-a-patient');
+            Route::post('save-pathology-patient-test', [PathologyController::class, 'save_pathology_charge'])->name('save-pathology-charge');
         });
+        Route::group(['middleware' => ['permission:edit-pathology-test-to-a-patient']], function () {
+            Route::get('edit-pathology-test-patient/{id}', [PathologyController::class, 'edit_pathology_test_patient'])->name('edit-pathology-test-patient');
+            Route::post('update-pathology-patient-test', [PathologyController::class, 'update_pathology_charge'])->name('update-pathology-charge');
+        });
+        Route::group(['middleware' => ['permission:delete-pathology-test-to-a-patient']], function () {
+            Route::get('delete-pathology-test-patient/{id}', [PathologyController::class, 'delete_pathology_test_patient'])->name('delete-pathology-test-patient');
+        });
+
     });
 
 
@@ -1834,6 +1842,12 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::group(['middleware' => ['permission:delete opd billing']], function () {
             Route::get('delete-opd-bill/{bill_id}', [BillingController::class, 'delete_opd_bill'])->name('delete-opd-bill');
         });
+    });
+    //================================= OPD billing ====================================
+
+    //================================= OPD billing ====================================
+    Route::group(['middleware' => ['permission:OPD Pathology Investigation']], function () {
+        Route::get('opd-pathology-investigation/{id}', [OpdController::class, 'opd_pathology_investigation'])->name('opd-pathology-investigation');
     });
     //================================= OPD billing ====================================
 
