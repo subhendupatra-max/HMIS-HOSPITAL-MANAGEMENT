@@ -259,7 +259,7 @@ class OpdController extends Controller
 
             $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
 
-            $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'opd_patient_physical_details.height', 'opd_patient_physical_details.weight', 'opd_patient_physical_details.bp', 'opd_patient_physical_details.respiration', 'opd_patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date', 'opd_visit_details.id as opd_visit_details_id')
+            $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'opd_patient_physical_details.height', 'opd_patient_physical_details.weight', 'opd_patient_physical_details.bp', 'opd_patient_physical_details.respiration', 'opd_patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date', 'opd_visit_details.id as opd_visit_details_id','opd_details.id as opd_detailsId')
                 ->leftjoin('opd_details', 'opd_details.id', '=', 'opd_visit_details.opd_details_id')
                 ->leftjoin('patients', 'patients.id', '=', 'opd_details.patient_id')
                 ->leftjoin('opd_patient_physical_details', 'opd_patient_physical_details.opd_id', '=', 'opd_visit_details.opd_details_id')
@@ -268,15 +268,9 @@ class OpdController extends Controller
                 ->where('opd_visit_details.id', $opd_visit_details->id)
                 ->first();
 
-            // \QrCode::size(250)
-            // ->format('png')
-            // ->generate('ItSolutionStuff.com', public_path('qr_code/opd'.$opd_visit_details->id.'.png'));
-
-            // DB::commit();
+             DB::commit();
             if ($request->save == 'save_and_print') {
-                return view('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image'));
-                // return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
-                // return $pdf->download('opd_prescription.pdf')->redirect()->back()->with('success', 'OPD Registation Sucessfully');
+                return view('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image')).redirect('/opd/OPD-Patient-list');
             } else {
                 return redirect()->route('OPD-Patient-list')->with('success', 'OPD Registation Sucessfully');
             }
@@ -313,6 +307,28 @@ class OpdController extends Controller
         // $opd_visit_details = OpdVisitDetails::where('opd_details_id',$opd_id)->get();
         $opd_visit_details = OpdVisitDetails::where('opd_details_id', $opd_id)->first();
         return view('OPD.opd-patient-profile', compact('billing_amount', 'opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount'));
+    }
+    public function prescription_print($id)
+    {
+        $opd_visit_id = base64_decode($id);
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+        $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'opd_patient_physical_details.height', 'opd_patient_physical_details.weight', 'opd_patient_physical_details.bp', 'opd_patient_physical_details.respiration', 'opd_patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date', 'opd_visit_details.id as opd_visit_details_id','opd_details.id as opd_id','opd_details.case_id','opd_details.opd_prefix','states.name as state_name','districts.name as district_name','patients.pin_no','countries.country_name','patients.phone','patients.guardian_contact_no','patients.local_guardian_name','patients.local_guardian_contact_no','opd_visit_details.ticket_no')
+            ->leftjoin('opd_details', 'opd_details.id', '=', 'opd_visit_details.opd_details_id')
+            ->leftjoin('patients', 'patients.id', '=', 'opd_details.patient_id')
+            ->leftjoin('opd_patient_physical_details', 'opd_patient_physical_details.opd_id', '=', 'opd_visit_details.opd_details_id')
+            ->leftjoin('users', 'users.id', '=', 'opd_visit_details.cons_doctor')
+            ->leftjoin('departments', 'departments.id', '=', 'opd_visit_details.department_id')
+            ->leftjoin('states', 'states.id', '=', 'patients.state')
+            ->leftjoin('countries', 'countries.id', '=', 'patients.country')
+            ->leftjoin('districts', 'districts.id', '=', 'patients.district')
+            ->where('opd_visit_details.id', $opd_visit_id)
+            ->first();
+
+        $pdf = PDF::loadView('OPD._print.opd_prescription', compact('opd_patient_details','header_image'));
+        return $pdf->stream('opd-prescription.pdf');
+
+        return redirect()->route('OPD-Patient-list')->with('success', ' Sucessfully');
+
     }
 
     //opd setup
