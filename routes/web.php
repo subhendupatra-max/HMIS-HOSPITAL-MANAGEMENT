@@ -1745,6 +1745,10 @@ Route::group(['middleware' => ['permission:radiology main'], 'prefix' => 'radiol
     //     Route::get('radiology-billing-list', [RadiologyController::class, 'radiology_test_charge'])->name('radiology-details');
     // });
 
+
+    Route::get('view-radiology-test-details/{id}', [RadiologyController::class, 'view_radiology_test_details'])->name('view-radiology-test-details');
+
+
     Route::group(['middleware' => ['permission:radiology-test-to-a-patient']], function () {
         Route::group(['middleware' => ['permission:radiology-test-to-a-patient']], function () {
             Route::get('radiology-patient-test-list', [RadiologyController::class, 'radiology_test_charge'])->name('radiology-test-charge');
@@ -2210,9 +2214,9 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     });
 
     Route::group(['middleware' => ['permission:edit IPD registation']], function () {
-        Route::get('edit-ipd-registation/{id}', [IpdController::class, 'edit_ipd_registration'])->name('edit-ipd-registation');
+        Route::get('edit-ipd-registation/{ipd_id}', [IpdController::class, 'edit_ipd_registration'])->name('edit-ipd-registation');
 
-        Route::post('update-ipd-registation', [IpdController::class, 'update_ipd_registation'])->name('update-ipd-registation');
+        Route::post('update-ipd-registation', [IpdController::class, 'updaste_ipd_registation'])->name('update-ipd-registation');
     });
 
     Route::group(['middleware' => ['permission:IPD profile'], 'prefix' => 'ipd-profile'], function () {

@@ -6,7 +6,7 @@
                 <div class="row">
                     <div class="col-md-10">
                         <span class="head_name">Test Name</span> : <span
-                            class="value_name">{{ @$pathologyTest->test_name }}</span>
+                            class="value_name">{{ @$radiologyTest->test_name }}</span>
                     </div>
                     <div class="col-md-2">
                         <div class="row">
@@ -22,61 +22,61 @@
                 <div class="row">
                     <div class="col-md-4">
                         <span class="head_name">Test Type</span> : <span
-                            class="value_name">{{ @$pathologyTest->test_type }}</span>
+                            class="value_name">{{ @$radiologyTest->test_type }}</span>
                     </div>
 
                     <div class="col-md-4">
                         <span class="head_name">Category</span> : <span
-                            class="value_name">{{ @$pathologyTest->pathology_catagory->catagory_name }}</span>
+                            class="value_name">{{ @$radiologyTest->pathology_catagory->catagory_name }}</span>
                     </div>
                     <div class="col-md-4">
                         <span class="head_name"> Sub Catagory</span> : <span
-                            class="value_name">{{ @$pathologyTest->sub_catagory }}</span>
+                            class="value_name">{{ @$radiologyTest->sub_catagory }}</span>
                     </div>
 
 
 
                     <div class="col-md-4">
                         <span class="head_name">Method</span> : <span
-                            class="value_name">{{ @$pathologyTest->method }}</span>
+                            class="value_name">{{ @$radiologyTest->method }}</span>
                     </div>
                     <div class="col-md-4">
                         <span class="head_name">Report Days</span> : <span
-                            class="value_name">{{ @$pathologyTest->report_days }}</span>
+                            class="value_name">{{ @$radiologyTest->report_days }}</span>
                     </div>
 
 
                     <div class="col-md-4">
                         <span class="head_name">Charges Catagory </span> : <span
-                            class="value_name">{{ @$pathologyTest->charges_catagory->charges_catagories_name }}</span>
+                            class="value_name">{{ @$radiologyTest->charges_catagory->charges_catagories_name }}</span>
                     </div>
                     <div class="col-md-4">
                         <span class="head_name">Charges Sub Catagory</span> : <span
-                            class="value_name">{{ @$pathologyTest->charges_sub_catagory->charges_sub_catagories_name }}</span>
+                            class="value_name">{{ @$radiologyTest->charges_sub_catagory->charges_sub_catagories_name }}</span>
                     </div>
 
 
                     <div class="col-md-4">
                         <span class="head_name">Charges</span> : <span
-                            class="value_name">{{ @$pathologyTest->charges->charges_name }}</span>
+                            class="value_name">{{ @$radiologyTest->charges->charges_name }}</span>
                     </div>
                     <div class="col-md-4">
-                        <span class="head_name">Tax</span> : <span class="value_name">{{ @$pathologyTest->tax }}</span>
+                        <span class="head_name">Tax</span> : <span class="value_name">{{ @$radiologyTest->tax }}</span>
                     </div>
 
 
                     <div class="col-md-4">
                         <span class="head_name">Charge Amount</span> : <span
-                            class="value_name">{{ @$pathologyTest->standard_charges }}</span>
+                            class="value_name">{{ @$radiologyTest->standard_charges }}</span>
                     </div>
                     <div class="col-md-4">
                         <span class="head_name">Total Amount</span> : <span
-                            class="value_name">{{ @$pathologyTest->total_amount }}</span>
+                            class="value_name">{{ @$radiologyTest->total_amount }}</span>
                     </div>
                 </div>
                 <hr class="ipd_header_border ">
                 <div class="row">
-                    {!! @$pathologyTest->test_details !!}
+                    {!! @$radiologyTest->test_details !!}
                 </div>
                 <hr class="ipd_header_border ">
                 @if (isset($value->test_parameter_name[0]->parameter_name))
@@ -90,7 +90,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($pathologyParameter as $value)
+                            @foreach ($radiologyParameter as $value)
                                 <tr>
                                     <td>{{ @$value->test_parameter_name->parameter_name }}</td>
                                     <td>{!! @$value->test_parameter_name->reference_range !!}</td>
@@ -104,5 +104,4 @@
             </div>
         </div>
     </div>
-    
 @endsection

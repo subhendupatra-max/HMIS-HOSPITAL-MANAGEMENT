@@ -81,7 +81,8 @@
                                             <i class="fa fa-file"></i> Status Change</a>
                                         @endcan
                                         @can('')
-                                        <a class="dropdown-item" href="{{route('edit-ipd-registation',['id'=> $value->id]) }}">
+                                       
+                                        <a class="dropdown-item" href="{{ route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])}}">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         @endcan
                                         @can('')
