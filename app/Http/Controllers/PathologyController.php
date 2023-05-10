@@ -35,8 +35,8 @@ class PathologyController extends Controller
     // ======================== Pathology Billing =============================
     public function pathology_billing_list()
     {
-        $pathology_bill_details = PathologyBilling::orderBy('id','desc')->get();
-        return view('pathology.pathology-billing-list',compact('pathology_bill_details'));
+        $pathology_bill_details = PathologyBilling::orderBy('id', 'desc')->get();
+        return view('pathology.pathology-billing-list', compact('pathology_bill_details'));
     }
     public function add_pathology_bill()
     {
@@ -54,8 +54,8 @@ class PathologyController extends Controller
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $pathology_all_test = PathologyTest::all();
-        $patient_reg_details = caseReference::where('patient_id',$request->patient_id)->orderBy('id','desc')->first();
-        return view('pathology.pathology-add-billing', compact('all_patient', 'patient_details_information', 'pathology_all_test','patient_reg_details'));
+        $patient_reg_details = caseReference::where('patient_id', $request->patient_id)->orderBy('id', 'desc')->first();
+        return view('pathology.pathology-add-billing', compact('all_patient', 'patient_details_information', 'pathology_all_test', 'patient_reg_details'));
     }
     public function save_pathology_billing(Request $request)
     {
@@ -100,8 +100,8 @@ class PathologyController extends Controller
                 $patient_charge->status = '';
                 $patient_charge->save();
             }
-           DB::commit();
-           return redirect()->route('pathology-details')->with('success', "Pathology Bill Successfully Created");
+            DB::commit();
+            return redirect()->route('pathology-details')->with('success', "Pathology Bill Successfully Created");
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route('add-pathology-billing')->with('error', "Something Went Wrong");
@@ -226,7 +226,7 @@ class PathologyController extends Controller
     {
         $pathologyTest = PathologyTest::find($id);
         $pathologyParameter = TestWithParameter::where('pathology_test_id', $id)->get();
-        return view('pathology.test-pathology.pathology-test-details', compact('pathologyTest', 'pathologyParameter'));
+        return view('pathology.test-master.pathology-test-details', compact('pathologyTest', 'pathologyParameter'));
     }
 
     public function add_pathology_report()
@@ -301,27 +301,26 @@ class PathologyController extends Controller
 
     public function add_test()
     {
-
     }
 
     public function pathology_test_charge()
     {
-        $pathology_patient_test = PathologyPatientTest::where('ins_by','ori')->get();
-        return view('pathology.patient-test.patient-test-list',compact('pathology_patient_test'));
+        $pathology_patient_test = PathologyPatientTest::where('ins_by', 'ori')->get();
+        return view('pathology.patient-test.patient-test-list', compact('pathology_patient_test'));
     }
     public function pathology_test_charge_add()
     {
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $pathology_all_test = PathologyTest::all();
-        return view('pathology.patient-test.patient-test-add',compact('all_patient','pathology_all_test'));
+        return view('pathology.patient-test.patient-test-add', compact('all_patient', 'pathology_all_test'));
     }
     public function add_pathology_charges_for_a_patient(Request $request)
     {
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $pathology_all_test = PathologyTest::all();
-        $patient_reg_details = caseReference::where('patient_id',$request->patient_id)->orderBy('id','desc')->first();
-        return view('pathology.patient-test.patient-test-add', compact('all_patient', 'patient_details_information', 'pathology_all_test','patient_reg_details'));
+        $patient_reg_details = caseReference::where('patient_id', $request->patient_id)->orderBy('id', 'desc')->first();
+        return view('pathology.patient-test.patient-test-add', compact('all_patient', 'patient_details_information', 'pathology_all_test', 'patient_reg_details'));
     }
 
     public function save_pathology_charge(Request $request)
@@ -335,19 +334,15 @@ class PathologyController extends Controller
             DB::beginTransaction();
             $pathology_patient_test = new PathologyPatientTest();
 
-            $case_details = caseReference::where('id',$request->case_id)->first();
-            if($case_details->section == 'OPD')
-            {
-                $section_details = OpdDetails::where('case_id',$request->case_id)->first();
+            $case_details = caseReference::where('id', $request->case_id)->first();
+            if ($case_details->section == 'OPD') {
+                $section_details = OpdDetails::where('case_id', $request->case_id)->first();
                 $pathology_patient_test->opd_id = $section_details->id;
-            }
-            elseif($case_details->section == 'EMG')
-            {
-                $section_details = EmgDetails::where('case_id',$request->case_id)->first();
+            } elseif ($case_details->section == 'EMG') {
+                $section_details = EmgDetails::where('case_id', $request->case_id)->first();
                 $pathology_patient_test->emg_id = $section_details->id;
-            }
-            else {
-                $section_details = IpdDetails::where('case_id',$request->case_id)->first();
+            } else {
+                $section_details = IpdDetails::where('case_id', $request->case_id)->first();
                 $pathology_patient_test->ipd_id = $section_details->id;
             }
 
@@ -360,30 +355,29 @@ class PathologyController extends Controller
             $pathology_patient_test->billing_status = '0';
             $pathology_patient_test->test_status = '<span class="badge badge-warning">Sample Not Collected</span>';
             $pathology_patient_test->save();
-                
+
             DB::commit();
             return redirect()->route('pathology-test-charge')->with('success', "Test Added Successfully");
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route('pathology-test-charge')->withErrors(['error' => $th->getMessage()]);
         }
-       
     }
 
     public function edit_pathology_test_patient($id)
     {
         $test_id = base64_decode($id);
-        $test_details = PathologyPatientTest::where('id',$test_id)->first();
-       // dd($test_details );
+        $test_details = PathologyPatientTest::where('id', $test_id)->first();
+        // dd($test_details );
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $test_details->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $pathology_all_test = PathologyTest::all();
-        $patient_reg_details = caseReference::where('patient_id',$test_details->patient_id)->orderBy('id','desc')->first();
-       return view('pathology.patient-test.patient-test-edit',compact('test_details','all_patient','patient_details_information','pathology_all_test','patient_reg_details'));
+        $patient_reg_details = caseReference::where('patient_id', $test_details->patient_id)->orderBy('id', 'desc')->first();
+        return view('pathology.patient-test.patient-test-edit', compact('test_details', 'all_patient', 'patient_details_information', 'pathology_all_test', 'patient_reg_details'));
     }
     public function update_pathology_charge(Request $request)
     {
-       // dd($request->all());
+        // dd($request->all());
         $validate = $request->validate([
             'date'   => 'required',
             'test_id'   => 'required',
@@ -396,27 +390,27 @@ class PathologyController extends Controller
             $pathology_patient_test->date = $request->date;
             $pathology_patient_test->test_id = $request->test_id;
             $pathology_patient_test->save();
-                
+
             DB::commit();
             return redirect()->route('pathology-test-charge')->with('success', "Test Upadated Successfully");
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route('pathology-test-charge')->withErrors(['error' => $th->getMessage()]);
-        }  
+        }
     }
 
     public function delete_pathology_test_patient($id)
     {
         try {
-        DB::beginTransaction();
-        $test_id = base64_decode($id);
-        $test_details = PathologyPatientTest::where('id',$test_id)->delete();
-        DB::commit();
-        return redirect()->route('pathology-test-charge')->with('success', "Test Deleted Successfully");
-    } catch (\Throwable $th) {
-        DB::rollback();
-        return redirect()->route('pathology-test-charge')->withErrors(['error' => $th->getMessage()]);
-    }
+            DB::beginTransaction();
+            $test_id = base64_decode($id);
+            $test_details = PathologyPatientTest::where('id', $test_id)->delete();
+            DB::commit();
+            return redirect()->route('pathology-test-charge')->with('success', "Test Deleted Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('pathology-test-charge')->withErrors(['error' => $th->getMessage()]);
+        }
     }
 
     // =====================pathology test============================

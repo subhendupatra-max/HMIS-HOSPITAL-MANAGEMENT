@@ -173,7 +173,7 @@
                                 <option value="">Select Test Name</option>
                                 @if(isset($all_test))
                                 @foreach ($all_test as $test)
-                                <option value="{{$test->id}}">{{$test->test_name}}</option>
+                                <option value="{{$test->id}}">{{$test->parameter_name}}</option>
                                 @endforeach
                                 @endcan
                             </select>
