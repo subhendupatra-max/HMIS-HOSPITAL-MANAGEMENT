@@ -6,7 +6,7 @@
         <div class="menubox">
             <div class="menu-box1">
                 <a class="card1" href="#">
-                    <h3>Human Resource Human Resource</h3>
+                    <h3>Human Resource</h3>
                     <p class="small">0</p>
                     <div class="go-corner" href="#">
                       <div class="go-arrow">

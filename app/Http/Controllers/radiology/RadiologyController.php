@@ -50,7 +50,7 @@ class RadiologyController extends Controller
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $radiology_all_test = RadiologyTest::all();
         $patient_reg_details = CaseReference::where('patient_id', $request->patient_id)->orderBy('id', 'desc')->first();
-        return view('pathology.patient-test.patient-test-add', compact('all_patient', 'patient_details_information', 'radiology_all_test', 'patient_reg_details'));
+        return view('radiology.patient-test.patient-test-add', compact('all_patient', 'patient_details_information', 'radiology_all_test', 'patient_reg_details'));
     }
 
     public function save_radiology_charge(Request $request)

@@ -5,18 +5,18 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-4 card-title">
-                    Pathology Test
+                    Radiology Test
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add-pathology-test-to-a-patient')): ?>
-                        <a href="<?php echo e(route('add-pathology-test-to-a-patient')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-money-bill"></i> Add </a>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add-radiology-test-to-a-patient')): ?>
+                        <a href="<?php echo e(route('add-radiology-test-to-a-patient')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-money-bill"></i> Add </a>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology test')): ?>
-                        <a href="<?php echo e(route('pathology-test-list')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-vials"></i> Pathology Test </a>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('radiology test')): ?>
+                        <a href="<?php echo e(route('radiology-test-list')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-vials"></i> Radiology Test </a>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology test master')): ?>
-                        <a href="<?php echo e(route('pathology-test-master-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('radiology test master')): ?>
+                        <a href="<?php echo e(route('radiology-test-master-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
                         <?php endif; ?>
 
                     </div>
@@ -42,8 +42,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php if(@$pathology_patient_test): ?>
-                            <?php $__currentLoopData = $pathology_patient_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php if(@$radiology_patient_test): ?>
+                            <?php $__currentLoopData = $radiology_patient_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
                             if ($value->section == 'OPD') {
                                 $opd_details = DB::table('opd_details')->where('case_id', $value->case_id)->first();
@@ -107,4 +107,4 @@
     </div>
 </div>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pathology/patient-test/patient-test-list.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/radiology/patient-test/patient-test-list.blade.php ENDPATH**/ ?>
