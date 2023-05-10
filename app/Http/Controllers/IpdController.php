@@ -189,15 +189,14 @@ class IpdController extends Controller
         return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units'));
     }
 
-    public function edit_ipd_registration($id)
+    public function edit_ipd_registration($ipd_id)
     {
-        $ipd_id = $id;
+        $ipd_id = base64_decode($ipd_id);
         $tpa_management = TpaManagement::get();
         $referer = Referral::get();
         $departments = Department::where('is_active', '1')->get();
         $units = BedUnit::where('is_active', '1')->get();
         $visit_details = IpdDetails::where('id', '=', $ipd_id)->first();
-        // dd($visit_details);
 
         return view('Ipd.edit-ipd-patient', compact('ipd_id', 'departments', 'referer', 'tpa_management', 'visit_details', 'units'));
     }

@@ -22,6 +22,7 @@ use DB;
 use App\Models\RadiologyTestDetails;
 use App\Models\RadiologyTestMasterDetails;
 use App\Models\RadiologyTestWithParameters;
+use App\Models\TestWithParameterInRadiology;
 
 class RadiologyController extends Controller
 {
@@ -46,6 +47,7 @@ class RadiologyController extends Controller
 
     public function add_radiology_charges_for_a_patient(Request $request)
     {
+        // dd($request->patient_id);
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $radiology_all_test = RadiologyTest::all();
@@ -60,38 +62,38 @@ class RadiologyController extends Controller
             'test_id'   => 'required',
             'patientId'   => 'required',
         ]);
-        try {
-            DB::beginTransaction();
-            $radiology_patient_test = new RadiologyPatientTest();
-
-            $case_details = caseReference::where('id', $request->case_id)->first();
-            if ($case_details->section == 'OPD') {
-                $section_details = OpdDetails::where('case_id', $request->case_id)->first();
-                $radiology_patient_test->opd_id = $section_details->id;
-            } elseif ($case_details->section == 'EMG') {
-                $section_details = EmgDetails::where('case_id', $request->case_id)->first();
-                $radiology_patient_test->emg_id = $section_details->id;
-            } else {
-                $section_details = IpdDetails::where('case_id', $request->case_id)->first();
-                $radiology_patient_test->ipd_id = $section_details->id;
-            }
-
-            $radiology_patient_test->case_id = $request->case_id;
-            $radiology_patient_test->date = $request->date;
-            $radiology_patient_test->section = $case_details->section;
-            $radiology_patient_test->patient_id = $request->patientId;
-            $radiology_patient_test->test_id = $request->test_id;
-            $radiology_patient_test->generated_by = Auth::user()->id;
-            $radiology_patient_test->billing_status = '0';
-            $radiology_patient_test->test_status = '<span class="badge badge-warning">Sample Not Collected</span>';
-            $radiology_patient_test->save();
-
-            DB::commit();
-            return redirect()->route('radiology-test-charge')->with('success', "Test Added Successfully");
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->route('radiology-test-charge')->withErrors(['error' => $th->getMessage()]);
+        // try {
+        //     DB::beginTransaction();
+        $radiology_patient_test = new RadiologyPatientTest();
+        // dd($request->case_id);
+        $case_details = caseReference::where('id', $request->case_id)->first();
+        if ($case_details->section == 'OPD') {
+            $section_details = OpdDetails::where('case_id', $request->case_id)->first();
+            $radiology_patient_test->opd_id = $section_details->id;
+        } elseif ($case_details->section == 'EMG') {
+            $section_details = EmgDetails::where('case_id', $request->case_id)->first();
+            $radiology_patient_test->emg_id = $section_details->id;
+        } else {
+            $section_details = IpdDetails::where('case_id', $request->case_id)->first();
+            $radiology_patient_test->ipd_id = $section_details->id;
         }
+
+        $radiology_patient_test->case_id = $request->case_id;
+        $radiology_patient_test->date = $request->date;
+        $radiology_patient_test->section = $case_details->section;
+        $radiology_patient_test->patient_id = $request->patientId;
+        $radiology_patient_test->test_id = $request->test_id;
+        $radiology_patient_test->generated_by = Auth::user()->id;
+        $radiology_patient_test->billing_status = '0';
+        $radiology_patient_test->test_status = '<span class="badge badge-warning">Sample Not Collected</span>';
+        $radiology_patient_test->save();
+
+        DB::commit();
+        return redirect()->route('radiology-test-charge')->with('success', "Test Added Successfully");
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->route('radiology-test-charge')->withErrors(['error' => $th->getMessage()]);
+        // }
     }
 
 
@@ -222,66 +224,72 @@ class RadiologyController extends Controller
         return response()->json(['range_value' => $range_value, 'unit_value' => $unit_value]);
     }
 
-
-
-    public function add_radiology_test_details()
+    public function view_radiology_test_details($id)
     {
-
-        $catagory       = RadiologyCatagory::all();
-        $chargeCatagory = ChargesCatagory::all();
-        $parameter      = RadiologyParameter::all();
-
-        return view('radiology.test-radiology.add-radiology-test', compact('catagory', 'chargeCatagory', 'parameter'));
+        $radiologyTest = RadiologyTest::find($id);
+        $radiologyParameter = TestWithParameterInRadiology::where('radiology_test_id', $id)->get();
+        return view('radiology.test-master.radiology-test-details', compact('radiologyTest', 'radiologyParameter'));
     }
 
-    public function save_radiology_test_details(Request $request)
-    {
-        $request->validate([
-            'test_name'                         => 'required',
-            'test_type'                         => 'required',
-            'catagory_id'                       => 'required',
-            'sub_catagory'                      => 'required',
-            'report_days'                       => 'required',
-            'charge_category'                   => 'required',
-            'charge_sub_category'               => 'required',
-            'charge'                            => 'required',
-            'tax'                               => 'required',
-            'standard_charges'                  => 'required',
-            'total_amount'                      => 'required',
-        ]);
 
-        $status = RadiologyTest::insert([
-            'test_name'                       => $request->test_name,
-            'short_name'                      => $request->short_name,
-            'test_type'                       => $request->test_type,
-            'catagory_id'                     => $request->catagory_id,
-            'sub_catagory'                    => $request->sub_catagory,
-            'method'                          => $request->method,
-            'report_days'                     => $request->report_days,
-            'charge_category'                 => $request->charge_category,
-            'charge_sub_category'             => $request->charge_sub_category,
-            'charge'                          => $request->charge,
-            'tax'                             => $request->tax,
-            'standard_charges'                => $request->standard_charges,
-            'total_amount'                    => $request->total_amount,
+    // public function add_radiology_test_details()
+    // {
 
-        ]);
+    //     $catagory       = RadiologyCatagory::all();
+    //     $chargeCatagory = ChargesCatagory::all();
+    //     $parameter      = RadiologyParameter::all();
 
-        for ($i = 0; $i < count($request->test_parameter_name); $i++) {
-            $status = RadiologyTestWithParameters::insert([
-                'pathology_test_id'                     => $status->id,
-                'pathology_parameter_id'                => $request->test_parameter_name[$i],
-                'reference_range'                       => '',
-                'unit'                                  => '',
-                'formula'                               => $request->formula[$i],
-            ]);
-        }
+    //     return view('radiology.test-radiology.add-radiology-test', compact('catagory', 'chargeCatagory', 'parameter'));
+    // }
+
+    // public function save_radiology_test_details(Request $request)
+    // {
+    //     $request->validate([
+    //         'test_name'                         => 'required',
+    //         'test_type'                         => 'required',
+    //         'catagory_id'                       => 'required',
+    //         'sub_catagory'                      => 'required',
+    //         'report_days'                       => 'required',
+    //         'charge_category'                   => 'required',
+    //         'charge_sub_category'               => 'required',
+    //         'charge'                            => 'required',
+    //         'tax'                               => 'required',
+    //         'standard_charges'                  => 'required',
+    //         'total_amount'                      => 'required',
+    //     ]);
+
+    //     $status = RadiologyTest::insert([
+    //         'test_name'                       => $request->test_name,
+    //         'short_name'                      => $request->short_name,
+    //         'test_type'                       => $request->test_type,
+    //         'catagory_id'                     => $request->catagory_id,
+    //         'sub_catagory'                    => $request->sub_catagory,
+    //         'method'                          => $request->method,
+    //         'report_days'                     => $request->report_days,
+    //         'charge_category'                 => $request->charge_category,
+    //         'charge_sub_category'             => $request->charge_sub_category,
+    //         'charge'                          => $request->charge,
+    //         'tax'                             => $request->tax,
+    //         'standard_charges'                => $request->standard_charges,
+    //         'total_amount'                    => $request->total_amount,
+
+    //     ]);
+
+    //     for ($i = 0; $i < count($request->test_parameter_name); $i++) {
+    //         $status = RadiologyTestWithParameters::insert([
+    //             'pathology_test_id'                     => $status->id,
+    //             'pathology_parameter_id'                => $request->test_parameter_name[$i],
+    //             'reference_range'                       => '',
+    //             'unit'                                  => '',
+    //             'formula'                               => $request->formula[$i],
+    //         ]);
+    //     }
 
 
-        if ($status) {
-            return redirect()->route('radiology-test-details')->with('success', 'Test Added Sucessfully');
-        } else {
-            return redirect()->route('radiology-test-details')->with('error', "Something Went Wrong");
-        }
-    }
+    //     if ($status) {
+    //         return redirect()->route('radiology-test-details')->with('success', 'Test Added Sucessfully');
+    //     } else {
+    //         return redirect()->route('radiology-test-details')->with('error', "Something Went Wrong");
+    //     }
+    // }
 }
