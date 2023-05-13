@@ -44,7 +44,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                        <label for="description" class="form-label">Description</label>
                         <textarea name="description" class="form-control"> <?php echo e($editTimeline->description); ?></textarea>
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

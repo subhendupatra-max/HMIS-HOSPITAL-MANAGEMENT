@@ -43,7 +43,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                        <label for="description" class="form-label">Description</label>
                         <textarea name="description" class="form-control"> </textarea>
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -80,9 +80,6 @@ unset($__errorArgs, $__bag); ?>
     </div>
 
 </div>
-
-</div>
-
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/emg/timeline/add-timeline.blade.php ENDPATH**/ ?>

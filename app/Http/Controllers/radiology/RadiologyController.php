@@ -64,37 +64,35 @@ class RadiologyController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        $radiology_patient_test = new RadiologyPatientTest();
-        // dd($request->case_id);
-        $case_details = caseReference::where('id', $request->case_id)->first();
-        if ($case_details->section == 'OPD') {
-            $section_details = OpdDetails::where('case_id', $request->case_id)->first();
-            $radiology_patient_test->opd_id = $section_details->id;
-        } elseif ($case_details->section == 'EMG') {
-            $section_details = EmgDetails::where('case_id', $request->case_id)->first();
-            $radiology_patient_test->emg_id = $section_details->id;
-        } else {
-            $section_details = IpdDetails::where('case_id', $request->case_id)->first();
-            $radiology_patient_test->ipd_id = $section_details->id;
-        }
-        $radio_details = RadiologyPatientTest::where('case_id',$request->case_id)->where('test_id',$request->test_id)->where('test_status','=','0')->first();
-        if($radio_details == null)
-        {
-        $radiology_patient_test->case_id = $request->case_id;
-        $radiology_patient_test->date = $request->date;
-        $radiology_patient_test->section = $case_details->section;
-        $radiology_patient_test->patient_id = $request->patientId;
-        $radiology_patient_test->test_id = $request->test_id;
-        $radiology_patient_test->generated_by = Auth::user()->id;
-        $radiology_patient_test->billing_status = '0';
-        $radiology_patient_test->test_status = '0';
-        $radiology_patient_test->save();
-        DB::commit();
-        return redirect()->route('radiology-test-charge')->with('success', "Test Added Successfully for this patient");
-        }
-        else{
-            return redirect()->route('radiology-test-charge')->with('success', "Test already added for this patient");
-        }
+            $radiology_patient_test = new RadiologyPatientTest();
+            // dd($request->case_id);
+            $case_details = caseReference::where('id', $request->case_id)->first();
+            if ($case_details->section == 'OPD') {
+                $section_details = OpdDetails::where('case_id', $request->case_id)->first();
+                $radiology_patient_test->opd_id = $section_details->id;
+            } elseif ($case_details->section == 'EMG') {
+                $section_details = EmgDetails::where('case_id', $request->case_id)->first();
+                $radiology_patient_test->emg_id = $section_details->id;
+            } else {
+                $section_details = IpdDetails::where('case_id', $request->case_id)->first();
+                $radiology_patient_test->ipd_id = $section_details->id;
+            }
+            $radio_details = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $request->test_id)->where('test_status', '=', '0')->first();
+            if ($radio_details == null) {
+                $radiology_patient_test->case_id = $request->case_id;
+                $radiology_patient_test->date = $request->date;
+                $radiology_patient_test->section = $case_details->section;
+                $radiology_patient_test->patient_id = $request->patientId;
+                $radiology_patient_test->test_id = $request->test_id;
+                $radiology_patient_test->generated_by = Auth::user()->id;
+                $radiology_patient_test->billing_status = '0';
+                $radiology_patient_test->test_status = '0';
+                $radiology_patient_test->save();
+                DB::commit();
+                return redirect()->route('radiology-test-charge')->with('success', "Test Added Successfully for this patient");
+            } else {
+                return redirect()->route('radiology-test-charge')->with('success', "Test already added for this patient");
+            }
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route('radiology-test-charge')->withErrors(['error' => $th->getMessage()]);

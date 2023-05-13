@@ -645,7 +645,7 @@ class OpdController extends Controller
                     $charge_detr = RadiologyTest::where('charge',$request->charge_name[$key])->first();
                     $chargedetailstestr = RadiologyPatientTest::where('case_id',$request->case_id)->where('test_id',$charge_detr->id)->where('test_status','=','0')->where('test_id',$charge_detr->charge)->first();
 
-                    if($chargedetailstest == null)
+                    if($chargedetailstestr == null)
                     {
                         $radiology_patient_test = new RadiologyPatientTest();
                         $radiology_patient_test->case_id = $request->case_id;

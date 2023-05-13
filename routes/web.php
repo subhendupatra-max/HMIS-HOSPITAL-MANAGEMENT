@@ -1885,12 +1885,12 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::get('opd-pathology-investigation/{id}', [OpdController::class, 'opd_pathology_investigation'])->name('opd-pathology-investigation');
     });
     //================================= OPD Pathology ====================================
-    //================================= OPD billing ====================================
+    //================================= OPD radiology ====================================
     Route::group(['middleware' => ['permission:OPD Pathology Investigation']], function () {
         Route::get('opd-radiology-investigation/{id}', [OpdController::class, 'opd_radiology_investigation'])->name('opd-radiology-investigation');
     });
-    //================================= OPD billing ====================================
-    
+    //================================= OPD radiology ====================================
+
 
     //================================= OPD timeline ====================================
     Route::group(['middleware' => ['permission:timeline list opd'], 'prefix' => 'opd-timeline'], function () {
@@ -1956,11 +1956,10 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
             Route::get('edit-opd-charges/{id?}/{charge_id?}', [OpdController::class, 'edit_charges'])->name('edit-opd-charges');
             Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
         });
-
     });
     //================================= OPD charges ====================================
     //================================= OPD prescription ====================================
-Route::group(['middleware' => ['permission:Create Prescription for OPD'], 'prefix' => 'create-prescription-opd'], function () {
+    Route::group(['middleware' => ['permission:Create Prescription for OPD'], 'prefix' => 'create-prescription-opd'], function () {
         Route::get('opd-prescription-list/{id?}', [OpdController::class, 'opd_prescription_list'])->name('opd-prescription-list');
         Route::post('add-new-charges1', [OpdController::class, 'save_charges'])->name('add-new-charges');
     });
@@ -2011,6 +2010,31 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
 });
 
 
+//================================= Emg charges ====================================
+Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
+    Route::get('charges-list-emg/{id?}', [EmgController::class, 'charge_list'])->name('charges-list-emg');
+    Route::group(['middleware' => ['permission:add emg charges']], function () {
+        Route::get('add-emg-charges/{id?}', [EmgController::class, 'add_charges'])->name('add-emg-charges');
+        Route::post('add-new-charges-emg', [EmgController::class, 'save_charges'])->name('add-new-charges-emg');
+    });
+    Route::group(['middleware' => ['permission:edit emg charges']], function () {
+        Route::get('edit-emg-charges/{id?}/{charge_id?}', [EmgController::class, 'edit_charges'])->name('edit-emg-charges');
+        Route::post('add-new-charges-emg', [EmgController::class, 'save_charges'])->name('add-new-charges-emg');
+    });
+});
+//================================= Emg charges ====================================
+
+
+//================================= Emg Pathology ====================================
+Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
+    Route::get('emg-pathology-investigation/{id}', [EmgController::class, 'emg_pathology_investigation'])->name('emg-pathology-investigation');
+});
+//================================= Emg Pathology ====================================
+//================================= Emg radiology ====================================
+Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
+    Route::get('emg-radiology-investigation/{id}', [EmgController::class, 'emg_radiology_investigation'])->name('emg-radiology-investigation');
+});
+//================================= Emg radiology ====================================
 
 
 //================================= emg Physical Condition ====================================
