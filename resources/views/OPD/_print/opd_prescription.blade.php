@@ -45,6 +45,7 @@
             width: 100%;
             height: auto;
         }
+
     </style>
     <div style="padding: 0px 7px 0px 7px;">
         <!-- ==========================================code here================================== -->
@@ -60,7 +61,7 @@
             <table>
                 <tr>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:180px">
-                        <b>UHID No: {{ @$opd_patient_details->patient_prefix }}{{ @$opd_patient_details->patient_id
+                        <b>UHID No: বাংলা {{ @$opd_patient_details->patient_prefix }}{{ @$opd_patient_details->patient_id
                             }}</b>
                     </td>
                     <td

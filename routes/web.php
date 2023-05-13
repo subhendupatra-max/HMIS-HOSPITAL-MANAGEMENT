@@ -1880,11 +1880,17 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     });
     //================================= OPD billing ====================================
 
-    //================================= OPD billing ====================================
+    //================================= OPD Pathology ====================================
     Route::group(['middleware' => ['permission:OPD Pathology Investigation']], function () {
         Route::get('opd-pathology-investigation/{id}', [OpdController::class, 'opd_pathology_investigation'])->name('opd-pathology-investigation');
     });
+    //================================= OPD Pathology ====================================
     //================================= OPD billing ====================================
+    Route::group(['middleware' => ['permission:OPD Pathology Investigation']], function () {
+        Route::get('opd-radiology-investigation/{id}', [OpdController::class, 'opd_radiology_investigation'])->name('opd-radiology-investigation');
+    });
+    //================================= OPD billing ====================================
+    
 
     //================================= OPD timeline ====================================
     Route::group(['middleware' => ['permission:timeline list opd'], 'prefix' => 'opd-timeline'], function () {
@@ -1942,12 +1948,23 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     //================================= OPD charges ====================================
     Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
         Route::get('charges-list/{id?}', [OpdController::class, 'charge_list'])->name('charges-list');
-        Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
+        Route::group(['middleware' => ['permission:add opd charges']], function () {
             Route::get('add-opd-charges/{id?}', [OpdController::class, 'add_charges'])->name('add-opd-charges');
             Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
         });
+        Route::group(['middleware' => ['permission:edit opd charges']], function () {
+            Route::get('edit-opd-charges/{id?}/{charge_id?}', [OpdController::class, 'edit_charges'])->name('edit-opd-charges');
+            Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
+        });
+
     });
     //================================= OPD charges ====================================
+    //================================= OPD prescription ====================================
+Route::group(['middleware' => ['permission:Create Prescription for OPD'], 'prefix' => 'create-prescription-opd'], function () {
+        Route::get('opd-prescription-list/{id?}', [OpdController::class, 'opd_prescription_list'])->name('opd-prescription-list');
+        Route::post('add-new-charges1', [OpdController::class, 'save_charges'])->name('add-new-charges');
+    });
+    //================================= OPD prescription ====================================
 
     //================================= ipd admission from opd ==========================
     Route::group(['middleware' => ['permission:Admission From OPD']], function () {

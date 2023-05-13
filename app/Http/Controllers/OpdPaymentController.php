@@ -16,7 +16,6 @@ class OpdPaymentController extends Controller
     public function payment_listing_in_opd($id)
     {
         $opd_id = base64_decode($id);
-        // $opdPayment = OpdPayment::all();
         $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
         $opdPaymentDetails =  Payment::where('opd_id', $opd_id)->where('section', 'OPD')->paginate(10);
 
@@ -26,7 +25,6 @@ class OpdPaymentController extends Controller
     public function add_payment_in_opd($id)
     {
         $opd_id = base64_decode($id);
-        // $opdPayment = OpdPayment::all();
         $opd_patient_details = OpdDetails::where('id',$opd_id)->first();
         $opdPaymentDetails =  Payment::where('opd_id', $opd_id)->where('section', 'OPD')->get();
         return view('OPD.payment.add-payment', compact('opd_id', 'opdPaymentDetails','opd_patient_details'));

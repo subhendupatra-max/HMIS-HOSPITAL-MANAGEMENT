@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add medicine dosage')): ?>
@@ -50,7 +52,7 @@ unset($__errorArgs, $__bag); ?>
                         <tbody id="subhendu">
                             <tr id="rowid0">
                                 <td>
-                                    <input type="text" class="form-control" id="dose" name="dose[]" value="<?php echo e(old('dose')); ?>" required>
+                                    <input type="text" id="dose" name="dose[]" value="<?php echo e(old('dose')); ?>" required>
                                 </td>
                                 <td>
                                     <select name="medicine_unit_id[]" class="form-control select2-show-search" id="medicine_unit_id">

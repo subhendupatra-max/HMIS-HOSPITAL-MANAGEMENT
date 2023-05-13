@@ -44,12 +44,18 @@
                                     <?php $__currentLoopData = $opd_charges_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr>
                                             <td><?php echo e($loop->iteration); ?></td>
-                                            <td><?php echo e(date('d-m-Y h:i A', strtotime($value->charges_date))); ?></td>
-                                            <td><?php echo e($value->charges_category_details->charges_catagories_name); ?></td>
-                                            <td><?php echo e($value->charge_details->charges_name); ?></td>
-                                            <td><?php echo e($value->amount); ?></td>
-                                            <td><?php echo e($value->generated_by_details->first_name); ?> <?php echo e($value->generated_by_details->last_name); ?></td>
-                                            <td><span class="badge badge-success"><?php echo e($value->billing_status); ?></span></td>
+                                            <td><?php echo e(@date('d-m-Y h:i A', strtotime($value->charges_date))); ?></td>
+                                            <td><?php echo e(@$value->charges_category_details->charges_catagories_name); ?></td>
+                                            <td><?php echo e(@$value->charge_details->charges_name); ?></td>
+                                            <td><?php echo e(@$value->amount); ?></td>
+                                            <td><?php echo e(@$value->generated_by_details->first_name); ?> <?php echo e(@$value->generated_by_details->last_name); ?></td>
+                                            <td>
+                                                <?php if($value->billing_status == '0'): ?>
+                                                <span class="badge badge-warning">Billing Not Created</span>
+                                                <?php else: ?>
+                                                <span class="badge badge-success">Billing Created</span>
+                                                <?php endif; ?>
+                                            </td>
                                             <td>
                                             <div class="card-options">
                                                 <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
@@ -65,8 +71,8 @@
                                                         <i class="fa fa-print"></i> Print
                                                     </a>
 
-                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit opd billing')): ?>
-                                                        <a class="dropdown-item" href="<?php echo e(route('edit-opd-bill',['bill_id'=>$value->id])); ?>">
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit opd charges')): ?>
+                                                        <a class="dropdown-item" href="<?php echo e(route('edit-opd-charges',['id'=>base64_encode($opd_id),'charge_id'=>base64_encode($value->id)])); ?>">
                                                             <i class="fa fa-edit"></i> Edit
                                                         </a>
                                                     <?php endif; ?>
@@ -84,11 +90,11 @@
                                 <?php endif; ?>
                             </tbody>
                         </table>
-                        
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/OPD/charges/charges-list.blade.php ENDPATH**/ ?>

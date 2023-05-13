@@ -10,7 +10,7 @@
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         @can('add timeline list opd')
-                        <a href="{{ route('add-timeline-lisitng-in-opd',['id' => base64_encode($opd_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Timeline </a>
+                        <a href="{{ route('add-timeline-lisitng-in-opd',['id' => base64_encode($opd_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-file"></i> Add Timeline </a>
                         @endcan
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
@@ -40,6 +40,9 @@
 
                                 </span></div>
                             <p class="text-muted fs-12"> {{ $item->description }}</p>
+                            @if(@$item->attach_document)
+                            <a href="{{ asset('public/assets/images/opd-timeline/'.$item->attach_document) }}" target="_blank" data-placement="top" data-toggle="tooltip" title="show attach document" ><img src="{{ asset('public/assets/images/opd-timeline/'.$item->attach_document) }}" width="20" height="20"></a>
+                            @endif
                         </li>
                         @endforeach
                     </ul>

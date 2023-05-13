@@ -15,6 +15,7 @@ class CreateRadiologyPatientTestsTable extends Migration
     {
         Schema::create('radiology_patient_tests', function (Blueprint $table) {
             $table->id();
+            $table->string('bill_id')->nullable();
             $table->string('case_id')->nullable();
             $table->string('date')->nullable();
             $table->string('patient_id')->nullable();
