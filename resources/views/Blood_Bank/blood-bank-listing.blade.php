@@ -100,8 +100,9 @@
                                     </h3>
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table card-table table-vcenter text-nowrap table-danger">
-                                        <thead class="bg-primary text-white">
+                                    <!-- <table class="table card-table table-vcenter text-nowrap table-danger"> -->
+                                    <table class="table card-table table-vcenter text-primary table-white ">
+                                    <thead class="bg-primary text-white">
                                             <tr>
                                                 <th class="text-white">ID</th>
                                                 <th class="text-white">Bags</th>
@@ -111,9 +112,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($components as $item)
                                             <tr>
-
+                                                <td>{{ $loop->iteration}}</td>
+                                                <td>{{ @$item->getComponentsDetails->bag}}</td>
+                                                <td>{{ @$item->getComponentsDetails->lot}}</td>
+                                                <td>{{ @$item->getComponentsDetails->institution}}</td>
+                                                <td>
+                                                    @can('View blood components Details')
+                                                    <a href="{{ route('add-blood-issue-details',['blood_group_id'=> base64_encode($blood_groups_details_for_this_blood_group->id) , 'id'=> base64_encode($item->id)  ]) }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Issue </a>
+                                                    @endcan
+                                                </td>
                                             </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>

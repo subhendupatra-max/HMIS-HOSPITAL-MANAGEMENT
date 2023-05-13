@@ -2,6 +2,8 @@
 <?php $__env->startSection('content'); ?>
 <form method="post" action="<?php echo e(route('update-ipd-registation')); ?>">
     <?php echo csrf_field(); ?>
+    <input type="hidden" name="patient_bed_history_id" value="<?php echo e($patient_details->id); ?>" />
+    <input type="hidden" name="ipd_details_id" value="<?php echo e($visit_details->id); ?>" />
     <input type="hidden" name="patient_id" value="<?php echo e($visit_details->patient_id); ?>" />
     <input type="hidden" name="patient_source_id" value="<?php echo e($visit_details->patient_source_id); ?>" />
     <input type="hidden" name="patient_source" value="<?php echo e($visit_details->patient_source); ?>" />
@@ -210,7 +212,7 @@ unset($__errorArgs, $__bag); ?>
 
                                     <div class="col-md-4 ipd-registrationproadd">
                                         <label for="ward"> Ward <span class="text-danger">*</span></label>
-                                        <select name="ward" onchange="getBed(<?php echo e($visit_details->bed); ?>)" class="form-control select2-show-search" id="bed_ward">
+                                        <select name="ward" onchange="getBed(<?php echo e($visit_details->bed_ward_id); ?>)" class="form-control select2-show-search" id="bed_ward">
                                             <option value="">Select..</option>
                                         </select>
                                         <?php $__errorArgs = ['ward'];
@@ -227,7 +229,7 @@ unset($__errorArgs, $__bag); ?>
 
                                     <div class="col-md-4 ipd-registrationproadd">
                                         <label for="unit"> Unit <span class="text-danger">*</span></label>
-                                        <select name="unit" onchange="getBed($visit_details->bed)" class="form-control select2-show-search" id="unit">
+                                        <select name="unit" onchange="getBed(<?php echo e($visit_details->bed_ward_id); ?>)" class="form-control select2-show-search" id="unit">
                                             <option value="">Select..</option>
                                             <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($unit->id); ?>" <?php echo e($unit->id == $visit_details->bed_unit_id ? 'selected' : " "); ?>> <?php echo e($unit->bedUnit_name); ?>
@@ -247,7 +249,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
 
-
+                                    <input name="previous_bed" type="hidden" value="<?php echo e($visit_details->bed); ?>" id="previous_bed" />
                                     <div class="col-md-4 ipd-registrationproadd">
                                         <label> Bed <span class="text-danger">*</span></label>
                                         <select name="bed" class="form-control select2-show-search" id="bed">
@@ -272,12 +274,12 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="row">
                                     <div class="col-md-4 ipd-registrationproaddd">
                                         
-                                        <input type="text" id="note" name="note">
+                                        <input type="text" id="note" name="note" value="<?php echo e($visit_details->note); ?>">
                                         <label for="note">Note</label>
                                     </div>
                                     <div class="col-md-4 ipd-registrationproaddd">
                                         
-                                        <input type="text" id="any_known_allergies" name="any_known_allergies">
+                                        <input type="text" id="any_known_allergies" name="any_known_allergies" value="<?php echo e($visit_details->known_allergies); ?>">
                                         <label for="any_known_allergies">Any Known Allergies</label>
                                     </div>
                                 </div>
@@ -408,6 +410,7 @@ unset($__errorArgs, $__bag); ?>
                 console.log(error);
             }
         });
+        getBed(wardId);
     }
 </script>
 
@@ -476,24 +479,33 @@ unset($__errorArgs, $__bag); ?>
         });
     });
 
-    function getBed() {
+    function getBed(ward_id = null, bed_id = null, ) {
+        // alert(ward_id);
         var bedward = $('#bed_ward').val();
+
         var bedunit = $('#unit').val();
+        var p_bed = $('#previous_bed').val();
+        console.log('unit ' + bedunit);
+        console.log('bedward ' + ward_id);
+
         $('#bed').empty();
-        $('#bed').html(`<option value="">Select.....</option>`)
+        var div_dta = `<option value="">Select.....</option>`;
         $.ajax({
             url: "<?php echo e(route('find-bed-by-bed-ward')); ?>",
             type: "POST",
             data: {
                 _token: '<?php echo e(csrf_token()); ?>',
-                bed_ward: bedward,
+                bed_ward: ward_id,
                 bed_unit: bedunit,
+                previous_bed: p_bed,
             },
             success: function(response) {
+                console.log('ok');
                 $.each(response, function(key, value) {
-
-                    $('#bed').append(`<option value="${value.id	}">${value.bed_name }</option>`);
+                    let sel = (value.id == p_bed ? 'selected' : '');
+                    div_dta += `<option value="${value.id}" ${sel}>${value.bed_name }</option>`;
                 });
+                $('#bed').html(div_dta);
             },
             error: function(error) {
                 console.log(error);

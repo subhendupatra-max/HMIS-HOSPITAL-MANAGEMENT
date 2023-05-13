@@ -115,6 +115,8 @@ use App\Http\Controllers\false\OpdFalseController;
 
 use App\Http\Controllers\EmgBillingController;
 
+use App\Http\Controllers\PatientDischargeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -1687,6 +1689,7 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
 
 
 
+
     //pathology test
     Route::group(['middleware' => ['permission:pathology test']], function () {
         // ============= pathology master ====================
@@ -1758,6 +1761,13 @@ Route::group(['middleware' => ['permission:radiology main'], 'prefix' => 'radiol
             Route::get('add-radiology-test-to-a-patient', [RadiologyController::class, 'radiology_test_charge_add'])->name('add-radiology-test-to-a-patient');
             Route::post('add-radiology-test-for-a-patient', [RadiologyController::class, 'add_radiology_charges_for_a_patient'])->name('add-radiology-charges-for-a-patient');
             Route::post('save-radiology-patient-test', [RadiologyController::class, 'save_radiology_charge'])->name('save-radiology-charge');
+        });
+        Route::group(['middleware' => ['permission:edit-radiology-test-to-a-patient']], function () {
+            Route::get('edit-radiology-test-patient/{id}', [RadiologyController::class, 'edit_radiology_test_patient'])->name('edit-radiology-test-patient');
+            Route::post('update-radiology-patient-test', [RadiologyController::class, 'update_radiology_charge'])->name('update-radiology-charge');
+        });
+        Route::group(['middleware' => ['permission:delete-radiology-test-to-a-patient']], function () {
+            Route::get('delete-radiology-test-patient/{id}', [RadiologyController::class, 'delete_radiology_test_patient'])->name('delete-radiology-test-patient');
         });
     });
 
@@ -2229,6 +2239,21 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     Route::post('find-bed-by-bed-ward', [IpdController::class, 'find_bed_by_bed_ward'])->name('find-bed-by-bed-ward');
 
     // Route::post('find-bed-type-by-department-in-ipd', [IpdController::class, 'find_bed_type_by_department_in_opd'])->name('find-bed-type-by-department-in-ipd');
+
+    // =============================== Discharged Patient ==================================================
+    Route::group(['middleware' => ['permission:ipd discharged patient'], 'prefix' => 'ipd-timeline'], function () {
+
+        Route::get('discharged-patient-in-ipd/{ipd_id}', [PatientDischargeController::class, 'discharged_patient_in_ipd'])->name('discharged-patient-in-ipd');
+        Route::get('all-discharged-patient-in-ipd', [PatientDischargeController::class, 'all_discharged_patient_in_ipd'])->name('all-discharged-patient-in-ipd');
+
+        Route::group(['middleware' => ['permission:add ipd discharged patient']], function () {
+            Route::get('add-discharged-patient-in-ipd/{ipd_id}', [PatientDischargeController::class, 'add_patient_discharge'])->name('add-discharged-patient-in-ipd');
+
+            Route::post('save-discharged-patient-in-ipd', [PatientDischargeController::class, 'save_patient_discharge'])->name('save-discharged-patient-in-ipd');
+        });
+    });
+    // ================================= Discharged Patient ==================================================
+
 
     // =============================== Timeline ipd ==================================================
     Route::group(['middleware' => ['permission:ipd timeline'], 'prefix' => 'ipd-timeline'], function () {

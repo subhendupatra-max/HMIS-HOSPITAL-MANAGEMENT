@@ -2,6 +2,8 @@
 @section('content')
 <form method="post" action="{{ route('update-ipd-registation') }}">
     @csrf
+    <input type="hidden" name="patient_bed_history_id" value="{{ $patient_details->id }}" />
+    <input type="hidden" name="ipd_details_id" value="{{ $visit_details->id }}" />
     <input type="hidden" name="patient_id" value="{{ $visit_details->patient_id }}" />
     <input type="hidden" name="patient_source_id" value="{{ $visit_details->patient_source_id }}" />
     <input type="hidden" name="patient_source" value="{{ $visit_details->patient_source }}" />
@@ -149,7 +151,7 @@
                                     </div>
                                     <div class="col-md-4 ipd-registrationproadd ">
                                         <label for="department">Department <span class="text-danger">*</span></label>
-                                        <select name="department" class="form-control select2-show-search" id="department" onchange="getDoctor_ward(this.value,{{ $visit_details->cons_doctor}},{{ $visit_details->bed_ward_id}})">
+                                        <select name="department" class="form-control select2-show-search" id="department" onchange="getDoctor_ward(this.value,{{$visit_details->cons_doctor}},{{$visit_details->bed_ward_id}})">
                                             <option value="">Select</option>
                                             @foreach ($departments as $key => $department)
                                             <option value="{{ $department->id }}" {{ $department->id == $visit_details->department_id ? 'selected' : " "}}>
@@ -174,7 +176,7 @@
 
                                     <div class="col-md-4 ipd-registrationproadd">
                                         <label for="ward"> Ward <span class="text-danger">*</span></label>
-                                        <select name="ward" onchange="getBed({{$visit_details->bed}})" class="form-control select2-show-search" id="bed_ward">
+                                        <select name="ward" onchange="getBed({{$visit_details->bed_ward_id}})" class="form-control select2-show-search" id="bed_ward">
                                             <option value="">Select..</option>
                                         </select>
                                         @error('ward')
@@ -184,7 +186,7 @@
 
                                     <div class="col-md-4 ipd-registrationproadd">
                                         <label for="unit"> Unit <span class="text-danger">*</span></label>
-                                        <select name="unit" onchange="getBed($visit_details->bed)" class="form-control select2-show-search" id="unit">
+                                        <select name="unit" onchange="getBed({{$visit_details->bed_ward_id}})" class="form-control select2-show-search" id="unit">
                                             <option value="">Select..</option>
                                             @foreach ($units as $key => $unit)
                                             <option value="{{ $unit->id }}" {{ $unit->id == $visit_details->bed_unit_id ? 'selected' : " "}}> {{ $unit->bedUnit_name }}
@@ -196,7 +198,7 @@
                                         @enderror
                                     </div>
 
-
+                                    <input name="previous_bed" type="hidden" value="{{$visit_details->bed}}" id="previous_bed" />
                                     <div class="col-md-4 ipd-registrationproadd">
                                         <label> Bed <span class="text-danger">*</span></label>
                                         <select name="bed" class="form-control select2-show-search" id="bed">
@@ -215,13 +217,13 @@
                                     <div class="col-md-4 ipd-registrationproaddd">
                                         {{-- <label class="form-label">Note</label>
                                             <textarea class="form-control" name="note"></textarea>  --}}
-                                        <input type="text" id="note" name="note">
+                                        <input type="text" id="note" name="note" value="{{$visit_details->note}}">
                                         <label for="note">Note</label>
                                     </div>
                                     <div class="col-md-4 ipd-registrationproaddd">
                                         {{-- <label class="form-label">Any Known Allergies</label>
                                             <textarea class="form-control" name="any_known_allergies"></textarea>  --}}
-                                        <input type="text" id="any_known_allergies" name="any_known_allergies">
+                                        <input type="text" id="any_known_allergies" name="any_known_allergies" value="{{$visit_details->known_allergies}}">
                                         <label for="any_known_allergies">Any Known Allergies</label>
                                     </div>
                                 </div>
@@ -352,6 +354,7 @@
                 console.log(error);
             }
         });
+        getBed(wardId);
     }
 </script>
 
@@ -420,24 +423,33 @@
         });
     });
 
-    function getBed(bedId) {
+    function getBed(ward_id = null, bed_id = null, ) {
+        // alert(ward_id);
         var bedward = $('#bed_ward').val();
+
         var bedunit = $('#unit').val();
+        var p_bed = $('#previous_bed').val();
+        console.log('unit ' + bedunit);
+        console.log('bedward ' + ward_id);
+
         $('#bed').empty();
-        $('#bed').html(`<option value="">Select.....</option>`)
+        var div_dta = `<option value="">Select.....</option>`;
         $.ajax({
             url: "{{ route('find-bed-by-bed-ward') }}",
             type: "POST",
             data: {
                 _token: '{{ csrf_token() }}',
-                bed_ward: bedward,
+                bed_ward: ward_id,
                 bed_unit: bedunit,
+                previous_bed: p_bed,
             },
             success: function(response) {
+                console.log('ok');
                 $.each(response, function(key, value) {
-
-                    $('#bed').append(`<option value="${value.id	}">${value.bed_name }</option>`);
+                    let sel = (value.id == p_bed ? 'selected' : '');
+                    div_dta += `<option value="${value.id}" ${sel}>${value.bed_name }</option>`;
                 });
+                $('#bed').html(div_dta);
             },
             error: function(error) {
                 console.log(error);

@@ -80,14 +80,14 @@
                                                 <i class="fa fa-eye"></i> View
                                             </a>
 
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-pathology-test-to-a-patient')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('edit-pathology-test-patient',['id'=>base64_encode($value->id)])); ?>">
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-radiology-test-to-a-patient')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('edit-radiology-test-patient',['id'=>base64_encode($value->id)])); ?>">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
                                             <?php endif; ?>
 
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-pathology-test-to-a-patient')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('delete-pathology-test-patient',['id'=>base64_encode($value->id)])); ?>">
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-radiology-test-to-a-patient')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('delete-radiology-test-patient',['id'=>base64_encode($value->id)])); ?>">
                                                 <i class="fa fa-trash"></i> Delete
                                             </a>
                                             <?php endif; ?>

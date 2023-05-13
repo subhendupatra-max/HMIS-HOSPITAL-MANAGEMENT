@@ -131,7 +131,7 @@ unset($__errorArgs, $__bag); ?>
                             <div class="row">
                                 <div class="form-group col-md-6 adcharge ">
                                     <label class="date-format"> Date <span class="text-danger">*</span></label>
-                                    <input type="datetime-local" name="date" value="<?php echo e(date('Y-m-d H:s')); ?>" required />
+                                    <input type="datetime-local" name="date" value="<?php echo e(date('Y-m-d H:m')); ?>" required />
                                     <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

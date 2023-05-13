@@ -103,6 +103,7 @@
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Guardian Name
+                        
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         {{$opd_patient_details->guardian_name}}

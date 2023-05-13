@@ -133,7 +133,7 @@ class MedicineRequisitionController extends Controller
 
     public function find_medicine_name_by_medicine_name(Request $request)
     {
-        $unit_name = Medicine::select('medicine_units.medicine_unit_name','medicine_units.id')->where('medicines.id', $request->medicineName_id)
+        $unit_name = Medicine::select('medicine_units.medicine_unit_name', 'medicine_units.id')->where('medicines.id', $request->medicineName_id)
             ->leftjoin('medicine_units', 'medicines.unit', '=', 'medicine_units.id')
             ->first();
 

@@ -80,14 +80,14 @@
                                                 <i class="fa fa-eye"></i> View
                                             </a>
 
-                                            @can('edit-pathology-test-to-a-patient')
-                                            <a class="dropdown-item" href="{{route('edit-pathology-test-patient',['id'=>base64_encode($value->id)])}}">
+                                            @can('edit-radiology-test-to-a-patient')
+                                            <a class="dropdown-item" href="{{route('edit-radiology-test-patient',['id'=>base64_encode($value->id)])}}">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
                                             @endcan
 
-                                            @can('delete-pathology-test-to-a-patient')
-                                            <a class="dropdown-item" href="{{route('delete-pathology-test-patient',['id'=>base64_encode($value->id)])}}">
+                                            @can('delete-radiology-test-to-a-patient')
+                                            <a class="dropdown-item" href="{{route('delete-radiology-test-patient',['id'=>base64_encode($value->id)])}}">
                                                 <i class="fa fa-trash"></i> Delete
                                             </a>
                                             @endcan

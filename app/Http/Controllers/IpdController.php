@@ -25,15 +25,17 @@ use App\Models\IpdTimeline;
 use App\Models\MedicationDose;
 use App\Models\MedicineCatagory;
 use App\Models\NurseNote;
+use App\Models\AllHeader;
 use App\Models\OperationTheatre;
 use App\Models\OxygenMonitoring;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class IpdController extends Controller
 {
     public function index()
     {
-        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('ins_by', 'ori')->get();
+        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'no')->where('ins_by', 'ori')->get();
         return view('Ipd.ipd-patients-details', compact('ipd_patient_list'));
     }
 
@@ -83,7 +85,7 @@ class IpdController extends Controller
 
     public function find_bed_by_bed_ward(Request $request)
     {
-        $find_bed = Bed::where('bedWard_id', $request->bed_ward)->where('bedUnit_id', $request->bed_unit)->where('is_used', 'no')->get();
+        $find_bed = Bed::where('bedWard_id', $request->bed_ward)->where('bedUnit_id', $request->bed_unit)->where('is_used', 'no')->orwhere('id', $request->previous_bed)->get();
         // dd($find_bed);
         return response()->json($find_bed);
     }
@@ -99,8 +101,8 @@ class IpdController extends Controller
             'unit' => 'required',
             'bed' => 'required',
         ]);
-        try {
-            DB::beginTransaction();
+        // try {
+        //     DB::beginTransaction();
             $ipd_prefix = Prefix::where('name', 'ipd')->first();
 
             //SAVE in ipd details
@@ -155,16 +157,27 @@ class IpdController extends Controller
             //bed history update in bed table
 
             DB::commit();
+
+            $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+
+            $ipd_details = IpdDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'ipd_details.patient_type', 'patients.address', 'patients.blood_group', 'ipd_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'ipd_patient_physical_details.height', 'ipd_patient_physical_details.weight', 'ipd_patient_physical_details.bp', 'ipd_patient_physical_details.respiration', 'ipd_patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'ipd_details.appointment_date', 'ipd_details.id as ipd_details_id')
+                ->leftjoin('patients', 'patients.id', '=', 'ipd_details.patient_id')
+                ->leftjoin('ipd_patient_physical_details', 'ipd_patient_physical_details.ipd_id', '=', 'ipd_details.id')
+                ->leftjoin('users', 'users.id', '=', 'ipd_details.cons_doctor')
+                ->leftjoin('departments', 'departments.id', '=', 'ipd_details.department_id')
+                ->where('ipd_details.id', $ipd_details->id)
+                ->first();
+
             if ($request->save == 'save_and_print') {
-                $pdf = PDF::loadView('OPD._print.opd_prescription');
-                return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
+                $pdf = PDF::loadView('Ipd._print.ipd_prescription');
+                return $pdf->stream('ipd_prescription.pdf', array('Attachment' => 0));
             } else {
                 return redirect()->route('ipd-patient-listing')->with('success', 'Ipd Registation Sucessfully');
             }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->back()->with('error', $th->getMessage());
-        }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->back()->with('error', $th->getMessage());
+        // }
     }
 
     public function ipd_patient_status_change(Request $request)
@@ -197,7 +210,87 @@ class IpdController extends Controller
         $departments = Department::where('is_active', '1')->get();
         $units = BedUnit::where('is_active', '1')->get();
         $visit_details = IpdDetails::where('id', '=', $ipd_id)->first();
+        $patient_details = PatientBedHistory::where('ipd_id', $ipd_id)->latest()->first();
 
-        return view('Ipd.edit-ipd-patient', compact('ipd_id', 'departments', 'referer', 'tpa_management', 'visit_details', 'units'));
+        return view('Ipd.edit-ipd-patient', compact('ipd_id', 'departments', 'referer', 'tpa_management', 'visit_details', 'units', 'patient_details'));
+    }
+
+    public function updaste_ipd_registation(Request $request)
+    {
+        $validate = $request->validate([
+            'appointment_date' => 'required',
+            'patient_type' => 'required',
+            'department' => 'required',
+            'cons_doctor' => 'required',
+            'ward' => 'required',
+            'unit' => 'required',
+            'bed' => 'required',
+        ]);
+        // try {
+        //     DB::beginTransaction();
+        $ipd_prefix = Prefix::where('name', 'ipd')->first();
+
+        //SAVE in ipd details
+        $ipd_details = IpdDetails::find($request->ipd_details_id);
+        $ipd_details->ipd_prefix                  = $ipd_prefix->prefix;
+        $ipd_details->patient_id                  = $request->patient_id;
+        $ipd_details->patient_source_id           = $request->patient_source_id;
+        $ipd_details->patient_source              = $request->patient_source;
+        $ipd_details->case_id                     = $request->case_id;
+        $ipd_details->appointment_date            = $request->appointment_date;
+        $ipd_details->credit_limit                = $request->credit_limit;
+        $ipd_details->bp                          = $request->bp;
+        $ipd_details->height                      = $request->height;
+        $ipd_details->weight                      = $request->weight;
+        $ipd_details->pulse                       = $request->pulse;
+        $ipd_details->temperature                 = $request->temperature;
+        $ipd_details->respiration                 = $request->respiration;
+        $ipd_details->known_allergies             = $request->any_known_allergies;
+        $ipd_details->symptoms_type               = $request->symptoms_type;
+        $ipd_details->symptoms                    = $request->symptoms_title;
+        $ipd_details->symptoms_description        = $request->symptoms_description;
+        $ipd_details->patient_type                = $request->patient_type;
+        $ipd_details->tpa_organization            = $request->tpa_organization;
+        $ipd_details->type_no                     = $request->type_no;
+        $ipd_details->note                        = $request->note;
+        $ipd_details->refference                  = $request->reference;
+        $ipd_details->cons_doctor                 = $request->cons_doctor;
+        $ipd_details->department_id               = $request->department;
+        $ipd_details->bed                         = $request->bed;
+        $ipd_details->bed_ward_id                 = $request->ward;
+        $ipd_details->bed_unit_id                 = $request->unit;
+        $ipd_details->generated_by                = Auth::user()->id;
+        $ipd_details->save();
+        //SAVE in ipd details
+
+
+        //bed status update in bed table
+        Bed::where('id', $request->bed)->update(['is_used' => 'yes']);
+        //bed status update in bed table
+        // dd($request->patient_bed_history_id);
+        //bed history update in bed table
+        $patient_bed_history = PatientBedHistory::find($request->patient_bed_history_id);
+        $patient_bed_history->patient_id = $request->patient_id;
+        $patient_bed_history->case_id = $request->case_id;
+        $patient_bed_history->ipd_id = $ipd_details->id;
+        $patient_bed_history->department_id = $request->department;
+        $patient_bed_history->bed_ward_id = $request->ward;
+        $patient_bed_history->bed_unit_id = $request->unit;
+        $patient_bed_history->bed_id = $request->bed;
+        $patient_bed_history->from_date = $request->appointment_date;
+        $patient_bed_history->save();
+        //bed history update in bed table
+
+        DB::commit();
+        if ($request->save == 'save_and_print') {
+            $pdf = PDF::loadView('OPD._print.opd_prescription');
+            return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
+        } else {
+            return redirect()->route('ipd-patient-listing')->with('success', 'Ipd Patient Details Updated Sucessfully');
+        }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->back()->with('error', $th->getMessage());
+        // }
     }
 }

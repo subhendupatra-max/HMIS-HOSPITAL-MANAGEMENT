@@ -377,7 +377,7 @@ class PathologyController extends Controller
     }
     public function update_pathology_charge(Request $request)
     {
-        // dd($request->all());
+       
         $validate = $request->validate([
             'date'   => 'required',
             'test_id'   => 'required',

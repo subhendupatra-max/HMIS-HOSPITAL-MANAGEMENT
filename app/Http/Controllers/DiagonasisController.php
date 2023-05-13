@@ -11,25 +11,22 @@ class DiagonasisController extends Controller
 {
     public function diagonasis_details()
     {
-        $diagonasis = Diagonasis::all(); 
-        $department = Department::where('is_active','=',1)->get();
+        $diagonasis = Diagonasis::all();
 
-        return view('setup.diagonasis.diagonasis-listing', compact('diagonasis','department'));
+        return view('setup.diagonasis.diagonasis-listing', compact('diagonasis'));
     }
 
     public function save_diagonasis_details(Request $request)
     {
         $validate = $request->validate([
             'diagonasis_name' => 'required',
-            'department' => 'required',
             'icd_code' => 'required',
         ]);
 
         $status = Diagonasis::insert([
             'diagonasis_name' => $request->diagonasis_name,
-            'department' => $request->department,
             'icd_code' => $request->icd_code,
-           
+
         ]);
 
         if ($status) {
@@ -43,23 +40,21 @@ class DiagonasisController extends Controller
     {
         $diagonasis = Diagonasis::all();
         $editDiagonasis = Diagonasis::find($id);
-        $department = Department::where('is_active','=',1)->get();
-        return view('setup.diagonasis.edit-diagonasis', compact('diagonasis', 'editDiagonasis','department'));
+
+        return view('setup.diagonasis.edit-diagonasis', compact('diagonasis', 'editDiagonasis'));
     }
 
     public function update_diagonasis_details(Request $request)
     {
         $validate = $request->validate([
             'diagonasis_name' => 'required',
-            'department' => 'required',
             'icd_code' => 'required',
         ]);
 
         $diagonasis = Diagonasis::find($request->id);
         $diagonasis->diagonasis_name = $request->diagonasis_name;
-        $diagonasis->department      = $request->department;
         $diagonasis->icd_code        = $request->icd_code;
-      
+
         $status = $diagonasis->save();
 
         if ($status) {
@@ -71,7 +66,7 @@ class DiagonasisController extends Controller
 
     public function delete_diagonasis_details($id)
     {
-        Diagonasis::where('id',$id)->delete();
+        Diagonasis::where('id', $id)->delete();
 
         return redirect()->route('diagonasis-details')->with('success', 'Diagonasis Deleted Sucessfully');
     }

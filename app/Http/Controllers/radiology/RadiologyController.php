@@ -103,14 +103,6 @@ class RadiologyController extends Controller
 
 
 
-
-
-
-
-
-
-
-
     //pathology test
     public function radiology_test_list()
     {
@@ -233,6 +225,54 @@ class RadiologyController extends Controller
         return view('radiology.test-master.radiology-test-details', compact('radiologyTest', 'radiologyParameter'));
     }
 
+    public function edit_radiology_test_patient($id)
+    {
+        $test_id = base64_decode($id);
+        $test_details = RadiologyPatientTest::where('id', $test_id)->first();
+        // dd($test_details );
+        $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
+        $patient_details_information = Patient::where('id', $test_details->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
+        $radiology_all_test = RadiologyTest::all();
+        $patient_reg_details = caseReference::where('patient_id', $test_details->patient_id)->orderBy('id', 'desc')->first();
+        return view('radiology.patient-test.patient-test-edit', compact('test_details', 'all_patient', 'patient_details_information', 'radiology_all_test', 'patient_reg_details'));
+    }
+
+    public function update_radiology_charge(Request $request)
+    {
+        $validate = $request->validate([
+            'date'   => 'required',
+            'test_id'   => 'required',
+            'patientId'   => 'required',
+        ]);
+        try {
+            DB::beginTransaction();
+            $radiology_patient_test = RadiologyPatientTest::find($request->pre_test_id);
+
+            $radiology_patient_test->date = $request->date;
+            $radiology_patient_test->test_id = $request->test_id;
+            $radiology_patient_test->save();
+
+            DB::commit();
+            return redirect()->route('radiology-test-charge')->with('success', "Test Upadated Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('radiology-test-charge')->withErrors(['error' => $th->getMessage()]);
+        }
+    }
+
+    public function delete_radiology_test_patient($id)
+    {
+        try {
+            DB::beginTransaction();
+            $test_id = base64_decode($id);
+            $test_details = RadiologyPatientTest::where('id', $test_id)->delete();
+            DB::commit();
+            return redirect()->route('radiology-test-charge')->with('success', "Test Deleted Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('radiology-test-charge')->withErrors(['error' => $th->getMessage()]);
+        }
+    }
 
     // public function add_radiology_test_details()
     // {

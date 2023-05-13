@@ -122,7 +122,7 @@
                             <div class="row">
                                 <div class="form-group col-md-6 adcharge ">
                                     <label class="date-format"> Date <span class="text-danger">*</span></label>
-                                    <input type="datetime-local" name="date" value="{{ date('Y-m-d H:s',strtotime($test_details->date)) }}"
+                                    <input type="datetime-local" name="date" value="{{ date('Y-m-d h:m:s',strtotime($test_details->date)) }}"
                                         required />
                                     @error('date')
                                     <small class="text-danger">{{ $message }}</small>
