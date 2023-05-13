@@ -790,6 +790,7 @@ class PermissionSeeder extends Seeder
 
         //charges opd
         Permission::create(['name' => 'add opd charges']);
+        Permission::create(['name' => 'edit opd charges']);
         Permission::create(['name' => 'patient charges']);
 
         //pathology test add to patient
@@ -800,6 +801,9 @@ class PermissionSeeder extends Seeder
 
         //OPD Pathology Investigation
         Permission::create(['name' => 'OPD Pathology Investigation']);
+        Permission::create(['name' => 'OPD Radiology Investigation']);
+
+        Permission::create(['name' => 'Create Prescription for OPD']);
 
 
     }

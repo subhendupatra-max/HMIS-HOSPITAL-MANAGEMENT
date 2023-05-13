@@ -56,7 +56,7 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="form-group col-md-6">
                         <label for="description" class="form-label">Description</label>
-                        <textarea name="description" class="form-control"> </textarea>
+                        <input name="description" class="form-control" />
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
