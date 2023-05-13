@@ -26,7 +26,7 @@
             <div class="card-body">
                 <div class="">
                     <div class="table-responsive">
-                        <table class="table card-table table-vcenter text-nowrap table-default">
+                        <table class="table table-bordered text-nowrap" id="example">
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0">Bill No.</th>
@@ -53,9 +53,15 @@
                                            
                                             <td>
                                                 <?php if($value->discount_status != 'Not applied'): ?>
-                                                <span class="badge badge-<?php echo e($value->discount_status == 'Approved' ? 'success' : 'denger'); ?>"><?php echo e($value->discount_status); ?></span>
+                                                    <?php if($value->discount_status == 'Approved'): ?>
+                                                        <span class="badge badge-success">Approved</span>
+                                                    <?php elseif($value->discount_status == 'Requested'): ?>
+                                                        <span class="badge badge-warning">Requested</span>
+                                                    <?php else: ?>
+                                                        <span class="badge badge-danger">Rejected</span>
+                                                    <?php endif; ?>
                                                 <?php else: ?>
-                                                <span class="text-warning">Not Applied</span>
+                                                    <span class="badge badge-primary">Not Applied</span>
                                                 <?php endif; ?>
                                             </td>
 
@@ -99,6 +105,7 @@
                 </div>
             </div>
         </div>
+    </div>
     <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/OPD/billing/billing-list.blade.php ENDPATH**/ ?>

@@ -42,7 +42,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="description" class="form-label">Description</label>
-                        <textarea name="description" class="form-control"> </textarea>
+                        <input name="description" class="form-control" />
                         @error('description')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

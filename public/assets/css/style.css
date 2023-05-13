@@ -25870,10 +25870,10 @@ object, embed, video {
 }
 .profileHeding{
   font-weight: bold;
-  font-size: 18px;
+  font-size: 14px;
   font-family: sans-serif;
   text-transform: uppercase;
-  color:#22854a !important;
+  color:#343af1 !important;
 }
 .profileDetailsHeading{
     font-size: 16px;

@@ -345,7 +345,9 @@ class PathologyController extends Controller
                 $section_details = IpdDetails::where('case_id', $request->case_id)->first();
                 $pathology_patient_test->ipd_id = $section_details->id;
             }
-
+            $path_details = PathologyPatientTest::where('case_id',$request->case_id)->where('test_id',$request->test_id)->where('test_status','=','0')->first();
+            if($path_details == null)
+            {
             $pathology_patient_test->case_id = $request->case_id;
             $pathology_patient_test->date = $request->date;
             $pathology_patient_test->section = $case_details->section;
@@ -353,11 +355,15 @@ class PathologyController extends Controller
             $pathology_patient_test->test_id = $request->test_id;
             $pathology_patient_test->generated_by = Auth::user()->id;
             $pathology_patient_test->billing_status = '0';
-            $pathology_patient_test->test_status = '<span class="badge badge-warning">Sample Not Collected</span>';
+            $pathology_patient_test->test_status = '0';
             $pathology_patient_test->save();
 
             DB::commit();
-            return redirect()->route('pathology-test-charge')->with('success', "Test Added Successfully");
+            return redirect()->route('pathology-test-charge')->with('success', "Test added successfully for this patient");
+            }
+            else{
+                return redirect()->route('pathology-test-charge')->with('success', "Test already added For this patient");
+            }
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route('pathology-test-charge')->withErrors(['error' => $th->getMessage()]);

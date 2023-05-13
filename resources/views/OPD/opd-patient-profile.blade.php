@@ -22,7 +22,7 @@
         <div class="card-body p-0">
             <div class="row no-gutters">
                 {{-- ========================================================================================= --}}
-                <div class="col-lg-6 col-xl-6 border-right">
+                <div class="col-lg-4 col-xl-4 border-right">
 
                     {{-- ================== patient name ====================== --}}
                     <div class="options px-5 pt-2  border-bottom pb-1">
@@ -75,9 +75,10 @@
                                         <span class="font-weight-semibold w-50">Age :- </span>
                                     </td>
                                     <td class="py-2 px-0">
-                                        {{ @$opd_patient_details->patient_details->year }}Y
-                                        {{ @$opd_patient_details->patient_details->month }}M
-                                        {{ @$opd_patient_details->patient_details->day }}D
+                                        {{ @$opd_patient_details->patient_details->year == '0'?'':$opd_patient_details->patient_details->year.'Y' }}
+                                        {{ @$opd_patient_details->patient_details->month == '0'?'':$opd_patient_details->patient_details->month.'M' }}
+                                        {{ @$opd_patient_details->patient_details->day == '0'?'':$opd_patient_details->patient_details->day.'D' }}
+                                     
                                     </td>
                                 </tr>
                                 <tr colspan="2">
@@ -132,52 +133,21 @@
                                         {{ $opd_visit_details->patient_type }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td class="py-2 px-0">
+                                        <i class="fa fa-cube text-primary"></i>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50"> Case Id :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        {{ $opd_patient_details->case_id }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                     {{-- ================== patient registation information ====================== --}}
-
-                </div>
-                {{-- ========================================================================================= --}}
-
-                {{-- ========================================================================================= --}}
-                <div class="col-lg-6 col-xl-6 border-right">
-                    {{-- ================== add new patient ====================== --}}
-                    <div class="options px-5 pt-2  border-bottom pb-1">
-                        <div class="row">
-                            <div class="col-md-12 mb-2">
-                                <h5>Latest Physical Condition</h5>
-                                <div class="table-responsive">
-                                    <table class="table card-table table-vcenter text-nowrap table-danger">
-                                        <thead class="bg-danger text-white">
-                                            <tr>
-                                                <th class="text-white">Height</th>
-                                                <th class="text-white">Weight</th>
-                                                <th class="text-white">Pulse</th>
-                                                <th class="text-white">BP</th>
-                                                <th class="text-white">Temp</th>
-                                                <th class="text-white">Resp</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (@$PhysicalDetails)
-                                            @foreach ($PhysicalDetails as $item)
-                                            <tr>
-                                                <td>{{$item->height}}</td>
-                                                <td>{{$item->weight}}</td>
-                                                <td>{{$item->pulse}}</td>
-                                                <td>{{$item->bp}}</td>
-                                                <td>{{$item->temperature}}</td>
-                                                <td>{{$item->respiration}}</td>
-                                            </tr>
-                                            @endforeach
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
@@ -192,6 +162,152 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+                {{-- ========================================================================================= --}}
+
+                {{-- ========================================================================================= --}}
+                <div class="col-lg-8 col-xl-8 border-right">
+                    {{-- ================== add new patient ====================== --}}
+                    <div class="options px-5 pt-2  border-bottom pb-1">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <h5>Latest Physical Condition</h5>
+                                @if (@$PhysicalDetails[0]->height != null)
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap table-danger">
+                                        <thead class="bg-danger text-white">
+                                            <tr>
+                                                <th class="text-white">Height</th>
+                                                <th class="text-white">Weight</th>
+                                                <th class="text-white">Pulse</th>
+                                                <th class="text-white">BP</th>
+                                                <th class="text-white">Temp</th>
+                                                <th class="text-white">Resp</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            @foreach ($PhysicalDetails as $item)
+                                            <tr>
+                                                <td>{{@$item->height == null ?'':$item->height.' cm'}}</td>
+                                                <td>{{@$item->weight == null ?'':$item->weight.' kg'}}</td>
+                                                <td>{{@$item->pulse == null ?'':$item->pulse.' bpm'}}</td>
+                                                <td>{{@$item->bp == null ?'':$item->bp.' mmHg'}}</td>
+                                                <td>{{@$item->temperature == null ?'':$item->temperature.' °C'}}</td>
+                                                <td>{{@$item->respiration == null ?'':$item->respiration.' b/m'}}</td>
+                                            </tr>
+                                            @endforeach
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @else
+                                <span style="color:brown">** No Physical condition added **</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div class="options px-5 pt-2  border-bottom pb-1">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <h5>Pathology Test</h5>
+                                @if (@$PathologyTestDetails[0]->id != null)
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap table-success">
+                                        <thead class="bg-success text-white">
+                                            <tr>
+                                                <th class="text-white">Test Name</th>
+                                                <th class="text-white">Date</th>
+                                                <th class="text-white">Billing Status</th>
+                                                <th class="text-white">Test Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($PathologyTestDetails as $item)
+                                            <tr>
+                                                <td>{{ @$item->test_details->test_name }}</td>
+                                                <td>{{@date('d-m-Y h:i A',strtotime($item->date))}}</td> 
+                                                <td>
+                                                    @if($item->billing_status == '0')
+                                                    <span class="badge badge-warning">Billing Not Done</span>
+                                                    @elseif ($item->billing_status == '1')
+                                                    <span class="badge badge-warning">Billing Done</span>
+                                                    @else
+                                                    <span class="badge badge-warning">Charge Added</span>
+                                                    @endif
+                                                </td> 
+                                                <td>
+                                                    @if($item->test_status == '0')
+                                                    <span class="badge badge-warning">Sample Not Collected</span>
+                                                    @else
+                                                    <span class="badge badge-success">Sample Collected</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @else
+                                <span style="color:brown">** No Pathology Test done **</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                 
+                    <div class="options px-5 pt-2  border-bottom pb-1">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <h5>Radiology Test</h5>
+                                @if (@$RadiologyTestDetails[0]->id != null)
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap table-success">
+                                        <thead class="bg-success text-white">
+                                            <tr>
+                                                <th class="text-white">Test Name</th>
+                                                <th class="text-white">Date</th>
+                                                <th class="text-white">Billing Status</th>
+                                                <th class="text-white">Test Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            
+                                            @foreach ($RadiologyTestDetails as $item)
+                                            <tr>
+                                                <td>{{ @$item->test_details->test_name }}</td>
+                                                <td>{{@date('d-m-Y h:i A',strtotime($item->date))}}</td>
+                                                <td>
+                                                    @if($item->billing_status == '0')
+                                                    <span class="badge badge-warning">Billing Not Done</span>
+                                                    @elseif ($item->billing_status == '1')
+                                                    <span class="badge badge-warning">Billing Done</span>
+                                                    @else
+                                                    <span class="badge badge-warning">Charge Added</span>
+                                                    @endif
+                                                </td> 
+                                                <td>
+                                                    @if($item->test_status == '0')
+                                                    <span class="badge badge-warning">Sample Not Collected</span>
+                                                    @else
+                                                    <span class="badge badge-success">Sample Collected</span>
+                                                    @endif
+                                                </td>
+                                               
+                                            </tr>
+                                            @endforeach
+                                          
+                                        </tbody>
+                                    </table>
+                                </div>
+                                @else
+                                <span style="color:brown">** No Radiology Test done **</span>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+              
                 </div>
                 {{-- ========================================================================================= --}}
             </div>

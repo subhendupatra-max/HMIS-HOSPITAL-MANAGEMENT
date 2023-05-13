@@ -77,7 +77,7 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="form-group col-md-6">
                         <label for="note" class="form-label">Note </label>
-                        <textarea name="note" id="note" class="form-control"> </textarea>
+                        <input name="note" id="note" class="form-control" />
                         <?php $__errorArgs = ['note'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

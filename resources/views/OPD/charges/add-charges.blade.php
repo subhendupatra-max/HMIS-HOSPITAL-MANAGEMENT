@@ -250,7 +250,7 @@
                                 </select>
                             </td>
                             <td>
-                                <select class="form-control select2-show-search" onchange=getcharges(${i}) name="charge_name[]" id="charge_name${i}">
+                                <select class="form-control select2-show-search" onchange="getcharges(${i})" name="charge_name[]" id="charge_name${i}">
                                     <option value="">Select One..</option>
                                 </select>
                             </td>

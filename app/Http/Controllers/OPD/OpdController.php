@@ -36,6 +36,9 @@ use App\Models\Billing;
 use App\Models\Country;
 use App\Models\Payment;
 use App\Models\PatientCharge;
+use App\Models\PathologyTest;
+use App\Models\RadiologyTest;
+use App\Models\RadiologyPatientTest;
 use PDF;
 
 class OpdController extends Controller
@@ -304,9 +307,13 @@ class OpdController extends Controller
         $PhysicalDetails  =  OpdPatientPhysicalDetail::where('opd_id', $opd_id)->get();
         $payment_amount = Payment::where('opd_id', $opd_id)->sum('payment_amount');
         $billing_amount = Billing::where('opd_id', $opd_id)->sum('grand_total');
+        $PathologyTestDetails = PathologyPatientTest::where('case_id',$opd_patient_details->case_id)->get();
+        $RadiologyTestDetails = RadiologyPatientTest::where('case_id',$opd_patient_details->case_id)->get();
         // $opd_visit_details = OpdVisitDetails::where('opd_details_id',$opd_id)->get();
+
+        //dd($PathologyTestDetails);
         $opd_visit_details = OpdVisitDetails::where('opd_details_id', $opd_id)->first();
-        return view('OPD.opd-patient-profile', compact('billing_amount', 'opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount'));
+        return view('OPD.opd-patient-profile', compact('billing_amount', 'opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount','PathologyTestDetails','RadiologyTestDetails'));
     }
     public function prescription_print($id)
     {
@@ -543,10 +550,6 @@ class OpdController extends Controller
             ->where('opd_visit_details.id', $opd_visit_details->id)
             ->first();
 
-        // \QrCode::size(250)
-        // ->format('png')
-        // ->generate('ItSolutionStuff.com', public_path('qr_code/opd'.$opd_visit_details->id.'.png'));
-
         DB::commit();
         if ($request->save == 'save_and_print') {
             return view('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image'));
@@ -564,8 +567,8 @@ class OpdController extends Controller
     public function charge_list($id = null)
     {
         $opd_id = base64_decode($id);
-        $opd_charges_details = PatientCharge::where('ins_by', 'ori')->get();
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        $opd_charges_details = PatientCharge::where('ins_by', 'ori')->where('case_id',$opd_patient_details->case_id)->get();
         return view('OPD.charges.charges-list', compact('opd_id', 'opd_patient_details', 'opd_charges_details'));
     }
     public function add_charges($id)
@@ -574,6 +577,17 @@ class OpdController extends Controller
         $charge_category =  ChargesCatagory::all();
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
         return view('OPD.charges.add-charges', compact('opd_patient_details', 'opd_id', 'charge_category'));
+    }
+    public function edit_charges($id,$charge_id)
+    {
+        $opd_id = base64_decode($id);
+        $chargeId = base64_decode($charge_id);
+        $charge_category =  ChargesCatagory::all();
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        $patient_charge_details = PatientCharge::where('id',$chargeId)->first();
+
+        //dd($patient_charge_details );
+        return view('OPD.charges.edit-charges', compact('opd_patient_details', 'opd_id', 'charge_category','patient_charge_details'));
     }
     public function save_charges(Request $request)
     {
@@ -601,6 +615,55 @@ class OpdController extends Controller
                 $patient_charge->generated_by = Auth::user()->id;
                 $patient_charge->billing_status = '0';
                 $patient_charge->save();
+
+                if($request->charge_category[$key] == '1')
+                {
+                    $charge_detp = PathologyTest::where('charge',$request->charge_name[$key])->first();
+                    $chargedetailstestp = PathologyPatientTest::where('case_id',$request->case_id)->where('test_id',$charge_detp->id)->where('test_status','=','0')->first();
+
+                    if($chargedetailstestp == null)
+                    {
+                        $pathology_patient_test = new PathologyPatientTest();
+                        $pathology_patient_test->case_id = $request->case_id;
+                        $pathology_patient_test->date = $request->date;
+                        $pathology_patient_test->section = 'OPD';
+                        $pathology_patient_test->patient_id = $request->patient_id;
+                        $pathology_patient_test->test_id =  $charge_detp->id;
+                        $pathology_patient_test->opd_id = $request->opd_id;
+                        $pathology_patient_test->generated_by = Auth::user()->id;
+                        $pathology_patient_test->billing_status = '2';
+                        $pathology_patient_test->test_status = '0';
+                        $pathology_patient_test->save();
+                    }
+                    else{
+                        $chargedetailstestp->billing_status = '2';
+                        $chargedetailstestp->save();
+                    }
+                }
+                if($request->charge_category[$key] == '2')
+                {
+                    $charge_detr = RadiologyTest::where('charge',$request->charge_name[$key])->first();
+                    $chargedetailstestr = RadiologyPatientTest::where('case_id',$request->case_id)->where('test_id',$charge_detr->id)->where('test_status','=','0')->where('test_id',$charge_detr->charge)->first();
+
+                    if($chargedetailstest == null)
+                    {
+                        $radiology_patient_test = new RadiologyPatientTest();
+                        $radiology_patient_test->case_id = $request->case_id;
+                        $radiology_patient_test->date = $request->date;
+                        $radiology_patient_test->section = 'OPD';
+                        $radiology_patient_test->patient_id = $request->patient_id;
+                        $radiology_patient_test->test_id = $charge_detr->id;
+                        $radiology_patient_test->opd_id = $request->opd_id;
+                        $radiology_patient_test->generated_by = Auth::user()->id;
+                        $radiology_patient_test->billing_status = '2';
+                        $radiology_patient_test->test_status = '0';
+                        $radiology_patient_test->save();
+                    }
+                    else{
+                        $chargedetailstest->billing_status = '2';
+                        $chargedetailstest->save(); 
+                    }
+                }
             }
             DB::commit();
             return redirect()->route('charges-list', ['id' => base64_encode($request->opd_id)])->with('success', "Charges Added Successfully");
@@ -616,5 +679,20 @@ class OpdController extends Controller
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
         $pathology_patient_test = PathologyPatientTest::where('ins_by', 'ori')->where('case_id', $opd_patient_details->case_id)->get();
         return view('OPD.pathology.test-list', compact('pathology_patient_test', 'opd_patient_details', 'opd_id'));
+    }
+    public function opd_radiology_investigation($id)
+    {
+        $opd_id = base64_decode($id);
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        $radiology_patient_test = RadiologyPatientTest::where('ins_by', 'ori')->where('case_id', $opd_patient_details->case_id)->get();
+        return view('OPD.radiology.test-list', compact('radiology_patient_test', 'opd_patient_details', 'opd_id'));
+    }
+
+    public function opd_prescription_list($id)
+    {
+        $opd_id = base64_decode($id);
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        
+        return view('OPD.prescription.prescription-list', compact('opd_patient_details','opd_id'));
     }
 }
