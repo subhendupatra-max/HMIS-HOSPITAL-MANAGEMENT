@@ -24,4 +24,5 @@ return [
     'operation_status' => ['Pending', 'Approved'],
     'permission_type' => ['Parallal'],
     'charges_type' => ['General', 'Sastha-Swathi', 'ESI', 'Star Health', 'IOCL'],
+    'discharge_type' => ['Death', 'Refferal', 'Normal', 'LAMA', 'DORB'],
 ];

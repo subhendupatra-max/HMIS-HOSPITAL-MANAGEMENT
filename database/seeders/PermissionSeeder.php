@@ -391,6 +391,7 @@ class PermissionSeeder extends Seeder
         //Ipd ipd-patients
         Permission::create(['name' => 'IPD ipd-patients']);
         Permission::create(['name' => 'IPD registation']);
+        Permission::create(['name' => 'edit IPD registation']);
         Permission::create(['name' => 'IPD profile']);
 
         // Opd TimeLine
@@ -725,6 +726,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'blood components']);
         Permission::create(['name' => 'Add blood components']);
         Permission::create(['name' => 'View blood components Details']);
+      
 
         //opd billing
         Permission::create(['name' => 'opd billing']);
@@ -795,12 +797,6 @@ class PermissionSeeder extends Seeder
         //pathology test add to patient
         Permission::create(['name' => 'pathology-test-to-a-patient']);
         Permission::create(['name' => 'add-pathology-test-to-a-patient']);
-        Permission::create(['name' => 'edit-pathology-test-to-a-patient']);
-        Permission::create(['name' => 'delete-pathology-test-to-a-patient']);
-
-        //OPD Pathology Investigation
-        Permission::create(['name' => 'OPD Pathology Investigation']);
-
 
     }
 }

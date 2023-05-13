@@ -12,6 +12,8 @@ use App\Models\Charge;
 use App\Models\User;
 use App\Models\bloodBank\Blood;
 use App\Models\bloodBank\BloodIssue;
+use App\Models\bloodBank\Components;
+use App\Models\bloodBank\ComponentsDetail;
 use App\Models\Patient;
 
 class BloodBankController extends Controller
@@ -27,8 +29,12 @@ class BloodBankController extends Controller
         $blood_group_id = $id;
         $blood_groups = BloodGroup::all();
         $blood = Blood::where('blood_group_id', $blood_group_id)->get();
+        $components = Components::where('blood_group_id', $blood_group_id)->get();
+        // dd( $components );
+       
         $blood_groups_details_for_this_blood_group = BloodGroup::where('id', $blood_group_id)->first();
-        return view('Blood_Bank.blood-bank-listing', compact('blood_groups', 'blood_group_id', 'blood_groups_details_for_this_blood_group', 'blood'));
+
+        return view('Blood_Bank.blood-bank-listing', compact('blood_groups', 'blood_group_id', 'blood_groups_details_for_this_blood_group', 'blood', 'components'));
     }
 
     public function add_blood($id)

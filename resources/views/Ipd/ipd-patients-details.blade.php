@@ -9,8 +9,24 @@
                 <div class="col-md-6 card-title">
                     <h4 class="card-title">IPD Patient List </h4>
                 </div>
+                <div class="col-md-6 text-right">
+                    <div class="d-block">
+                        @can('')
+                        <a href="#" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
+                            Add Patient</a>
+                        @endcan
+
+                        @can('')
+                        <a href="{{ route('all-discharged-patient-in-ipd') }}" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
+                            Discharged Patient</a>
+                        @endcan
+
+                    </div>
+                </div>
             </div>
+
         </div>
+        @include('message.notification')
 
         <div class="card-body">
             <div class="table-responsive">
@@ -81,7 +97,7 @@
                                             <i class="fa fa-file"></i> Status Change</a>
                                         @endcan
                                         @can('')
-                                       
+
                                         <a class="dropdown-item" href="{{ route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])}}">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         @endcan

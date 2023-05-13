@@ -61,7 +61,7 @@
             <table style="width: 100%;border-collapse: collapse" >
                 <tr>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-                        <b>UHID No: dd<?php echo e(@$opd_patient_details->patient_prefix); ?><?php echo e(@$opd_patient_details->patient_id); ?></b>
+                        <b>UHID No: <?php echo e(@$opd_patient_details->patient_prefix); ?><?php echo e(@$opd_patient_details->patient_id); ?></b>
                     </td>
                     <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
 
@@ -86,7 +86,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>EMG No : EMG/IIMSAR-DR. BCRHH/23041221516 </b></td>
+                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>EMG No : Opd/IIMSAR-DR. BCRHH/23041221516 </b></td>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Medico Legal Case: No</b></td>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>Department: <?php echo e(@$opd_patient_details->department_name); ?></b></td>
                 </tr>
@@ -106,6 +106,7 @@
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Guardian Name
+                        (রোগী/রোগী প্রতিনিধির স্বাক্ষর)
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         <?php echo e($opd_patient_details->guardian_name); ?>

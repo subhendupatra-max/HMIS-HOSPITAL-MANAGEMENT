@@ -26685,6 +26685,11 @@ top: -29px;
 .adcharged{
     margin: 25px 0px 0px 0px;
 }
+.diagoniseadd{
+  top: 27%;
+  left: 15px;
+}
+
 /* ---------------------------------------------------- */
 .menubox{
     display: flex;

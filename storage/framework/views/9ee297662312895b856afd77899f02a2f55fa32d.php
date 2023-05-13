@@ -10,7 +10,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="form-group col-md-3">
-                     
+                        
                         <input type="text" id="medicine_name" name="medicine_name" value="<?php echo e(old('medicine_name')); ?>" required />
                         <label for="medicine_name">Medicine Name<span class="text-danger">*</span> </label>
                         <?php $__errorArgs = ['medicine_name'];
