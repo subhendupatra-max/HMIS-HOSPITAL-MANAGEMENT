@@ -322,6 +322,18 @@ $login_details = DB::table('users')
                             </a>
                         </li>
                         <?php endif; ?>
+                        <?php if(auth()->user()->can('Operation')): ?>
+                        <li class="slide">
+                            <a class="side-menu__item" href="<?php echo e(route('all-blood-details')); ?>">
+
+                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                    <path d="M0 0h24v24H0V0z" fill="none" />
+                                    <path d="M8 3v2H6v4c0 2.21 1.79 4 4 4s4-1.79 4-4V5h-2V3h3c.552 0 1 .448 1 1v5c0 2.973-2.162 5.44-5 5.917V16.5c0 1.933 1.567 3.5 3.5 3.5 1.497 0 2.775-.94 3.275-2.263C16.728 17.27 16 16.22 16 15c0-1.657 1.343-3 3-3s3 1.343 3 3c0 1.371-.92 2.527-2.176 2.885C19.21 20.252 17.059 22 14.5 22 11.462 22 9 19.538 9 16.5v-1.583C6.162 14.441 4 11.973 4 9V4c0-.552.448-1 1-1h3z" />
+                                </svg>
+                                <span class="side-menu__label">Operation</span>
+                            </a>
+                        </li>
+                        <?php endif; ?>
                         <?php if(auth()->user()->can('False Generation')): ?>
                         <li class="slide  <?php echo e(Request::segment(1) == 'false-patient' ? 'active' : ''); ?>">
                             <a class="side-menu__item  <?php echo e(Request::segment(1) == 'false-patient' ? 'active' : ''); ?>" data-toggle="slide" href="index-2.html#">
