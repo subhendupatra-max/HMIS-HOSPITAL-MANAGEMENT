@@ -32,6 +32,7 @@ class CreatePathologyTestsTable extends Migration
             $table->string('reference_range')->nullable();
             $table->string('unit')->nullable();
             $table->longText('test_details')->nullable();
+            $table->string('ins_by')->default('ori');
             $table->timestamps();
         });
     }

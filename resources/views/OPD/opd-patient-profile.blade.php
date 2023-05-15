@@ -130,7 +130,7 @@
                                         <span class="font-weight-semibold w-50"> Patient Type :- </span>
                                     </td>
                                     <td class="py-2 px-0">
-                                        {{ $opd_visit_details->patient_type }}
+                                        {{ @$opd_visit_details->patient_type }}
                                     </td>
                                 </tr>
                                 <tr>

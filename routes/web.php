@@ -2454,6 +2454,8 @@ Route::group(['middleware' => ['permission:False Generation'], 'prefix' => 'fals
         Route::get('opd', [OpdFalseController::class, 'index'])->name('opd-false-generation');
         Route::post('false-opd-registation', [OpdFalseController::class, 'false_opd_registation'])->name('false-opd-registation');
         Route::post('registation-false-opd', [OpdFalseController::class, 'registation_false_opd'])->name('registation-false-opd');
+        Route::post('false-pathology-test-add-opd', [OpdFalseController::class, 'false_pathology_test_add_opd'])->name('false-pathology-test-add-opd');
+        Route::post('false-radiology-test-add-opd', [OpdFalseController::class, 'false_radiology_test_add_opd'])->name('false-radiology-test-add-opd');
     });
 });
 //================================= false section ===================================================
