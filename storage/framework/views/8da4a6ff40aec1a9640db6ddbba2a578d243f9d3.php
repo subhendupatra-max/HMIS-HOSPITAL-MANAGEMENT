@@ -104,6 +104,10 @@
                                     <a class="dropdown-item" href="<?php echo e(route('delete-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id))); ?>"><i class="fa fa-trash"></i>
                                         Delete</a>
                                     <?php endif; ?>
+                                  
+                                    <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id))); ?>"><i class="fa fa-print"></i>
+                                        Print</a>
+                                    
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd billing')): ?>
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('add-opd-billing',['id'=> base64_encode($value->id)])); ?>"><i

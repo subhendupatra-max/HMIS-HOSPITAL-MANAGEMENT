@@ -333,7 +333,7 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 
         <!-- ============================Requisition Permission Activity================== -->
         <div class="col-lg-4 col-xl-4 col-md-4 col-sm-4">
-            if(isset($permisison_users[0]->permission_user_details->first_name) && $permisison_users[0]->permission_user_details->first_name != '')
+            @if(isset($permisison_users[0]->permission_user_details->first_name) && $permisison_users[0]->permission_user_details->first_name != '')
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title"> Requisition Permission Activity</h3>
@@ -347,8 +347,8 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             @foreach($permisison_users as $user)
                             <li class="mt-0">
                                 <div class="d-flex"><span class="time-data">{{@$user->permission_user_details->first_name}} {{@$user->permission_user_details->last_name}}</span><span class="ml-auto text-muted fs-11"><?php if ($user->date != '' && $user->date != null) {
-                                                                                                                                                                                                                            echo date('d-m-Y h:i', strtotime($user->date));
-                                                                                                                                                                                                                        } ?></span></div>
+                                    echo  date('d-m-Y h:i', strtotime($user->date));
+                                       } ?></span></div>          
                                 <p class="text-muted fs-12">
                                     <span class="text-info">
                                         @if($user->user_id == Auth::id() && ( $user->permission_type == 'Parallal' || @$show_for_permission->user_id == Auth::id()) )
@@ -367,8 +367,9 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                         </ul>
                     </div>
                 </div>
-
+             
             </div>
+            @endif
 
             @if(count($permisison_users_vendor) > 0)
             <div class="card">

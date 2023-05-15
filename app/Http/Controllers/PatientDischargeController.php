@@ -13,15 +13,16 @@ use Illuminate\Support\Facades\DB;
 
 class PatientDischargeController extends Controller
 {
-    public function discharged_patient_in_ipd($ipd_id)
+    public function discharged_patient_in_ipd($ipd_id = null)
     {
-
+        $ipdId = base64_decode($ipd_id);
         $discharged_patient = DischargedPatient::all();
-        $ipd_details = IpdDetails::where('id', $ipd_id)->first();
-        $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
-        $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipd_id)->get();
+        $ipd_details = IpdDetails::where('id', $ipdId)->first();
+        $ipd_patient_details = IpdDetails::where('id', $ipdId)->first();
+        // dd($ipd_patient_details);
+        $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipdId)->get();
         $icd_code = Diagonasis::all();
-        return view('Ipd.discharge-patient.add-discharge-patient', compact('discharged_patient', 'ipd_id', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code'));
+        return view('Ipd.discharge-patient.add-discharge-patient', compact('discharged_patient', 'ipdId', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code'));
     }
 
     public function add_patient_discharge($ipd_id)

@@ -24,7 +24,7 @@
             <form action="{{ route('save-discharged-patient-in-ipd') }}" method="POST">
                 @csrf
                 <div class="row">
-                    <input type="hidden" name="ipd_id" value="{{ $ipd_id }}" />
+                    <input type="hidden" name="ipd_id" value="{{ $ipdId }}" />
                     <input type="hidden" name="case_id" value="{{ $ipd_patient_details->case_id }}" />
                     <input type="hidden" name="patient_id" value="{{ $ipd_patient_details->patient_id }}" />
 
