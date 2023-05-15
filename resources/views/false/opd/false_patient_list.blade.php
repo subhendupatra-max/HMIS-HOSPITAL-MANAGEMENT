@@ -110,12 +110,12 @@
                                     value="{{ $department_id }}" />
                                 <input type="hidden" id="pathology_date" name="pathology_date" value="{{ $date }}" />
                                 <div class="row">
-                                    <div class="form-group col-md-12 newaddappon">
+                                    {{-- <div class="form-group col-md-12 newaddappon">
                                         <label class="date-format ml-3"> Test Date<span
                                                 class="text-danger">*</span></label>
                                         <input type="date" name="pathology_test_date" id="pathology_test_date"
                                             required />
-                                    </div>
+                                    </div> --}}
                                     <div class="form-group col-md-12 newuserlisttchange ">
                                         <label for="gender"> Catagory <span class="text-danger">*</span></label>
                                         <select name="pathology_category" class="form-control select2-show-search"
@@ -184,7 +184,7 @@
                                     </div> --}}
 
                                     <div class="form-group col-md-12 opd-bladedesign ">
-                                        <button class="btn btn-primary btn-sm text-center ml-2" type="button"
+                                        <button class="btn btn-primary btn-sm text-center ml-2" style="    margin-top: 66px;" type="button"
                                             onclick="validate_for_investigation_pathology()" name="save" value="save"><i
                                                 class="fa fa-plus"></i> Add Pathology</button>
                                     </div>
@@ -208,12 +208,12 @@
                                     <small class="text-danger">{{ $message }}</sma>
                                         @enderror
                                         <div class="row">
-                                            <div class="form-group col-md-12 newaddappon">
+                                            {{-- <div class="form-group col-md-12 newaddappon">
                                                 <label class="date-format ml-3"> Test Date<span
                                                         class="text-danger">*</span></label>
                                                 <input type="date" name="radiology_test_date" id="radiology_test_date"
                                                     required />
-                                            </div>
+                                            </div> --}}
                                             <div class="form-group col-md-12 newuserlisttchange ">
                                                 <label for="gender"> Catagory <span class="text-danger">*</span></label>
                                                 <select name="radiology_category"
@@ -287,9 +287,9 @@
                                             </div> --}}
 
                                             <div class="form-group col-md-12 opd-bladedesign ">
-                                                <button class="btn btn-primary btn-sm text-center ml-2" type="button"
+                                                <button class="btn btn-primary btn-sm text-center ml-2" type="button" style="    margin-top: 66px;"
                                                     onclick="validate_for_investigation_radiology()" name="save"
-                                                    value="save"><i class="fa fa-plus"></i> Add Pathology</button>
+                                                    value="save"><i class="fa fa-plus"></i> Add Radiology</button>
                                             </div>
                                         </div>
                             </form>
@@ -345,9 +345,9 @@
                         <div class="row">
                             @foreach ($pathology_category as $value)
                             <?php
-                             $ori_pathlogy = DB::table('pathology_patient_tests')->join('pathology_tests','pathology_tests.id','pathology_patient_tests.test_id')->where('pathology_tests.catagory_id',$value->id)->where('pathology_patient_tests.ins_by','ori')->where('date', 'like', $date .'%')->count();
+                             $ori_pathlogy = DB::table('pathology_patient_tests')->join('pathology_tests','pathology_tests.id','pathology_patient_tests.test_id')->where('pathology_tests.catagory_id',$value->id)->where('pathology_patient_tests.ins_by','ori')->where('pathology_patient_tests.date', 'like', $date .'%')->count();
 
-                             $sys_pathlogy = DB::table('pathology_patient_tests')->join('pathology_tests','pathology_tests.id','pathology_patient_tests.test_id')->where('pathology_tests.catagory_id',$value->id)->where('pathology_patient_tests.ins_by','sys')->where('date', 'like', $date .'%')->count();
+                             $sys_pathlogy = DB::table('pathology_patient_tests')->join('pathology_tests','pathology_tests.id','pathology_patient_tests.test_id')->where('pathology_tests.catagory_id',$value->id)->where('pathology_patient_tests.ins_by','sys')->where('pathology_patient_tests.date', 'like', $date .'%')->count();
                               ?>
                                 <div class="col-md-2">{{ $value->catagory_name }}<br>
                                     <span class="badge badge-success">{{ $ori_pathlogy }}</span>
@@ -364,11 +364,17 @@
                         Radiology</span>
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-2">dd</div>
-                            <div class="col-md-2">dd</div>
-                            <div class="col-md-2">dd</div>
-                            <div class="col-md-2">dd</div>
-                            <div class="col-md-2">dd</div>
+                            @foreach ($radiology_category as $value)
+                            <?php
+                             $ori_radiology = DB::table('radiology_patient_tests')->join('radiology_tests','radiology_tests.id','radiology_patient_tests.test_id')->where('radiology_tests.catagory_id',$value->id)->where('radiology_patient_tests.ins_by','ori')->where('radiology_patient_tests.date', 'like', $date .'%')->count();
+
+                             $sys_radiology = DB::table('radiology_patient_tests')->join('radiology_tests','radiology_tests.id','radiology_patient_tests.test_id')->where('radiology_tests.catagory_id',$value->id)->where('radiology_patient_tests.ins_by','sys')->where('radiology_patient_tests.date', 'like', $date .'%')->count();
+                              ?>
+                                <div class="col-md-2">{{ $value->catagory_name }}<br>
+                                    <span class="badge badge-success">{{ $ori_radiology }}</span>
+                                    <span class="badge badge-danger">{{ $sys_radiology }}</span>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -393,6 +399,8 @@
                                 <td><a class="textlink"
                                         href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}">{{
                                         @$value->id }}</a>
+                                    <br>
+                                    <a href="#" onclick="showAllTest({{ $value->case_id }})" class="badge badge-primary">Investigation</a>
                                 </td>
                                 <td>
                                     {{ @$value->all_patient_details->prefix }}
@@ -448,7 +456,64 @@
         </div>
     </div>
 </div>
+<div class="modal" id="modaldemo1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">All Investigation</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <ul class="list-group" id="investigation">
+{{-- 
+                        <li class="list-group-item"><i class="fa fa-flask text-danger"
+                                aria-hidden="true"></i> Today's total OPD Patient : {{
+                            @$todays_total_opd }}</span>
+                        </li> --}}
+
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 <script>
+    function showAllTest(case_id)
+    {
+        var div_pathology_radiology = '';
+        $.ajax({
+            url: "{{ route('false-pathology-test-show-in_modal') }}",
+                type: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    caseId:case_id,
+                },
+                success: function(response) {
+                    $.each(response.pathology_test_deatils, function(key, value) {
+                        div_pathology_radiology += `<li class="list-group-item"><i class="fa fa-flask text-info"
+                                aria-hidden="true"></i>${value.test_name}
+                        </li>`
+                    });
+                    $.each(response.radiology_test_deatils, function(key, value) {
+                        div_pathology_radiology += `<li class="list-group-item"><i class="fa fa-flask text-info"
+                                aria-hidden="true"></i> ${value.test_name}
+                        </li>`
+                    });
+                    $('#modaldemo1').modal('show');
+                    $('#investigation').html(div_pathology_radiology);
+                },
+                error: function(error) {
+                    alert(response.message);
+                }
+          
+            });
+    }
+
     function validate_for_investigation_pathology() {
     // var pathology_test_date = $('#pathology_test_date').val();
     var pathology_category = $('#pathology_category').val();

@@ -58,11 +58,12 @@ class OpdFalseController extends Controller
         $todays_total_for_this_department_ori = OpdVisitDetails::where('appointment_date', 'like', $date .'%')->where('ins_by','=','ori')->where('department_id','=',$department_id)->count(); 
 
         $pathology_category = PathologyCatagory::get();
+        $radiology_category = RadiologyCatagory::get();
 
         $pathology_test_original = PathologyPatientTest::where('date','like', $date .'%')->where('ins_by','ori')->count(); 
 
         if (@$department_details) {
-            return view('false.opd.false_patient_list',compact('department_details','opd_registaion_list','date','department_id','pathology_category','radiology_category',     'todays_total_opd','todays_new','todays_revisit','todays_total_for_this_department','todays_total_opd_sys','todays_new_sys','todays_revisit_sys','todays_total_for_this_department_sys','todays_total_opd_ori','todays_new_ori','todays_revisit_ori','todays_total_for_this_department_ori','pathology_category'));
+            return view('false.opd.false_patient_list',compact('department_details','radiology_category','opd_registaion_list','date','department_id','pathology_category','radiology_category',     'todays_total_opd','todays_new','todays_revisit','todays_total_for_this_department','todays_total_opd_sys','todays_new_sys','todays_revisit_sys','todays_total_for_this_department_sys','todays_total_opd_ori','todays_new_ori','todays_revisit_ori','todays_total_for_this_department_ori','pathology_category'));
         } else {
             return redirect()->back()->with('success', 'Search Again !!!!');
         }
@@ -192,16 +193,7 @@ class OpdFalseController extends Controller
         try {
             DB::beginTransaction();
             $opd_patient_details = OpdDetails::select('opd_details.id as opd_id','opd_details.case_id','opd_details.patient_id')->leftjoin('opd_visit_details','opd_visit_details.opd_details_id','=','opd_details.id')->where('opd_visit_details.department_id','=',$request->pathology_department_id)->where('opd_visit_details.appointment_date','like',$request->pathology_date.'%')->limit($request->no_of_patient_for_pathology_test)->get();
-         //   dd($opd_patient_details);
 
-            // if($request->visit_type == 'New Visit')
-            // {
-            //     $patient_details = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->where('last_update', '<=', now()->subDays(15))->limit($request->no_of_patient)->get();
-            // }
-            // if($request->visit_type == 'Revisit')
-            // {
-            //     $patient_details = Patient::whereBetween('year', [$request->from_age, $request->to_age])->where('created_at', '<=', now()->subDays(15))->where('ins_by','sys')->limit($request->no_of_patient)->get();
-            // }
             if(@$opd_patient_details[0]->opd_id == null)
             {
                 return response()->json(['message'=>'You dont have enough patient']); 
@@ -213,7 +205,6 @@ class OpdFalseController extends Controller
             foreach($opd_patient_details as $value){
 
                 $pathology_test_details = PathologyTest::select('pathology_tests.id')->where('catagory_id',$request->pathology_category)->inRandomOrder()->first();
-               // dd($pathology_test_details);
 
                 $pathology_patient_test = new PathologyPatientTest();
                 $pathology_patient_test->case_id = $value->case_id;
@@ -221,6 +212,7 @@ class OpdFalseController extends Controller
                 $pathology_patient_test->section = 'OPD';
                 $pathology_patient_test->patient_id = $value->patient_id;
                 $pathology_patient_test->test_id = $pathology_test_details->id;
+                $pathology_patient_test->opd_id = $value->opd_id;
                 $pathology_patient_test->generated_by = Auth::user()->id;
                 $pathology_patient_test->billing_status = '1';
                 $pathology_patient_test->test_status = '3';
@@ -228,21 +220,6 @@ class OpdFalseController extends Controller
                 $pathology_patient_test->save();
             }
         }
-    
-        
-
-        
-
-
-            // $radiology_patient_test->case_id = $request->case_id;
-            // $radiology_patient_test->date = $request->date;
-            // $radiology_patient_test->section = 'OPD';
-            // $radiology_patient_test->patient_id = $request->patientId;
-            // $radiology_patient_test->test_id = $request->test_id;
-            // $radiology_patient_test->generated_by = Auth::user()->id;
-            // $radiology_patient_test->billing_status = '0';
-            // $radiology_patient_test->test_status = '0';
-            // $radiology_patient_test->save();
 
             DB::commit();
             return response()->json(['message'=>'Pathology Investigation added SuccessFully']); 
@@ -256,16 +233,6 @@ class OpdFalseController extends Controller
         try {
             DB::beginTransaction();
             $opd_patient_details = OpdDetails::select('opd_details.id as opd_id','opd_details.case_id','opd_details.patient_id')->leftjoin('opd_visit_details','opd_visit_details.opd_details_id','=','opd_details.id')->where('opd_visit_details.department_id','=',$request->radiology_department_id)->where('opd_visit_details.appointment_date','like',$request->radiology_date.'%')->limit($request->no_of_patient_for_radiology_test)->get();
-         //   dd($opd_patient_details);
-
-            // if($request->visit_type == 'New Visit')
-            // {
-            //     $patient_details = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->where('last_update', '<=', now()->subDays(15))->limit($request->no_of_patient)->get();
-            // }
-            // if($request->visit_type == 'Revisit')
-            // {
-            //     $patient_details = Patient::whereBetween('year', [$request->from_age, $request->to_age])->where('created_at', '<=', now()->subDays(15))->where('ins_by','sys')->limit($request->no_of_patient)->get();
-            // }
             if(@$opd_patient_details[0]->opd_id == null)
             {
                 return response()->json(['message'=>'You dont have enough patient']); 
@@ -273,17 +240,14 @@ class OpdFalseController extends Controller
 
         if(@$opd_patient_details[0]->opd_id != null)
         {  
-
             foreach($opd_patient_details as $value){
-
                 $radiology_test_details = RadiologyTest::select('radiology_tests.id')->where('catagory_id',$request->radiology_category)->inRandomOrder()->first();
-               // dd($radiology_test_details);
-
                 $radiology_patient_test = new RadiologyPatientTest();
                 $radiology_patient_test->case_id = $value->case_id;
-                $radiology_patient_test->date = $request->radiology_test_date;
+                $radiology_patient_test->date = $request->radiology_date;
                 $radiology_patient_test->section = 'OPD';
                 $radiology_patient_test->patient_id = $value->patient_id;
+                $radiology_patient_test->opd_id = $value->opd_id;
                 $radiology_patient_test->test_id = $radiology_test_details->id;
                 $radiology_patient_test->generated_by = Auth::user()->id;
                 $radiology_patient_test->billing_status = '1';
@@ -292,28 +256,34 @@ class OpdFalseController extends Controller
                 $radiology_patient_test->save();
             }
         }
-    
-        
-
-        
-
-
-            // $radiology_patient_test->case_id = $request->case_id;
-            // $radiology_patient_test->date = $request->date;
-            // $radiology_patient_test->section = 'OPD';
-            // $radiology_patient_test->patient_id = $request->patientId;
-            // $radiology_patient_test->test_id = $request->test_id;
-            // $radiology_patient_test->generated_by = Auth::user()->id;
-            // $radiology_patient_test->billing_status = '0';
-            // $radiology_patient_test->test_status = '0';
-            // $radiology_patient_test->save();
-
             DB::commit();
-            return response()->json(['message'=>'Pathology Investigation added SuccessFully']); 
+            return response()->json(['message'=>'Radiology Investigation added SuccessFully']); 
         } catch (\Throwable $th) {
             DB::rollback();
             return response()->json(['message'=>'Error!! Do it Again']);
         }
+    }
+
+    public function false_pathology_test_show_in_modal(Request $request)
+    {
+       
+       $radiology_test_deatils =  RadiologyPatientTest::select('radiology_tests.test_name','radiology_patient_tests.id as radiology_patient_tests_id')->leftjoin('radiology_tests','radiology_tests.id','=','radiology_patient_tests.test_id')->where('case_id',$request->caseId)->get();  
+       // dd($radiology_test_deatils);
+
+       $pathology_test_deatils =  PathologyPatientTest::select('pathology_tests.test_name','pathology_patient_tests.id as pathology_patient_tests_id')->leftjoin('pathology_tests','pathology_tests.id','=','pathology_patient_tests.test_id')->where('case_id',$request->caseId)->get();
+
+       return response()->json(['radiology_test_deatils'=>$radiology_test_deatils , 'pathology_test_deatils'=>$pathology_test_deatils]); 
+    }
+
+    public function delete_radiology_test_false($id)
+    {
+        RadiologyPatientTest::where('id',$id)->delete();
+        return redirect()->back()->with('success','Test Deleted Successfully');
+    }
+    public function delete_pathology_test_false($id)
+    {
+        PathologyPatientTest::where('id',$id)->delete();
+        return redirect()->back()->with('success','Test Deleted Successfully');
     }
             
     
