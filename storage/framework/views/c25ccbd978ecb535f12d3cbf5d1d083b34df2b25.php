@@ -3,15 +3,27 @@
 
 <div class="col-md-12">
     <div class="card">
-        <div class="card-header">
-            <div class="card-title">OPD // <span style="color:blue"><?php echo e(@$department_details->department_name); ?></span>
-                // <span><?php echo e(date('d-m-Y',strtotime($date))); ?></span></div>
+        <div class="card-header  d-block">
+            <div class="row">
+                <div class="col-md-6 card-title">
+                    OPD // <span style="color:blue"><?php echo e(@$department_details->department_name); ?></span>
+                    // <span><?php echo e(date('d-m-Y',strtotime($date))); ?></span>
+                </div>
+
+                <div class="col-md-6 text-right">
+                    <div class="d-block">
+                        <a class="btn btn-primary btn-sm" href="<?php echo e(route('opd-false-generation')); ?>"><i
+                                class="fa fa-reply"></i> Change Department</a>
+                    </div>
+                </div>
+
+            </div>
         </div>
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body p-0  mt-3">
             <div class="options px-5 pt-1  border-bottom pb-3">
                 <div class="row no-gutters">
-                    <div class="col-lg-4 col-xl-4 border-right">
+                    <div class="col-lg-3 col-xl-3 border-right">
                         <span style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> OPD
                             Registation</span>
                         <div class="col-md-12 mt-3">
@@ -129,7 +141,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-12 opd-bladedesign ">
-                                                <button class="btn btn-primary btn-sm text-center ml-2" type="button"
+                                                <button
+                                                    class="btn btn-primary btn-sm text-center ml-2" type="button"
                                                     onclick="validate()" name="save" value="save"><i
                                                         class="fa fa-plus"></i> Add OPD Registation</button>
                                             </div>
@@ -137,15 +150,78 @@ unset($__errorArgs, $__bag); ?>
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-xl-4 border-right">
+                    <div class="col-lg-3 col-xl-3 border-right">
                         <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i
-                                class="fa fa-cube"></i> Add Investigation</span>
+                                class="fa fa-cube"></i> Pathology Investigation</span>
                         <div class="col-md-12 mt-3">
-                            <form method="post" action="<?php echo e(route('registation-false-opd')); ?>">
+                            <form method="post" action="#">
                                 <?php echo csrf_field(); ?>
-                                <input type="hidden" id="department_id" name="department_id"
+                                <input type="hidden" id="pathology_department_id" name="pathology_department_id"
                                     value="<?php echo e($department_id); ?>" />
-                                <input type="hidden" id="date" name="date" value="<?php echo e($date); ?>" />
+                                <input type="hidden" id="pathology_date" name="pathology_date" value="<?php echo e($date); ?>" />
+                                <div class="row">
+                                    
+                                    <div class="form-group col-md-12 newuserlisttchange ">
+                                        <label for="gender"> Catagory <span class="text-danger">*</span></label>
+                                        <select name="pathology_category" class="form-control select2-show-search"
+                                            id="pathology_category" required>
+                                            <option value="">Select Category..</option>
+                                            <?php $__currentLoopData = $pathology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($value->id); ?>"> <?php echo e($value->catagory_name); ?>
+
+                                            </option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </select>
+                                        <?php $__errorArgs = ['pathology_category'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <small class="text-danger"><?php echo e($message); ?></small>
+                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                    </div>
+                                    <div class="form-group col-md-12 newaddappon ">
+                                        <label class="date-format"> No. of patient<span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" name="no_of_patient_for_pathology_test"
+                                            id="no_of_patient_for_pathology_test" required />
+                                        <?php $__errorArgs = ['no_of_patient_for_pathology_test'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <small class="text-danger"><?php echo e($message); ?></sma>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                    </div>
+                                    
+                                    
+                                    
+                                    
+
+                                    <div class="form-group col-md-12 opd-bladedesign ">
+                                        <button class="btn btn-primary btn-sm text-center ml-2" style="    margin-top: 66px;" type="button"
+                                            onclick="validate_for_investigation_pathology()" name="save" value="save"><i
+                                                class="fa fa-plus"></i> Add Pathology</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-xl-3 border-right">
+                        <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i
+                                class="fa fa-cube"></i> Radiology Investigation</span>
+                        <div class="col-md-12 mt-3">
+                            <form method="post" action="#">
+                                <?php echo csrf_field(); ?>
+                                <input type="hidden" id="radiology_department_id" name="radiology_department_id"
+                                    value="<?php echo e($department_id); ?>" />
+                                <input type="hidden" id="radiology_date" name="radiology_date" value="<?php echo e($date); ?>" />
                                 <?php $__errorArgs = ['department_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -167,73 +243,20 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                         <div class="row">
-                                            <div class="form-group col-md-12 newaddappon">
-                                                <label class="date-format ml-3"> Test Date<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="date" name="test_date" id="test_date" required />
-                                                <?php $__errorArgs = ['test_date'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <small class="text-danger"><?php echo e($message); ?></sma>
-                                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                            <div class="form-group col-md-6 newuserlisttchange ">
-                                                <label for="gender">Pathology Catagory <span
-                                                        class="text-danger">*</span></label>
-                                                <select name="gender" class="form-control select2-show-search"
-                                                    id="gender" required>
-                                                    <option value="">Select Pathology Category..</option>
-                                                    <?php $__currentLoopData = $pathology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($value->id); ?>"> <?php echo e($value->); ?>
-
-                                                    </option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </select>
-                                                <?php $__errorArgs = ['gender'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <small class="text-danger"><?php echo e($message); ?></small>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                            <div class="form-group col-md-6 newaddappon ">
-                                                <label class="date-format"> No. of patient<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" name="no_of_patient_for_pathology_test"
-                                                    id="no_of_patient_for_pathology_test" required />
-                                                <?php $__errorArgs = ['no_of_patient_for_pathology_test'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <small class="text-danger"><?php echo e($message); ?></sma>
-                                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                            <div class="form-group col-md-6 newuserlisttchange ">
-                                                <label for="gender">Radiology Catagory <span
-                                                        class="text-danger">*</span></label>
-                                                <select name="gender" class="form-control select2-show-search"
-                                                    id="gender" required>
-                                                    <option value="" >Select Radiology Category..</option>
+                                            
+                                            <div class="form-group col-md-12 newuserlisttchange ">
+                                                <label for="gender"> Catagory <span class="text-danger">*</span></label>
+                                                <select name="radiology_category"
+                                                    class="form-control select2-show-search" id="radiology_category"
+                                                    required>
+                                                    <option value="">Select Category..</option>
                                                     <?php $__currentLoopData = $radiology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($genders); ?>"> <?php echo e($genders); ?>
+                                                    <option value="<?php echo e($value->id); ?>"> <?php echo e($value->catagory_name); ?>
 
                                                     </option>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
-                                                <?php $__errorArgs = ['gender'];
+                                                <?php $__errorArgs = ['radiology_category'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -244,7 +267,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
-                                            <div class="form-group col-md-6 newaddappon ">
+                                            <div class="form-group col-md-12 newaddappon ">
                                                 <label class="date-format"> No. of patient<span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" name="no_of_patient_for_radiology_test"
@@ -260,31 +283,90 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
+                                            
+
                                             <div class="form-group col-md-12 opd-bladedesign ">
-                                                <button class="btn btn-primary btn-sm text-center ml-2" type="button"
-                                                    onclick="validate_for_investigation()" name="save" value="save"><i
-                                                        class="fa fa-plus"></i> Add Investigation</button>
+                                                <button class="btn btn-primary btn-sm text-center ml-2" type="button" style="    margin-top: 66px;"
+                                                    onclick="validate_for_investigation_radiology()" name="save"
+                                                    value="save"><i class="fa fa-plus"></i> Add Radiology</button>
                                             </div>
                                         </div>
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-xl-4">
+                    <div class="col-lg-3 col-xl-3">
                         <div class="col-md-12">
                             <div class="row">
                                 <div class="col-md-12">
                                     <ul class="list-group">
                                         <li class="list-group-item"><i class="fa fa-cog text-danger"
-                                                aria-hidden="true"></i> Today's total OPD Patient : </li>
+                                                aria-hidden="true"></i> Today's total OPD Patient : <?php echo e(@$todays_total_opd); ?> <br>
+                                            <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_total_opd_ori); ?></span> <span
+                                                class="badge badge-danger badge-pill">False : <?php echo e(@$todays_total_opd_sys); ?></span>
+                                        </li>
                                         <li class="list-group-item"><i class="fa fa-cog text-primary"
-                                                aria-hidden="true"></i> New Patient : </li>
+                                                aria-hidden="true"></i> New Patient : <?php echo e(@$todays_new); ?>
+
+                                            <br>
+                                            <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_new_ori); ?></span> <span class="badge badge-danger badge-pill">False : <?php echo e(@$todays_new_sys); ?></span>
+                                        </li>
                                         <li class="list-group-item"><i class="fa fa-cog text-success"
-                                                aria-hidden="true"></i> Revisit Patient : </li>
+                                                aria-hidden="true"></i> Revisit Patient : <?php echo e(@$todays_revisit); ?>
+
+                                            <br> <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_revisit_ori); ?></span> <span
+                                                class="badge badge-danger badge-pill">False : <?php echo e(@$todays_revisit_sys); ?></span>
+                                        </li>
                                         <li class="list-group-item"><i class="fa fa-cog text-warning"
-                                                aria-hidden="true"></i> Total for this Department : </li>
+                                                aria-hidden="true"></i> Total for this Department : <?php echo e(@$todays_total_for_this_department); ?>
+
+                                            <br> <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_total_for_this_department_ori); ?></span> <span
+                                                class="badge badge-danger badge-pill">False : <?php echo e(@$todays_total_for_this_department_sys); ?></span>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="options px-5 pt-1  border-bottom pb-3">
+                <div class="row no-gutters">
+                    <span style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i>
+                        Pathology</span>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <?php $__currentLoopData = $pathology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                             $ori_pathlogy = DB::table('pathology_patient_tests')->join('pathology_tests','pathology_tests.id','pathology_patient_tests.test_id')->where('pathology_tests.catagory_id',$value->id)->where('pathology_patient_tests.ins_by','ori')->where('pathology_patient_tests.date', 'like', $date .'%')->count();
+
+                             $sys_pathlogy = DB::table('pathology_patient_tests')->join('pathology_tests','pathology_tests.id','pathology_patient_tests.test_id')->where('pathology_tests.catagory_id',$value->id)->where('pathology_patient_tests.ins_by','sys')->where('pathology_patient_tests.date', 'like', $date .'%')->count();
+                              ?>
+                                <div class="col-md-2"><?php echo e($value->catagory_name); ?><br>
+                                    <span class="badge badge-success"><?php echo e($ori_pathlogy); ?></span>
+                                    <span class="badge badge-danger"><?php echo e($sys_pathlogy); ?></span>
+                                </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="options px-5 pt-1  border-bottom pb-3">
+                <div class="row no-gutters">
+                    <span style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i>
+                        Radiology</span>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <?php $__currentLoopData = $radiology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                             $ori_radiology = DB::table('radiology_patient_tests')->join('radiology_tests','radiology_tests.id','radiology_patient_tests.test_id')->where('radiology_tests.catagory_id',$value->id)->where('radiology_patient_tests.ins_by','ori')->where('radiology_patient_tests.date', 'like', $date .'%')->count();
+
+                             $sys_radiology = DB::table('radiology_patient_tests')->join('radiology_tests','radiology_tests.id','radiology_patient_tests.test_id')->where('radiology_tests.catagory_id',$value->id)->where('radiology_patient_tests.ins_by','sys')->where('radiology_patient_tests.date', 'like', $date .'%')->count();
+                              ?>
+                                <div class="col-md-2"><?php echo e($value->catagory_name); ?><br>
+                                    <span class="badge badge-success"><?php echo e($ori_radiology); ?></span>
+                                    <span class="badge badge-danger"><?php echo e($sys_radiology); ?></span>
+                                </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
                 </div>
@@ -308,6 +390,8 @@ unset($__errorArgs, $__bag); ?>
                             <tr>
                                 <td><a class="textlink"
                                         href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
+                                    <br>
+                                    <a href="#" onclick="showAllTest(<?php echo e($value->case_id); ?>)" class="badge badge-primary">Investigation</a>
                                 </td>
                                 <td>
                                     <?php echo e(@$value->all_patient_details->prefix); ?>
@@ -366,8 +450,174 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </div>
+<div class="modal" id="modaldemo1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">All Investigation</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12">
+                    <ul class="list-group" id="investigation">
+
+
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
 <script>
-    function validate() {
+    function showAllTest(case_id)
+    {
+        var div_pathology_radiology = '';
+        $.ajax({
+            url: "<?php echo e(route('false-pathology-test-show-in_modal')); ?>",
+                type: "POST",
+                data: {
+                    _token: '<?php echo e(csrf_token()); ?>',
+                    caseId:case_id,
+                },
+                success: function(response) {
+                    $.each(response.pathology_test_deatils, function(key, value) {
+                        div_pathology_radiology += `<li class="list-group-item"><i class="fa fa-flask text-info"
+                                aria-hidden="true"></i>${value.test_name}
+                        </li>`
+                    });
+                    $.each(response.radiology_test_deatils, function(key, value) {
+                        div_pathology_radiology += `<li class="list-group-item"><i class="fa fa-flask text-info"
+                                aria-hidden="true"></i> ${value.test_name}
+                        </li>`
+                    });
+                    $('#modaldemo1').modal('show');
+                    $('#investigation').html(div_pathology_radiology);
+                },
+                error: function(error) {
+                    alert(response.message);
+                }
+          
+            });
+    }
+
+    function validate_for_investigation_pathology() {
+    // var pathology_test_date = $('#pathology_test_date').val();
+    var pathology_category = $('#pathology_category').val();
+    var no_of_patient_for_pathology_test = $('#no_of_patient_for_pathology_test').val();
+
+    //   if( pathology_test_date == "" ) {
+    //      alert( "Select test date !!" );
+    //      return false;
+    //   }
+      if( pathology_category == "" ) {
+         alert( "Select Pathology Category" );
+         return false;
+      }
+      if( no_of_patient_for_pathology_test == "" ) {
+         alert( "Enter no of patient" );
+         return false;
+      }
+      savePatientopdpathology();
+   }
+
+   function savePatientopdpathology()
+   {
+    // var pathology_visit_type_ = $('#pathology_visit_type').val();
+    // var pathology_to_age_ = $('#pathology_to_age').val();
+    // var pathology_from_age_ = $('#pathology_from_age').val();
+    // var pathology_gender_ = $('#pathology_gender').val();
+    var no_of_patient_for_pathology_test_ = $('#no_of_patient_for_pathology_test').val();
+    var pathology_category_ = $('#pathology_category').val();
+    // var pathology_test_date_ = $('#pathology_test_date').val();
+    var pathology_date_ = $('#pathology_date').val();
+    var pathology_department_id_ = $('#pathology_department_id').val();
+
+        $.ajax({
+                url: "<?php echo e(route('false-pathology-test-add-opd')); ?>",
+                type: "POST",
+                data: {
+                    _token: '<?php echo e(csrf_token()); ?>',
+                    // pathology_visit_type : pathology_visit_type_,
+                    // pathology_to_age : pathology_to_age_,
+                    // pathology_from_age : pathology_from_age_,
+                    // pathology_gender : pathology_gender_,
+                    no_of_patient_for_pathology_test : no_of_patient_for_pathology_test_,
+                    pathology_category : pathology_category_,
+                    // pathology_test_date : pathology_test_date_,
+                    pathology_date : pathology_date_,
+                    pathology_department_id : pathology_department_id_,
+                },
+                success: function(response) {
+                    alert(response.message);
+                    location.reload();
+                },
+                error: function(error) {
+                    alert(response.message);
+                }
+            });
+   }
+   function validate_for_investigation_radiology() {
+    // var radiology_test_date = $('#radiology_test_date').val();
+    var radiology_category = $('#radiology_category').val();
+    var no_of_patient_for_radiology_test = $('#no_of_patient_for_radiology_test').val();
+
+    //   if( radiology_test_date == "" ) {
+    //      alert( "Select test date !!" );
+    //      return false;
+    //   }
+      if( radiology_category == "" ) {
+         alert( "Select Radiology Category" );
+         return false;
+      }
+      if( no_of_patient_for_radiology_test == "" ) {
+         alert( "Enter no of patient" );
+         return false;
+      }
+      savePatientopdradiology();
+   }
+   function savePatientopdradiology()
+   {
+    // var radiology_visit_type_ = $('#radiology_visit_type').val();
+    // var radiology_to_age_ = $('#radiology_to_age').val();
+    // var radiology_from_age_ = $('#radiology_from_age').val();
+    // var radiology_gender_ = $('#radiology_gender').val();
+    var no_of_patient_for_radiology_test_ = $('#no_of_patient_for_radiology_test').val();
+    var radiology_category_ = $('#radiology_category').val();
+    // var radiology_test_date_ = $('#radiology_test_date').val();
+    var radiology_date_ = $('#radiology_date').val();
+    var radiology_department_id_ = $('#radiology_department_id').val();
+
+        $.ajax({
+                url: "<?php echo e(route('false-radiology-test-add-opd')); ?>",
+                type: "POST",
+                data: {
+                    _token: '<?php echo e(csrf_token()); ?>',
+                    // radiology_visit_type : radiology_visit_type_,
+                    // radiology_to_age : radiology_to_age_,
+                    // radiology_from_age : radiology_from_age_,
+                    // radiology_gender : radiology_gender_,
+                    no_of_patient_for_radiology_test : no_of_patient_for_radiology_test_,
+                    radiology_category : radiology_category_,
+                    // radiology_test_date : radiology_test_date_,
+                    radiology_date : radiology_date_,
+                    radiology_department_id : radiology_department_id_,
+
+                },
+                success: function(response) {
+                    alert(response.message);
+                    location.reload();
+                },
+                error: function(error) {
+                    alert(response.message);
+                }
+            });
+    
+   }
+   function validate() {
     var visit_type_ = $('#visit_type').val();
     var to_age_ = $('#to_age').val();
     var from_age_ = $('#from_age').val();

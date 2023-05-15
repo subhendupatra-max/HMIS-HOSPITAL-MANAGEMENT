@@ -1,5 +1,5 @@
-@extends('layouts.layout')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header d-block">
@@ -11,27 +11,34 @@
                     <div class="d-block">
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            @include('Ipd.include.menu')
+                            <?php echo $__env->make('Ipd.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <form method="post" action="{{ route('add-new-charges-ipd') }}">
-            @csrf
-            <input type="hidden" name="case_id" value="{{ $ipd_details->case_id }}" />
+        <form method="post" action="<?php echo e(route('add-new-charges-ipd')); ?>">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="case_id" value="<?php echo e($ipd_details->case_id); ?>" />
             <input type="hidden" name="section" value="IPD" />
-            <input type="hidden" name="ipd_id" value="{{ $ipd_details->id }}" />
-            <input type="hidden" name="patient_id" value="{{ $ipd_details->patient_id }}" />
+            <input type="hidden" name="ipd_id" value="<?php echo e($ipd_details->id); ?>" />
+            <input type="hidden" name="patient_id" value="<?php echo e($ipd_details->patient_id); ?>" />
             <div class="card-body">
                 <div class="col-md-12 mb-2">
                     <div class="row">
                         <div class="col-md-4">
                             <label class="form-label"> Date <span class="text-danger">*</span></label>
-                            <input type="datetime-local" required class="form-control" name="date" value="{{ date('Y-m-d H:i') }}" />
-                            @error('date')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <input type="datetime-local" required class="form-control" name="date" value="<?php echo e(date('Y-m-d H:i')); ?>" />
+                            <?php $__errorArgs = ['date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                 </div>
@@ -65,133 +72,19 @@
                         </table>
                     </div>
                 </div>
-                {{-- <div class="row border-bottom">
-                        <div class="col-md-6">
-                            <div class="options px-5 pt-5 pb-3">
-                                <div class="container mt-5">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label class="form-label">Note </label>
-                                            <textarea class="form-control" name="note"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Payment Amount </label>
-                                            <input type="text" name="payment_amount" class="form-control" />
-                                            @error('payment_amount')
-                                                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Payment Mode</label>
-                <select class="form-control" name="payment_mode">
-                    <option value="">Select One...</option>
-                    @foreach (Config::get('static.payment_mode_name') as $lang => $payment_mode_name)
-                    <option value="{{ $payment_mode_name }}"> {{ $payment_mode_name }}
-                    </option>
-                    @endforeach
-                </select>
-                @error('payment_mode')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-    </div>
-</div>
-</div>
-</div> --}}
-{{-- <div class="col-md-6">
-                            <div class="options px-5 pt-5 pb-3">
-                                <div class="container mt-5">
-                                    <div class="d-flex justify-content-end">
-                                        <span class="biltext">Total</span>
-                                        <input type="text" name="total" readonly id="total_am"
-                                            class="form-control myfld">
-                                    </div> --}}
-{{-- <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" value="yes" /></span>
-                                    <div class="d-flex justify-content-end mt-2" id="discount_section" style="display:none !important;">
-                                        <span class="biltext">Discount (% / flat)</span>
-                                        <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
-                                            id="total_discount" class="form-control myfld">
-                                        <select name="discount_type" onchange="gettotal()" id="discount_type"
-                                            class="form-control myfld" style="width: 75px">
-                                            <option value="percentage" selected>%</option>
-                                            <option value="flat">Flat</option>
-                                        </select>
-                                    </div> --}}
-{{-- <div class="d-flex justify-content-end mt-2">
-                                        <span class="biltext">Tax</span>
-                                        <input type="text" name="total_tax" onkeyup="gettotal()" value="0"
-                                            id="total_tax" class="form-control myfld">
-                                    </div>
-                                    <div class="d-flex justify-content-end thrdarea">
-                                        <span class="biltext">Grand Total</span>
-                                        <input type="text" name="grand_total" readonly id="grnd_total" value="00"
-                                            class="form-control myfld">
-                                        @error('grand_total')
-                                            <br>
-                                            <span class="text-danger">{{ $message }}</span>
-@enderror
-</div> --}}
-{{-- </div>
-                            </div>
-                        </div>
-                    </div> --}}
-{{-- <div class="row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-8 add-medicinedesignn">
-                                            <label >Note </label>
-                                           
-                                            <input type="text" name="note" id="note" >
-                                        </div>
-                                        <div class="col-md-4 add-medicinedesignin">
-                                            <label>Payment Amount </label>
-                                            <input type="text" name="payment_amount"  />
-                                            @error('payment_amount')
-                                                <span class="text-danger">{{ $message }}</span>
-@enderror
-</div>
-<div class="col-md-4 add-medicinedesign">
-    <label>Payment Mode</label>
-    <select class="form-control" name="payment_mode">
-        <option value="">Select One...</option>
-        @foreach (Config::get('static.payment_mode_name') as $lang => $payment_mode_name)
-        <option value="{{ $payment_mode_name }}"> {{ $payment_mode_name }}
-        </option>
-        @endforeach
-    </select>
-    @error('payment_mode')
-    <span class="text-danger">{{ $message }}</span>
-    @enderror
-</div>
-</div>
-</div>
-<div class="col-md-6">
-    <div class="options px-5 pt-5  border-bottom pb-3">
-        <div class="container mt-5">
-            <div class="d-flex justify-content-end">
-                <span class="biltext">Total</span>
-                <input type="text" name="total" readonly id="total_am" class="form-control myfld">
-            </div>
-            @error('total')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</div> --}}
+                
+
+
+
+
+
 
 
 <div class="btn-list p-3">
     <button class="btn btn-primary btn-sm float-right mr-2" type="button" onclick="gettotal()"><i class="fa fa-file-invoice"></i> Billing</button>
-    {{-- <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
-                                class="fa fa-calculator"></i> Calculate</button> --}}
+    
     <button class="btn btn-primary btn-sm float-right mr-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
-    {{-- <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit"  value="save_and_print"><i
-                                class="fa fa-paste"></i> Save & Print</button> --}}
+    
 </div>
 </div>
 </form>
@@ -228,10 +121,11 @@
                             <td>
                                 <select class="form-control select2-show-search" name="charge_type[]" id="charge_type${i}" onchange="getchargetype_details(${i})">
                                     <option value=" " selected disable >Select One... </option>
-                                    @foreach (Config::get('static.charges_type') as $lang => $charges_type)
-                                        <option value="{{ $charges_type }}" > {{ $charges_type }}
+                                    <?php $__currentLoopData = Config::get('static.charges_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $charges_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($charges_type); ?>" > <?php echo e($charges_type); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </td>
                             <td>
@@ -307,11 +201,11 @@
         $('#charge_category' + row_id).empty();
         var div_data = '<option value="" >Select One..</option>';
         $.ajax({
-            url: "{{ route('get-category') }}",
+            url: "<?php echo e(route('get-category')); ?>",
             type: "post",
             data: {
                 chargeSet: charge_set,
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
             },
             dataType: 'json',
             success: function(res) {
@@ -337,12 +231,12 @@
         let charge_set = $('#charge_set' + row_id).val();
         var div_data = '<option value="">Select One..</option>';
         $.ajax({
-            url: "{{ route('get-subcategory-by-category') }}",
+            url: "<?php echo e(route('get-subcategory-by-category')); ?>",
             type: "post",
             data: {
                 categoryId: category_id,
                 chargeSet: charge_set,
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
             },
             dataType: 'json',
             success: function(res) {
@@ -370,14 +264,14 @@
         $('#charge_name' + row_id).empty();
         var div_data = '<option value="">Select One..</option>';
         $.ajax({
-            url: "{{ route('get-charge-name') }}",
+            url: "<?php echo e(route('get-charge-name')); ?>",
             type: "post",
             data: {
                 chargeSet: charge_set,
                 chargeType: charge_type,
                 chargeCategory: charge_category,
                 chargeSubCategory: charge_sub_category,
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
             },
             dataType: 'json',
             success: function(res) {
@@ -404,12 +298,12 @@
         $('#standard_charges' + row_id).empty();
 
         $.ajax({
-            url: "{{ route('get-charge-amount') }}",
+            url: "<?php echo e(route('get-charge-amount')); ?>",
             type: "post",
             data: {
                 chargeName: charge_name,
                 chargeSet: charge_set,
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
             },
             dataType: 'json',
             success: function(res) {
@@ -457,4 +351,5 @@
         // $('#grnd_total').val(grnd_total);
     }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/Ipd/charges/add-charges.blade.php ENDPATH**/ ?>

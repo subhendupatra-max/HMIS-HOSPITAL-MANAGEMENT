@@ -2010,6 +2010,20 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
     });
 });
 
+//================================= emg false section ===================================================
+Route::group(['middleware' => ['permission:Emg False Generation'], 'prefix' => 'false-patient'], function () {
+    Route::group(['middleware' => ['permission:Emg False'], 'prefix' => 'emg-false'], function () {
+        Route::get('emg', [EmgFalseController::class, 'index'])->name('emg-false-generation');
+        Route::post('false-emg-registation', [EmgFalseController::class, 'false_emg_registation'])->name('false-emg-registation');
+        Route::post('registation-false-emg', [EmgFalseController::class, 'registation_false_emg'])->name('registation-false-emg');
+        Route::post('false-pathology-test-add-emg', [EmgFalseController::class, 'false_pathology_test_add_emg'])->name('false-pathology-test-add-emg');
+        Route::post('false-radiology-test-add-emg', [EmgFalseController::class, 'false_radiology_test_add_emg'])->name('false-radiology-test-add-emg');
+        Route::post('false-pathology-test-show-in_modal', [EmgFalseController::class, 'false_pathology_test_show_in_modal'])->name('false-pathology-test-show-in_modal');
+        Route::get('delete-radiology-test-false/{id?}', [EmgFalseController::class, 'delete_radiology_test_false'])->name('delete-radiology-test-false');
+        Route::get('delete-pathology-test-false/{id?}', [EmgFalseController::class, 'delete_pathology_test_false'])->name('delete-pathology-test-false');
+    });
+});
+//================================= emg false section ===================================================
 
 //================================= Emg charges ====================================
 Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
