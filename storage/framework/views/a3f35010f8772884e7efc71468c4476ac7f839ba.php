@@ -24,7 +24,7 @@
             <form action="<?php echo e(route('save-discharged-patient-in-ipd')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <div class="row">
-                    <input type="hidden" name="ipd_id" value="<?php echo e($ipd_id); ?>" />
+                    <input type="hidden" name="ipd_id" value="<?php echo e($ipdId); ?>" />
                     <input type="hidden" name="case_id" value="<?php echo e($ipd_patient_details->case_id); ?>" />
                     <input type="hidden" name="patient_id" value="<?php echo e($ipd_patient_details->patient_id); ?>" />
 

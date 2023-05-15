@@ -11,18 +11,18 @@
                     <div class="d-block">
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            @include('emg.include.menu')
+                            @include('ipd.include.menu')
                         </div>
                     </div>
                 </div>
             </div>
-        </div>s
-        <form method="post" action="{{ route('add-new-charges-emg') }}">
+        </div>
+        <form method="post" action="{{ route('add-new-charges-ipd') }}">
             @csrf
-            <input type="hidden" name="case_id" value="{{ $emg_patient_details->case_id }}" />
-            <input type="hidden" name="section" value="EMG" />
-            <input type="hidden" name="emg_id" value="{{ $emg_patient_details->id }}" />
-            <input type="hidden" name="patient_id" value="{{ $emg_patient_details->patient_id }}" />
+            <input type="hidden" name="case_id" value="{{ $ipd_details->case_id }}" />
+            <input type="hidden" name="section" value="IPD" />
+            <input type="hidden" name="ipd_id" value="{{ $ipd_details->id }}" />
+            <input type="hidden" name="patient_id" value="{{ $ipd_details->patient_id }}" />
             <div class="card-body">
                 <div class="col-md-12 mb-2">
                     <div class="row">
