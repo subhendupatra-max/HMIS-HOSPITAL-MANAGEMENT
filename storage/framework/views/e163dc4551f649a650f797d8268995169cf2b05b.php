@@ -7,7 +7,7 @@
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ipd billing')): ?>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-billing' ? 'active' : ''); ?>" href="<?php echo e(route('ipd-billing', ['id' => base64_encode($ipd_details->id)])); ?>"><i class="fa fa-money-bill"></i> Billing</a>
 <?php endif; ?>
-<a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-profile' ? 'active' : ''); ?>" href="route('charges-list-ipd', ['id' => base64_encode(@$ipd_details->id)]) }}"><i class="fa fa-file-alt"></i>Add Charges</a>
+<a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-profile' ? 'active' : ''); ?>" href="<?php echo e(route('charges-list-ipd', ['id' => base64_encode(@$ipd_details->id)])); ?>"><i class="fa fa-file-alt"></i>Add Charges</a>
 
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-profile' ? 'active' : ''); ?>" href="<?php echo e(route('ipd-payment-details', ['ipd_id' => base64_encode($ipd_details->id)])); ?>"><i class="fa fa-rupee-sign"></i> Payment</a>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-profile' ? 'active' : ''); ?>" href="<?php echo e(route('bed-transfar-history-in-ipd', ['ipd_id' => base64_encode($ipd_details->id)])); ?>"><i class="fa fa-bed"></i> Bed History</a>
