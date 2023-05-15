@@ -78,7 +78,7 @@
                                         {{ @$opd_patient_details->patient_details->year == '0'?'':$opd_patient_details->patient_details->year.'Y' }}
                                         {{ @$opd_patient_details->patient_details->month == '0'?'':$opd_patient_details->patient_details->month.'M' }}
                                         {{ @$opd_patient_details->patient_details->day == '0'?'':$opd_patient_details->patient_details->day.'D' }}
-                                     
+
                                     </td>
                                 </tr>
                                 <tr colspan="2">
@@ -187,7 +187,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+
                                             @foreach ($PhysicalDetails as $item)
                                             <tr>
                                                 <td>{{@$item->height == null ?'':$item->height.' cm'}}</td>
@@ -198,7 +198,7 @@
                                                 <td>{{@$item->respiration == null ?'':$item->respiration.' b/m'}}</td>
                                             </tr>
                                             @endforeach
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -208,7 +208,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
@@ -228,7 +228,7 @@
                                             @foreach ($PathologyTestDetails as $item)
                                             <tr>
                                                 <td>{{ @$item->test_details->test_name }}</td>
-                                                <td>{{@date('d-m-Y h:i A',strtotime($item->date))}}</td> 
+                                                <td>{{@date('d-m-Y h:i A',strtotime($item->date))}}</td>
                                                 <td>
                                                     @if($item->billing_status == '0')
                                                     <span class="badge badge-warning">Billing Not Done</span>
@@ -237,7 +237,7 @@
                                                     @else
                                                     <span class="badge badge-warning">Charge Added</span>
                                                     @endif
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     @if($item->test_status == '0')
                                                     <span class="badge badge-warning">Sample Not Collected</span>
@@ -256,7 +256,7 @@
                             </div>
                         </div>
                     </div>
-                 
+
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
@@ -273,7 +273,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+
                                             @foreach ($RadiologyTestDetails as $item)
                                             <tr>
                                                 <td>{{ @$item->test_details->test_name }}</td>
@@ -286,7 +286,7 @@
                                                     @else
                                                     <span class="badge badge-warning">Charge Added</span>
                                                     @endif
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     @if($item->test_status == '0')
                                                     <span class="badge badge-warning">Sample Not Collected</span>
@@ -294,10 +294,10 @@
                                                     <span class="badge badge-success">Sample Collected</span>
                                                     @endif
                                                 </td>
-                                               
+
                                             </tr>
                                             @endforeach
-                                          
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -307,7 +307,7 @@
                             </div>
                         </div>
                     </div>
-              
+
                 </div>
                 {{-- ========================================================================================= --}}
             </div>

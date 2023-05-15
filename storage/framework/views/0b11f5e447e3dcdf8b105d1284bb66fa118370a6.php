@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="form-label">Billing Date <span class="text-danger">*</span></label>
-                                <input type="datetime-local" required class="form-control" name="bill_date" />
+                                <input type="datetime-local" required class="form-control" name="bill_date" value="<?php echo e(date('Y-m-d H:i')); ?>" />
                                 <?php $__errorArgs = ['bill_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -44,7 +44,6 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                     </div>
-
                     <div class="border-bottom border-top">
                         <div class="table-responsive">
                             <table class="table card-table table-vcenter text-nowrap">
@@ -53,14 +52,15 @@ unset($__errorArgs, $__bag); ?>
                                         <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
                                         </th>
-                                        <th scope="col" style="width: 15%">Category <span class="text-danger">*</span>
+                                        <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
                                         </th>
                                         <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
                                         </th>
-                                        <th scope="col" style="width: 20%">Charge Name <span class="text-danger">*</span>
+                                        <th scope="col" style="width: 15%">Charge Name <span class="text-danger">*</span>
                                         </th>
-                                        <th scope="col" style="width: 10%">Charges <span class="text-danger">*</span>
+                                        <th scope="col" style="width: 10%">Charge <span class="text-danger">*</span>
                                         </th>
+                                        <th scope="col" style="width: 10%">Qty <span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 10%">Tax <span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 10%">Amount <span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm"
@@ -69,18 +69,108 @@ unset($__errorArgs, $__bag); ?>
                                     </tr>
                                 </thead>
                                 <tbody id="chargeTable">
+                                    <?php if(@$old_applied_charges): ?>
+                                    <?php $__currentLoopData = $old_applied_charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <tr id="row<?php echo e($key); ?>" style="background-color:#e6f5ed">
+                                            <input type="hidden" name="old_or_new[]" value="old" />
+                                            <input type="hidden" name="charge_id_old[]" value="<?php echo e($value->id); ?>" />
+                                            <td>
+                                                
+                                                <select class="form-control select2-show-search" name="charge_set[]" id="charge_set<?php echo e($key); ?>">
+                                                    <option value="<?php echo e(@$value->charge_set); ?> " ><?php echo e(@$value->charge_set); ?> </option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type<?php echo e($key); ?>" >
 
+                                                        <option value="<?php echo e($value->charge_type); ?>" > <?php echo e($value->charge_type); ?>
+
+                                                        </option>
+                                                 
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control select2-show-search"  name="charge_category[]" id="charge_category<?php echo e($key); ?>">
+                                                    <option value="<?php echo e($value->charge_category); ?>"><?php echo e($value->charges_category_details->charges_catagories_name); ?></option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category<?php echo e($key); ?>" >
+                                                    <option value="<?php echo e($value->charge_sub_category); ?>"><?php echo e($value->charges_sub_category_details->charges_sub_catagories_name); ?></option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select class="form-control select2-show-search" name="charge_name[]" id="charge_name<?php echo e($key); ?>">
+                                                    <option value=<?php echo e($value->charge_name); ?>><?php echo e($value->charges_name_details->charges_name); ?></option>
+                                                </select>
+                                            </td>
+                
+                                            <td>
+                                                <input class="form-control" name="standard_charges[]" id="standard_charges<?php echo e($key); ?>" value="<?php echo e($value->standard_charges); ?>" readonly />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" value="<?php echo e($value->qty); ?>" readonly  name="qty[]" id="qty<?php echo e($key); ?>" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" value="<?php echo e($value->tax); ?>" readonly  name="tax[]" id="tax<?php echo e($key); ?>" />
+                                            </td>
+                                            <td>
+                                                <input class="form-control" value="<?php echo e($value->amount); ?>" readonly name="amount[]" id="amount<?php echo e($key); ?>" />
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger btn-sm"  type="button"
+                                                        onclick="rowRemove(<?php echo e($key); ?>)"><i class="fa fa-times"></i></button>
+                                            </td>
+                                        </tr>                                     
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="row border-bottom">
+                    <div class="border-bottom border-top">
+                       <span style="color: #ff6014;font-size: 14px;"> Are You want to add Medicine Bill ?<input type="checkbox" id="add_medicine_bill" name="add_medicine_bill" onchange="addMedicineBill(<?php echo e($opd_patient_details->case_id); ?>)" value="yes" /></span>
+                        <div class="table-responsive" id="fjafiao" style="display: none">
+                            <?php if(@$medicine_charges[0]->id != null || @$medicine_charges[0]->id != '' ): ?>
+                            <table class="table card-table table-vcenter text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
+                                        <th scope="col" style="width: 30%">Medicine Bill No. <span class="text-danger">*</span>
+                                        </th>
+                                        <th scope="col" style="width: 30%">Date <span class="text-danger">*</span>
+                                        </th>
+                                        <th scope="col" style="width: 20%">Amount <span class="text-danger">*</span>
+                                        <th scope="col" style="width: 10%"></th>
+                                
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $__currentLoopData = $medicine_charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr id="medicineRow<?php echo e($key); ?>">
+                                        <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id<?php echo e($key); ?>" value="<?php echo e($value->id); ?>" />
+                                        <td><?php echo e($loop->iteration); ?></td>
+                                        <td><?php echo e($value->bill_prefix); ?><?php echo e($value->id); ?></td>
+                                        <td><?php echo e(date('d-m-Y h:i a',strtotime($value->bill_date))); ?></td>
+                                        <td><input text="text" readonly class="form-control" name="medicine_amount[]" id="medicine_amount<?php echo e($key); ?>" value="<?php echo e($value->total_amount); ?>" /></td>
+                                        <td><button class="btn btn-danger btn-sm"  type="button"
+                                            onclick="medicinerowRemove(<?php echo e($key); ?>)"><i class="fa fa-times"></i></button></td>
+                                    </tr>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </tbody>
+                            </table>
+                            <?php else: ?>
+                            <span style="color:blue">Don't Have any bill !!</span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                     <div class="row border-bottom">
                         <div class="col-md-6">
                             <div class="options px-5 pt-5 pb-3">
                                 <div class="container mt-5">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label class="form-label">Note </label>
+                                            <label>Note </label>
                                             <textarea class="form-control" name="note"></textarea>
                                         </div>
                                         <div class="col-md-6">
@@ -121,16 +211,16 @@ unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-6">
+                        </div> 
+                         <div class="col-md-6">
                             <div class="options px-5 pt-5 pb-3">
                                 <div class="container mt-5">
                                     <div class="d-flex justify-content-end">
                                         <span class="biltext">Total</span>
                                         <input type="text" name="total" readonly id="total_am"
                                             class="form-control myfld">
-                                    </div>
-                                    <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" value="yes" /></span>
+                                    </div> 
+                                     <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" value="yes" /></span>
                                     <div class="d-flex justify-content-end mt-2" id="discount_section" style="display:none !important;">
                                         <span class="biltext">Discount (% / flat)</span>
                                         <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
@@ -140,8 +230,8 @@ unset($__errorArgs, $__bag); ?>
                                             <option value="percentage" selected>%</option>
                                             <option value="flat">Flat</option>
                                         </select>
-                                    </div>
-                                    <div class="d-flex justify-content-end mt-2">
+                                    </div> 
+                                     <div class="d-flex justify-content-end mt-2">
                                         <span class="biltext">Tax</span>
                                         <input type="text" name="total_tax" onkeyup="gettotal()" value="0"
                                             id="total_tax" class="form-control myfld">
@@ -161,11 +251,12 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                                    </div>
+                                    </div> 
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
+                   
 
                     <div class="btn-list p-3">
                         <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
@@ -183,7 +274,6 @@ unset($__errorArgs, $__bag); ?>
     </div>
     <script>
         function takeDiscount() {
-           // alert('ok');
             if (document.getElementById("take_discount").checked) {
                 $('#discount_section').removeAttr('style', true);
 
@@ -194,12 +284,26 @@ unset($__errorArgs, $__bag); ?>
             }
         }
     </script>
+    <script>
+        function addMedicineBill(case_id) {
+           // alert('ok');
+            if (document.getElementById("add_medicine_bill").checked) {
+                $('#fjafiao').removeAttr('style',true);
+                gettotal();
+            } else {
+                $('#fjafiao').attr('style','display:none',true);
+                gettotal();
+            }
+        }
+    </script>
 
     <script type="text/javascript">
-        var i = 1;
-
+        var i = $('#chargeTable tr').length;
+        i = i + 1;
         function addNewrow() {
             var html = `<tr id="row${i}">
+                        <input type="hidden" name="old_or_new[]" value="new" />
+                        <input type="hidden" name="charge_id[]" value="" />
                             <td>
                                 <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
                                     <option value="" disable >Select One..</option>
@@ -237,7 +341,10 @@ unset($__errorArgs, $__bag); ?>
                                 <input class="form-control" onkeyup="getamountwithtax(${i})" name="standard_charges[]" id="standard_charges${i}" />
                             </td>
                             <td>
-                                <input class="form-control"  onkeyup="getamountwithtax(${i})"  name="tax[]" id="tax${i}" />
+                                <input class="form-control" value="1" onkeyup="getamountwithtax(${i})"  name="qty[]" id="qty${i}" />
+                            </td>
+                            <td>
+                                <input class="form-control" value="0" onkeyup="getamountwithtax(${i})"  name="tax[]" id="tax${i}" />
                             </td>
                             <td>
                                 <input class="form-control" name="amount[]" id="amount${i}" />
@@ -257,6 +364,15 @@ unset($__errorArgs, $__bag); ?>
             $('#grnd_total' + row_id).val('0');
             $('#total_tax' + row_id).val('0');
             $(`#row${row_id}`).remove();
+            gettotal();
+        }
+        function medicinerowRemove(row_id) {
+            $('#total_discount' + row_id).val('0');
+            $('#total_am' + row_id).val('0');
+            $('#grnd_total' + row_id).val('0');
+            $('#total_tax' + row_id).val('0');
+            $(`#medicineRow${row_id}`).remove();
+            gettotal();
         }
 
         function getchargetype_details(row_id) {
@@ -367,6 +483,7 @@ unset($__errorArgs, $__bag); ?>
                     $('#charge_name' + row_id).append(div_data);
                 }
             });
+            
         }
 
         function getcharges(row_id) {
@@ -399,11 +516,14 @@ unset($__errorArgs, $__bag); ?>
 
         function getamountwithtax(row_id) {
 
-            let standard_charges = $('#standard_charges' + row_id).val();
+            let standard_chargesss = $('#standard_charges' + row_id).val();
             let tax = $('#tax' + row_id).val();
+            let qty = $('#qty' + row_id).val();
+            var standard_charges = parseFloat(standard_chargesss) * qty;
             let amount = parseFloat(standard_charges) + (parseFloat(standard_charges) * (parseFloat(tax) / 100));
             let amount_ = parseFloat(amount).toFixed(2);
             $('#amount' + row_id).val(amount_);
+            gettotal(row_id);
         }
     </script>
     <script type="text/javascript">
@@ -412,16 +532,24 @@ unset($__errorArgs, $__bag); ?>
             console.log('aaa=>', no_of_row);
 
             var t = 0;
+            var m = 0;
             $("input[name='amount[]']").map(function() {
                 t = t + parseFloat($(this).val());
             }).get();
-            $('#total_am').val(t);
+            if (document.getElementById("add_medicine_bill").checked) {
+                $("input[name='medicine_amount[]']").map(function() {
+                    m = m + parseFloat($(this).val());
+                }).get();
+            }
+
+            var t_m = parseFloat(t) + parseFloat(m)
+            $('#total_am').val(t_m.toFixed(2));
 
             var total_discount = $('#total_discount').val();
             if ($('#discount_type').val() == 'percentage') {
-                var r = parseFloat(t) - ((parseFloat(t)) * (parseFloat(total_discount) / 100));
+                var r = parseFloat(t_m) - ((parseFloat(t_m)) * (parseFloat(total_discount) / 100));
             } else {
-                var r = parseFloat(t) - parseFloat(total_discount);
+                var r = parseFloat(t_m) - parseFloat(total_discount);
             }
             var total_tax = $('#total_tax').val();
             if (total_tax != 0) {

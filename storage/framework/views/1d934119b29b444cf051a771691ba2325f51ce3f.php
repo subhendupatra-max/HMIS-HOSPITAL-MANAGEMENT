@@ -40,7 +40,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="weight" class="form-label">Weight(kg)<span class="text-danger">*</span></label>
+                        <label for="weight" class="form-label">Weight(kg)</label>
                         <input type="text" class="form-control" id="weight" name="weight" value="<?php echo e(old('weight')); ?>" />
                         <?php $__errorArgs = ['weight'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -55,7 +55,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="bp" class="form-label">BP<span class="text-danger">*</span></label>
+                        <label for="bp" class="form-label">BP</label>
                         <input type="text" class="form-control" id="bp" name="bp" value="<?php echo e(old('bp')); ?>" />
                         <?php $__errorArgs = ['weight'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -69,7 +69,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="pulse" class="form-label">Pulse<span class="text-danger">*</span></label>
+                        <label for="pulse" class="form-label">Pulse</label>
                         <input type="text" class="form-control" id="pulse" name="pulse" value="<?php echo e(old('pulse')); ?>" />
                         <?php $__errorArgs = ['pulse'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -84,7 +84,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="temperature" class="form-label">Temperature<span class="text-danger">*</span></label>
+                        <label for="temperature" class="form-label">Temperature</label>
                         <input type="text" class="form-control" id="temperature" name="temperature" value="<?php echo e(old('temperature')); ?>" />
                         <?php $__errorArgs = ['pulse'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -98,7 +98,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="respiration" class="form-label">Respiration<span class="text-danger">*</span></label>
+                        <label for="respiration" class="form-label">Respiration</label>
                         <input type="text" class="form-control" id="respiration" name="respiration" value="<?php echo e(old('respiration')); ?>" />
                         <?php $__errorArgs = ['respiration'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

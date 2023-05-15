@@ -262,7 +262,7 @@ class OpdController extends Controller
 
             $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
 
-            $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'opd_patient_physical_details.height', 'opd_patient_physical_details.weight', 'opd_patient_physical_details.bp', 'opd_patient_physical_details.respiration', 'opd_patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date', 'opd_visit_details.id as opd_visit_details_id','opd_details.id as opd_detailsId')
+            $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'opd_patient_physical_details.height', 'opd_patient_physical_details.weight', 'opd_patient_physical_details.bp', 'opd_patient_physical_details.respiration', 'opd_patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date', 'opd_visit_details.id as opd_visit_details_id', 'opd_details.id as opd_detailsId')
                 ->leftjoin('opd_details', 'opd_details.id', '=', 'opd_visit_details.opd_details_id')
                 ->leftjoin('patients', 'patients.id', '=', 'opd_details.patient_id')
                 ->leftjoin('opd_patient_physical_details', 'opd_patient_physical_details.opd_id', '=', 'opd_visit_details.opd_details_id')
@@ -271,9 +271,9 @@ class OpdController extends Controller
                 ->where('opd_visit_details.id', $opd_visit_details->id)
                 ->first();
 
-             DB::commit();
+            DB::commit();
             if ($request->save == 'save_and_print') {
-                return view('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image')).redirect('/opd/OPD-Patient-list');
+                return view('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image')) . redirect('/opd/OPD-Patient-list');
             } else {
                 return redirect()->route('OPD-Patient-list')->with('success', 'OPD Registation Sucessfully');
             }
@@ -307,19 +307,19 @@ class OpdController extends Controller
         $PhysicalDetails  =  OpdPatientPhysicalDetail::where('opd_id', $opd_id)->get();
         $payment_amount = Payment::where('opd_id', $opd_id)->sum('payment_amount');
         $billing_amount = Billing::where('opd_id', $opd_id)->sum('grand_total');
-        $PathologyTestDetails = PathologyPatientTest::where('case_id',$opd_patient_details->case_id)->get();
-        $RadiologyTestDetails = RadiologyPatientTest::where('case_id',$opd_patient_details->case_id)->get();
+        $PathologyTestDetails = PathologyPatientTest::where('case_id', $opd_patient_details->case_id)->get();
+        $RadiologyTestDetails = RadiologyPatientTest::where('case_id', $opd_patient_details->case_id)->get();
         // $opd_visit_details = OpdVisitDetails::where('opd_details_id',$opd_id)->get();
 
         //dd($PathologyTestDetails);
         $opd_visit_details = OpdVisitDetails::where('opd_details_id', $opd_id)->first();
-        return view('OPD.opd-patient-profile', compact('billing_amount', 'opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount','PathologyTestDetails','RadiologyTestDetails'));
+        return view('OPD.opd-patient-profile', compact('billing_amount', 'opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount', 'PathologyTestDetails', 'RadiologyTestDetails'));
     }
     public function prescription_print($id)
     {
         $opd_visit_id = base64_decode($id);
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
-        $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'opd_patient_physical_details.height', 'opd_patient_physical_details.weight', 'opd_patient_physical_details.bp', 'opd_patient_physical_details.respiration', 'opd_patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date', 'opd_visit_details.id as opd_visit_details_id','opd_details.id as opd_id','opd_details.case_id','opd_details.opd_prefix','states.name as state_name','districts.name as district_name','patients.pin_no','countries.country_name','patients.phone','patients.guardian_contact_no','patients.local_guardian_name','patients.local_guardian_contact_no','opd_visit_details.ticket_no')
+        $opd_patient_details = OpdVisitDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'opd_visit_details.patient_type', 'patients.address', 'patients.blood_group', 'opd_visit_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'opd_patient_physical_details.height', 'opd_patient_physical_details.weight', 'opd_patient_physical_details.bp', 'opd_patient_physical_details.respiration', 'opd_patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'opd_visit_details.appointment_date', 'opd_visit_details.id as opd_visit_details_id', 'opd_details.id as opd_id', 'opd_details.case_id', 'opd_details.opd_prefix', 'states.name as state_name', 'districts.name as district_name', 'patients.pin_no', 'countries.country_name', 'patients.phone', 'patients.guardian_contact_no', 'patients.local_guardian_name', 'patients.local_guardian_contact_no', 'opd_visit_details.ticket_no')
             ->leftjoin('opd_details', 'opd_details.id', '=', 'opd_visit_details.opd_details_id')
             ->leftjoin('patients', 'patients.id', '=', 'opd_details.patient_id')
             ->leftjoin('opd_patient_physical_details', 'opd_patient_physical_details.opd_id', '=', 'opd_visit_details.opd_details_id')
@@ -331,11 +331,10 @@ class OpdController extends Controller
             ->where('opd_visit_details.id', $opd_visit_id)
             ->first();
 
-        $pdf = PDF::loadView('OPD._print.opd_prescription', compact('opd_patient_details','header_image'));
+        $pdf = PDF::loadView('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image'));
         return $pdf->stream('opd-prescription.pdf');
 
         return redirect()->route('OPD-Patient-list')->with('success', ' Sucessfully');
-
     }
 
     //opd setup
@@ -568,7 +567,7 @@ class OpdController extends Controller
     {
         $opd_id = base64_decode($id);
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
-        $opd_charges_details = PatientCharge::where('ins_by', 'ori')->where('case_id',$opd_patient_details->case_id)->get();
+        $opd_charges_details = PatientCharge::where('ins_by', 'ori')->where('case_id', $opd_patient_details->case_id)->get();
         return view('OPD.charges.charges-list', compact('opd_id', 'opd_patient_details', 'opd_charges_details'));
     }
     public function add_charges($id)
@@ -578,16 +577,16 @@ class OpdController extends Controller
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
         return view('OPD.charges.add-charges', compact('opd_patient_details', 'opd_id', 'charge_category'));
     }
-    public function edit_charges($id,$charge_id)
+    public function edit_charges($id, $charge_id)
     {
         $opd_id = base64_decode($id);
         $chargeId = base64_decode($charge_id);
         $charge_category =  ChargesCatagory::all();
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
-        $patient_charge_details = PatientCharge::where('id',$chargeId)->first();
+        $patient_charge_details = PatientCharge::where('id', $chargeId)->first();
 
         //dd($patient_charge_details );
-        return view('OPD.charges.edit-charges', compact('opd_patient_details', 'opd_id', 'charge_category','patient_charge_details'));
+        return view('OPD.charges.edit-charges', compact('opd_patient_details', 'opd_id', 'charge_category', 'patient_charge_details'));
     }
     public function save_charges(Request $request)
     {
@@ -616,13 +615,11 @@ class OpdController extends Controller
                 $patient_charge->billing_status = '0';
                 $patient_charge->save();
 
-                if($request->charge_category[$key] == '1')
-                {
-                    $charge_detp = PathologyTest::where('charge',$request->charge_name[$key])->first();
-                    $chargedetailstestp = PathologyPatientTest::where('case_id',$request->case_id)->where('test_id',$charge_detp->id)->where('test_status','=','0')->first();
+                if ($request->charge_category[$key] == '1') {
+                    $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
+                    $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
 
-                    if($chargedetailstestp == null)
-                    {
+                    if ($chargedetailstestp == null) {
                         $pathology_patient_test = new PathologyPatientTest();
                         $pathology_patient_test->case_id = $request->case_id;
                         $pathology_patient_test->date = $request->date;
@@ -634,19 +631,16 @@ class OpdController extends Controller
                         $pathology_patient_test->billing_status = '2';
                         $pathology_patient_test->test_status = '0';
                         $pathology_patient_test->save();
-                    }
-                    else{
+                    } else {
                         $chargedetailstestp->billing_status = '2';
                         $chargedetailstestp->save();
                     }
                 }
-                if($request->charge_category[$key] == '2')
-                {
-                    $charge_detr = RadiologyTest::where('charge',$request->charge_name[$key])->first();
-                    $chargedetailstestr = RadiologyPatientTest::where('case_id',$request->case_id)->where('test_id',$charge_detr->id)->where('test_status','=','0')->where('test_id',$charge_detr->charge)->first();
+                if ($request->charge_category[$key] == '2') {
+                    $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
+                    $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
 
-                    if($chargedetailstest == null)
-                    {
+                    if ($chargedetailstestr == null) {
                         $radiology_patient_test = new RadiologyPatientTest();
                         $radiology_patient_test->case_id = $request->case_id;
                         $radiology_patient_test->date = $request->date;
@@ -658,10 +652,9 @@ class OpdController extends Controller
                         $radiology_patient_test->billing_status = '2';
                         $radiology_patient_test->test_status = '0';
                         $radiology_patient_test->save();
-                    }
-                    else{
-                        $chargedetailstest->billing_status = '2';
-                        $chargedetailstest->save(); 
+                    } else {
+                        $chargedetailstestr->billing_status = '2';
+                        $chargedetailstestr->save();
                     }
                 }
             }
@@ -692,7 +685,7 @@ class OpdController extends Controller
     {
         $opd_id = base64_decode($id);
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
-        
-        return view('OPD.prescription.prescription-list', compact('opd_patient_details','opd_id'));
+
+        return view('OPD.prescription.prescription-list', compact('opd_patient_details', 'opd_id'));
     }
 }

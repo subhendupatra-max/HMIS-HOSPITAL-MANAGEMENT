@@ -55,7 +55,7 @@
                                 $section_id = $ipd_details->id;
                             }
                             if ($value->section == 'EMG') {
-                                $opd_details = DB::table('emg_details')->where('case_id', $value->case_id)->first();
+                                $emg_details = DB::table('emg_details')->where('case_id', $value->case_id)->first();
                                 $section_id = $emg_details->id;
                             }
                             ?>

@@ -1548,16 +1548,16 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
 // ================================== Pharmacy Main =================
 
 // ================================== Inventory  ==============================
-Route::group(['middleware' => ['permission:Inventory']], function () {
+Route::group(['middleware' => ['permission:Inventory'], 'prefix' => 'inventory'], function () {
 
     Route::get('item-stock-listing', [ItemStockController::class, 'item_stock_details'])->name('item-stock-listing');
 
     // ================================== Inventory requisition  ==============================
-    Route::group(['middleware' => ['permission:View Inventory Reqiuisition']], function () {
+    Route::group(['middleware' => ['permission:View Inventory Reqiuisition'], 'prefix' => 'inventory-requisition'], function () {
 
         Route::get('all-inventory-requisition-listing', [ItemRequisitionController::class, 'inventory_requisition_listing'])->name('all-inventory-requisition-listing');
 
-        Route::group(['middleware' => ['permission:Add Inventory Reqiuisition']], function () {
+        Route::group(['middleware' => ['permission:Add Inventory Reqiuisition'], 'prefix' => 'inventory-add-requisition'], function () {
 
             Route::get('add-inventory-requisition-details', [ItemRequisitionController::class, 'add_inventory_requisition_details'])->name('add-inventory-requisition-details');
             Route::post('save-inventory-requisition-details', [ItemRequisitionController::class, 'save_inventory_requisition_details'])->name('save-inventory-requisition-details');
@@ -1885,12 +1885,12 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::get('opd-pathology-investigation/{id}', [OpdController::class, 'opd_pathology_investigation'])->name('opd-pathology-investigation');
     });
     //================================= OPD Pathology ====================================
-    //================================= OPD billing ====================================
+    //================================= OPD radiology ====================================
     Route::group(['middleware' => ['permission:OPD Pathology Investigation']], function () {
         Route::get('opd-radiology-investigation/{id}', [OpdController::class, 'opd_radiology_investigation'])->name('opd-radiology-investigation');
     });
-    //================================= OPD billing ====================================
-    
+    //================================= OPD radiology ====================================
+
 
     //================================= OPD timeline ====================================
     Route::group(['middleware' => ['permission:timeline list opd'], 'prefix' => 'opd-timeline'], function () {
@@ -1956,11 +1956,11 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
             Route::get('edit-opd-charges/{id?}/{charge_id?}', [OpdController::class, 'edit_charges'])->name('edit-opd-charges');
             Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
         });
-
     });
     //================================= OPD charges ====================================
+
     //================================= OPD prescription ====================================
-Route::group(['middleware' => ['permission:Create Prescription for OPD'], 'prefix' => 'create-prescription-opd'], function () {
+    Route::group(['middleware' => ['permission:Create Prescription for OPD'], 'prefix' => 'create-prescription-opd'], function () {
         Route::get('opd-prescription-list/{id?}', [OpdController::class, 'opd_prescription_list'])->name('opd-prescription-list');
         Route::post('add-new-charges1', [OpdController::class, 'save_charges'])->name('add-new-charges');
     });
@@ -2011,6 +2011,31 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
 });
 
 
+//================================= Emg charges ====================================
+Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
+    Route::get('charges-list-emg/{id?}', [EmgController::class, 'charge_list'])->name('charges-list-emg');
+    Route::group(['middleware' => ['permission:add emg charges']], function () {
+        Route::get('add-emg-charges/{id?}', [EmgController::class, 'add_charges'])->name('add-emg-charges');
+        Route::post('add-new-charges-emg', [EmgController::class, 'save_charges'])->name('add-new-charges-emg');
+    });
+    Route::group(['middleware' => ['permission:edit emg charges']], function () {
+        Route::get('edit-emg-charges/{id?}/{charge_id?}', [EmgController::class, 'edit_charges'])->name('edit-emg-charges');
+        Route::post('add-new-charges-emg', [EmgController::class, 'save_charges'])->name('add-new-charges-emg');
+    });
+});
+//================================= Emg charges ====================================
+
+
+//================================= Emg Pathology ====================================
+Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
+    Route::get('emg-pathology-investigation/{id}', [EmgController::class, 'emg_pathology_investigation'])->name('emg-pathology-investigation');
+});
+//================================= Emg Pathology ====================================
+//================================= Emg radiology ====================================
+Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
+    Route::get('emg-radiology-investigation/{id}', [EmgController::class, 'emg_radiology_investigation'])->name('emg-radiology-investigation');
+});
+//================================= Emg radiology ====================================
 
 
 //================================= emg Physical Condition ====================================
@@ -2293,6 +2318,21 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
     // =============================== Timeline ipd ====================================================
 
+    //================================= Ipd charges ====================================
+    Route::group(['middleware' => ['permission:patient charges in ipd'], 'prefix' => 'patient-charge'], function () {
+        Route::get('charges-list-ipd/{id?}', [IpdController::class, 'charge_list_in_ipd'])->name('charges-list-ipd');
+        Route::group(['middleware' => ['permission:add ipd charges']], function () {
+            Route::get('add-ipd-charges/{id?}', [IpdController::class, 'add_charges_ipd'])->name('add-ipd-charges');
+            Route::post('add-new-charges-ipd', [IpdController::class, 'save_charges_ipd'])->name('add-new-charges-ipd');
+        });
+        Route::group(['middleware' => ['permission:edit ipd charges']], function () {
+            Route::get('edit-ipd-charges/{id?}/{charge_id?}', [IpdController::class, 'edit_charges_ipd'])->name('edit-ipd-charges');
+            Route::post('add-new-charges-ipd', [IpdController::class, 'save_charges_ipd'])->name('add-new-charges-ipd');
+        });
+    });
+    //================================= Ipd charges ====================================
+
+
     //================================= Ipd Physical Condition ====================================
     Route::group(['middleware' => ['permission:ipd physical condition'], 'prefix' => 'ipd-physical-condition'], function () {
         Route::get('physical-condition-in-ipd/{ipd_id}', [PhysicalConditionController::class, 'physical_condition_listing_in_ipd'])->name('physical-condition-in-ipd');
@@ -2349,6 +2389,34 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         });
     });
     // =============================== Nurse Note ==================================================
+
+    //================================= ipd Pathology ====================================
+    Route::group(['middleware' => ['permission:ipd Pathology Investigation']], function () {
+        Route::get('ipd-pathology-investigation/{id}', [IpdController::class, 'ipd_pathology_investigation'])->name('ipd-pathology-investigation');
+    });
+    //================================= ipd Pathology ====================================
+    //================================= ipd radiology ====================================
+    Route::group(['middleware' => ['permission:ipd Pathology Investigation']], function () {
+        Route::get('ipd-radiology-investigation/{id}', [IpdController::class, 'ipd_radiology_investigation'])->name('ipd-radiology-investigation');
+    });
+    //================================= ipd radiology ====================================
+    // dddd
+    //================================= IPD billing ====================================
+    Route::group(['middleware' => ['permission:ipd billing'], 'prefix' => 'ipd-billing'], function () {
+        Route::get('ipd-billing/{id}', [BillingController::class, 'ipd_billing_index'])->name('ipd-billing');
+        Route::group(['middleware' => ['permission:add ipd billing']], function () {
+            Route::get('add-ipd-billing/{id}', [BillingController::class, 'create_billing_in_ipd'])->name('add-ipd-billing');
+            Route::post('add-new-ipd-billing', [BillingController::class, 'save_new_ipd_billing'])->name('add-new-ipd-billing');
+        });
+        Route::get('ipd-bill-details/{bill_id}', [BillingController::class, 'bill_details_for_ipd'])->name('ipd-bill-details');
+        Route::group(['middleware' => ['permission:edit ipd billing']], function () {
+            Route::get('edit-ipd-bill/{bill_id}', [BillingController::class, 'edit_ipd_bill'])->name('edit-ipd-bill');
+        });
+        Route::group(['middleware' => ['permission:delete ipd billing']], function () {
+            Route::get('delete-ipd-bill/{bill_id}', [BillingController::class, 'delete_ipd_bill'])->name('delete-ipd-bill');
+        });
+    });
+    //================================= IPD billing ====================================
 
     // =============================== Medication ==================================================
     Route::group(['middleware' => ['permission:save medication']], function () {
