@@ -101,8 +101,9 @@
                                     </h3>
                                 </div>
                                 <div class="table-responsive">
-                                    <table class="table card-table table-vcenter text-nowrap table-danger">
-                                        <thead class="bg-primary text-white">
+                                    <!-- <table class="table card-table table-vcenter text-nowrap table-danger"> -->
+                                    <table class="table card-table table-vcenter text-primary table-white ">
+                                    <thead class="bg-primary text-white">
                                             <tr>
                                                 <th class="text-white">ID</th>
                                                 <th class="text-white">Bags</th>
@@ -112,9 +113,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php $__currentLoopData = $components; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
-
+                                                <td><?php echo e($loop->iteration); ?></td>
+                                                <td><?php echo e(@$item->getComponentsDetails->bag); ?></td>
+                                                <td><?php echo e(@$item->getComponentsDetails->lot); ?></td>
+                                                <td><?php echo e(@$item->getComponentsDetails->institution); ?></td>
+                                                <td>
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('View blood components Details')): ?>
+                                                    <a href="<?php echo e(route('add-blood-issue-details',['blood_group_id'=> base64_encode($blood_groups_details_for_this_blood_group->id) , 'id'=> base64_encode($item->id)  ])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Issue </a>
+                                                    <?php endif; ?>
+                                                </td>
                                             </tr>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </tbody>
                                     </table>
                                 </div>
