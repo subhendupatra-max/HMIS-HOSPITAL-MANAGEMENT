@@ -235,13 +235,13 @@
 
 
 
-                                <hr class="hr_line">
-                                <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to
+                                <!-- <hr class="hr_line"> -->
+                                <!-- <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to
                                     Share Patient's Physical Condition
                                     ?</span>
+ -->
 
-
-                                <div class="row" id="physical_condition" style="display: none">
+                                <!-- <div class="row" id="physical_condition" style="display: none">
                                     <div class="col-md-2 emgcondition">
                                         <label for="height" class="form-label">Height(cm)</label>
                                         <input type="text" class="form-control" id="height" name="height" value="{{ old('height') }}" />
@@ -300,10 +300,10 @@
                                         <label for="symptoms_description"> Symptoms
                                             Description<span class="text-danger">*</span> </label>
                                     </div>
-                                </div>
+                                </div> -->
 
 
-                                <hr class="hr_line">
+                                <!-- <hr class="hr_line"> -->
                                 <div class="row">
                                     <div class="col-md-6 emgregistext ">
                                         {{-- <label class="form-label">Note</label>

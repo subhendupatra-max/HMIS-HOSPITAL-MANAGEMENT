@@ -130,22 +130,22 @@ class EmgController extends Controller
         $emg_patient_details->save();
         //SAVE in Emg Patient details
 
-        $patient_physical_condition = new EmgPatientPhysicalDetail();
-        $patient_physical_condition->emg_id                      = $Emg_details->id;
-        $patient_physical_condition->bp                          = $request->bp;
-        $patient_physical_condition->height                      = $request->height;
-        $patient_physical_condition->weight                      = $request->weight;
-        $patient_physical_condition->pulse                       = $request->pulse;
-        $patient_physical_condition->temperature                 = $request->temperature;
-        $patient_physical_condition->respiration                 = $request->respiration;
-        $patient_physical_condition->save();
+        // $patient_physical_condition = new EmgPatientPhysicalDetail();
+        // $patient_physical_condition->emg_id                      = $Emg_details->id;
+        // $patient_physical_condition->bp                          = $request->bp;
+        // $patient_physical_condition->height                      = $request->height;
+        // $patient_physical_condition->weight                      = $request->weight;
+        // $patient_physical_condition->pulse                       = $request->pulse;
+        // $patient_physical_condition->temperature                 = $request->temperature;
+        // $patient_physical_condition->respiration                 = $request->respiration;
+        // $patient_physical_condition->save();
         DB::commit();
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
 
-        $emg_patient_details = EmgPatientDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'emg_patient_details.patient_type', 'patients.address', 'patients.blood_group', 'emg_patient_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'patient_physical_details.height', 'patient_physical_details.weight', 'patient_physical_details.bp', 'patient_physical_details.respiration', 'patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'emg_patient_details.appointment_date', 'emg_patient_details.medico_legal_case', 'emg_details.emg_prefix', 'emg_details.id as emg_id')
+        $emg_patient_details = EmgPatientDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'emg_patient_details.patient_type', 'patients.address', 'patients.blood_group', 'emg_patient_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'emg_patient_physical_details.height', 'emg_patient_physical_details.weight', 'emg_patient_physical_details.bp', 'emg_patient_physical_details.respiration', 'emg_patient_physical_details.temperature', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'emg_patient_details.appointment_date', 'emg_patient_details.medico_legal_case', 'emg_details.emg_prefix', 'emg_details.id as emg_id')
             ->join('emg_details', 'emg_details.id', '=', 'emg_patient_details.emg_details_id')
             ->join('patients', 'patients.id', '=', 'emg_details.patient_id')
-            ->join('patient_physical_details', 'patient_physical_details.emg_patient_details_id', '=', 'emg_patient_details.id')
+            ->join('emg_patient_physical_details', 'emg_patient_physical_details.emg_id', '=', 'emg_patient_details.id')
             ->join('users', 'users.id', '=', 'emg_patient_details.cons_doctor')
             ->join('departments', 'departments.id', '=', 'emg_patient_details.department_id')
             ->where('emg_patient_details.id', $emg_patient_details->id)

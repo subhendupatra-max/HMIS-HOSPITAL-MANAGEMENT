@@ -110,13 +110,14 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-12 newaddappon">
-                                                <label for="visit_type">Visit Type <span class="text-danger">*</span></label>
-                                                <select name="visit_type" id="visit_type" class="form-control select2-show-search" id="visit_type" required>
+                                                <label for="cons_doctor">Doctor<span class="text-danger">*</span></label>
+                                                <select name="cons_doctor" id="cons_doctor" class="form-control select2-show-search" id="cons_doctor" required>
                                                     <option value="">Select One</option>
-                                                    <option value="New Visit">New-Visit</option>
-                                                    <option value="Revisit">Revisit</option>
+                                                    <?php $__currentLoopData = $doctor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($item->id); ?>"><?php echo e($item->first_name); ?> <?php echo e($item->last_name); ?></option>
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
-                                                <?php $__errorArgs = ['visit_type'];
+                                                <?php $__errorArgs = ['cons_doctor'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -276,10 +277,7 @@ unset($__errorArgs, $__bag); ?>
                         <br>
                         <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_new_ori); ?></span> <span class="badge badge-danger badge-pill">False : <?php echo e(@$todays_new_sys); ?></span>
                     </li>
-                    <li class="list-group-item"><i class="fa fa-cog text-success" aria-hidden="true"></i> Revisit Patient : <?php echo e(@$todays_revisit); ?>
-
-                        <br> <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_revisit_ori); ?></span> <span class="badge badge-danger badge-pill">False : <?php echo e(@$todays_revisit_sys); ?></span>
-                    </li>
+                   
                     <li class="list-group-item"><i class="fa fa-cog text-warning" aria-hidden="true"></i> Total for this Department : <?php echo e(@$todays_total_for_this_department); ?>
 
                         <br> <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_total_for_this_department_ori); ?></span> <span class="badge badge-danger badge-pill">False : <?php echo e(@$todays_total_for_this_department_sys); ?></span>
