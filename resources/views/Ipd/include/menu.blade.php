@@ -1,3 +1,4 @@
+<div class="scrollable">
 <a class="dropdown-item {{ Request::segment(2) == 'ipd-profile' ? 'active' : '' }}" href=""><i class="fa fa-home"></i> Profile</a>
 <a class="dropdown-item {{ Request::segment(2) == 'ipd-profile' ? 'active' : '' }}" href="{{ route('add-oxygen-monitoring-details', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-dna"></i> Oxygen Monitoring</a>
 <a class="dropdown-item {{ Request::segment(2) == 'ipd-profile' ? 'active' : '' }}" href="{{ route('show-medicaiton-dose', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-tablets"></i> Medication</a>
@@ -21,3 +22,4 @@
 <a class="dropdown-item {{ Request::segment(2) == 'ipd-radiology-investigation' ? 'active' : '' }}" href="{{ route('ipd-radiology-investigation', ['id' => base64_encode($ipd_details->id)]) }}"> <i class="fa fa-x-ray"></i> Radiology Investigation</a>
 @endcan
 <a class="dropdown-item {{ Request::segment(2) == 'ipd-timeline' ? 'active' : '' }}" href="{{ route('discharged-patient-in-ipd', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="far fa-calendar-check"></i> Timeline</a>
+</div>

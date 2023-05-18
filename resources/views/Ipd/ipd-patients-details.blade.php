@@ -11,10 +11,10 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        @can('')
+                        {{-- @can('')
                         <a href="#" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
                             Add Patient</a>
-                        @endcan
+                        @endcan --}}
 
                         @can('')
                         <a href="{{ route('all-discharged-patient-in-ipd') }}" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
@@ -30,7 +30,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table card-table table-vcenter text-nowrap table-default">
+                <table class="table table-bordered text-nowrap" id="example">
                     <thead>
                         <tr>
                             <th scope="col">IPD Id</th>
@@ -40,7 +40,6 @@
                             <th scope="col">Admission Date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
-
                         </tr>
                     </thead>
                     <tbody>

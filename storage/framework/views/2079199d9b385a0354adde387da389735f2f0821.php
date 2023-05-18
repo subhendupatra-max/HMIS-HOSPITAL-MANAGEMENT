@@ -11,10 +11,7 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
-                            Add Patient</a>
-                        <?php endif; ?>
+                        
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
                         <a href="<?php echo e(route('all-discharged-patient-in-ipd')); ?>" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
@@ -30,7 +27,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table card-table table-vcenter text-nowrap table-default">
+                <table class="table table-bordered text-nowrap" id="example">
                     <thead>
                         <tr>
                             <th scope="col">IPD Id</th>
