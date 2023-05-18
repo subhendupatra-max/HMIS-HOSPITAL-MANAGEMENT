@@ -348,7 +348,7 @@ $login_details = DB::table('users')
                                 <li><a href="{{ route('opd-false-generation') }}" class="slide-item {{ Request::segment(2) == 'opd-false' ? 'active' : '' }}"> OPD</a></li>
                                 @endif
                                 @if (auth()->user()->can('EMG False'))
-                                <li><a href="{{ route('user-list') }}" class="slide-item {{ Request::segment(2) == 'emg-false' ? 'active' : '' }}"> EMG</a></li>
+                                <li><a href="{{ route('emg-false-generation') }}" class="slide-item {{ Request::segment(2) == 'emg-false' ? 'active' : '' }}"> EMG</a></li>
                                 @endif
                                 @if (auth()->user()->can('IPD False'))
                                 <li><a href="{{ route('user-list') }}" class="slide-item {{ Request::segment(2) == 'ipd-false' ? 'active' : '' }}"> IPD</a></li>
