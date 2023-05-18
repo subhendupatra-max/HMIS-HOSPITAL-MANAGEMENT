@@ -275,8 +275,8 @@
                                                 }}</span> <span class="badge badge-danger badge-pill">False : {{
                                                 @$todays_new_sys }}</span>
                     </li>
-                   {{-- <li class="list-group-item"><i class="fa fa-cog text-success" aria-hidden="true"></i> Revisit Patient : {{ @$todays_revisit }}
-                        <br> <span class="badge badge-success badge-pill">Original : {{
+                    {{-- <li class="list-group-item"><i class="fa fa-cog text-success" aria-hidden="true"></i> Revisit Patient : {{ @$todays_revisit }}
+                    <br> <span class="badge badge-success badge-pill">Original : {{
                                                 @$todays_revisit_ori }}</span> <span class="badge badge-danger badge-pill">False : {{ @$todays_revisit_sys
                                                 }}</span>
                     </li> --}}

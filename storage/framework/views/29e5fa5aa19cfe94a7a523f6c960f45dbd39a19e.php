@@ -6,10 +6,15 @@
         <div class="card-header  d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    EMG
+                    IPD // <span style="color:blue"><?php echo e(@$department_details->department_name); ?></span>
                     // <span><?php echo e(date('d-m-Y',strtotime($date))); ?></span>
                 </div>
 
+                <div class="col-md-6 text-right">
+                    <div class="d-block">
+                        <a class="btn btn-primary btn-sm" href="<?php echo e(route('ipd-false-generation')); ?>"><i class="fa fa-reply"></i> Change Department</a>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -18,12 +23,12 @@
             <div class="options px-5 pt-1  border-bottom pb-3">
                 <div class="row no-gutters">
                     <div class="col-lg-3 col-xl-3 border-right">
-                        <span style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> EMG
+                        <span style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> IPD
                             Registation</span>
                         <div class="col-md-12 mt-3">
-                            <form method="post" action="<?php echo e(route('registation-false-emg')); ?>">
+                            <form method="post" action="<?php echo e(route('registation-false-ipd')); ?>">
                                 <?php echo csrf_field(); ?>
-
+                                <input type="hidden" id="department_id" name="department_id" value="<?php echo e($department_id); ?>" />
                                 <input type="hidden" id="date" name="date" value="<?php echo e($date); ?>" />
                                 <?php $__errorArgs = ['department_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -129,7 +134,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-12 opd-bladedesign ">
-                                                <button class="btn btn-primary btn-sm text-center ml-2" type="button" onclick="validate()" name="save" value="save"><i class="fa fa-plus"></i> Add EMG Registation</button>
+                                                <button class="btn btn-primary btn-sm text-center ml-2" type="button" onclick="validate()" name="save" value="save"><i class="fa fa-plus"></i> Add IPD Registation</button>
                                             </div>
                                         </div>
                             </form>
@@ -140,7 +145,7 @@ unset($__errorArgs, $__bag); ?>
                         <div class="col-md-12 mt-3">
                             <form method="post" action="#">
                                 <?php echo csrf_field(); ?>
-
+                                <input type="hidden" id="pathology_department_id" name="pathology_department_id" value="<?php echo e($department_id); ?>" />
                                 <input type="hidden" id="pathology_date" name="pathology_date" value="<?php echo e($date); ?>" />
                                 <div class="row">
                                     
@@ -196,7 +201,7 @@ unset($__errorArgs, $__bag); ?>
         <div class="col-md-12 mt-3">
             <form method="post" action="#">
                 <?php echo csrf_field(); ?>
-
+                <input type="hidden" id="radiology_department_id" name="radiology_department_id" value="<?php echo e($department_id); ?>" />
                 <input type="hidden" id="radiology_date" name="radiology_date" value="<?php echo e($date); ?>" />
                 <?php $__errorArgs = ['department_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -269,15 +274,18 @@ unset($__errorArgs, $__bag); ?>
         <div class="row">
             <div class="col-md-12">
                 <ul class="list-group">
-                    <li class="list-group-item"><i class="fa fa-cog text-danger" aria-hidden="true"></i> Today's total Emg Patient : <?php echo e(@$todays_total_emg); ?> <br>
-                        <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_total_emg_ori); ?></span> <span class="badge badge-danger badge-pill">False : <?php echo e(@$todays_total_emg_sys); ?></span>
+                    <li class="list-group-item"><i class="fa fa-cog text-danger" aria-hidden="true"></i> Today's total IPD Patient : <?php echo e(@$todays_total_ipd); ?> <br>
+                        <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_total_ipd_ori); ?></span> <span class="badge badge-danger badge-pill">False : <?php echo e(@$todays_total_ipd_sys); ?></span>
                     </li>
                     <li class="list-group-item"><i class="fa fa-cog text-primary" aria-hidden="true"></i> New Patient : <?php echo e(@$todays_new); ?>
 
                         <br>
                         <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_new_ori); ?></span> <span class="badge badge-danger badge-pill">False : <?php echo e(@$todays_new_sys); ?></span>
                     </li>
-                    
+                    <li class="list-group-item"><i class="fa fa-cog text-success" aria-hidden="true"></i> Revisit Patient : <?php echo e(@$todays_revisit); ?>
+
+                        <br> <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_revisit_ori); ?></span> <span class="badge badge-danger badge-pill">False : <?php echo e(@$todays_revisit_sys); ?></span>
+                    </li>
                     <li class="list-group-item"><i class="fa fa-cog text-warning" aria-hidden="true"></i> Total for this Department : <?php echo e(@$todays_total_for_this_department); ?>
 
                         <br> <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_total_for_this_department_ori); ?></span> <span class="badge badge-danger badge-pill">False : <?php echo e(@$todays_total_for_this_department_sys); ?></span>
@@ -336,7 +344,7 @@ unset($__errorArgs, $__bag); ?>
         <table class="table table-bordered text-nowrap" id="example">
             <thead>
                 <tr>
-                    <th scope="col">EMG Id</th>
+                    <th scope="col">OPD Id</th>
                     <th scope="col">Patient Name</th>
                     <th scope="col">Gurdian Name</th>
                     <th scope="col">Mobile No.</th>
@@ -345,10 +353,10 @@ unset($__errorArgs, $__bag); ?>
                 </tr>
             </thead>
             <tbody>
-                <?php if(isset($emg_registaion_list)): ?>
-                <?php $__currentLoopData = $emg_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php if(isset($ipd_registaion_list)): ?>
+                <?php $__currentLoopData = $ipd_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
-                    <td><a class="textlink" href="<?php echo e(route('emg-patient-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
+                    <td><a class="textlink" href="<?php echo e(route('ipd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
                         <br>
                         <a href="#" onclick="showAllTest(<?php echo e($value->case_id); ?>)" class="badge badge-primary">Investigation</a>
                     </td>
@@ -377,22 +385,22 @@ unset($__errorArgs, $__bag); ?>
                     <td><?php echo e(@$value->all_patient_details->phone); ?></td>
                     <td><?php echo e(@$value->case_id); ?></td>
                     <td>
-                        <?php if(isset($value->latest_emg_visit_details_for_patient->department_id)): ?>
+                        <?php if(isset($value->latest_ipd_visit_details_for_patient->department_id)): ?>
                         <i class="fa fa-cubes text-primary"></i>
-                        <?php echo e(@$value->latest_emg_visit_details_for_patient->department_details->department_name); ?>
+                        <?php echo e(@$value->latest_ipd_visit_details_for_patient->department_details->department_name); ?>
 
                         <br>
                         <?php endif; ?>
-                        <?php if(isset($value->latest_emg_visit_details_for_patient->cons_doctor)): ?>
+                        <?php if(isset($value->latest_ipd_visit_details_for_patient->cons_doctor)): ?>
                         <i class="fas fa-user-md text-primary"></i>
-                        <?php echo e(@$value->latest_emg_visit_details_for_patient->doctor->first_name); ?>
+                        <?php echo e(@$value->latest_ipd_visit_details_for_patient->doctor->first_name); ?>
 
-                        <?php echo e(@$value->latest_emg_visit_details_for_patient->doctor->last_name); ?><br>
+                        <?php echo e(@$value->latest_ipd_visit_details_for_patient->doctor->last_name); ?><br>
                         <?php endif; ?>
-                        <?php if(isset($value->latest_emg_visit_details_for_patient->appointment_date)): ?>
+                        <?php if(isset($value->latest_ipd_visit_details_for_patient->appointment_date)): ?>
                         <i class="fa fa-calendar text-primary"></i>
                         <?php echo e(date('d-m-Y h:i A',
-                                    strtotime($value->latest_emg_visit_details_for_patient->appointment_date))); ?>
+                                    strtotime($value->latest_ipd_visit_details_for_patient->appointment_date))); ?>
 
                         <?php endif; ?>
                     </td>
@@ -434,7 +442,7 @@ unset($__errorArgs, $__bag); ?>
     function showAllTest(case_id) {
         var div_pathology_radiology = '';
         $.ajax({
-            url: "<?php echo e(route('false-pathology-test-show-in_modal-emg')); ?>",
+            url: "<?php echo e(route('false-pathology-test-show-in_modal')); ?>",
             type: "POST",
             data: {
                 _token: '<?php echo e(csrf_token()); ?>',
@@ -463,6 +471,7 @@ unset($__errorArgs, $__bag); ?>
 
     function validate_for_investigation_pathology() {
         // var pathology_test_date = $('#pathology_test_date').val();
+     alert('kk');
         var pathology_category = $('#pathology_category').val();
         var no_of_patient_for_pathology_test = $('#no_of_patient_for_pathology_test').val();
 
@@ -478,10 +487,10 @@ unset($__errorArgs, $__bag); ?>
             alert("Enter no of patient");
             return false;
         }
-        savePatientemgpathology();
+        savePatientopdpathology();
     }
 
-    function savePatientemgpathology() {
+    function savePatientopdpathology() {
         // var pathology_visit_type_ = $('#pathology_visit_type').val();
         // var pathology_to_age_ = $('#pathology_to_age').val();
         // var pathology_from_age_ = $('#pathology_from_age').val();
@@ -493,7 +502,7 @@ unset($__errorArgs, $__bag); ?>
         var pathology_department_id_ = $('#pathology_department_id').val();
 
         $.ajax({
-            url: "<?php echo e(route('false-pathology-test-add-emg')); ?>",
+            url: "<?php echo e(route('false-pathology-test-add-ipd')); ?>",
             type: "POST",
             data: {
                 _token: '<?php echo e(csrf_token()); ?>',
@@ -534,10 +543,10 @@ unset($__errorArgs, $__bag); ?>
             alert("Enter no of patient");
             return false;
         }
-        savePatientemgradiology();
+        savePatientopdradiology();
     }
 
-    function savePatientemgradiology() {
+    function savePatientopdradiology() {
         // var radiology_visit_type_ = $('#radiology_visit_type').val();
         // var radiology_to_age_ = $('#radiology_to_age').val();
         // var radiology_from_age_ = $('#radiology_from_age').val();
@@ -549,7 +558,7 @@ unset($__errorArgs, $__bag); ?>
         var radiology_department_id_ = $('#radiology_department_id').val();
 
         $.ajax({
-            url: "<?php echo e(route('false-radiology-test-add-emg')); ?>",
+            url: "<?php echo e(route('false-radiology-test-add-ipd')); ?>",
             type: "POST",
             data: {
                 _token: '<?php echo e(csrf_token()); ?>',
@@ -608,14 +617,14 @@ unset($__errorArgs, $__bag); ?>
             alert("Select Date");
             return false;
         }
-        // if (departmentId == "") {
-        //     alert("Select Department");
-        //     return false;
-        // }
-        savePatientemg();
+        if (departmentId == "") {
+            alert("Select Department");
+            return false;
+        }
+        savePatientopd();
     }
 
-    function savePatientemg() {
+    function savePatientopd() {
         var visit_type_ = $('#visit_type').val();
         var to_age_ = $('#to_age').val();
         var from_age_ = $('#from_age').val();
@@ -625,7 +634,7 @@ unset($__errorArgs, $__bag); ?>
         var departmentId = $('#department_id').val();
 
         $.ajax({
-            url: "<?php echo e(route('registation-false-emg')); ?>",
+            url: "<?php echo e(route('registation-false-ipd')); ?>",
             type: "POST",
             data: {
                 _token: '<?php echo e(csrf_token()); ?>',
@@ -658,4 +667,4 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/false/emg/false_patient_list.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/false/ipd/false_patient_list.blade.php ENDPATH**/ ?>

@@ -119,6 +119,8 @@ use App\Http\Controllers\PatientDischargeController;
 
 use App\Http\Controllers\false\EmgFalseController;
 
+use App\Http\Controllers\false\IpdFalseController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -2547,6 +2549,21 @@ Route::group(['middleware' => ['permission:Emg False Generation'], 'prefix' => '
     });
 });
 //================================= emg false section ===================================================
+
+//================================= ipd false section ===================================================
+Route::group(['middleware' => ['permission:Ipd False Generation'], 'prefix' => 'false-patient'], function () {
+    Route::group(['middleware' => ['permission:Ipd False'], 'prefix' => 'false-patient-ipd'], function () {
+        Route::get('ipd', [IpdFalseController::class, 'index'])->name('ipd-false-generation');
+        Route::post('false-ipd-registation', [IpdFalseController::class, 'false_ipd_registation'])->name('false-ipd-registation');
+        Route::post('registation-false-ipd', [IpdFalseController::class, 'registation_false_ipd'])->name('registation-false-ipd');
+        Route::post('false-pathology-test-add-ipd', [IpdFalseController::class, 'false_pathology_test_add_ipd'])->name('false-pathology-test-add-ipd');
+        Route::post('false-radiology-test-add-ipd', [IpdFalseController::class, 'false_radiology_test_add_ipd'])->name('false-radiology-test-add-ipd');
+        Route::post('false-pathology-test-show-in_modal-ipd', [IpdFalseController::class, 'false_pathology_test_show_in_modal'])->name('false-pathology-test-show-in_modal-ipd');
+        Route::get('delete-radiology-test-false-ipd/{id?}', [IpdFalseController::class, 'delete_radiology_test_false_ipd'])->name('delete-radiology-test-false-ipd');
+        Route::get('delete-pathology-test-false-ipd/{id?}', [IpdFalseController::class, 'delete_pathology_test_false_ipd'])->name('delete-pathology-test-false-ipd');
+    });
+});
+//================================= ipd false section ===================================================
 
 
 //=================================  Update stock =============================
