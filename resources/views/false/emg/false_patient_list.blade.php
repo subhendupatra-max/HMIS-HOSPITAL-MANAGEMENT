@@ -66,90 +66,91 @@
                                                 <small class="text-danger">{{ $message }}</sma>
                                                     @enderror
                                             </div>
-                                            <div class="form-group col-md-12 newaddappon">
+                                            {{-- <div class="form-group col-md-12 newaddappon">
                                                 <label for="cons_doctor">Doctor<span class="text-danger">*</span></label>
                                                 <select name="cons_doctor" id="cons_doctor" class="form-control select2-show-search" id="cons_doctor" required>
                                                     <option value="">Select One</option>
                                                     @foreach($doctor as $item)
                                                     <option value="{{$item->id}}">{{$item->first_name}} {{$item->last_name}}</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('cons_doctor')
-                                                <small class="text-danger">{{ $message }}</sma>
-                                                    @enderror
-                                            </div>
-                                            <div class="form-group col-md-12 opd-bladedesign ">
-                                                <button class="btn btn-primary btn-sm text-center ml-2" type="button" onclick="validate()" name="save" value="save"><i class="fa fa-plus"></i> Add EMG Registation</button>
-                                            </div>
+                                            @endforeach
+                                            </select>
+                                            @error('cons_doctor')
+                                            <small class="text-danger">{{ $message }}</sma>
+                                                @enderror
                                         </div>
-                            </form>
+                                        --}}
+                                        <div class="form-group col-md-12 opd-bladedesign ">
+                                            <button class="btn btn-primary btn-sm text-center ml-2" type="button" onclick="validate()" name="save" value="save"><i class="fa fa-plus"></i> Add EMG Registation</button>
+                                        </div>
                         </div>
+                        </form>
                     </div>
-                    <div class="col-lg-3 col-xl-3 border-right">
-                        <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> Pathology Investigation</span>
-                        <div class="col-md-12 mt-3">
-                            <form method="post" action="#">
-                                @csrf
+                </div>
+                <div class="col-lg-3 col-xl-3 border-right">
+                    <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> Pathology Investigation</span>
+                    <div class="col-md-12 mt-3">
+                        <form method="post" action="#">
+                            @csrf
 
-                                <input type="hidden" id="pathology_date" name="pathology_date" value="{{ $date }}" />
-                                <div class="row">
-                                    {{-- <div class="form-group col-md-12 newaddappon">
+                            <input type="hidden" id="pathology_date" name="pathology_date" value="{{ $date }}" />
+                            <div class="row">
+                                {{-- <div class="form-group col-md-12 newaddappon">
                                         <label class="date-format ml-3"> Test Date<span
                                                 class="text-danger">*</span></label>
                                         <input type="date" name="pathology_test_date" id="pathology_test_date"
                                             required />
                                     </div> --}}
-                                    <div class="form-group col-md-12 newuserlisttchange ">
-                                        <label for="gender"> Catagory <span class="text-danger">*</span></label>
-                                        <select name="pathology_category" class="form-control select2-show-search" id="pathology_category" required>
-                                            <option value="">Select Category..</option>
-                                            @foreach ($pathology_category as $key => $value)
-                                            <option value="{{ $value->id }}"> {{ $value->catagory_name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @error('pathology_category')
-                                        <small class="text-danger">{{ $message }}</small>
+                                <div class="form-group col-md-12 newuserlisttchange ">
+                                    <label for="gender"> Catagory <span class="text-danger">*</span></label>
+                                    <select name="pathology_category" class="form-control select2-show-search" id="pathology_category" required>
+                                        <option value="">Select Category..</option>
+                                        @foreach ($pathology_category as $key => $value)
+                                        <option value="{{ $value->id }}"> {{ $value->catagory_name }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    @error('pathology_category')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-12 newaddappon ">
+                                    <label class="date-format"> No. of patient<span class="text-danger">*</span></label>
+                                    <input type="text" name="no_of_patient_for_pathology_test" id="no_of_patient_for_pathology_test" required />
+                                    @error('no_of_patient_for_pathology_test')
+                                    <small class="text-danger">{{ $message }}</sma>
                                         @enderror
-                                    </div>
-                                    <div class="form-group col-md-12 newaddappon ">
-                                        <label class="date-format"> No. of patient<span class="text-danger">*</span></label>
-                                        <input type="text" name="no_of_patient_for_pathology_test" id="no_of_patient_for_pathology_test" required />
-                                        @error('no_of_patient_for_pathology_test')
-                                        <small class="text-danger">{{ $message }}</sma>
-                                            @enderror
-                                    </div>
-                                    {{-- <div class="form-group col-md-6 newuserlisttchange ">
+                                </div>
+                                {{-- <div class="form-group col-md-6 newuserlisttchange ">
                                         <label for="pathology_gender">Gender <span class="text-danger">*</span></label>
                                         <select name="pathology_gender" class="form-control select2-show-search"
                                             id="pathology_gender" required>
                                             <option value="">gender</option>
                                             @foreach (Config::get('static.gender') as $lang => $genders)
                                             <option value="{{ $genders }}"> {{ $genders }}
-                                    </option>
-                                    @endforeach
-                                    </select>
-                                    @error('pathology_gender')
-                                    <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div> --}}
-                                {{-- <div class="form-group col-md-6 newaddappon ">
+                                </option>
+                                @endforeach
+                                </select>
+                                @error('pathology_gender')
+                                <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div> --}}
+                            {{-- <div class="form-group col-md-6 newaddappon ">
                                         <label class="date-format"> From Age(in year) <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" name="pathology_from_age" id="pathology_from_age" required />
                                         @error('pathology_from_age')
                                         <small class="text-danger">{{ $message }}</sma>
-                                @enderror
-                        </div> --}}
-                        {{-- <div class="form-group col-md-6 newaddappon ">
+                            @enderror
+                    </div> --}}
+                    {{-- <div class="form-group col-md-6 newaddappon ">
                                         <label class="date-format"> To Age(in year) <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" name="pathology_to_age" id="pathology_to_age" required />
                                         @error('pathology_to_age')
                                         <small class="text-danger">{{ $message }}</sma>
-                        @enderror
-                    </div> --}}
-                    {{-- <div class="form-group col-md-12 newaddappon">
+                    @enderror
+                </div> --}}
+                {{-- <div class="form-group col-md-12 newaddappon">
                                         <label for="pathology_visit_type">Visit Type <span
                                                 class="text-danger">*</span></label>
                                         <select name="pathology_visit_type"
@@ -160,57 +161,57 @@
                                         </select>
                                         @error('pathology_visit_type')
                                         <small class="text-danger">{{ $message }}</sma>
-                    @enderror
-                </div> --}}
+                @enderror
+            </div> --}}
 
-                <div class="form-group col-md-12 opd-bladedesign ">
-                    <button class="btn btn-primary btn-sm text-center ml-2" style="    margin-top: 66px;" type="button" onclick="validate_for_investigation_pathology()" name="save" value="save"><i class="fa fa-plus"></i> Add Pathology</button>
-                </div>
+            <div class="form-group col-md-12 opd-bladedesign ">
+                <button class="btn btn-primary btn-sm text-center ml-2" style="    margin-top: 66px;" type="button" onclick="validate_for_investigation_pathology()" name="save" value="save"><i class="fa fa-plus"></i> Add Pathology</button>
             </div>
-            </form>
         </div>
+        </form>
     </div>
-    <div class="col-lg-3 col-xl-3 border-right">
-        <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> Radiology Investigation</span>
-        <div class="col-md-12 mt-3">
-            <form method="post" action="#">
-                @csrf
+</div>
+<div class="col-lg-3 col-xl-3 border-right">
+    <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> Radiology Investigation</span>
+    <div class="col-md-12 mt-3">
+        <form method="post" action="#">
+            @csrf
 
-                <input type="hidden" id="radiology_date" name="radiology_date" value="{{ $date }}" />
-                @error('department_id')
+            <input type="hidden" id="radiology_date" name="radiology_date" value="{{ $date }}" />
+            @error('department_id')
+            <small class="text-danger">{{ $message }}</sma>
+                @enderror
+                @error('date')
                 <small class="text-danger">{{ $message }}</sma>
                     @enderror
-                    @error('date')
-                    <small class="text-danger">{{ $message }}</sma>
-                        @enderror
-                        <div class="row">
-                            {{-- <div class="form-group col-md-12 newaddappon">
+                    <div class="row">
+                        {{-- <div class="form-group col-md-12 newaddappon">
                                                 <label class="date-format ml-3"> Test Date<span
                                                         class="text-danger">*</span></label>
                                                 <input type="date" name="radiology_test_date" id="radiology_test_date"
                                                     required />
                                             </div> --}}
-                            <div class="form-group col-md-12 newuserlisttchange ">
-                                <label for="gender"> Catagory <span class="text-danger">*</span></label>
-                                <select name="radiology_category" class="form-control select2-show-search" id="radiology_category" required>
-                                    <option value="">Select Category..</option>
-                                    @foreach ($radiology_category as $key => $value)
-                                    <option value="{{ $value->id }}"> {{ $value->catagory_name }}
-                                    </option>
-                                    @endforeach
-                                </select>
-                                @error('radiology_category')
-                                <small class="text-danger">{{ $message }}</small>
+                        <div class="form-group col-md-12 newuserlisttchange ">
+                            <label for="gender"> Catagory <span class="text-danger">*</span></label>
+                            <select name="radiology_category" class="form-control select2-show-search" id="radiology_category" required>
+                                <option value="">Select Category..</option>
+                                @foreach ($radiology_category as $key => $value)
+                                <option value="{{ $value->id }}"> {{ $value->catagory_name }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('radiology_category')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-12 newaddappon ">
+                            <label class="date-format"> No. of patient<span class="text-danger">*</span></label>
+                            <input type="text" name="no_of_patient_for_radiology_test" id="no_of_patient_for_radiology_test" required />
+                            @error('no_of_patient_for_radiology_test')
+                            <small class="text-danger">{{ $message }}</sma>
                                 @enderror
-                            </div>
-                            <div class="form-group col-md-12 newaddappon ">
-                                <label class="date-format"> No. of patient<span class="text-danger">*</span></label>
-                                <input type="text" name="no_of_patient_for_radiology_test" id="no_of_patient_for_radiology_test" required />
-                                @error('no_of_patient_for_radiology_test')
-                                <small class="text-danger">{{ $message }}</sma>
-                                    @enderror
-                            </div>
-                            {{-- <div class="form-group col-md-6 newuserlisttchange ">
+                        </div>
+                        {{-- <div class="form-group col-md-6 newuserlisttchange ">
                                                 <label for="radiology_gender">Gender <span
                                                         class="text-danger">*</span></label>
                                                 <select name="radiology_gender" class="form-control select2-show-search"
@@ -218,45 +219,45 @@
                                                     <option value="">gender</option>
                                                     @foreach (Config::get('static.gender') as $lang => $genders)
                                                     <option value="{{ $genders }}"> {{ $genders }}
-                            </option>
-                            @endforeach
-                            </select>
-                            @error('radiology_gender')
-                            <small class="text-danger">{{ $message }}</small>
+                        </option>
+                        @endforeach
+                        </select>
+                        @error('radiology_gender')
+                        <small class="text-danger">{{ $message }}</small>
+                        @enderror
+                    </div>
+                    <div class="form-group col-md-6 newaddappon ">
+                        <label class="date-format"> From Age(in year) <span class="text-danger">*</span></label>
+                        <input type="text" name="radiology_from_age" id="radiology_from_age" required />
+                        @error('radiology_from_age')
+                        <small class="text-danger">{{ $message }}</sma>
                             @enderror
-                        </div>
-                        <div class="form-group col-md-6 newaddappon ">
-                            <label class="date-format"> From Age(in year) <span class="text-danger">*</span></label>
-                            <input type="text" name="radiology_from_age" id="radiology_from_age" required />
-                            @error('radiology_from_age')
-                            <small class="text-danger">{{ $message }}</sma>
-                                @enderror
-                        </div>
-                        <div class="form-group col-md-6 newaddappon ">
-                            <label class="date-format"> To Age(in year) <span class="text-danger">*</span></label>
-                            <input type="text" name="radiology_to_age" id="radiology_to_age" required />
-                            @error('radiology_to_age')
-                            <small class="text-danger">{{ $message }}</sma>
-                                @enderror
-                        </div>
-                        <div class="form-group col-md-12 newaddappon">
-                            <label for="radiology_visit_type">Visit Type <span class="text-danger">*</span></label>
-                            <select name="radiology_visit_type" id="visit_type" class="form-control select2-show-search" id="radiology_visit_type" required>
-                                <option value="">Select One</option>
-                                <option value="New Visit">New-Visit</option>
-                                <option value="Revisit">Revisit</option>
-                            </select>
-                            @error('radiology_visit_type')
-                            <small class="text-danger">{{ $message }}</sma>
-                                @enderror
-                        </div> --}}
+                    </div>
+                    <div class="form-group col-md-6 newaddappon ">
+                        <label class="date-format"> To Age(in year) <span class="text-danger">*</span></label>
+                        <input type="text" name="radiology_to_age" id="radiology_to_age" required />
+                        @error('radiology_to_age')
+                        <small class="text-danger">{{ $message }}</sma>
+                            @enderror
+                    </div>
+                    <div class="form-group col-md-12 newaddappon">
+                        <label for="radiology_visit_type">Visit Type <span class="text-danger">*</span></label>
+                        <select name="radiology_visit_type" id="visit_type" class="form-control select2-show-search" id="radiology_visit_type" required>
+                            <option value="">Select One</option>
+                            <option value="New Visit">New-Visit</option>
+                            <option value="Revisit">Revisit</option>
+                        </select>
+                        @error('radiology_visit_type')
+                        <small class="text-danger">{{ $message }}</sma>
+                            @enderror
+                    </div> --}}
 
-                        <div class="form-group col-md-12 opd-bladedesign ">
-                            <button class="btn btn-primary btn-sm text-center ml-2" type="button" style="    margin-top: 66px;" onclick="validate_for_investigation_radiology()" name="save" value="save"><i class="fa fa-plus"></i> Add Radiology</button>
-                        </div>
-        </div>
-        </form>
+                    <div class="form-group col-md-12 opd-bladedesign ">
+                        <button class="btn btn-primary btn-sm text-center ml-2" type="button" style="    margin-top: 66px;" onclick="validate_for_investigation_radiology()" name="save" value="save"><i class="fa fa-plus"></i> Add Radiology</button>
+                    </div>
     </div>
+    </form>
+</div>
 </div>
 <div class="col-lg-3 col-xl-3">
     <div class="col-md-12">

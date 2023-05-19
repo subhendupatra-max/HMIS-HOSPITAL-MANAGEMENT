@@ -76,7 +76,7 @@
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
 
-                        <b>Date: {{$emg_patient_details->appointment_date}}</b>
+                        <b>Date: {{@$emg_patient_details->appointment_date}}</b>
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
                         <b>Cons. Doctor: {{@$emg_patient_details->doctor_first_name}}{{@$emg_patient_details->doctor_last_name}}</b>
@@ -94,22 +94,22 @@
                         Patient Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->first_name}}
-                        {{$emg_patient_details->middle_name}}
-                        {{$emg_patient_details->last_name}}
+                        {{@$emg_patient_details->first_name}}
+                        {{@$emg_patient_details->middle_name}}
+                        {{@$emg_patient_details->last_name}}
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Guardian Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->guardian_name}}
+                        {{@$emg_patient_details->guardian_name}}
                     </td>
 
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Mobile No.
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->guardian_contact_no}}
+                        {{@$emg_patient_details->guardian_contact_no}}
                     </td>
                 </tr>
                 <tr>
@@ -117,21 +117,21 @@
                         Age
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->year}}Y
-                        {{$emg_patient_details->month}}M
-                        {{$emg_patient_details->day}}D
+                        {{@$emg_patient_details->year}}Y
+                        {{@$emg_patient_details->month}}M
+                        {{@$emg_patient_details->day}}D
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Gender
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->gender}}
+                        {{@$emg_patient_details->gender}}
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Patient Type
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->patient_type}}
+                        {{@$emg_patient_details->patient_type}}
                     </td>
                 </tr>
                 <tr>
@@ -139,19 +139,19 @@
                         Address
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->address}}
+                        {{@$emg_patient_details->address}}
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Blood Group
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->blood_group}}
+                        {{@$emg_patient_details->blood_group}}
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Ticket Fees:
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->ticket_fees}}
+                        {{@$emg_patient_details->ticket_fees}}
                     </td>
                 </tr>
             </table>

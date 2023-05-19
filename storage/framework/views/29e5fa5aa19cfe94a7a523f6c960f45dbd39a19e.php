@@ -115,14 +115,16 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-12 newaddappon">
-                                                <label for="cons_doctor">Doctor<span class="text-danger">*</span></label>
-                                                <select name="cons_doctor" id="cons_doctor" class="form-control select2-show-search" id="cons_doctor" required>
+                                                <label for="patient_source">Patient From<span class="text-danger">*</span></label>
+                                                <select name="patient_source" id="patient_source" class="form-control select2-show-search" id="patient_source" required>
                                                     <option value="">Select One</option>
-                                                    <?php $__currentLoopData = $doctor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($item->id); ?>"><?php echo e($item->first_name); ?> <?php echo e($item->last_name); ?></option>
+                                                    <?php $__currentLoopData = Config::get('static.patient_from'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $from): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($from); ?>"> <?php echo e($from); ?>
+
+                                                    </option>
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
-                                                <?php $__errorArgs = ['cons_doctor'];
+                                                <?php $__errorArgs = ['patient_source'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
