@@ -86,7 +86,7 @@ unset($__errorArgs, $__bag); ?>
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control select2-show-search" onchange="getSub_cate_by_cate()" name="charge_category[]" id="charge_category">
+                                            <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(<?php echo e($patient_charge_details->charge_category); ?>,<?php echo e($patient_charge_details->charge_sub_category); ?>)" name="charge_category[]" id="charge_category">
                                                 <option value="">Select One..</option>
                                             </select>
                                         </td>
@@ -164,12 +164,14 @@ unset($__errorArgs, $__bag); ?>
             getSub_cate_by_cate();
         }
 
-        function getSub_cate_by_cate() {
+        function getSub_cate_by_cate(category_id = null,charge_sub_category = null) {
    
-            let category_id = $('#charge_category').val();
+            // let category_id = $('#charge_category').val();
             let charge_set = $('#charge_set').val();
+            // alert(category_id);
+           // alert(charge_sub_category);
            
-            var div_data = '<option value="">Select One..</option>';
+            var div_data = '';
             $.ajax({
                 url: "<?php echo e(route('get-subcategory-by-category')); ?>",
                 type: "post",
@@ -181,22 +183,29 @@ unset($__errorArgs, $__bag); ?>
                 dataType: 'json',
                 success: function(res) {
                     $.each(res, function(i, obj) {
+                        let sel = (obj.sub_category_id == charge_sub_category ? 'selected' : '');
                         div_data +=
-                            `<option value="${obj.sub_category_id}">${obj.sub_category_name}</option>`;
+                            `<option value="${obj.sub_category_id}" ${sel}>${obj.sub_category_name}</option>`;
                     });
                     $('#charge_sub_category').append(div_data);
                 }
             });
+            get_charges_name();
         }
 
-        function get_charges_name() {
+        function get_charges_name(charge_set = null,charge_type = null,charge_category = null,charge_sub_category = null,charge_name = null) {
      
-            let charge_set = $('#charge_set').val();
-            let charge_type = $('#charge_type').val();
-            let charge_category = $('#charge_category').val();
-            let charge_sub_category = $('#charge_sub_category').val();
-            $('#charge_name').empty();
-            var div_data = '<option value="">Select One..</option>';
+        //     // let charge_set = $('#charge_set').val();
+        //     // let charge_type = $('#charge_type').val();
+        //     // let charge_category = $('#charge_category').val();
+        //     // let charge_sub_category = $('#charge_sub_category').val();
+        //   //  $('#charge_name').empty();
+        //   alert(charge_set);
+        //   alert(charge_type);
+        //   alert(charge_category);
+        //   alert(charge_sub_category);
+
+            var div_data = '';
             $.ajax({
                 url: "<?php echo e(route('get-charge-name')); ?>",
                 type: "post",
@@ -210,6 +219,7 @@ unset($__errorArgs, $__bag); ?>
                 dataType: 'json',
                 success: function(res) {
                     $.each(res, function(i, obj) {
+                        let sel = (obj.sub_category_id == charge_sub_category ? 'selected' : '');
                         div_data += `<option value="${obj.charge_id}">${obj.charges_name}</option>`;
                     });
                     $('#charge_name').append(div_data);

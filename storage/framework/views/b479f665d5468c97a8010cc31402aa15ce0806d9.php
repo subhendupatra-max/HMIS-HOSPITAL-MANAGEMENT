@@ -73,6 +73,7 @@ unset($__errorArgs, $__bag); ?>
                                     <?php $__currentLoopData = $old_applied_charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <tr id="row<?php echo e($key); ?>" style="background-color:#e6f5ed">
                                             <input type="hidden" name="old_or_new[]" value="old" />
+                                            <input type="hidden" name="charge_id_old[]" value="<?php echo e($value->id); ?>" />
                                             <td>
                                                 
                                                 <select class="form-control select2-show-search" name="charge_set[]" id="charge_set<?php echo e($key); ?>">
@@ -145,19 +146,17 @@ unset($__errorArgs, $__bag); ?>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                        <?php $__currentLoopData = $medicine_charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <tr id="medicineRow<?php echo e($key); ?>">
-                                            <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id<?php echo e($key); ?>" value="<?php echo e($value->id); ?>" />
-                                            <td><?php echo e($loop->iteration); ?></td>
-                                            <td><?php echo e($value->bill_prefix); ?><?php echo e($value->id); ?></td>
-                                            <td><?php echo e(date('d-m-Y h:i a',strtotime($value->bill_date))); ?></td>
-                                            <td><input text="text" readonly class="form-control" name="medicine_amount[]" id="medicine_amount<?php echo e($key); ?>" value="<?php echo e($value->total_amount); ?>" /></td>
-                                            <td><button class="btn btn-danger btn-sm"  type="button"
-                                                onclick="medicinerowRemove(<?php echo e($key); ?>)"><i class="fa fa-times"></i></button></td>
-                                        </tr>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                    
+                                    <?php $__currentLoopData = $medicine_charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr id="medicineRow<?php echo e($key); ?>">
+                                        <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id<?php echo e($key); ?>" value="<?php echo e($value->id); ?>" />
+                                        <td><?php echo e($loop->iteration); ?></td>
+                                        <td><?php echo e($value->bill_prefix); ?><?php echo e($value->id); ?></td>
+                                        <td><?php echo e(date('d-m-Y h:i a',strtotime($value->bill_date))); ?></td>
+                                        <td><input text="text" readonly class="form-control" name="medicine_amount[]" id="medicine_amount<?php echo e($key); ?>" value="<?php echo e($value->total_amount); ?>" /></td>
+                                        <td><button class="btn btn-danger btn-sm"  type="button"
+                                            onclick="medicinerowRemove(<?php echo e($key); ?>)"><i class="fa fa-times"></i></button></td>
+                                    </tr>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                             <?php else: ?>
@@ -304,6 +303,7 @@ unset($__errorArgs, $__bag); ?>
         function addNewrow() {
             var html = `<tr id="row${i}">
                         <input type="hidden" name="old_or_new[]" value="new" />
+                        <input type="hidden" name="charge_id[]" value="" />
                             <td>
                                 <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
                                     <option value="" disable >Select One..</option>

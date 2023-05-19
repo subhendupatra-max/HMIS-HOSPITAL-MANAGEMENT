@@ -86,7 +86,7 @@
 
                                         <?php echo e(@$opd_patient_details->patient_details->day == '0'?'':$opd_patient_details->patient_details->day.'D'); ?>
 
-                                     
+
                                     </td>
                                 </tr>
                                 <tr colspan="2">
@@ -200,7 +200,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+
                                             <?php $__currentLoopData = $PhysicalDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
                                                 <td><?php echo e(@$item->height == null ?'':$item->height.' cm'); ?></td>
@@ -211,7 +211,7 @@
                                                 <td><?php echo e(@$item->respiration == null ?'':$item->respiration.' b/m'); ?></td>
                                             </tr>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -221,7 +221,7 @@
                             </div>
                         </div>
                     </div>
-                   
+
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
@@ -241,7 +241,7 @@
                                             <?php $__currentLoopData = $PathologyTestDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
                                                 <td><?php echo e(@$item->test_details->test_name); ?></td>
-                                                <td><?php echo e(@date('d-m-Y h:i A',strtotime($item->date))); ?></td> 
+                                                <td><?php echo e(@date('d-m-Y h:i A',strtotime($item->date))); ?></td>
                                                 <td>
                                                     <?php if($item->billing_status == '0'): ?>
                                                     <span class="badge badge-warning">Billing Not Done</span>
@@ -250,7 +250,7 @@
                                                     <?php else: ?>
                                                     <span class="badge badge-warning">Charge Added</span>
                                                     <?php endif; ?>
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     <?php if($item->test_status == '0'): ?>
                                                     <span class="badge badge-warning">Sample Not Collected</span>
@@ -269,7 +269,7 @@
                             </div>
                         </div>
                     </div>
-                 
+
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
@@ -286,7 +286,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+
                                             <?php $__currentLoopData = $RadiologyTestDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <tr>
                                                 <td><?php echo e(@$item->test_details->test_name); ?></td>
@@ -299,7 +299,7 @@
                                                     <?php else: ?>
                                                     <span class="badge badge-warning">Charge Added</span>
                                                     <?php endif; ?>
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     <?php if($item->test_status == '0'): ?>
                                                     <span class="badge badge-warning">Sample Not Collected</span>
@@ -307,10 +307,10 @@
                                                     <span class="badge badge-success">Sample Collected</span>
                                                     <?php endif; ?>
                                                 </td>
-                                               
+
                                             </tr>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                          
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -320,7 +320,7 @@
                             </div>
                         </div>
                     </div>
-              
+
                 </div>
                 
             </div>

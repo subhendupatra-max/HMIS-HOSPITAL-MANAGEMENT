@@ -153,4 +153,32 @@ class PharmacyController extends Controller
        $medicine_details = Medicine::where('id',$medicine_id)->get();
        return view('pharmacy.medicine.medicine-details', compact('medicine_details'));
     }
+
+    public function delete_medicine_bill($bill_id)
+    {
+        try {
+        DB::beginTransaction();
+        $id = base64_decode($bill_id);
+        MedicineBilling::where('id',$id)->delete();
+        MedicineBillingDetails::where('medicine_billing_id',$id)->delete();
+        DB::commit();
+        return redirect()->route('pharmacy-bill-listing')->with('success', "Medicine Bill Successfully deleted");
+        } catch (\Throwable $th) {
+        DB::rollback();
+        return back()->withErrors(['error' => $th->getMessage()]);
+        }
+    }
+
+    public function details_medicine_bill($bill_id)
+    {
+        $id = base64_decode($bill_id);
+        $medicine_bill = MedicineBilling::where('id',$id)->first();
+        $medicine_bill_details = MedicineBillingDetails::select('medicine_units.medicine_unit_name','medicine_catagories.medicine_catagory_name','medicines.medicine_name','medicine_billing_details.amount','medicine_billing_details.qty')
+        ->leftjoin('medicine_catagories','medicine_billing_details.medicine_category','=','medicine_catagories.id')
+        ->leftjoin('medicines','medicine_billing_details.medicine_name','=','medicines.id')
+        ->leftjoin('medicine_units','medicine_billing_details.unit_id','=','medicine_units.id')
+        ->where('medicine_billing_id',$id)
+        ->get();
+        return view('pharmacy.generate-bill.bill-details', compact('medicine_bill_details','medicine_bill'));
+    }
 }
