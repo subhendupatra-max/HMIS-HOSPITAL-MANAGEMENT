@@ -56,7 +56,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="note" class="form-label">Note </label>
-                        <textarea name="note" id="note" class="form-control"> </textarea>
+                        <input name="note" id="note" class="form-control" />
                         @error('note')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

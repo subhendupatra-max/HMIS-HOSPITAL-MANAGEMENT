@@ -44,12 +44,18 @@
                                     @foreach ($opd_charges_details as $value)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
-                                            <td>{{ date('d-m-Y h:i A', strtotime($value->charges_date)) }}</td>
-                                            <td>{{ $value->charges_category_details->charges_catagories_name }}</td>
-                                            <td>{{ $value->charge_details->charges_name }}</td>
-                                            <td>{{ $value->amount }}</td>
-                                            <td>{{ $value->generated_by_details->first_name }} {{ $value->generated_by_details->last_name }}</td>
-                                            <td><span class="badge badge-success">{{ $value->billing_status }}</span></td>
+                                            <td>{{ @date('d-m-Y h:i A', strtotime($value->charges_date)) }}</td>
+                                            <td>{{ @$value->charges_category_details->charges_catagories_name }}</td>
+                                            <td>{{ @$value->charge_details->charges_name }}</td>
+                                            <td>{{ @$value->amount }}</td>
+                                            <td>{{ @$value->generated_by_details->first_name }} {{ @$value->generated_by_details->last_name }}</td>
+                                            <td>
+                                                @if($value->billing_status == '0')
+                                                <span class="badge badge-warning">Billing Not Created</span>
+                                                @else
+                                                <span class="badge badge-success">Billing Created</span>
+                                                @endif
+                                            </td>
                                             <td>
                                             <div class="card-options">
                                                 <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
@@ -65,8 +71,8 @@
                                                         <i class="fa fa-print"></i> Print
                                                     </a>
 
-                                                    @can('edit opd billing')
-                                                        <a class="dropdown-item" href="{{route('edit-opd-bill',['bill_id'=>$value->id])}}">
+                                                    @can('edit opd charges')
+                                                        <a class="dropdown-item" href="{{route('edit-opd-charges',['id'=>base64_encode($opd_id),'charge_id'=>base64_encode($value->id)])}}">
                                                             <i class="fa fa-edit"></i> Edit
                                                         </a>
                                                     @endcan
@@ -84,9 +90,9 @@
                                 @endif
                             </tbody>
                         </table>
-                        {{-- {!! $opd_billing_details->links() !!} --}}
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     @endsection

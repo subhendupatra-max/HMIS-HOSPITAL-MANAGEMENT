@@ -41,18 +41,19 @@ class UserController extends Controller
         $request->validate([
 
             'employee_id' => 'required|unique:users',
-            'role' => "required|",
-            'first_name' => "required|",
+            'role' => "required",
+            'first_name' => "required",
+            'last_name' => "required",
             'gender' => "required|",
-            'date_of_birth' => "required|",
+            'date_of_birth' => "required",
             'email' => "required|unique:users",
-
+            'current_address' => "required",
         ]);
 
 
-        try {
+        // try {
 
-            DB::beginTransaction();
+        //     DB::beginTransaction();
 
             if ($request->profile_image != null) {
 
@@ -79,7 +80,7 @@ class UserController extends Controller
                 'gender' => $request->gender,
                 'marital_status' => $request->marital_status,
                 'blood_group' => $request->blood_group,
-                'date_of_birth' => \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d'),
+                'date_of_birth' => $request->date_of_birth,
                 'date_of_joining' => \Carbon\Carbon::parse($request->date_of_joining)->format('Y-m-d'),
                 'phone_no' => $request->phone_no,
                 'whatsapp_no' => $request->whatsapp_no,
@@ -114,10 +115,10 @@ class UserController extends Controller
             /*=======================================================================*/
 
             return redirect()->route('user-list')->with('success', 'User Created Sucessfully');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->route('UserCreate')->with('error', $th->getMessage());
-        }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->route('UserCreate')->with('error', $th->getMessage());
+        // }
     }
 
     public function userprofile($id)
@@ -208,28 +209,33 @@ class UserController extends Controller
 
         $u_id = base64_decode($id);
         $user_details = User::find($u_id);
+        // dd( $user_details);
         $all_role = Role::all();
         $department = Department::where('is_active', '=', 1)->get();
+
 
         return view('appPages.Users.edit-user', compact('user_details', 'all_role', 'department'));
     }
 
     public function user_update(Request $request)
     {
+       // dd($request->all());
         $request->validate([
 
             'employee_id' => Rule::unique('users')->ignore($request->id),
             'role' => "required|",
             'first_name' => "required|",
+            'last_name' => "required",
             'gender' => "required|",
             'date_of_birth' => "required|",
             'email' => Rule::unique('users')->ignore($request->id),
+            'current_address' => "required",
 
         ]);
 
-        try {
+        // try {
 
-            DB::beginTransaction();
+        //     DB::beginTransaction();
 
             if ($request->hasfile('profile_image')) {
 
@@ -256,8 +262,8 @@ class UserController extends Controller
                 'gender' => $request->gender,
                 'marital_status' => $request->marital_status,
                 'blood_group' => $request->blood_group,
-                'date_of_birth' => \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d'),
-                'date_of_joining' => \Carbon\Carbon::parse($request->date_of_joining)->format('Y-m-d'),
+                'date_of_birth' => $request->date_of_birth,
+                'date_of_joining' => $request->date_of_joining,
                 'phone_no' => $request->phone_no,
                 'whatsapp_no' => $request->whatsapp_no,
                 'emg_phone_no' => $request->emg_phone_no,
@@ -273,12 +279,12 @@ class UserController extends Controller
                 'identification_number' => $request->identification_number,
                 'local_identification_number' => $request->local_identification_number,
             ]);
-            DB::commit();
+            // DB::commit();
 
-            return redirect()->route('user-list')->with('success', 'User Updated Sucessfully');
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->back()->with('error', $th->getMessage());
-        }
+        //     return redirect()->route('user-list')->with('success', 'User Updated Sucessfully');
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->back()->with('error', $th->getMessage());
+        // }
     }
 }

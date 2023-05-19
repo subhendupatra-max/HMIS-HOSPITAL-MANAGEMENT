@@ -150,7 +150,7 @@
     {
         var div_data = '';
         $('#charge').val('');
-        $("#charge").html("<option value='l'>loading... </option>");
+        $("#charge").html("<option value=''>loading... </option>");
         var ijij =  $('#charge_Sub_category').val();
         $.ajax({
                 url: "{{ route('find-charge-by-sub-catagory') }}",

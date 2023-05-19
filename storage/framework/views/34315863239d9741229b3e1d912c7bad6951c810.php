@@ -32,7 +32,7 @@
                 <div class="card-body">
                     <div class="">
                         <div class="table-responsive">
-                            <table class="table table-bordered text-nowrap" id="example2">
+                            <table class="table table-bordered text-nowrap" id="example">
                                 <thead>
                                     <tr>
                                         <th class="border-bottom-0">Sl. No</th>
@@ -82,6 +82,7 @@
                 </div>
             <?php endif; ?>
         </div>
+    </div>
     <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/pathology/test-master/pathology-test-master-listing.blade.php ENDPATH**/ ?>

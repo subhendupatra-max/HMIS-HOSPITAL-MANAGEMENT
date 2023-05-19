@@ -6,7 +6,7 @@
         <div class="card-header">
             <div class="card-title">OPD Registation Details Edit</div>
         </div>
-        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
         <div class="card-body p-0">
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
@@ -124,7 +124,7 @@ unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <div class="col-lg-8 col-xl-8">
-                    <form method="post" action="<?php echo e(route('add-opd-registration')); ?>">
+                    <form method="post" action="<?php echo e(route('update-opd-patient')); ?>">
                         <?php echo csrf_field(); ?>
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <?php $__errorArgs = ['patient_id'];
@@ -140,7 +140,6 @@ unset($__errorArgs, $__bag); ?>
                             <div class="row">
                                 <input type="hidden" name="old_details_id" value="<?php echo e(@$opd_patient_details->id); ?>" />
                                 <input type="hidden" name="opd_visit_details_id" value="<?php echo e(@$opd_visit_details->id); ?>" />
-                                <input type="hidden" name="physical_condition" value="<?php echo e(@$patient_physical_details->id); ?>" />
                                 <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
 
                                 <div class="form-group col-md-4 opd-bladedesign ">
@@ -225,10 +224,10 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="form-group col-md-4 newaddappon">
                                 <label for="department">Department <span class="text-danger">*</span></label>
-                                <select name="department" class="form-control select2-show-search" id="department">
+                                <select name="department" class="form-control select2-show-search" id="department" data-doctor_id="<?php echo e($opd_visit_details->cons_doctor); ?>">
                                     <option value="">Department</option>
                                     <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($department->id); ?>"> <?php echo e($department->department_name); ?></option>
+                                    <option value="<?php echo e($department->id); ?>" <?php echo e($department->id == $opd_visit_details->department_id ? 'selected' : ''); ?>> <?php echo e($department->department_name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                                 <?php $__errorArgs = ['department'];
@@ -245,7 +244,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <div class="form-group col-md-4 newaddappon">
                                 <label for="cons_doctor">Consultant Doctor <span class="text-danger">*</span></label>
-                                <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
+                                <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor" data-unit_id="<?php echo e($opd_visit_details->unit); ?>">
                                     <option value="">Consultant Doctor</option>
                                 </select>
                                 <?php $__errorArgs = ['cons_doctor'];
@@ -280,7 +279,7 @@ unset($__errorArgs, $__bag); ?>
                                 <label for="ticket_no">Ticket No <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-group col-md-4 newaddappon ">
-                                <input type="text" value="<?php echo e($ticket_fees->ticket_fees); ?>" id="ticket_fees" name="ticket_fees">
+                                <input type="text" value="<?php echo e($opd_visit_details->ticket_fees); ?>" id="ticket_fees" name="ticket_fees">
                                 <label for="ticket_fees">Ticket Fees <span class="text-danger">*</span></label>
                             </div>
 
@@ -294,75 +293,74 @@ unset($__errorArgs, $__bag); ?>
                         
 
                         
-                        <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Physical Condition
-                            ?</span>
+                        <!-- <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Physical Condition
+                            ?</span> -->
 
-                        <div class="row" id="physical_condition" style="display: none">
+                        <!-- <div class="row" id="physical_condition" style="display: none">
                             <div class="col-md-2 opd-condition">
                                 <label for="height" class="form-label">Height(cm)</label>
-                                <input type="text" class="form-control" id="height" name="height" value="<?php echo e(old('height')); ?>" />
+                                <input type="text" class="form-control" id="height" name="height" value="<?php echo e(@$patient_physical_details->height); ?>" />
                             </div>
                             <div class="col-md-2 opd-condition">
                                 <label for="weight" class="form-label">Weight(kg)</label>
-                                <input type="text" class="form-control" id="weight" name="weight" value="<?php echo e(old('weight')); ?>" />
+                                <input type="text" class="form-control" id="weight" name="weight" value="<?php echo e(@$patient_physical_details->weight); ?>" />
                             </div>
                             <div class="col-md-2 opd-condition">
                                 <label for="bp" class="form-label">BP</label>
-                                <input type="text" class="form-control" id="bp" name="bp" value="<?php echo e(old('bp')); ?>" />
+                                <input type="text" class="form-control" id="bp" name="bp" value="<?php echo e(@$patient_physical_details->bp); ?>" />
                             </div>
                             <div class="col-md-2 opd-condition1">
                                 <label for="pulse" class="form-label">Pulse</label>
-                                <input type="text" class="form-control" id="pulse" name="pulse" value="<?php echo e(old('pulse')); ?>" />
+                                <input type="text" class="form-control" id="pulse" name="pulse" value="<?php echo e(@$patient_physical_details->pulse); ?>" />
                             </div>
                             <div class="col-md-2 opd-condition1">
                                 <label for="temperature" class="form-label">Temperature</label>
-                                <input type="text" class="form-control" id="temperature" name="temperature" value="<?php echo e(old('temperature')); ?>" />
+                                <input type="text" class="form-control" id="temperature" name="temperature" value="<?php echo e(@$patient_physical_details->temperature); ?>" />
                             </div>
                             <div class="col-md-2 opd-condition1">
                                 <label for="respiration" class="form-label">Respiration</label>
-                                <input type="text" class="form-control" id="respiration" name="respiration" value="<?php echo e(old('respiration')); ?>" />
+                                <input type="text" class="form-control" id="respiration" name="respiration" value="<?php echo e(@$patient_physical_details->respiration); ?>" />
                             </div>
-                        </div>
+                        </div> -->
 
-                        <hr class="hr_line">
-                        <input type="checkbox" onchange="show_Symptoms()" id="show_Symptoms_button" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Symptoms ?</span>
+                        <!-- <hr class="hr_line"> -->
+                        <!-- <input type="checkbox" onchange="show_Symptoms()" id="show_Symptoms_button" <?php echo e($opd_visit_details->symptoms_type != null ? 'checked' : " "); ?> /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Symptoms ?</span>
 
                         <div class="row" id="show_Symptoms" style="display: none">
                             <div class="col-md-3 newaddappon ">
                                 <label for="symptoms_type" class="form-label">Symptoms Type</label>
-                                <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type">
+                                <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type" onchange="getSymptomsHead(this.value,<?php echo e($opd_visit_details->symptoms); ?>)" >
                                     <option value="">symptoms type</option>
                                     <?php $__currentLoopData = $symptoms_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $symptoms_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($symptoms_type->id); ?>"> <?php echo e($symptoms_type->symptoms_type_name); ?></option>
+                                    <option value="<?php echo e($symptoms_type->id); ?>" <?php echo e($symptoms_type->id == $opd_visit_details->symptoms_type ? 'selected' : " "); ?>> <?php echo e($symptoms_type->symptoms_type_name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
 
                             <div class="col-md-3 newaddappon">
                                 <label for="symptoms_title" class="form-label">Symptoms Title</label>
-
                                 <select name="symptoms_title" id="symptoms_title" class="form-control select2-show-search">
-                                    <option value="">symptoms_title</option>
+                                    <option value="">symptoms title</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4 opd-bladedesigninin">
 
-                                <input type="text" id="symptoms_description" name="symptoms_description">
+                                <input type="text" id="symptoms_description" name="symptoms_description" value="<?php echo e($opd_visit_details->symptoms_description); ?>">
                                 <label for="Symptoms Description">Symptoms Description </label>
                             </div>
-                        </div>
+                        </div> -->
 
 
-                        <hr class="hr_line">
+                        <!-- <hr class="hr_line"> -->
                         <div class="row">
                             <div class="form-group col-md-4 opd-condition">
 
-                                <input type="text" id="note" name="note">
+                                <input type="text" id="note" name="note" value="<?php echo e($opd_visit_details->note); ?>">
                                 <label for="note">Note </label>
                             </div>
                             <div class="form-group col-md-4 opd-condition">
 
-                                <input type="text" id="any_known_allergies" name="any_known_allergies">
+                                <input type="text" id="any_known_allergies" name="any_known_allergies" value="<?php echo e($opd_visit_details->known_allergies); ?>">
                                 <label for="any_known_allergies">Any Known Allergies</label>
                             </div>
                         </div>
@@ -396,21 +394,28 @@ unset($__errorArgs, $__bag); ?>
         }
     }
 
-    function show_physical_condition() {
-        if (document.getElementById('isAgeSelected').checked) {
-            $('#physical_condition').removeAttr('style', true);
-        } else {
-            $('#physical_condition').attr('style', 'display:none', true);
-        }
-    }
+    // function show_physical_condition() {
+
+    //     // if ($patient_physical_details == null) {
+    //     if (document.getElementById('isAgeSelected').checked) {
+
+    //         $('#physical_condition').removeAttr('style', true);
+
+    //     } else {
+    //         $('#physical_condition').attr('style', 'display:none', true);
+    //     }
+    // }
 
     function show_Symptoms() {
+
         if (document.getElementById('show_Symptoms_button').checked) {
+
             $('#show_Symptoms').removeAttr('style', true);
         } else {
             $('#show_Symptoms').attr('style', 'display:none', true);
         }
     }
+
 
     function getDetailsAccordingType(val) {
 
@@ -431,13 +436,19 @@ unset($__errorArgs, $__bag); ?>
         }
     }
 </script>
+
 <script>
     $(document).ready(function() {
         $("#department").change(function(event) {
             event.preventDefault();
             let department = $(this).val();
+
             // alert(department);
             $('#cons_doctor').html('<option vaule="" >Select...</option>');
+            let cons_doc_id = $(this).attr("data-doctor_id");
+            // alert(cons_doc_id);
+            let unit_name = $(this).attr("data-unit_id");
+            // alert(unit_name);
             $.ajax({
                 url: "<?php echo e(route('find-doctor-by-department')); ?>",
                 type: "POST",
@@ -449,10 +460,15 @@ unset($__errorArgs, $__bag); ?>
                     console.log(response);
                     $('#ticket_no').val(response.opd_ticket_no_by_department)
                     $.each(response.cons_doctor, function(key, value) {
-                        $('#cons_doctor').append(`<option value="${value.id}">${value.first_name} ${value.last_name}</option>`);
+                        let sel = (value.id == cons_doc_id ? 'selected' : '');
+
+                        $('#cons_doctor').append(`<option value="${value.id}" ${sel}>${value.first_name} ${value.last_name}</option>`);
                     });
                     $.each(response.opd_units, function(key, value) {
-                        $('#unit').append(`<option value="${value.unit_name}">${value.unit_name}</option>`);
+                        let sel = (value.id == unit_name ? 'selected' : '');
+
+                        $('#unit').append(`<option value="${value.unit_name}" ${sel}>${value.unit_name}</option>`);
+
                     });
                 },
                 error: function(error) {
@@ -463,11 +479,14 @@ unset($__errorArgs, $__bag); ?>
     });
 </script>
 
+<!-- 
 <script>
     $(document).ready(function() {
         $("#symptoms_type").change(function(event) {
             event.preventDefault();
-            let symptoms_type = $(this).val();
+            // let symptoms_type = $(this).val();
+            // let symptoms_head = $(this).attr("data-symptomsHead_id");
+            // alert(symptoms_head);
             $('#symptoms_title').html('<option value="" >Select...</option>');
             $.ajax({
                 url: "<?php echo e(route('find-symptoms-title-by-symptoms-type')); ?>",
@@ -477,8 +496,10 @@ unset($__errorArgs, $__bag); ?>
                     symptoms_type_id: symptoms_type,
                 },
                 success: function(response) {
+
                     $.each(response, function(key, value) {
-                        $('#symptoms_title').append(`<option value="${value.symptoms_head_name	}">${value.symptoms_head_name }</option>`);
+                        // let sel = (value.symptoms_head_name == symptoms_head ? 'selected' : '');
+                        $('#symptoms_title').append(`<option value="${value.symptoms_head_name}">${value.symptoms_head_name }</option>`);
                     });
                 },
                 error: function(error) {
@@ -487,9 +508,36 @@ unset($__errorArgs, $__bag); ?>
             });
         });
     });
+</script> -->
+
+<script>
+    function getSymptomsHead(symptomsType_id, symptomsHead_id) {
+
+        // alert(symptomsHead_id);
+        let symptomsHead_id = $(this).attr("data-SymptomHead_id");
+        alert(symptomsHead_id);
+        $('#symptoms_title').html('<option value="" >Select...</option>');
+
+        $.ajax({
+            url: "<?php echo e(route('find-symptoms-title-by-symptoms-type')); ?>",
+            type: "POST",
+            data: {
+                _token: '<?php echo e(csrf_token()); ?>',
+                symptoms_type_id: symptomsType_id,
+            },
+            success: function(response) {
+                console.log(response);
+                $.each(response, function(key, values) {
+                    let sel = (values.symptoms_head_name == symptomsHead_id ? 'selected' : '');
+                    $('#symptoms_title').append(`<option value="${values.symptoms_head_name}" >${values.symptoms_head_name}</option>`);
+                });
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
 </script>
-
-
 
 
 <?php $__env->stopSection(); ?>

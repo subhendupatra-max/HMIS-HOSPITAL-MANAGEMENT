@@ -25,6 +25,7 @@
             </div>
 
         </div>
+        @include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -36,9 +37,9 @@
                                 <th class="border-bottom-0">Date</th>
                                 <th class="border-bottom-0">Patient Name </th>
                                 <th class="border-bottom-0">Amount</th>
-                                @can('edit medicine','delete medicine')
+                               
                                 <th>Action</th>
-                                @endcan
+                              
                             </tr>
                         </thead>
                         <tbody>
@@ -52,7 +53,31 @@
                                         {{ @$value->all_patient_details->patient_prefix }}{{ @$value->all_patient_details->id }}
                                     </td>
                                     <td>{{ @$value->total_amount }}</td>
-                                    <td>d</td>
+                                    <td>
+                                        <div class="card-options">
+                                            <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action <i class="fa fa-caret-down"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right" style="">
+    
+                                                <a class="dropdown-item" href="{{ route('medicine-bill-details', ['bill_id' => base64_encode($value->id)]) }}">
+                                                    <i class="fa fa-eye"></i> View
+                                                </a>
+
+                                                <a class="dropdown-item" href="{{route('print-medicine-bill',['bill_id'=>base64_encode($value->id)])}}">
+                                                    <i class="fa fa-print"></i> Print
+                                                </a>
+    
+                                           
+                                                <a class="dropdown-item" href="{{route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])}}">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                           
+                                                <a class="dropdown-item" href="{{route('delete-medicine-bill',['bill_id'=>base64_encode($value->id)])}}">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                          
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                             @endif

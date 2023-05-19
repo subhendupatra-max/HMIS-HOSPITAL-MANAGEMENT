@@ -10,7 +10,7 @@
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         @can('opd payment')
-                        <a href="{{ route('add-payment-in-opd',['id'=> base64_encode($opd_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Payment </a>
+                        <a href="{{ route('add-payment-in-opd',['id'=> base64_encode($opd_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-rupee-sign"></i> Add Payment </a>
                         @endcan
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>

@@ -66,6 +66,7 @@
                                     @foreach ($old_applied_charges as $key=>$value)
                                         <tr id="row{{ $key }}" style="background-color:#e6f5ed">
                                             <input type="hidden" name="old_or_new[]" value="old" />
+                                            <input type="hidden" name="charge_id_old[]" value="{{ $value->id }}" />
                                             <td>
                                                 
                                                 <select class="form-control select2-show-search" name="charge_set[]" id="charge_set{{ $key }}">
@@ -137,19 +138,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
-                                        @foreach ($medicine_charges as $key=>$value)
-                                        <tr id="medicineRow{{ $key }}">
-                                            <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id{{ $key }}" value="{{ $value->id }}" />
-                                            <td>{{$loop->iteration}}</td>
-                                            <td>{{ $value->bill_prefix }}{{ $value->id }}</td>
-                                            <td>{{ date('d-m-Y h:i a',strtotime($value->bill_date))}}</td>
-                                            <td><input text="text" readonly class="form-control" name="medicine_amount[]" id="medicine_amount{{ $key }}" value="{{ $value->total_amount }}" /></td>
-                                            <td><button class="btn btn-danger btn-sm"  type="button"
-                                                onclick="medicinerowRemove({{ $key }})"><i class="fa fa-times"></i></button></td>
-                                        </tr>
-                                        @endforeach
-                                    
+                                    @foreach ($medicine_charges as $key=>$value)
+                                    <tr id="medicineRow{{ $key }}">
+                                        <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id{{ $key }}" value="{{ $value->id }}" />
+                                        <td>{{$loop->iteration}}</td>
+                                        <td>{{ $value->bill_prefix }}{{ $value->id }}</td>
+                                        <td>{{ date('d-m-Y h:i a',strtotime($value->bill_date))}}</td>
+                                        <td><input text="text" readonly class="form-control" name="medicine_amount[]" id="medicine_amount{{ $key }}" value="{{ $value->total_amount }}" /></td>
+                                        <td><button class="btn btn-danger btn-sm"  type="button"
+                                            onclick="medicinerowRemove({{ $key }})"><i class="fa fa-times"></i></button></td>
+                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                             @else
@@ -274,6 +273,7 @@
         function addNewrow() {
             var html = `<tr id="row${i}">
                         <input type="hidden" name="old_or_new[]" value="new" />
+                        <input type="hidden" name="charge_id[]" value="" />
                             <td>
                                 <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
                                     <option value="" disable >Select One..</option>

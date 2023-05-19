@@ -12,16 +12,21 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-xl-3 col-lg-3 col-md-12">
-                        <span style=" color: #6f6f6f;font-size: 18px;font-weight: 500; margin-left: 45px;">IPD REGISTATION</span>
+                        <span style=" color: #6f6f6f;font-size: 18px;font-weight: 500; margin-left: 45px;">IPD
+                            REGISTATION</span>
 
                         <hr class="hr_line">
                         <div class="widget-user-image mx-auto mt-1"><img alt="User Avatar" class="rounded-circle" src="<?php echo e(asset('public/patient_image/patient_icon.png')); ?>" style="height: 100px;width: 117px;"></div>
                         <div class="card-body text-center">
                             <div class="pro-user">
                                 <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
-                                    <?php echo e($visit_details->all_patient_details->prefix); ?> <?php echo e($visit_details->all_patient_details->first_name); ?>
+                                    <?php echo e($visit_details->all_patient_details->prefix); ?>
 
-                                    <?php echo e($visit_details->all_patient_details->middle_name); ?> <?php echo e($visit_details->all_patient_details->last_name); ?>
+                                    <?php echo e($visit_details->all_patient_details->first_name); ?>
+
+                                    <?php echo e($visit_details->all_patient_details->middle_name); ?>
+
+                                    <?php echo e($visit_details->all_patient_details->last_name); ?>
 
                                 </h4>
                                 <h6 class="pro-user-desc textlink">
@@ -51,24 +56,28 @@
                                             <?php echo e($visit_details->all_patient_details->month); ?>m
                                             <?php echo e($visit_details->all_patient_details->day); ?>d
 
-                                            <a href="#" class="btn btn-default btn-sm" data-target="#editAge" data-toggle="modal"><i class="fa fa-edit"></i></a>
+                                            <!-- <a href="#" class="btn btn-default btn-sm" data-target="#editAge" data-toggle="modal"><i class="fa fa-edit"></i></a> -->
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-0">
                                             <span class="font-weight-semibold w-50">Guardian Name </span>
                                         </td>
-                                        <td class="py-2 px-0"><?php echo e($visit_details->all_patient_details->guardian_name_realation); ?>
+                                        <td class="py-2 px-0">
+                                            <?php echo e($visit_details->all_patient_details->guardian_name_realation); ?>
 
                                             <?php echo e($visit_details->all_patient_details->guardian_name); ?>
 
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td class="py-2 px-0">
                                             <span class="font-weight-semibold w-50">Blood Group </span>
                                         </td>
-                                        <td class="py-2 px-0"><?php echo e($visit_details->all_patient_details->blood_group); ?></td>
+                                        <td class="py-2 px-0"><?php echo e($visit_details->all_patient_details->blood_group); ?>
+
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-0">
@@ -85,12 +94,13 @@
                         <div class="main-profile-body">
                             <div class="">
                                 <div class="row">
-                                    <div class="col-md-4">
-                                        <label for="height" class="form-label">Admission Date <span class="text-danger">*</span></label>
+                                    <div class="col-md-4 ipd-registrationproaddd">
+                                        <label for="height">Admission Date <span class="text-danger">*</span></label>
                                         <?php if(auth()->user()->can('appointment date')): ?>
-                                        <input type="datetime-local" class="form-control" name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
+                                        
+                                        <input type="datetime-local" value="<?php echo e(old('appointment_date')); ?>" id="appointment_date" name="appointment_date">
                                         <?php else: ?>
-                                        <input type="datetime-local" class="form-control" name="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required />
+                                        <input type="datetime-local" value="<?php echo e(old('appointment_date')); ?>" id="appointment_date" name="appointment_date">
                                         <?php endif; ?>
 
                                         <?php $__errorArgs = ['appointment_date'];
@@ -105,14 +115,14 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <label for="credit_limit" class="form-label">Credit Limit</label>
-                                        <input type="text" class="form-control" name="credit_limit" value="<?php echo e(20000); ?>" />
+                                    <div class="col-md-4 ipd-registrationproaddin">
 
+                                        <input type="text" value="<?php echo e(20000); ?>" id="credit_limit" name="credit_limit">
+                                        <label for="credit_limit">Credit Limit <span class="text-danger">*</span></label>
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <label for="patient_type" class="form-label">Patient Type <span class="text-danger">*</span></label>
+                                    <div class="col-md-4 ipd-registrationproadd">
+                                        <label for="patient_type">Patient Type <span class="text-danger">*</span></label>
                                         <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
                                             <option value="">Select</option>
                                             <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $patient_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -132,34 +142,42 @@ endif;
 unset($__errorArgs, $__bag); ?>
 
                                     </div>
-                                    <div class="col-md-4 frefesd" style="display:none">
-                                        <label for="tpa_organization" class="form-label">TPA Organization <span class="text-danger">*</span></label>
+                                    <div class="col-md-4 frefesd ipd-registrationproadd" style="display:none">
+                                        <label for="tpa_organization">TPA Organization <span class="text-danger">*</span></label>
                                         <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
                                             <option value="">Select</option>
                                             <?php $__currentLoopData = $tpa_management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tpaManagement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($tpaManagement->id); ?>"> <?php echo e($tpaManagement->TPA_name); ?></option>
+                                            <option value="<?php echo e($tpaManagement->id); ?>">
+                                                <?php echo e($tpaManagement->TPA_name); ?>
+
+                                            </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-4 frefesds" style="display:none">
-                                        <label for="type_no" class="form-label"><span id="lableName"></span><span class="text-danger">*</span></label>
+                                    <div class="col-md-4 frefesds ipd-registrationproadd" style="display:none">
+                                        <label for="type_no"><span id="lableName"></span><span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>" id="type_no" />
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="reference" class="form-label">Reference</label>
+                                    <div class="col-md-4 ipd-registrationproadd">
+                                        <label for="reference">Reference</label>
                                         <select name="reference" class="form-control select2-show-search" id="reference">
                                             <option value="">Select</option>
                                             <?php $__currentLoopData = $referer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $reference): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($reference->id); ?>"> <?php echo e($reference->referral_name); ?></option>
+                                            <option value="<?php echo e($reference->id); ?>"> <?php echo e($reference->referral_name); ?>
+
+                                            </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
-                                        <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
+                                    <div class="col-md-4 ipd-registrationproadd ">
+                                        <label for="department">Department <span class="text-danger">*</span></label>
                                         <select name="department" class="form-control select2-show-search" id="department" onchange="getDoctor_ward(this.value)">
                                             <option value="">Select</option>
                                             <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($department->id); ?>"> <?php echo e($department->department_name); ?></option>
+                                            <option value="<?php echo e($department->id); ?>">
+                                                <?php echo e($department->department_name); ?>
+
+                                            </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                         <?php $__errorArgs = ['department'];
@@ -174,8 +192,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <label for="cons_doctor" class="form-label"> Doctor <span class="text-danger">*</span></label>
+                                    <div class="col-md-4 ipd-registrationproadd">
+                                        <label for="cons_doctor"> Doctor <span class="text-danger">*</span></label>
                                         <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
                                             <option value="">Select..</option>
                                         </select>
@@ -191,8 +209,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <label for="ward" class="form-label"> Ward <span class="text-danger">*</span></label>
+                                    <div class="col-md-4 ipd-registrationproadd">
+                                        <label for="ward"> Ward <span class="text-danger">*</span></label>
                                         <select name="ward" onchange="getBed()" class="form-control select2-show-search" id="bed_ward">
                                             <option value="">Select..</option>
                                         </select>
@@ -208,12 +226,14 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
 
-                                    <div class="col-md-4">
-                                        <label for="unit" class="form-label"> Unit <span class="text-danger">*</span></label>
+                                    <div class="col-md-4 ipd-registrationproadd">
+                                        <label for="unit"> Unit <span class="text-danger">*</span></label>
                                         <select name="unit" onchange="getBed()" class="form-control select2-show-search" id="unit">
                                             <option value="">Select..</option>
                                             <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($unit->id); ?>"> <?php echo e($unit->bedUnit_name); ?></option>
+                                            <option value="<?php echo e($unit->id); ?>"> <?php echo e($unit->bedUnit_name); ?>
+
+                                            </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                         <?php $__errorArgs = ['unit'];
@@ -229,8 +249,8 @@ unset($__errorArgs, $__bag); ?>
                                     </div>
 
 
-                                    <div class="col-md-4">
-                                        <label class="form-label"> Bed <span class="text-danger">*</span></label>
+                                    <div class="col-md-4 ipd-registrationproadd">
+                                        <label> Bed <span class="text-danger">*</span></label>
                                         <select name="bed" class="form-control select2-show-search" id="bed">
                                             <option value="">Select..</option>
                                         </select>
@@ -247,73 +267,82 @@ unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
 
-
                                 <hr class="hr_line">
-                                <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Physical Condition
-                                    ?</span>
+                                <!-- <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to
+                                    Share Patient's Physical Condition
+                                    ?</span> -->
 
-                                <div class="row" id="physical_condition" style="display: none">
-                                    <div class="col-md-2">
+                                <!-- <div class="row" id="physical_condition" style="display: none">
+                                    <div class="col-md-2 ipd-condition">
                                         <label for="height" class="form-label">Height(cm)</label>
                                         <input type="text" class="form-control" id="height" name="height" value="<?php echo e(old('height')); ?>" />
+
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 ipd-condition">
                                         <label for="weight" class="form-label">Weight(kg)</label>
                                         <input type="text" class="form-control" id="weight" name="weight" value="<?php echo e(old('weight')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 ipd-condition">
                                         <label for="bp" class="form-label">BP</label>
                                         <input type="text" class="form-control" id="bp" name="bp" value="<?php echo e(old('bp')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 ipd-condition">
                                         <label for="pulse" class="form-label">Pulse</label>
                                         <input type="text" class="form-control" id="pulse" name="pulse" value="<?php echo e(old('pulse')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 ipd-condition">
                                         <label for="temperature" class="form-label">Temperature</label>
                                         <input type="text" class="form-control" id="temperature" name="temperature" value="<?php echo e(old('temperature')); ?>" />
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 ipd-condition">
                                         <label for="respiration" class="form-label">Respiration</label>
                                         <input type="text" class="form-control" id="respiration" name="respiration" value="<?php echo e(old('respiration')); ?>" />
                                     </div>
-                                </div>
+                                </div> -->
 
-                                <hr class="hr_line">
-                                <input type="checkbox" onchange="show_Symptoms()" id="show_Symptoms_button" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Symptoms ?</span>
+                                <!-- <hr class="hr_line"> -->
+                                <!-- <input type="checkbox" onchange="show_Symptoms()" id="show_Symptoms_button" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Symptoms
+                                    ?</span> -->
 
-                                <div class="row" id="show_Symptoms" style="display: none">
-                                    <div class="col-md-3">
-                                        <label for="symptoms_type" class="form-label">Symptoms Type</label>
+                                <!-- <div class="row" id="show_Symptoms" style="display: none">
+                                    <div class="col-md-3 ipd-registrationpro">
+                                        <label for="symptoms_type">Symptoms Type</label>
                                         <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type">
                                             <option value="">Select</option>
                                             <?php $__currentLoopData = $symptoms_types; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $symptoms_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($symptoms_type->id); ?>"> <?php echo e($symptoms_type->symptoms_type_name); ?></option>
+                                            <option value="<?php echo e($symptoms_type->id); ?>">
+                                                <?php echo e($symptoms_type->symptoms_type_name); ?>
+
+                                            </option>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        <label for="symptoms_title" class="form-label">Symptoms Title</label>
+                                    <div class="col-md-3 ipd-registrationpro">
+                                        <label for="symptoms_title">Symptoms Title</label>
 
                                         <select name="symptoms_title" id="symptoms_title" class="form-control select2-show-search">
                                             <option value="">Select</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label for="symptoms_description" class="form-label">Symptoms Description</label>
-                                        <textarea class="form-control" name="symptoms_description"></textarea>
+                                    <div class="col-md-6 ipd-symtomsadd">
+                                        
+                                        <input type="text" id="symptoms_description" name="symptoms_description">
+                                        <label for="symptoms_description">Symptoms Description</label>
                                     </div>
-                                </div>
-                                <hr class="hr_line">
+                                </div> -->
+
+                                <!-- <hr class="hr_line"> -->
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <label class="form-label">Note</label>
-                                        <textarea class="form-control" name="note"></textarea>
+                                    <div class="col-md-6 ipd-registrationproaddd">
+                                        
+                                        <input type="text" id="note" name="note">
+                                        <label for="note">Note</label>
                                     </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label">Any Known Allergies</label>
-                                        <textarea class="form-control" name="any_known_allergies"></textarea>
+                                    <div class="col-md-6 ipd-registrationproaddd">
+                                        
+                                        <input type="text" id="any_known_allergies" name="any_known_allergies">
+                                        <label for="any_known_allergies">Any Known Allergies</label>
                                     </div>
                                 </div>
                                 <div class="mt-5 text-right">
@@ -426,10 +455,13 @@ unset($__errorArgs, $__bag); ?>
             success: function(response) {
                 console.log(response);
                 $.each(response.doctor, function(key, value) {
-                    $('#cons_doctor').append(`<option value="${value.id}">${value.first_name} ${value.last_name }</option>`);
+                    $('#cons_doctor').append(
+                        `<option value="${value.id}">${value.first_name} ${value.last_name }</option>`
+                    );
                 });
                 $.each(response.ward, function(key, values) {
-                    $('#bed_ward').append(`<option value="${values.id}">${values.ward_name}</option>`);
+                    $('#bed_ward').append(
+                        `<option value="${values.id}">${values.ward_name}</option>`);
                 });
             },
             error: function(error) {
@@ -452,8 +484,10 @@ unset($__errorArgs, $__bag); ?>
         let nw_month = nw.getMonth() + 1;
         let nw_day = nw.getDate();
 
-        let dob_in_date = ((parseInt(dob_year) * parseInt(365)) + (parseInt(dob_month) * parseInt(30)) + parseInt(dob_day));
-        let now_in_date = ((parseInt(nw_year) * parseInt(365)) + (parseInt(nw_month) * parseInt(30)) + parseInt(nw_day));
+        let dob_in_date = ((parseInt(dob_year) * parseInt(365)) + (parseInt(dob_month) * parseInt(30)) + parseInt(
+            dob_day));
+        let now_in_date = ((parseInt(nw_year) * parseInt(365)) + (parseInt(nw_month) * parseInt(30)) + parseInt(
+            nw_day));
         if (now_in_date >= dob_in_date) {
             let diffe_date = parseInt(parseInt(now_in_date) - parseInt(dob_in_date));
 
@@ -490,7 +524,9 @@ unset($__errorArgs, $__bag); ?>
                 },
                 success: function(response) {
                     $.each(response, function(key, value) {
-                        $('#symptoms_title').append(`<option value="${value.symptoms_head_name	}">${value.symptoms_head_name }</option>`);
+                        $('#symptoms_title').append(
+                            `<option value="${value.symptoms_head_name	}">${value.symptoms_head_name }</option>`
+                        );
                     });
                 },
                 error: function(error) {
@@ -524,6 +560,5 @@ unset($__errorArgs, $__bag); ?>
         });
     }
 </script>
-
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/Ipd/ipd-registration.blade.php ENDPATH**/ ?>

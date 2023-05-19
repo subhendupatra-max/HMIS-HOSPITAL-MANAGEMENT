@@ -337,6 +337,9 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Emg patients']);
         Permission::create(['name' => 'Emg registation']);
         Permission::create(['name' => 'emg patient profile']);
+        Permission::create(['name' => 'print emg registation copy']);
+        Permission::create(['name' => 'edit emg registation']);
+        Permission::create(['name' => 'delete emg registation']);
         Permission::create(['name' => 'Admission From EMG']);
 
 
@@ -391,6 +394,7 @@ class PermissionSeeder extends Seeder
         //Ipd ipd-patients
         Permission::create(['name' => 'IPD ipd-patients']);
         Permission::create(['name' => 'IPD registation']);
+        Permission::create(['name' => 'edit IPD registation']);
         Permission::create(['name' => 'IPD profile']);
 
         // Opd TimeLine
@@ -725,6 +729,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'blood components']);
         Permission::create(['name' => 'Add blood components']);
         Permission::create(['name' => 'View blood components Details']);
+      
 
         //opd billing
         Permission::create(['name' => 'opd billing']);
@@ -790,11 +795,21 @@ class PermissionSeeder extends Seeder
 
         //charges opd
         Permission::create(['name' => 'add opd charges']);
+        Permission::create(['name' => 'edit opd charges']);
         Permission::create(['name' => 'patient charges']);
 
         //pathology test add to patient
         Permission::create(['name' => 'pathology-test-to-a-patient']);
         Permission::create(['name' => 'add-pathology-test-to-a-patient']);
+        Permission::create(['name' => 'edit-pathology-test-to-a-patient']);
+        Permission::create(['name' => 'delete-pathology-test-to-a-patient']);
+
+        //OPD Pathology Investigation
+        Permission::create(['name' => 'OPD Pathology Investigation']);
+        Permission::create(['name' => 'OPD Radiology Investigation']);
+
+        Permission::create(['name' => 'Create Prescription for OPD']);
+
 
     }
 }

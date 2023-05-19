@@ -58,7 +58,7 @@
 
                     <div class="col-md-4">
                         <span class="head_name">Charges</span> : <span
-                            class="value_name">{{ @$pathologyTest->charges->charge_name }}</span>
+                            class="value_name">{{ @$pathologyTest->charges->charges_name }}</span>
                     </div>
                     <div class="col-md-4">
                         <span class="head_name">Tax</span> : <span class="value_name">{{ @$pathologyTest->tax }}</span>
@@ -104,4 +104,5 @@
             </div>
         </div>
     </div>
+    
 @endsection

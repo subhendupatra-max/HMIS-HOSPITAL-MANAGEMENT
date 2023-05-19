@@ -115,6 +115,12 @@ use App\Http\Controllers\false\OpdFalseController;
 
 use App\Http\Controllers\EmgBillingController;
 
+use App\Http\Controllers\PatientDischargeController;
+
+use App\Http\Controllers\false\EmgFalseController;
+
+use App\Http\Controllers\false\IpdFalseController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -1396,6 +1402,11 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
             Route::post('find-medicine-batch-by-medicine-name', [PharmacyController::class, 'find_medicine_batch_by_medicine_name'])->name('find-medicine-batch-by-medicine-name');
             Route::post('find-medicine-details-by-medicine-batch', [PharmacyController::class, 'find_medicine_details_by_medicine_batch'])->name('find-medicine-details-by-medicine-batch');
             Route::post('save-pharmacy-billing', [PharmacyController::class, 'save_pharmacy_billing'])->name('save-pharmacy-billing');
+
+            Route::get('medicine-bill-details/{bill_id?}', [PharmacyController::class, 'details_medicine_bill'])->name('medicine-bill-details');
+            Route::get('edit-medicine-bill/{bill_id?}', [PharmacyController::class, 'edit_medicine_bill'])->name('edit-medicine-bill');
+            Route::get('delete-medicine-bill/{bill_id?}', [PharmacyController::class, 'delete_medicine_bill'])->name('delete-medicine-bill');
+            Route::get('print-medicine-bill/{bill_id?}', [PharmacyController::class, 'print_medicine_bill'])->name('print-medicine-bill');
         });
     });
     Route::group(['middleware' => ['permission:medicine stock']], function () {
@@ -1546,16 +1557,16 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
 // ================================== Pharmacy Main =================
 
 // ================================== Inventory  ==============================
-Route::group(['middleware' => ['permission:Inventory']], function () {
+Route::group(['middleware' => ['permission:Inventory'], 'prefix' => 'inventory'], function () {
 
     Route::get('item-stock-listing', [ItemStockController::class, 'item_stock_details'])->name('item-stock-listing');
 
     // ================================== Inventory requisition  ==============================
-    Route::group(['middleware' => ['permission:View Inventory Reqiuisition']], function () {
+    Route::group(['middleware' => ['permission:View Inventory Reqiuisition'], 'prefix' => 'inventory-requisition'], function () {
 
         Route::get('all-inventory-requisition-listing', [ItemRequisitionController::class, 'inventory_requisition_listing'])->name('all-inventory-requisition-listing');
 
-        Route::group(['middleware' => ['permission:Add Inventory Reqiuisition']], function () {
+        Route::group(['middleware' => ['permission:Add Inventory Reqiuisition'], 'prefix' => 'inventory-add-requisition'], function () {
 
             Route::get('add-inventory-requisition-details', [ItemRequisitionController::class, 'add_inventory_requisition_details'])->name('add-inventory-requisition-details');
             Route::post('save-inventory-requisition-details', [ItemRequisitionController::class, 'save_inventory_requisition_details'])->name('save-inventory-requisition-details');
@@ -1669,14 +1680,22 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
 
     Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
         Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
-            Route::get('pathology-test-charge', [PathologyController::class, 'pathology_test_charge'])->name('pathology-test-charge');
+            Route::get('pathology-patient-test-list', [PathologyController::class, 'pathology_test_charge'])->name('pathology-test-charge');
         });
         Route::group(['middleware' => ['permission:add-pathology-test-to-a-patient']], function () {
             Route::get('add-pathology-test-to-a-patient', [PathologyController::class, 'pathology_test_charge_add'])->name('add-pathology-test-to-a-patient');
-            Route::post('add-pathology-charges-for-a-patient', [PathologyController::class, 'add_pathology_charges_for_a_patient'])->name('add-pathology-charges-for-a-patient');
-            Route::post('save-pathology-charge', [PathologyController::class, 'save_pathology_charge'])->name('save-pathology-charge');
+            Route::post('add-pathology-test-for-a-patient', [PathologyController::class, 'add_pathology_charges_for_a_patient'])->name('add-pathology-charges-for-a-patient');
+            Route::post('save-pathology-patient-test', [PathologyController::class, 'save_pathology_charge'])->name('save-pathology-charge');
+        });
+        Route::group(['middleware' => ['permission:edit-pathology-test-to-a-patient']], function () {
+            Route::get('edit-pathology-test-patient/{id}', [PathologyController::class, 'edit_pathology_test_patient'])->name('edit-pathology-test-patient');
+            Route::post('update-pathology-patient-test', [PathologyController::class, 'update_pathology_charge'])->name('update-pathology-charge');
+        });
+        Route::group(['middleware' => ['permission:delete-pathology-test-to-a-patient']], function () {
+            Route::get('delete-pathology-test-patient/{id}', [PathologyController::class, 'delete_pathology_test_patient'])->name('delete-pathology-test-patient');
         });
     });
+
 
 
 
@@ -1720,7 +1739,6 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
     Route::post('find-range-by-parameter', [PathologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter');
     Route::post('find-unit-by-parameter', [PathologyController::class, 'find_unit_by_parameter'])->name('find-unit-by-parameter');
 
-
     Route::group(['middleware' => ['permission:delete pathology test']], function () {
         Route::get('delete-pathology-test-details/{id}', [PathologyController::class, 'delete_pathology_test_details'])->name('delete-pathology-test-details');
     });
@@ -1735,22 +1753,55 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
 
 // ================================== Radiology Main =================
 Route::group(['middleware' => ['permission:radiology main'], 'prefix' => 'radiology'], function () {
+    // Route::group(['middleware' => ['permission:pathology billing list']], function () {
+    //     Route::get('radiology-billing-list', [RadiologyController::class, 'radiology_test_charge'])->name('radiology-details');
+    // });
 
-    Route::get('radiology-details', [RadiologyController::class, 'radiology_details'])->name('radiology-details');
-    Route::get('radiology-test-details', [RadiologyController::class, 'radiology_test_details'])->name('radiology-test-details');
-    Route::post('find-range-by-parameter-radiology', [RadiologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter-radiology');
-    Route::post('find-unit-by-parameter-radiology', [RadiologyController::class, 'find_unit_by_parameter'])->name('find-unit-by-parameter-radiology');
 
-    Route::group(['middleware' => ['permission:add radiology test']], function () {
-        Route::get('add-radiology-test-details', [RadiologyController::class, 'add_radiology_test_details'])->name('add-radiology-test-details');
-        Route::post('save-radiology-test-details', [RadiologyController::class, 'save_radiology_test_details'])->name('save-radiology-test-details');
+    Route::get('view-radiology-test-details/{id}', [RadiologyController::class, 'view_radiology_test_details'])->name('view-radiology-test-details');
+
+
+    Route::group(['middleware' => ['permission:radiology-test-to-a-patient']], function () {
+        Route::group(['middleware' => ['permission:radiology-test-to-a-patient']], function () {
+            Route::get('radiology-patient-test-list', [RadiologyController::class, 'radiology_test_charge'])->name('radiology-test-charge');
+        });
+
+        Route::group(['middleware' => ['permission:add-radiology-test-to-a-patient']], function () {
+            Route::get('add-radiology-test-to-a-patient', [RadiologyController::class, 'radiology_test_charge_add'])->name('add-radiology-test-to-a-patient');
+            Route::post('add-radiology-test-for-a-patient', [RadiologyController::class, 'add_radiology_charges_for_a_patient'])->name('add-radiology-charges-for-a-patient');
+            Route::post('save-radiology-patient-test', [RadiologyController::class, 'save_radiology_charge'])->name('save-radiology-charge');
+        });
+        Route::group(['middleware' => ['permission:edit-radiology-test-to-a-patient']], function () {
+            Route::get('edit-radiology-test-patient/{id}', [RadiologyController::class, 'edit_radiology_test_patient'])->name('edit-radiology-test-patient');
+            Route::post('update-radiology-patient-test', [RadiologyController::class, 'update_radiology_charge'])->name('update-radiology-charge');
+        });
+        Route::group(['middleware' => ['permission:delete-radiology-test-to-a-patient']], function () {
+            Route::get('delete-radiology-test-patient/{id}', [RadiologyController::class, 'delete_radiology_test_patient'])->name('delete-radiology-test-patient');
+        });
     });
-    Route::group(['middleware' => ['permission:delete radiology test']], function () {
-        Route::get('delete-radiology-test-details/{id}', [RadiologyController::class, 'delete_radiology_test_details'])->name('delete-radiology-test-details');
-    });
-    Route::group(['middleware' => ['permission:edit radiology test']], function () {
-        Route::get('edit-radiology-test-details/{id}', [RadiologyController::class, 'edit_radiology_test_details'])->name('edit-radiology-test-details');
-        Route::post('update-radiology-test-details', [RadiologyController::class, 'update_radiology_test_details'])->name('update-radiology-test-details');
+
+    //radiology-test
+    Route::group(['middleware' => ['permission:pathology test']], function () {
+        // ============= radiology master ====================
+        Route::group(['middleware' => ['permission:radiology test master']], function () {
+            Route::get('radiology-test-master-details', [RadiologyController::class, 'radiology_test_master_details'])->name('radiology-test-master-details');
+        });
+        Route::group(['middleware' => ['permission:add radiology test master']], function () {
+            Route::get('add-radiology-test-master-details', [RadiologyController::class, 'add_radiology_test_master_details'])->name('add-radiology-test-master-details');
+            Route::post('save-radiology-test-master-details', [RadiologyController::class, 'save_radiology_test_master_details'])->name('save-radiology-test-master-details');
+        });
+
+        // ============= pathology master ====================
+        // ============= radiology test ====================
+        Route::group(['middleware' => ['permission:radiology test']], function () {
+            Route::get('radiology-test-list', [RadiologyController::class, 'radiology_test_list'])->name('radiology-test-list');
+            Route::group(['middleware' => ['permission:add radiology test']], function () {
+                Route::get('add-radiology-test', [RadiologyController::class, 'add_radiology_test'])->name('add-radiology-test');
+                Route::post('save-radiology-test', [RadiologyController::class, 'save_radiology_test'])->name('save-radiology-test');
+            });
+        });
+        // ============= radiology test ====================
+        Route::post('find-range-by-parameter', [RadiologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter');
     });
 });
 // ================================== Radiology Main =================
@@ -1811,9 +1862,10 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     Route::group(['middleware' => ['permission:delete opd patient']], function () {
         Route::get('delete-opd-patient/{id}', [OpdController::class, 'deleteOPDdETAILS'])->name('delete-opd-patient');
     });
+    Route::get('print-opd-patient/{id}', [OpdController::class, 'prescription_print'])->name('print-opd-patient');
     Route::group(['middleware' => ['permission:edit opd patient']], function () {
         Route::get('edit-opd-patient/{id}', [OpdController::class, 'editOPDdETAILS'])->name('edit-opd-patient');
-        Route::get('update-opd-patient', [OpdController::class, 'updateOPDdETAILS'])->name('update-opd-patient');
+        Route::post('update-opd-patient', [OpdController::class, 'updateOPDdETAILS'])->name('update-opd-patient');
     });
     //================================= OPD profile ==================================
     Route::group(['middleware' => ['permission:OPD registation'], 'prefix' => 'opd-profile'], function () {
@@ -1836,6 +1888,18 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         });
     });
     //================================= OPD billing ====================================
+
+    //================================= OPD Pathology ====================================
+    Route::group(['middleware' => ['permission:OPD Pathology Investigation']], function () {
+        Route::get('opd-pathology-investigation/{id}', [OpdController::class, 'opd_pathology_investigation'])->name('opd-pathology-investigation');
+    });
+    //================================= OPD Pathology ====================================
+    //================================= OPD radiology ====================================
+    Route::group(['middleware' => ['permission:OPD Pathology Investigation']], function () {
+        Route::get('opd-radiology-investigation/{id}', [OpdController::class, 'opd_radiology_investigation'])->name('opd-radiology-investigation');
+    });
+    //================================= OPD radiology ====================================
+
 
     //================================= OPD timeline ====================================
     Route::group(['middleware' => ['permission:timeline list opd'], 'prefix' => 'opd-timeline'], function () {
@@ -1893,12 +1957,23 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     //================================= OPD charges ====================================
     Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
         Route::get('charges-list/{id?}', [OpdController::class, 'charge_list'])->name('charges-list');
-        Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
+        Route::group(['middleware' => ['permission:add opd charges']], function () {
             Route::get('add-opd-charges/{id?}', [OpdController::class, 'add_charges'])->name('add-opd-charges');
+            Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
+        });
+        Route::group(['middleware' => ['permission:edit opd charges']], function () {
+            Route::get('edit-opd-charges/{id?}/{charge_id?}', [OpdController::class, 'edit_charges'])->name('edit-opd-charges');
             Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
         });
     });
     //================================= OPD charges ====================================
+
+    //================================= OPD prescription ====================================
+    Route::group(['middleware' => ['permission:Create Prescription for OPD'], 'prefix' => 'create-prescription-opd'], function () {
+        Route::get('opd-prescription-list/{id?}', [OpdController::class, 'opd_prescription_list'])->name('opd-prescription-list');
+        Route::post('add-new-charges1', [OpdController::class, 'save_charges'])->name('add-new-charges');
+    });
+    //================================= OPD prescription ====================================
 
     //================================= ipd admission from opd ==========================
     Route::group(['middleware' => ['permission:Admission From OPD']], function () {
@@ -1921,12 +1996,27 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
 //================================= Emg ===================================================
 Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], function () {
     Route::get('emg-patient-list', [EmgController::class, 'index'])->name('emg-patient-list');
-    Route::group(['middleware' => ['permission:OPD registation']], function () {
+    Route::group(['middleware' => ['permission:Emg registation']], function () {
         Route::post('emg-after-new-old', [EmgController::class, 'after_new_old'])->name('emg-after-new-old');
 
         Route::any('emg-registation/{patientid?}', [EmgController::class, 'emg_registation'])->name('emg-registation');
         Route::post('add-emg-registation', [EmgController::class, 'add_emg_registation'])->name('add-emg-registation');
     });
+    Route::group(['middleware' => ['permission:Emg registation']], function () {
+        Route::post('emg-after-new-old', [EmgController::class, 'after_new_old'])->name('emg-after-new-old');
+
+        Route::any('emg-registation/{patientid?}', [EmgController::class, 'emg_registation'])->name('emg-registation');
+        Route::post('add-emg-registation', [EmgController::class, 'add_emg_registation'])->name('add-emg-registation');
+    });
+
+
+    Route::group(['middleware' => ['permission:print emg registation copy']], function () {
+        Route::get('print-emg-registation/{id}', [EmgController::class, 'print_emg_registation'])->name('print-emg-registation');
+    });
+    Route::group(['middleware' => ['permission:delete emg registation']], function () {
+        Route::get('delete-emg-registation/{id}', [EmgController::class, 'delete_emg_registation'])->name('delete-emg-registation');
+    });
+
     Route::group(['middleware' => ['permission:emg patient profile']], function () {
         Route::get('emg-profile/{id}', [EmgController::class, 'profile'])->name('emg-patient-profile');
     });
@@ -1936,6 +2026,31 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
 });
 
 
+//================================= Emg charges ====================================
+Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
+    Route::get('charges-list-emg/{id?}', [EmgController::class, 'charge_list'])->name('charges-list-emg');
+    Route::group(['middleware' => ['permission:add emg charges']], function () {
+        Route::get('add-emg-charges/{id?}', [EmgController::class, 'add_charges'])->name('add-emg-charges');
+        Route::post('add-new-charges-emg', [EmgController::class, 'save_charges'])->name('add-new-charges-emg');
+    });
+    Route::group(['middleware' => ['permission:edit emg charges']], function () {
+        Route::get('edit-emg-charges/{id?}/{charge_id?}', [EmgController::class, 'edit_charges'])->name('edit-emg-charges');
+        Route::post('add-new-charges-emg', [EmgController::class, 'save_charges'])->name('add-new-charges-emg');
+    });
+});
+//================================= Emg charges ====================================
+
+
+//================================= Emg Pathology ====================================
+Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
+    Route::get('emg-pathology-investigation/{id}', [EmgController::class, 'emg_pathology_investigation'])->name('emg-pathology-investigation');
+});
+//================================= Emg Pathology ====================================
+//================================= Emg radiology ====================================
+Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
+    Route::get('emg-radiology-investigation/{id}', [EmgController::class, 'emg_radiology_investigation'])->name('emg-radiology-investigation');
+});
+//================================= Emg radiology ====================================
 
 
 //================================= emg Physical Condition ====================================
@@ -2166,6 +2281,12 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::post('ipd-registation', [IpdController::class, 'ipd_registation'])->name('ipd-registation');
     });
 
+    Route::group(['middleware' => ['permission:edit IPD registation']], function () {
+        Route::get('edit-ipd-registation/{ipd_id}', [IpdController::class, 'edit_ipd_registration'])->name('edit-ipd-registation');
+
+        Route::post('update-ipd-registation', [IpdController::class, 'updaste_ipd_registation'])->name('update-ipd-registation');
+    });
+
     Route::group(['middleware' => ['permission:IPD profile'], 'prefix' => 'ipd-profile'], function () {
         Route::get('ipd-profile/{id}', [IpdController::class, 'profile'])->name('ipd-profile');
     });
@@ -2176,6 +2297,21 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     Route::post('find-bed-by-bed-ward', [IpdController::class, 'find_bed_by_bed_ward'])->name('find-bed-by-bed-ward');
 
     // Route::post('find-bed-type-by-department-in-ipd', [IpdController::class, 'find_bed_type_by_department_in_opd'])->name('find-bed-type-by-department-in-ipd');
+
+    // =============================== Discharged Patient ==================================================
+    Route::group(['middleware' => ['permission:ipd discharged patient'], 'prefix' => 'ipd-timeline'], function () {
+
+        Route::get('discharged-patient-in-ipd/{ipd_id}', [PatientDischargeController::class, 'discharged_patient_in_ipd'])->name('discharged-patient-in-ipd');
+        Route::get('all-discharged-patient-in-ipd', [PatientDischargeController::class, 'all_discharged_patient_in_ipd'])->name('all-discharged-patient-in-ipd');
+
+        Route::group(['middleware' => ['permission:add ipd discharged patient']], function () {
+            Route::get('add-discharged-patient-in-ipd/{ipd_id}', [PatientDischargeController::class, 'add_patient_discharge'])->name('add-discharged-patient-in-ipd');
+
+            Route::post('save-discharged-patient-in-ipd', [PatientDischargeController::class, 'save_patient_discharge'])->name('save-discharged-patient-in-ipd');
+        });
+    });
+    // ================================= Discharged Patient ==================================================
+
 
     // =============================== Timeline ipd ==================================================
     Route::group(['middleware' => ['permission:ipd timeline'], 'prefix' => 'ipd-timeline'], function () {
@@ -2196,6 +2332,21 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     });
 
     // =============================== Timeline ipd ====================================================
+
+    //================================= Ipd charges ====================================
+    Route::group(['middleware' => ['permission:patient charges in ipd'], 'prefix' => 'patient-charge'], function () {
+        Route::get('charges-list-ipd/{id?}', [IpdController::class, 'charge_list_in_ipd'])->name('charges-list-ipd');
+        Route::group(['middleware' => ['permission:add ipd charges']], function () {
+            Route::get('add-ipd-charges/{id?}', [IpdController::class, 'add_charges_ipd'])->name('add-ipd-charges');
+            Route::post('add-new-charges-ipd', [IpdController::class, 'save_charges_ipd'])->name('add-new-charges-ipd');
+        });
+        Route::group(['middleware' => ['permission:edit ipd charges']], function () {
+            Route::get('edit-ipd-charges/{id?}/{charge_id?}', [IpdController::class, 'edit_charges_ipd'])->name('edit-ipd-charges');
+            Route::post('add-new-charges-ipd', [IpdController::class, 'save_charges_ipd'])->name('add-new-charges-ipd');
+        });
+    });
+    //================================= Ipd charges ====================================
+
 
     //================================= Ipd Physical Condition ====================================
     Route::group(['middleware' => ['permission:ipd physical condition'], 'prefix' => 'ipd-physical-condition'], function () {
@@ -2253,6 +2404,34 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         });
     });
     // =============================== Nurse Note ==================================================
+
+    //================================= ipd Pathology ====================================
+    Route::group(['middleware' => ['permission:ipd Pathology Investigation']], function () {
+        Route::get('ipd-pathology-investigation/{id}', [IpdController::class, 'ipd_pathology_investigation'])->name('ipd-pathology-investigation');
+    });
+    //================================= ipd Pathology ====================================
+    //================================= ipd radiology ====================================
+    Route::group(['middleware' => ['permission:ipd Pathology Investigation']], function () {
+        Route::get('ipd-radiology-investigation/{id}', [IpdController::class, 'ipd_radiology_investigation'])->name('ipd-radiology-investigation');
+    });
+    //================================= ipd radiology ====================================
+    // dddd
+    //================================= IPD billing ====================================
+    Route::group(['middleware' => ['permission:ipd billing'], 'prefix' => 'ipd-billing'], function () {
+        Route::get('ipd-billing/{id}', [BillingController::class, 'ipd_billing_index'])->name('ipd-billing');
+        Route::group(['middleware' => ['permission:add ipd billing']], function () {
+            Route::get('add-ipd-billing/{id}', [BillingController::class, 'create_billing_in_ipd'])->name('add-ipd-billing');
+            Route::post('add-new-ipd-billing', [BillingController::class, 'save_new_ipd_billing'])->name('add-new-ipd-billing');
+        });
+        Route::get('ipd-bill-details/{bill_id}', [BillingController::class, 'bill_details_for_ipd'])->name('ipd-bill-details');
+        Route::group(['middleware' => ['permission:edit ipd billing']], function () {
+            Route::get('edit-ipd-bill/{bill_id}', [BillingController::class, 'edit_ipd_bill'])->name('edit-ipd-bill');
+        });
+        Route::group(['middleware' => ['permission:delete ipd billing']], function () {
+            Route::get('delete-ipd-bill/{bill_id}', [BillingController::class, 'delete_ipd_bill'])->name('delete-ipd-bill');
+        });
+    });
+    //================================= IPD billing ====================================
 
     // =============================== Medication ==================================================
     Route::group(['middleware' => ['permission:save medication']], function () {
@@ -2358,9 +2537,44 @@ Route::group(['middleware' => ['permission:False Generation'], 'prefix' => 'fals
         Route::get('opd', [OpdFalseController::class, 'index'])->name('opd-false-generation');
         Route::post('false-opd-registation', [OpdFalseController::class, 'false_opd_registation'])->name('false-opd-registation');
         Route::post('registation-false-opd', [OpdFalseController::class, 'registation_false_opd'])->name('registation-false-opd');
+        Route::post('false-pathology-test-add-opd', [OpdFalseController::class, 'false_pathology_test_add_opd'])->name('false-pathology-test-add-opd');
+        Route::post('false-radiology-test-add-opd', [OpdFalseController::class, 'false_radiology_test_add_opd'])->name('false-radiology-test-add-opd');
+        Route::post('false-pathology-test-show-in_modal', [OpdFalseController::class, 'false_pathology_test_show_in_modal'])->name('false-pathology-test-show-in_modal');
+        Route::get('delete-radiology-test-false/{id?}', [OpdFalseController::class, 'delete_radiology_test_false'])->name('delete-radiology-test-false');
+        Route::get('delete-pathology-test-false/{id?}', [OpdFalseController::class, 'delete_pathology_test_false'])->name('delete-pathology-test-false');
     });
 });
 //================================= false section ===================================================
+
+//================================= emg false section ===================================================
+Route::group(['middleware' => ['permission:Emg False Generation'], 'prefix' => 'false-patient'], function () {
+    Route::group(['middleware' => ['permission:Emg False'], 'prefix' => 'emg-false'], function () {
+        Route::get('emg', [EmgFalseController::class, 'index'])->name('emg-false-generation');
+        Route::post('false-emg-registation', [EmgFalseController::class, 'false_emg_registation'])->name('false-emg-registation');
+        Route::post('registation-false-emg', [EmgFalseController::class, 'registation_false_emg'])->name('registation-false-emg');
+        Route::post('false-pathology-test-add-emg', [EmgFalseController::class, 'false_pathology_test_add_emg'])->name('false-pathology-test-add-emg');
+        Route::post('false-radiology-test-add-emg', [EmgFalseController::class, 'false_radiology_test_add_emg'])->name('false-radiology-test-add-emg');
+        Route::post('false-pathology-test-show-in_modal-emg', [EmgFalseController::class, 'false_pathology_test_show_in_modal'])->name('false-pathology-test-show-in_modal-emg');
+        Route::get('delete-radiology-test-false-emg/{id?}', [EmgFalseController::class, 'delete_radiology_test_false_emg'])->name('delete-radiology-test-false-emg');
+        Route::get('delete-pathology-test-false-emg/{id?}', [EmgFalseController::class, 'delete_pathology_test_false_emg'])->name('delete-pathology-test-false-emg');
+    });
+});
+//================================= emg false section ===================================================
+
+//================================= ipd false section ===================================================
+Route::group(['middleware' => ['permission:Ipd False Generation'], 'prefix' => 'false-patient'], function () {
+    Route::group(['middleware' => ['permission:Ipd False'], 'prefix' => 'false-patient-ipd'], function () {
+        Route::get('ipd', [IpdFalseController::class, 'index'])->name('ipd-false-generation');
+        Route::post('false-ipd-registation', [IpdFalseController::class, 'false_ipd_registation'])->name('false-ipd-registation');
+        Route::post('registation-false-ipd', [IpdFalseController::class, 'registation_false_ipd'])->name('registation-false-ipd');
+        Route::post('false-pathology-test-add-ipd', [IpdFalseController::class, 'false_pathology_test_add_ipd'])->name('false-pathology-test-add-ipd');
+        Route::post('false-radiology-test-add-ipd', [IpdFalseController::class, 'false_radiology_test_add_ipd'])->name('false-radiology-test-add-ipd');
+        Route::post('false-pathology-test-show-in_modal-ipd', [IpdFalseController::class, 'false_pathology_test_show_in_modal'])->name('false-pathology-test-show-in_modal-ipd');
+        Route::get('delete-radiology-test-false-ipd/{id?}', [IpdFalseController::class, 'delete_radiology_test_false_ipd'])->name('delete-radiology-test-false-ipd');
+        Route::get('delete-pathology-test-false-ipd/{id?}', [IpdFalseController::class, 'delete_pathology_test_false_ipd'])->name('delete-pathology-test-false-ipd');
+    });
+});
+//================================= ipd false section ===================================================
 
 
 //=================================  Update stock =============================

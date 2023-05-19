@@ -4,7 +4,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <div class="card-title">Pathology Charge</div>
+            <div class="card-title">Radiology Charge</div>
         </div>
         <div class="card-body p-0">
             <div class="row no-gutters">
@@ -13,8 +13,7 @@
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <a class="btn btn-primary btn-sm" href="{{route('add_new_patient')}}"><i
-                                        class="fa fa-plus"></i> Add New Patient</a>
+                                <a class="btn btn-primary btn-sm" href="{{route('add_new_patient')}}"><i class="fa fa-plus"></i> Add New Patient</a>
                             </div>
                         </div>
                     </div>
@@ -33,7 +32,8 @@
                                         <option value="{{@$patient->id}}" {{ @$patient_details_information->id ==
                                             $patient->id ? 'Selected' : '' }}>{{@$patient->prefix}}
                                             {{@$patient->first_name}} {{@$patient->middle_name}}
-                                            {{@$patient->last_name}} ( {{@$patient->id}} ) </option>
+                                            {{@$patient->last_name}} ( {{@$patient->id}} )
+                                        </option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -103,8 +103,7 @@
                                             <td class="py-2 px-5">
                                                 <span class="font-weight-semibold w-50">Case Id </span>
                                             </td>
-                                            <td class="py-2 px-5"><span style="color:blue">{{@$patient_reg_details->id
-                                                    }}</span></td>
+                                            <td class="py-2 px-5"><span style="color:blue">{{@$patient_reg_details->id }}</span></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -116,26 +115,25 @@
                 </div>
 
                 <div class="col-lg-7 col-xl-8">
-                    <form method="post" action="{{route('save-pathology-charge')}}">
+                    <form method="post" action="{{route('update-radiology-charge')}}">
                         @csrf
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
-                                <div class="form-group col-md-4 adcharge ">
-                                    <label class="date-format">Charge Date <span class="text-danger">*</span></label>
-                                    <input type="datetime-local" name="charge_date" value="{{ date('Y-m-d H:s') }}"
-                                        required />
-                                    @error('charge_date')
+                                <div class="form-group col-md-6 adcharge ">
+                                    <label class="date-format"> Date <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" name="date" value="{{ date('Y-m-d h:m:s',strtotime($test_details->date)) }}" required />
+                                    @error('date')
                                     <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 adchargee ">
+                                <div class="form-group col-md-6 adchargee ">
                                     <label class="date-format">Test Name <span class="text-danger">*</span></label>
-                                    <select required class="form-control select2-show-search" name="test_id"
-                                        id="test_id" onchange="getTestAmount(this.value)">
+                                    <select required class="form-control select2-show-search" name="test_id" id="test_id">
                                         <option value="">Select Test Name</option>
-                                        @if(isset($pathology_all_test))
-                                        @foreach ($pathology_all_test as $key => $value)
-                                            <option value="{{$value->id}}">{{$value->test_name}}</option>
+                                        @if(isset($radiology_all_test))
+                                        @foreach ($radiology_all_test as $key => $value)
+                                        <option value="{{$value->id}}" {{ @$test_details->test_id ==
+                                            $value->id ? 'Selected' : '' }}>{{$value->test_name}}</option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -144,32 +142,16 @@
                                     <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
-                                <div class="form-group col-md-4 adcharged">
-                                    <label class="date-format">Charge<span class="text-danger">*</span></label>
-                                    <input type="text" name="charge" id="charge" required />
-                                    @error('charge')
-                                    <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                {{-- <div class="form-group col-md-4 opd-bladedesign ">
-                                    <label class="date-format">Billing Date <span class="text-danger">*</span></label>
-                                    <input type="datetime-local" name="billing_date" value="{{ date('Y-m-d H:s') }}"
-                                        required />
-                                    @error('billing_date')
-                                    <small class="text-danger">{{ $message }}</small>
-                                    @enderror
-                                </div> --}}
                             </div>
                         </div>
 
                         <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
                         <input type="hidden" name="section" value="{{ @$patient_reg_details->section }}" />
                         <input type="hidden" name="case_id" value="{{ @$patient_reg_details->id }}" />
-
+                        <input type="hidden" name="pre_test_id" value="{{ @$test_details->id }}" />
 
                         <div class="btn-list p-3">
-                            <button class="btn btn-primary btn-sm float-right" value="save" type="submit" name="save"><i
-                                    class="fa fa-file"></i> Save</button>
+                            <button class="btn btn-primary btn-sm float-right" value="save" type="submit" name="save"><i class="fa fa-file"></i> Save</button>
 
                         </div>
                     </form>
@@ -178,25 +160,6 @@
         </div>
     </div>
 </div>
-<script>
-       function getTestAmount(test_id) {
-        $.ajax({
-            url: "{{ route('find-test-amount-by-test') }}",
-            type: "POST",
-            data: {
-                _token: '{{ csrf_token() }}',
-                testId: test_id,
-            },
-            success: function(response) {
-                $('#charge').val(response.total_amount);
 
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-        gettotal(i);
-    }
-</script>
 
 @endsection

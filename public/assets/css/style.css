@@ -25895,10 +25895,10 @@ object, embed, video {
 }
 .profileHeding{
   font-weight: bold;
-  font-size: 18px;
+  font-size: 14px;
   font-family: sans-serif;
   text-transform: uppercase;
-  color:#22854a !important;
+  color:#343af1 !important;
 }
 .profileDetailsHeading{
     font-size: 16px;
@@ -26710,6 +26710,11 @@ top: -29px;
 .adcharged{
     margin: 25px 0px 0px 0px;
 }
+.diagoniseadd{
+  top: 27%;
+  left: 15px;
+}
+
 /* ---------------------------------------------------- */
 
 
@@ -27076,4 +27081,9 @@ border-radius: 2%;
         margin-bottom: 20px;
     }
 
+}
+.scrollable
+{
+   height: 400px;
+   overflow-y: scroll;
 }

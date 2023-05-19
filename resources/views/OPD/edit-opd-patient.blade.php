@@ -6,7 +6,7 @@
         <div class="card-header">
             <div class="card-title">OPD Registation Details Edit</div>
         </div>
-        @include('message.notification')
+
         <div class="card-body p-0">
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
@@ -112,7 +112,7 @@
                 </div>
 
                 <div class="col-lg-8 col-xl-8">
-                    <form method="post" action="{{route('add-opd-registration')}}">
+                    <form method="post" action="{{route('update-opd-patient')}}">
                         @csrf
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             @error('patient_id')
@@ -121,7 +121,6 @@
                             <div class="row">
                                 <input type="hidden" name="old_details_id" value="{{ @$opd_patient_details->id }}" />
                                 <input type="hidden" name="opd_visit_details_id" value="{{ @$opd_visit_details->id }}" />
-                                <input type="hidden" name="physical_condition" value="{{ @$patient_physical_details->id }}" />
                                 <input type="hidden" name="patient_id" value="{{ @$patient_details_information->id }}" />
 
                                 <div class="form-group col-md-4 opd-bladedesign ">
@@ -189,10 +188,10 @@
                             </div>
                             <div class="form-group col-md-4 newaddappon">
                                 <label for="department">Department <span class="text-danger">*</span></label>
-                                <select name="department" class="form-control select2-show-search" id="department">
+                                <select name="department" class="form-control select2-show-search" id="department" data-doctor_id="{{$opd_visit_details->cons_doctor}}">
                                     <option value="">Department</option>
                                     @foreach ($departments as $key => $department)
-                                    <option value="{{$department->id}}"> {{$department->department_name}}</option>
+                                    <option value="{{$department->id}}" {{ $department->id == $opd_visit_details->department_id ? 'selected' : '' }}> {{$department->department_name}}</option>
                                     @endforeach
                                 </select>
                                 @error('department')
@@ -202,7 +201,7 @@
 
                             <div class="form-group col-md-4 newaddappon">
                                 <label for="cons_doctor">Consultant Doctor <span class="text-danger">*</span></label>
-                                <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
+                                <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor" data-unit_id="{{$opd_visit_details->unit}}">
                                     <option value="">Consultant Doctor</option>
                                 </select>
                                 @error('cons_doctor')
@@ -223,7 +222,7 @@
                                 <label for="ticket_no">Ticket No <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-group col-md-4 newaddappon ">
-                                <input type="text" value="{{ $ticket_fees->ticket_fees }}" id="ticket_fees" name="ticket_fees">
+                                <input type="text" value="{{ $opd_visit_details->ticket_fees }}" id="ticket_fees" name="ticket_fees">
                                 <label for="ticket_fees">Ticket Fees <span class="text-danger">*</span></label>
                             </div>
 
@@ -240,75 +239,74 @@
                         {{-- </div> --}}
 
                         {{-- <hr class="hr_line"> --}}
-                        <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Physical Condition
-                            ?</span>
+                        <!-- <input type="checkbox" onchange="show_physical_condition()" id="isAgeSelected" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Physical Condition
+                            ?</span> -->
 
-                        <div class="row" id="physical_condition" style="display: none">
+                        <!-- <div class="row" id="physical_condition" style="display: none">
                             <div class="col-md-2 opd-condition">
                                 <label for="height" class="form-label">Height(cm)</label>
-                                <input type="text" class="form-control" id="height" name="height" value="{{ old('height') }}" />
+                                <input type="text" class="form-control" id="height" name="height" value="{{ @$patient_physical_details->height }}" />
                             </div>
                             <div class="col-md-2 opd-condition">
                                 <label for="weight" class="form-label">Weight(kg)</label>
-                                <input type="text" class="form-control" id="weight" name="weight" value="{{ old('weight') }}" />
+                                <input type="text" class="form-control" id="weight" name="weight" value="{{ @$patient_physical_details->weight }}" />
                             </div>
                             <div class="col-md-2 opd-condition">
                                 <label for="bp" class="form-label">BP</label>
-                                <input type="text" class="form-control" id="bp" name="bp" value="{{ old('bp') }}" />
+                                <input type="text" class="form-control" id="bp" name="bp" value="{{ @$patient_physical_details->bp }}" />
                             </div>
                             <div class="col-md-2 opd-condition1">
                                 <label for="pulse" class="form-label">Pulse</label>
-                                <input type="text" class="form-control" id="pulse" name="pulse" value="{{ old('pulse') }}" />
+                                <input type="text" class="form-control" id="pulse" name="pulse" value="{{ @$patient_physical_details->pulse }}" />
                             </div>
                             <div class="col-md-2 opd-condition1">
                                 <label for="temperature" class="form-label">Temperature</label>
-                                <input type="text" class="form-control" id="temperature" name="temperature" value="{{ old('temperature') }}" />
+                                <input type="text" class="form-control" id="temperature" name="temperature" value="{{ @$patient_physical_details->temperature }}" />
                             </div>
                             <div class="col-md-2 opd-condition1">
                                 <label for="respiration" class="form-label">Respiration</label>
-                                <input type="text" class="form-control" id="respiration" name="respiration" value="{{ old('respiration') }}" />
+                                <input type="text" class="form-control" id="respiration" name="respiration" value="{{ @$patient_physical_details->respiration }}" />
                             </div>
-                        </div>
+                        </div> -->
 
-                        <hr class="hr_line">
-                        <input type="checkbox" onchange="show_Symptoms()" id="show_Symptoms_button" /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Symptoms ?</span>
+                        <!-- <hr class="hr_line"> -->
+                        <!-- <input type="checkbox" onchange="show_Symptoms()" id="show_Symptoms_button" {{$opd_visit_details->symptoms_type != null ? 'checked' : " " }} /><span style="font-weight: 500;color:blue"> Are You Want to Share Patient's Symptoms ?</span>
 
                         <div class="row" id="show_Symptoms" style="display: none">
                             <div class="col-md-3 newaddappon ">
                                 <label for="symptoms_type" class="form-label">Symptoms Type</label>
-                                <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type">
+                                <select name="symptoms_type" class="form-control select2-show-search" id="symptoms_type" onchange="getSymptomsHead(this.value,{{$opd_visit_details->symptoms}})" >
                                     <option value="">symptoms type</option>
                                     @foreach ($symptoms_types as $key => $symptoms_type)
-                                    <option value="{{$symptoms_type->id}}"> {{$symptoms_type->symptoms_type_name}}</option>
+                                    <option value="{{$symptoms_type->id}}" {{ $symptoms_type->id == $opd_visit_details->symptoms_type ? 'selected' : " " }}> {{$symptoms_type->symptoms_type_name}}</option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="col-md-3 newaddappon">
                                 <label for="symptoms_title" class="form-label">Symptoms Title</label>
-
                                 <select name="symptoms_title" id="symptoms_title" class="form-control select2-show-search">
-                                    <option value="">symptoms_title</option>
+                                    <option value="">symptoms title</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4 opd-bladedesigninin">
 
-                                <input type="text" id="symptoms_description" name="symptoms_description">
+                                <input type="text" id="symptoms_description" name="symptoms_description" value="{{ $opd_visit_details->symptoms_description}}">
                                 <label for="Symptoms Description">Symptoms Description </label>
                             </div>
-                        </div>
+                        </div> -->
 
 
-                        <hr class="hr_line">
+                        <!-- <hr class="hr_line"> -->
                         <div class="row">
                             <div class="form-group col-md-4 opd-condition">
 
-                                <input type="text" id="note" name="note">
+                                <input type="text" id="note" name="note" value="{{ $opd_visit_details->note}}">
                                 <label for="note">Note </label>
                             </div>
                             <div class="form-group col-md-4 opd-condition">
 
-                                <input type="text" id="any_known_allergies" name="any_known_allergies">
+                                <input type="text" id="any_known_allergies" name="any_known_allergies" value="{{ $opd_visit_details->known_allergies}}">
                                 <label for="any_known_allergies">Any Known Allergies</label>
                             </div>
                         </div>
@@ -342,21 +340,28 @@
         }
     }
 
-    function show_physical_condition() {
-        if (document.getElementById('isAgeSelected').checked) {
-            $('#physical_condition').removeAttr('style', true);
-        } else {
-            $('#physical_condition').attr('style', 'display:none', true);
-        }
-    }
+    // function show_physical_condition() {
+
+    //     // if ($patient_physical_details == null) {
+    //     if (document.getElementById('isAgeSelected').checked) {
+
+    //         $('#physical_condition').removeAttr('style', true);
+
+    //     } else {
+    //         $('#physical_condition').attr('style', 'display:none', true);
+    //     }
+    // }
 
     function show_Symptoms() {
+
         if (document.getElementById('show_Symptoms_button').checked) {
+
             $('#show_Symptoms').removeAttr('style', true);
         } else {
             $('#show_Symptoms').attr('style', 'display:none', true);
         }
     }
+
 
     function getDetailsAccordingType(val) {
 
@@ -377,13 +382,19 @@
         }
     }
 </script>
+
 <script>
     $(document).ready(function() {
         $("#department").change(function(event) {
             event.preventDefault();
             let department = $(this).val();
+
             // alert(department);
             $('#cons_doctor').html('<option vaule="" >Select...</option>');
+            let cons_doc_id = $(this).attr("data-doctor_id");
+            // alert(cons_doc_id);
+            let unit_name = $(this).attr("data-unit_id");
+            // alert(unit_name);
             $.ajax({
                 url: "{{ route('find-doctor-by-department') }}",
                 type: "POST",
@@ -395,10 +406,15 @@
                     console.log(response);
                     $('#ticket_no').val(response.opd_ticket_no_by_department)
                     $.each(response.cons_doctor, function(key, value) {
-                        $('#cons_doctor').append(`<option value="${value.id}">${value.first_name} ${value.last_name}</option>`);
+                        let sel = (value.id == cons_doc_id ? 'selected' : '');
+
+                        $('#cons_doctor').append(`<option value="${value.id}" ${sel}>${value.first_name} ${value.last_name}</option>`);
                     });
                     $.each(response.opd_units, function(key, value) {
-                        $('#unit').append(`<option value="${value.unit_name}">${value.unit_name}</option>`);
+                        let sel = (value.id == unit_name ? 'selected' : '');
+
+                        $('#unit').append(`<option value="${value.unit_name}" ${sel}>${value.unit_name}</option>`);
+
                     });
                 },
                 error: function(error) {
@@ -409,11 +425,14 @@
     });
 </script>
 
+<!-- 
 <script>
     $(document).ready(function() {
         $("#symptoms_type").change(function(event) {
             event.preventDefault();
-            let symptoms_type = $(this).val();
+            // let symptoms_type = $(this).val();
+            // let symptoms_head = $(this).attr("data-symptomsHead_id");
+            // alert(symptoms_head);
             $('#symptoms_title').html('<option value="" >Select...</option>');
             $.ajax({
                 url: "{{ route('find-symptoms-title-by-symptoms-type') }}",
@@ -423,8 +442,10 @@
                     symptoms_type_id: symptoms_type,
                 },
                 success: function(response) {
+
                     $.each(response, function(key, value) {
-                        $('#symptoms_title').append(`<option value="${value.symptoms_head_name	}">${value.symptoms_head_name }</option>`);
+                        // let sel = (value.symptoms_head_name == symptoms_head ? 'selected' : '');
+                        $('#symptoms_title').append(`<option value="${value.symptoms_head_name}">${value.symptoms_head_name }</option>`);
                     });
                 },
                 error: function(error) {
@@ -433,9 +454,36 @@
             });
         });
     });
+</script> -->
+
+<script>
+    function getSymptomsHead(symptomsType_id, symptomsHead_id) {
+
+        // alert(symptomsHead_id);
+        let symptomsHead_id = $(this).attr("data-SymptomHead_id");
+        alert(symptomsHead_id);
+        $('#symptoms_title').html('<option value="" >Select...</option>');
+
+        $.ajax({
+            url: "{{ route('find-symptoms-title-by-symptoms-type') }}",
+            type: "POST",
+            data: {
+                _token: '{{ csrf_token() }}',
+                symptoms_type_id: symptomsType_id,
+            },
+            success: function(response) {
+                console.log(response);
+                $.each(response, function(key, values) {
+                    let sel = (values.symptoms_head_name == symptomsHead_id ? 'selected' : '');
+                    $('#symptoms_title').append(`<option value="${values.symptoms_head_name}" >${values.symptoms_head_name}</option>`);
+                });
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
 </script>
-
-
 
 
 @endsection

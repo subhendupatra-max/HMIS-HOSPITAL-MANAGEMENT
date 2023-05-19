@@ -129,7 +129,7 @@ unset($__errorArgs, $__bag); ?>
                         <?php echo csrf_field(); ?>
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
-                                <div class="form-group col-md-4 adcharge ">
+                                <div class="form-group col-md-6 adcharge ">
                                     <label class="date-format">Charge Date <span class="text-danger">*</span></label>
                                     <input type="datetime-local" name="charge_date" value="<?php echo e(date('Y-m-d H:s')); ?>"
                                         required />
@@ -144,7 +144,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-                                <div class="form-group col-md-4 adchargee ">
+                                <div class="form-group col-md-6 adchargee ">
                                     <label class="date-format">Test Name <span class="text-danger">*</span></label>
                                     <select required class="form-control select2-show-search" name="test_id"
                                         id="test_id" onchange="getTestAmount(this.value)">
@@ -167,20 +167,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-                                <div class="form-group col-md-4 adcharged">
-                                    <label class="date-format">Charge<span class="text-danger">*</span></label>
-                                    <input type="text" name="charge" id="charge" required />
-                                    <?php $__errorArgs = ['charge'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                    <small class="text-danger"><?php echo e($message); ?></small>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                </div>
+                                
                                 
                             </div>
                         </div>

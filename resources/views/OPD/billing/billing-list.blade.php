@@ -26,7 +26,7 @@
             <div class="card-body">
                 <div class="">
                     <div class="table-responsive">
-                        <table class="table card-table table-vcenter text-nowrap table-default">
+                        <table class="table table-bordered text-nowrap" id="example">
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0">Bill No.</th>
@@ -52,9 +52,15 @@
                                            
                                             <td>
                                                 @if($value->discount_status != 'Not applied')
-                                                <span class="badge badge-{{ $value->discount_status == 'Approved' ? 'success' : 'denger' }}">{{ $value->discount_status }}</span>
+                                                    @if($value->discount_status == 'Approved')
+                                                        <span class="badge badge-success">Approved</span>
+                                                    @elseif ($value->discount_status == 'Requested')
+                                                        <span class="badge badge-warning">Requested</span>
+                                                    @else
+                                                        <span class="badge badge-danger">Rejected</span>
+                                                    @endif
                                                 @else
-                                                <span class="text-warning">Not Applied</span>
+                                                    <span class="badge badge-primary">Not Applied</span>
                                                 @endif
                                             </td>
 
@@ -98,4 +104,5 @@
                 </div>
             </div>
         </div>
+    </div>
     @endsection

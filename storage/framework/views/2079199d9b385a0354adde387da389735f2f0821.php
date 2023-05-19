@@ -9,12 +9,25 @@
                 <div class="col-md-6 card-title">
                     <h4 class="card-title">IPD Patient List </h4>
                 </div>
+                <div class="col-md-6 text-right">
+                    <div class="d-block">
+                        
+
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
+                        <a href="<?php echo e(route('all-discharged-patient-in-ipd')); ?>" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
+                            Discharged Patient</a>
+                        <?php endif; ?>
+
+                    </div>
+                </div>
             </div>
+
         </div>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table card-table table-vcenter text-nowrap table-default">
+                <table class="table table-bordered text-nowrap" id="example">
                     <thead>
                         <tr>
                             <th scope="col">IPD Id</th>
@@ -24,7 +37,6 @@
                             <th scope="col">Admission Date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -84,7 +96,8 @@
                                             <i class="fa fa-file"></i> Status Change</a>
                                         <?php endif; ?>
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                                        <a class="dropdown-item" href="">
+
+                                        <a class="dropdown-item" href="<?php echo e(route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])); ?>">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         <?php endif; ?>
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>

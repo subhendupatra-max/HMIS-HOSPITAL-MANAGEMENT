@@ -77,7 +77,7 @@
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
 
-                        <b>Date: <?php echo e($emg_patient_details->appointment_date); ?></b>
+                        <b>Date: <?php echo e(@$emg_patient_details->appointment_date); ?></b>
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
                         <b>Cons. Doctor: <?php echo e(@$emg_patient_details->doctor_first_name); ?><?php echo e(@$emg_patient_details->doctor_last_name); ?></b>
@@ -95,18 +95,18 @@
                         Patient Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e($emg_patient_details->first_name); ?>
+                        <?php echo e(@$emg_patient_details->first_name); ?>
 
-                        <?php echo e($emg_patient_details->middle_name); ?>
+                        <?php echo e(@$emg_patient_details->middle_name); ?>
 
-                        <?php echo e($emg_patient_details->last_name); ?>
+                        <?php echo e(@$emg_patient_details->last_name); ?>
 
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Guardian Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e($emg_patient_details->guardian_name); ?>
+                        <?php echo e(@$emg_patient_details->guardian_name); ?>
 
                     </td>
 
@@ -114,7 +114,7 @@
                         Mobile No.
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e($emg_patient_details->guardian_contact_no); ?>
+                        <?php echo e(@$emg_patient_details->guardian_contact_no); ?>
 
                     </td>
                 </tr>
@@ -123,22 +123,22 @@
                         Age
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e($emg_patient_details->year); ?>Y
-                        <?php echo e($emg_patient_details->month); ?>M
-                        <?php echo e($emg_patient_details->day); ?>D
+                        <?php echo e(@$emg_patient_details->year); ?>Y
+                        <?php echo e(@$emg_patient_details->month); ?>M
+                        <?php echo e(@$emg_patient_details->day); ?>D
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Gender
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e($emg_patient_details->gender); ?>
+                        <?php echo e(@$emg_patient_details->gender); ?>
 
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Patient Type
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e($emg_patient_details->patient_type); ?>
+                        <?php echo e(@$emg_patient_details->patient_type); ?>
 
                     </td>
                 </tr>
@@ -147,21 +147,21 @@
                         Address
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e($emg_patient_details->address); ?>
+                        <?php echo e(@$emg_patient_details->address); ?>
 
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Blood Group
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e($emg_patient_details->blood_group); ?>
+                        <?php echo e(@$emg_patient_details->blood_group); ?>
 
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Ticket Fees:
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e($emg_patient_details->ticket_fees); ?>
+                        <?php echo e(@$emg_patient_details->ticket_fees); ?>
 
                     </td>
                 </tr>
