@@ -3,7 +3,7 @@
 /*shadow variables*/
 /*Colors*/
 a:hover {
-    color: #705ec8;
+    color: #ECCDB4;
 }
 
 .default-card.default .loader {
@@ -355,7 +355,7 @@ a:hover {
 
 .dropdown-item:hover,
 .dropdown-item:focus {
-    color: #705ec8;
+    color: #c85e72;
 }
 
 .btn.dropdown-toggle.btn-primary~.dropdown-menu .dropdown-plus-title {
