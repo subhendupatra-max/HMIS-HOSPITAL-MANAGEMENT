@@ -351,7 +351,7 @@ $login_details = DB::table('users')
                                 <li><a href="<?php echo e(route('emg-false-generation')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'emg-false' ? 'active' : ''); ?>"> EMG</a></li>
                                 <?php endif; ?>
                                 <?php if(auth()->user()->can('IPD False')): ?>
-                                <li><a href="<?php echo e(route('user-list')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'ipd-false' ? 'active' : ''); ?>"> IPD</a></li>
+                                <li><a href="<?php echo e(route('ipd-false-generation')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'ipd-false' ? 'active' : ''); ?>"> IPD</a></li>
                                 <?php endif; ?>
 
 

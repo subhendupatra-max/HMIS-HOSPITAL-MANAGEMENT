@@ -67,13 +67,14 @@
                                                     @enderror
                                             </div>
                                             <div class="form-group col-md-12 newaddappon">
-                                                <label for="visit_type">Visit Type <span class="text-danger">*</span></label>
-                                                <select name="visit_type" id="visit_type" class="form-control select2-show-search" id="visit_type" required>
+                                                <label for="cons_doctor">Doctor<span class="text-danger">*</span></label>
+                                                <select name="cons_doctor" id="cons_doctor" class="form-control select2-show-search" id="cons_doctor" required>
                                                     <option value="">Select One</option>
-                                                    <option value="New Visit">New-Visit</option>
-                                                    <option value="Revisit">Revisit</option>
+                                                    @foreach($doctor as $item)
+                                                    <option value="{{$item->id}}">{{$item->first_name}} {{$item->last_name}}</option>
+                                                    @endforeach
                                                 </select>
-                                                @error('visit_type')
+                                                @error('cons_doctor')
                                                 <small class="text-danger">{{ $message }}</sma>
                                                     @enderror
                                             </div>
@@ -274,11 +275,11 @@
                                                 }}</span> <span class="badge badge-danger badge-pill">False : {{
                                                 @$todays_new_sys }}</span>
                     </li>
-                    <li class="list-group-item"><i class="fa fa-cog text-success" aria-hidden="true"></i> Revisit Patient : {{ @$todays_revisit }}
-                        <br> <span class="badge badge-success badge-pill">Original : {{
+                    {{-- <li class="list-group-item"><i class="fa fa-cog text-success" aria-hidden="true"></i> Revisit Patient : {{ @$todays_revisit }}
+                    <br> <span class="badge badge-success badge-pill">Original : {{
                                                 @$todays_revisit_ori }}</span> <span class="badge badge-danger badge-pill">False : {{ @$todays_revisit_sys
                                                 }}</span>
-                    </li>
+                    </li> --}}
                     <li class="list-group-item"><i class="fa fa-cog text-warning" aria-hidden="true"></i> Total for this Department : {{
                                             @$todays_total_for_this_department }}
                         <br> <span class="badge badge-success badge-pill">Original : {{
