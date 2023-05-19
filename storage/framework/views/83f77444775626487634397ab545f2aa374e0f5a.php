@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <form method="post" action="<?php echo e(route('add-new-charges')); ?>">
+        <form method="post" action="<?php echo e(route('add-new-charges-emg')); ?>">
             <?php echo csrf_field(); ?>
             <input type="hidden" name="case_id" value="<?php echo e($emg_patient_details->case_id); ?>" />
             <input type="hidden" name="section" value="EMG" />

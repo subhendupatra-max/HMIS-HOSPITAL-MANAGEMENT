@@ -18,25 +18,18 @@
             </div>
         </div>
         <!-- ================================ Alert Message===================================== -->
-
-        <?php if(session('success')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-        <?php if(session()->has('error')): ?>
-        <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
-        <?php endif; ?>
-
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <div class="table-responsive">
 
-                <table class="table card-table table-vcenter text-nowrap table-default">
+                <table class="table table-bordered text-nowrap" id="example">
                     <thead>
                         <tr>
                             <th scope="col">Emg Id</th>
+                            <th scope="col">Case Id</th>
                             <th scope="col">Patient</th>
                             <th scope="col">Mobile No.</th>
                             <th scope="col">G. Name/P. Type</th>
-                            <th scope="col">Medico Legal Case</th>
                             <th scope="col">Appointment Date</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -46,7 +39,8 @@
                         <?php $__currentLoopData = $emg_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
 
-                            <td><a class="textlink" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->emg_prefix); ?><?php echo e(@$value->id); ?></a></td>
+                            <td><a class="textlink" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a></td>
+                            <td><?php echo e(@$value->case_id); ?></td>
                             <td>
                                 <?php echo e(@$value->all_patient_details->prefix); ?> <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?> (<?php echo e(@$value->all_patient_details->id); ?>)<br>
                                 <i class="fa fa-venus-mars text-primary"></i> <?php echo e(@$value->all_patient_details->gender); ?> <i class="fa fa-calendar-plus-o text-primary"></i> <?php echo e(@$value->all_patient_details->year); ?>Y <?php echo e(@$value->all_patient_details->month); ?>M <?php echo e(@$value->all_patient_details->day); ?>D
@@ -57,7 +51,7 @@
                                 <i class="fa fa-adjust text-primary"></i> <?php echo e(@$value->all_emg_visit_details->patient_type); ?>
 
                             </td>
-                            <td><?php echo e(@$value->all_emg_visit_details->medico_legal_case); ?></td>
+                      
                             <td>
                                 <?php if(isset($value->all_emg_visit_details->appointment_date)): ?>
                                 <?php echo e(date('d-m-Y h:i A',strtotime($value->all_emg_visit_details->appointment_date))); ?>
@@ -70,12 +64,16 @@
                                     <div class="dropdown-menu dropdown-menu-right" style="">
 
                                         <a class="dropdown-item" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->id)])); ?>"><i class="fa fa-eye"></i> View</a>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit emg registation')): ?>
                                         <a class="dropdown-item" href="">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         <?php endif; ?>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete patient')): ?>
-                                        <a class="dropdown-item" href=""><i class="fa fa-trash"></i> Delete</a>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print emg registation copy')): ?>
+                                        <a class="dropdown-item" href="<?php echo e(route('print-emg-registation',['id'=>base64_encode($value->id)])); ?>">
+                                            <i class="fa fa-print"></i> Print</a>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete emg registation')): ?>
+                                        <a class="dropdown-item" href="<?php echo e(route('delete-emg-registation',['id'=>base64_encode($value->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -86,8 +84,6 @@
                         <?php endif; ?>
                     </tbody>
                 </table>
-                <?php echo $emg_registaion_list->links(); ?>
-
             </div>
         </div>
     </div>
