@@ -98,10 +98,10 @@
                                     <a class="dropdown-item" href="{{ route('delete-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id)) }}"><i class="fa fa-trash"></i>
                                         Delete</a>
                                     @endcan
-                                  
+
                                     <a class="dropdown-item" href="{{ route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id)) }}"><i class="fa fa-print"></i>
                                         Print</a>
-                                    
+
                                     @can('opd billing')
                                     <a class="dropdown-item"
                                         href="{{ route('add-opd-billing',['id'=> base64_encode($value->id)]) }}"><i

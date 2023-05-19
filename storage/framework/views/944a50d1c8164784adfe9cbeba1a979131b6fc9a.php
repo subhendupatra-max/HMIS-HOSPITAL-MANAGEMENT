@@ -1,8 +1,6 @@
-
-
 <?php $__env->startSection('content'); ?>
 <div class="card-design">
-    <div class="container">
+    <div class="container-fluid">
         <div class="menubox">
             <div class="menu-box1">
                 <a class="card1" href="#">
@@ -49,9 +47,21 @@
                     </div>
                   </a>
             </div>
+
             <div class="menu-box1">
                 <a class="card1" href="#">
                     <h3>Emergency Patients</h3>
+                    <p class="small">0</p>
+                    <div class="go-corner" href="#">
+                      <div class="go-arrow">
+                        <img src="<?php echo e(asset('public/assets/images/brand/emergency patient.png')); ?>" >
+                      </div>
+                    </div>
+                  </a>
+            </div>
+            <div class="menu-box1">
+                <a class="card1" href="#">
+                    <h3>Set Up</h3>
                     <p class="small">0</p>
                     <div class="go-corner" href="#">
                       <div class="go-arrow">
@@ -117,6 +127,17 @@
                     </div>
                   </a>
             </div>
+            <div class="menu-box1">
+                <a class="card1" href="#">
+                    <h3>Referral</h3>
+                    <p class="small">0</p>
+                    <div class="go-corner" href="#">
+                      <div class="go-arrow">
+                        <img src="<?php echo e(asset('public/assets/images/brand/pharmacy.png')); ?>" >
+                      </div>
+                    </div>
+                  </a>
+            </div>
         </div>
         <div class="menubox">
             <div class="menu-box1">
@@ -154,11 +175,11 @@
             </div>
             <div class="menu-box1">
                 <a class="card1" href="#">
-                    <h3>Referral</h3>
+                    <h3>Ambulance</h3>
                     <p class="small">0</p>
                     <div class="go-corner" href="#">
                       <div class="go-arrow">
-                        <img src="<?php echo e(asset('public/assets/images/brand/medical-record.png')); ?>" >
+                        <img src="<?php echo e(asset('public/assets/images/brand/ambulance.png')); ?>" >
                       </div>
                     </div>
                   </a>
@@ -174,7 +195,18 @@
                     </div>
                   </a>
                 </div>
-                
+
+                <div class="menu-box1">
+                    <a class="card1" href="#">
+                        <h3>Blood Bank</h3>
+                        <p class="small">0</p>
+                        <div class="go-corner" href="#">
+                          <div class="go-arrow">
+                            <img src="<?php echo e(asset('public/assets/images/brand/blood-type.png')); ?>" >
+                          </div>
+                        </div>
+                      </a>
+                </div>
         </div>
 
     </div>

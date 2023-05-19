@@ -72,6 +72,70 @@ $login_details = DB::table('users')
         <img src="<?php echo e(asset('public/assets/images/svgs/Heart_beat.gif')); ?>" alt="loader" width="500px" height="200px">
     </div>
     <!--- End Global-loader-->
+<<<<<<< HEAD
+    <div class="new-page">
+        <nav class="navbar navbar-expand-lg navbar-light ">
+            <a class="navbar-brand" href="#"><img src="<?php echo e(asset('public/assets/images/brand/dashlogo.png')); ?>" ></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                 <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                         <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/investigation.png')); ?>" ></div>  HR
+                     </a>
+                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       <a class="dropdown-item" href="#">User List</a>
+                       <a class="dropdown-item" href="#">Add new user</a>
+                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><div class="icon-new"> <img src="<?php echo e(asset('public/assets/images/brand/hospitalisation.png')); ?>" ></div>Patient</a>
+                  </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/patient.png')); ?>" ></div>Opd</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"> <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/hospital-bed.png')); ?>" ></div>EMG</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/patient (1).png')); ?>" ></div>IPD</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/invoice.png')); ?>" ></div>Bill</a>
+              </li>
+             <li class="nav-item">
+                <a class="nav-link" href="#"><div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/offer.png')); ?>" ></div>Discount</a>
+              </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/investigation.png')); ?>" ></div>Pharmacy</a>
+              </li>
+               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/investigation.png')); ?>" ></div>  Investigation
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Pathology</a>
+                  <a class="dropdown-item" href="#">Radiology</a>
+               </div>
+              </li>
+              <li class="nav-item">
+               <a class="nav-link" href="#"><div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/hospital-bed (1).png')); ?>" ></div>Bed</a>
+             </li>
+             
+             <div class=" menu-item">
+             <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>" ></div>  <li class="dropdown">
+
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Setup <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="#">General Settings</a></li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Charges <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+                      <li><a href="#">Charges</a>
+
+=======
     <!-- Page -->
     <div class="page">
         <div class="page-main">
@@ -720,170 +784,253 @@ $login_details = DB::table('users')
 
                         
                     </ul>
+>>>>>>> 22d70a23d629df5d33548505b9d6705a051c564c
                     </li>
-
-
-                    <!-- ROLE PERMISSION END-->
-                    <?php endif; ?>
-
-                    
+                      <li><a href="#">Charges Catagory</a></li>
+                      <li><a href="#">Charges sub catagory</a></li>
+                      <li><a href="#">Charges Unit</a></li>
                     </ul>
-                    </li>
-                    <?php endif; ?>
-                    <!-- ORDER END-->
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Font Office <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+                      <li><a href="#">Purpose</a></li>
+                      <li><a href="#">Charge</a></li>
+                      <li><a href="#">Charges sub catagory</a></li>
+                      <li><a href="#">Charges Unit</a></li>
+                    </ul>
+                  </li>
+
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Charges Package <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+                      <li><a href="#">package name</a></li>
+                      <li><a href="#">package catagory</a></li>
+                      <li><a href="#">package sub catagory</a></li>
 
                     </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Setup Inventory <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+                      <li><a href="#">Inventory Item</a></li>
+                      <li><a href="#">Inventory Item Catagory</a></li>
+                      <li><a href="#">Inventory Item Unit</a></li>
+                      <li><a href="#">Inventory Item Brand</a></li>
+                      <li><a href="#">Inventory Item Manufacture</a></li>
+                      <li><a href="#">Inventory Item Type</a></li>
+                      <li><a href="#">Inventory Store Room</a></li>
+                      <li><a href="#">Inventory Item Attribute</a></li>
+                      <li><a href="#">Inventory Vendor</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#"> Pharmacy<i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+                      <li><a href="#">medicine storeroom</a></li>
+                      <li><a href="#">medicine store</a></li>
+                      <li><a href="#">medicine rack</a></li>
+                      <li><a href="#">medicine supplier</a></li>
+                      <li><a href="#">medicine dosage</a></li>
+                      <li><a href="#">medicine unit</a></li>
+                      <li><a href="#">dose interval</a></li>
+                      <li><a href="#">dose duration</a></li>
+                      <li><a href="#">medicine vendor</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Finding<i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+                      <li><a href="#">Finding</a></li>
+                      <li><a href="#">finding category</a></li>
+
+                    </ul>
+                  </li>
+
+                  <li><a href="#">All Header</a></li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Operation <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+                      <li><a href="#">operation-details</a></li>
+                      <li><a href="#">operation-catagory-details</a></li>
+                      <li><a href="#">operation-type-details</a></li>
+
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Opd <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+                      <li><a href="#">opd-unit-details</a></li>
+                      <li><a href="#">opd-setup-details</a></li>
+                      <li><a href="#">opd-ticket-fees-details</a></li>
+
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Emg setUp <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                    <li><a href="#">Emg setUp</a></li>
+                   </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">pathology <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+                      <li><a href="#">pathology catagory</a></li>
+                      <li><a href="#">pathology unit</a></li>
+                      <li><a href="#">pathology parameter</a></li>
+
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">radiology <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">radiology catagory</a></li>
+                      <li><a href="#">radiology unit</a></li>
+                      <li><a href="#">radiology parameter</a></li>
+                     </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">blood bank <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">blood bank product</a></li>
+                      <li><a href="#">Blood unit type</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">appointment <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">shift-details</a></li>
+                      <li><a href="#">slots-details</a></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">symptoms <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">symptoms head</a></li>
+                      <li><a href="#">symptoms type</a></li>
+                    </ul>
+                  </li>
+
+                  <li><a href="#">Department</a></li>
+                  <li><a href="#">tpa management</a></li>
+                  <li><a href="#">diagonasis</a></li>
+                  <li><a href="#">prefix</a></li>
+                  <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Bed  <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                    <li><a href="#">bed</a></li>
+                    <li><a href="#">bed type</a></li>
+                    <li><a href="#">bedUnit</a></li>
+                    <li><a href="#">bedgroup</a></li>
+                    <li><a href="#">ward</a></li>
+                    <li><a href="#">floor</a></li>
+                   </ul>
+                  </li>
+                </ul>
+              </li>
+             </div>
+
+              <li class="nav-item dropdown">
+                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/patient (2).png')); ?>" ></div> Others</a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                      <li><a class="dropdown-item" href="#">Inventory</a></li>
+                      <li><a class="dropdown-item" href="#">Birth And Death</a></li>
+                      <li><a class="dropdown-item" href="#">False Generation</a></li>
+                      <li><a class="dropdown-item" href="#">ReferraL</a></li>
+                      <li><a class="dropdown-item" href="#">Ambulance</a></li>
+                      <li><a class="dropdown-item" href="#">Font-Office</a></li>
+                      <li><a class="dropdown-item" href="#">Bllod-bank</a></li>
+                     </ul>
+                  </li>
+                  </ul>
+          </li>
+        </ul>
+      </li>
+      </ul>
+
+         </div>
+
+          <form class="form-inline my-2 my-lg-0">
+              <div class="popup-link">
+                       <a href="#popup1"> <div class="dashprofileimg"><img src="<?php echo e(asset('public/assets/images/brand/user.png')); ?>" ></div>
+                      </div>
+                   <div id="popup1" class="popup-container">
+                       <div class="popup-content">
+                         <a href="#" class="close">&times;</a>
+                         <h3>   <img src="<?php echo e(asset('public/assets/images/brand/user.png')); ?>" >Name</h3>
+                         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                       </div>
+                     </div>
+               <div class="dash-bellicon">
+                   <div class="bell">
+                    <div class="popup-link">
+                       <a href="#popup1"> <div class="dashprofileimg">  <img src="<?php echo e(asset('public/assets/images/brand/bell.png')); ?>" ></div>
+                      </div>
+                   <div id="popup1" class="popup-container">
+                       <div class="popup-content">
+                         <a href="#" class="close">&times;</a>
+                         <h3>   <img src="<?php echo e(asset('public/assets/images/brand/user.png')); ?>" >Name</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                       </div>
+                     </div>
+                   </div>
+                     <div class="popup-link">
+                       <a href="#popup1"><div class="dash-bellicontext"><h6>100</h6></div></a>
+                      </div>
+                      <div id="popup1" class="popup-container">
+                       <div class="popup-content">
+                         <a href="#" class="close">&times;</a>
+                         <h3>   <img src="<?php echo e(asset('public/assets/images/brand/user.png')); ?>" >Name</h3>
+                          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                       </div>
+                     </div>
+               </div>
+             </form>
+
+    </div>
+
+
+    <div class="row">
+        <?php echo $__env->yieldContent('content'); ?>
+      </div>
+      <div class="graph">
+
+        <div class="row">
+            <div class="col-lg-7 barbox">
+                <div class="bar-graph">
+              <div class="wrapper">
+                    <canvas id='c'></canvas>
+                    <div class="label">text</div>
+                  </div>
                 </div>
-            </aside>
-            <!--aside closed-->
-            <!-- App-Content -->
-            <div class="app-content main-content">
-                <div class="side-app">
-                    <!--app header-->
-                    <div class="app-header header">
-                        <div class="container-fluid">
-                            <div class="d-flex">
-                                <a class="header-brand" href="index.html">
-                                    <img src="<?php echo e(asset('public/assets/images/brand/logo.png')); ?>" class="header-brand-img desktop-lgo" alt="Admintro logo">
-                                    <img src="<?php echo e(asset('public/assets/images/brand/logo1.png')); ?>" class="header-brand-img dark-logo" alt="Admintro logo">
-                                    <img src="<?php echo e(asset('public/assets/images/brand/favicon.png')); ?>" class="header-brand-img mobile-logo" alt="Admintro logo">
-                                    <img src="<?php echo e(asset('public/assets/images/brand/favicon1.png')); ?>" class="header-brand-img darkmobile-logo" alt="Admintro logo">
-                                </a>
-                                <div class="app-sidebar__toggle" data-toggle="sidebar">
-                                    <a class="open-toggle" href="index-2.html#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-align-left header-icon mt-1">
-                                            <line x1="17" y1="10" x2="3" y2="10">
-                                            </line>
-                                            <line x1="21" y1="6" x2="3" y2="6">
-                                            </line>
-                                            <line x1="21" y1="14" x2="3" y2="14">
-                                            </line>
-                                            <line x1="17" y1="18" x2="3" y2="18">
-                                            </line>
-                                        </svg>
-                                    </a>
-                                </div>
-                                <?php if(auth()->user()->can('search patient')): ?>
-                                <div class="mt-1">
-                                    <form class="form-inline">
-                                        <div class="search-element">
-                                            <input type="search" class="form-control header-search" id="patient_entry_reslt" onkeyup="get_all_patient_result()" placeholder="Search Patient" aria-label="Search" tabindex="1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-                                            <table id="search_result_for_patient" class="table table-striped dropdown-menu dropdown-menu-center" style="width: 600px !important;margin-top: -64px !important;">
-
-                                            </table>
-
-
-                                            <button class="btn btn-primary-color" type="button">
-                                                <svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
-                                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                                <?php endif; ?>
-
-                                <div class="d-flex order-lg-2 ml-auto">
-                                    <a href="#" data-toggle="search" class="nav-link nav-link-lg d-md-none navsearch">
-                                        <svg class="header-icon search-icon" x="1008" y="1248" viewBox="0 0 24 24" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false">
-                                            <path d="M0 0h24v24H0V0z" fill="none" />
-                                            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
-                                        </svg>
-                                    </a>
-
-
-                                    <div class="dropdown   header-fullscreen">
-                                        <a class="nav-link icon full-screen-link p-0" id="fullscreen-button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="header-icon" width="24" height="24" viewBox="0 0 24 24">
-                                                <path d="M10 4L8 4 8 8 4 8 4 10 10 10zM8 20L10 20 10 14 4 14 4 16 8 16zM20 14L14 14 14 20 16 20 16 16 20 16zM20 8L16 8 16 4 14 4 14 10 20 10z" />
-                                            </svg>
-                                        </a>
-                                    </div>
-                                    <?php if( auth()->user()->can('Bed Status')): ?>
-                                    <div class="dropdown profile-dropdown">
-                                        <a href="<?php echo e(route('bed_status')); ?>" class="nav-link pr-0 leading-none" data-placement="top" data-toggle="tooltip" title="Bed Status">
-                                            <span>
-                                                <img src="<?php echo e(asset('public/icon/hospital-bed.png')); ?>" alt="">
-                                            </span>
-                                        </a>
-                                    </div>
-                                    <?php endif; ?>
-                                    
-
-
-                                    <div class="dropdown profile-dropdown">
-                                        <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                                            <span>
-                                                <img src="<?php echo e(asset('public/profile_picture')); ?>/<?php echo e($login_details->profile_image); ?>" alt="My Profile Picture">
-                                            </span>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow animated">
-                                            <div class="text-center">
-                                                <a href="#" class="dropdown-item text-center user pb-0 font-weight-bold"><?php echo e($login_details->first_name); ?>
-
-                                                    <?php echo e($login_details->last_name); ?></a>
-                                                <span class="text-center user-semi-title"><?php echo e($login_details->role); ?></span>
-                                                <div class="dropdown-divider"></div>
-                                            </div>
-                                            <a class="dropdown-item d-flex" href="<?php echo e(route('user-profile')); ?>/<?php echo e(base64_encode(Auth::id())); ?>">
-                                                <svg class="header-icon mr-3" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM7.07 18.28c.43-.9 3.05-1.78 4.93-1.78s4.51.88 4.93 1.78C15.57 19.36 13.86 20 12 20s-3.57-.64-4.93-1.72zm11.29-1.45c-1.43-1.74-4.9-2.33-6.36-2.33s-4.93.59-6.36 2.33C4.62 15.49 4 13.82 4 12c0-4.41 3.59-8 8-8s8 3.59 8 8c0 1.82-.62 3.49-1.64 4.83zM12 6c-1.94 0-3.5 1.56-3.5 3.5S10.06 13 12 13s3.5-1.56 3.5-3.5S13.94 6 12 6zm0 5c-.83 0-1.5-.67-1.5-1.5S11.17 8 12 8s1.5.67 1.5 1.5S12.83 11 12 11z" />
-                                                </svg>
-                                                <div class="">Profile</div>
-                                            </a>
-
-                                            <a class="dropdown-item d-flex" href="#">
-                                                <svg class="header-icon mr-3" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                                    <path d="M4 4h16v12H5.17L4 17.17V4m0-2c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2H4zm2 10h12v2H6v-2zm0-3h12v2H6V9zm0-3h12v2H6V6z" />
-                                                </svg>
-                                                <div class="">Change Password</div>
-                                            </a>
-                                            <form id="logout_form" method="POST" class="dropdown-item d-flex" action="<?php echo e(route('logout')); ?>">
-                                                <?php echo csrf_field(); ?>
-                                                <svg class="header-icon mr-3" xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24">
-                                                    <g>
-                                                        <rect fill="none" height="24" width="24" />
-                                                    </g>
-                                                    <g>
-                                                        <path d="M11,7L9.6,8.4l2.6,2.6H2v2h10.2l-2.6,2.6L11,17l5-5L11,7z M20,19h-8v2h8c1.1,0,2-0.9,2-2V5c0-1.1-0.9-2-2-2h-8v2h8V19z" />
-                                                    </g>
-                                                </svg>
-                                                <div onclick="document.getElementById('logout_form').submit();">Sign
-                                                    Out</div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/app header-->
-
-                    <div class="row">
-                        <?php echo $__env->yieldContent('content'); ?>
-                    </div>
-
             </div>
-            <!-- End app-content-->
+             <div class="col-lg-4 piebox">
+             <canvas width="500" id="myChart"></canvas>
+             </div>
         </div>
-        <!--Footer-->
-        <footer class="footer">
-            <div class="container">
-                <div class="row align-items-center flex-row-reverse">
-                    <div class="col-md-12 col-sm-12 text-center">
-                        Copyright © 2022 <a href="#"><?php echo e(@$general_details->software_name); ?></a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
-                        All rights reserved.
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <!-- End Footer-->
-    </div><!-- End Page -->
-    <!-- Back to top -->
+
+      </div>
+     <!--Footer-->
+     <footer class="footer">
+         <div class="container">
+             <div class="row align-items-center flex-row-reverse">
+                 <div class="col-md-12 col-sm-12 text-center">
+                     Copyright © 2022 <a href="#"><?php echo e(@$general_details->software_name); ?></a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
+                     All rights reserved.
+                 </div>
+             </div>
+         </div>
+     </footer>
+     <!-- Back to top -->
     <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
 
 
@@ -972,6 +1119,9 @@ $login_details = DB::table('users')
     <script src="<?php echo e(asset('public/assets/plugins/wysiwyag/jquery.richtext.js')); ?>"></script>
     <script src="<?php echo e(asset('public/assets/js/form-editor.js')); ?>"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    
 
 </body>
 
@@ -979,7 +1129,321 @@ $login_details = DB::table('users')
 
 </html>
 
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
 
+    var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+          labels: ["OPD",	"IPD",	"Pathology",	"Radiology", "Pharmacy","Refferal" ],
+        datasets: [{
+            data: [500,	50,	1000,100,300 , 400], // Specify the data values array
+
+            borderColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896','#e27d60','#553d67'], // Add custom color border
+            backgroundColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896','#e27d60','#553d67'], // Add custom color background (Points and Fill)
+            borderWidth: 1 // Specify bar border width
+        }]},
+
+    options: {
+      responsive: true, // Instruct chart js to respond nicely.
+      maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+    }
+});
+</script>
+
+<script>
+    var label = document.querySelector(".label");
+var c = document.getElementById("c");
+var ctx = c.getContext("2d");
+var cw = c.width = 700;
+var ch = c.height = 350;
+var cx = cw / 2,
+  cy = ch / 2;
+var rad = Math.PI / 180;
+var frames = 0;
+
+ctx.lineWidth = 1;
+ctx.strokeStyle = "#999";
+ctx.fillStyle = "#ccc";
+ctx.font = "14px monospace";
+
+var grd = ctx.createLinearGradient(0, 0, 0, cy);
+grd.addColorStop(0, "hsla(167,72%,60%,1)");
+grd.addColorStop(1, "hsla(167,72%,60%,0)");
+
+var oData = {
+  "2008": 10,
+  "2009": 39.9,
+  "2010": 17,
+  "2011": 30.0,
+  "2012": 5.3,
+  "2013": 38.4,
+  "2014": 15.7,
+  "2015": 9.0
+};
+
+var valuesRy = [];
+var propsRy = [];
+for (var prop in oData) {
+
+  valuesRy.push(oData[prop]);
+  propsRy.push(prop);
+}
+
+
+var vData = 4;
+var hData = valuesRy.length;
+var offset = 50.5; //offset chart axis
+var chartHeight = ch - 2 * offset;
+var chartWidth = cw - 2 * offset;
+var t = 1 / 7; // curvature : 0 = no curvature
+var speed = 2; // for the animation
+
+var A = {
+  x: offset,
+  y: offset
+}
+var B = {
+  x: offset,
+  y: offset + chartHeight
+}
+var C = {
+  x: offset + chartWidth,
+  y: offset + chartHeight
+}
+
+/*
+      A  ^
+	    |  |
+	    + 25
+	    |
+	    |
+	    |
+	    + 25
+      |__|_________________________________  C
+      B
+*/
+
+// CHART AXIS -------------------------
+ctx.beginPath();
+ctx.moveTo(A.x, A.y);
+ctx.lineTo(B.x, B.y);
+ctx.lineTo(C.x, C.y);
+ctx.stroke();
+
+// vertical ( A - B )
+var aStep = (chartHeight - 50) / (vData);
+
+var Max = Math.ceil(arrayMax(valuesRy) / 10) * 10;
+var Min = Math.floor(arrayMin(valuesRy) / 10) * 10;
+var aStepValue = (Max - Min) / (vData);
+console.log("aStepValue: " + aStepValue); //8 units
+var verticalUnit = aStep / aStepValue;
+
+var a = [];
+ctx.textAlign = "right";
+ctx.textBaseline = "middle";
+for (var i = 0; i <= vData; i++) {
+
+  if (i == 0) {
+    a[i] = {
+      x: A.x,
+      y: A.y + 25,
+      val: Max
+    }
+  } else {
+    a[i] = {}
+    a[i].x = a[i - 1].x;
+    a[i].y = a[i - 1].y + aStep;
+    a[i].val = a[i - 1].val - aStepValue;
+  }
+  drawCoords(a[i], 3, 0);
+}
+
+//horizontal ( B - C )
+var b = [];
+ctx.textAlign = "center";
+ctx.textBaseline = "hanging";
+var bStep = chartWidth / (hData + 1);
+
+for (var i = 0; i < hData; i++) {
+  if (i == 0) {
+    b[i] = {
+      x: B.x + bStep,
+      y: B.y,
+      val: propsRy[0]
+    };
+  } else {
+    b[i] = {}
+    b[i].x = b[i - 1].x + bStep;
+    b[i].y = b[i - 1].y;
+    b[i].val = propsRy[i]
+  }
+  drawCoords(b[i], 0, 3)
+}
+
+function drawCoords(o, offX, offY) {
+  ctx.beginPath();
+  ctx.moveTo(o.x - offX, o.y - offY);
+  ctx.lineTo(o.x + offX, o.y + offY);
+  ctx.stroke();
+
+  ctx.fillText(o.val, o.x - 2 * offX, o.y + 2 * offY);
+}
+//----------------------------------------------------------
+
+// DATA
+var oDots = [];
+var oFlat = [];
+var i = 0;
+
+for (var prop in oData) {
+  oDots[i] = {}
+  oFlat[i] = {}
+
+  oDots[i].x = b[i].x;
+  oFlat[i].x = b[i].x;
+
+  oDots[i].y = b[i].y - oData[prop] * verticalUnit - 25;
+  oFlat[i].y = b[i].y - 25;
+
+  oDots[i].val = oData[b[i].val];
+
+  i++
+}
+
+
+
+///// Animation Chart ///////////////////////////
+//var speed = 3;
+function animateChart() {
+  requestId = window.requestAnimationFrame(animateChart);
+  frames += speed; //console.log(frames)
+  ctx.clearRect(60, 0, cw, ch - 60);
+
+  for (var i = 0; i < oFlat.length; i++) {
+    if (oFlat[i].y > oDots[i].y) {
+      oFlat[i].y -= speed;
+    }
+  }
+  drawCurve(oFlat);
+  for (var i = 0; i < oFlat.length; i++) {
+      ctx.fillText(oDots[i].val, oFlat[i].x, oFlat[i].y - 25);
+      ctx.beginPath();
+      ctx.arc(oFlat[i].x, oFlat[i].y, 3, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+
+  if (frames >= Max * verticalUnit) {
+    window.cancelAnimationFrame(requestId);
+
+  }
+}
+requestId = window.requestAnimationFrame(animateChart);
+
+/////// EVENTS //////////////////////
+c.addEventListener("mousemove", function(e) {
+  label.innerHTML = "";
+  label.style.display = "none";
+  this.style.cursor = "default";
+
+  var m = oMousePos(this, e);
+  for (var i = 0; i < oDots.length; i++) {
+
+    output(m, i);
+  }
+
+}, false);
+
+function output(m, i) {
+  ctx.beginPath();
+  ctx.arc(oDots[i].x, oDots[i].y, 20, 0, 2 * Math.PI);
+  if (ctx.isPointInPath(m.x, m.y)) {
+    //console.log(i);
+    label.style.display = "block";
+    label.style.top = (m.y + 10) + "px";
+    label.style.left = (m.x + 10) + "px";
+    label.innerHTML = "<strong>" + propsRy[i] + "</strong>: " + valuesRy[i] + "%";
+    c.style.cursor = "pointer";
+  }
+}
+
+// CURVATURE
+function controlPoints(p) {
+  // given the points array p calculate the control points
+  var pc = [];
+  for (var i = 1; i < p.length - 1; i++) {
+    var dx = p[i - 1].x - p[i + 1].x; // difference x
+    var dy = p[i - 1].y - p[i + 1].y; // difference y
+    // the first control point
+    var x1 = p[i].x - dx * t;
+    var y1 = p[i].y - dy * t;
+    var o1 = {
+      x: x1,
+      y: y1
+    };
+
+    // the second control point
+    var x2 = p[i].x + dx * t;
+    var y2 = p[i].y + dy * t;
+    var o2 = {
+      x: x2,
+      y: y2
+    };
+
+    // building the control points array
+    pc[i] = [];
+    pc[i].push(o1);
+    pc[i].push(o2);
+  }
+  return pc;
+}
+
+function drawCurve(p) {
+
+  var pc = controlPoints(p); // the control points array
+
+  ctx.beginPath();
+  //ctx.moveTo(p[0].x, B.y- 25);
+  ctx.lineTo(p[0].x, p[0].y);
+  // the first & the last curve are quadratic Bezier
+  // because I'm using push(), pc[i][1] comes before pc[i][0]
+  ctx.quadraticCurveTo(pc[1][1].x, pc[1][1].y, p[1].x, p[1].y);
+
+  if (p.length > 2) {
+    // central curves are cubic Bezier
+    for (var i = 1; i < p.length - 2; i++) {
+      ctx.bezierCurveTo(pc[i][0].x, pc[i][0].y, pc[i + 1][1].x, pc[i + 1][1].y, p[i + 1].x, p[i + 1].y);
+    }
+    // the first & the last curve are quadratic Bezier
+    var n = p.length - 1;
+    ctx.quadraticCurveTo(pc[n - 1][0].x, pc[n - 1][0].y, p[n].x, p[n].y);
+  }
+
+  //ctx.lineTo(p[p.length-1].x, B.y- 25);
+  ctx.stroke();
+  ctx.save();
+  ctx.fillStyle = grd;
+  ctx.fill();
+  ctx.restore();
+}
+
+function arrayMax(array) {
+  return Math.max.apply(Math, array);
+};
+
+function arrayMin(array) {
+  return Math.min.apply(Math, array);
+};
+
+function oMousePos(canvas, evt) {
+  var ClientRect = canvas.getBoundingClientRect();
+  return { //objeto
+    x: Math.round(evt.clientX - ClientRect.left),
+    y: Math.round(evt.clientY - ClientRect.top)
+  }
+}
+</script>
 <script type="text/javascript">
     function get_all_patient_result() {
         $('#search_result_for_patient').empty();

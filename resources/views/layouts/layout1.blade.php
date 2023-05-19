@@ -13,8 +13,12 @@ $login_details = DB::table('users')
 
 <head>
     <!-- Jquery cdn -->
+<<<<<<< HEAD
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
    
+=======
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+>>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -72,6 +76,7 @@ $login_details = DB::table('users')
         <img src="{{ asset('public/assets/images/svgs/Heart_beat.gif') }}" alt="loader" width="500px" height="200px">
     </div>
     <!--- End Global-loader-->
+<<<<<<< HEAD
     <!-- Page -->
     <div class="page">
         <div class="page-main">
@@ -979,6 +984,185 @@ $login_details = DB::table('users')
         <!-- End Footer-->
     </div><!-- End Page -->
     <!-- Back to top -->
+=======
+    <div class="dash-bord">
+    <div class="new-page">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-md navbar-light ">
+
+              <a class="navbar-brand" href="#"><img src="{{ asset('public/assets/images/brand/dashlogo.png') }}" ></a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+               </button>
+               <div class="collapse navbar-collapse" id="navbar1">
+                 <ul class="navbar-nav">
+                   <li class="nav-item">
+                       <a class="nav-link" href="#"><div class="icon-new"> <img src="{{ asset('public/assets/images/brand/hospitalisation.png') }}" ></div>Patient</a>
+                     </li>
+                 <li class="nav-item">
+                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient.png') }}" ></div>Opd</a>
+                 </li>
+                 <li class="nav-item">
+                   <a class="nav-link" href="#"> <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed.png') }}" ></div>EMG</a>
+                 </li>
+                 <li class="nav-item">
+                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (1).png') }}" ></div>IPD</a>
+                 </li>
+                 <li class="nav-item">
+                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/invoice.png') }}" ></div>Bill</a>
+                 </li>
+
+
+                 <li class="nav-item">
+                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/offer.png') }}" ></div>Discount</a>
+                 </li>
+
+                 <li class="nav-item">
+                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/investigation.png') }}" ></div>Pharmacy</a>
+                 </li>
+                 <li class="nav-item">
+                  <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}" ></div>Bed</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="icon-new"><img src="{{ asset('public/assets/images/brand/settings.png') }}" ></div>  Set up </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">General Setting</a></li>
+                          <li><a class="dropdown-item" href="#">Inventory</a>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Second Level Menu ! <i class="fa fa-chevron-right"></i></a>
+                                <ul class="dropdown-menu">
+                                  <li><a tabindex="-1" href="#">Link 1</a></li>
+                                  <li><a href="#">Lik 2</a></li>
+                                  <li><a href="#">Link 3</a></li>
+                                </ul>
+                              </li>
+                     </li>
+                        <li><a class="dropdown-item" href="#">Pharmacy</a>
+                            <li class="dropdown-submenu">
+                                <a tabindex="-1" href="#">Second Level Menu ! <i class="fa fa-chevron-right"></i></a>
+                                <ul class="dropdown-menu">
+                                  <li><a tabindex="-1" href="#">Link 1</a></li>
+                                  <li><a href="#">Lik 2</a></li>
+                                  <li><a href="#">Link 3</a></li>
+                                </ul>
+                              </li>
+                        </li>
+                        <li><a class="dropdown-item" href="#">Finding</a></li>
+                        <li><a class="dropdown-item" href="#">All Header</a></li>
+                        <li><a class="dropdown-item" href="#">Operation</a></li>
+                        <li><a class="dropdown-item" href="#">Opd</a></li>
+                        <li><a class="dropdown-item" href="#">Emg</a></li>
+                        <li><a class="dropdown-item" href="#">Pathology</a></li>
+                        <li><a class="dropdown-item" href="#">Radiology</a></li>
+                        <li><a class="dropdown-item" href="#">Blood Bank</a></li>
+                        <li><a class="dropdown-item" href="#">Appointment</a></li>
+                        <li><a class="dropdown-item" href="#">Department</a></li>
+                        <li><a class="dropdown-item" href="#">Bed Details</a></li>
+                        <li><a class="dropdown-item" href="#">Symptoms</a></li>
+                    </ul>
+                </li>
+                 <li class="nav-item dropdown">
+                   <a class="nav-link  href="#">
+                       <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (2).png') }}" ></div> Others
+
+
+
+                   </a>
+
+                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                       <li><a class="dropdown-item" href="#">HR</a></li>
+                     <li><a class="dropdown-item" href="#">Inventory</a></li>
+                     <li><a class="dropdown-item" href="#">Birth And Death
+
+
+                     </a>
+
+                   </li>
+
+                     <li class="nav-item dropdown"><a href="#">False Generation</a>
+
+                   </li>
+                     <li><a class="dropdown-item" href="#">ReferraL</a></li>
+                     <li><a class="dropdown-item" href="#">Ambulance</a></li>
+                     <li><a class="dropdown-item" href="#">Font-Office</a></li>
+                     <li><a class="dropdown-item" href="#">Bllod-bank</a></li>
+
+                    </ul>
+                 </li>
+
+               </ul>
+             </div>
+
+
+                <div class="dashprofileimg"><img src="{{ asset('public/assets/images/brand/user.png') }}" ></div>
+                 {{--  <div class="dash-bellicon"><img src="{{ asset('public/assets/images/brand/bell.png') }}" ></div>
+                <div class="dash-bellicontext"><a href="#"><h6>100</h6></a></div>  --}}
+                <div class="dash-bellicon"><img src="{{ asset('public/assets/images/brand/bell.png') }}" ></div>
+                <div class="popup-link">
+                    <a href="#popup1"><div class="dash-bellicontext"><h6>100</h6></div></a>
+                   </div>
+                   <div id="popup1" class="popup-container">
+                    <div class="popup-content">
+                      <a href="#" class="close">&times;</a>
+                      <h3>   <img src="{{ asset('public/assets/images/brand/user.png') }}" >Name</h3>
+
+
+                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    </div>
+                  </div>
+
+         </nav>
+
+       </div>
+
+    </div>
+    <div class="row">
+        @yield('content')
+      </div>
+      <div id="contenitore">
+        <div class="left">
+
+        <table>
+        <caption>Date table</caption>
+        <tbody>
+        <tr><td>A</td><td>80%</td><td style="background-color:#336699">&nbsp;</td></tr>
+        <tr><td>B</td><td>68%</td><td style="background-color:#003366">&nbsp;</td></tr>
+        <tr><td>C</td><td>30%</td><td style="background-color:#ff6600">&nbsp;</td></tr>
+        <tr><td>D</td><td>20%</td><td style="background-color:#ffcc00">&nbsp;</td></tr>
+        </tbody></table>
+        <div class="button" onclick="viewGraph()">Rerun</div>
+        </div>
+        <div class="left">
+        <div id="grafico">
+        <div class="riga" style="top:25%"><div>75%</div></div>
+        <div class="riga" style="top:50%"><div>50%</div></div>
+        <div class="riga" style="top:75%"><div>25%</div></div>
+        <div class="riga" style="top:75%"><div>25%</div></div>
+        <div id="col0" style="left:0; background-color:#336699;" class="column"></div>
+        <div id="col1" style="left:25%; background-color:#003366;" class="column"></div>
+        <div id="col2" style="left:50%; background-color:#ff6600;" class="column"></div>
+        <div id="col3" style="left:75%; background-color:#ffcc00;" class="column"></div>
+        <div id="col3" style="left:75%; background-color:#ffcc00;" class="column"></div>
+        </div>
+        </div>
+        <div class="canc"></div>
+        <div style="margin: 20px auto; text-align:center;">quellidelcucuzzolo.blogspot.com</div>
+        </div>
+     <!--Footer-->
+     <footer class="footer">
+         <div class="container">
+             <div class="row align-items-center flex-row-reverse">
+                 <div class="col-md-12 col-sm-12 text-center">
+                     Copyright © 2022 <a href="#">{{ @$general_details->software_name }}</a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
+                     All rights reserved.
+                 </div>
+             </div>
+         </div>
+     </footer>
+     <!-- End Footer-->
+    </div>
+     <!-- Back to top -->
+>>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
     <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
 
 
@@ -1059,9 +1243,15 @@ $login_details = DB::table('users')
 
     <!-- Switcher js-->
     <script src="{{ asset('public/assets/switcher/js/switcher.js') }}"></script>
+<<<<<<< HEAD
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+=======
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+>>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
     <script src="{{ asset('public/assets/plugins/notify/js/notifIt.js') }}"></script>
     <!-- INTERNAL WYSIWYG Editor js -->
     <script src="{{ asset('public/assets/plugins/wysiwyag/jquery.richtext.js') }}"></script>
@@ -1073,7 +1263,22 @@ $login_details = DB::table('users')
 <!-- Mirrored from laravel.spruko.com/admitro/Vertical-IconSidedar-Light/index by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 21 Nov 2021 07:29:24 GMT -->
 
 </html>
+<<<<<<< HEAD
 
+=======
+<script>
+    function viewGraph(){
+        $('.column').css('height','0');
+        $('table tr').each(function(index) {
+        var ha = $(this).children('td').eq(1).text();
+        $('#col'+index).animate({height: ha}, 1500).html("<div>"+ha+"</div>");
+        });
+        }
+        $(document).ready(function(){
+        viewGraph();
+        });
+</script>
+>>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
 
 <script type="text/javascript">
     function get_all_patient_result() {
@@ -1104,4 +1309,8 @@ $login_details = DB::table('users')
             });
         }
     }
+<<<<<<< HEAD
 </script>
+=======
+</script>
+>>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
