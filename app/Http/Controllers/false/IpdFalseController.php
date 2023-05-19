@@ -70,114 +70,122 @@ class IpdFalseController extends Controller
 
     public function registation_false_ipd(Request $request)
     {
-        // try {
-        //     DB::beginTransaction();
-        $emg_prefix = Prefix::where('name', 'emg')->first();
-        // if ($request->visit_type == 'New Visit') {
-        $patient_details = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->where('last_update', '<=', now()->subDays(15))->limit($request->no_of_patient)->get();
-        // dd( $patient_details);
-        // }
-        // if ($request->visit_type == 'Revisit') {
-        //     $patient_details = Patient::whereBetween('year', [$request->from_age, $request->to_age])->where('created_at', '<=', now()->subDays(15))->where('ins_by', 'sys')->limit($request->no_of_patient)->get();
-        // }
-        if (@$patient_details[0]->id == null) {
-            return response()->json(['message' => 'You dont have enough patient']);
-        }
-        // dd($patient_details);
-
-        foreach ($patient_details as $value) {
+        try {
+            DB::beginTransaction();
+            $emg_prefix = Prefix::where('name', 'emg')->first();
             // if ($request->visit_type == 'New Visit') {
-            FalsePatient::where('id', $value->id)->update(['last_update' => $request->date]);
-            $patient = new Patient();
-            $patient->patient_prefix =  $value->patient_prefix;
-            $patient->prefix = $value->prefix;
-            $patient->first_name = $value->first_name;
-            $patient->middle_name = $value->middle_name;
-            $patient->last_name = $value->last_name;
-            $patient->guardian_name = $value->guardian_name;
-            $patient->guardian_contact_no = $value->guardian_contact_no;
-            $patient->marital_status = $value->marital_status;
-            $patient->blood_group = $value->blood_group;
-            $patient->gender = $value->gender;
-            $patient->date_of_birth = $value->date_of_birth;
-            $patient->year = $value->year;
-            $patient->month = $value->month;
-            $patient->day = $value->day;
-            $patient->local_guardian_name = $value->local_guardian_name;
-            $patient->local_guardian_contact_no = $value->local_guardian_contact_no;
-            $patient->phone = $value->phone;
-            $patient->email = $value->email;
-            $patient->address = $value->address;
-            $patient->state = $value->state;
-            $patient->country = $value->country;
-            $patient->district = $value->district;
-            $patient->pin_no = $value->pin_no;
-            $patient->identification_name = $value->identification_name;
-            $patient->identification_number = $value->identification_number;
-            $patient->local_address = $value->local_address;
-            $patient->country_local = $value->country_local;
-            $patient->state_local = $value->state_local;
-            $patient->district_local = $value->district_local;
-            $patient->local_pin_no = $value->local_pin_no;
-            $patient->ins_by = 'sys';
-            $patient->save();
-
-            $pati_id = $patient->id;
-            // } 
-            // else {
-            //     $pati_id = $value->id;
+            $patient_details = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->where('last_update', '<=', now()->subDays(15))->limit($request->no_of_patient)->get();
+            // dd( $patient_details);
             // }
+            // if ($request->visit_type == 'Revisit') {
+            //     $patient_details = Patient::whereBetween('year', [$request->from_age, $request->to_age])->where('created_at', '<=', now()->subDays(15))->where('ins_by', 'sys')->limit($request->no_of_patient)->get();
+            // }
+            if (@$patient_details[0]->id == null) {
+                return response()->json(['message' => 'You dont have enough patient']);
+            }
+            // dd($patient_details);
 
-            //SAVE in CASE reference
-            $caseReference = new caseReference;
-            $caseReference->patient_id = $pati_id;
-            $caseReference->section = 'IPD';
-            $caseReference->ins_by = 'sys';
-            $caseReference->save();
-            //SAVE in CASE reference
+            foreach ($patient_details as $value) {
+                // if ($request->visit_type == 'New Visit') {
+                FalsePatient::where('id', $value->id)->update(['last_update' => $request->date]);
+                $patient = new Patient();
+                $patient->patient_prefix =  $value->patient_prefix;
+                $patient->prefix = $value->prefix;
+                $patient->first_name = $value->first_name;
+                $patient->middle_name = $value->middle_name;
+                $patient->last_name = $value->last_name;
+                $patient->guardian_name = $value->guardian_name;
+                $patient->guardian_contact_no = $value->guardian_contact_no;
+                $patient->marital_status = $value->marital_status;
+                $patient->blood_group = $value->blood_group;
+                $patient->gender = $value->gender;
+                $patient->date_of_birth = $value->date_of_birth;
+                $patient->year = $value->year;
+                $patient->month = $value->month;
+                $patient->day = $value->day;
+                $patient->local_guardian_name = $value->local_guardian_name;
+                $patient->local_guardian_contact_no = $value->local_guardian_contact_no;
+                $patient->phone = $value->phone;
+                $patient->email = $value->email;
+                $patient->address = $value->address;
+                $patient->state = $value->state;
+                $patient->country = $value->country;
+                $patient->district = $value->district;
+                $patient->pin_no = $value->pin_no;
+                $patient->identification_name = $value->identification_name;
+                $patient->identification_number = $value->identification_number;
+                $patient->local_address = $value->local_address;
+                $patient->country_local = $value->country_local;
+                $patient->state_local = $value->state_local;
+                $patient->district_local = $value->district_local;
+                $patient->local_pin_no = $value->local_pin_no;
+                $patient->ins_by = 'sys';
+                $patient->save();
 
-            //SAVE in opd details
-            // $Emg_details = new IpdDetails;
-            // $Emg_details->case_id        = $caseReference->id;
-            // $Emg_details->patient_id     = $pati_id;
-            // $Emg_details->emg_prefix     = $emg_prefix->prefix;
-            // $Emg_details->generate_by    = Auth::user()->id;
-            // $Emg_details->ins_by = 'sys';
-            // $Emg_details->save();
-            //SAVE in opd details
+                $pati_id = $patient->id;
+                // } 
+                // else {
+                //     $pati_id = $value->id;
+                // }
 
-            //SAVE in opd Visit details
-            $ipd_visit_details = new IpdDetails();
-            $ipd_visit_details->ipd_prefix                  = $emg_prefix->prefix;
-            $ipd_visit_details->patient_id                  = $pati_id;
-            $ipd_visit_details->patient_source_id           = '';
-            $ipd_visit_details->department_id               = $request->department_id;
-            $ipd_visit_details->cons_doctor                 = $request->cons_doctor;
-            $ipd_visit_details->case_type                   = '';
-            $ipd_visit_details->patient_type                = 'General';
-            $ipd_visit_details->ticket_fees                 = 00;
-            $ipd_visit_details->ticket_no                   = 0;
-            $ipd_visit_details->tpa_organization            = '';
-            $ipd_visit_details->type_no                     = '';
-            $ipd_visit_details->appointment_date            = $request->date . ' ' . sprintf("%02d", rand(8, 13)) . ':' . sprintf("%02d", rand(00, 59)) . ':' . sprintf("%02d", rand(00, 59));
-            $ipd_visit_details->symptoms_type               = '';
-            $ipd_visit_details->symptoms                    = '';
-            $ipd_visit_details->symptoms_description        = '';
-            $ipd_visit_details->known_allergies             = '';
-            $ipd_visit_details->note                        = '';
-            $ipd_visit_details->refference                  = '';
-            $ipd_visit_details->generated_by                = Auth::user()->id;
-            $ipd_visit_details->ins_by                      = 'sys';
-            $ipd_visit_details->save();
-            //SAVE in opd Visit details
-            // dd($opd_visit_details);
+                //SAVE in CASE reference
+                $caseReference = new caseReference;
+                $caseReference->patient_id = $pati_id;
+                $caseReference->section = 'IPD';
+                $caseReference->ins_by = 'sys';
+                $caseReference->save();
+                //SAVE in CASE reference
+
+                //SAVE in opd details
+                // $Emg_details = new IpdDetails;
+                // $Emg_details->case_id        = $caseReference->id;
+                // $Emg_details->patient_id     = $pati_id;
+                // $Emg_details->emg_prefix     = $emg_prefix->prefix;
+                // $Emg_details->generate_by    = Auth::user()->id;
+                // $Emg_details->ins_by = 'sys';
+                // $Emg_details->save();
+                //SAVE in opd details
+
+                //SAVE in opd Visit details
+                $ipd_visit_details = new IpdDetails();
+                $ipd_visit_details->ipd_prefix                  = $emg_prefix->prefix;
+                $ipd_visit_details->patient_id                  = $pati_id;
+                $ipd_visit_details->patient_source              = $request->patient_source;
+                $ipd_visit_details->patient_source_id           = '';
+                $ipd_visit_details->department_id               = $request->department_id;
+                $ipd_visit_details->cons_doctor                 = '';
+                $ipd_visit_details->credit_limit                 = '20000';
+                $ipd_visit_details->case_type                   = '';
+                $ipd_visit_details->patient_type                = 'General';
+                $ipd_visit_details->ticket_fees                 = 00;
+                $ipd_visit_details->ticket_no                   = 0;
+                $ipd_visit_details->tpa_organization            = '';
+                $ipd_visit_details->type_no                     = '';
+                $ipd_visit_details->appointment_date            = $request->date . ' ' . sprintf("%02d", rand(8, 13)) . ':' . sprintf("%02d", rand(00, 59)) . ':' . sprintf("%02d", rand(00, 59));
+                $ipd_visit_details->symptoms_type               = '';
+                $ipd_visit_details->symptoms                    = '';
+                $ipd_visit_details->symptoms_description        = '';
+                $ipd_visit_details->known_allergies             = '';
+                $ipd_visit_details->note                        = '';
+                $ipd_visit_details->refference                  = '';
+                $ipd_visit_details->generated_by                = Auth::user()->id;
+                $ipd_visit_details->ins_by                      = 'sys';
+                $ipd_visit_details->save();
+                //SAVE in opd Visit details
+                // dd($opd_visit_details);
+
+                if ($request->patient_source == 'OPD') {
+                    IpdDetails::where('id', '=', $ipd_visit_details->id)->update(['patient_source_id' => 'DITS/OPD/2023/ $ipd_visit_details->patient_id']);
+                } else {
+                    IpdDetails::where('id', '=', $ipd_visit_details->id)->update(['patient_source_id' => 'DITS/EMG/2023/ $ipd_visit_details->patient_id']);
+                }
+            }
+            DB::commit();
+            return response()->json(['message' => 'Registation SuccessFully']);
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json(['message' => 'Error!! Do it Again']);
         }
-        DB::commit();
-        return response()->json(['message' => 'Registation SuccessFully']);
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return response()->json(['message' => 'Error!! Do it Again']);
-        // }
     }
 
     public function false_pathology_test_add_ipd(Request $request)

@@ -86,9 +86,6 @@ class EmgFalseController extends Controller
         return response()->json(['radiology_test_deatils' => $radiology_test_deatils, 'pathology_test_deatils' => $pathology_test_deatils]);
     }
 
-
-
-
     public function false_pathology_test_add_emg(Request $request)
     {
         try {

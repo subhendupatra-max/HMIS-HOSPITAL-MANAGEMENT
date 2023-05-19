@@ -72,14 +72,15 @@
                                                     @enderror
                                             </div>
                                             <div class="form-group col-md-12 newaddappon">
-                                                <label for="cons_doctor">Doctor<span class="text-danger">*</span></label>
-                                                <select name="cons_doctor" id="cons_doctor" class="form-control select2-show-search" id="cons_doctor" required>
+                                                <label for="patient_source">Patient From<span class="text-danger">*</span></label>
+                                                <select name="patient_source" id="patient_source" class="form-control select2-show-search" id="patient_source" required>
                                                     <option value="">Select One</option>
-                                                    @foreach($doctor as $item)
-                                                    <option value="{{$item->id}}">{{$item->first_name}} {{$item->last_name}}</option>
+                                                    @foreach (Config::get('static.patient_from') as $lang => $from)
+                                                    <option value="{{ $from }}"> {{ $from }}
+                                                    </option>
                                                     @endforeach
                                                 </select>
-                                                @error('cons_doctor')
+                                                @error('patient_source')
                                                 <small class="text-danger">{{ $message }}</sma>
                                                     @enderror
                                             </div>

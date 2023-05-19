@@ -109,96 +109,88 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                             </div>
-                                            <div class="form-group col-md-12 newaddappon">
-                                                <label for="cons_doctor">Doctor<span class="text-danger">*</span></label>
-                                                <select name="cons_doctor" id="cons_doctor" class="form-control select2-show-search" id="cons_doctor" required>
-                                                    <option value="">Select One</option>
-                                                    <?php $__currentLoopData = $doctor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <option value="<?php echo e($item->id); ?>"><?php echo e($item->first_name); ?> <?php echo e($item->last_name); ?></option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </select>
-                                                <?php $__errorArgs = ['cons_doctor'];
+                                            
+                                        <div class="form-group col-md-12 opd-bladedesign ">
+                                            <button class="btn btn-primary btn-sm text-center ml-2" type="button" onclick="validate()" name="save" value="save"><i class="fa fa-plus"></i> Add EMG Registation</button>
+                                        </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-xl-3 border-right">
+                    <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> Pathology Investigation</span>
+                    <div class="col-md-12 mt-3">
+                        <form method="post" action="#">
+                            <?php echo csrf_field(); ?>
+
+                            <input type="hidden" id="pathology_date" name="pathology_date" value="<?php echo e($date); ?>" />
+                            <div class="row">
+                                
+                                <div class="form-group col-md-12 newuserlisttchange ">
+                                    <label for="gender"> Catagory <span class="text-danger">*</span></label>
+                                    <select name="pathology_category" class="form-control select2-show-search" id="pathology_category" required>
+                                        <option value="">Select Category..</option>
+                                        <?php $__currentLoopData = $pathology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($value->id); ?>"> <?php echo e($value->catagory_name); ?>
+
+                                        </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php $__errorArgs = ['pathology_category'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                                <small class="text-danger"><?php echo e($message); ?></sma>
-                                                    <?php unset($message);
+                                    <small class="text-danger"><?php echo e($message); ?></small>
+                                    <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                            <div class="form-group col-md-12 opd-bladedesign ">
-                                                <button class="btn btn-primary btn-sm text-center ml-2" type="button" onclick="validate()" name="save" value="save"><i class="fa fa-plus"></i> Add EMG Registation</button>
-                                            </div>
-                                        </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-xl-3 border-right">
-                        <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> Pathology Investigation</span>
-                        <div class="col-md-12 mt-3">
-                            <form method="post" action="#">
-                                <?php echo csrf_field(); ?>
-
-                                <input type="hidden" id="pathology_date" name="pathology_date" value="<?php echo e($date); ?>" />
-                                <div class="row">
-                                    
-                                    <div class="form-group col-md-12 newuserlisttchange ">
-                                        <label for="gender"> Catagory <span class="text-danger">*</span></label>
-                                        <select name="pathology_category" class="form-control select2-show-search" id="pathology_category" required>
-                                            <option value="">Select Category..</option>
-                                            <?php $__currentLoopData = $pathology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($value->id); ?>"> <?php echo e($value->catagory_name); ?>
-
-                                            </option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </select>
-                                        <?php $__errorArgs = ['pathology_category'];
+                                </div>
+                                <div class="form-group col-md-12 newaddappon ">
+                                    <label class="date-format"> No. of patient<span class="text-danger">*</span></label>
+                                    <input type="text" name="no_of_patient_for_pathology_test" id="no_of_patient_for_pathology_test" required />
+                                    <?php $__errorArgs = ['no_of_patient_for_pathology_test'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                        <small class="text-danger"><?php echo e($message); ?></small>
+                                    <small class="text-danger"><?php echo e($message); ?></sma>
                                         <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                                    </div>
-                                    <div class="form-group col-md-12 newaddappon ">
-                                        <label class="date-format"> No. of patient<span class="text-danger">*</span></label>
-                                        <input type="text" name="no_of_patient_for_pathology_test" id="no_of_patient_for_pathology_test" required />
-                                        <?php $__errorArgs = ['no_of_patient_for_pathology_test'];
+                                </div>
+                                
+                            
+                    
+                
+
+            <div class="form-group col-md-12 opd-bladedesign ">
+                <button class="btn btn-primary btn-sm text-center ml-2" style="    margin-top: 66px;" type="button" onclick="validate_for_investigation_pathology()" name="save" value="save"><i class="fa fa-plus"></i> Add Pathology</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<div class="col-lg-3 col-xl-3 border-right">
+    <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> Radiology Investigation</span>
+    <div class="col-md-12 mt-3">
+        <form method="post" action="#">
+            <?php echo csrf_field(); ?>
+
+            <input type="hidden" id="radiology_date" name="radiology_date" value="<?php echo e($date); ?>" />
+            <?php $__errorArgs = ['department_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                        <small class="text-danger"><?php echo e($message); ?></sma>
-                                            <?php unset($message);
+            <small class="text-danger"><?php echo e($message); ?></sma>
+                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                                    </div>
-                                    
-                                
-                        
-                    
-
-                <div class="form-group col-md-12 opd-bladedesign ">
-                    <button class="btn btn-primary btn-sm text-center ml-2" style="    margin-top: 66px;" type="button" onclick="validate_for_investigation_pathology()" name="save" value="save"><i class="fa fa-plus"></i> Add Pathology</button>
-                </div>
-            </div>
-            </form>
-        </div>
-    </div>
-    <div class="col-lg-3 col-xl-3 border-right">
-        <span class="ml-2" style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> Radiology Investigation</span>
-        <div class="col-md-12 mt-3">
-            <form method="post" action="#">
-                <?php echo csrf_field(); ?>
-
-                <input type="hidden" id="radiology_date" name="radiology_date" value="<?php echo e($date); ?>" />
-                <?php $__errorArgs = ['department_id'];
+                <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -208,61 +200,51 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                    <?php $__errorArgs = ['date'];
+                    <div class="row">
+                        
+                        <div class="form-group col-md-12 newuserlisttchange ">
+                            <label for="gender"> Catagory <span class="text-danger">*</span></label>
+                            <select name="radiology_category" class="form-control select2-show-search" id="radiology_category" required>
+                                <option value="">Select Category..</option>
+                                <?php $__currentLoopData = $radiology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($value->id); ?>"> <?php echo e($value->catagory_name); ?>
+
+                                </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                            <?php $__errorArgs = ['radiology_category'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                    <small class="text-danger"><?php echo e($message); ?></sma>
-                        <?php unset($message);
+                            <small class="text-danger"><?php echo e($message); ?></small>
+                            <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                        <div class="row">
-                            
-                            <div class="form-group col-md-12 newuserlisttchange ">
-                                <label for="gender"> Catagory <span class="text-danger">*</span></label>
-                                <select name="radiology_category" class="form-control select2-show-search" id="radiology_category" required>
-                                    <option value="">Select Category..</option>
-                                    <?php $__currentLoopData = $radiology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($value->id); ?>"> <?php echo e($value->catagory_name); ?>
-
-                                    </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                                <?php $__errorArgs = ['radiology_category'];
+                        </div>
+                        <div class="form-group col-md-12 newaddappon ">
+                            <label class="date-format"> No. of patient<span class="text-danger">*</span></label>
+                            <input type="text" name="no_of_patient_for_radiology_test" id="no_of_patient_for_radiology_test" required />
+                            <?php $__errorArgs = ['no_of_patient_for_radiology_test'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
-                                <small class="text-danger"><?php echo e($message); ?></small>
+                            <small class="text-danger"><?php echo e($message); ?></sma>
                                 <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
-                            </div>
-                            <div class="form-group col-md-12 newaddappon ">
-                                <label class="date-format"> No. of patient<span class="text-danger">*</span></label>
-                                <input type="text" name="no_of_patient_for_radiology_test" id="no_of_patient_for_radiology_test" required />
-                                <?php $__errorArgs = ['no_of_patient_for_radiology_test'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <small class="text-danger"><?php echo e($message); ?></sma>
-                                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-                            
-
-                        <div class="form-group col-md-12 opd-bladedesign ">
-                            <button class="btn btn-primary btn-sm text-center ml-2" type="button" style="    margin-top: 66px;" onclick="validate_for_investigation_radiology()" name="save" value="save"><i class="fa fa-plus"></i> Add Radiology</button>
                         </div>
-        </div>
-        </form>
+                        
+
+                    <div class="form-group col-md-12 opd-bladedesign ">
+                        <button class="btn btn-primary btn-sm text-center ml-2" type="button" style="    margin-top: 66px;" onclick="validate_for_investigation_radiology()" name="save" value="save"><i class="fa fa-plus"></i> Add Radiology</button>
+                    </div>
     </div>
+    </form>
+</div>
 </div>
 <div class="col-lg-3 col-xl-3">
     <div class="col-md-12">

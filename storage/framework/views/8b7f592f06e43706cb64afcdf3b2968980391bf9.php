@@ -57,7 +57,6 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
