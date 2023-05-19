@@ -213,6 +213,7 @@ class MedicineController extends Controller
             $medicine->expiry_date              = date('Y-m-d', strtotime($request->expiry_date));
             $medicine->quantity                 = $request->quantity;
             $medicine->mrp                      = $request->mrp;
+            $medicine->unit                     = $request->unit;
             $medicine->sale_price               = $request->sale_price;
             $medicine->purchase_price           = $request->purchase_price;
             $medicine->amount                   = $request->amount;

@@ -337,6 +337,8 @@ unset($__errorArgs, $__bag); ?>
         }
 
         function getMedicineName(category_id, rowid) {
+            $('#medicine_name' + rowid).html('');
+            $('#medicine_name' + rowid).html('');
             $('#medicine_name' + rowid).html('<option value="">Select One...</option>');
             $('#medicine_batch' + rowid).html('<option value="">Select One...</option>');
             $('#medicine_expiry_date' + rowid).val('');
@@ -367,6 +369,8 @@ unset($__errorArgs, $__bag); ?>
         }
 
         function getMedicineBatchDetails(medicine_name, rowid) {
+            $('#medicine_batch' + rowid).html('');
+            $('#medicine_batch' + rowid).html('<option value="">Select One...</option>');
             $.ajax({
                 url: "<?php echo e(route('find-medicine-batch-by-medicine-name')); ?>",
                 type: "POST",

@@ -16,23 +16,25 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 form-group">
-                                <label class="medicinerackinput" for="stored_room">Store Room</label>
+                               
                                 <select class="form-control select2-show-search" id="stored_room" name="stored_room">
-                                    <option value="">Select Stroe Room</option>
+                                    <option value="">Select Store Room</option>
                                     @if ($store_room)
                                     @foreach ($store_room as $value)
                                     <option value="{{ $value->id }}">{{ $value->name }}</option>
                                     @endforeach
                                     @endif
                                 </select>
+                                <label for="stored_room">Store Room <span class="text-danger">*</span></label>
                                 @error('stored_room')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            <input type="hidden" name="unit" value="{{ $medicine_details->unit }}" />
                             <div class="col-md-4 form-group">
-                                <label class="medicinerackinput" for="medicine_category"> Medicine Catagory </label>
+                             
 
-                                <select class="form-control select2-show-search select2-hidden-accessible" value="{{ old('medicine_catagory') }}" name="medicine_category" id="medicine_category" required>
+                                <select class="form-control select2-show-search select2-hidden-accessible" value="{{ old('medicine_catagory') }}" name="medicine_category" onchange="getMedicineName(this.value)" id="medicine_category" required>
                                     <optgroup>
                                         <option value=" ">Select Medicine Catagory<span class="text-danger">*</span>
                                         </option>
@@ -41,15 +43,18 @@
                                         @endforeach
                                     </optgroup>
                                 </select>
+                                <label for="medicine_category">Medicine Catagory<span class="text-danger">*</span> </label>
                                 @error('medicine_category')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="text" id="medicine_name" name="medicine_name" value="{{ $medicine_details->medicine_name }}" required />
-                                <label for="medicine_name">Medicine Name<span class="text-danger">*</span> </label>
-
+                                <select name="medicine_name" id="medicine_name"
+                                class="form-control select2-show-search">
+                                <option value="">Select One...</option>
+                            </select>
+                            <label for="batch_no">Medicine Name<span class="text-danger">*</span> </label>
                                 @error('medicine_name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -127,5 +132,29 @@
     </div>
 </div>
 @endcan
+
+<script>
+            function getMedicineName(category_id) {
+            $('#medicine_name').html('<option value="">Select One...</option>');
+            $.ajax({
+                url: "{{ route('find-medicine-name-by-category') }}",
+                type: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    medicine_category_id: category_id,
+                },
+                success: function(response) {
+
+                    $.each(response, function(key, value) {
+                        $('#medicine_name').append(
+                            `<option value="${value.id}">${value.medicine_name}</option>`);
+                    });
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+</script>
 
 @endsection

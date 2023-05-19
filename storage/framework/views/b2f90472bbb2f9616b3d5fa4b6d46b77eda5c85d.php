@@ -16,15 +16,16 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 form-group">
-                                <label class="medicinerackinput" for="stored_room">Store Room</label>
+                               
                                 <select class="form-control select2-show-search" id="stored_room" name="stored_room">
-                                    <option value="">Select Stroe Room</option>
+                                    <option value="">Select Store Room</option>
                                     <?php if($store_room): ?>
                                     <?php $__currentLoopData = $store_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <option value="<?php echo e($value->id); ?>"><?php echo e($value->name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php endif; ?>
                                 </select>
+                                <label for="stored_room">Store Room <span class="text-danger">*</span></label>
                                 <?php $__errorArgs = ['stored_room'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -37,9 +38,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <label class="medicinerackinput" for="medicine_category"> Medicine Catagory </label>
+                             
 
-                                <select class="form-control select2-show-search select2-hidden-accessible" value="<?php echo e(old('medicine_catagory')); ?>" name="medicine_category" id="medicine_category" required>
+                                <select class="form-control select2-show-search select2-hidden-accessible" value="<?php echo e(old('medicine_catagory')); ?>" name="medicine_category" onchange="getMedicineName(this.value)" id="medicine_category" required>
                                     <optgroup>
                                         <option value=" ">Select Medicine Catagory<span class="text-danger">*</span>
                                         </option>
@@ -48,6 +49,7 @@ unset($__errorArgs, $__bag); ?>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </optgroup>
                                 </select>
+                                <label for="medicine_category">Medicine Catagory<span class="text-danger">*</span> </label>
                                 <?php $__errorArgs = ['medicine_category'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -61,9 +63,11 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="text" id="medicine_name" name="medicine_name" value="<?php echo e($medicine_details->medicine_name); ?>" required />
-                                <label for="medicine_name">Medicine Name<span class="text-danger">*</span> </label>
-
+                                <select name="medicine_name" id="medicine_name"
+                                class="form-control select2-show-search">
+                                <option value="">Select One...</option>
+                            </select>
+                            <label for="batch_no">Medicine Name<span class="text-danger">*</span> </label>
                                 <?php $__errorArgs = ['medicine_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -197,6 +201,30 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 <?php endif; ?>
+
+<script>
+            function getMedicineName(category_id) {
+            $('#medicine_name').html('<option value="">Select One...</option>');
+            $.ajax({
+                url: "<?php echo e(route('find-medicine-name-by-category')); ?>",
+                type: "POST",
+                data: {
+                    _token: '<?php echo e(csrf_token()); ?>',
+                    medicine_category_id: category_id,
+                },
+                success: function(response) {
+
+                    $.each(response, function(key, value) {
+                        $('#medicine_name').append(
+                            `<option value="${value.id}">${value.medicine_name}</option>`);
+                    });
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        }
+</script>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pharmacy/update-stock.blade.php ENDPATH**/ ?>

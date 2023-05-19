@@ -100,7 +100,7 @@ $login_details = DB::table('users')
                             </a>
                         </li>
                         @endif
-                        @if (auth()->user()->can('bill summary'))
+                        {{-- @if (auth()->user()->can('bill summary'))
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('bill-summary') }}">
                                 <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -111,7 +111,7 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">Bill Summary</span>
                             </a>
                         </li>
-                        @endif
+                        @endif --}}
                         @if (auth()->user()->can('Human Resource'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'Human-Resource' ? 'active' : '' }}" data-toggle="slide" href="index-2.html#">

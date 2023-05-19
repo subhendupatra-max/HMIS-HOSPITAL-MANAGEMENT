@@ -100,18 +100,7 @@ $login_details = DB::table('users')
                             </a>
                         </li>
                         <?php endif; ?>
-                        <?php if(auth()->user()->can('bill summary')): ?>
-                        <li class="slide">
-                            <a class="side-menu__item" href="<?php echo e(route('bill-summary')); ?>">
-                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
-                                    <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".9"></path>
-                                </svg>
-                                <span class="side-menu__label">Bill Summary</span>
-                            </a>
-                        </li>
-                        <?php endif; ?>
+                        
                         <?php if(auth()->user()->can('Human Resource')): ?>
                         <li class="slide">
                             <a class="side-menu__item <?php echo e(Request::segment(1) == 'Human-Resource' ? 'active' : ''); ?>" data-toggle="slide" href="index-2.html#">
@@ -348,7 +337,7 @@ $login_details = DB::table('users')
                                 <li><a href="<?php echo e(route('opd-false-generation')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'opd-false' ? 'active' : ''); ?>"> OPD</a></li>
                                 <?php endif; ?>
                                 <?php if(auth()->user()->can('EMG False')): ?>
-                                <li><a href="<?php echo e(route('user-list')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'emg-false' ? 'active' : ''); ?>"> EMG</a></li>
+                                <li><a href="<?php echo e(route('emg-false-generation')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'emg-false' ? 'active' : ''); ?>"> EMG</a></li>
                                 <?php endif; ?>
                                 <?php if(auth()->user()->can('IPD False')): ?>
                                 <li><a href="<?php echo e(route('user-list')); ?>" class="slide-item <?php echo e(Request::segment(2) == 'ipd-false' ? 'active' : ''); ?>"> IPD</a></li>
