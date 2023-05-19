@@ -301,7 +301,7 @@
 <div class="options px-5 pt-1  border-bottom pb-3">
     <div class="row no-gutters">
         <span style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i>
-            Pathology</span>
+            Pathology </span>
         <div class="col-md-12">
             <div class="row">
                 @foreach ($pathology_category as $value)
@@ -474,7 +474,7 @@
 
     function validate_for_investigation_pathology() {
         // var pathology_test_date = $('#pathology_test_date').val();
-    //  alert('kk');
+        //  alert('kk');
         var pathology_category = $('#pathology_category').val();
         var no_of_patient_for_pathology_test = $('#no_of_patient_for_pathology_test').val();
 
@@ -490,10 +490,10 @@
             alert("Enter no of patient");
             return false;
         }
-        savePatientopdpathology();
+        savePatientipdpathology();
     }
 
-    function savePatientopdpathology() {
+    function savePatientipdpathology() {
         // var pathology_visit_type_ = $('#pathology_visit_type').val();
         // var pathology_to_age_ = $('#pathology_to_age').val();
         // var pathology_from_age_ = $('#pathology_from_age').val();
@@ -546,10 +546,10 @@
             alert("Enter no of patient");
             return false;
         }
-        savePatientopdradiology();
+        savePatientipdradiology();
     }
 
-    function savePatientopdradiology() {
+    function savePatientipdradiology() {
         // var radiology_visit_type_ = $('#radiology_visit_type').val();
         // var radiology_to_age_ = $('#radiology_to_age').val();
         // var radiology_from_age_ = $('#radiology_from_age').val();
@@ -624,10 +624,10 @@
             alert("Select Department");
             return false;
         }
-        savePatientopd();
+        savePatientipd();
     }
 
-    function savePatientopd() {
+    function savePatientipd() {
         var visit_type_ = $('#visit_type').val();
         var to_age_ = $('#to_age').val();
         var from_age_ = $('#from_age').val();

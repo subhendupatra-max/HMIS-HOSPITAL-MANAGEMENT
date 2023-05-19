@@ -17,7 +17,8 @@ use App\Models\PathologyPatientTest;
 use App\Models\RadiologyPatientTest;
 use App\Models\RadiologyCatagory;
 use App\Models\PathologyCatagory;
-
+use Auth;
+use DB;
 
 class IpdFalseController extends Controller
 {
@@ -181,41 +182,41 @@ class IpdFalseController extends Controller
 
     public function false_pathology_test_add_ipd(Request $request)
     {
-        try {
-            DB::beginTransaction();
-            $ipd_patient_details = IpdDetails::select('ipd_details.id as ipd_id', 'ipd_details.case_id', 'ipd_details.patient_id')->where('ipd_details.department_id', '=', $request->pathology_department_id)->where('ipd_details.appointment_date', 'like', $request->pathology_date . '%')->limit($request->no_of_patient_for_pathology_test)->get();
-
-            if (@$ipd_patient_details[0]->ipd_id == null) {
-                return response()->json(['message' => 'You dont have enough patient']);
-            }
-
-            if (@$ipd_patient_details[0]->ipd_id != null) {
-
-                foreach ($ipd_patient_details as $value) {
-
-                    $pathology_test_details = PathologyTest::select('pathology_tests.id')->where('catagory_id', $request->pathology_category)->inRandomOrder()->first();
-
-                    $pathology_patient_test = new PathologyPatientTest();
-                    $pathology_patient_test->case_id = $value->case_id;
-                    $pathology_patient_test->date = $request->pathology_test_date;
-                    $pathology_patient_test->section = 'IPD';
-                    $pathology_patient_test->patient_id = $value->patient_id;
-                    $pathology_patient_test->test_id = $pathology_test_details->id;
-                    $pathology_patient_test->ipd_id = $value->ipd_id;
-                    $pathology_patient_test->generated_by = Auth::user()->id;
-                    $pathology_patient_test->billing_status = '1';
-                    $pathology_patient_test->test_status = '3';
-                    $pathology_patient_test->ins_by = 'sys';
-                    $pathology_patient_test->save();
-                }
-            }
-
-            DB::commit();
-            return response()->json(['message' => 'Pathology Investigation added SuccessFully']);
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return response()->json(['message' => 'Error!! Do it Again']);
+        // try {
+        //     DB::beginTransaction();
+        $ipd_patient_details = IpdDetails::where('ipd_details.department_id', '=', $request->pathology_department_id)->where('ipd_details.appointment_date', 'like', $request->pathology_date . '%')->limit($request->no_of_patient_for_pathology_test)->get();
+        // dd($ipd_patient_details);
+        if (@$ipd_patient_details[0]->id == null) {
+            return response()->json(['message' => 'You dont have enough patient']);
         }
+
+        if (@$ipd_patient_details[0]->id != null) {
+
+            foreach ($ipd_patient_details as $value) {
+
+                $pathology_test_details = PathologyTest::select('pathology_tests.id')->where('catagory_id', $request->pathology_category)->inRandomOrder()->first();
+
+                $pathology_patient_test = new PathologyPatientTest();
+                $pathology_patient_test->case_id = $value->case_id;
+                $pathology_patient_test->date = $request->pathology_test_date;
+                $pathology_patient_test->section = 'IPD';
+                $pathology_patient_test->patient_id = $value->patient_id;
+                $pathology_patient_test->test_id = $pathology_test_details->id;
+                $pathology_patient_test->ipd_id = $value->ipd_id;
+                $pathology_patient_test->generated_by = Auth::user()->id;
+                $pathology_patient_test->billing_status = '1';
+                $pathology_patient_test->test_status = '3';
+                $pathology_patient_test->ins_by = 'sys';
+                $pathology_patient_test->save();
+            }
+        }
+
+        DB::commit();
+        return response()->json(['message' => 'Pathology Investigation added SuccessFully']);
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return response()->json(['message' => 'Error!! Do it Again']);
+        // }
     }
     public function false_radiology_test_add_ipd(Request $request)
     {
