@@ -46,7 +46,7 @@
                             <tr>
 
                                 <td><a href="{{ route('patient-details-profile', base64_encode($all_patients->id)) }}"
-                                        class="textlink">{{ $all_patients->patient_prefix }}{{ $all_patients->id }}</a>
+                                        class="textlink">{{ $all_patients->id }}</a>
                                 </td>
                                 <td>{{ $all_patients->prefix }} {{ $all_patients->first_name }}
                                     {{ $all_patients->middle_name }} {{ $all_patients->last_name }}

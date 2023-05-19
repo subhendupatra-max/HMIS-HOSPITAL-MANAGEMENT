@@ -337,6 +337,9 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Emg patients']);
         Permission::create(['name' => 'Emg registation']);
         Permission::create(['name' => 'emg patient profile']);
+        Permission::create(['name' => 'print emg registation copy']);
+        Permission::create(['name' => 'edit emg registation']);
+        Permission::create(['name' => 'delete emg registation']);
         Permission::create(['name' => 'Admission From EMG']);
 
 

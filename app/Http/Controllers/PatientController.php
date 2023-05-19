@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\DB;
 use App\Imports\PatientImport;
 use App\Models\PatientPhysicalDetails;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\OpdDetails;
+use App\Models\EmgDetails;
+use App\Models\IpdDetails;
 use Validator;
 
 use function PHPSTORM_META\type;
@@ -178,7 +181,10 @@ class PatientController extends Controller
     {
         $id = base64_decode($patient_id);
         $patient_details = Patient::where('id', $id)->first();
-        return view('setup.patient.patient-details', compact('patient_details'));
+        $emg_registaion_list = EmgDetails::where('ins_by', 'ori')->where('patient_id', $id)->orderBy('id', 'desc')->get();
+        $opd_registaion_list = OpdDetails::where('ins_by', 'ori')->where('patient_id', $id)->orderBy('id', 'desc')->get();
+        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('patient_id', $id)->where('ins_by', 'ori')->get();
+        return view('setup.patient.patient-details', compact('patient_details','opd_registaion_list','emg_registaion_list','ipd_patient_list'));
     }
 
     public function edit_new_patient($id, Request $request)

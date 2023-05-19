@@ -2010,6 +2010,12 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
     });
 
 
+    Route::group(['middleware' => ['permission:print emg registation copy']], function () {
+        Route::get('print-emg-registation/{id}', [EmgController::class, 'print_emg_registation'])->name('print-emg-registation');
+    });
+    Route::group(['middleware' => ['permission:delete emg registation']], function () {
+        Route::get('delete-emg-registation/{id}', [EmgController::class, 'delete_emg_registation'])->name('delete-emg-registation');
+    });
 
     Route::group(['middleware' => ['permission:emg patient profile']], function () {
         Route::get('emg-profile/{id}', [EmgController::class, 'profile'])->name('emg-patient-profile');

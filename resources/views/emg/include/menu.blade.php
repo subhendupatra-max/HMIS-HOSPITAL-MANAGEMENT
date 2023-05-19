@@ -1,14 +1,12 @@
 <a class="dropdown-item {{ Request::segment(2) == 'opd-profile' ? 'active' : '' }}" href="{{ route('opd-profile', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-home"></i>
     Profile</a>
-@can('opd billing')
-<!-- <a class="dropdown-item {{ Request::segment(2) == 'opd-billing' ? 'active' : '' }}" href="#"><i class="fa fa-money-bill"></i>
-    Billing</a> -->
-@endcan
+
 <a class="dropdown-item {{ Request::segment(2) == 'opd-payment' ? 'active' : '' }}" href="{{ route('payment-listing-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-rupee-sign"></i> Payment</a>
 <a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('timeline-lisitng-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="far fa-calendar-check"></i> Timeline</a>
 
 <a class="dropdown-item {{ Request::segment(2) == 'emg-billing' ? 'active' : '' }}" href="{{ route('emg-billing', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-money-bill"></i>
     Billing</a>
+    
 @can('patient charges')
 <a class="dropdown-item {{ Request::segment(2) == 'patient-charge' ? 'active' : '' }}" href="{{ route('charges-list-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-file-invoice-dollar"></i> Add Charges</a>
 @endcan

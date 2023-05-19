@@ -132,7 +132,7 @@ $login_details = DB::table('users')
                             </ul>
                         </li>
                         @endif
-                        @if (auth()->user()->can('appointment main'))
+                        {{-- @if (auth()->user()->can('appointment main'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'appointment' ? 'active' : '' }}" href="{{ route('all-appointments-details') }}">
                                 <svg class="side-menu__icon {{ Request::segment(1) == 'appointment' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -143,7 +143,7 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">Appointment </span>
                             </a>
                         </li>
-                        @endif
+                        @endif --}}
                         @if (auth()->user()->can('Patient Master'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'Patient' ? 'active' : '' }}" href="{{ route('patient_details') }}">

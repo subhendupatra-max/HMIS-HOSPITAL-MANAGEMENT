@@ -6,13 +6,13 @@
 <body>
 
     <style>
-        @page {
+        @page  {
             size: A4 portrait;
             margin: 0;
             / change the margins as you want them to be. /
         }
 
-        @media print {
+        @media  print {
 
             html,
             body {
@@ -53,32 +53,32 @@
         <table style="width: 100%;border-collapse: collapse">
             <tr style="text-align: center;">
                 <td>
-                    <img src="{{ asset('public/assets/images/header') }}/{{$header_image->logo}}" alt="" style="width: 80%;">
+                    <img src="<?php echo e(asset('public/assets/images/header')); ?>/<?php echo e($header_image->logo); ?>" alt="" style="width: 80%;">
                 </td>
             </tr>
             <table>
                 <tr>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width: 200px;">
-                        <b>UHID No: {{ @$emg_patient_details->patient_prefix }}{{ @$emg_patient_details->patient_id }}</b>
+                        <b>UHID No: <?php echo e(@$emg_patient_details->patient_prefix); ?><?php echo e(@$emg_patient_details->patient_id); ?></b>
                     </td>
                     <td rowspan="2" style="text-align: center;border: 1px solid #899499;width: 130px;">
-                        @php
+                        <?php
                         $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
-                        @endphp
-                        <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$emg_patient_details->patient_prefix @$emg_patient_details->patient_id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 120px;height: 40px;">
+                        ?>
+                        <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$emg_patient_details->patient_prefix @$emg_patient_details->patient_id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 120px;height: 40px;">
                     </td>
                 
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width: 180px;">
-                        <b>Date: {{$emg_patient_details->appointment_date}}</b>
+                        <b>Date: <?php echo e($emg_patient_details->appointment_date); ?></b>
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width: 200px;">
-                        <b>Cons. Doctor: {{@$emg_patient_details->doctor_first_name}}{{@$emg_patient_details->doctor_last_name}}</b>
+                        <b>Cons. Doctor: <?php echo e(@$emg_patient_details->doctor_first_name); ?><?php echo e(@$emg_patient_details->doctor_last_name); ?></b>
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>EMG No : {{@$emg_patient_details->emg_prefix}}{{@$emg_patient_details->emg_id}}</b></td>
-                    <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Medico Legal Case: {{@$emg_patient_details->medico_legal_case}}</b></td>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width: 200px;"><b>Department: {{@$emg_patient_details->department_name}}</b></td>
+                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>EMG No : <?php echo e(@$emg_patient_details->emg_prefix); ?><?php echo e(@$emg_patient_details->emg_id); ?></b></td>
+                    <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Medico Legal Case: <?php echo e(@$emg_patient_details->medico_legal_case); ?></b></td>
+                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width: 200px;"><b>Department: <?php echo e(@$emg_patient_details->department_name); ?></b></td>
                 </tr>
             </table>
             <table style="width: 100%; ;margin: 10px 0px 0px 0px;border: 1px solid #899499;border-collapse: collapse;">
@@ -87,22 +87,27 @@
                         Patient Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->first_name}}
-                        {{$emg_patient_details->middle_name}}
-                        {{$emg_patient_details->last_name}}
+                        <?php echo e($emg_patient_details->first_name); ?>
+
+                        <?php echo e($emg_patient_details->middle_name); ?>
+
+                        <?php echo e($emg_patient_details->last_name); ?>
+
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Guardian Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->guardian_name}}
+                        <?php echo e($emg_patient_details->guardian_name); ?>
+
                     </td>
 
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Mobile No.
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->guardian_contact_no}}
+                        <?php echo e($emg_patient_details->guardian_contact_no); ?>
+
                     </td>
                 </tr>
                 <tr>
@@ -110,21 +115,26 @@
                         Age
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{ @$emg_patient_details->year == '0'?'':$emg_patient_details->year.'y' }}
-                        {{ @$emg_patient_details->month == '0'?'':$emg_patient_details->month.'m' }}
-                        {{ @$emg_patient_details->day == '0'?'':$emg_patient_details->day.'d' }}
+                        <?php echo e(@$emg_patient_details->year == '0'?'':$emg_patient_details->year.'y'); ?>
+
+                        <?php echo e(@$emg_patient_details->month == '0'?'':$emg_patient_details->month.'m'); ?>
+
+                        <?php echo e(@$emg_patient_details->day == '0'?'':$emg_patient_details->day.'d'); ?>
+
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Gender
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->gender}}
+                        <?php echo e($emg_patient_details->gender); ?>
+
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Patient Type
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->patient_type}}
+                        <?php echo e($emg_patient_details->patient_type); ?>
+
                     </td>
                 </tr>
                 <tr>
@@ -132,19 +142,22 @@
                         Address
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->address}}
+                        <?php echo e($emg_patient_details->address); ?>
+
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Blood Group
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->blood_group}}
+                        <?php echo e($emg_patient_details->blood_group); ?>
+
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Ticket Fees:
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        {{$emg_patient_details->ticket_fees}}
+                        <?php echo e($emg_patient_details->ticket_fees); ?>
+
                     </td>
                 </tr>
             </table>
@@ -185,7 +198,7 @@
                     </td>
                     </td>
                     <td height="00px" valign="top">
-                        <img src="{{ asset('public/hospital_details/rx.png') }}" style="width: 30px;">
+                        <img src="<?php echo e(asset('public/hospital_details/rx.png')); ?>" style="width: 30px;">
                     </td>
                 </tr>
             </table>
@@ -194,4 +207,4 @@
     </div>
 </body>
 
-</html>
+</html><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/emg/_print/emg_prescription.blade.php ENDPATH**/ ?>

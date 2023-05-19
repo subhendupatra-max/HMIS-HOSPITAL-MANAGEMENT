@@ -18,25 +18,18 @@
             </div>
         </div>
         <!-- ================================ Alert Message===================================== -->
-
-        @if (session('success'))
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{ session('success') }}</div>
-        @endif
-        @if (session()->has('error'))
-        <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{ session('error') }}</div>
-        @endif
-
+        @include('message.notification')
         <div class="card-body">
             <div class="table-responsive">
 
-                <table class="table card-table table-vcenter text-nowrap table-default">
+                <table class="table table-bordered text-nowrap" id="example">
                     <thead>
                         <tr>
                             <th scope="col">Emg Id</th>
+                            <th scope="col">Case Id</th>
                             <th scope="col">Patient</th>
                             <th scope="col">Mobile No.</th>
                             <th scope="col">G. Name/P. Type</th>
-                            <th scope="col">Medico Legal Case</th>
                             <th scope="col">Appointment Date</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -46,7 +39,8 @@
                         @foreach ($emg_registaion_list as $value)
                         <tr>
 
-                            <td><a class="textlink" href="{{route('emg-patient-profile',['id'=>base64_encode($value->id)])}}">{{ @$value->emg_prefix }}{{ @$value->id }}</a></td>
+                            <td><a class="textlink" href="{{route('emg-patient-profile',['id'=>base64_encode($value->id)])}}">{{ @$value->id }}</a></td>
+                            <td>{{ @$value->case_id }}</td>
                             <td>
                                 {{ @$value->all_patient_details->prefix }} {{ @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name }} {{ @$value->all_patient_details->last_name }} ({{ @$value->all_patient_details->id }})<br>
                                 <i class="fa fa-venus-mars text-primary"></i> {{ @$value->all_patient_details->gender }} <i class="fa fa-calendar-plus-o text-primary"></i> {{ @$value->all_patient_details->year }}Y {{ @$value->all_patient_details->month }}M {{ @$value->all_patient_details->day }}D
@@ -56,7 +50,7 @@
                                 <i class="fa fa-user-secret text-primary"></i> {{ @$value->all_patient_details->guardian_name }}<br>
                                 <i class="fa fa-adjust text-primary"></i> {{ @$value->all_emg_visit_details->patient_type }}
                             </td>
-                            <td>{{ @$value->all_emg_visit_details->medico_legal_case }}</td>
+                      
                             <td>
                                 @if(isset($value->all_emg_visit_details->appointment_date))
                                 {{ date('d-m-Y h:i A',strtotime($value->all_emg_visit_details->appointment_date)) }}
@@ -68,12 +62,16 @@
                                     <div class="dropdown-menu dropdown-menu-right" style="">
 
                                         <a class="dropdown-item" href="{{route('emg-patient-profile',['id'=>base64_encode($value->id)])}}"><i class="fa fa-eye"></i> View</a>
-                                        @can('edit patient')
+                                        @can('edit emg registation')
                                         <a class="dropdown-item" href="">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         @endcan
-                                        @can('delete patient')
-                                        <a class="dropdown-item" href=""><i class="fa fa-trash"></i> Delete</a>
+                                        @can('print emg registation copy')
+                                        <a class="dropdown-item" href="{{route('print-emg-registation',['id'=>base64_encode($value->id)])}}">
+                                            <i class="fa fa-print"></i> Print</a>
+                                        @endcan
+                                        @can('delete emg registation')
+                                        <a class="dropdown-item" href="{{route('delete-emg-registation',['id'=>base64_encode($value->id)])}}"><i class="fa fa-trash"></i> Delete</a>
                                         @endcan
                                     </div>
                                 </div>
@@ -84,7 +82,6 @@
                         @endif
                     </tbody>
                 </table>
-                {!! $emg_registaion_list->links() !!}
             </div>
         </div>
     </div>
