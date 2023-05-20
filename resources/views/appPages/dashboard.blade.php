@@ -6,7 +6,7 @@
     <div class="menubox">
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>OPD Today Ticket Income</h3>
+          <h3>Today OPD Ticket Income</h3>
           <p class="small">{{@$opd_today_ticket_details}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
@@ -17,7 +17,7 @@
       </div>
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Opd Today New Patient</h3>
+          <h3>Today OPD New Patient</h3>
           <p class="small">{{@$opd_today_new_patient}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
@@ -29,8 +29,7 @@
       <div class="menu-box1">
         <a class="card1" href="#">
           <h3>Today Opd Revisit Patient</h3>
-
-          <p class="small">{{$@opd_today_revisit_patient}}</p>
+          <p class="small">{{@$opd_today_revisit_patient}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/registration.png') }}">
@@ -40,8 +39,8 @@
       </div>
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Opd-out Patients</h3>
-          <p class="small">0</p>
+          <h3>Today Emergency Patient</h3>
+          <p class="small">{{@$today_emg_patient}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/opd out patients.png') }}">
@@ -52,8 +51,8 @@
 
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Emergency Patients</h3>
-          <p class="small">0</p>
+          <h3>Today EMG Income</h3>
+          <p class="small">{{@$today_emg_income}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/emergency patient.png') }}">
@@ -63,8 +62,8 @@
       </div>
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Set Up</h3>
-          <p class="small">0</p>
+          <h3>Total Ipd Patient</h3>
+          <p class="small">{{@$total_ipd_patient}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/emergency patient.png') }}">
@@ -76,8 +75,8 @@
     <div class="menubox">
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Ipd Patients</h3>
-          <p class="small">0</p>
+          <h3>Today Ipd Patients</h3>
+          <p class="small">{{@$today_total_ipd_patient}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/ipd patients.png') }}">
@@ -87,8 +86,8 @@
       </div>
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Discount</h3>
-          <p class="small">0</p>
+          <h3>Today IPD From OPD</h3>
+          <p class="small">{{@$today_ipd_from_opd_patient}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/dicount.png') }}">
@@ -98,8 +97,8 @@
       </div>
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Pathology</h3>
-          <p class="small">0</p>
+          <h3>Today IPD From EMG</h3>
+          <p class="small">{{@$today_ipd_from_emg_patient}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/pathology.png') }}">
@@ -109,8 +108,8 @@
       </div>
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Radiology</h3>
-          <p class="small">0</p>
+          <h3>Today Discharged Patient</h3>
+          <p class="small">{{@$today_discharged_patient}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/radiology.png') }}">
@@ -120,8 +119,8 @@
       </div>
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Pharmacy</h3>
-          <p class="small">0</p>
+          <h3>IPD Income</h3>
+          <p class="small">{{@$ipd_income}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/pharmacy.png') }}">
