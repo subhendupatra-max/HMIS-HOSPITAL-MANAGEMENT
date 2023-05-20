@@ -10,7 +10,7 @@
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd payment')): ?>
-                        <a href="<?php echo e(route('add-payment-in-opd',['id'=> base64_encode($opd_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Payment </a>
+                        <a href="<?php echo e(route('add-payment-in-opd',['id'=> base64_encode($opd_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-rupee-sign"></i> Add Payment </a>
                         <?php endif; ?>
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
@@ -31,6 +31,7 @@
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Date</th>
                                 <th class="border-bottom-0">Amount</th>
+                                <th class="border-bottom-0">Received By</th>
                                 <th class="border-bottom-0">Payment Mode</th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit opd payment','delete opd payment')): ?>
                                 <th>Action</th>
@@ -41,8 +42,9 @@
                             <?php $__currentLoopData = $opdPaymentDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
-                                <td><?php echo e($item->payment_date); ?></td>
-                                <td><?php echo e($item->amount); ?></td>
+                                <td><?php echo e(date('d-m-Y h:i a',strtotime($item->payment_date))); ?></td>
+                                <td><?php echo e($item->payment_amount); ?></td>
+                                <td><?php echo e($item->generated_by->first_name); ?> <?php echo e($item->generated_by->last_name); ?></td>
                                 <td><?php echo e($item->payment_mode); ?></td>
                                 <td>
                                     <div class="card-options">
@@ -63,6 +65,7 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
+                    <?php echo $opdPaymentDetails->links(); ?>
 
                 </div>
             </div>

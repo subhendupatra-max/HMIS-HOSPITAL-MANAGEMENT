@@ -20,9 +20,10 @@ class EmgPaymentController extends Controller
     public function add_payment_in_emg($id)
     {
         $emg_id = base64_decode($id);
-        $emgPaymentDetails =  EmgPayment::where('emg_id', $emg_id)->get();
-
-        return view('emg.payment.add-payment', compact('emg_id', 'emgPaymentDetails'));
+        // dd( $emg_id );
+        $emg_patient_details =  EmgPayment::where('emg_id', $emg_id)->get();
+        // dd( $emg_patient_details );
+        return view('emg.payment.add-payment', compact('emg_id', 'emg_patient_details'));
     }
 
     public function save_payment_in_emg(Request $request)
@@ -80,7 +81,7 @@ class EmgPaymentController extends Controller
         }
     }
 
-    public function delete_payment_in_emg($id,Request $request)
+    public function delete_payment_in_emg($id, Request $request)
     {
         $id = base64_decode($id);
         EmgPayment::find($id)->delete();

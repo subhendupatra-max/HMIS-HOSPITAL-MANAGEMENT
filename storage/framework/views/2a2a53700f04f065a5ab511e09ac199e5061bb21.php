@@ -6,7 +6,7 @@
 <?php endif; ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('patient charges')): ?>
-<a class="dropdown-item <?php echo e(Request::segment(2) == 'patient-charge' ? 'active' : ''); ?>" href="<?php echo e(route('charges-list', ['id' => base64_encode($opd_patient_details->id)])); ?>"><i class="fa fa-file-invoice-dollar"></i> Add Charges</a>
+<a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-patient-charge' ? 'active' : ''); ?>" href="<?php echo e(route('charges-list', ['id' => base64_encode($opd_patient_details->id)])); ?>"><i class="fa fa-file-invoice-dollar"></i> Add Charges</a>
 <?php endif; ?>
 
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-payment' ? 'active' : ''); ?>" href="<?php echo e(route('payment-listing-in-opd', ['id' => base64_encode($opd_patient_details->id)])); ?>"><i class="fa fa-rupee-sign"></i> Payment</a>

@@ -1955,7 +1955,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     //================================= OPD Physical Condition ====================================
 
     //================================= OPD charges ====================================
-    Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
+    Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'opd-patient-charge'], function () {
         Route::get('charges-list/{id?}', [OpdController::class, 'charge_list'])->name('charges-list');
         Route::group(['middleware' => ['permission:add opd charges']], function () {
             Route::get('add-opd-charges/{id?}', [OpdController::class, 'add_charges'])->name('add-opd-charges');
@@ -2027,7 +2027,7 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
 
 
 //================================= Emg charges ====================================
-Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'patient-charge'], function () {
+Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'emg-patient-charge'], function () {
     Route::get('charges-list-emg/{id?}', [EmgController::class, 'charge_list'])->name('charges-list-emg');
     Route::group(['middleware' => ['permission:add emg charges']], function () {
         Route::get('add-emg-charges/{id?}', [EmgController::class, 'add_charges'])->name('add-emg-charges');
@@ -2120,7 +2120,7 @@ Route::group(['middleware' => ['permission:emg payment'], 'prefix' => 'emg-payme
         Route::get('delete-payment-in-emg/{id}', [EmgPaymentController::class, 'delete_payment_in_emg'])->name('delete-payment-in-emg');
     });
     Route::group(['middleware' => ['permission:edit emg payment']], function () {
-        Route::get('edit-payment-in-emg/{id}/{emg_id}', [EmgPaymentController::class, 'edit_payment_in_emg'])->name('edit-payment-in-emg');
+        Route::get('edit-payment-in-emg/{id}', [EmgPaymentController::class, 'edit_payment_in_emg'])->name('edit-payment-in-emg');
         Route::post('update-payment-in-emg', [EmgPaymentController::class, 'update_payment_in_emg'])->name('update-payment-in-emg');
     });
 });
