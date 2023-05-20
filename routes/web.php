@@ -119,6 +119,7 @@ use App\Http\Controllers\PatientDischargeController;
 
 use App\Http\Controllers\false\EmgFalseController;
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\false\IpdFalseController;
 
 /*
@@ -136,9 +137,13 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/dashboard', function () {
-    return view('appPages/dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('appPages/dashboard');
+// })->middleware(['auth'])->name('dashboard');
+
+Route::group(['middleware' => 'auth'], function () {
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
 
 require __DIR__ . '/auth.php';
 

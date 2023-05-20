@@ -1,1 +1,5 @@
- $ipd_patient_details = IpdDetails::where('ipd_details.department_id', '=', $request->pathology_department_id)->where('ipd_details.appointment_date', 'like', $request->pathology_date . '%')->limit($request->no_of_patient_for_pathology_test)->get();
+ $opd_details =  OpdDetails::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->count();

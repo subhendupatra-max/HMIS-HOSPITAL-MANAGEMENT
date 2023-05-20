@@ -80,4 +80,5 @@
     </div>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
+
 @endsection

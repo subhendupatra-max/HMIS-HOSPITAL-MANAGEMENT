@@ -13,12 +13,8 @@ $login_details = DB::table('users')
 
 <head>
     <!-- Jquery cdn -->
-<<<<<<< HEAD
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-   
-=======
-    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
->>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
+
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -95,69 +91,69 @@ $login_details = DB::table('users')
                         {{-- @if (auth()->user()->can('OPD out-patients'))
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('dashboard') }}">
-                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
-                                    <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".9"></path>
-                                </svg>
-                                <span class="side-menu__label">Dashboard</span>
-                            </a>
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
+                            <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".9"></path>
+                        </svg>
+                        <span class="side-menu__label">Dashboard</span>
+                        </a>
                         </li>
                         @endif --}}
                         {{-- @if (auth()->user()->can('bill summary'))
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('bill-summary') }}">
-                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
-                                    <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".9"></path>
-                                </svg>
-                                <span class="side-menu__label">Bill Summary</span>
-                            </a>
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
+                            <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".9"></path>
+                        </svg>
+                        <span class="side-menu__label">Bill Summary</span>
+                        </a>
                         </li>
                         @endif --}}
                         {{-- @if (auth()->user()->can('Human Resource'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'Human-Resource' ? 'active' : '' }}" data-toggle="slide" href="index-2.html#">
-                                <svg class="side-menu__icon {{ Request::segment(1) == 'Human-Resource' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
-                                    </path>
-                                </svg>
-                                <span class="side-menu__label">Human Resource</span><i class="angle fa fa-angle-right"></i></a>
-                            <ul class="slide-menu">
-                                @if (auth()->user()->can('User List'))
-                                <li><a href="{{ route('user-list') }}" class="slide-item"> User List</a></li>
-                                @endif
-                                @if (auth()->user()->can('User Add'))
-                                <li><a href="{{ route('UserCreate') }}" class="slide-item"> Add New User</a>
-                                </li>
-                                @endif
-                            </ul>
+                        <svg class="side-menu__icon {{ Request::segment(1) == 'Human-Resource' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z">
+                            </path>
+                        </svg>
+                        <span class="side-menu__label">Human Resource</span><i class="angle fa fa-angle-right"></i></a>
+                        <ul class="slide-menu">
+                            @if (auth()->user()->can('User List'))
+                            <li><a href="{{ route('user-list') }}" class="slide-item"> User List</a></li>
+                            @endif
+                            @if (auth()->user()->can('User Add'))
+                            <li><a href="{{ route('UserCreate') }}" class="slide-item"> Add New User</a>
+                            </li>
+                            @endif
+                        </ul>
                         </li>
                         @endif --}}
                         {{-- @if (auth()->user()->can('appointment main'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'appointment' ? 'active' : '' }}" href="{{ route('all-appointments-details') }}">
-                                <svg class="side-menu__icon {{ Request::segment(1) == 'appointment' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z" />
+                        <svg class="side-menu__icon {{ Request::segment(1) == 'appointment' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z" />
 
-                                </svg>
-                                <span class="side-menu__label">Appointment </span>
-                            </a>
+                        </svg>
+                        <span class="side-menu__label">Appointment </span>
+                        </a>
                         </li>
                         @endif --}}
                         {{-- @if (auth()->user()->can('Patient Master'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'Patient' ? 'active' : '' }}" href="{{ route('patient_details') }}">
 
-                                <svg class="side-menu__icon {{ Request::segment(1) == 'Patient' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1.4c0-2 4-3.1 6-3.1s6 1.1 6 3.1V19z" />
-                                </svg>
-                                <span class="side-menu__label">Patient Registation</span>
-                            </a>
+                        <svg class="side-menu__icon {{ Request::segment(1) == 'Patient' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 4c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H6v-1.4c0-2 4-3.1 6-3.1s6 1.1 6 3.1V19z" />
+                        </svg>
+                        <span class="side-menu__label">Patient Registation</span>
+                        </a>
                         </li>
                         @endif
                         @if (auth()->user()->can('OPD out-patients'))
@@ -175,47 +171,47 @@ $login_details = DB::table('users')
                         {{-- @if (auth()->user()->can('Emergency Patients'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'emg' ? 'active' : '' }}" href="{{ route('emg-patient-list') }}">
-                                <svg class="side-menu__icon {{ Request::segment(1) == 'emg' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm1-11h-2v3H8v2h3v3h2v-3h3v-2h-3V9z" />
-                                </svg>
-                                <span class="side-menu__label">Emergency Patients</span>
-                            </a>
+                        <svg class="side-menu__icon {{ Request::segment(1) == 'emg' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M7.88 3.39L6.6 1.86 2 5.71l1.29 1.53 4.59-3.85zM22 5.72l-4.6-3.86-1.29 1.53 4.6 3.86L22 5.72zM12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9c4.97 0 9-4.03 9-9s-4.03-9-9-9zm0 16c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7zm1-11h-2v3H8v2h3v3h2v-3h3v-2h-3V9z" />
+                        </svg>
+                        <span class="side-menu__label">Emergency Patients</span>
+                        </a>
                         </li>
                         @endif --}}
                         {{-- @if (auth()->user()->can('IPD ipd-patients'))
                         <li class="slide {{ Request::segment(1) == 'IPD' ? 'active' : '' }}">
-                            <a class="side-menu__item {{ Request::segment(1) == 'IPD' ? 'active' : '' }}" href="{{ route('ipd-patient-listing') }}">
-                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
-                                    <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".9"></path>
-                                </svg>
-                                <span class="side-menu__label">Ipd In-Patients</span>
-                            </a>
+                        <a class="side-menu__item {{ Request::segment(1) == 'IPD' ? 'active' : '' }}" href="{{ route('ipd-patient-listing') }}">
+                            <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm5 15h-2v-6H9v6H7v-7.81l5-4.5 5 4.5V18z" />
+                                <path d="M7 10.19V18h2v-6h6v6h2v-7.81l-5-4.5z" opacity=".9"></path>
+                            </svg>
+                            <span class="side-menu__label">Ipd In-Patients</span>
+                        </a>
                         </li>
                         @endif --}}
                         {{-- @if (auth()->user()->can('discount'))
                         <li class="slide {{ Request::segment(1) == 'discount' ? 'active' : '' }}">
-                            <a class="side-menu__item {{ Request::segment(1) == 'discount' ? 'active' : '' }}" href="{{ route('discount-list') }}">
-                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none"></path>
-                                    <path d="M14.25 2.26l-.08-.04-.01.02C13.46 2.09 12.74 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-4.75-3.31-8.72-7.75-9.74zM19.41 9h-7.99l2.71-4.7c2.4.66 4.35 2.42 5.28 4.7zM13.1 4.08L10.27 9l-1.15 2L6.4 6.3C7.84 4.88 9.82 4 12 4c.37 0 .74.03 1.1.08zM5.7 7.09L8.54 12l1.15 2H4.26C4.1 13.36 4 12.69 4 12c0-1.85.64-3.55 1.7-4.91zM4.59 15h7.98l-2.71 4.7c-2.4-.67-4.34-2.42-5.27-4.7zm6.31 4.91L14.89 13l2.72 4.7C16.16 19.12 14.18 20 12 20c-.38 0-.74-.04-1.1-.09zm7.4-3l-4-6.91h5.43c.17.64.27 1.31.27 2 0 1.85-.64 3.55-1.7 4.91z"></path>
-                                </svg>
-                                <span class="side-menu__label"> Discount</span>
-                            </a>
+                        <a class="side-menu__item {{ Request::segment(1) == 'discount' ? 'active' : '' }}" href="{{ route('discount-list') }}">
+                            <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M0 0h24v24H0V0z" fill="none"></path>
+                                <path d="M14.25 2.26l-.08-.04-.01.02C13.46 2.09 12.74 2 12 2 6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10c0-4.75-3.31-8.72-7.75-9.74zM19.41 9h-7.99l2.71-4.7c2.4.66 4.35 2.42 5.28 4.7zM13.1 4.08L10.27 9l-1.15 2L6.4 6.3C7.84 4.88 9.82 4 12 4c.37 0 .74.03 1.1.08zM5.7 7.09L8.54 12l1.15 2H4.26C4.1 13.36 4 12.69 4 12c0-1.85.64-3.55 1.7-4.91zM4.59 15h7.98l-2.71 4.7c-2.4-.67-4.34-2.42-5.27-4.7zm6.31 4.91L14.89 13l2.72 4.7C16.16 19.12 14.18 20 12 20c-.38 0-.74-.04-1.1-.09zm7.4-3l-4-6.91h5.43c.17.64.27 1.31.27 2 0 1.85-.64 3.55-1.7 4.91z"></path>
+                            </svg>
+                            <span class="side-menu__label"> Discount</span>
+                        </a>
                         </li>
                         @endif --}}
                         {{-- @if (auth()->user()->can('pathology main'))
                         <li class="slide {{ Request::segment(1) == 'pathology' ? 'active' : '' }}">
-                            <a class="side-menu__item {{ Request::segment(1) == 'pathology' ? 'active' : '' }}" href="{{ route('pathology-test-charge') }}">
-                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z" />
+                        <a class="side-menu__item {{ Request::segment(1) == 'pathology' ? 'active' : '' }}" href="{{ route('pathology-test-charge') }}">
+                            <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                                <path d="M0 0h24v24H0V0z" fill="none" />
+                                <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z" />
 
-                                </svg>
-                                <span class="side-menu__label">Pathology</span>
-                            </a>
+                            </svg>
+                            <span class="side-menu__label">Pathology</span>
+                        </a>
                         </li>
                         @endif
                         @if (auth()->user()->can('radiology main'))
@@ -234,12 +230,12 @@ $login_details = DB::table('users')
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'pharmacy' ? 'active' : '' }}" href="{{ route('pharmacy-bill-listing') }}">
 
-                                <svg class="side-menu__icon {{ Request::segment(1) == 'pharmacy' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M8 3v2H6v4c0 2.21 1.79 4 4 4s4-1.79 4-4V5h-2V3h3c.552 0 1 .448 1 1v5c0 2.973-2.162 5.44-5 5.917V16.5c0 1.933 1.567 3.5 3.5 3.5 1.497 0 2.775-.94 3.275-2.263C16.728 17.27 16 16.22 16 15c0-1.657 1.343-3 3-3s3 1.343 3 3c0 1.371-.92 2.527-2.176 2.885C19.21 20.252 17.059 22 14.5 22 11.462 22 9 19.538 9 16.5v-1.583C6.162 14.441 4 11.973 4 9V4c0-.552.448-1 1-1h3z" />
-                                </svg>
-                                <span class="side-menu__label">Pharmacy</span>
-                            </a>
+                        <svg class="side-menu__icon {{ Request::segment(1) == 'pharmacy' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M8 3v2H6v4c0 2.21 1.79 4 4 4s4-1.79 4-4V5h-2V3h3c.552 0 1 .448 1 1v5c0 2.973-2.162 5.44-5 5.917V16.5c0 1.933 1.567 3.5 3.5 3.5 1.497 0 2.775-.94 3.275-2.263C16.728 17.27 16 16.22 16 15c0-1.657 1.343-3 3-3s3 1.343 3 3c0 1.371-.92 2.527-2.176 2.885C19.21 20.252 17.059 22 14.5 22 11.462 22 9 19.538 9 16.5v-1.583C6.162 14.441 4 11.973 4 9V4c0-.552.448-1 1-1h3z" />
+                        </svg>
+                        <span class="side-menu__label">Pharmacy</span>
+                        </a>
                         </li>
                         @endif --}}
 
@@ -318,24 +314,24 @@ $login_details = DB::table('users')
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('all-blood-details') }}">
 
-                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M8 3v2H6v4c0 2.21 1.79 4 4 4s4-1.79 4-4V5h-2V3h3c.552 0 1 .448 1 1v5c0 2.973-2.162 5.44-5 5.917V16.5c0 1.933 1.567 3.5 3.5 3.5 1.497 0 2.775-.94 3.275-2.263C16.728 17.27 16 16.22 16 15c0-1.657 1.343-3 3-3s3 1.343 3 3c0 1.371-.92 2.527-2.176 2.885C19.21 20.252 17.059 22 14.5 22 11.462 22 9 19.538 9 16.5v-1.583C6.162 14.441 4 11.973 4 9V4c0-.552.448-1 1-1h3z" />
-                                </svg>
-                                <span class="side-menu__label">Blood Bank</span>
-                            </a>
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M8 3v2H6v4c0 2.21 1.79 4 4 4s4-1.79 4-4V5h-2V3h3c.552 0 1 .448 1 1v5c0 2.973-2.162 5.44-5 5.917V16.5c0 1.933 1.567 3.5 3.5 3.5 1.497 0 2.775-.94 3.275-2.263C16.728 17.27 16 16.22 16 15c0-1.657 1.343-3 3-3s3 1.343 3 3c0 1.371-.92 2.527-2.176 2.885C19.21 20.252 17.059 22 14.5 22 11.462 22 9 19.538 9 16.5v-1.583C6.162 14.441 4 11.973 4 9V4c0-.552.448-1 1-1h3z" />
+                        </svg>
+                        <span class="side-menu__label">Blood Bank</span>
+                        </a>
                         </li>
                         @endif --}}
                         {{-- @if (auth()->user()->can('Operation'))
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('all-blood-details') }}">
 
-                                <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
-                                    <path d="M0 0h24v24H0V0z" fill="none" />
-                                    <path d="M8 3v2H6v4c0 2.21 1.79 4 4 4s4-1.79 4-4V5h-2V3h3c.552 0 1 .448 1 1v5c0 2.973-2.162 5.44-5 5.917V16.5c0 1.933 1.567 3.5 3.5 3.5 1.497 0 2.775-.94 3.275-2.263C16.728 17.27 16 16.22 16 15c0-1.657 1.343-3 3-3s3 1.343 3 3c0 1.371-.92 2.527-2.176 2.885C19.21 20.252 17.059 22 14.5 22 11.462 22 9 19.538 9 16.5v-1.583C6.162 14.441 4 11.973 4 9V4c0-.552.448-1 1-1h3z" />
-                                </svg>
-                                <span class="side-menu__label">Operation</span>
-                            </a>
+                        <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M8 3v2H6v4c0 2.21 1.79 4 4 4s4-1.79 4-4V5h-2V3h3c.552 0 1 .448 1 1v5c0 2.973-2.162 5.44-5 5.917V16.5c0 1.933 1.567 3.5 3.5 3.5 1.497 0 2.775-.94 3.275-2.263C16.728 17.27 16 16.22 16 15c0-1.657 1.343-3 3-3s3 1.343 3 3c0 1.371-.92 2.527-2.176 2.885C19.21 20.252 17.059 22 14.5 22 11.462 22 9 19.538 9 16.5v-1.583C6.162 14.441 4 11.973 4 9V4c0-.552.448-1 1-1h3z" />
+                        </svg>
+                        <span class="side-menu__label">Operation</span>
+                        </a>
                         </li>
                         @endif --}}
                         @if (auth()->user()->can('False Generation'))
@@ -966,8 +962,235 @@ $login_details = DB::table('users')
                         @yield('content')
                     </div>
 
+                </div>
+                <!-- End app-content-->
             </div>
-            <!-- End app-content-->
+            <!--Footer-->
+            <footer class="footer">
+                <div class="container">
+                    <div class="row align-items-center flex-row-reverse">
+                        <div class="col-md-12 col-sm-12 text-center">
+                            Copyright © 2022 <a href="#">{{ @$general_details->software_name }}</a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
+                            All rights reserved.
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- End Footer-->
+        </div><!-- End Page -->
+        <!-- Back to top -->
+        <div class="dash-bord">
+            <div class="new-page">
+                <div class="container-fluid">
+                    <nav class="navbar navbar-expand-md navbar-light ">
+
+                        <a class="navbar-brand" href="#"><img src="{{ asset('public/assets/images/brand/dashlogo.png') }}"></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbar1">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <div class="icon-new"> <img src="{{ asset('public/assets/images/brand/hospitalisation.png') }}"></div>Patient
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient.png') }}"></div>Opd
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed.png') }}"></div>EMG
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (1).png') }}"></div>IPD
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <div class="icon-new"><img src="{{ asset('public/assets/images/brand/invoice.png') }}"></div>Bill
+                                    </a>
+                                </li>
+
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <div class="icon-new"><img src="{{ asset('public/assets/images/brand/offer.png') }}"></div>Discount
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <div class="icon-new"><img src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>Pharmacy
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}"></div>Bed
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <div class="icon-new"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div> Set up
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li><a class="dropdown-item" href="#">General Setting</a></li>
+                                        <li><a class="dropdown-item" href="#">Inventory</a>
+                                        <li class="dropdown-submenu">
+                                            <a tabindex="-1" href="#">Second Level Menu ! <i class="fa fa-chevron-right"></i></a>
+                                            <ul class="dropdown-menu">
+                                                <li><a tabindex="-1" href="#">Link 1</a></li>
+                                                <li><a href="#">Lik 2</a></li>
+                                                <li><a href="#">Link 3</a></li>
+                                            </ul>
+                                        </li>
+                                </li>
+                                <li><a class="dropdown-item" href="#">Pharmacy</a>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Second Level Menu ! <i class="fa fa-chevron-right"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a tabindex="-1" href="#">Link 1</a></li>
+                                        <li><a href="#">Lik 2</a></li>
+                                        <li><a href="#">Link 3</a></li>
+                                    </ul>
+                                </li>
+                                </li>
+                                <li><a class="dropdown-item" href="#">Finding</a></li>
+                                <li><a class="dropdown-item" href="#">All Header</a></li>
+                                <li><a class="dropdown-item" href="#">Operation</a></li>
+                                <li><a class="dropdown-item" href="#">Opd</a></li>
+                                <li><a class="dropdown-item" href="#">Emg</a></li>
+                                <li><a class="dropdown-item" href="#">Pathology</a></li>
+                                <li><a class="dropdown-item" href="#">Radiology</a></li>
+                                <li><a class="dropdown-item" href="#">Blood Bank</a></li>
+                                <li><a class="dropdown-item" href="#">Appointment</a></li>
+                                <li><a class="dropdown-item" href="#">Department</a></li>
+                                <li><a class="dropdown-item" href="#">Bed Details</a></li>
+                                <li><a class="dropdown-item" href="#">Symptoms</a></li>
+                            </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link  href=" #">
+                                    <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (2).png') }}"></div> Others
+
+
+
+                                </a>
+
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#">HR</a></li>
+                                    <li><a class="dropdown-item" href="#">Inventory</a></li>
+                                    <li><a class="dropdown-item" href="#">Birth And Death
+
+
+                                        </a>
+
+                                    </li>
+
+                                    <li class="nav-item dropdown"><a href="#">False Generation</a>
+
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">ReferraL</a></li>
+                                    <li><a class="dropdown-item" href="#">Ambulance</a></li>
+                                    <li><a class="dropdown-item" href="#">Font-Office</a></li>
+                                    <li><a class="dropdown-item" href="#">Bllod-bank</a></li>
+
+                                </ul>
+                            </li>
+
+                            </ul>
+                        </div>
+
+
+                        <div class="dashprofileimg"><img src="{{ asset('public/assets/images/brand/user.png') }}"></div>
+                        {{-- <div class="dash-bellicon"><img src="{{ asset('public/assets/images/brand/bell.png') }}" >
+                </div>
+                <div class="dash-bellicontext"><a href="#">
+                        <h6>100</h6>
+                    </a></div> --}}
+                <div class="dash-bellicon"><img src="{{ asset('public/assets/images/brand/bell.png') }}"></div>
+                <div class="popup-link">
+                    <a href="#popup1">
+                        <div class="dash-bellicontext">
+                            <h6>100</h6>
+                        </div>
+                    </a>
+                </div>
+                <div id="popup1" class="popup-container">
+                    <div class="popup-content">
+                        <a href="#" class="close">&times;</a>
+                        <h3> <img src="{{ asset('public/assets/images/brand/user.png') }}">Name</h3>
+
+
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                    </div>
+                </div>
+
+                </nav>
+
+            </div>
+
+        </div>
+        <div class="row">
+            @yield('content')
+        </div>
+        <div id="contenitore">
+            <div class="left">
+
+                <table>
+                    <caption>Date table</caption>
+                    <tbody>
+                        <tr>
+                            <td>A</td>
+                            <td>80%</td>
+                            <td style="background-color:#336699">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td>68%</td>
+                            <td style="background-color:#003366">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>30%</td>
+                            <td style="background-color:#ff6600">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td>20%</td>
+                            <td style="background-color:#ffcc00">&nbsp;</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="button" onclick="viewGraph()">Rerun</div>
+            </div>
+            <div class="left">
+                <div id="grafico">
+                    <div class="riga" style="top:25%">
+                        <div>75%</div>
+                    </div>
+                    <div class="riga" style="top:50%">
+                        <div>50%</div>
+                    </div>
+                    <div class="riga" style="top:75%">
+                        <div>25%</div>
+                    </div>
+                    <div class="riga" style="top:75%">
+                        <div>25%</div>
+                    </div>
+                    <div id="col0" style="left:0; background-color:#336699;" class="column"></div>
+                    <div id="col1" style="left:25%; background-color:#003366;" class="column"></div>
+                    <div id="col2" style="left:50%; background-color:#ff6600;" class="column"></div>
+                    <div id="col3" style="left:75%; background-color:#ffcc00;" class="column"></div>
+                    <div id="col3" style="left:75%; background-color:#ffcc00;" class="column"></div>
+                </div>
+            </div>
+            <div class="canc"></div>
+            <div style="margin: 20px auto; text-align:center;">quellidelcucuzzolo.blogspot.com</div>
         </div>
         <!--Footer-->
         <footer class="footer">
@@ -981,185 +1204,8 @@ $login_details = DB::table('users')
             </div>
         </footer>
         <!-- End Footer-->
-    </div><!-- End Page -->
+    </div>
     <!-- Back to top -->
-    <div class="dash-bord">
-    <div class="new-page">
-        <div class="container-fluid">
-            <nav class="navbar navbar-expand-md navbar-light ">
-
-              <a class="navbar-brand" href="#"><img src="{{ asset('public/assets/images/brand/dashlogo.png') }}" ></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-               <span class="navbar-toggler-icon"></span>
-               </button>
-               <div class="collapse navbar-collapse" id="navbar1">
-                 <ul class="navbar-nav">
-                   <li class="nav-item">
-                       <a class="nav-link" href="#"><div class="icon-new"> <img src="{{ asset('public/assets/images/brand/hospitalisation.png') }}" ></div>Patient</a>
-                     </li>
-                 <li class="nav-item">
-                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient.png') }}" ></div>Opd</a>
-                 </li>
-                 <li class="nav-item">
-                   <a class="nav-link" href="#"> <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed.png') }}" ></div>EMG</a>
-                 </li>
-                 <li class="nav-item">
-                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (1).png') }}" ></div>IPD</a>
-                 </li>
-                 <li class="nav-item">
-                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/invoice.png') }}" ></div>Bill</a>
-                 </li>
-
-
-                 <li class="nav-item">
-                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/offer.png') }}" ></div>Discount</a>
-                 </li>
-
-                 <li class="nav-item">
-                   <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/investigation.png') }}" ></div>Pharmacy</a>
-                 </li>
-                 <li class="nav-item">
-                  <a class="nav-link" href="#"><div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}" ></div>Bed</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <div class="icon-new"><img src="{{ asset('public/assets/images/brand/settings.png') }}" ></div>  Set up </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a class="dropdown-item" href="#">General Setting</a></li>
-                          <li><a class="dropdown-item" href="#">Inventory</a>
-                            <li class="dropdown-submenu">
-                                <a tabindex="-1" href="#">Second Level Menu ! <i class="fa fa-chevron-right"></i></a>
-                                <ul class="dropdown-menu">
-                                  <li><a tabindex="-1" href="#">Link 1</a></li>
-                                  <li><a href="#">Lik 2</a></li>
-                                  <li><a href="#">Link 3</a></li>
-                                </ul>
-                              </li>
-                     </li>
-                        <li><a class="dropdown-item" href="#">Pharmacy</a>
-                            <li class="dropdown-submenu">
-                                <a tabindex="-1" href="#">Second Level Menu ! <i class="fa fa-chevron-right"></i></a>
-                                <ul class="dropdown-menu">
-                                  <li><a tabindex="-1" href="#">Link 1</a></li>
-                                  <li><a href="#">Lik 2</a></li>
-                                  <li><a href="#">Link 3</a></li>
-                                </ul>
-                              </li>
-                        </li>
-                        <li><a class="dropdown-item" href="#">Finding</a></li>
-                        <li><a class="dropdown-item" href="#">All Header</a></li>
-                        <li><a class="dropdown-item" href="#">Operation</a></li>
-                        <li><a class="dropdown-item" href="#">Opd</a></li>
-                        <li><a class="dropdown-item" href="#">Emg</a></li>
-                        <li><a class="dropdown-item" href="#">Pathology</a></li>
-                        <li><a class="dropdown-item" href="#">Radiology</a></li>
-                        <li><a class="dropdown-item" href="#">Blood Bank</a></li>
-                        <li><a class="dropdown-item" href="#">Appointment</a></li>
-                        <li><a class="dropdown-item" href="#">Department</a></li>
-                        <li><a class="dropdown-item" href="#">Bed Details</a></li>
-                        <li><a class="dropdown-item" href="#">Symptoms</a></li>
-                    </ul>
-                </li>
-                 <li class="nav-item dropdown">
-                   <a class="nav-link  href="#">
-                       <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (2).png') }}" ></div> Others
-
-
-
-                   </a>
-
-                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                       <li><a class="dropdown-item" href="#">HR</a></li>
-                     <li><a class="dropdown-item" href="#">Inventory</a></li>
-                     <li><a class="dropdown-item" href="#">Birth And Death
-
-
-                     </a>
-
-                   </li>
-
-                     <li class="nav-item dropdown"><a href="#">False Generation</a>
-
-                   </li>
-                     <li><a class="dropdown-item" href="#">ReferraL</a></li>
-                     <li><a class="dropdown-item" href="#">Ambulance</a></li>
-                     <li><a class="dropdown-item" href="#">Font-Office</a></li>
-                     <li><a class="dropdown-item" href="#">Bllod-bank</a></li>
-
-                    </ul>
-                 </li>
-
-               </ul>
-             </div>
-
-
-                <div class="dashprofileimg"><img src="{{ asset('public/assets/images/brand/user.png') }}" ></div>
-                 {{--  <div class="dash-bellicon"><img src="{{ asset('public/assets/images/brand/bell.png') }}" ></div>
-                <div class="dash-bellicontext"><a href="#"><h6>100</h6></a></div>  --}}
-                <div class="dash-bellicon"><img src="{{ asset('public/assets/images/brand/bell.png') }}" ></div>
-                <div class="popup-link">
-                    <a href="#popup1"><div class="dash-bellicontext"><h6>100</h6></div></a>
-                   </div>
-                   <div id="popup1" class="popup-container">
-                    <div class="popup-content">
-                      <a href="#" class="close">&times;</a>
-                      <h3>   <img src="{{ asset('public/assets/images/brand/user.png') }}" >Name</h3>
-
-
-                      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
-                    </div>
-                  </div>
-
-         </nav>
-
-       </div>
-
-    </div>
-    <div class="row">
-        @yield('content')
-      </div>
-      <div id="contenitore">
-        <div class="left">
-
-        <table>
-        <caption>Date table</caption>
-        <tbody>
-        <tr><td>A</td><td>80%</td><td style="background-color:#336699">&nbsp;</td></tr>
-        <tr><td>B</td><td>68%</td><td style="background-color:#003366">&nbsp;</td></tr>
-        <tr><td>C</td><td>30%</td><td style="background-color:#ff6600">&nbsp;</td></tr>
-        <tr><td>D</td><td>20%</td><td style="background-color:#ffcc00">&nbsp;</td></tr>
-        </tbody></table>
-        <div class="button" onclick="viewGraph()">Rerun</div>
-        </div>
-        <div class="left">
-        <div id="grafico">
-        <div class="riga" style="top:25%"><div>75%</div></div>
-        <div class="riga" style="top:50%"><div>50%</div></div>
-        <div class="riga" style="top:75%"><div>25%</div></div>
-        <div class="riga" style="top:75%"><div>25%</div></div>
-        <div id="col0" style="left:0; background-color:#336699;" class="column"></div>
-        <div id="col1" style="left:25%; background-color:#003366;" class="column"></div>
-        <div id="col2" style="left:50%; background-color:#ff6600;" class="column"></div>
-        <div id="col3" style="left:75%; background-color:#ffcc00;" class="column"></div>
-        <div id="col3" style="left:75%; background-color:#ffcc00;" class="column"></div>
-        </div>
-        </div>
-        <div class="canc"></div>
-        <div style="margin: 20px auto; text-align:center;">quellidelcucuzzolo.blogspot.com</div>
-        </div>
-     <!--Footer-->
-     <footer class="footer">
-         <div class="container">
-             <div class="row align-items-center flex-row-reverse">
-                 <div class="col-md-12 col-sm-12 text-center">
-                     Copyright © 2022 <a href="#">{{ @$general_details->software_name }}</a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
-                     All rights reserved.
-                 </div>
-             </div>
-         </div>
-     </footer>
-     <!-- End Footer-->
-    </div>
-     <!-- Back to top -->
     <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
 
 
@@ -1240,15 +1286,9 @@ $login_details = DB::table('users')
 
     <!-- Switcher js-->
     <script src="{{ asset('public/assets/switcher/js/switcher.js') }}"></script>
-<<<<<<< HEAD
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-=======
-    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
-
-    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
->>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
     <script src="{{ asset('public/assets/plugins/notify/js/notifIt.js') }}"></script>
     <!-- INTERNAL WYSIWYG Editor js -->
     <script src="{{ asset('public/assets/plugins/wysiwyag/jquery.richtext.js') }}"></script>
@@ -1260,22 +1300,6 @@ $login_details = DB::table('users')
 <!-- Mirrored from laravel.spruko.com/admitro/Vertical-IconSidedar-Light/index by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 21 Nov 2021 07:29:24 GMT -->
 
 </html>
-<<<<<<< HEAD
-
-=======
-<script>
-    function viewGraph(){
-        $('.column').css('height','0');
-        $('table tr').each(function(index) {
-        var ha = $(this).children('td').eq(1).text();
-        $('#col'+index).animate({height: ha}, 1500).html("<div>"+ha+"</div>");
-        });
-        }
-        $(document).ready(function(){
-        viewGraph();
-        });
-</script>
->>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
 
 <script type="text/javascript">
     function get_all_patient_result() {
@@ -1306,8 +1330,4 @@ $login_details = DB::table('users')
             });
         }
     }
-<<<<<<< HEAD
 </script>
-=======
-</script>
->>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
