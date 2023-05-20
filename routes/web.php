@@ -2299,7 +2299,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     // Route::post('find-bed-type-by-department-in-ipd', [IpdController::class, 'find_bed_type_by_department_in_opd'])->name('find-bed-type-by-department-in-ipd');
 
     // =============================== Discharged Patient ==================================================
-    Route::group(['middleware' => ['permission:ipd discharged patient'], 'prefix' => 'ipd-timeline'], function () {
+    Route::group(['middleware' => ['permission:ipd discharged patient'], 'prefix' => 'ipd-discharged'], function () {
 
         Route::get('discharged-patient-in-ipd/{ipd_id}', [PatientDischargeController::class, 'discharged_patient_in_ipd'])->name('discharged-patient-in-ipd');
         Route::get('all-discharged-patient-in-ipd', [PatientDischargeController::class, 'all_discharged_patient_in_ipd'])->name('all-discharged-patient-in-ipd');
@@ -2334,7 +2334,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     // =============================== Timeline ipd ====================================================
 
     //================================= Ipd charges ====================================
-    Route::group(['middleware' => ['permission:patient charges in ipd'], 'prefix' => 'patient-charge'], function () {
+    Route::group(['middleware' => ['permission:patient charges in ipd'], 'prefix' => 'ipd-charges'], function () {
         Route::get('charges-list-ipd/{id?}', [IpdController::class, 'charge_list_in_ipd'])->name('charges-list-ipd');
         Route::group(['middleware' => ['permission:add ipd charges']], function () {
             Route::get('add-ipd-charges/{id?}', [IpdController::class, 'add_charges_ipd'])->name('add-ipd-charges');
@@ -2406,12 +2406,12 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     // =============================== Nurse Note ==================================================
 
     //================================= ipd Pathology ====================================
-    Route::group(['middleware' => ['permission:ipd Pathology Investigation']], function () {
+    Route::group(['middleware' => ['permission:IPD Pathology Investigation'], 'prefix' => 'ipd-pathology-investigation'], function () {
         Route::get('ipd-pathology-investigation/{id}', [IpdController::class, 'ipd_pathology_investigation'])->name('ipd-pathology-investigation');
     });
     //================================= ipd Pathology ====================================
     //================================= ipd radiology ====================================
-    Route::group(['middleware' => ['permission:ipd Pathology Investigation']], function () {
+    Route::group(['middleware' => ['permission:IPD Radiology Investigation'], 'prefix' => 'ipd-radiology-investigation'], function () {
         Route::get('ipd-radiology-investigation/{id}', [IpdController::class, 'ipd_radiology_investigation'])->name('ipd-radiology-investigation');
     });
     //================================= ipd radiology ====================================
@@ -2434,7 +2434,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     //================================= IPD billing ====================================
 
     // =============================== Medication ==================================================
-    Route::group(['middleware' => ['permission:save medication']], function () {
+    Route::group(['middleware' => ['permission:save medication'], 'prefix' => 'ipd-medication'], function () {
         Route::get('show-medicaiton-dose/{ipd_id}', [MedicationController::class, 'show_medicaiton_dose'])->name('show-medicaiton-dose');
 
         Route::get('add-medicaiton-dose/{ipd_id}', [MedicationController::class, 'add_medicaiton_dose'])->name('add-medicaiton-dose');
@@ -2455,7 +2455,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     // =============================== Medication ==================================================
 
     // =============================== OxygenMonitoring ==================================================
-    Route::group(['middleware' => ['permission:save oxygen monitoring']], function () {
+    Route::group(['middleware' => ['permission:save oxygen monitoring'], 'prefix' => 'oxygen-monitoring'], function () {
         Route::get('add-oxygen-monitoring-details/{ipd_id}', [OxygenMonitoringController::class, 'add_oxygen_monitoring_details'])->name('add-oxygen-monitoring-details');
 
         Route::post('save-oxygen-monitoring-details', [OxygenMonitoringController::class, 'save_oxygen_monitoring_details'])->name('save-oxygen-monitoring-details');
@@ -2465,7 +2465,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     // ================================= OxygenMonitoring ==================================================
 
     // =============================== Ipd - Operation ==================================================
-    Route::group(['middleware' => ['permission:operation theatre']], function () {
+    Route::group(['middleware' => ['permission:operation theatre'], 'prefix' => 'ipd-operation'], function () {
 
         Route::get('show-ipd-operation-details/{ipd_id}', [OperationTheatreController::class, 'show_ipd_operation_details'])->name('show-ipd-operation-details');
 

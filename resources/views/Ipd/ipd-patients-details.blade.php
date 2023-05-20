@@ -3,7 +3,6 @@
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
-
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
@@ -12,12 +11,14 @@
                 <div class="col-md-6 text-right">
                     <div class="d-block">
                         {{-- @can('')
-                        <a href="#" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
+                        <a href="#" class="btn btn-primary btn-sm"><i
+                                class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
                             Add Patient</a>
                         @endcan --}}
 
                         @can('')
-                        <a href="{{ route('all-discharged-patient-in-ipd') }}" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
+                        <a href="{{ route('all-discharged-patient-in-ipd') }}" class="btn btn-primary btn-sm"><i
+                                class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
                             Discharged Patient</a>
                         @endcan
 
@@ -38,6 +39,7 @@
                             <th scope="col">Mobile No.</th>
                             <th scope="col">Admission Information</th>
                             <th scope="col">Admission Date</th>
+                            <th scope="col">Admitted By</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
@@ -46,33 +48,45 @@
                         @if (isset($ipd_patient_list))
                         @foreach ($ipd_patient_list as $value)
                         <tr>
-                            <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{ @$value->ipd_prefix }}{{ @$value->id }}</a></td>
+                            <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{
+                                    @$value->id }}</a></td>
                             <td>
-                                <i class="fa fa-user text-primary"></i> {{ @$value->all_patient_details->prefix }} {{ @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name }} {{ @$value->all_patient_details->last_name }}({{ @$value->all_patient_details->id }})
+                                <i class="fa fa-user text-primary"></i> {{ @$value->all_patient_details->prefix }} {{
+                                @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name
+                                }} {{ @$value->all_patient_details->last_name }}({{ @$value->all_patient_details->id }})
                                 <br>
                                 <i class="fa fa-users text-primary"></i>
                                 {{ @$value->all_patient_details->guardian_name }}
                                 <br>
-                                <i class="fa fa-venus-mars text-primary"></i> {{ @$value->all_patient_details->gender }} //
+                                <i class="fa fa-venus-mars text-primary"></i> {{ @$value->all_patient_details->gender }}
+                                //
 
 
-                                <i class="fa fa-calendar-plus-o text-primary"></i> {{ @$value->all_patient_details->year }}Y {{ @$value->all_patient_details->month }}M {{ @$value->all_patient_details->day }}D
+                                <i class="fa fa-calendar-plus-o text-primary"></i> {{ @$value->all_patient_details->year
+                                }}Y {{ @$value->all_patient_details->month }}M {{ @$value->all_patient_details->day }}D
 
                             </td>
                             <td>{{ @$value->all_patient_details->phone }}</td>
                             <td>
                                 @if(isset($value->department_id))
-                                <i class="fa fa-cubes text-primary"></i> {{ @$value->department_details->department_name }}( {{ @$value->department_details->department_code }}) <br>
+                                <i class="fa fa-cubes text-primary"></i> {{ @$value->department_details->department_name
+                                }}( {{ @$value->department_details->department_code }}) <br>
                                 @endif
                                 @if(isset($value->cons_doctor))
-                                <i class="fas fa-user-md text-primary"></i> {{ @$value->doctor_details->first_name }} {{ @$value->doctor_details->last_name }} <br>
+                                <i class="fas fa-user-md text-primary"></i> {{ @$value->doctor_details->first_name }} {{
+                                @$value->doctor_details->last_name }} <br>
                                 @endif
                                 @if(isset($value->bed_ward_id))
-                                <i class="fa fa-bed text-primary"></i> {{ @$value->bed_details->bed_name }} - {{ @$value->ward_details->ward_name }} - {{ @$value->unit_details->bedUnit_name }}
+                                <i class="fa fa-bed text-primary"></i> {{ @$value->bed_details->bed_name }} - {{
+                                @$value->ward_details->ward_name }} - {{ @$value->unit_details->bedUnit_name }}
                                 @endif
                             </td>
                             <td>
                                 {{ date('d-m-Y h:i A',strtotime($value->appointment_date)) }}
+                            </td>
+                            <td>
+                                {{ @$value->admitted_by }}<br>
+                                {{ @$value->admitted_by_contact_no }}
                             </td>
                             <td>
                                 @if($value->status == 'admitted')
@@ -85,19 +99,23 @@
                             </td>
                             <td>
                                 <div class="card-options">
-                                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
+                                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right" style="">
                                         <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
                                         @can('')
-                                        <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission Form</a>
+                                        <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission
+                                            Form</a>
                                         @endcan
                                         @can('')
-                                        <a class="dropdown-item" href="#" onclick="statusButton(<?php echo $value->id; ?>)">
+                                        <a class="dropdown-item" href="#"
+                                            onclick="statusButton(<?php echo $value->id; ?>)">
                                             <i class="fa fa-file"></i> Status Change</a>
                                         @endcan
                                         @can('')
 
-                                        <a class="dropdown-item" href="{{ route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])}}">
+                                        <a class="dropdown-item"
+                                            href="{{ route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])}}">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         @endcan
                                         @can('')
@@ -118,9 +136,12 @@
     </div>
 </div>
 
+
+
 {{-- ====================patient status change(admission/discharged planed/discharged) ================== --}}
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

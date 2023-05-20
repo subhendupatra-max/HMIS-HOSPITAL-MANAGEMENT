@@ -144,6 +144,28 @@
                                         {{$ipd_details->bed_details->bed_name}} - {{$ipd_details->unit_details->bedUnit_name}} - {{$ipd_details->ward_details->ward_name}}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td class="py-2 px-0">
+                                        <i class="fa fa-users text-primary"></i>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Admitted By :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        {{ @$ipd_details->department_details->admitted_by }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-0">
+                                        <i class="fa fa-rocket text-primary"></i>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Admitted By Contact No. :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        {{ @$ipd_details->department_details->admitted_by_contact_no }}
+                                    </td>
+                                </tr>
 
                             </tbody>
                         </table>

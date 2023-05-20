@@ -16,6 +16,8 @@ class CreateIpdDetailsTable extends Migration
         Schema::create('ipd_details', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('patient_id');
+            $table->string('admitted_by');
+            $table->string('admitted_by_contact_no');
             $table->string('ipd_prefix');
             $table->string('patient_source_id');
             $table->string('patient_source');

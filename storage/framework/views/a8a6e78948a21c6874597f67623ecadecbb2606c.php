@@ -421,7 +421,7 @@ unset($__errorArgs, $__bag); ?>
             $('#tpa_organizationcxvc').removeAttr('style', true);
         } else if (val == 'Swasthya Sathi') {
             
-            $('.frefesd').attr('style', 'display:none', true);
+            $('#frefesd').attr('style', 'display:none', true);
             $('#tpa_organizationcxvc').attr('style', 'display:none', true);
             $('#lableName').text('Swasthya Sathi ID');
         } else {

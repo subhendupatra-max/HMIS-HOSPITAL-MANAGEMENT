@@ -31,7 +31,8 @@
                         <th scope="col">Gurdian Name</th>
                         <th scope="col">Mobile No.</th>
                         <th scope="col">Case Id</th>
-                        <th scope="col">Last Visit Details</th>
+                        <th scope="col">Visit Details</th>
+                        <th scope="col">Appointment Date</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -75,18 +76,17 @@
                             {{ @$value->latest_opd_visit_details_for_patient->doctor->first_name }}
                             {{ @$value->latest_opd_visit_details_for_patient->doctor->last_name }}<br>
                             @endif
-                            @if (isset($value->latest_opd_visit_details_for_patient->appointment_date))
-                            <i class="fa fa-calendar text-primary"></i>
-                            {{ date('d-m-Y h:i A',
-                            strtotime($value->latest_opd_visit_details_for_patient->appointment_date)) }}
-                            @endif
+                           
                         </td>
+
+                        <td>{{ date('d-m-Y h:i A',
+                            strtotime($value->latest_opd_visit_details_for_patient->appointment_date)) }}</td>
                         <td>
                             <div class="card-options">
                                 <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right" style="">
-                                    <a class="dropdown-item" href=""><i class="fa fa-file"></i> Bill Summary</a>
+                                    {{-- <a class="dropdown-item" href=""><i class="fa fa-file"></i> Bill Summary</a> --}}
                                     <a class="dropdown-item"
                                         href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}"><i
                                             class="fa fa-eye"></i> View</a>
@@ -96,21 +96,22 @@
                                     @endcan
                                     @can('delete opd patient')
                                     <a class="dropdown-item" href="{{ route('delete-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id)) }}"><i class="fa fa-trash"></i>
-                                        Delete</a>
+                                         Delete</a>
                                     @endcan
 
                                     <a class="dropdown-item" href="{{ route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id)) }}"><i class="fa fa-print"></i>
-                                        Print</a>
+                                         Print</a>
 
                                     @can('opd billing')
                                     <a class="dropdown-item"
                                         href="{{ route('add-opd-billing',['id'=> base64_encode($value->id)]) }}"><i
                                             class="fa fa-money-bill"></i>
-                                        Add Billing</a>
+                                         Add Billing</a>
                                     @endcan
                                     <a class="dropdown-item"
                                         href="{{ route('payment-listing-in-opd', ['id' => base64_encode($value->id)]) }}"><i
-                                            class="fa fa-rupee-sign"></i>Take Payment</a>
+                                            class="fa fa-rupee-sign"></i> Take Payment</a>
+                                    <a class="dropdown-item"  href="{{ route('ipd-registation-from-opd', ['id' => base64_encode($value->id), 'patient_source' => 'opd', 'source_id' => $value->id]) }}"><i class="fa fa-bed"></i> Admission</a>
 
                                 </div>
                             </div>

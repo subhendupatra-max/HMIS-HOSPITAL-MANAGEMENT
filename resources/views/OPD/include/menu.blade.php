@@ -24,3 +24,4 @@
 {{-- <a class="dropdown-item {{ Request::segment(2) == 'bill-summary' ? 'active' : '' }}" href="{{ route('create-bill-summary', ['id' => base64_encode($opd_patient_details->id),'case_id'=>base64_encode($opd_patient_details->case_id)]) }}"><i class="fa fa-file"></i> Bill Summary</a> --}}
 
 <a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('physical-condition-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-receipt"></i> Physical Conditions</a>
+

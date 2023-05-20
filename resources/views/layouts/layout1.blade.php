@@ -76,7 +76,6 @@ $login_details = DB::table('users')
         <img src="{{ asset('public/assets/images/svgs/Heart_beat.gif') }}" alt="loader" width="500px" height="200px">
     </div>
     <!--- End Global-loader-->
-<<<<<<< HEAD
     <!-- Page -->
     <div class="page">
         <div class="page-main">
@@ -93,7 +92,7 @@ $login_details = DB::table('users')
 
                     <ul class="side-menu app-sidebar3">
                         <!-- DASHBOARD -->
-                        @if (auth()->user()->can('OPD out-patients'))
+                        {{-- @if (auth()->user()->can('OPD out-patients'))
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('dashboard') }}">
                                 <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -104,7 +103,7 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">Dashboard</span>
                             </a>
                         </li>
-                        @endif
+                        @endif --}}
                         {{-- @if (auth()->user()->can('bill summary'))
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('bill-summary') }}">
@@ -117,7 +116,7 @@ $login_details = DB::table('users')
                             </a>
                         </li>
                         @endif --}}
-                        @if (auth()->user()->can('Human Resource'))
+                        {{-- @if (auth()->user()->can('Human Resource'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'Human-Resource' ? 'active' : '' }}" data-toggle="slide" href="index-2.html#">
                                 <svg class="side-menu__icon {{ Request::segment(1) == 'Human-Resource' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -136,7 +135,7 @@ $login_details = DB::table('users')
                                 @endif
                             </ul>
                         </li>
-                        @endif
+                        @endif --}}
                         {{-- @if (auth()->user()->can('appointment main'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'appointment' ? 'active' : '' }}" href="{{ route('all-appointments-details') }}">
@@ -149,7 +148,7 @@ $login_details = DB::table('users')
                             </a>
                         </li>
                         @endif --}}
-                        @if (auth()->user()->can('Patient Master'))
+                        {{-- @if (auth()->user()->can('Patient Master'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'Patient' ? 'active' : '' }}" href="{{ route('patient_details') }}">
 
@@ -172,8 +171,8 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">OPD Out-Patients</span>
                             </a>
                         </li>
-                        @endif
-                        @if (auth()->user()->can('Emergency Patients'))
+                        @endif --}}
+                        {{-- @if (auth()->user()->can('Emergency Patients'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'emg' ? 'active' : '' }}" href="{{ route('emg-patient-list') }}">
                                 <svg class="side-menu__icon {{ Request::segment(1) == 'emg' ? 'active' : '' }}" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -183,8 +182,8 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">Emergency Patients</span>
                             </a>
                         </li>
-                        @endif
-                        @if (auth()->user()->can('IPD ipd-patients'))
+                        @endif --}}
+                        {{-- @if (auth()->user()->can('IPD ipd-patients'))
                         <li class="slide {{ Request::segment(1) == 'IPD' ? 'active' : '' }}">
                             <a class="side-menu__item {{ Request::segment(1) == 'IPD' ? 'active' : '' }}" href="{{ route('ipd-patient-listing') }}">
                                 <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -195,8 +194,8 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">Ipd In-Patients</span>
                             </a>
                         </li>
-                        @endif
-                        @if (auth()->user()->can('discount'))
+                        @endif --}}
+                        {{-- @if (auth()->user()->can('discount'))
                         <li class="slide {{ Request::segment(1) == 'discount' ? 'active' : '' }}">
                             <a class="side-menu__item {{ Request::segment(1) == 'discount' ? 'active' : '' }}" href="{{ route('discount-list') }}">
                                 <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -206,8 +205,8 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label"> Discount</span>
                             </a>
                         </li>
-                        @endif
-                        @if (auth()->user()->can('pathology main'))
+                        @endif --}}
+                        {{-- @if (auth()->user()->can('pathology main'))
                         <li class="slide {{ Request::segment(1) == 'pathology' ? 'active' : '' }}">
                             <a class="side-menu__item {{ Request::segment(1) == 'pathology' ? 'active' : '' }}" href="{{ route('pathology-test-charge') }}">
                                 <svg class="side-menu__icon" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
@@ -230,8 +229,8 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">Radiology</span>
                             </a>
                         </li>
-                        @endif
-                        @if (auth()->user()->can('pharmacy main'))
+                        @endif --}}
+                        {{-- @if (auth()->user()->can('pharmacy main'))
                         <li class="slide">
                             <a class="side-menu__item {{ Request::segment(1) == 'pharmacy' ? 'active' : '' }}" href="{{ route('pharmacy-bill-listing') }}">
 
@@ -242,7 +241,7 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">Pharmacy</span>
                             </a>
                         </li>
-                        @endif
+                        @endif --}}
 
                         @if (auth()->user()->can('Inventory'))
                         <li class="slide">
@@ -315,7 +314,7 @@ $login_details = DB::table('users')
                             </a>
                         </li>
                         @endif
-                        @if (auth()->user()->can('Blood Bank'))
+                        {{-- @if (auth()->user()->can('Blood Bank'))
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('all-blood-details') }}">
 
@@ -326,8 +325,8 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">Blood Bank</span>
                             </a>
                         </li>
-                        @endif
-                        @if (auth()->user()->can('Operation'))
+                        @endif --}}
+                        {{-- @if (auth()->user()->can('Operation'))
                         <li class="slide">
                             <a class="side-menu__item" href="{{ route('all-blood-details') }}">
 
@@ -338,7 +337,7 @@ $login_details = DB::table('users')
                                 <span class="side-menu__label">Operation</span>
                             </a>
                         </li>
-                        @endif
+                        @endif --}}
                         @if (auth()->user()->can('False Generation'))
                         <li class="slide  {{ Request::segment(1) == 'false-patient' ? 'active' : '' }}">
                             <a class="side-menu__item  {{ Request::segment(1) == 'false-patient' ? 'active' : '' }}" data-toggle="slide" href="index-2.html#">
@@ -984,7 +983,6 @@ $login_details = DB::table('users')
         <!-- End Footer-->
     </div><!-- End Page -->
     <!-- Back to top -->
-=======
     <div class="dash-bord">
     <div class="new-page">
         <div class="container-fluid">
@@ -1162,7 +1160,6 @@ $login_details = DB::table('users')
      <!-- End Footer-->
     </div>
      <!-- Back to top -->
->>>>>>> aec1f1c69906c7ec76ff88f06937894d28480f88
     <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
 
 
