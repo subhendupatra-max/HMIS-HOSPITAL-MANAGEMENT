@@ -10,7 +10,7 @@
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         @can('add timeline ipd')
-                        <a class="btn btn-primary btn-sm" href="{{ route('add-nurse-note-details', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-plus"></i> Add Nurse Note </a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('add-nurse-note-details', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-receipt"></i> Add New Note </a>
                         @endcan
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
@@ -39,8 +39,8 @@
                                     @endcan
                                 </span>
                             </div>
-                            <p class="text-muted fs-12"> {{ $item->note }}</p>
-
+                            <p class="text-muted fs-12"> {{ @$item->note }}</p>
+                            <p class="text-muted fs-12"> {{ @$item->comment }}</p>
                         </li>
                         @endforeach
 

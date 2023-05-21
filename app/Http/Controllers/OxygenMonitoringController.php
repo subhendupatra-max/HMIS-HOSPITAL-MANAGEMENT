@@ -15,19 +15,38 @@ class OxygenMonitoringController extends Controller
         $ipdId = base64_decode($ipd_id);
         $ipd_details = IpdDetails::where('id', $ipdId)->first();
         $oxygen_monitering = OxygenMonitoring::where('ipd_id', $ipdId)->get();
-        return view('Ipd.add-oxygen-monitoring', compact('ipd_details', 'oxygen_monitering'));
+        return view('Ipd.add-oxygen-monitoring', compact('ipd_details', 'oxygen_monitering','ipdId'));
     }
 
     public function save_oxygen_monitoring_details(Request $request)
     {
         // dd($request['ipd_id']);
         $oxygen = new OxygenMonitoring;
-        $oxygen->ipd_id      = $request->ipdID;
-        $oxygen->oxygen_time = $request->otwotime_value;
+        $oxygen->ipd_id      = $request->ipd_id;
+        $oxygen->start_time = $request->start_time;
         $status = $oxygen->save();
 
         if ($status) {
-            return back()->with('success', " Oxygen Monitoring Added Succesfully ");
+            return back()->with('success', " Oxygen started !! ");
+        } else {
+            return back()->with('error', "Something Went Wrong");
+        }
+    }
+    public function save_end_oxygen_monitoring_details(Request $request)
+    {
+        // dd($request['ipd_id']);
+        $date1 = strtotime($request->start_time);
+        $date2 = strtotime($request->end_time);
+        $secondsDiff = $date2 - $date1;
+
+        $oxygen = OxygenMonitoring::find($request->id);
+        $oxygen->ipd_id      = $request->ipd_id;
+        $oxygen->end_time = $request->end_time;
+        $oxygen->duration = $secondsDiff;
+        $status = $oxygen->save();
+
+        if ($status) {
+            return back()->with('success', " Oxygen started !! ");
         } else {
             return back()->with('error', "Something Went Wrong");
         }

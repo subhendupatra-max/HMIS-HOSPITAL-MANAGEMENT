@@ -1,5 +1,5 @@
-@extends('layouts.layout')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
 
@@ -11,21 +11,21 @@
 
                 <div class="col-md-8 text-right">
                     <div class="d-block">
-                        <a href="{{ route('add-bed-transfar-history-in-ipd',['ipd_id' => base64_encode($ipd_details->id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Print Transfer Report</a>
-                        @can('')
-                        <a href="{{ route('add-bed-transfar-history-in-ipd',['ipd_id' => base64_encode($ipd_details->id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-arrow-alt-circle-left"></i> Bed Transfer</a>
-                        @endcan
+                        <a href="<?php echo e(route('add-bed-transfar-history-in-ipd',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Print Transfer Report</a>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
+                        <a href="<?php echo e(route('add-bed-transfar-history-in-ipd',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-alt-circle-left"></i> Bed Transfer</a>
+                        <?php endif; ?>
 
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            @include('ipd.include.menu')
+                            <?php echo $__env->make('ipd.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
-        @include('message.notification')
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body ">
             <div class="row no-gutters">
                 <div class="col-md-12 mt-2">
@@ -39,36 +39,37 @@
                                     <th class="border-bottom-0">Bed</th>
                                     <th class="border-bottom-0">Duration</th>
                                     <th class="border-bottom-0">Status</th>
-                                    @can('edit bed transfar history')
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit bed transfar history')): ?>
                                         <th class="border-bottom-0">Action</th>
-                                    @endcan
+                                    <?php endif; ?>
                                     
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ( $bedHistory as $item)
+                                <?php $__currentLoopData = $bedHistory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <tr>
-                                    <td class="border-bottom-0">{{ $loop->iteration }}</td>
-                                    <td class="border-bottom-0"> {{ $item->department_details->department_name }} </td>
-                                    <td class="border-bottom-0"> {{ $item->ward_details->ward_name }} - {{ $item->unit_details->bedUnit_name }}</td>
-                                    <td class="border-bottom-0">{{ @$item->bed_details->bed_name }}</td>
+                                    <td class="border-bottom-0"><?php echo e($loop->iteration); ?></td>
+                                    <td class="border-bottom-0"> <?php echo e($item->department_details->department_name); ?> </td>
+                                    <td class="border-bottom-0"> <?php echo e($item->ward_details->ward_name); ?> - <?php echo e($item->unit_details->bedUnit_name); ?></td>
+                                    <td class="border-bottom-0"><?php echo e(@$item->bed_details->bed_name); ?></td>
                                     <td class="border-bottom-0">
-                                        <span>From Date</span> : <span>{{ $item->from_date }}</span><br>
-                                        <span>To Date</span> : <span>{{ $item->to_date }}</span><br>
+                                        <span>From Date</span> : <span><?php echo e($item->from_date); ?></span><br>
+                                        <span>To Date</span> : <span><?php echo e($item->to_date); ?></span><br>
                                       
                                     </td>
                                     <td>
-                                        {!! $item->is_present == 'no' ? '<span class="badge badge-danger">Moved from here</span>':'<span class="badge badge-success">Present Here</span>' !!}
+                                        <?php echo $item->is_present == 'no' ? '<span class="badge badge-danger">Moved from here</span>':'<span class="badge badge-success">Present Here</span>'; ?>
+
                                     </td>
-                                    @can('edit bed transfar history')
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit bed transfar history')): ?>
                                     <td class="border-bottom-0">
-                                        @if(!isset($item->to_date))
+                                        <?php if(!isset($item->to_date)): ?>
                                         <a onclick="bedHistoryEditButton('<?php echo $item->id  ?>','<?php echo $item->from_date;  ?>')" class="btn btn-primary btn-sm"> <i class="fa fa-edit"></i> </a>
-                                        @endif
+                                        <?php endif; ?>
                                     </td>
-                                    @endcan
+                                    <?php endif; ?>
                                 </tr>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
                         </table>
                     </div>
@@ -93,17 +94,24 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('update-bed-hidtroy-from-date') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
+                <form action="<?php echo e(route('update-bed-hidtroy-from-date')); ?>" method="POST" enctype="multipart/form-data">
+                    <?php echo csrf_field(); ?>
                     <input type="hidden" name="bed_histry_id" id="bed_histry_id" />
 
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label for="from_time" class="form-label">From Date <span class="text-danger">*</span></label>
                             <input type="datetime-local" class="form-control" id="from_time" name="from_time" required>
-                            @error('from_time')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['from_time'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
 
                     </div>
@@ -124,4 +132,5 @@
         $("#editBedHistory").modal('show');
     }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/ipd/bed-history/bed-history.blade.php ENDPATH**/ ?>

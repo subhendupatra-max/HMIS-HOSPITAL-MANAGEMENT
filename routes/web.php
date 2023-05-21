@@ -2382,6 +2382,9 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
             Route::post('update-bed-transfar-history', [BedTransfarController::class, 'update_bed_transfar_history'])->name('update-bed-transfar-history');
         });
+        Route::group(['middleware' => ['permission:edit bed transfar history']], function () {
+            Route::post('update-bed-hidtroy-from-date', [BedTransfarController::class, 'update_bed_transfar_from_date'])->name('update-bed-hidtroy-from-date');
+        });
     });
 
     // =============================== Bed Transfar ====================================================
@@ -2458,7 +2461,9 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     Route::group(['middleware' => ['permission:save oxygen monitoring'], 'prefix' => 'oxygen-monitoring'], function () {
         Route::get('add-oxygen-monitoring-details/{ipd_id}', [OxygenMonitoringController::class, 'add_oxygen_monitoring_details'])->name('add-oxygen-monitoring-details');
 
-        Route::post('save-oxygen-monitoring-details', [OxygenMonitoringController::class, 'save_oxygen_monitoring_details'])->name('save-oxygen-monitoring-details');
+        Route::post('start-oxygen-in-ipd', [OxygenMonitoringController::class, 'save_oxygen_monitoring_details'])->name('start-oxygen-in-ipd');
+
+        Route::post('end-oxygen-in-ipd', [OxygenMonitoringController::class, 'save_end_oxygen_monitoring_details'])->name('end-oxygen-in-ipd');
 
         Route::get('delete-oxygen-monitoring/{id}', [OxygenMonitoringController::class, 'delete_oxygen_monitoring'])->name('delete-oxygen-monitoring');
     });
@@ -2519,6 +2524,14 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::post('save-ipd-charges-details', [IpdChargeController::class, 'save_ipd_charges_details'])->name('save-ipd-charges-details');
     });
     // ================================ ipd charges =================================================
+ // =============================== ipd status change ==================================================
+ Route::group(['middleware' => ['permission:ipd status change']], function () {
+    Route::post('update-status-ipd', [IpdController::class, 'update_status'])->name('update-status-ipd');
+});
+// ================================ ipd charges =================================================
+Route::group(['middleware' => ['permission:ipd delete']], function () {
+    Route::get('ipd-patient-delete/{ipd_id?}', [IpdController::class, 'ipd_patient_delete'])->name('ipd-patient-delete');
+});
 
 });
 //================================= Ipd ===================================================

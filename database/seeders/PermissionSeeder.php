@@ -397,6 +397,9 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'edit IPD registation']);
         Permission::create(['name' => 'IPD profile']);
 
+        Permission::create(['name' => 'ipd status change']);
+        Permission::create(['name' => 'ipd delete']);
+
         // Opd TimeLine
         Permission::create(['name' => 'timeline list opd']);
         Permission::create(['name' => 'add timeline list opd']);

@@ -29,8 +29,8 @@ a:hover {
 }
 
 .page-item.active .page-link {
-    background-color: #705ec8;
-    border-color: #705ec8;
+    background-color: #2e4f4f;
+    border-color: #2e4f4f;
 }
 
 .panel-default>.panel-heading {
@@ -155,22 +155,22 @@ a:hover {
 
 .btn-primary {
     color: #fff !important;
-    background-color: #705ec8;
-    border-color: #705ec8;
+    background-color: #2e4f4f;
+    border-color: #2e4f4f;
     box-shadow: 0 0px 10px -5px rgba(112, 94, 200, 0.5);
 }
 
 .btn-primary:hover {
     color: #fff !important;
-    background-color: #6958be;
-    border-color: #6958be;
+    background-color: #263d3d;
+    border-color: #263d3d;
 }
 
 .btn-primary:focus,
 .btn-primary.focus {
     box-shadow: 0 0 0 2px rgba(112, 94, 200, 0.5);
-    background-color: #6958be;
-    border-color: #6958be;
+    background-color: #2e4f4f;
+    border-color: #2e4f4f;
 }
 
 .btn-primary.disabled,
@@ -183,14 +183,14 @@ a:hover {
 .btn-primary:not(:disabled):not(.disabled):active,
 .btn-primary:not(:disabled):not(.disabled).active {
     color: #fff;
-    background-color: #6958be;
-    border-color: #6958be;
+    background-color: #2e4f4f;
+    border-color: #2e4f4f;
 }
 
 .show>.btn-primary.dropdown-toggle {
     color: #fff;
-    background-color: #6958be;
-    border-color: #6958be;
+    background-color: #2e4f4f;
+    border-color: #2e4f4f;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus,
@@ -359,7 +359,7 @@ a:hover {
 }
 
 .btn.dropdown-toggle.btn-primary~.dropdown-menu .dropdown-plus-title {
-    border-color: #705ec8 !important;
+    border-color: #2e4f4f !important;
 }
 
 .list-group-item-primary {
@@ -1013,12 +1013,12 @@ a.chip:hover {
 }
 
 #back-to-top {
-    background: #705ec8;
+    background: #2e4f4f;
 }
 
 #back-to-top:hover {
-    color: #705ec8;
-    border: 2px solid #705ec8;
+    color: #2e4f4f;
+    border: 2px solid #2e4f4f;
 }
 
 .tabs-menu ul li .active {
@@ -1188,7 +1188,7 @@ i.fa.round,
 }
 
 .text-primary {
-    color: #705ec8 !important;
+    color: #2e4f4f !important;
 }
 
 a.text-primary:hover,

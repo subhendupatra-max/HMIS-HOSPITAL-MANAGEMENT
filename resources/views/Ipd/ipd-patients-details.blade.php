@@ -35,6 +35,7 @@
                     <thead>
                         <tr>
                             <th scope="col">IPD Id</th>
+                            <th scope="col">Case Id</th>
                             <th scope="col">Patient Information</th>
                             <th scope="col">Mobile No.</th>
                             <th scope="col">Admission Information</th>
@@ -48,8 +49,8 @@
                         @if (isset($ipd_patient_list))
                         @foreach ($ipd_patient_list as $value)
                         <tr>
-                            <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{
-                                    @$value->id }}</a></td>
+                            <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{ @$value->id }}</a></td>
+                            <td>{{ @$value->case_id }}</td>
                             <td>
                                 <i class="fa fa-user text-primary"></i> {{ @$value->all_patient_details->prefix }} {{
                                 @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name
@@ -60,8 +61,6 @@
                                 <br>
                                 <i class="fa fa-venus-mars text-primary"></i> {{ @$value->all_patient_details->gender }}
                                 //
-
-
                                 <i class="fa fa-calendar-plus-o text-primary"></i> {{ @$value->all_patient_details->year
                                 }}Y {{ @$value->all_patient_details->month }}M {{ @$value->all_patient_details->day }}D
 
@@ -107,7 +106,7 @@
                                         <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission
                                             Form</a>
                                         @endcan
-                                        @can('')
+                                        @can('ipd status change')
                                         <a class="dropdown-item" href="#"
                                             onclick="statusButton(<?php echo $value->id; ?>)">
                                             <i class="fa fa-file"></i> Status Change</a>
@@ -118,8 +117,8 @@
                                             href="{{ route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])}}">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         @endcan
-                                        @can('')
-                                        <a class="dropdown-item" href=""><i class="fa fa-trash"></i> Delete</a>
+                                        @can('ipd delete')
+                                        <a class="dropdown-item" href="{{ route('ipd-patient-delete',['ipd_id'=>base64_encode($value->id) ])}}"><i class="fa fa-trash"></i> Delete</a>
                                         @endcan
 
                                     </div>
@@ -152,17 +151,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('save-timeline-lisitng-in-opd') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('update-status-ipd') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <input type="hidden" name="ipd_id" value="" />
+                    <input type="hidden" name="ipd_id"  id="ipd_id_"/>
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-control" id="status" name="status">
                                 <option value="">Select......</option>
                                 <option value="discharged_planed">Discharged Planed</option>
-                                <option value="discharged">Discharged</option>
                             </select>
                             @error('status')
                             <span class="text-danger">{{ $message }}</span>
@@ -198,6 +196,8 @@
                 ipdId: ipd_id,
             },
             success: function(response) {
+                console.log(response);
+                $("#ipd_id_").val(response.id);
                 $("#exampleModal").modal('show');
             },
             error: function(error) {
