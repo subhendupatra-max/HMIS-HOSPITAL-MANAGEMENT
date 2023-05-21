@@ -130,8 +130,8 @@
       </div>
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Referral</h3>
-          <p class="small">0</p>
+          <h3>Pharmacy Income</h3>
+          <p class="small">{{@$pharmacy_income}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/pharmacy.png') }}">
@@ -143,8 +143,8 @@
     <div class="menubox">
       <div class="menu-box1">
         <a class="card1" href="#">
-          <h3>Inventory</h3>
-          <p class="small">0</p>
+          <h3>Pathology Income</h3>
+          <p class="small">{{@$pathology_income}}</p>
           <div class="go-corner" href="#">
             <div class="go-arrow">
               <img src="{{ asset('public/assets/images/brand/inventory.png') }}">

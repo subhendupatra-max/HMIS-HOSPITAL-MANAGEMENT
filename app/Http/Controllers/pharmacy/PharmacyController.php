@@ -48,8 +48,8 @@ class PharmacyController extends Controller
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $patient_reg_details = caseReference::where('patient_id', $request->patient_id)->orderBy('id', 'desc')->first();
         $medicine_category = MedicineCatagory::all();
-     //   dd( $patient_reg_details);
-        return view('pharmacy.generate-bill.add-medicine-bill', compact('all_patient', 'patient_details_information', 'medicine_category','patient_reg_details'));
+        //   dd( $patient_reg_details);
+        return view('pharmacy.generate-bill.add-medicine-bill', compact('all_patient', 'patient_details_information', 'medicine_category', 'patient_reg_details'));
     }
 
     public function medicine_name_by_medicine_category(Request $request)
@@ -150,35 +150,35 @@ class PharmacyController extends Controller
     }
     public function medicine_details($medicine_id)
     {
-       $medicine_details = Medicine::where('id',$medicine_id)->get();
-       return view('pharmacy.medicine.medicine-details', compact('medicine_details'));
+        $medicine_details = Medicine::where('id', $medicine_id)->get();
+        return view('pharmacy.medicine.medicine-details', compact('medicine_details'));
     }
 
     public function delete_medicine_bill($bill_id)
     {
         try {
-        DB::beginTransaction();
-        $id = base64_decode($bill_id);
-        MedicineBilling::where('id',$id)->delete();
-        MedicineBillingDetails::where('medicine_billing_id',$id)->delete();
-        DB::commit();
-        return redirect()->route('pharmacy-bill-listing')->with('success', "Medicine Bill Successfully deleted");
+            DB::beginTransaction();
+            $id = base64_decode($bill_id);
+            MedicineBilling::where('id', $id)->delete();
+            MedicineBillingDetails::where('medicine_billing_id', $id)->delete();
+            DB::commit();
+            return redirect()->route('pharmacy-bill-listing')->with('success', "Medicine Bill Successfully deleted");
         } catch (\Throwable $th) {
-        DB::rollback();
-        return back()->withErrors(['error' => $th->getMessage()]);
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
         }
     }
 
     public function details_medicine_bill($bill_id)
     {
         $id = base64_decode($bill_id);
-        $medicine_bill = MedicineBilling::where('id',$id)->first();
-        $medicine_bill_details = MedicineBillingDetails::select('medicine_units.medicine_unit_name','medicine_catagories.medicine_catagory_name','medicines.medicine_name','medicine_billing_details.amount','medicine_billing_details.qty')
-        ->leftjoin('medicine_catagories','medicine_billing_details.medicine_category','=','medicine_catagories.id')
-        ->leftjoin('medicines','medicine_billing_details.medicine_name','=','medicines.id')
-        ->leftjoin('medicine_units','medicine_billing_details.unit_id','=','medicine_units.id')
-        ->where('medicine_billing_id',$id)
-        ->get();
-        return view('pharmacy.generate-bill.bill-details', compact('medicine_bill_details','medicine_bill'));
+        $medicine_bill = MedicineBilling::where('id', $id)->first();
+        $medicine_bill_details = MedicineBillingDetails::select('medicine_units.medicine_unit_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_name', 'medicine_billing_details.amount', 'medicine_billing_details.qty')
+            ->leftjoin('medicine_catagories', 'medicine_billing_details.medicine_category', '=', 'medicine_catagories.id')
+            ->leftjoin('medicines', 'medicine_billing_details.medicine_name', '=', 'medicines.id')
+            ->leftjoin('medicine_units', 'medicine_billing_details.unit_id', '=', 'medicine_units.id')
+            ->where('medicine_billing_id', $id)
+            ->get();
+        return view('pharmacy.generate-bill.bill-details', compact('medicine_bill_details', 'medicine_bill'));
     }
 }

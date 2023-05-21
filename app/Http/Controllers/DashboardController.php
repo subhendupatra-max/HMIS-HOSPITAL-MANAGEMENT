@@ -8,8 +8,10 @@ use App\Models\IpdDetails;
 use Illuminate\Http\Request;
 use App\Models\OpdVisitDetails;
 use App\Models\PathologyBilling;
+use App\Models\PathologyPatientTest;
 use can;
 use Carbon\Carbon;
+use App\Models\MedicineBilling;
 
 class DashboardController extends Controller
 {
@@ -90,14 +92,20 @@ class DashboardController extends Controller
             }
         })->sum('ticket_fees');
 
-        // $pathology_billing =  PathologyBilling::where(function ($query) {
-        //     if (!auth()->user()->can('False Generation')) {
-        //         $query->where('ins_by', 'ori');
-        //     }
-        // })->sum('');
+        $pathology_income =  PathologyPatientTest::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->leftJoin('pathology_billings', 'pathology_billings.patientId', '=', 'pathology_patient_tests.patient_id')->sum('grand_total');
 
+        $pharmacy_income =  MedicineBilling::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->leftJoin('medicine_billing_details', 'medicine_billing_details.medicine_billing_id', '=', 'medicine_billings.id')->sum('total_amount');
 
+        // dd($pharmacy_income);
 
-        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'ipd_income'));
+        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'ipd_income', 'pathology_income', 'pharmacy_income'));
     }
 }

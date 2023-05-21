@@ -91,7 +91,7 @@ class IpdController extends Controller
         $RadiologyTestDetails = RadiologyPatientTest::where('case_id', $ipd_details->case_id)->get();
         // dd($RadiologyTestDetails);
 
-        return view('Ipd.ipd-profile', compact('paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails','PhysicalDetails'));
+        return view('Ipd.ipd-profile', compact('paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'PhysicalDetails'));
     }
 
     public function find_doctor_and_ward_by_department_in_opd(Request $request)
@@ -127,8 +127,8 @@ class IpdController extends Controller
         ]);
         // try {
         //     DB::beginTransaction();
-        $result =  Bed::where('id', $request->bed)->where('is_used','no')->first();
-        if($result == null){
+        $result =  Bed::where('id', $request->bed)->where('is_used', 'no')->first();
+        if ($result == null) {
             return redirect()->back()->with('success', 'Select Another Bed');
         }
         //SAVE in CASE reference
@@ -202,7 +202,7 @@ class IpdController extends Controller
 
         DB::commit();
         return redirect()->route('ipd-patient-listing')->with('success', 'Ipd Registation Sucessfully');
-        
+
         // } catch (\Throwable $th) {
         //     DB::rollback();
         //     return redirect()->back()->with('error', $th->getMessage());
@@ -234,12 +234,14 @@ class IpdController extends Controller
     public function edit_ipd_registration($ipd_id)
     {
         $ipd_id = base64_decode($ipd_id);
+        // dd($ipd_id);
         $tpa_management = TpaManagement::get();
         $referer = Referral::get();
         $departments = Department::where('is_active', '1')->get();
         $units = BedUnit::where('is_active', '1')->get();
         $visit_details = IpdDetails::where('id', '=', $ipd_id)->first();
         $patient_details = PatientBedHistory::where('ipd_id', $ipd_id)->latest()->first();
+        // dd($patient_details);
 
         return view('Ipd.edit-ipd-patient', compact('ipd_id', 'departments', 'referer', 'tpa_management', 'visit_details', 'units', 'patient_details'));
     }
@@ -333,7 +335,7 @@ class IpdController extends Controller
 
         $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
         // dd($ipd_details);
-        return view('Ipd.charges.charges-list', compact('ipd_id', 'ipd_details', 'ipd_charges_details','ipd_patient_details'));
+        return view('Ipd.charges.charges-list', compact('ipd_id', 'ipd_details', 'ipd_charges_details', 'ipd_patient_details'));
     }
     public function add_charges_ipd($id)
     {
@@ -341,7 +343,7 @@ class IpdController extends Controller
         $charge_category =  ChargesCatagory::all();
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
         $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
-        return view('Ipd.charges.add-charges', compact('ipd_id', 'charge_category', 'ipd_details','ipd_patient_details'));
+        return view('Ipd.charges.add-charges', compact('ipd_id', 'charge_category', 'ipd_details', 'ipd_patient_details'));
     }
     public function edit_charges_ipd($id, $charge_id)
     {
@@ -352,7 +354,7 @@ class IpdController extends Controller
         $patient_charge_details = PatientCharge::where('id', $chargeId)->first();
         $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
         //dd($patient_charge_details );
-        return view('Ipd.charges.edit-charges', compact('ipd_details', 'ipd_id', 'charge_category', 'patient_charge_details','ipd_patient_details'));
+        return view('Ipd.charges.edit-charges', compact('ipd_details', 'ipd_id', 'charge_category', 'patient_charge_details', 'ipd_patient_details'));
     }
     public function save_charges_ipd(Request $request)
     {
