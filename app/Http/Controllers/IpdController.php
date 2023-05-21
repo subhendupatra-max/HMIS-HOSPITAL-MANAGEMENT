@@ -67,7 +67,7 @@ class IpdController extends Controller
     public  function profile($id)
     {
         $ipd_id = base64_decode($id);
-        $PhysicalDetails  =  IpdPatientPhysicalDetail::where('ipd_id', $ipd_id)->orderBy('id','Desc')->first();
+        $PhysicalDetails  =  IpdPatientPhysicalDetail::where('ipd_id', $ipd_id)->orderBy('id', 'Desc')->first();
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
         $bed_history_details = PatientBedHistory::where('id', $ipd_id)->first();
         $departments = Department::where('is_active', '1')->get();
@@ -259,66 +259,66 @@ class IpdController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        $ipd_prefix = Prefix::where('name', 'ipd')->first();
+            $ipd_prefix = Prefix::where('name', 'ipd')->first();
 
-        //SAVE in ipd details
-        $ipd_details = IpdDetails::find($request->ipd_details_id);
-        $ipd_details->ipd_prefix                  = $ipd_prefix->prefix;
-        $ipd_details->patient_id                  = $request->patient_id;
-        $ipd_details->patient_source_id           = $request->patient_source_id;
-        $ipd_details->patient_source              = $request->patient_source;
-        $ipd_details->case_id                     = $request->case_id;
-        $ipd_details->appointment_date            = $request->appointment_date;
-        $ipd_details->credit_limit                = $request->credit_limit;
-        $ipd_details->bp                          = $request->bp;
-        $ipd_details->height                      = $request->height;
-        $ipd_details->weight                      = $request->weight;
-        $ipd_details->pulse                       = $request->pulse;
-        $ipd_details->temperature                 = $request->temperature;
-        $ipd_details->respiration                 = $request->respiration;
-        $ipd_details->known_allergies             = $request->any_known_allergies;
-        $ipd_details->symptoms_type               = $request->symptoms_type;
-        $ipd_details->symptoms                    = $request->symptoms_title;
-        $ipd_details->symptoms_description        = $request->symptoms_description;
-        $ipd_details->patient_type                = $request->patient_type;
-        $ipd_details->tpa_organization            = $request->tpa_organization;
-        $ipd_details->type_no                     = $request->type_no;
-        $ipd_details->note                        = $request->note;
-        $ipd_details->refference                  = $request->reference;
-        $ipd_details->cons_doctor                 = $request->cons_doctor;
-        $ipd_details->department_id               = $request->department;
-        $ipd_details->bed                         = $request->bed;
-        $ipd_details->bed_ward_id                 = $request->ward;
-        $ipd_details->bed_unit_id                 = $request->unit;
-        $ipd_details->generated_by                = Auth::user()->id;
-        $ipd_details->save();
-        //SAVE in ipd details
+            //SAVE in ipd details
+            $ipd_details = IpdDetails::find($request->ipd_details_id);
+            $ipd_details->ipd_prefix                  = $ipd_prefix->prefix;
+            $ipd_details->patient_id                  = $request->patient_id;
+            $ipd_details->patient_source_id           = $request->patient_source_id;
+            $ipd_details->patient_source              = $request->patient_source;
+            $ipd_details->case_id                     = $request->case_id;
+            $ipd_details->appointment_date            = $request->appointment_date;
+            $ipd_details->credit_limit                = $request->credit_limit;
+            $ipd_details->bp                          = $request->bp;
+            $ipd_details->height                      = $request->height;
+            $ipd_details->weight                      = $request->weight;
+            $ipd_details->pulse                       = $request->pulse;
+            $ipd_details->temperature                 = $request->temperature;
+            $ipd_details->respiration                 = $request->respiration;
+            $ipd_details->known_allergies             = $request->any_known_allergies;
+            $ipd_details->symptoms_type               = $request->symptoms_type;
+            $ipd_details->symptoms                    = $request->symptoms_title;
+            $ipd_details->symptoms_description        = $request->symptoms_description;
+            $ipd_details->patient_type                = $request->patient_type;
+            $ipd_details->tpa_organization            = $request->tpa_organization;
+            $ipd_details->type_no                     = $request->type_no;
+            $ipd_details->note                        = $request->note;
+            $ipd_details->refference                  = $request->reference;
+            $ipd_details->cons_doctor                 = $request->cons_doctor;
+            $ipd_details->department_id               = $request->department;
+            $ipd_details->bed                         = $request->bed;
+            $ipd_details->bed_ward_id                 = $request->ward;
+            $ipd_details->bed_unit_id                 = $request->unit;
+            $ipd_details->generated_by                = Auth::user()->id;
+            $ipd_details->save();
+            //SAVE in ipd details
 
 
-        //bed status update in bed table
-        Bed::where('id', $request->bed)->update(['is_used' => 'yes']);
-        //bed status update in bed table
-        // dd($request->patient_bed_history_id);
-        //bed history update in bed table
-        $patient_bed_history = PatientBedHistory::find($request->patient_bed_history_id);
-        $patient_bed_history->patient_id = $request->patient_id;
-        $patient_bed_history->case_id = $request->case_id;
-        $patient_bed_history->ipd_id = $ipd_details->id;
-        $patient_bed_history->department_id = $request->department;
-        $patient_bed_history->bed_ward_id = $request->ward;
-        $patient_bed_history->bed_unit_id = $request->unit;
-        $patient_bed_history->bed_id = $request->bed;
-        $patient_bed_history->from_date = $request->appointment_date;
-        $patient_bed_history->save();
-        //bed history update in bed table
+            //bed status update in bed table
+            Bed::where('id', $request->bed)->update(['is_used' => 'yes']);
+            //bed status update in bed table
+            // dd($request->patient_bed_history_id);
+            //bed history update in bed table
+            $patient_bed_history = PatientBedHistory::find($request->patient_bed_history_id);
+            $patient_bed_history->patient_id = $request->patient_id;
+            $patient_bed_history->case_id = $request->case_id;
+            $patient_bed_history->ipd_id = $ipd_details->id;
+            $patient_bed_history->department_id = $request->department;
+            $patient_bed_history->bed_ward_id = $request->ward;
+            $patient_bed_history->bed_unit_id = $request->unit;
+            $patient_bed_history->bed_id = $request->bed;
+            $patient_bed_history->from_date = $request->appointment_date;
+            $patient_bed_history->save();
+            //bed history update in bed table
 
-        DB::commit();
-        if ($request->save == 'save_and_print') {
-            $pdf = PDF::loadView('OPD._print.opd_prescription');
-            return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
-        } else {
-            return redirect()->route('ipd-patient-listing')->with('success', 'Ipd Patient Details Updated Sucessfully');
-        }
+            DB::commit();
+            if ($request->save == 'save_and_print') {
+                $pdf = PDF::loadView('OPD._print.opd_prescription');
+                return $pdf->stream('opd_prescription.pdf', array('Attachment' => 0));
+            } else {
+                return redirect()->route('ipd-patient-listing')->with('success', 'Ipd Patient Details Updated Sucessfully');
+            }
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->back()->with('error', $th->getMessage());
@@ -363,71 +363,71 @@ class IpdController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        foreach ($request->charge_name as $key => $value) {
-            $patient_charge = new PatientCharge();
-            $patient_charge->case_id = $request->case_id;
-            $patient_charge->section = $request->section;
-            $patient_charge->charges_date = $request->date;
-            $patient_charge->ipd_id = $request->ipd_id;
-            $patient_charge->patient_id = $request->patient_id;
-            $patient_charge->charge_set = $request->charge_set[$key];
-            $patient_charge->charge_type = $request->charge_type[$key];
-            $patient_charge->charge_category = $request->charge_category[$key];
-            $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
-            $patient_charge->charge_name = $request->charge_name[$key];
-            $patient_charge->standard_charges = $request->standard_charges[$key];
-            $patient_charge->tax = $request->tax[$key];
-            $patient_charge->qty = $request->qty[$key];
-            $patient_charge->amount = $request->amount[$key];
-            $patient_charge->generated_by = Auth::user()->id;
-            $patient_charge->billing_status = '0';
-            $patient_charge->save();
+            foreach ($request->charge_name as $key => $value) {
+                $patient_charge = new PatientCharge();
+                $patient_charge->case_id = $request->case_id;
+                $patient_charge->section = $request->section;
+                $patient_charge->charges_date = $request->date;
+                $patient_charge->ipd_id = $request->ipd_id;
+                $patient_charge->patient_id = $request->patient_id;
+                $patient_charge->charge_set = $request->charge_set[$key];
+                $patient_charge->charge_type = $request->charge_type[$key];
+                $patient_charge->charge_category = $request->charge_category[$key];
+                $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
+                $patient_charge->charge_name = $request->charge_name[$key];
+                $patient_charge->standard_charges = $request->standard_charges[$key];
+                $patient_charge->tax = $request->tax[$key];
+                $patient_charge->qty = $request->qty[$key];
+                $patient_charge->amount = $request->amount[$key];
+                $patient_charge->generated_by = Auth::user()->id;
+                $patient_charge->billing_status = '0';
+                $patient_charge->save();
 
-            if ($request->charge_category[$key] == '1') {
-                $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
-                $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
+                if ($request->charge_category[$key] == '1') {
+                    $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
+                    $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
 
-                if ($chargedetailstestp == null) {
-                    $pathology_patient_test = new PathologyPatientTest();
-                    $pathology_patient_test->case_id = $request->case_id;
-                    $pathology_patient_test->date = $request->date;
-                    $pathology_patient_test->section = 'IPD';
-                    $pathology_patient_test->patient_id = $request->patient_id;
-                    $pathology_patient_test->test_id =  $charge_detp->id;
-                    $pathology_patient_test->ipd_id = $request->ipd_id;
-                    $pathology_patient_test->generated_by = Auth::user()->id;
-                    $pathology_patient_test->billing_status = '2';
-                    $pathology_patient_test->test_status = '0';
-                    $pathology_patient_test->save();
-                } else {
-                    $chargedetailstestp->billing_status = '2';
-                    $chargedetailstestp->save();
+                    if ($chargedetailstestp == null) {
+                        $pathology_patient_test = new PathologyPatientTest();
+                        $pathology_patient_test->case_id = $request->case_id;
+                        $pathology_patient_test->date = $request->date;
+                        $pathology_patient_test->section = 'IPD';
+                        $pathology_patient_test->patient_id = $request->patient_id;
+                        $pathology_patient_test->test_id =  $charge_detp->id;
+                        $pathology_patient_test->ipd_id = $request->ipd_id;
+                        $pathology_patient_test->generated_by = Auth::user()->id;
+                        $pathology_patient_test->billing_status = '2';
+                        $pathology_patient_test->test_status = '0';
+                        $pathology_patient_test->save();
+                    } else {
+                        $chargedetailstestp->billing_status = '2';
+                        $chargedetailstestp->save();
+                    }
+                }
+                if ($request->charge_category[$key] == '2') {
+                    $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
+                    $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
+
+                    if ($chargedetailstestr == null) {
+                        $radiology_patient_test = new RadiologyPatientTest();
+                        $radiology_patient_test->case_id = $request->case_id;
+                        $radiology_patient_test->date = $request->date;
+                        $radiology_patient_test->section = 'IPD';
+                        $radiology_patient_test->patient_id = $request->patient_id;
+                        $radiology_patient_test->test_id = $charge_detr->id;
+                        $radiology_patient_test->ipd_id = $request->ipd_id;
+                        $radiology_patient_test->generated_by = Auth::user()->id;
+                        $radiology_patient_test->billing_status = '2';
+                        $radiology_patient_test->test_status = '0';
+                        $radiology_patient_test->save();
+                    } else {
+                        $chargedetailstestr->billing_status = '2';
+                        $chargedetailstestr->save();
+                    }
                 }
             }
-            if ($request->charge_category[$key] == '2') {
-                $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
-                $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
-
-                if ($chargedetailstestr == null) {
-                    $radiology_patient_test = new RadiologyPatientTest();
-                    $radiology_patient_test->case_id = $request->case_id;
-                    $radiology_patient_test->date = $request->date;
-                    $radiology_patient_test->section = 'IPD';
-                    $radiology_patient_test->patient_id = $request->patient_id;
-                    $radiology_patient_test->test_id = $charge_detr->id;
-                    $radiology_patient_test->ipd_id = $request->ipd_id;
-                    $radiology_patient_test->generated_by = Auth::user()->id;
-                    $radiology_patient_test->billing_status = '2';
-                    $radiology_patient_test->test_status = '0';
-                    $radiology_patient_test->save();
-                } else {
-                    $chargedetailstestr->billing_status = '2';
-                    $chargedetailstestr->save();
-                }
-            }
-        }
-        DB::commit();
-        return redirect()->route('charges-list-ipd', ['id' => base64_encode($request->ipd_id)])->with('success', "Charges Added Successfully");
+            DB::commit();
+            return redirect()->route('charges-list-ipd', ['id' => base64_encode($request->ipd_id)])->with('success', "Charges Added Successfully");
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);
@@ -453,30 +453,30 @@ class IpdController extends Controller
     public function update_status(Request $request)
     {
         try {
-        DB::beginTransaction();
+            DB::beginTransaction();
 
-       $ipd_details =  IpdDetails::find($request->ipd_id);
-       $ipd_details->discharged_planed_date = $request->date;
-       $ipd_details->status = $request->status;
-       $ipd_details->save();
-       DB::commit();
-       return redirect()->back()->with('success', "Status Changed Successfully");
-       } catch (\Throwable $th) {
-           DB::rollback();
-           return back()->withErrors(['error' => $th->getMessage()]);
-       }
+            $ipd_details =  IpdDetails::find($request->ipd_id);
+            $ipd_details->discharged_planed_date = $request->date;
+            $ipd_details->status = $request->status;
+            $ipd_details->save();
+            DB::commit();
+            return redirect()->back()->with('success', "Status Changed Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
     public function ipd_patient_delete($ipd_id)
     {
         try {
-        DB::beginTransaction();
-        $ipdid = base64_decode($ipd_id);
-        $ipd_details =  IpdDetails::find($ipdid);
-        PatientBedHistory::where('ipd_id',$ipdid)->delete();
-        Bed::where('id', $ipd_details->bed)->update(['is_used' => 'no']);
-        $ipd_details->delete();
-        DB::commit();
-        return redirect()->back()->with('success', "IPD Patient Deleted Successfully");
+            DB::beginTransaction();
+            $ipdid = base64_decode($ipd_id);
+            $ipd_details =  IpdDetails::find($ipdid);
+            PatientBedHistory::where('ipd_id', $ipdid)->delete();
+            Bed::where('id', $ipd_details->bed)->update(['is_used' => 'no']);
+            $ipd_details->delete();
+            DB::commit();
+            return redirect()->back()->with('success', "IPD Patient Deleted Successfully");
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);
