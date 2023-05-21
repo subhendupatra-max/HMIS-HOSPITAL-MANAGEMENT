@@ -42,7 +42,7 @@
                             <tr>
 
                                 <td><a href="<?php echo e(route('patient-details-profile', base64_encode($all_patients->id))); ?>"
-                                        class="textlink"><?php echo e($all_patients->patient_prefix); ?><?php echo e($all_patients->id); ?></a>
+                                        class="textlink"><?php echo e($all_patients->id); ?></a>
                                 </td>
                                 <td><?php echo e($all_patients->prefix); ?> <?php echo e($all_patients->first_name); ?>
 
@@ -102,7 +102,7 @@
             </div>
         </div>
     </div>
-
+</div>
 
     <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/setup/patient/patient_list.blade.php ENDPATH**/ ?>

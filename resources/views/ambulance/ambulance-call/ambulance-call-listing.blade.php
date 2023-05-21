@@ -21,10 +21,12 @@
             </div>
         </div>
 
+        @include('message.notification')
+
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
-                    <table id="example" class="table table-bordered text-nowrap key-buttons">
+                    <table class="table table-bordered text-nowrap" id="example">
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
@@ -32,7 +34,7 @@
                                 <th class="border-bottom-0">Driver Name</th>
                                 <th class="border-bottom-0">Charges Catagory </th>
                                 <th class="border-bottom-0">Charges Sub Catagory</th>
-                         
+
                                 <th class="border-bottom-0">Total Amount</th>
 
                                 @can('edit ambulance call','delete ambulance call')
@@ -40,6 +42,7 @@
                                 @endcan
                             </tr>
                         </thead>
+
                         <tbody>
                             @foreach ($ambulanceCall as $item)
                             <tr>
@@ -65,6 +68,7 @@
                                 </td>
                             </tr>
                             @endforeach
+
                         </tbody>
                     </table>
 
@@ -72,6 +76,6 @@
             </div>
         </div>
     </div>
+</div>
 
-
-    @endsection
+@endsection

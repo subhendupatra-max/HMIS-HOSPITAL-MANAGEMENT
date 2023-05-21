@@ -15,8 +15,7 @@ $login_details = DB::table('users')
     <!-- Jquery cdn -->
     {{-- <script src="https://code.jquery.com/jquery-3.6.3.js"
         integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> --}}
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
     <!-- Meta data -->
     <meta charset="UTF-8">
@@ -25,8 +24,7 @@ $login_details = DB::table('users')
     <title>{{ @$general_details->software_name }}</title>
 
     <!--Favicon -->
-    <link rel="icon" href="{{ asset('public/assets/images/brand') }}/{{ @$general_details->small_logo }}"
-        type="image/x-icon" />
+    <link rel="icon" href="{{ asset('public/assets/images/brand') }}/{{ @$general_details->small_logo }}" type="image/x-icon" />
 
     <!--Bootstrap css -->
     <link href="{{ asset('public/assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -68,9 +66,7 @@ $login_details = DB::table('users')
     <!-- Switcher css -->
     <link rel="stylesheet" href="{{ asset('public/assets/switcher/css/switcher.css') }}">
     <link rel="stylesheet" href="{{ asset('public/assets/switcher/demo.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-        integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
@@ -83,21 +79,18 @@ $login_details = DB::table('users')
     <div class="new-page">
         <nav class="navbar navbar-expand-lg navbar-light ">
             <a class="navbar-brand" href="{{ route('dashboard') }}"><img src="{{ asset('public/assets/images/brand/dashlogo.png') }}"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     @if (auth()->user()->can('Human Resource'))
                     <li class="nav-item dropdown {{ Request::segment(1) == 'Human-Resource' ? 'active' : '' }}">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="icon-new"><img
-                                    src="{{ asset('public/assets/images/brand/investigation.png') }}"></div> HR
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="icon-new"><img src="{{ asset('public/assets/images/brand/investigation.png') }}"></div> HR
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                             @if (auth()->user()->can('User List'))
+                            @if (auth()->user()->can('User List'))
                             <a class="dropdown-item" href="{{ route('user-list') }}">User List</a>
                             @endif
                             @if (auth()->user()->can('User Add'))
@@ -109,8 +102,7 @@ $login_details = DB::table('users')
                     @if (auth()->user()->can('Patient Master'))
                     <li class="nav-item {{ Request::segment(1) == 'Patient' ? 'nav-active' : '' }}">
                         <a class="nav-link" href="{{ route('patient_details') }}">
-                            <div class="icon-new"> <img
-                                    src="{{ asset('public/assets/images/brand/hospitalisation.png') }}"></div>Patient
+                            <div class="icon-new"> <img src="{{ asset('public/assets/images/brand/hospitalisation.png') }}"></div>Patient
                         </a>
                     </li>
                     @endif
@@ -155,16 +147,13 @@ $login_details = DB::table('users')
                     @if (auth()->user()->can('pharmacy main'))
                     <li class="nav-item {{ Request::segment(1) == 'pharmacy' ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('pharmacy-bill-listing') }}">
-                            <div class="icon-new"><img
-                                    src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>Pharmacy
+                            <div class="icon-new"><img src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>Pharmacy
                         </a>
                     </li>
                     @endif
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <div class="icon-new"><img
-                                    src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="icon-new"><img src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>
                             Investigation
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -179,286 +168,415 @@ $login_details = DB::table('users')
 
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <div class="icon-new"><img
-                                    src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}"></div>Bed
+                            <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}"></div>Bed
                         </a>
                     </li>
                     {{-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <div class="icon-new"><img src="{{ asset('public/assets/images/brand/settings.png') }}">
-                            </div> Set up
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">General Setting</a></li>
-                            <li><a class="dropdown-item" href="#">Inventory</a></li>
-                            <li><a class="dropdown-item" href="#">Pharmacy</a></li>
-                            <li><a class="dropdown-item" href="#">Finding</a></li>
-                            <li><a class="dropdown-item" href="#">All Header</a></li>
-                            <li><a class="dropdown-item" href="#">Operation</a></li>
-                            <li><a class="dropdown-item" href="#">Opd</a></li>
-                            <li><a class="dropdown-item" href="#">Emg</a></li>
-                            <li><a class="dropdown-item" href="#">Pathology</a></li>
-                            <li><a class="dropdown-item" href="#">Radiology</a></li>
-                            <li><a class="dropdown-item" href="#">Blood Bank</a></li>
-                            <li><a class="dropdown-item" href="#">Appointment</a></li>
-                            <li><a class="dropdown-item" href="#">Department</a></li>
-                            <li><a class="dropdown-item" href="#">Bed Details</a></li>
-                            <li><a class="dropdown-item" href="#">Symptoms</a></li>
-                        </ul>
-                    </li> --}}
-                    <div class=" menu-item">
-                        <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
-                        <li class="dropdown">
+            </div> Set up
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <li><a class="dropdown-item" href="{{ route('general_setting_details') }}">General Setting</a></li>
+                <li><a class="dropdown-item" href="#">Inventory</a></li>
+                <li><a class="dropdown-item" href="#">Pharmacy</a></li>
+                <li><a class="dropdown-item" href="#">Finding</a></li>
+                <li><a class="dropdown-item" href="#">All Header</a></li>
+                <li><a class="dropdown-item" href="#">Operation</a></li>
+                <li><a class="dropdown-item" href="#">Opd</a></li>
+                <li><a class="dropdown-item" href="#">Emg</a></li>
+                <li><a class="dropdown-item" href="#">Pathology</a></li>
+                <li><a class="dropdown-item" href="#">Radiology</a></li>
+                <li><a class="dropdown-item" href="#">Blood Bank</a></li>
+                <li><a class="dropdown-item" href="#">Appointment</a></li>
+                <li><a class="dropdown-item" href="#">Department</a></li>
+                <li><a class="dropdown-item" href="#">Bed Details</a></li>
+                <li><a class="dropdown-item" href="#">Symptoms</a></li>
+            </ul>
+            </li> --}}
+            <div class=" menu-item">
+                <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
+                <li class="dropdown">
 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                aria-expanded="false"> Setup <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">General Settings</a></li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Charges <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Setup <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        @if (auth()->user()->can('General Setting'))
+                        <li><a href="{{ route('general_setting_details') }}">General Settings</a></li>
+                        @endif
 
-                                        <li><a href="#">Charges</a>
-
-                                        </li>
-                                        <li><a href="#">Charges Catagory</a></li>
-                                        <li><a href="#">Charges sub catagory</a></li>
-                                        <li><a href="#">Charges Unit</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Font Office <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="#">Purpose</a></li>
-                                        <li><a href="#">Charge</a></li>
-                                        <li><a href="#">Charges sub catagory</a></li>
-                                        <li><a href="#">Charges Unit</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Charges Package <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="#">package name</a></li>
-                                        <li><a href="#">package catagory</a></li>
-                                        <li><a href="#">package sub catagory</a></li>
-
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Setup Inventory <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="#">Inventory Item</a></li>
-                                        <li><a href="#">Inventory Item Catagory</a></li>
-                                        <li><a href="#">Inventory Item Unit</a></li>
-                                        <li><a href="#">Inventory Item Brand</a></li>
-                                        <li><a href="#">Inventory Item Manufacture</a></li>
-                                        <li><a href="#">Inventory Item Type</a></li>
-                                        <li><a href="#">Inventory Store Room</a></li>
-                                        <li><a href="#">Inventory Item Attribute</a></li>
-                                        <li><a href="#">Inventory Vendor</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#"> Pharmacy<i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="#">medicine storeroom</a></li>
-                                        <li><a href="#">medicine store</a></li>
-                                        <li><a href="#">medicine rack</a></li>
-                                        <li><a href="#">medicine supplier</a></li>
-                                        <li><a href="#">medicine dosage</a></li>
-                                        <li><a href="#">medicine unit</a></li>
-                                        <li><a href="#">dose interval</a></li>
-                                        <li><a href="#">dose duration</a></li>
-                                        <li><a href="#">medicine vendor</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Finding<i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="#">Finding</a></li>
-                                        <li><a href="#">finding category</a></li>
-
-                                    </ul>
-                                </li>
-
-                                <li><a href="#">All Header</a></li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Operation <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="#">operation-details</a></li>
-                                        <li><a href="#">operation-catagory-details</a></li>
-                                        <li><a href="#">operation-type-details</a></li>
-
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Opd <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="#">opd-unit-details</a></li>
-                                        <li><a href="#">opd-setup-details</a></li>
-                                        <li><a href="#">opd-ticket-fees-details</a></li>
-
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Emg setUp <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Emg setUp</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">pathology <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-
-                                        <li><a href="#">pathology catagory</a></li>
-                                        <li><a href="#">pathology unit</a></li>
-                                        <li><a href="#">pathology parameter</a></li>
-
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">radiology <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">radiology catagory</a></li>
-                                        <li><a href="#">radiology unit</a></li>
-                                        <li><a href="#">radiology parameter</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">blood bank <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">blood bank product</a></li>
-                                        <li><a href="#">Blood unit type</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">appointment <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">shift-details</a></li>
-                                        <li><a href="#">slots-details</a></li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">symptoms <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">symptoms head</a></li>
-                                        <li><a href="#">symptoms type</a></li>
-                                    </ul>
-                                </li>
-
-                                <li><a href="#">Department</a></li>
-                                <li><a href="#">tpa management</a></li>
-                                <li><a href="#">diagonasis</a></li>
-                                <li><a href="#">prefix</a></li>
-                                <li class="dropdown-submenu">
-                                    <a tabindex="-1" href="#">Bed <i class="fa fa-chevron-right"></i></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">bed</a></li>
-                                        <li><a href="#">bed type</a></li>
-                                        <li><a href="#">bedUnit</a></li>
-                                        <li><a href="#">bedgroup</a></li>
-                                        <li><a href="#">ward</a></li>
-                                        <li><a href="#">floor</a></li>
-                                    </ul>
-                                </li>
+                        @if (auth()->user()->can('Charges Master'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Charges <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('charges')
+                                <li><a href="{{ route('charges-details') }}">Charges</a></li>
+                                @endcan
+                                @can('charges catagory')
+                                <li><a href="{{ route('charges-catagory-details') }}">Charges Catagory</a></li>
+                                @endcan
+                                @can('charges sub catagory')
+                                <li><a href="{{ route('charges-sub-catagory-details') }}">Charges sub catagory</a></li>
+                                @endcan
+                                @can('charges unit')
+                                <li><a href="{{ route('charges-unit-details') }}">Charges Unit</a></li>
+                                @endcan
                             </ul>
                         </li>
-                    </div>
+                        @endif
+                        @if (auth()->user()->can('front office'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Front Office <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('purpose')
+                                <li><a href="{{ route('add-purpose-in-front-office') }}">Purpose</a></li>
+                                @endcan
+                                @can('complain type')
+                                <li><a href="{{ route('add-complain-type-in-front-office') }}">Complain Type</a></li>
+                                @endcan
+                                @can('source')
+                                <li><a href="{{ route('add-source-in-front-office') }}">Source</a></li>
+                                @endcan
+                                @can('appointment priority')
+                                <li><a href="{{ route('add-appointment-priority-in-front-office') }}">Appointment Priority</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('charges package'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Charges Package <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('package name')
+                                <li><a href="{{ route('charges-package-name-details') }}">package name</a></li>
+                                @endcan
+                                @can('package catagory')
+                                <li><a href="{{ route('charges-package-catagory-details') }}">package catagory</a></li>
+                                @endcan
+                                @can('package sub catagory')
+                                <li><a href="{{ route('charges-package-sub-catagory-details') }}">package sub catagory</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (2).png') }}">
-                            </div> Others
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            @if (auth()->user()->can('Inventory'))
-                            <li><a class="dropdown-item" href="#">Inventory</a></li>
+                        @if (auth()->user()->can('Setup Inventory'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Setup Inventory <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('Inventory Item')
+                                <li><a href="{{ route('inventory-item-list') }}">Inventory Item</a></li>
+                                @endcan
+                                @can('Inventory Item Catagory')
+                                <li><a href="{{ route('add-inventory-item-catagory') }}">Inventory Item Catagory</a></li>
+                                @endcan
+                                @can('Inventory Item Unit')
+                                <li><a href="{{ route('add-inventory-item-unit') }}">Inventory Item Unit</a></li>
+                                @endcan
+                                @can('Inventory Item Brand')
+                                <li><a href="{{ route('add-inventory-item-brand') }}">Inventory Item Brand</a></li>
+                                @endcan
+                                @can('Inventory Item Manufacture')
+                                <li><a href="{{ route('add-inventory-manufacture') }}">Inventory Item Manufacture</a></li>
+                                @endcan
+                                @can('Inventory Item Type')
+                                <li><a href="{{ route('add-inventory-item-type') }}">Inventory Item Type</a></li>
+                                @endcan
+                                @can('Inventory Store Room')
+                                <li><a href="{{ route('add-inventory-item-store-room') }}">Inventory Store Room</a></li>
+                                @endcan
+                                @can('Inventory Item Attribute')
+                                <li><a href="{{ route('inventory-item-attribute') }}">Inventory Item Attribute</a></li>
+                                @endcan
+                                @can('Inventory Vendor')
+                                <li><a href="{{ route('inventory-vendor') }}">Inventory Vendor</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('setup pharmacy'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#"> Pharmacy<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('medicine storeroom')
+                                <li><a href="{{ route('medicine-store-room-details') }}">medicine storeroom</a></li>
+                                @endcan
+                                @can('medicine store')
+                                <li><a href="{{ route('medicine-store-details') }}">medicine store</a></li>
+                                @endcan
+                                @can('medicine rack')
+                                <li><a href="{{ route('medicine-rack-details') }}">medicine rack</a></li>
+                                @endcan
+                                @can('medicine supplier')
+                                <li><a href="{{ route('medicine-supplier-details') }}">medicine supplier</a></li>
+                                @endcan
+                                @can('medicine dosage')
+                                <li><a href="{{ route('medicine-dosage-details') }}">medicine dosage</a></li>
+                                @endcan
+                                @can('medicine unit')
+                                <li><a href="{{ route('medicine-unit-details') }}">medicine unit</a></li>
+                                @endcan
+                                @can('dose interval')
+                                <li><a href="{{ route('dose-interval-details') }}">dose interval</a></li>
+                                @endcan
+                                @can('dose duration')
+                                <li><a href="{{ route('dose-duration-details') }}">dose duration</a></li>
+                                @endcan
+                                @can('medicine vendor')
+                                <li><a href="{{ route('medicine-vendor-details') }}">medicine vendor</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('Finding'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Finding<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('Finding')
+                                <li><a href="{{ route('finding') }}">Finding</a></li>
+                                @endcan
+                                @can('finding category')
+                                <li><a href="{{ route('finding-category-add') }}">finding category</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('All Header'))
+                        <li><a href="{{ route('all-header-listing') }}">All Header</a></li>
+                        @endif
+                        @if (auth()->user()->can('Master Operation'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Operation <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="{{ route('operation-details') }}">operation-details</a></li>
+                                <li><a href="{{ route('operation-catagory-details') }}">operation-catagory-details</a></li>
+                                @can('operation type')
+                                <li><a href="{{ route('operation-type-details') }}">operation-type-details</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('Opd'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Opd <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('opd unit')
+                                <li><a href="{{ route('opd-unit-details') }}">opd-unit-details</a></li>
+                                @endcan
+                                @can('opd setup')
+                                <li><a href="{{ route('opd-setup-details') }}">opd-setup-details</a></li>
+                                @endcan
+                                @can('opd ticket fees')
+                                <li><a href="{{ route('opd-ticket-fees-details') }}">opd-ticket-fees-details</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('Emg setUp'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Emg setUp <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Emg setUp</a></li>
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('pathology'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">pathology <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('pathology catagory')
+                                <li><a href="{{ route('pathology-catagory-details') }}">pathology catagory</a></li>
+                                @endcan
+                                @can('pathology unit')
+                                <li><a href="{{ route('pathology-unit-details') }}">pathology unit</a></li>
+                                @endcan
+                                @can('pathology parameter')
+                                <li><a href="{{ route('pathology-parameter-details') }}">pathology parameter</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('radiology'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">radiology <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('radiology catagory')
+                                <li><a href="{{ route('radiology-catagory-details') }}">radiology catagory</a></li>
+                                @endcan
+                                @can('radiology unit')
+                                <li><a href="{{ route('radiology-unit-details') }}">radiology unit</a></li>
+                                @endcan
+                                @can('radiology parameter')
+                                <li><a href="{{ route('radiology-parameter-details') }}">radiology parameter</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+
+                        @if (auth()->user()->can('blood bank'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Blood bank <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('blood bank product')
+                                <li><a href="{{ route('blood-bank-product-details') }}">blood bank product</a></li>
+                                @endcan
+                                @can('Blood unit type')
+                                <li><a href="{{ route('add-blood-unit-type') }}">Blood unit type</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('appointment'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Appointment <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('shift')
+                                <li><a href="{{ route('shift-details') }}">shift-details</a></li>
+                                @endcan
+                                @can('slots')
+                                <li><a href="{{ route('slots-details') }}">slots-details</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('symptoms'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">symptoms <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('symptoms head')
+                                <li><a href="{{ route('symptoms-head-details') }}">symptoms head</a></li>
+                                @endcan
+                                @can('symptoms type')
+                                <li><a href="{{ route('symptoms-type-details') }}">symptoms type</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                        @if (auth()->user()->can('Department'))
+                        <li><a href="{{ route('department-details') }}">Department</a></li>
+                        @endif
+                        @if (auth()->user()->can('tpa management'))
+                        <li><a href="{{ route('tpa-management-details') }}">tpa management</a></li>
+                        @endif
+                        @if (auth()->user()->can('diagonasis'))
+                        <li><a href="{{ route('diagonasis-details') }}">diagonasis</a></li>
+                        @endif
+                        @if (auth()->user()->can('prefix'))
+                        <li><a href="{{ route('prefixList') }}">prefix</a></li>
+                        @endif
+                        @if (auth()->user()->can('Bed Master'))
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Bed <i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @can('bed')
+                                <li><a href="{{ route('bed-details') }}">bed</a></li>
+                                @endcan
+                                @can('bed type')
+                                <li><a href="{{ route('bed-type-details') }}">bed type</a></li>
+                                @endcan
+                                @can('bedUnit')
+                                <li><a href="{{ route('bed-unit-details') }}">bedUnit</a></li>
+                                @endcan
+                                @can('bedgroup')
+                                <li><a href="{{ route('bedgroup-details') }}">bedgroup</a></li>
+                                @endcan
+                                @can('ward')
+                                <li><a href="{{ route('ward-details') }}">ward</a></li>
+                                @endcan
+                                @can('floor')
+                                <li><a href="{{ route('floor-details') }}">floor</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endif
+                    </ul>
+                </li>
+            </div>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (2).png') }}">
+                    </div> Others
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    @if (auth()->user()->can('Inventory'))
+                    <li><a class="dropdown-item" href="{{ route('item-stock-listing') }}">Inventory</a></li>
+                    @endif
+                    @if (auth()->user()->can('Birth and Death Record'))
+                    <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">Birth & Death <i class="fa fa-chevron-right"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Birth Record</a></li>
+                            <li><a href="#">Death Record</a></li>
+                        </ul>
+                    </li>
+                    @endif
+
+                    @if (auth()->user()->can('False Generation'))
+                    <li class="dropdown-submenu  {{ Request::segment(1) == 'false-patient' ? 'nav-active' : '' }}">
+                        <a tabindex="-1" href="#">False Generation <i class="fa fa-chevron-right"></i></a>
+                        <ul class="dropdown-menu">
+                            @if (auth()->user()->can('OPD False'))
+                            <li><a href="{{ route('opd-false-generation') }}" class="{{ Request::segment(2) == 'opd-false' ? 'active' : '' }}"> OPD</a></li>
                             @endif
-                            @if (auth()->user()->can('Birth and Death Record'))
-                            <li class="dropdown-submenu">
-                                <a tabindex="-1" href="#">Birth & Death <i class="fa fa-chevron-right"></i></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Birth Record</a></li>
-                                    <li><a href="#">Death Record</a></li>
-                                </ul>
-                            </li>
+                            @if (auth()->user()->can('EMG False'))
+                            <li><a href="{{ route('emg-false-generation') }}" class="{{ Request::segment(2) == 'emg-false' ? 'active' : '' }}"> EMG</a></li>
                             @endif
-                           
-                            @if (auth()->user()->can('False Generation'))
-                            <li class="dropdown-submenu  {{ Request::segment(1) == 'false-patient' ? 'nav-active' : '' }}">
-                                <a tabindex="-1" href="#">False Generation <i class="fa fa-chevron-right"></i></a>
-                                <ul class="dropdown-menu">
-                                    @if (auth()->user()->can('OPD False'))
-                                    <li><a href="{{ route('opd-false-generation') }}" class="{{ Request::segment(2) == 'opd-false' ? 'active' : '' }}"> OPD</a></li>
-                                    @endif
-                                    @if (auth()->user()->can('EMG False'))
-                                    <li><a href="{{ route('emg-false-generation') }}" class="{{ Request::segment(2) == 'emg-false' ? 'active' : '' }}"> EMG</a></li>
-                                    @endif
-                                    @if (auth()->user()->can('IPD False'))
-                                    <li><a href="{{ route('ipd-false-generation') }}" class="{{ Request::segment(2) == 'ipd-false' ? 'active' : '' }}"> IPD</a></li>
-                                    @endif
-                                </ul>
-                            </li>
-                            @endif
-                            <li><a class="dropdown-item" href="{{ route('referral') }}">Referral</a></li>
-                            @if (auth()->user()->can('ambulance'))
-                            <li><a class="dropdown-item" href="{{ route('ambulance-call-details') }}">Ambulance</a></li>
-                            @endif
-                            @if (auth()->user()->can('front office'))
-                            <li><a class="dropdown-item" href="{{ route('all-visit-details') }}">Font Office</a></li>
-                            @endif
-                            @if (auth()->user()->can('Blood Bank'))
-                            <li><a class="dropdown-item" href="{{ route('all-blood-details') }}">Blood Bank</a></li>
+                            @if (auth()->user()->can('IPD False'))
+                            <li><a href="{{ route('ipd-false-generation') }}" class="{{ Request::segment(2) == 'ipd-false' ? 'active' : '' }}"> IPD</a></li>
                             @endif
                         </ul>
                     </li>
+                    @endif
+                    <li><a class="dropdown-item" href="{{ route('referral') }}">Referral</a></li>
+                    @if (auth()->user()->can('ambulance'))
+                    <li><a class="dropdown-item" href="{{ route('ambulance-call-details') }}">Ambulance</a></li>
+                    @endif
+                    @if (auth()->user()->can('front office'))
+                    <li><a class="dropdown-item" href="{{ route('all-visit-details') }}">Font Office</a></li>
+                    @endif
+                    @if (auth()->user()->can('Blood Bank'))
+                    <li><a class="dropdown-item" href="{{ route('all-blood-details') }}">Blood Bank</a></li>
+                    @endif
                 </ul>
-                </li>
-                </ul>
-                </li>
-                </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
+            </li>
+            </ul>
 
+    </div>
+
+    {{-- <form class="form-inline my-2 my-lg-0"> --}}
+    <div class="popup-link">
+        <a href="#popup1">
+            <div class="dashprofileimg"><img src="{{ asset('public/profile_picture') }}/{{ $login_details->profile_image }}"></div>
+    </div>
+    <div id="popup1" class="popup-container">
+        <div class="popup-content">
+            <a href="#" class="close">&times;</a>
+            <h3> <img src="{{ asset('public/profile_picture') }}/{{ $login_details->profile_image }}" style="width: 40px;height:40px">Name</h3>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+        </div>
+    </div>
+    <div class="dash-bellicon">
+        <div class="bell">
+            <div class="popup-link">
+                <a href="#popup1notification">
+                    <div class="dashprofileimg"> <img src="{{ asset('public/assets/images/brand/bell.png') }}"></div>
             </div>
-
-            {{-- <form class="form-inline my-2 my-lg-0"> --}}
-                <div class="popup-link">
-                    <a href="#popup1">
-                        <div class="dashprofileimg"><img src="{{ asset('public/profile_picture') }}/{{ $login_details->profile_image }}"></div>
+            <div id="popup1notification" class="popup-container">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3> <img src="{{ asset('public/assets/images/brand/user.png') }}">Name</h3>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
                 </div>
-                <div id="popup1" class="popup-container">
-                    <div class="popup-content">
-                        <a href="#" class="close">&times;</a>
-                        <h3> <img src="{{ asset('public/profile_picture') }}/{{ $login_details->profile_image }}" style="width: 40px;height:40px">Name</h3>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
-                    </div>
-                </div>
-                <div class="dash-bellicon">
-                    <div class="bell">
-                        <div class="popup-link">
-                            <a href="#popup1notification">
-                                <div class="dashprofileimg"> <img
-                                        src="{{ asset('public/assets/images/brand/bell.png') }}"></div>
-                        </div>
-                        <div id="popup1notification" class="popup-container">
-                            <div class="popup-content">
-                                <a href="#" class="close">&times;</a>
-                                <h3> <img src="{{ asset('public/assets/images/brand/user.png') }}">Name</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{-- </form> --}}
+            </div>
+        </div>
+    </div>
+    {{-- </form> --}}
 
     </div>
 
@@ -472,8 +590,7 @@ $login_details = DB::table('users')
         <div class="container">
             <div class="row align-items-center flex-row-reverse">
                 <div class="col-md-12 col-sm-12 text-center">
-                    Copyright © 2022 <a href="#">{{ @$general_details->software_name }}</a>. Designed by <a
-                        href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
+                    Copyright © 2022 <a href="#">{{ @$general_details->software_name }}</a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
                     All rights reserved.
                 </div>
             </div>
