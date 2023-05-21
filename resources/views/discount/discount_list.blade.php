@@ -21,7 +21,7 @@
         @endif
 
         <div class="card-body">
-            <table class="table card-table table-vcenter text-nowrap table-default">
+            <table class="table table-bordered text-nowrap" id="example">
                 <thead>
                     <tr>
                         <th scope="col">Discount No.</th>
@@ -91,7 +91,6 @@
                     @endif
                 </tbody>
             </table>
-            {!! $discountList->links() !!}
         </div>
     </div>
 </div>

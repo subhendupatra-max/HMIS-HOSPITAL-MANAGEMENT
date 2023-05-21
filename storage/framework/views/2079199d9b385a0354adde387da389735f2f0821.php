@@ -31,6 +31,7 @@
                     <thead>
                         <tr>
                             <th scope="col">IPD Id</th>
+                            <th scope="col">Case Id</th>
                             <th scope="col">Patient Information</th>
                             <th scope="col">Mobile No.</th>
                             <th scope="col">Admission Information</th>
@@ -45,6 +46,7 @@
                         <?php $__currentLoopData = $ipd_patient_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td><a class="textlink" href="<?php echo e(route('ipd-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a></td>
+                            <td><?php echo e(@$value->case_id); ?></td>
                             <td>
                                 <i class="fa fa-user text-primary"></i> <?php echo e(@$value->all_patient_details->prefix); ?> <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?>(<?php echo e(@$value->all_patient_details->id); ?>)
                                 <br>
@@ -55,8 +57,6 @@
                                 <i class="fa fa-venus-mars text-primary"></i> <?php echo e(@$value->all_patient_details->gender); ?>
 
                                 //
-
-
                                 <i class="fa fa-calendar-plus-o text-primary"></i> <?php echo e(@$value->all_patient_details->year); ?>Y <?php echo e(@$value->all_patient_details->month); ?>M <?php echo e(@$value->all_patient_details->day); ?>D
 
                             </td>
@@ -101,7 +101,7 @@
                                         <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission
                                             Form</a>
                                         <?php endif; ?>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ipd status change')): ?>
                                         <a class="dropdown-item" href="#"
                                             onclick="statusButton(<?php echo $value->id; ?>)">
                                             <i class="fa fa-file"></i> Status Change</a>
@@ -112,8 +112,8 @@
                                             href="<?php echo e(route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])); ?>">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         <?php endif; ?>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                                        <a class="dropdown-item" href=""><i class="fa fa-trash"></i> Delete</a>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ipd delete')): ?>
+                                        <a class="dropdown-item" href="<?php echo e(route('ipd-patient-delete',['ipd_id'=>base64_encode($value->id) ])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                         <?php endif; ?>
 
                                     </div>
@@ -146,17 +146,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?php echo e(route('save-timeline-lisitng-in-opd')); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo e(route('update-status-ipd')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <div class="modal-body">
-                    <input type="hidden" name="ipd_id" value="" />
+                    <input type="hidden" name="ipd_id"  id="ipd_id_"/>
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-control" id="status" name="status">
                                 <option value="">Select......</option>
                                 <option value="discharged_planed">Discharged Planed</option>
-                                <option value="discharged">Discharged</option>
                             </select>
                             <?php $__errorArgs = ['status'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -206,6 +205,8 @@ unset($__errorArgs, $__bag); ?>
                 ipdId: ipd_id,
             },
             success: function(response) {
+                console.log(response);
+                $("#ipd_id_").val(response.id);
                 $("#exampleModal").modal('show');
             },
             error: function(error) {

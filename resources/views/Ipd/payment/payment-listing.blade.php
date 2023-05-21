@@ -11,8 +11,9 @@
 
                 <div class="col-md-8 text-right">
                     <div class="d-block">
+                        <a href="{{ route('add-ipd-payment-details',['ipd_id' => base64_encode($ipd_details->id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Print Total Payment Slip</a>
                         @can('')
-                        <a href="{{ route('add-ipd-payment-details',['ipd_id' => base64_encode($ipd_details->id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Payment</a>
+                        <a href="{{ route('add-ipd-payment-details',['ipd_id' => base64_encode($ipd_details->id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-rupee-sign"></i> Add new Payment</a>
                         @endcan
 
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>

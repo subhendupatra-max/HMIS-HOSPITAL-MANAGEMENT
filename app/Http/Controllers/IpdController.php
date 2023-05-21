@@ -67,7 +67,7 @@ class IpdController extends Controller
     public  function profile($id)
     {
         $ipd_id = base64_decode($id);
-        $PhysicalDetails  =  IpdPatientPhysicalDetail::where('ipd_id', $ipd_id)->get();
+        $PhysicalDetails  =  IpdPatientPhysicalDetail::where('ipd_id', $ipd_id)->orderBy('id','Desc')->first();
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
         $bed_history_details = PatientBedHistory::where('id', $ipd_id)->first();
         $departments = Department::where('is_active', '1')->get();
@@ -211,7 +211,7 @@ class IpdController extends Controller
 
     public function ipd_patient_status_change(Request $request)
     {
-        $ipd_details = IpdDetails::where('id', $request->ipdId)->get();
+        $ipd_details = IpdDetails::where('id', $request->ipdId)->first();
         return response()->json($ipd_details);
     }
 
@@ -255,8 +255,8 @@ class IpdController extends Controller
             'unit' => 'required',
             'bed' => 'required',
         ]);
-        // try {
-        //     DB::beginTransaction();
+        try {
+            DB::beginTransaction();
         $ipd_prefix = Prefix::where('name', 'ipd')->first();
 
         //SAVE in ipd details
@@ -317,10 +317,10 @@ class IpdController extends Controller
         } else {
             return redirect()->route('ipd-patient-listing')->with('success', 'Ipd Patient Details Updated Sucessfully');
         }
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return redirect()->back()->with('error', $th->getMessage());
-        // }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     public function charge_list_in_ipd($id = null)
@@ -359,8 +359,8 @@ class IpdController extends Controller
         $validate = $request->validate([
             'date'   => 'required',
         ]);
-        // try {
-        //     DB::beginTransaction();
+        try {
+            DB::beginTransaction();
         foreach ($request->charge_name as $key => $value) {
             $patient_charge = new PatientCharge();
             $patient_charge->case_id = $request->case_id;
@@ -426,10 +426,10 @@ class IpdController extends Controller
         }
         DB::commit();
         return redirect()->route('charges-list-ipd', ['id' => base64_encode($request->ipd_id)])->with('success', "Charges Added Successfully");
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return back()->withErrors(['error' => $th->getMessage()]);
-        // }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
 
     public function ipd_pathology_investigation($id)
@@ -447,5 +447,37 @@ class IpdController extends Controller
         // dd($ipd_details);
         $radiology_patient_test = RadiologyPatientTest::where('ins_by', 'ori')->where('case_id', $ipd_details->case_id)->get();
         return view('Ipd.radiology.test-list', compact('radiology_patient_test', 'ipd_details', 'ipd_id'));
+    }
+    public function update_status(Request $request)
+    {
+        try {
+        DB::beginTransaction();
+
+       $ipd_details =  IpdDetails::find($request->ipd_id);
+       $ipd_details->discharged_planed_date = $request->date;
+       $ipd_details->status = $request->status;
+       $ipd_details->save();
+       DB::commit();
+       return redirect()->back()->with('success', "Status Changed Successfully");
+       } catch (\Throwable $th) {
+           DB::rollback();
+           return back()->withErrors(['error' => $th->getMessage()]);
+       }
+    }
+    public function ipd_patient_delete($ipd_id)
+    {
+        try {
+        DB::beginTransaction();
+        $ipdid = base64_decode($ipd_id);
+        $ipd_details =  IpdDetails::find($ipdid);
+        PatientBedHistory::where('ipd_id',$ipdid)->delete();
+        Bed::where('id', $ipd_details->bed)->update(['is_used' => 'no']);
+        $ipd_details->delete();
+        DB::commit();
+        return redirect()->back()->with('success', "IPD Patient Deleted Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
 }

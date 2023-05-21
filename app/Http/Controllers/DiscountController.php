@@ -14,7 +14,7 @@ class DiscountController extends Controller
 {
     public function discount_list()
     {
-        $discountList = Discount::orderBy('id','desc')->paginate(15);
+        $discountList = Discount::get();
         return view('discount.discount_list', compact('discountList'));
     }
 

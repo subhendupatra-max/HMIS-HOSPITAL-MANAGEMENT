@@ -1,5 +1,5 @@
-@extends('layouts.layout')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
 
@@ -14,14 +14,14 @@
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            @include('ipd.include.menu')
+                            <?php echo $__env->make('ipd.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
-        @include('message.notification')
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body p-0">
             <div class="row no-gutters">
                 <div class="col-md-12 mt-2">
@@ -41,53 +41,54 @@
                                     </thead>
                                     <tbody>
                                         <?php $seconds = 0 ?>
-                                        @if ($oxygen_monitering[0]->start_time != null)
-                                            @foreach ($oxygen_monitering as $value)
+                                        <?php if($oxygen_monitering[0]->start_time != null): ?>
+                                            <?php $__currentLoopData = $oxygen_monitering; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <?php
                                              $seconds += $value->duration;
                                              $total_duration = floor($seconds / 60);
                                              ?>
                                                 <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $value->start_time }}</td>
+                                                    <td><?php echo e($loop->iteration); ?></td>
+                                                    <td><?php echo e($value->start_time); ?></td>
                                                     <td>
-                                                        @if($value->end_time == null)
-                                                        <form action="{{ route('end-oxygen-in-ipd') }}" method="POST">
-                                                            @csrf
+                                                        <?php if($value->end_time == null): ?>
+                                                        <form action="<?php echo e(route('end-oxygen-in-ipd')); ?>" method="POST">
+                                                            <?php echo csrf_field(); ?>
                                                                 <div class="col-md-12">
                                                                     <div class="row">
                                                                         <div class="col-md-8">
                                                                             <input type="datetime-local" name="end_time" required />
                                                                         </div>
-                                                                        <input type="hidden" name="id" value="{{ $value->id }}" />
-                                                                        <input type="hidden" name="ipd_id" value="{{ $ipdId }}" />
-                                                                        <input type="hidden" name="start_time" value="{{ $value->start_time }}" />
+                                                                        <input type="hidden" name="id" value="<?php echo e($value->id); ?>" />
+                                                                        <input type="hidden" name="ipd_id" value="<?php echo e($ipdId); ?>" />
+                                                                        <input type="hidden" name="start_time" value="<?php echo e($value->start_time); ?>" />
                                                                         <div class="col-md-4">
                                                                             <button class="btn btn-primary  btn-sm" type="submit">Submit</button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </form>
-                                                            @else
-                                                            {{ date('d-m-Y h:i a'),strtotime($value->start_time )}}
-                                                            @endif
+                                                            <?php else: ?>
+                                                            <?php echo e(date('d-m-Y h:i a'),strtotime($value->start_time )); ?>
+
+                                                            <?php endif; ?>
                                                     </td>
-                                                    <td>{{ @$value->duration }}</td>
+                                                    <td><?php echo e(@$value->duration); ?></td>
                                                  
                                                 </tr> 
-                                            @endforeach
-                                        @endif
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        <?php endif; ?>
                                         <tr>
                                             <td>New Start</td>
                                             <td>
-                                                <form action="{{ route('start-oxygen-in-ipd') }}" method="POST">
-                                                @csrf
+                                                <form action="<?php echo e(route('start-oxygen-in-ipd')); ?>" method="POST">
+                                                <?php echo csrf_field(); ?>
                                                     <div class="col-md-12">
                                                         <div class="row">
                                                             <div class="col-md-8">
                                                                 <input type="datetime-local" name="start_time" required />
                                                             </div>
-                                                            <input type="hidden" name="ipd_id" value="{{ $ipdId }}" />
+                                                            <input type="hidden" name="ipd_id" value="<?php echo e($ipdId); ?>" />
                                                             
                                                             <div class="col-md-4">
                                                                 <button class="btn btn-primary  btn-sm" type="submit">Submit</button>
@@ -102,7 +103,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <span style="color:blue;font-weight:700;font-size:15px">Total : {{ @$total_duration }} min</span>
+                                <span style="color:blue;font-weight:700;font-size:15px">Total : <?php echo e(@$total_duration); ?> min</span>
                             </div>
                         </div>
                     </div>
@@ -113,4 +114,5 @@
 </div>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/Ipd/add-oxygen-monitoring.blade.php ENDPATH**/ ?>

@@ -11,6 +11,7 @@ use App\Models\IpdDetails;
 use Illuminate\Http\Request;
 use SebastianBergmann\CodeCoverage\Report\Xml\Unit;
 use  App\Models\BedUnit;
+use DB;
 
 class BedTransfarController extends Controller
 {
@@ -86,5 +87,31 @@ class BedTransfarController extends Controller
     {
         $edit_bed_history_details =  PatientBedHistory::where('ipd_id', $request->bedHistoryId)->first();
         return response()->json($edit_bed_history_details);
+    }
+
+    public function update_bed_transfar_from_date(Request $request)
+    {
+        try {
+        DB::beginTransaction();
+       $PatientBedHistory =  PatientBedHistory::find($request->bed_histry_id);
+       $PatientBedHistory->from_date = $request->from_time;
+       $PatientBedHistory->save();
+
+       $sec_max = PatientBedHistory::where('ipd_id', $PatientBedHistory->ipd_id)
+       ->orderBy('id', 'DESC')
+       ->offset(1)
+       ->limit(1)
+       ->first();
+
+       $sec_max->to_date = $request->from_time;
+       $sec_max->save();
+
+       DB::commit();
+       return redirect()->back()->with('success', "Bed teansfer date Update Successfully");
+       } catch (\Throwable $th) {
+           DB::rollback();
+           return back()->withErrors(['error' => $th->getMessage()]);
+       
+       }
     }
 }
