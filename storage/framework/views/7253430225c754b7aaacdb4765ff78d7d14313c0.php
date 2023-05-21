@@ -11,8 +11,9 @@
 
                 <div class="col-md-8 text-right">
                     <div class="d-block">
+                        <a href="<?php echo e(route('bed-transfar-history-print-in-ipd',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Print Transfer Report</a>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                        <a href="<?php echo e(route('add-bed-transfar-history-in-ipd',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Bed History</a>
+                        <a href="<?php echo e(route('add-bed-transfar-history-in-ipd',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-alt-circle-left"></i> Bed Transfer</a>
                         <?php endif; ?>
 
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
@@ -37,7 +38,11 @@
                                     <th class="border-bottom-0">Ward - Unit</th>
                                     <th class="border-bottom-0">Bed</th>
                                     <th class="border-bottom-0">Duration</th>
+                                    <th class="border-bottom-0">Status</th>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit bed transfar history')): ?>
                                     <th class="border-bottom-0">Action</th>
+                                    <?php endif; ?>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,16 +55,19 @@
                                     <td class="border-bottom-0">
                                         <span>From Date</span> : <span><?php echo e($item->from_date); ?></span><br>
                                         <span>To Date</span> : <span><?php echo e($item->to_date); ?></span><br>
-                                        <span>Duration</span> : <span> </span>
-                                    </td>
-                                    <td class="border-bottom-0">
-                                        <?php if(!isset($item->to_date)): ?>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit bed transfar history')): ?>
-                                        <a onclick="bedHistoryEditButton('<?php echo $item->id  ?>','<?php echo $item->from_date;  ?>')" class="btn btn-success btn-sm"> <i class="fa fa-edit"></i> </a>
-                                        <?php endif; ?>
-                                        <?php endif; ?>
 
                                     </td>
+                                    <td>
+                                        <?php echo $item->is_present == 'no' ? '<span class="badge badge-danger">Moved from here</span>':'<span class="badge badge-success">Present Here</span>'; ?>
+
+                                    </td>
+                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit bed transfar history')): ?>
+                                    <td class="border-bottom-0">
+                                        <?php if(!isset($item->to_date)): ?>
+                                        <a onclick="bedHistoryEditButton('<?php echo $item->id  ?>','<?php echo $item->from_date;  ?>')" class="btn btn-primary btn-sm"> <i class="fa fa-edit"></i> </a>
+                                        <?php endif; ?>
+                                    </td>
+                                    <?php endif; ?>
                                 </tr>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </tbody>
@@ -70,6 +78,7 @@
         </div>
     </div>
 </div>
+
 
 
 
@@ -85,13 +94,13 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="<?php echo e(route('update-bed-hidtroy-from-date')); ?>" method="POST" enctype="multipart/form-data">
                     <?php echo csrf_field(); ?>
-                    <input type="hidden" name="bed_histry_id" name="bed_histry_id" />
+                    <input type="hidden" name="bed_histry_id" id="bed_histry_id" />
 
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label for="from_time" class="form-label"> Date <span class="text-danger">*</span></label>
+                            <label for="from_time" class="form-label">From Date <span class="text-danger">*</span></label>
                             <input type="datetime-local" class="form-control" id="from_time" name="from_time" required>
                             <?php $__errorArgs = ['from_time'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -119,19 +128,8 @@ unset($__errorArgs, $__bag); ?>
 
 <script>
     function bedHistoryEditButton(bedHistoy_id, from_date) {
-        // alert(bedHistoy_id);
-        // alert(from_date);
         $("#bed_histry_id").val(bedHistoy_id);
-        var now = new Date(from_date);
-        var formattedDate = now.getFullYear() + '-' + (now.getMonth() + 1).toString().padStart(2, '0') + '-' + now.getDate().toString().padStart(2, '0') + 'T' + now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
-
-        var dateString = formattedDate.toISOString().slice(0, 16);
-        //  $('#datetime-input').val(dateString);
-        // alert(formattedDate);
-
-        $('#from_time').val(dateString);
         $("#editBedHistory").modal('show');
-
     }
 </script>
 <?php $__env->stopSection(); ?>
