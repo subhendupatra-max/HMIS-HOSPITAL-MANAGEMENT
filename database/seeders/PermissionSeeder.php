@@ -732,7 +732,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'blood components']);
         Permission::create(['name' => 'Add blood components']);
         Permission::create(['name' => 'View blood components Details']);
-      
+
 
         //opd billing
         Permission::create(['name' => 'opd billing']);
@@ -813,6 +813,8 @@ class PermissionSeeder extends Seeder
 
         Permission::create(['name' => 'Create Prescription for OPD']);
 
+        //master operation
+        Permission::create(['name' => 'main operation']);
 
     }
 }

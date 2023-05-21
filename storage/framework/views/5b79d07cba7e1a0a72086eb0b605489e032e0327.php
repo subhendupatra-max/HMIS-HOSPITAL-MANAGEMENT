@@ -94,9 +94,14 @@ unset($__errorArgs, $__bag); ?>
                                             <td class="py-2 px-5">
                                                 <span class="font-weight-semibold w-50">Age </span>
                                             </td>
-                                            <td class="py-2 px-5"><?php echo e(@$patient_details_information->year); ?>y
-                                                <?php echo e(@$patient_details_information->month); ?>m
-                                                <?php echo e(@$patient_details_information->day); ?>d
+                                            <td class="py-2 px-5">
+                                                <?php echo e(@$patient_details_information->year == '0'?'':$patient_details_information->year.'y'); ?>
+
+                                                <?php echo e(@$patient_details_information->month == '0'?'':$patient_details_information->month.'m'); ?>
+
+                                                <?php echo e(@$patient_details_information->day == '0'?'':$patient_details_information->day.'d'); ?>
+
+
                                             </td>
                                         </tr>
                                         <tr>

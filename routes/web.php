@@ -122,6 +122,8 @@ use App\Http\Controllers\false\EmgFalseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\false\IpdFalseController;
 
+use App\Http\Controllers\MainOperationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -2621,3 +2623,19 @@ Route::group(['middleware' => ['permission:bill summary'], 'prefix' => 'bill-sum
 
 
 //================================= Bill Summary ==============================
+
+//=================================  Main Operation ==============================
+Route::group(['middleware' => ['permission:main operation'], 'prefix' => 'operation'], function () {
+    Route::get('main-operation', [MainOperationController::class, 'index'])->name('main-operation');
+
+    // Route::any('add-operation', [MainOperationController::class, 'operation_booking'])->name('add-operation');
+
+    // Route::any('add-operation/{id?}', [MainOperationController::class, 'operation_booking'])->name('add-operation');
+
+    Route::post('save-operation-booking', [MainOperationController::class, 'save_operation_booking'])->name('save-operation-booking');
+
+    Route::get('add-operation', [MainOperationController::class, 'add_operation'])->name('add-operation');
+    Route::any('booking-operation', [MainOperationController::class, 'operation_booking'])->name('booking-operation');
+    Route::post('find-operation-catagory-by-department', [MainOperationController::class, 'find_operation_catagory_by_department'])->name('find-operation-catagory-by-department');
+});
+//================================= Main Operation  ==============================

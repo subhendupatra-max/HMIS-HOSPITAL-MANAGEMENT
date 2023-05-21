@@ -515,6 +515,9 @@ $login_details = DB::table('users')
                     <?php if(auth()->user()->can('Blood Bank')): ?>
                     <li><a class="dropdown-item" href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
                     <?php endif; ?>
+                    <?php if(auth()->user()->can('master operation')): ?>
+                    <li><a class="dropdown-item" href="<?php echo e(route('main-operation')); ?>">Operation</a></li>
+                    <?php endif; ?>
                 </ul>
             </li>
             </ul>

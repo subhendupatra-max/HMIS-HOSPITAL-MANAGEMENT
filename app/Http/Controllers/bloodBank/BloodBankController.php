@@ -31,7 +31,7 @@ class BloodBankController extends Controller
         $blood = Blood::where('blood_group_id', $blood_group_id)->get();
         $components = Components::where('blood_group_id', $blood_group_id)->get();
         // dd( $components );
-       
+
         $blood_groups_details_for_this_blood_group = BloodGroup::where('id', $blood_group_id)->first();
 
         return view('Blood_Bank.blood-bank-listing', compact('blood_groups', 'blood_group_id', 'blood_groups_details_for_this_blood_group', 'blood', 'components'));

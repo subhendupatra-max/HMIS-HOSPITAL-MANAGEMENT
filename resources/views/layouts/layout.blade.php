@@ -539,6 +539,9 @@ $login_details = DB::table('users')
                     @if (auth()->user()->can('Blood Bank'))
                     <li><a class="dropdown-item" href="{{ route('all-blood-details') }}">Blood Bank</a></li>
                     @endif
+                    @if (auth()->user()->can('master operation'))
+                    <li><a class="dropdown-item" href="{{ route('main-operation') }}">Operation</a></li>
+                    @endif
                 </ul>
             </li>
             </ul>
