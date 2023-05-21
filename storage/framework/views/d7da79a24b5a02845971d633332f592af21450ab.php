@@ -5,7 +5,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    Ambulance Call List
+                    Ambulance Call List 
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
@@ -21,10 +21,12 @@
             </div>
         </div>
 
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
-                    <table id="example" class="table table-bordered text-nowrap key-buttons">
+                    <table class="table table-bordered text-nowrap" id="example">
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
@@ -32,7 +34,7 @@
                                 <th class="border-bottom-0">Driver Name</th>
                                 <th class="border-bottom-0">Charges Catagory </th>
                                 <th class="border-bottom-0">Charges Sub Catagory</th>
-                         
+
                                 <th class="border-bottom-0">Total Amount</th>
 
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit ambulance call','delete ambulance call')): ?>
@@ -40,6 +42,7 @@
                                 <?php endif; ?>
                             </tr>
                         </thead>
+
                         <tbody>
                             <?php $__currentLoopData = $ambulanceCall; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
@@ -65,6 +68,7 @@
                                 </td>
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
                         </tbody>
                     </table>
 
@@ -72,7 +76,7 @@
             </div>
         </div>
     </div>
+</div>
 
-
-    <?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/ambulance/ambulance-call/ambulance-call-listing.blade.php ENDPATH**/ ?>

@@ -29,9 +29,9 @@
 
                     <div class="form-group ">
                         <div class="descriptionadd">
-                        <label for="description" class="descriptiononelabel">Description</label>
-                        <input type="text"id="description" name="description"value=" {{ old('description') }} " >
-                        <small class="text-danger">{{ $errors->first('description') }}</small>
+                            <label for="description" class="descriptiononelabel">Description</label>
+                            <input type="text" id="description" name="description" value=" {{ old('description') }} ">
+                            <small class="text-danger">{{ $errors->first('description') }}</small>
                         </div>
                     </div>
 
@@ -92,4 +92,5 @@
     </div>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
+
 @endsection

@@ -150,6 +150,30 @@
 
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td class="py-2 px-0">
+                                        <i class="fa fa-users text-primary"></i>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Admitted By :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <?php echo e(@$ipd_details->department_details->admitted_by); ?>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-0">
+                                        <i class="fa fa-rocket text-primary"></i>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <span class="font-weight-semibold w-50">Admitted By Contact No. :- </span>
+                                    </td>
+                                    <td class="py-2 px-0">
+                                        <?php echo e(@$ipd_details->department_details->admitted_by_contact_no); ?>
+
+                                    </td>
+                                </tr>
 
                             </tbody>
                         </table>
