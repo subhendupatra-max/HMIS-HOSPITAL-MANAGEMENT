@@ -504,13 +504,20 @@ $login_details = DB::table('users')
                     <li><a class="dropdown-item" href="{{ route('item-stock-listing') }}">Inventory</a></li>
                     @endif
                     @if (auth()->user()->can('Birth and Death Record'))
-                    <li class="dropdown-submenu">
+                    <!-- <li class="dropdown-submenu">
                         <a tabindex="-1" href="#">Birth & Death <i class="fa fa-chevron-right"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Birth Record</a></li>
                             <li><a href="#">Death Record</a></li>
                         </ul>
-                    </li>
+                    </li> -->
+                    <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">appointment <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">shift-details</a></li>
+                      <li><a href="#">slots-details</a></li>
+                    </ul>
+                  </li>
                     @endif
 
                     @if (auth()->user()->can('False Generation'))
