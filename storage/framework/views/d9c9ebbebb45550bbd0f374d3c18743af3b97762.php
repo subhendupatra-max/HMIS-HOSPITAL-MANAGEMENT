@@ -36,62 +36,72 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Duration (In Seconds)</th>
-                              
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $seconds = 0 ?>
-                                        <?php if($oxygen_monitering[0]->start_time != null): ?>
-                                            <?php $__currentLoopData = $oxygen_monitering; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <?php
+                                        <?php $seconds = 0;
+                                         $total_duration = 0;
+                                         ?>
+                                        <?php if(@$oxygen_monitering[0]->start_time != null): ?>
+                                        <?php $__currentLoopData = $oxygen_monitering; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php
                                              $seconds += $value->duration;
                                              $total_duration = floor($seconds / 60);
                                              ?>
-                                                <tr>
-                                                    <td><?php echo e($loop->iteration); ?></td>
-                                                    <td><?php echo e($value->start_time); ?></td>
-                                                    <td>
-                                                        <?php if($value->end_time == null): ?>
-                                                        <form action="<?php echo e(route('end-oxygen-in-ipd')); ?>" method="POST">
-                                                            <?php echo csrf_field(); ?>
-                                                                <div class="col-md-12">
-                                                                    <div class="row">
-                                                                        <div class="col-md-8">
-                                                                            <input type="datetime-local" name="end_time" required />
-                                                                        </div>
-                                                                        <input type="hidden" name="id" value="<?php echo e($value->id); ?>" />
-                                                                        <input type="hidden" name="ipd_id" value="<?php echo e($ipdId); ?>" />
-                                                                        <input type="hidden" name="start_time" value="<?php echo e($value->start_time); ?>" />
-                                                                        <div class="col-md-4">
-                                                                            <button class="btn btn-primary  btn-sm" type="submit">Submit</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                            <?php else: ?>
-                                                            <?php echo e(date('d-m-Y h:i a'),strtotime($value->start_time )); ?>
+                                        <tr>
+                                            <td><?php echo e($loop->iteration); ?></td>
+                                            <td> <?php echo e(date('d-m-Y h:i a',strtotime($value->start_time ))); ?></td>
+                                            <td>
+                                                <?php if($value->end_time == null): ?>
+                                                <form action="<?php echo e(route('end-oxygen-in-ipd')); ?>" method="POST">
+                                                    <?php echo csrf_field(); ?>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <input type="datetime-local" name="end_time" required />
+                                                            </div>
+                                                            <input type="hidden" name="id" value="<?php echo e($value->id); ?>" />
+                                                            <input type="hidden" name="ipd_id" value="<?php echo e($ipdId); ?>" />
+                                                            <input type="hidden" name="start_time"
+                                                                value="<?php echo e($value->start_time); ?>" />
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary  btn-sm"
+                                                                    type="submit">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <?php else: ?>
+                                                <?php if(@$value->end_time != null): ?>
+                                                <?php echo e(@date('d-m-Y h:i a',strtotime($value->end_time ))); ?>
 
-                                                            <?php endif; ?>
-                                                    </td>
-                                                    <td><?php echo e(@$value->duration); ?></td>
-                                                 
-                                                </tr> 
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                                <?php endif; ?>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td><?php echo e(@$value->duration); ?></td>
+
+                                        </tr>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         <?php endif; ?>
+                                        <?php if(@$oxygen_monitering_last->end_time != null ||
+                                        !isset($oxygen_monitering_last)): ?>
                                         <tr>
                                             <td>New Start</td>
                                             <td>
                                                 <form action="<?php echo e(route('start-oxygen-in-ipd')); ?>" method="POST">
-                                                <?php echo csrf_field(); ?>
+                                                    <?php echo csrf_field(); ?>
                                                     <div class="col-md-12">
                                                         <div class="row">
                                                             <div class="col-md-8">
-                                                                <input type="datetime-local" name="start_time" required />
+                                                                <input type="datetime-local" name="start_time"
+                                                                    required />
                                                             </div>
                                                             <input type="hidden" name="ipd_id" value="<?php echo e($ipdId); ?>" />
-                                                            
+
                                                             <div class="col-md-4">
-                                                                <button class="btn btn-primary  btn-sm" type="submit">Submit</button>
+                                                                <button class="btn btn-primary  btn-sm"
+                                                                    type="submit">Submit</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -99,11 +109,15 @@
                                             </td>
                                             <td>End Time</td>
                                             <td>Duration (In Seconds)</td>
-                                         
+
                                         </tr>
+                                        <?php endif; ?>
                                     </tbody>
                                 </table>
-                                <span style="color:blue;font-weight:700;font-size:15px">Total : <?php echo e(@$total_duration); ?> min</span>
+                                <span style="color:blue;font-weight:700;font-size:15px;margin:19px 17px 14px 33px">Total
+                                    : <?php echo e(@$total_duration.' min'); ?>
+
+                                </span>
                             </div>
                         </div>
                     </div>

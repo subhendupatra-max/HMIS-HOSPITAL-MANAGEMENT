@@ -10,6 +10,7 @@ use App\Http\Controllers\PrefixController;
 use App\Http\Controllers\Bed\BedController;
 use App\Http\Controllers\BedUnitController;
 use App\Http\Controllers\BedTypeController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Bed\FloorController;
 use App\Http\Controllers\Bed\WardController;
 use App\Http\Controllers\BedGroupController;
@@ -1886,7 +1887,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         });
         Route::get('opd-bill-details/{bill_id}', [BillingController::class, 'bill_details'])->name('opd-bill-details');
         Route::group(['middleware' => ['permission:edit opd billing']], function () {
-            Route::get('edit-opd-bill/{bill_id}', [BillingController::class, 'edit_opd_bill'])->name('edit-opd-bill');
+            Route::get('edit-opd-bill/{bill_id}/{id}]', [BillingController::class, 'edit_opd_bill'])->name('edit-opd-bill');
         });
         Route::group(['middleware' => ['permission:delete opd billing']], function () {
             Route::get('delete-opd-bill/{bill_id}', [BillingController::class, 'delete_opd_bill'])->name('delete-opd-bill');
@@ -1969,6 +1970,9 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::group(['middleware' => ['permission:edit opd charges']], function () {
             Route::get('edit-opd-charges/{id?}/{charge_id?}', [OpdController::class, 'edit_charges'])->name('edit-opd-charges');
             Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
+        });
+        Route::group(['middleware' => ['permission:delete opd charges']], function () {
+            Route::get('delete-opd-charges/{id?}/{charge_id?}', [OpdController::class, 'delete_charges'])->name('delete-opd-charges');
         });
     });
     //================================= OPD charges ====================================
@@ -2590,6 +2594,7 @@ Route::group(['middleware' => ['permission:Ipd False Generation'], 'prefix' => '
         Route::post('false-pathology-test-show-in_modal-ipd', [IpdFalseController::class, 'false_pathology_test_show_in_modal'])->name('false-pathology-test-show-in_modal-ipd');
         Route::get('delete-radiology-test-false-ipd/{id?}', [IpdFalseController::class, 'delete_radiology_test_false_ipd'])->name('delete-radiology-test-false-ipd');
         Route::get('delete-pathology-test-false-ipd/{id?}', [IpdFalseController::class, 'delete_pathology_test_false_ipd'])->name('delete-pathology-test-false-ipd');
+        Route::post('add-discharged-false', [IpdFalseController::class, 'add_discharged_false'])->name('add-discharged-false');
     });
 });
 //================================= ipd false section ===================================================
@@ -2610,7 +2615,22 @@ Route::group(['middleware' => ['permission:bill summary'], 'prefix' => 'bill-sum
 });
 //================================= Bill Summary ==============================
 
-//================================= Bill Summary ==============================
+//================================= bed status ==============================
+Route::group(['middleware' => ['permission:bed-status'], 'prefix' => 'bed-status'], function () {
+    Route::get('bed-status-list', [BedController::class, 'bed_status_list_in_header'])->name('bed-status-list');
+    Route::post('update-status-bed', [BedController::class, 'update_status_bed'])->name('update-status-bed');
+});
+
+//================================= bed status ==============================
+
+//================================= Reports ==============================
+Route::group(['middleware' => ['permission:Report'], 'prefix' => 'report'], function () {
+    Route::group(['middleware' => ['permission:OPD Patient Report']], function () {
+        Route::get('opd-patient-report', [ReportController::class, 'opd_patient_index'])->name('opd-patient-report');
+        Route::post('fetch-opd-patient-report', [ReportController::class, 'fetch_opd_patient_report'])->name('fetch-opd-patient-report');
+    });
+});
+//================================= Reports ==============================
 
 
-//================================= Bill Summary ==============================
+

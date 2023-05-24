@@ -1143,17 +1143,17 @@ a.chip:hover {
 }
 
 .bg-primary {
-    background-color: #705ec8 !important;
+    background-color: #2e4f4f !important;
 }
 
 a.bg-primary:hover,
 a.bg-primary:focus {
-    background-color: #6958be !important;
+    background-color: #213636 !important;
 }
 
 button.bg-primary:hover,
 button.bg-primary:focus {
-    background-color: #6958be !important;
+    background-color: #213636 !important;
 }
 
 .bg-secondary {

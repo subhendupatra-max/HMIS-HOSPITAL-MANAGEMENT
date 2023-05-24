@@ -104,4 +104,21 @@ class BedController extends Controller
         return response()->json($beds);
 
     }
+
+    public function bed_status_list_in_header()
+    {
+        $beds = Bed::where('is_active',1)->get();
+        return view('bed-status',compact('beds'));
+    }
+
+    public function update_status_bed(Request $request){
+        $beds = Bed::find($request->bed_id);
+        $beds->is_used = $request->status;
+        $status =  $beds->save();
+        if ($status) {
+            return redirect()->back()->with('success', "Bed status changed Sucessfully");
+        } else {
+            return redirect()->back()->with('error', "Something Went Wrong");
+        }
+    }
 }

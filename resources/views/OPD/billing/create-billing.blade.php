@@ -68,17 +68,14 @@
                                             <input type="hidden" name="old_or_new[]" value="old" />
                                             <input type="hidden" name="charge_id_old[]" value="{{ $value->id }}" />
                                             <td>
-                                                
                                                 <select class="form-control select2-show-search" name="charge_set[]" id="charge_set{{ $key }}">
                                                     <option value="{{ @$value->charge_set}} " >{{ @$value->charge_set}} </option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <select class="form-control select2-show-search" name="charge_type[]" id="charge_type{{ $key }}" >
-
                                                         <option value="{{ $value->charge_type }}" > {{ $value->charge_type }}
                                                         </option>
-                                                 
                                                 </select>
                                             </td>
                                             <td>
@@ -168,9 +165,7 @@
                                         <div class="col-md-6">
                                             <label class="form-label">Payment Amount </label>
                                             <input type="text" name="payment_amount" class="form-control" />
-                                            @error('payment_amount')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                 
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Payment Mode</label>
@@ -181,9 +176,7 @@
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            @error('payment_mode')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
+                                
                                         </div>
                                     </div>
                                 </div>
@@ -273,7 +266,7 @@
         function addNewrow() {
             var html = `<tr id="row${i}">
                         <input type="hidden" name="old_or_new[]" value="new" />
-                        <input type="hidden" name="charge_id[]" value="" />
+                        <input type="hidden" name="charge_id_old[]" value="" />
                             <td>
                                 <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
                                     <option value="" disable >Select One..</option>

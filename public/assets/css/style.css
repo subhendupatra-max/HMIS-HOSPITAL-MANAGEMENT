@@ -26714,7 +26714,18 @@ top: -29px;
   top: 27%;
   left: 15px;
 }
-
+.editbill{
+  margin: 10px 0px 0px 0px;
+}
+.edittbill{
+  margin: 28px 0px 0px 0px;
+}
+.edittbilll{
+  margin: 36px 0px 0px 0px;
+}
+.addopdd{
+  margin: 39px 0px 0px 0px;
+}
 /* ---------------------------------------------------- */
 
 
@@ -26913,6 +26924,7 @@ font-size: 15px;
     background: #152B39;
      margin: 0px 0px 0px 12px ;
      box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+     width: 700px;
   }
 
   .label {
@@ -26931,8 +26943,8 @@ font-size: 15px;
 /* ------------------------------------------ */
 /* ------------------------------------------ */
  .piebox{
- margin: -9px 0px 0px 0px;
-left: 3%;
+ margin: -9px 81px 0px 0px;
+left: 12%;
 
 padding: 10px 10px;
 border-radius: 2%;
@@ -26942,7 +26954,7 @@ border-radius: 2%;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); */
 
 width: 100%;
-padding: 10px 10px 10px 10px;
+padding: 10px 10px 10px 23px;
 border-radius: 2%;
 }
 .graph {

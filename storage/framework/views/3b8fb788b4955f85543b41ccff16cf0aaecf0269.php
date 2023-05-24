@@ -85,7 +85,7 @@
                         </td>
 
                         <td><?php echo e(date('d-m-Y h:i A',
-                            strtotime($value->latest_opd_visit_details_for_patient->appointment_date))); ?></td>
+                            strtotime(@$value->latest_opd_visit_details_for_patient->appointment_date))); ?></td>
                         <td>
                             <div class="card-options">
                                 <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"

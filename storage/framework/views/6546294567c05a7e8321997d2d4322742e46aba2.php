@@ -5,7 +5,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                Pharmacy Bill
+                    Pharmacy Bill
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
@@ -37,49 +37,49 @@
                                 <th class="border-bottom-0">Date</th>
                                 <th class="border-bottom-0">Patient Name </th>
                                 <th class="border-bottom-0">Amount</th>
-                               
+
                                 <th>Action</th>
-                              
+
                             </tr>
                         </thead>
                         <tbody>
                             <?php if(@$medicine_bill): ?>
                             <?php $__currentLoopData = $medicine_bill; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <tr>
-                                    <td><?php echo e(@$value->bill_prefix); ?><?php echo e(@$value->id); ?></td>
-                                    <td><?php echo e(@$value->case_id); ?></td>
-                                    <td><?php echo e(date('d-m-Y h:i a',strtotime($value->bill_date))); ?></td>
-                                    <td><?php echo e(@$value->all_patient_details->prefix); ?> <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?><br>
-                                        <?php echo e(@$value->all_patient_details->patient_prefix); ?><?php echo e(@$value->all_patient_details->id); ?>
+                            <tr>
+                                <td><?php echo e(@$value->bill_prefix); ?><?php echo e(@$value->id); ?></td>
+                                <td><?php echo e(@$value->case_id); ?></td>
+                                <td><?php echo e(date('d-m-Y h:i a',strtotime($value->bill_date))); ?></td>
+                                <td><?php echo e(@$value->all_patient_details->prefix); ?> <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?><br>
+                                    <?php echo e(@$value->all_patient_details->patient_prefix); ?><?php echo e(@$value->all_patient_details->id); ?>
 
-                                    </td>
-                                    <td><?php echo e(@$value->total_amount); ?></td>
-                                    <td>
-                                        <div class="card-options">
-                                            <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action <i class="fa fa-caret-down"></i></a>
-                                            <div class="dropdown-menu dropdown-menu-right" style="">
-    
-                                                <a class="dropdown-item" href="<?php echo e(route('medicine-bill-details', ['bill_id' => base64_encode($value->id)])); ?>">
-                                                    <i class="fa fa-eye"></i> View
-                                                </a>
+                                </td>
+                                <td><?php echo e(@$value->total_amount); ?></td>
+                                <td>
+                                    <div class="card-options">
+                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action <i class="fa fa-caret-down"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right" style="">
 
-                                                <a class="dropdown-item" href="<?php echo e(route('print-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
-                                                    <i class="fa fa-print"></i> Print
-                                                </a>
-    
-                                           
-                                                <a class="dropdown-item" href="<?php echo e(route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
-                                                    <i class="fa fa-edit"></i> Edit
-                                                </a>
-                                           
-                                                <a class="dropdown-item" href="<?php echo e(route('delete-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
-                                                    <i class="fa fa-trash"></i> Delete
-                                                </a>
-                                          
-                                            </div>
+                                            <a class="dropdown-item" href="<?php echo e(route('medicine-bill-details', ['bill_id' => base64_encode($value->id)])); ?>">
+                                                <i class="fa fa-eye"></i> View
+                                            </a>
+
+                                            <a class="dropdown-item" href="<?php echo e(route('print-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
+                                                <i class="fa fa-print"></i> Print
+                                            </a>
+
+
+                                            <a class="dropdown-item" href="<?php echo e(route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+
+                                            <a class="dropdown-item" href="<?php echo e(route('delete-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
+                                                <i class="fa fa-trash"></i> Delete
+                                            </a>
+
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php endif; ?>
                         </tbody>
@@ -91,6 +91,5 @@
 
     </div>
 </div>
- <?php $__env->stopSection(); ?>
-
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pharmacy/generate-bill/generate-bill-listing.blade.php ENDPATH**/ ?>

@@ -15,7 +15,9 @@ class OxygenMonitoringController extends Controller
         $ipdId = base64_decode($ipd_id);
         $ipd_details = IpdDetails::where('id', $ipdId)->first();
         $oxygen_monitering = OxygenMonitoring::where('ipd_id', $ipdId)->get();
-        return view('Ipd.add-oxygen-monitoring', compact('ipd_details', 'oxygen_monitering','ipdId'));
+        $oxygen_monitering_last = OxygenMonitoring::where('ipd_id', $ipdId)->orderBy('id','DESC')->first();
+        //dd($oxygen_monitering_last);
+        return view('Ipd.add-oxygen-monitoring', compact('ipd_details', 'oxygen_monitering','ipdId','oxygen_monitering_last'));
     }
 
     public function save_oxygen_monitoring_details(Request $request)

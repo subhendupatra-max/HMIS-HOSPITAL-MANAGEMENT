@@ -100,6 +100,7 @@
                                             <th>#</th>
                                             <th>Charge Name</th>
                                             <th>Charge Amount</th>
+                                            <th>Qty</th>
                                             <th>Tax</th>
                                             <th>Total</th>
                                         </tr>
@@ -111,6 +112,7 @@
                                             <th scope="row"><?php echo e($loop->iteration); ?></th>
                                             <td><?php echo e(@$charge->charges_name); ?></td>
                                             <td><?php echo e(@$charge->standard_charges); ?></td>
+                                            <td><?php echo e(@$charge->qty); ?></td>
                                             <td><?php echo e(@$charge->tax); ?></td>
                                             <td><?php echo e(@$charge->amount); ?></td>
                                         </tr>

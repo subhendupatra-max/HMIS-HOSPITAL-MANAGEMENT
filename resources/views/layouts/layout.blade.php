@@ -17,6 +17,12 @@ $login_details = DB::table('users')
         integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -166,35 +172,8 @@ $login_details = DB::table('users')
                         </div>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}"></div>Bed
-                        </a>
-                    </li>
-                    {{-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <div class="icon-new"><img src="{{ asset('public/assets/images/brand/settings.png') }}">
-            </div> Set up
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a class="dropdown-item" href="{{ route('general_setting_details') }}">General Setting</a></li>
-                <li><a class="dropdown-item" href="#">Inventory</a></li>
-                <li><a class="dropdown-item" href="#">Pharmacy</a></li>
-                <li><a class="dropdown-item" href="#">Finding</a></li>
-                <li><a class="dropdown-item" href="#">All Header</a></li>
-                <li><a class="dropdown-item" href="#">Operation</a></li>
-                <li><a class="dropdown-item" href="#">Opd</a></li>
-                <li><a class="dropdown-item" href="#">Emg</a></li>
-                <li><a class="dropdown-item" href="#">Pathology</a></li>
-                <li><a class="dropdown-item" href="#">Radiology</a></li>
-                <li><a class="dropdown-item" href="#">Blood Bank</a></li>
-                <li><a class="dropdown-item" href="#">Appointment</a></li>
-                <li><a class="dropdown-item" href="#">Department</a></li>
-                <li><a class="dropdown-item" href="#">Bed Details</a></li>
-                <li><a class="dropdown-item" href="#">Symptoms</a></li>
-            </ul>
-            </li> --}}
+
+              
             <div class=" menu-item">
                 <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
                 <li class="dropdown">
@@ -494,58 +473,71 @@ $login_details = DB::table('users')
                 </li>
             </div>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (2).png') }}">
-                    </div> Others
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    @if (auth()->user()->can('Inventory'))
-                    <li><a class="dropdown-item" href="{{ route('item-stock-listing') }}">Inventory</a></li>
-                    @endif
-                    @if (auth()->user()->can('Birth and Death Record'))
-                    <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#">Birth & Death <i class="fa fa-chevron-right"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Birth Record</a></li>
-                            <li><a href="#">Death Record</a></li>
-                        </ul>
-                    </li>
-                    @endif
+            <div class=" menu-item">
+                <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
+                <li class="dropdown">
 
-                    @if (auth()->user()->can('False Generation'))
-                    <li class="dropdown-submenu  {{ Request::segment(1) == 'false-patient' ? 'nav-active' : '' }}">
-                        <a tabindex="-1" href="#">False Generation <i class="fa fa-chevron-right"></i></a>
-                        <ul class="dropdown-menu">
-                            @if (auth()->user()->can('OPD False'))
-                            <li><a href="{{ route('opd-false-generation') }}" class="{{ Request::segment(2) == 'opd-false' ? 'active' : '' }}"> OPD</a></li>
-                            @endif
-                            @if (auth()->user()->can('EMG False'))
-                            <li><a href="{{ route('emg-false-generation') }}" class="{{ Request::segment(2) == 'emg-false' ? 'active' : '' }}"> EMG</a></li>
-                            @endif
-                            @if (auth()->user()->can('IPD False'))
-                            <li><a href="{{ route('ipd-false-generation') }}" class="{{ Request::segment(2) == 'ipd-false' ? 'active' : '' }}"> IPD</a></li>
-                            @endif
-                        </ul>
-                    </li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Inventory</a></li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Birth and Death record<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="#">Birth Record</a></li>
+                                <li><a href="#">Death Record</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+                                @if (auth()->user()->can('OPD False'))
+                                <li><a href="{{ route('opd-false-generation') }}" class="{{ Request::segment(2) == 'opd-false' ? 'active' : '' }}"> OPD</a></li>
+                                @endif
+                                @if (auth()->user()->can('EMG False'))
+                                <li><a href="{{ route('emg-false-generation') }}" class="{{ Request::segment(2) == 'emg-false' ? 'active' : '' }}"> EMG</a></li>
+                                @endif
+                                @if (auth()->user()->can('IPD False'))
+                                <li><a href="{{ route('ipd-false-generation') }}" class="{{ Request::segment(2) == 'ipd-false' ? 'active' : '' }}"> IPD</a></li>
+                                @endif
+                            </ul>
+                        </li>
+                        <li><a href="#">Refferal</a></li>
+                        <li><a href="#">Font office</a></li>
+                        <li><a href="#">Blood Bank</a></li>
+                        <li><a href="#">Operation</a></li>
+
+            </div>
+            @if (auth()->user()->can('Report'))
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="icon-new"><img src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>
+                    Reports
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @if (auth()->user()->can('OPD Patient Report'))
+                    <a class="dropdown-item" href="{{ route('opd-patient-report') }}">OPD Patient Report</a>
                     @endif
-                    <li><a class="dropdown-item" href="{{ route('referral') }}">Referral</a></li>
-                    @if (auth()->user()->can('ambulance'))
-                    <li><a class="dropdown-item" href="{{ route('ambulance-call-details') }}">Ambulance</a></li>
-                    @endif
-                    @if (auth()->user()->can('front office'))
-                    <li><a class="dropdown-item" href="{{ route('all-visit-details') }}">Font Office</a></li>
-                    @endif
-                    @if (auth()->user()->can('Blood Bank'))
-                    <li><a class="dropdown-item" href="{{ route('all-blood-details') }}">Blood Bank</a></li>
-                    @endif
-                </ul>
+                    <a class="dropdown-item" href="">OPD Income Report</a>
+                    <a class="dropdown-item" href="">EMG Patient Report</a>
+                    <a class="dropdown-item" href="">EMG Income Report</a>
+                    <a class="dropdown-item" href="">IPD Patient Report</a>
+                    <a class="dropdown-item" href="">IPD Income Report</a>
+                </div>
+            </li>
+            @endif
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('bed-status-list') }}">
+                    <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}"></div>Bed
+                </a>
             </li>
             </ul>
+         
             </li>
+            
             </ul>
-            </li>
-            </ul>
+
 
     </div>
 
@@ -557,8 +549,19 @@ $login_details = DB::table('users')
     <div id="popup1" class="popup-container">
         <div class="popup-content">
             <a href="#" class="close">&times;</a>
-            <h3> <img src="{{ asset('public/profile_picture') }}/{{ $login_details->profile_image }}" style="width: 40px;height:40px">Name</h3>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+            <img src="{{ asset('public/profile_picture') }}/{{ $login_details->profile_image }}" style="width: 50px;
+            height: 50px;
+            cursor: default;
+            margin: 0px 0px 0px 151px;">
+            <h3 style="margin: 5px 0px 0px 110px;"> {{ $login_details->first_name }}
+                {{ $login_details->last_name }}</h3>
+            <span class="badge badge-light badge-pill" style="margin:5px 0px 10px 97px;">{{ $login_details->role }}</span>
+            
+            <a class="btn btn-success btn-sm" href="{{ route('user-profile') }}/{{ base64_encode(Auth::id()) }}"><i class='fas fa-address-card'></i> Profile</a>
+            <form method="POST"  action="{{ route('logout') }}">
+                @csrf
+                <button class="btn btn-primary btn-sm text-center" style="margin: 0px 0px 0px 140px" type="submit"><i class="fa fa-sign-out-alt"></i> Log Out</button>
+            </form>
         </div>
     </div>
     <div class="dash-bellicon">

@@ -36,61 +36,71 @@
                                             <th>Start Time</th>
                                             <th>End Time</th>
                                             <th>Duration (In Seconds)</th>
-                              
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $seconds = 0 ?>
-                                        @if ($oxygen_monitering[0]->start_time != null)
-                                            @foreach ($oxygen_monitering as $value)
-                                            <?php
+                                        <?php $seconds = 0;
+                                         $total_duration = 0;
+                                         ?>
+                                        @if (@$oxygen_monitering[0]->start_time != null)
+                                        @foreach ($oxygen_monitering as $value)
+                                        <?php
                                              $seconds += $value->duration;
                                              $total_duration = floor($seconds / 60);
                                              ?>
-                                                <tr>
-                                                    <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $value->start_time }}</td>
-                                                    <td>
-                                                        @if($value->end_time == null)
-                                                        <form action="{{ route('end-oxygen-in-ipd') }}" method="POST">
-                                                            @csrf
-                                                                <div class="col-md-12">
-                                                                    <div class="row">
-                                                                        <div class="col-md-8">
-                                                                            <input type="datetime-local" name="end_time" required />
-                                                                        </div>
-                                                                        <input type="hidden" name="id" value="{{ $value->id }}" />
-                                                                        <input type="hidden" name="ipd_id" value="{{ $ipdId }}" />
-                                                                        <input type="hidden" name="start_time" value="{{ $value->start_time }}" />
-                                                                        <div class="col-md-4">
-                                                                            <button class="btn btn-primary  btn-sm" type="submit">Submit</button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </form>
-                                                            @else
-                                                            {{ date('d-m-Y h:i a'),strtotime($value->start_time )}}
-                                                            @endif
-                                                    </td>
-                                                    <td>{{ @$value->duration }}</td>
-                                                 
-                                                </tr> 
-                                            @endforeach
+                                        <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td> {{ date('d-m-Y h:i a',strtotime($value->start_time ))}}</td>
+                                            <td>
+                                                @if($value->end_time == null)
+                                                <form action="{{ route('end-oxygen-in-ipd') }}" method="POST">
+                                                    @csrf
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-8">
+                                                                <input type="datetime-local" name="end_time" required />
+                                                            </div>
+                                                            <input type="hidden" name="id" value="{{ $value->id }}" />
+                                                            <input type="hidden" name="ipd_id" value="{{ $ipdId }}" />
+                                                            <input type="hidden" name="start_time"
+                                                                value="{{ $value->start_time }}" />
+                                                            <div class="col-md-4">
+                                                                <button class="btn btn-primary  btn-sm"
+                                                                    type="submit">Submit</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                @else
+                                                @if(@$value->end_time != null)
+                                                {{ @date('d-m-Y h:i a',strtotime($value->end_time ))}}
+                                                @endif
+                                                @endif
+                                            </td>
+                                            <td>{{ @$value->duration }}</td>
+
+                                        </tr>
+                                        @endforeach
                                         @endif
+                                        @if(@$oxygen_monitering_last->end_time != null ||
+                                        !isset($oxygen_monitering_last))
                                         <tr>
                                             <td>New Start</td>
                                             <td>
                                                 <form action="{{ route('start-oxygen-in-ipd') }}" method="POST">
-                                                @csrf
+                                                    @csrf
                                                     <div class="col-md-12">
                                                         <div class="row">
                                                             <div class="col-md-8">
-                                                                <input type="datetime-local" name="start_time" required />
+                                                                <input type="datetime-local" name="start_time"
+                                                                    required />
                                                             </div>
                                                             <input type="hidden" name="ipd_id" value="{{ $ipdId }}" />
-                                                            
+
                                                             <div class="col-md-4">
-                                                                <button class="btn btn-primary  btn-sm" type="submit">Submit</button>
+                                                                <button class="btn btn-primary  btn-sm"
+                                                                    type="submit">Submit</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -98,11 +108,14 @@
                                             </td>
                                             <td>End Time</td>
                                             <td>Duration (In Seconds)</td>
-                                         
+
                                         </tr>
+                                        @endif
                                     </tbody>
                                 </table>
-                                <span style="color:blue;font-weight:700;font-size:15px">Total : {{ @$total_duration }} min</span>
+                                <span style="color:blue;font-weight:700;font-size:15px;margin:19px 17px 14px 33px">Total
+                                    : {{ @$total_duration.' min' }}
+                                </span>
                             </div>
                         </div>
                     </div>
