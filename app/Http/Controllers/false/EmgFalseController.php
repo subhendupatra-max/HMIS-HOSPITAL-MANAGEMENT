@@ -35,41 +35,21 @@ class EmgFalseController extends Controller
         ]);
 
         $date = $request->date;
-        // $department_details = Department::where('is_active', '1')->where('id', $request->department_id)->first();
+       
         $emg_registaion_list = EmgDetails::where('ins_by', 'sys')->where('created_at', 'like', '%' . $request->date . '%')->orderBy('id', 'desc')->get();
         $pathology_category = PathologyCatagory::get();
         $radiology_category = RadiologyCatagory::get();
 
         $todays_total_emg = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->count();
 
-        // $todays_new = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->where('visit_type', '=', 'New Visit')->count();
-        $todays_new = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->count();
-
-        $todays_total_for_this_department = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->count();
-
         $todays_total_emg_sys = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->where('ins_by', '=', 'sys')->count();
-
-        $todays_new_sys = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->where('ins_by', '=', 'sys')->count();
-
-        $todays_revisit_sys = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->where('visit_type', '=', 'Revisit')->where('ins_by', '=', 'sys')->count();
-
-        $todays_total_for_this_department_sys = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->where('ins_by', '=', 'sys')->count();
-
         $todays_total_emg_ori = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->where('ins_by', '=', 'ori')->count();
-        $todays_new_ori = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->where('ins_by', '=', 'ori')->count();
-
-        $todays_revisit_ori = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->where('visit_type', '=', 'Revisit')->where('ins_by', '=', 'ori')->count();
-        // dd($todays_total_emg);
-        $todays_total_for_this_department_ori = EmgPatientDetails::where('appointment_date', 'like', $date . '%')->where('ins_by', '=', 'ori')->count();
-
-        $pathology_category = PathologyCatagory::get();
-        $radiology_category = RadiologyCatagory::get();
 
         $pathology_test_original = PathologyPatientTest::where('date', 'like', $date . '%')->where('ins_by', 'ori')->count();
         $doctor = User::where('role', '=', 'Doctor')->get();
 
         if (@$date) {
-            return view('false.emg.false_patient_list', compact('radiology_category', 'emg_registaion_list', 'date',  'pathology_category', 'radiology_category', 'todays_total_emg', 'todays_new', 'todays_total_for_this_department', 'todays_total_emg_sys', 'todays_new_sys', 'todays_revisit_sys', 'todays_total_for_this_department_sys', 'todays_total_emg_ori', 'todays_new_ori', 'todays_revisit_ori', 'todays_total_for_this_department_ori', 'pathology_category', 'doctor'));
+            return view('false.emg.false_patient_list', compact('radiology_category', 'emg_registaion_list', 'date',  'pathology_category', 'todays_total_emg',  'todays_total_emg_sys', 'todays_total_emg_ori',  'pathology_category', 'doctor'));
         } else {
             return redirect()->back()->with('success', 'Search Again !!!!');
         }
@@ -90,7 +70,7 @@ class EmgFalseController extends Controller
     {
         try {
             DB::beginTransaction();
-            $emg_patient_details = EmgDetails::select('emg_details.id as emg_id', 'emg_details.case_id', 'emg_details.patient_id')->leftjoin('emg_patient_details', 'emg_patient_details.emg_details_id', '=', 'emg_details.id')->where('emg_patient_details.department_id', '=', $request->pathology_department_id)->where('emg_patient_details.appointment_date', 'like', $request->pathology_date . '%')->limit($request->no_of_patient_for_pathology_test)->get();
+            $emg_patient_details = EmgDetails::select('emg_details.id as emg_id', 'emg_details.case_id', 'emg_details.patient_id')->leftjoin('emg_patient_details', 'emg_patient_details.emg_details_id', '=', 'emg_details.id')->where('emg_patient_details.appointment_date', 'like', $request->pathology_date . '%')->limit($request->no_of_patient_for_pathology_test)->get();
 
             if (@$emg_patient_details[0]->emg_id == null) {
                 return response()->json(['message' => 'You dont have enough patient']);
@@ -104,7 +84,7 @@ class EmgFalseController extends Controller
 
                     $pathology_patient_test = new PathologyPatientTest();
                     $pathology_patient_test->case_id = $value->case_id;
-                    $pathology_patient_test->date = $request->pathology_test_date;
+                    $pathology_patient_test->date = $request->pathology_date;
                     $pathology_patient_test->section = 'EMG';
                     $pathology_patient_test->patient_id = $value->patient_id;
                     $pathology_patient_test->test_id = $pathology_test_details->id;
@@ -129,7 +109,7 @@ class EmgFalseController extends Controller
     {
         try {
             DB::beginTransaction();
-            $emg_patient_details = EmgDetails::select('emg_details.id as emg_id', 'emg_details.case_id', 'emg_details.patient_id')->leftjoin('emg_patient_details', 'emg_patient_details.emg_details_id', '=', 'emg_details.id')->where('emg_patient_details.department_id', '=', $request->radiology_department_id)->where('emg_patient_details.appointment_date', 'like', $request->radiology_date . '%')->limit($request->no_of_patient_for_radiology_test)->get();
+            $emg_patient_details = EmgDetails::select('emg_details.id as emg_id', 'emg_details.case_id', 'emg_details.patient_id')->leftjoin('emg_patient_details', 'emg_patient_details.emg_details_id', '=', 'emg_details.id')->where('emg_patient_details.appointment_date', 'like', $request->radiology_date . '%')->limit($request->no_of_patient_for_radiology_test)->get();
             if (@$emg_patient_details[0]->emg_id == null) {
                 return response()->json(['message' => 'You dont have enough patient']);
             }
@@ -161,22 +141,18 @@ class EmgFalseController extends Controller
 
     public function registation_false_emg(Request $request)
     {
-        // try {
-        //     DB::beginTransaction();
+        try {
+            DB::beginTransaction();
         $emg_prefix = Prefix::where('name', 'emg')->first();
-        // if ($request->visit_type == 'New Visit') {
-        $patient_details = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->where('last_update', '<=', now()->subDays(15))->limit($request->no_of_patient)->get();
-        // }
-        // if ($request->visit_type == 'Revisit') {
-        //     $patient_details = Patient::whereBetween('year', [$request->from_age, $request->to_age])->where('created_at', '<=', now()->subDays(15))->where('ins_by', 'sys')->limit($request->no_of_patient)->get();
-        // }
+      
+        $patient_details = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->where('last_update', '<=', now()->subDays(5))->limit($request->no_of_patient)->get();
+  
         if (@$patient_details[0]->id == null) {
             return response()->json(['message' => 'You dont have enough patient']);
         }
-        // dd($patient_details);
+        
 
         foreach ($patient_details as $value) {
-            // if ($request->visit_type == 'New Visit') {
             FalsePatient::where('id', $value->id)->update(['last_update' => $request->date]);
             $patient = new Patient();
             $patient->patient_prefix =  $value->patient_prefix;
@@ -213,10 +189,7 @@ class EmgFalseController extends Controller
             $patient->save();
 
             $pati_id = $patient->id;
-            // } 
-            // else {
-            //     $pati_id = $value->id;
-            // }
+          
 
             //SAVE in CASE reference
             $caseReference = new caseReference;
@@ -236,18 +209,20 @@ class EmgFalseController extends Controller
             $Emg_details->save();
             //SAVE in opd details
 
-            // $cons_doctor = User::where('department',$request->department_id)->inRandomOrder()->first();
-            // $unit = OpdUnit::select('opd_unit_details.unit_name')->join('opd_unit_details', 'opd_unit_details.opd_unit_id', '=', 'opd_units.id')->where('opd_units.department_id', $request->department_id)->where('opd_units.department_id', $request->department_id)->where('opd_units.days', date('l', strtotime($request->date)))->inRandomOrder()->first();
+            $caseReferenceUpdate = caseReference::find($caseReference->id);
+            $caseReferenceUpdate->section_id = $Emg_details->id;
+            $caseReferenceUpdate->save();
+            //SAVE in CASE reference
 
             //SAVE in opd Visit details
             $emg_visit_details = new EmgPatientDetails();
-            $emg_visit_details->opd_details_id              = $Emg_details->id;
-            $emg_visit_details->department_id               = $request->department_id;
-            $emg_visit_details->cons_doctor                 = $request->cons_doctor;
+            $emg_visit_details->emg_details_id              = $Emg_details->id;
+            $emg_visit_details->department_id               = 3;
+            $emg_visit_details->cons_doctor                 = 1;
             $emg_visit_details->case_type                   = '';
             $emg_visit_details->patient_type                = 'General';
             $emg_visit_details->ticket_fees                 = 00;
-            $emg_visit_details->ticket_no                   = 0;
+            $emg_visit_details->medico_legal_case           = 'no';
             $emg_visit_details->tpa_organization            = '';
             $emg_visit_details->type_no                     = '';
             $emg_visit_details->appointment_date            = $request->date . ' ' . sprintf("%02d", rand(8, 13)) . ':' . sprintf("%02d", rand(00, 59)) . ':' . sprintf("%02d", rand(00, 59));
@@ -261,14 +236,14 @@ class EmgFalseController extends Controller
             $emg_visit_details->ins_by                      = 'sys';
             $emg_visit_details->save();
             //SAVE in opd Visit details
-            // dd($opd_visit_details);
+         
         }
         DB::commit();
         return response()->json(['message' => 'Registation SuccessFully']);
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return response()->json(['message' => 'Error!! Do it Again']);
-        // }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json(['message' => 'Error!! Do it Again']);
+        }
     }
 
     public function delete_radiology_test_false_emg($id)

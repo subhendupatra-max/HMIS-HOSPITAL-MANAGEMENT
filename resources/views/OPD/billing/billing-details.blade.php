@@ -108,6 +108,7 @@
                                             <th>#</th>
                                             <th>Charge Name</th>
                                             <th>Charge Amount</th>
+                                            <th>Qty</th>
                                             <th>Tax</th>
                                             <th>Total</th>
                                         </tr>
@@ -119,6 +120,7 @@
                                             <th scope="row">{{ $loop->iteration }}</th>
                                             <td>{{ @$charge->charges_name }}</td>
                                             <td>{{ @$charge->standard_charges }}</td>
+                                            <td>{{ @$charge->qty }}</td>
                                             <td>{{ @$charge->tax }}</td>
                                             <td>{{ @$charge->amount }}</td>
                                         </tr>

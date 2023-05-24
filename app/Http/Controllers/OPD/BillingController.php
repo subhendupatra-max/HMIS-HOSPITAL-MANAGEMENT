@@ -26,6 +26,7 @@ use App\Models\RadiologyTest;
 use App\Models\BillDetails;
 use App\Models\RadiologyPatientTest;
 use App\Models\IpdDetails;
+use App\Models\Bill;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -92,14 +93,12 @@ class BillingController extends Controller
 
     public function save_new_opd_billing(Request $request)
     {
-        // dd($request->all());
+    //dd($request->all());
         $validate = $request->validate([
             'bill_date'   => 'required',
-            'total'   => 'required',
-            'grand_total'   => 'required',
         ]);
-        // try {
-        //     DB::beginTransaction();
+        try {
+            DB::beginTransaction();
         if ($request->take_discount == 'yes') {
             $status = 'Done';
             $tax = $request->total_tax;
@@ -120,6 +119,9 @@ class BillingController extends Controller
             } else {
                 $payment_status = 'Due';
             }
+        }
+        else{
+            $payment_status = 'Due'; 
         }
 
         // ====================== Billing ===========================================
@@ -142,9 +144,8 @@ class BillingController extends Controller
         $bill->save();
         // ====================== Billing ===========================================
         foreach ($request->charge_category as $key => $value) {
-            if ($value->old_or_new == 'new') {
+            if ($request->old_or_new[$key] == 'new') {
                 $patient_charge = new PatientCharge();
-                $patient_charge->case_id = $request->case_id;
                 $patient_charge->case_id = $request->case_id;
                 $patient_charge->section = $request->section;
                 $patient_charge->charges_date = $request->date;
@@ -164,73 +165,18 @@ class BillingController extends Controller
                 $patient_charge->save();
                 $charge_id = $patient_charge->id;
             }
-            if ($value->old_or_new == 'old') {
+            if ($request->old_or_new[$key] == 'old') {
                 $charge_id = $request->charge_id_old[$key];
+                $patient_charge_update = PatientCharge::find($charge_id);
+                $patient_charge_update->billing_status = '1';
+                $patient_charge_update->save();
             }
-
-
-            // for pathology billing 
-            if ($request->charge_category[$key] == '1') {
-                $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
-                $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
-
-                if ($chargedetailstestp == null) {
-                    $pathology_patient_test = new PathologyPatientTest();
-                    $pathology_patient_test->bill_id = $bill->id;
-                    $pathology_patient_test->case_id = $request->case_id;
-                    $pathology_patient_test->date = $request->date;
-                    $pathology_patient_test->section = 'OPD';
-                    $pathology_patient_test->patient_id = $request->patient_id;
-                    $pathology_patient_test->test_id =  $charge_detp->id;
-                    $pathology_patient_test->opd_id = $request->opd_id;
-                    $pathology_patient_test->generated_by = Auth::user()->id;
-                    $pathology_patient_test->billing_status = '1';
-                    $pathology_patient_test->test_status = '0';
-                    $pathology_patient_test->save();
-                } else {
-                    $chargedetailstestp->billing_status = '1';
-                    $chargedetailstestp->save();
-                }
-            }
-
-            // for pathology billing
-            // for Radiology billing
-
-            if ($request->charge_category[$key] == '2') {
-                $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
-                $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
-
-                if ($chargedetailstest == null) {
-                    $radiology_patient_test = new RadiologyPatientTest();
-                    $radiology_patient_test->bill_id = $bill->id;
-                    $radiology_patient_test->case_id = $request->case_id;
-                    $radiology_patient_test->date = $request->date;
-                    $radiology_patient_test->section = 'OPD';
-                    $radiology_patient_test->patient_id = $request->patient_id;
-                    $radiology_patient_test->test_id = $charge_detr->id;
-                    $radiology_patient_test->opd_id = $request->opd_id;
-                    $radiology_patient_test->generated_by = Auth::user()->id;
-                    $radiology_patient_test->billing_status = '2';
-                    $radiology_patient_test->test_status = '0';
-                    $radiology_patient_test->save();
-                } else {
-                    $chargedetailstest->billing_status = '2';
-                    $chargedetailstest->save();
-                }
-            }
-            // for Radiology billing
-
-            // for Blood Bank billing 
-            // for Blood Bank billing
-
-            // for Ambulance billing 
-            // for Ambulance billing
 
             // ====================== Billing Details ===========================================
             $bill_details_charges = new BillDetails();
             $bill_details_charges->bill_id = $bill->id;
             $bill_details_charges->purpose_for = 'charges';
-            $bill_details_charges->purpose_for_id = $patient_charge->id;
+            $bill_details_charges->purpose_for_id = $charge_id;
             $bill_details_charges->save();
             // ====================== Billing Details ===========================================
         }
@@ -245,8 +191,6 @@ class BillingController extends Controller
                 // ====================== Billing Details ===========================================
             }
         }
-
-
         //payment
         if ($request->payment_amount != null || $request->payment_amount != 0 || $request->payment_amount != '') {
             // ====================== add payment =======================================
@@ -293,12 +237,12 @@ class BillingController extends Controller
             $bill_update->save();
         }
 
-        //     DB::commit();
-        //     return redirect()->route('opd-billing', ['id' => base64_encode($request->opd_id)])->with('success', "Biliing Successfully");
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return back()->withErrors(['error' => $th->getMessage()]);
-        // }
+            DB::commit();
+            return redirect()->route('opd-billing', ['id' => base64_encode($request->opd_id)])->with('success', "Biliing Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
     public function bill_details($bill_id)
     {
@@ -306,20 +250,51 @@ class BillingController extends Controller
         $bill_details = Billing::where('id', $billId)->first();
         $discount_details = DiscountDetails::where('bill_id', $billId)->first();
 
-        $patient_charge_details = BillDetails::select('charges.charges_name', 'patient_charges.amount', 'patient_charges.standard_charges', 'patient_charges.tax')->where('bill_details.purpose_for', '=', 'charges')->leftjoin('patient_charges', 'patient_charges.id', '=', 'bill_details.purpose_for_id')->leftjoin('charges', 'patient_charges.charge_name', '=', 'charges.id')->where('bill_details.bill_id', $billId)->get();
+        $patient_charge_details = BillDetails::select('charges.charges_name', 'patient_charges.amount', 'patient_charges.standard_charges', 'patient_charges.tax', 'patient_charges.qty')->where('bill_details.purpose_for', '=', 'charges')->leftjoin('patient_charges', 'patient_charges.id', '=', 'bill_details.purpose_for_id')->leftjoin('charges', 'patient_charges.charge_name', '=', 'charges.id')->where('bill_details.bill_id', $billId)->get();
 
         $medicine_bill_details = BillDetails::select('medicine_billings.total_amount', 'medicine_billings.bill_prefix', 'medicine_billings.id', 'medicine_billings.bill_date')->where('bill_details.purpose_for', '=', 'medicine')->leftjoin('medicine_billings', 'medicine_billings.id', '=', 'bill_details.purpose_for_id')->get();
 
         $opd_patient_details = OpdDetails::where('case_id', $bill_details->case_id)->first();
         return view('OPD.billing.billing-details', compact('bill_details', 'patient_charge_details', 'opd_patient_details', 'discount_details', 'medicine_bill_details'));
     }
-    public function edit_opd_bill($bill_id)
+    public function edit_opd_bill($bill_id,$id)
     {
         $billId = base64_decode($bill_id);
+        $opd_id = base64_decode($id);
+        $charge_category =  ChargesCatagory::all();
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        $old_applied_charges = PatientCharge::where('billing_status', '0')->where('ins_by', 'ori')->where('case_id', $opd_patient_details->case_id)->get();
+        $medicine_charges = MedicineBilling::where('status', '0')->where('ins_by', 'ori')->where('case_id', $opd_patient_details->case_id)->get();
+        $bill_details = Billing::where('id', $billId)->first();
+        $discount_details = DiscountDetails::where('bill_id', $billId)->first();
+
+        $patient_charge_details = BillDetails::select('charges.charges_name', 'patient_charges.*')->where('bill_details.purpose_for', '=', 'charges')->leftjoin('patient_charges', 'patient_charges.id', '=', 'bill_details.purpose_for_id')->leftjoin('charges', 'patient_charges.charge_name', '=', 'charges.id')->where('bill_details.bill_id', $billId)->get();
+
+        $medicine_bill_details = BillDetails::select('medicine_billings.total_amount', 'medicine_billings.bill_prefix', 'medicine_billings.id', 'medicine_billings.bill_date')->where('bill_details.purpose_for', '=', 'medicine')->leftjoin('medicine_billings', 'medicine_billings.id', '=', 'bill_details.purpose_for_id')->get();
+
+        return view('OPD.billing.edit-billing', compact('opd_patient_details', 'opd_id', 'charge_category', 'old_applied_charges', 'medicine_charges','billId','bill_details','discount_details','patient_charge_details','medicine_bill_details'));
     }
     public function delete_opd_bill($bill_id)
     {
+        try {
+        DB::beginTransaction();
         $billId = base64_decode($bill_id);
+        $bill_details_charges_ = BillDetails::where('bill_id',$billId)->get();
+       
+        foreach($bill_details_charges_ as $key=>$value){
+            
+            if($bill_details_charges_[$key]->purpose_for == 'charges'){
+               $patient_charge_update = PatientCharge::where('id',$bill_details_charges_[$key]->purpose_for_id)->update(['billing_status'=>'0']);
+            }
+        }
+        BillDetails::where('bill_id',$billId)->delete();
+        Billing::where('id',$billId)->delete();
+        DB::commit();
+        return redirect()->back()->with('success', "Billing Deleted Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
 
 

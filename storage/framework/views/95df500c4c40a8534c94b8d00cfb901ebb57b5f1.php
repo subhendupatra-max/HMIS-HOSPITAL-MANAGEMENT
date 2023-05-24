@@ -1,25 +1,25 @@
-@extends('layouts.layout')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header  d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    IPD // <span style="color:blue">{{ @$department_details->department_name }}</span>
-                    // <span>{{ date('d-m-Y',strtotime($date))}}</span>
+                    IPD // <span style="color:blue"><?php echo e(@$department_details->department_name); ?></span>
+                    // <span><?php echo e(date('d-m-Y',strtotime($date))); ?></span>
                 </div>
 
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        <a class="btn btn-primary btn-sm" href="{{ route('ipd-false-generation') }}"><i
+                        <a class="btn btn-primary btn-sm" href="<?php echo e(route('ipd-false-generation')); ?>"><i
                                 class="fa fa-reply"></i> Change Department</a>
                     </div>
                 </div>
 
             </div>
         </div>
-        @include('message.notification')
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body p-0  mt-3">
             <div class="options px-5 pt-1  border-bottom pb-3">
                 <div class="row no-gutters">
@@ -27,25 +27,46 @@
                         <span style="color: brown;font-size: 14px;font-weight: 700;"><i class="fa fa-cube"></i> IPD
                             Registation</span>
                         <div class="col-md-12 mt-3">
-                            <form method="post" action="{{ route('registation-false-ipd') }}">
-                                @csrf
+                            <form method="post" action="<?php echo e(route('registation-false-ipd')); ?>">
+                                <?php echo csrf_field(); ?>
                                 <input type="hidden" id="department_id" name="department_id"
-                                    value="{{ $department_id }}" />
-                                <input type="hidden" id="date" name="date" value="{{ $date }}" />
-                                @error('department_id')
-                                <small class="text-danger">{{ $message }}</sma>
-                                    @enderror
-                                    @error('date')
-                                    <small class="text-danger">{{ $message }}</sma>
-                                        @enderror
+                                    value="<?php echo e($department_id); ?>" />
+                                <input type="hidden" id="date" name="date" value="<?php echo e($date); ?>" />
+                                <?php $__errorArgs = ['department_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <small class="text-danger"><?php echo e($message); ?></sma>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                    <?php $__errorArgs = ['date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e($message); ?></sma>
+                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                         <div class="row">
                                             <div class="form-group col-md-6 newaddappon ">
                                                 <label class="date-format"> No. Of Patient <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" id="no_of_patient" name="no_of_patient" required />
-                                                @error('no_of_patient')
-                                                <small class="text-danger">{{ $message }}</sma>
-                                                    @enderror
+                                                <?php $__errorArgs = ['no_of_patient'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></sma>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-6 newuserlisttchange ">
                                                 <label for="from">From <span class="text-danger">*</span></label>
@@ -55,9 +76,16 @@
                                                     <option value="OPD">OPD</option>
                                                     <option value="EMG">EMG</option>
                                                 </select>
-                                                @error('from')
-                                                <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <?php $__errorArgs = ['from'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-6 newuserlisttchange" id="hcedeyvb"
                                                 style="display:none">
@@ -68,39 +96,68 @@
                                                     <option value="Revisit">Revisit</option>
                                                     <option value="New Visit">New Visit</option>
                                                 </select>
-                                                @error('re_new')
-                                                <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <?php $__errorArgs = ['re_new'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-6 newuserlisttchange ">
                                                 <label for="gender">Gender <span class="text-danger">*</span></label>
                                                 <select name="gender" class="form-control select2-show-search"
                                                     id="gender" required>
                                                     <option value="" for="gender">gender</option>
-                                                    @foreach (Config::get('static.gender') as $lang => $genders)
-                                                    <option value="{{ $genders }}"> {{ $genders }}
+                                                    <?php $__currentLoopData = Config::get('static.gender'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $genders): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($genders); ?>"> <?php echo e($genders); ?>
+
                                                     </option>
-                                                    @endforeach
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
-                                                @error('gender')
-                                                <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <?php $__errorArgs = ['gender'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-6 newaddappon ">
                                                 <label class="date-format"> From Age(in year) <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" name="from_age" id="from_age" required />
-                                                @error('from_age')
-                                                <small class="text-danger">{{ $message }}</sma>
-                                                    @enderror
+                                                <?php $__errorArgs = ['from_age'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></sma>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-6 newaddappon ">
                                                 <label class="date-format"> To Age(in year) <span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" name="to_age" id="to_age" required />
-                                                @error('to_age')
-                                                <small class="text-danger">{{ $message }}</sma>
-                                                    @enderror
+                                                <?php $__errorArgs = ['to_age'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></sma>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-12 opd-bladedesign ">
                                                 <button class="btn btn-primary btn-sm text-center ml-2" type="button"
@@ -116,33 +173,48 @@
                                 class="fa fa-cube"></i> Pathology Investigation</span>
                         <div class="col-md-12 mt-3">
                             <form method="post" action="#">
-                                @csrf
+                                <?php echo csrf_field(); ?>
                                 <input type="hidden" id="pathology_department_id" name="pathology_department_id"
-                                    value="{{ $department_id }}" />
-                                <input type="hidden" id="pathology_date" name="pathology_date" value="{{ $date }}" />
+                                    value="<?php echo e($department_id); ?>" />
+                                <input type="hidden" id="pathology_date" name="pathology_date" value="<?php echo e($date); ?>" />
                                 <div class="row">
                                     <div class="form-group col-md-12 newuserlisttchange ">
                                         <label for="gender"> Catagory <span class="text-danger">*</span></label>
                                         <select name="pathology_category" class="form-control select2-show-search"
                                             id="pathology_category" required>
                                             <option value="">Select Category..</option>
-                                            @foreach ($pathology_category as $key => $value)
-                                            <option value="{{ $value->id }}"> {{ $value->catagory_name }}
+                                            <?php $__currentLoopData = $pathology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($value->id); ?>"> <?php echo e($value->catagory_name); ?>
+
                                             </option>
-                                            @endforeach
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
-                                        @error('pathology_category')
-                                        <small class="text-danger">{{ $message }}</small>
-                                        @enderror
+                                        <?php $__errorArgs = ['pathology_category'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <small class="text-danger"><?php echo e($message); ?></small>
+                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                     </div>
                                     <div class="form-group col-md-12 newaddappon ">
                                         <label class="date-format"> No. of patient<span
                                                 class="text-danger">*</span></label>
                                         <input type="text" name="no_of_patient_for_pathology_test"
                                             id="no_of_patient_for_pathology_test" required />
-                                        @error('no_of_patient_for_pathology_test')
-                                        <small class="text-danger">{{ $message }}</sma>
-                                            @enderror
+                                        <?php $__errorArgs = ['no_of_patient_for_pathology_test'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <small class="text-danger"><?php echo e($message); ?></sma>
+                                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                     </div>
 
                                     <div class="form-group col-md-12 opd-bladedesign ">
@@ -160,16 +232,30 @@
                                 class="fa fa-cube"></i> Radiology Investigation</span>
                         <div class="col-md-12 mt-3">
                             <form method="post" action="#">
-                                @csrf
+                                <?php echo csrf_field(); ?>
                                 <input type="hidden" id="radiology_department_id" name="radiology_department_id"
-                                    value="{{ $department_id }}" />
-                                <input type="hidden" id="radiology_date" name="radiology_date" value="{{ $date }}" />
-                                @error('department_id')
-                                <small class="text-danger">{{ $message }}</sma>
-                                    @enderror
-                                    @error('date')
-                                    <small class="text-danger">{{ $message }}</sma>
-                                        @enderror
+                                    value="<?php echo e($department_id); ?>" />
+                                <input type="hidden" id="radiology_date" name="radiology_date" value="<?php echo e($date); ?>" />
+                                <?php $__errorArgs = ['department_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <small class="text-danger"><?php echo e($message); ?></sma>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                    <?php $__errorArgs = ['date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e($message); ?></sma>
+                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                         <div class="row">
 
                                             <div class="form-group col-md-12 newuserlisttchange ">
@@ -178,23 +264,38 @@
                                                     class="form-control select2-show-search" id="radiology_category"
                                                     required>
                                                     <option value="">Select Category..</option>
-                                                    @foreach ($radiology_category as $key => $value)
-                                                    <option value="{{ $value->id }}"> {{ $value->catagory_name }}
+                                                    <?php $__currentLoopData = $radiology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($value->id); ?>"> <?php echo e($value->catagory_name); ?>
+
                                                     </option>
-                                                    @endforeach
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
-                                                @error('radiology_category')
-                                                <small class="text-danger">{{ $message }}</small>
-                                                @enderror
+                                                <?php $__errorArgs = ['radiology_category'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></small>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
                                             <div class="form-group col-md-12 newaddappon ">
                                                 <label class="date-format"> No. of patient<span
                                                         class="text-danger">*</span></label>
                                                 <input type="text" name="no_of_patient_for_radiology_test"
                                                     id="no_of_patient_for_radiology_test" required />
-                                                @error('no_of_patient_for_radiology_test')
-                                                <small class="text-danger">{{ $message }}</sma>
-                                                    @enderror
+                                                <?php $__errorArgs = ['no_of_patient_for_radiology_test'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                                <small class="text-danger"><?php echo e($message); ?></sma>
+                                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                             </div>
 
                                             <div class="form-group col-md-12 opd-bladedesign ">
@@ -213,42 +314,30 @@
                                 <div class="col-md-12">
                                     <ul class="list-group">
                                         <li class="list-group-item"><i class="fa fa-cog text-danger"
-                                                aria-hidden="true"></i> Today's total IPD Patient : {{
-                                            @$todays_total_ipd }} <br>
-                                            <span class="badge badge-success badge-pill">Original : {{
-                                                @$todays_total_ipd_ori }}</span> <span
-                                                class="badge badge-danger badge-pill">False : {{ @$todays_total_ipd_sys
-                                                }}</span>
+                                                aria-hidden="true"></i> Today's total IPD Patient : <?php echo e(@$todays_total_ipd); ?> <br>
+                                            <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_total_ipd_ori); ?></span> <span
+                                                class="badge badge-danger badge-pill">False : <?php echo e(@$todays_total_ipd_sys); ?></span>
                                         </li>
                                         <li class="list-group-item"><i class="fa fa-cog text-primary"
-                                                aria-hidden="true"></i> IPD from OPD for this department : {{
-                                            @$todays_ipd_from_opd }}
+                                                aria-hidden="true"></i> IPD from OPD for this department : <?php echo e(@$todays_ipd_from_opd); ?>
+
                                             <br>
-                                            <span class="badge badge-success badge-pill">Original : {{
-                                                @$todays_ipd_from_opd_ori }}</span> <span
-                                                class="badge badge-danger badge-pill">False : {{
-                                                @$todays_ipd_from_opd_sys
-                                                }}</span>
+                                            <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_ipd_from_opd_ori); ?></span> <span
+                                                class="badge badge-danger badge-pill">False : <?php echo e(@$todays_ipd_from_opd_sys); ?></span>
                                         </li>
                                         <li class="list-group-item"><i class="fa fa-cog text-success"
-                                                aria-hidden="true"></i> IPD from EMG for this department: {{
-                                            @$todays_ipd_from_emg }}
+                                                aria-hidden="true"></i> IPD from EMG for this department: <?php echo e(@$todays_ipd_from_emg); ?>
+
                                             <br>
-                                            <span class="badge badge-success badge-pill">Original : {{
-                                                @$todays_ipd_from_emg_ori }}</span> <span
-                                                class="badge badge-danger badge-pill">False : {{
-                                                @$todays_ipd_from_emg_sys
-                                                }}</span>
+                                            <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_ipd_from_emg_ori); ?></span> <span
+                                                class="badge badge-danger badge-pill">False : <?php echo e(@$todays_ipd_from_emg_sys); ?></span>
                                         </li>
                                         <li class="list-group-item"><i class="fa fa-cog text-warning"
-                                                aria-hidden="true"></i> Total for this Department : {{
-                                            @$todays_total_for_this_department }}
+                                                aria-hidden="true"></i> Total for this Department : <?php echo e(@$todays_total_for_this_department); ?>
+
                                             <br>
-                                            <span class="badge badge-success badge-pill">Original : {{
-                                                @$todays_total_for_this_department_ori }}</span> <span
-                                                class="badge badge-danger badge-pill">False : {{
-                                                @$todays_total_for_this_department_sys
-                                                }}</span>
+                                            <span class="badge badge-success badge-pill">Original : <?php echo e(@$todays_total_for_this_department_ori); ?></span> <span
+                                                class="badge badge-danger badge-pill">False : <?php echo e(@$todays_total_for_this_department_sys); ?></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -263,17 +352,17 @@
                         Pathology </span>
                     <div class="col-md-12">
                         <div class="row">
-                            @foreach ($pathology_category as $value)
+                            <?php $__currentLoopData = $pathology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
                 $ori_pathlogy = DB::table('pathology_patient_tests')->join('pathology_tests', 'pathology_tests.id', 'pathology_patient_tests.test_id')->where('pathology_patient_tests.section', 'IPD')->where('pathology_tests.catagory_id', $value->id)->where('pathology_patient_tests.ins_by', 'ori')->where('pathology_patient_tests.date', 'like', $date . '%')->count();
 
                 $sys_pathlogy = DB::table('pathology_patient_tests')->join('pathology_tests', 'pathology_tests.id', 'pathology_patient_tests.test_id')->where('pathology_patient_tests.section', 'IPD')->where('pathology_tests.catagory_id', $value->id)->where('pathology_patient_tests.ins_by', 'sys')->where('pathology_patient_tests.date', 'like', $date . '%')->count();
                 ?>
-                            <div class="col-md-2">{{ $value->catagory_name }}<br>
-                                <span class="badge badge-success">{{ $ori_pathlogy }}</span>
-                                <span class="badge badge-danger">{{ $sys_pathlogy }}</span>
+                            <div class="col-md-2"><?php echo e($value->catagory_name); ?><br>
+                                <span class="badge badge-success"><?php echo e($ori_pathlogy); ?></span>
+                                <span class="badge badge-danger"><?php echo e($sys_pathlogy); ?></span>
                             </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
                 </div>
@@ -284,17 +373,17 @@
                         Radiology</span>
                     <div class="col-md-12">
                         <div class="row">
-                            @foreach ($radiology_category as $value)
+                            <?php $__currentLoopData = $radiology_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
                 $ori_radiology = DB::table('radiology_patient_tests')->join('radiology_tests', 'radiology_tests.id', 'radiology_patient_tests.test_id')->where('radiology_tests.catagory_id', $value->id)->where('radiology_patient_tests.ins_by', 'ori')->where('radiology_patient_tests.section', 'IPD')->where('radiology_patient_tests.date', 'like', $date . '%')->count();
 
                 $sys_radiology = DB::table('radiology_patient_tests')->join('radiology_tests', 'radiology_tests.id', 'radiology_patient_tests.test_id')->where('radiology_tests.catagory_id', $value->id)->where('radiology_patient_tests.section', 'IPD')->where('radiology_patient_tests.ins_by', 'sys')->where('radiology_patient_tests.date', 'like', $date . '%')->count();
                 ?>
-                            <div class="col-md-2">{{ $value->catagory_name }}<br>
-                                <span class="badge badge-success">{{ $ori_radiology }}</span>
-                                <span class="badge badge-danger">{{ $sys_radiology }}</span>
+                            <div class="col-md-2"><?php echo e($value->catagory_name); ?><br>
+                                <span class="badge badge-success"><?php echo e($ori_radiology); ?></span>
+                                <span class="badge badge-danger"><?php echo e($sys_radiology); ?></span>
                             </div>
-                            @endforeach
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </div>
                     </div>
                 </div>
@@ -314,56 +403,59 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (isset($ipd_registaion_list))
-                            @foreach ($ipd_registaion_list as $value)
+                            <?php if(isset($ipd_registaion_list)): ?>
+                            <?php $__currentLoopData = $ipd_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td><a class="textlink"
-                                        href="{{ route('ipd-profile', ['id' => base64_encode($value->id)]) }}">{{
-                                        @$value->id }}</a>
+                                        href="<?php echo e(route('ipd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
                                     <br>
-                                    <a href="#" onclick="showAllTest({{ $value->case_id }})"
+                                    <a href="#" onclick="showAllTest(<?php echo e($value->case_id); ?>)"
                                         class="badge badge-primary">Investigation</a>
                                 </td>
                                 <td>
-                                    {{ @$value->all_patient_details->prefix }}
-                                    {{ @$value->all_patient_details->first_name }}
-                                    {{ @$value->all_patient_details->middle_name }}
-                                    {{ @$value->all_patient_details->last_name }}({{ @$value->all_patient_details->id
-                                    }})<br>
+                                    <?php echo e(@$value->all_patient_details->prefix); ?>
+
+                                    <?php echo e(@$value->all_patient_details->first_name); ?>
+
+                                    <?php echo e(@$value->all_patient_details->middle_name); ?>
+
+                                    <?php echo e(@$value->all_patient_details->last_name); ?>(<?php echo e(@$value->all_patient_details->id); ?>)<br>
                                     <i class="fa fa-venus-mars text-primary"></i>
-                                    {{ @$value->all_patient_details->gender }} <i
+                                    <?php echo e(@$value->all_patient_details->gender); ?> <i
                                         class="fa fa-calendar-plus-o text-primary"></i>
-                                    @if (@$value->all_patient_details->year != 0)
-                                    {{ @$value->all_patient_details->year }}y
-                                    @endif
-                                    @if (@$value->all_patient_details->month != 0)
-                                    {{ @$value->all_patient_details->month }}m
-                                    @endif
-                                    @if (@$value->all_patient_details->day != 0)
-                                    {{ @$value->all_patient_details->day }}d
-                                    @endif
+                                    <?php if(@$value->all_patient_details->year != 0): ?>
+                                    <?php echo e(@$value->all_patient_details->year); ?>y
+                                    <?php endif; ?>
+                                    <?php if(@$value->all_patient_details->month != 0): ?>
+                                    <?php echo e(@$value->all_patient_details->month); ?>m
+                                    <?php endif; ?>
+                                    <?php if(@$value->all_patient_details->day != 0): ?>
+                                    <?php echo e(@$value->all_patient_details->day); ?>d
+                                    <?php endif; ?>
 
                                 </td>
                                 <td>
-                                    <i class="fa fa-calendar text-primary"></i> Admission Date :  {{ date('d-m-Y h:i A',
-                                    strtotime($value->appointment_date)) }}
+                                    <i class="fa fa-calendar text-primary"></i> Admission Date :  <?php echo e(date('d-m-Y h:i A',
+                                    strtotime($value->appointment_date))); ?>
+
                                 </td>
                                 <td>
-                                    {{$value->bed_details->bed_name}} -
-                                    {{$value->unit_details->bedUnit_name}} -
-                                    {{$value->ward_details->ward_name}}
+                                    <?php echo e($value->bed_details->bed_name); ?> -
+                                    <?php echo e($value->unit_details->bedUnit_name); ?> -
+                                    <?php echo e($value->ward_details->ward_name); ?>
+
                                 </td>
                                 <td>
-                                    <a href="#" onclick="addOperation({{ $value->case_id }},{{ $value->id }},{{ $value->patient_id }})"
+                                    <a href="#" onclick="addOperation(<?php echo e($value->case_id); ?>,<?php echo e($value->id); ?>,<?php echo e($value->patient_id); ?>)"
                                         class="badge badge-secondary"><i class="fa fa-scissors"></i> Add Operation</a>
                                 </td>
                                 <td>
-                                    <a href="#" onclick="dischargedPatient({{ $value->case_id }},{{ $value->id }},{{ $value->patient_id }},{{$value->bed_details->id}})"
+                                    <a href="#" onclick="dischargedPatient(<?php echo e($value->case_id); ?>,<?php echo e($value->id); ?>,<?php echo e($value->patient_id); ?>,<?php echo e($value->bed_details->id); ?>)"
                                         class="badge badge-info"><i class="fa fa-file"></i> Discharged</a>
                                 </td>
                             </tr>
-                            @endforeach
-                            @endif
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -426,8 +518,8 @@
                 <h6 class="modal-title">Discharged</h6><button aria-label="Close" class="close"
                     data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
             </div>
-            <form action="{{ route('add-discharged-false') }}" method="POST">
-            @csrf
+            <form action="<?php echo e(route('add-discharged-false')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
 
             <input type="hidden" name="patient_id" id="patient_id" />
             <input type="hidden" name="case_id" id="case_id" />
@@ -444,28 +536,43 @@
                             <label for="discharge_status" class="form-label">Discharge Status <span class="required">*</span></label>
                             <select name="discharge_status" class="form-control" id="discharge_status" required>
                                 <option value="">Select...</option>
-                                @foreach (Config::get('static.discharge_type') as $lang => $dischargeType)
-                                <option value="{{ $dischargeType }}"> {{ $dischargeType }}
+                                <?php $__currentLoopData = Config::get('static.discharge_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $dischargeType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($dischargeType); ?>"> <?php echo e($dischargeType); ?>
+
                                 </option>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
-                            @error('discharge_status')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['discharge_status'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
     
                         <div class="form-group col-md-12">
                             <label for="icd_code" class="form-label">Icd Code <span class="required">*</span></label>
                             <select name="icd_code" class="form-control select2-show-search" id="icd_code" required>
                                 <option value="">Select...</option>
-                                @foreach ( $icd_code as $item)
-                                <option value="{{ $item->id }}">{{ $item->diagonasis_name }} ({{ $item->icd_code }})
+                                <?php $__currentLoopData = $icd_code; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($item->id); ?>"><?php echo e($item->diagonasis_name); ?> (<?php echo e($item->icd_code); ?>)
                                 </option>
-                                @endforeach
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
-                            @error('icd_code')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['icd_code'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                    </div>
                 </div>
@@ -493,10 +600,10 @@
     function showAllTest(case_id) {
         var div_pathology_radiology = '';
         $.ajax({
-            url: "{{ route('false-pathology-test-show-in_modal') }}",
+            url: "<?php echo e(route('false-pathology-test-show-in_modal')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 caseId: case_id,
             },
             success: function(response) {
@@ -554,10 +661,10 @@
         var pathology_department_id_ = $('#pathology_department_id').val();
 
         $.ajax({
-            url: "{{ route('false-pathology-test-add-ipd') }}",
+            url: "<?php echo e(route('false-pathology-test-add-ipd')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 no_of_patient_for_pathology_test: no_of_patient_for_pathology_test_,
                 pathology_category: pathology_category_,
                 pathology_date: pathology_date_,
@@ -605,10 +712,10 @@
         var radiology_department_id_ = $('#radiology_department_id').val();
 
         $.ajax({
-            url: "{{ route('false-radiology-test-add-ipd') }}",
+            url: "<?php echo e(route('false-radiology-test-add-ipd')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 // radiology_visit_type : radiology_visit_type_,
                 // radiology_to_age : radiology_to_age_,
                 // radiology_from_age : radiology_from_age_,
@@ -685,10 +792,10 @@
         var re_new_ = $('#re_new').val();
 
         $.ajax({
-            url: "{{ route('registation-false-ipd') }}",
+            url: "<?php echo e(route('registation-false-ipd')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 to_age: to_age_,
                 from_age: from_age_,
                 gender: gender_,
@@ -717,4 +824,5 @@
     }
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/false/ipd/false_patient_list.blade.php ENDPATH**/ ?>

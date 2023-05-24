@@ -70,18 +70,14 @@
                                                     <a class="dropdown-item" href="">
                                                         <i class="fa fa-print"></i> Print
                                                     </a>
-
-                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit opd charges')): ?>
-                                                        <a class="dropdown-item" href="<?php echo e(route('edit-opd-charges',['id'=>base64_encode($opd_id),'charge_id'=>base64_encode($value->id)])); ?>">
-                                                            <i class="fa fa-edit"></i> Edit
-                                                        </a>
-                                                    <?php endif; ?>
-                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete opd billing')): ?>
-                                                        <a class="dropdown-item" href="<?php echo e(route('delete-opd-bill',['bill_id'=>$value->id])); ?>">
+                                                    
+                                                    <?php if($value->billing_status == '0'): ?>
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete opd charges')): ?>
+                                                        <a class="dropdown-item" href="<?php echo e(route('delete-opd-charges',['id'=>base64_encode($opd_id),'charge_id'=>base64_encode($value->id)])); ?>">
                                                             <i class="fa fa-trash"></i> Delete
                                                         </a>
                                                     <?php endif; ?>
-
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
                                         </td>

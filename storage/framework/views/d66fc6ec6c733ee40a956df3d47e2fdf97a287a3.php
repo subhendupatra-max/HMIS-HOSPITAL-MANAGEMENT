@@ -82,12 +82,12 @@
                                                     </a>
 
                                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit opd billing')): ?>
-                                                        <a class="dropdown-item" href="<?php echo e(route('edit-opd-bill',['bill_id'=>$value->id])); ?>">
+                                                        <a class="dropdown-item" href="<?php echo e(route('edit-opd-bill',['bill_id'=>base64_encode($value->id),'id'=>base64_encode($opd_id)])); ?>">
                                                             <i class="fa fa-edit"></i> Edit
                                                         </a>
                                                     <?php endif; ?>
                                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete opd billing')): ?>
-                                                        <a class="dropdown-item" href="<?php echo e(route('delete-opd-bill',['bill_id'=>$value->id])); ?>">
+                                                        <a class="dropdown-item" href="<?php echo e(route('delete-opd-bill',['bill_id'=>base64_encode($value->id)])); ?>">
                                                             <i class="fa fa-trash"></i> Delete
                                                         </a>
                                                     <?php endif; ?>

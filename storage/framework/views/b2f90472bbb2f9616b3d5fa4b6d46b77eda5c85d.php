@@ -37,6 +37,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
+                            <input type="hidden" name="unit" value="<?php echo e($medicine_details->unit); ?>" />
                             <div class="col-md-4 form-group">
                              
 

@@ -132,8 +132,8 @@ class IpdController extends Controller
             'admitted_by' => 'required',
             'admitted_by_contact_no' => 'required',
         ]);
-        // try {
-        //     DB::beginTransaction();
+        try {
+            DB::beginTransaction();
         $result =  Bed::where('id', $request->bed)->where('is_used', 'no')->first();
         if ($result == null) {
             return redirect()->back()->with('success', 'Select Another Bed');
@@ -210,10 +210,10 @@ class IpdController extends Controller
         DB::commit();
         return redirect()->route('ipd-patient-listing')->with('success', 'Ipd Registation Sucessfully');
 
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return redirect()->back()->with('error', $th->getMessage());
-        // }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     public function ipd_patient_status_change(Request $request)

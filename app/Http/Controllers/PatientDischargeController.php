@@ -8,6 +8,7 @@ use App\Models\DischargedPatient;
 use App\Models\IpdDetails;
 use App\Models\Diagonasis;
 use App\Models\Patient;
+use App\Models\Bed;
 use App\Models\PatientBedHistory;
 use Illuminate\Support\Facades\DB;
 
@@ -69,6 +70,8 @@ class PatientDischargeController extends Controller
             IpdDetails::where('id', $ipd_details->ipd_id)->update(['discharged' => 'yes', 'discharged_date' => $ipd_details->discharge_date]);
 
             PatientBedHistory::where('ipd_id', $ipd_details->id)->update(['is_present' => 'no', 'to_date' => $ipd_details->discharge_date]);
+
+            Bed::where('id', $ipd_details->bed)->update(['is_used' => 'Under Maintenance']);
 
             DB::commit();
             if ($status) {

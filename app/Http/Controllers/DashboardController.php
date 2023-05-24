@@ -22,7 +22,7 @@ class DashboardController extends Controller
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
             }
-        })->sum('ticket_fees');
+        })->where('appointment_date', 'like', date('Y-m-d') . '%')->sum('ticket_fees');
 
         // dd($opd_today_ticket_details);
         $opd_today_new_patient =  OpdVisitDetails::where(function ($query) {
@@ -86,17 +86,17 @@ class DashboardController extends Controller
             }
         })->where('discharged', '=', 'yes')->where('discharged_date', 'like', date('Y-m-d') . '%')->count();
 
-        $ipd_income =  IpdDetails::where(function ($query) {
-            if (!auth()->user()->can('False Generation')) {
-                $query->where('ins_by', 'ori');
-            }
-        })->sum('ticket_fees');
+        // $ipd_income =  IpdDetails::where(function ($query) {
+        //     if (!auth()->user()->can('False Generation')) {
+        //         $query->where('ins_by', 'ori');
+        //     }
+        // })->sum('ticket_fees');
 
-        $pathology_income =  PathologyPatientTest::where(function ($query) {
-            if (!auth()->user()->can('False Generation')) {
-                $query->where('ins_by', 'ori');
-            }
-        })->leftJoin('pathology_billings', 'pathology_billings.patientId', '=', 'pathology_patient_tests.patient_id')->sum('grand_total');
+        // $pathology_income =  PathologyPatientTest::where(function ($query) {
+        //     if (!auth()->user()->can('False Generation')) {
+        //         $query->where('ins_by', 'ori');
+        //     }
+        // })->leftJoin('pathology_billings', 'pathology_billings.patientId', '=', 'pathology_patient_tests.patient_id')->sum('grand_total');
 
         $pharmacy_income =  MedicineBilling::where(function ($query) {
             if (!auth()->user()->can('False Generation')) {
@@ -106,6 +106,6 @@ class DashboardController extends Controller
 
         // dd($pharmacy_income);
 
-        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'ipd_income', 'pathology_income', 'pharmacy_income'));
+        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'pharmacy_income'));
     }
 }

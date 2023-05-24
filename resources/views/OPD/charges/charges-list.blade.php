@@ -70,18 +70,18 @@
                                                     <a class="dropdown-item" href="">
                                                         <i class="fa fa-print"></i> Print
                                                     </a>
-
-                                                    @can('edit opd charges')
+                                                    {{-- @can('edit opd charges')
                                                         <a class="dropdown-item" href="{{route('edit-opd-charges',['id'=>base64_encode($opd_id),'charge_id'=>base64_encode($value->id)])}}">
                                                             <i class="fa fa-edit"></i> Edit
                                                         </a>
-                                                    @endcan
-                                                    @can('delete opd billing')
-                                                        <a class="dropdown-item" href="{{route('delete-opd-bill',['bill_id'=>$value->id])}}">
+                                                    @endcan --}}
+                                                    @if($value->billing_status == '0')
+                                                    @can('delete opd charges')
+                                                        <a class="dropdown-item" href="{{route('delete-opd-charges',['id'=>base64_encode($opd_id),'charge_id'=>base64_encode($value->id)])}}">
                                                             <i class="fa fa-trash"></i> Delete
                                                         </a>
                                                     @endcan
-
+                                                    @endif
                                                 </div>
                                             </div>
                                         </td>

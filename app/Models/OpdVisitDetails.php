@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Department;
+use App\Models\OpdDetails;
 use App\Models\User;
 
 class OpdVisitDetails extends Model
@@ -25,6 +26,10 @@ class OpdVisitDetails extends Model
     public function GeneratedBy()
     {
         return $this->belongsTo(User::class, 'generated_by', 'id');
+    }
+    public function opd_details_data()
+    {
+        return $this->belongsTo(OpdDetails::class, 'opd_details_id', 'id');
     }
     
     public function PatientPhisicalCondition()
