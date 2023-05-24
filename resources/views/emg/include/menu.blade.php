@@ -24,3 +24,6 @@
 <!-- 
 <a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('timeline-lisitng-in-opd', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-file"></i> Bill Summary</a> -->
 <a class="dropdown-item {{ Request::segment(2) == 'emg-timeline' ? 'active' : '' }}" href="{{ route('physical-condition-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-file"></i> Physical Conditions</a>
+<a class="dropdown-item {{ Request::segment(2) == 'emg-operation' ? 'active' : '' }}" href="{{ route('emg-operation-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="far fa-calendar-check"></i> Operation</a>
+
+<a class="dropdown-item {{ Request::segment(2) == 'emg-pathology-investigation' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa-solid fa-droplet"></i> Blood Details</a>

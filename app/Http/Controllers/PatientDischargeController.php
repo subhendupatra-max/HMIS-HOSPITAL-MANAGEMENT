@@ -19,10 +19,12 @@ class PatientDischargeController extends Controller
         $discharged_patient = DischargedPatient::all();
         $ipd_details = IpdDetails::where('id', $ipdId)->first();
         $ipd_patient_details = IpdDetails::where('id', $ipdId)->first();
+        $patient_details = Patient::where('id',$ipd_details->patient_id)->first();
         // dd($ipd_patient_details);
         $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipdId)->get();
+
         $icd_code = Diagonasis::all();
-        return view('Ipd.discharge-patient.add-discharge-patient', compact('discharged_patient', 'ipdId', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code'));
+        return view('Ipd.discharge-patient.add-discharge-patient', compact('discharged_patient', 'ipdId', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code','patient_details'));
     }
 
     public function add_patient_discharge($ipd_id)

@@ -97,13 +97,13 @@ class BloodBankController extends Controller
         $blood_group_id = base64_decode($blood_group_id);
         $blood_groups_id = BloodGroup::where('id', $blood_group_id)->first(); //a
         $blood_details = Blood::where('id', $blood_id)->first();
-        $doctor = User::where('role', '=', 'Doctor')->get();
+        $issed_by = User::all();
         $catagory = ChargesCatagory::all();
         $blood_groups = BloodGroup::all();
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $getBag = Blood::where('blood_group_id', $blood_group_id)->get();
 
-        return view('Blood_Bank.add-blood-issue-details', compact('doctor', 'catagory', 'blood_groups', 'getBag', 'blood_details', 'blood_groups_id', 'blood_id', 'all_patient'));
+        return view('Blood_Bank.add-blood-issue-details', compact('issed_by', 'catagory', 'blood_groups', 'getBag', 'blood_details', 'blood_groups_id', 'blood_id', 'all_patient'));
     }
 
     public function save_blood_issue_details(Request $request)
@@ -113,21 +113,12 @@ class BloodBankController extends Controller
         $blood_issue->blood_id           = $request->blood_id;
         $blood_issue->blood_group_id     = $request->blood_group_id;
         $blood_issue->issue_date         = $request->issue_date;
-        $blood_issue->doctor             = $request->doctor;
+        $blood_issue->issed_by           = $request->issed_by;
         $blood_issue->reference_name     = $request->reference_name;
         $blood_issue->technician         = $request->technician;
         $blood_issue->blood_group        = $request->blood_group;
         $blood_issue->bag                = $request->bag;
-        $blood_issue->charge_catagory_id = $request->charge_category;
-        $blood_issue->charge_name        = $request->charge_name;
-        $blood_issue->standard_charge    = $request->standard_charges;
         $blood_issue->blood_qty          = $request->blood_qty;
-        $blood_issue->total              = $request->total;
-        $blood_issue->discount           = $request->discount;
-        $blood_issue->tax                = $request->taxid;
-        $blood_issue->net_amount         = $request->net_amount;
-        $blood_issue->payment_mode       = $request->payment_mode;
-        $blood_issue->payment_amount     = $request->payment_amount;
         $blood_issue->note               = $request->note;
         $status = $blood_issue->save();
 
@@ -148,13 +139,13 @@ class BloodBankController extends Controller
         $blood_group_id = base64_decode($blood_group_id);
         $blood_groups_id = BloodGroup::where('id', $blood_group_id)->first(); //a
         $blood_details = Blood::where('id', $blood_id)->first();
-        $doctor = User::where('role', '=', 'Doctor')->get();
+        $issed_by = User::all();
         $catagory = ChargesCatagory::all();
         $blood_groups = BloodGroup::all();
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $getBag = Blood::where('blood_group_id', $blood_group_id)->get();
 
 
-        return view('Blood_Bank.add-blood-issue-details', compact('doctor', 'catagory', 'blood_groups', 'getBag', 'blood_details', 'blood_groups_id', 'blood_id', 'all_patient', 'patient_details_information'));
+        return view('Blood_Bank.add-blood-issue-details', compact('issed_by','catagory', 'blood_groups', 'getBag', 'blood_details', 'blood_groups_id', 'blood_id', 'all_patient', 'patient_details_information'));
     }
 }

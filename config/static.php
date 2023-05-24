@@ -26,4 +26,5 @@ return [
     'charges_type' => ['General', 'Sastha-Swathi', 'ESI', 'Star Health', 'IOCL'],
     'discharge_type' => ['Death', 'Refferal', 'Normal', 'LAMA', 'DORB'],
     'patient_from' => ['Opd', 'Emg'],
+    'main_operation_status' => ['Pending', 'Complete', 'Cancel'],
 ];

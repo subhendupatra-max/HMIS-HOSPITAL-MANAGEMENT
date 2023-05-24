@@ -212,11 +212,30 @@ unset($__errorArgs, $__bag); ?>
 
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="operation_category_id">Operation Catagory <span class="text-danger">*</span></label>
-                                    <select name="operation_category_id" class="form-control select2-show-search" id="operation_category_id">
+                                    <select name="operation_category_id" class="form-control select2-show-search" id="operation_category_id" onchange="getOperationCatagory(this.value)">
                                         <option value="">Operation Catagory</option>
 
                                     </select>
                                     <?php $__errorArgs = ['operation_category_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
+
+
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="operation_id">Operation Name <span class="text-danger">*</span></label>
+                                    <select name="operation_id" class="form-control select2-show-search" id="operation_id">
+                                        <option value="">Select Operation Name</option>
+
+                                    </select>
+                                    <?php $__errorArgs = ['operation_id'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -381,7 +400,25 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="status">Status <span class="text-danger">*</span></label>
+                                    <select name="status" class="form-control select2-show-search" id="status">
+                                        <option value="">Select</option>
+                                        <?php $__currentLoopData = Config::get('static.main_operation_status'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($item); ?>" <?php echo e(@$item == 'Pending' ? 'selected' : ""); ?>><?php echo e($item); ?></option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php $__errorArgs = ['status'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
                                 <div class="form-group col-md-4 opd-condition">
 
                                     <input type="text" id="remark" name="remark">
@@ -402,9 +439,11 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 
+
 <script>
     function getOperation(department) {
 
+        // alert(department);
         $('#operation_category_id').html('<option value="" >Select...</option>');
 
         $.ajax({
@@ -415,10 +454,13 @@ unset($__errorArgs, $__bag); ?>
                 department_id: department,
             },
             success: function(response) {
-                // console.log(response);
-                $.each(response,function(key, values) {
-                    $('#operation_category_id').append(`<option value="${values.id}"  >${values.operation_catagory_name	}</option>`);
+
+                $.each(response.operation_catagory, function(key, value) {
+                    $('#operation_category_id').append(`<option value="${value.id}"  >${value.operation_catagory_name	}</option>`);
                 });
+                // $.each(response.operation_name, function(key, values) {
+                //     $('#operation_id').append(`<option value="${values.id}"  >${values.operation_name}</option>`);
+                // });
             },
             error: function(error) {
                 console.log(error);
@@ -426,6 +468,33 @@ unset($__errorArgs, $__bag); ?>
         });
 
 
+    }
+</script>
+
+
+<script>
+    function getOperationCatagory(catagory) {
+
+        // alert(department);
+        $('#operation_id').html('<option value="" >Select...</option>');
+
+        $.ajax({
+            url: "<?php echo e(route('find-operation-name-by-catagory')); ?>",
+            type: "POST",
+            data: {
+                _token: '<?php echo e(csrf_token()); ?>',
+                catagory_id: catagory,
+            },
+            success: function(response) {
+
+                $.each(response.operation_name, function(key, values) {
+                    $('#operation_id').append(`<option value="${values.id}"  >${values.operation_name}</option>`);
+                });
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
     }
 </script>
 <?php $__env->stopSection(); ?>

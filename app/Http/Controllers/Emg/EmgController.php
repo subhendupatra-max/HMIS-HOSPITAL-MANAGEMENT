@@ -34,6 +34,13 @@ use App\Models\PathologyPatientTest;
 use App\Models\RadiologyPatientTest;
 use App\Models\PathologyTest;
 use App\Models\RadiologyTest;
+use App\Models\OperationBooking;
+use App\Models\OperationTheather;
+use App\Models\Operation;
+use App\Models\OperationCatagory;
+use App\Models\OperationType;
+use App\Models\BloodComponentIssue;
+use App\Models\bloodBank\BloodIssue;
 use PDF;
 
 class EmgController extends Controller
@@ -81,7 +88,7 @@ class EmgController extends Controller
 
     public function add_emg_registation(Request $request)
     {
-//dd($request->all());
+        //dd($request->all());
         $validate = $request->validate([
             'appointment_date'      => 'required',
             'patient_type'          => 'required',
@@ -91,82 +98,82 @@ class EmgController extends Controller
             'patient_id'     => 'required',
         ]);
         try {
-        DB::beginTransaction();
-        $emg_prefix = Prefix::where('name', 'emg')->first();
+            DB::beginTransaction();
+            $emg_prefix = Prefix::where('name', 'emg')->first();
 
-        //SAVE in CASE reference
-        $caseReference = new caseReference;
-        $caseReference->patient_id     = $request->patient_id;
-        $caseReference->section     = 'EMG';
-        $caseReference->save();
-        //SAVE in CASE reference
+            //SAVE in CASE reference
+            $caseReference = new caseReference;
+            $caseReference->patient_id     = $request->patient_id;
+            $caseReference->section     = 'EMG';
+            $caseReference->save();
+            //SAVE in CASE reference
 
-        //SAVE in opd details
-        $Emg_details = new EmgDetails();
-        $Emg_details->case_id        = $caseReference->id;
-        $Emg_details->patient_id     = $request->patient_id;
-        $Emg_details->emg_prefix     = $emg_prefix->prefix;
-        $Emg_details->generate_by    = Auth::user()->id;
-        $Emg_details->save();
-        //SAVE in opd details
+            //SAVE in opd details
+            $Emg_details = new EmgDetails();
+            $Emg_details->case_id        = $caseReference->id;
+            $Emg_details->patient_id     = $request->patient_id;
+            $Emg_details->emg_prefix     = $emg_prefix->prefix;
+            $Emg_details->generate_by    = Auth::user()->id;
+            $Emg_details->save();
+            //SAVE in opd details
 
-        $caseReference_update = caseReference::find($caseReference->id);
-        $caseReference_update->section_id = $Emg_details->id; 
-        $caseReference->save();
-
-
-        //SAVE in opd Visit details
-        $emg_patient_details = new EmgPatientDetails();
-        $emg_patient_details->emg_details_id              = $Emg_details->id;
-        $emg_patient_details->department_id               = $request->department;
-        $emg_patient_details->cons_doctor                 = $request->cons_doctor;
-        $emg_patient_details->medico_legal_case           = $request->medico_legal_case;
-        $emg_patient_details->ticket_fees                 = $request->ticket_fees;
-        $emg_patient_details->case_type                   = $request->case;
-        $emg_patient_details->patient_type                = $request->patient_type;
-        $emg_patient_details->tpa_organization            = $request->tpa_organization;
-        $emg_patient_details->type_no                     = $request->type_no;
-        $emg_patient_details->appointment_date            = $request->appointment_date;
-        $emg_patient_details->symptoms_type               = $request->symptoms_type;
-        $emg_patient_details->symptoms                    = $request->symptoms_title;
-        $emg_patient_details->symptoms_description        = $request->symptoms_description;
-        $emg_patient_details->known_allergies             = $request->any_known_allergies;
-        $emg_patient_details->note                        = $request->note;
-        $emg_patient_details->refference                  = $request->reference;
-        $emg_patient_details->generated_by                = Auth::user()->id;
-        $emg_patient_details->save();
-        //SAVE in Emg Patient details
-
-        // $patient_physical_condition = new EmgPatientPhysicalDetail();
-        // $patient_physical_condition->emg_id                      = $Emg_details->id;
-        // $patient_physical_condition->bp                          = $request->bp;
-        // $patient_physical_condition->height                      = $request->height;
-        // $patient_physical_condition->weight                      = $request->weight;
-        // $patient_physical_condition->pulse                       = $request->pulse;
-        // $patient_physical_condition->temperature                 = $request->temperature;
-        // $patient_physical_condition->respiration                 = $request->respiration;
-        // $patient_physical_condition->save();
-         DB::commit();
-        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
-
-        $emg_patient_details = EmgPatientDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'emg_patient_details.patient_type', 'patients.address', 'patients.blood_group', 'emg_patient_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'emg_patient_details.appointment_date', 'emg_patient_details.medico_legal_case', 'emg_details.emg_prefix', 'emg_details.id as emg_id')
-            ->join('emg_details', 'emg_details.id', '=', 'emg_patient_details.emg_details_id')
-            ->join('patients', 'patients.id', '=', 'emg_details.patient_id')
-            ->join('users', 'users.id', '=', 'emg_patient_details.cons_doctor')
-            ->join('departments', 'departments.id', '=', 'emg_patient_details.department_id')
-            ->where('emg_patient_details.id', $emg_patient_details->id)
-            ->first();
-
-            dd( $emg_patient_details);
+            $caseReference_update = caseReference::find($caseReference->id);
+            $caseReference_update->section_id = $Emg_details->id;
+            $caseReference->save();
 
 
-        if ($request->save == 'save_and_print') {
-            $pdf = PDF::loadView('emg._print.emg_prescription', compact('emg_patient_details', 'header_image'));
-            return $pdf->stream('emg_prescription.pdf');
-            return redirect()->route('emg-patient-list')->with('success', 'EMG Registation Sucessfully');
-        } else {
-            return redirect()->route('emg-patient-list')->with('success', 'EMG Registation Sucessfully');
-        }
+            //SAVE in opd Visit details
+            $emg_patient_details = new EmgPatientDetails();
+            $emg_patient_details->emg_details_id              = $Emg_details->id;
+            $emg_patient_details->department_id               = $request->department;
+            $emg_patient_details->cons_doctor                 = $request->cons_doctor;
+            $emg_patient_details->medico_legal_case           = $request->medico_legal_case;
+            $emg_patient_details->ticket_fees                 = $request->ticket_fees;
+            $emg_patient_details->case_type                   = $request->case;
+            $emg_patient_details->patient_type                = $request->patient_type;
+            $emg_patient_details->tpa_organization            = $request->tpa_organization;
+            $emg_patient_details->type_no                     = $request->type_no;
+            $emg_patient_details->appointment_date            = $request->appointment_date;
+            $emg_patient_details->symptoms_type               = $request->symptoms_type;
+            $emg_patient_details->symptoms                    = $request->symptoms_title;
+            $emg_patient_details->symptoms_description        = $request->symptoms_description;
+            $emg_patient_details->known_allergies             = $request->any_known_allergies;
+            $emg_patient_details->note                        = $request->note;
+            $emg_patient_details->refference                  = $request->reference;
+            $emg_patient_details->generated_by                = Auth::user()->id;
+            $emg_patient_details->save();
+            //SAVE in Emg Patient details
+
+            // $patient_physical_condition = new EmgPatientPhysicalDetail();
+            // $patient_physical_condition->emg_id                      = $Emg_details->id;
+            // $patient_physical_condition->bp                          = $request->bp;
+            // $patient_physical_condition->height                      = $request->height;
+            // $patient_physical_condition->weight                      = $request->weight;
+            // $patient_physical_condition->pulse                       = $request->pulse;
+            // $patient_physical_condition->temperature                 = $request->temperature;
+            // $patient_physical_condition->respiration                 = $request->respiration;
+            // $patient_physical_condition->save();
+            DB::commit();
+            $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+
+            $emg_patient_details = EmgPatientDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'emg_patient_details.patient_type', 'patients.address', 'patients.blood_group', 'emg_patient_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'emg_patient_details.appointment_date', 'emg_patient_details.medico_legal_case', 'emg_details.emg_prefix', 'emg_details.id as emg_id')
+                ->join('emg_details', 'emg_details.id', '=', 'emg_patient_details.emg_details_id')
+                ->join('patients', 'patients.id', '=', 'emg_details.patient_id')
+                ->join('users', 'users.id', '=', 'emg_patient_details.cons_doctor')
+                ->join('departments', 'departments.id', '=', 'emg_patient_details.department_id')
+                ->where('emg_patient_details.id', $emg_patient_details->id)
+                ->first();
+
+            dd($emg_patient_details);
+
+
+            if ($request->save == 'save_and_print') {
+                $pdf = PDF::loadView('emg._print.emg_prescription', compact('emg_patient_details', 'header_image'));
+                return $pdf->stream('emg_prescription.pdf');
+                return redirect()->route('emg-patient-list')->with('success', 'EMG Registation Sucessfully');
+            } else {
+                return redirect()->route('emg-patient-list')->with('success', 'EMG Registation Sucessfully');
+            }
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->back()->with('error', $th->getMessage());
@@ -253,73 +260,73 @@ class EmgController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        foreach ($request->charge_name as $key => $value) {
-            $patient_charge = new PatientCharge();
-            $patient_charge->case_id = $request->case_id;
-            $patient_charge->section = $request->section;
-            $patient_charge->charges_date = $request->date;
-            $patient_charge->emg_id = $request->emg_id;
-            $patient_charge->patient_id = $request->patient_id;
-            $patient_charge->charge_set = $request->charge_set[$key];
-            $patient_charge->charge_type = $request->charge_type[$key];
-            $patient_charge->charge_category = $request->charge_category[$key];
-            $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
-            $patient_charge->charge_name = $request->charge_name[$key];
-            $patient_charge->standard_charges = $request->standard_charges[$key];
-            $patient_charge->tax = $request->tax[$key];
-            $patient_charge->qty = $request->qty[$key];
-            $patient_charge->amount = $request->amount[$key];
-            $patient_charge->generated_by = Auth::user()->id;
-            $patient_charge->billing_status = '0';
-            $patient_charge->save();
+            foreach ($request->charge_name as $key => $value) {
+                $patient_charge = new PatientCharge();
+                $patient_charge->case_id = $request->case_id;
+                $patient_charge->section = $request->section;
+                $patient_charge->charges_date = $request->date;
+                $patient_charge->emg_id = $request->emg_id;
+                $patient_charge->patient_id = $request->patient_id;
+                $patient_charge->charge_set = $request->charge_set[$key];
+                $patient_charge->charge_type = $request->charge_type[$key];
+                $patient_charge->charge_category = $request->charge_category[$key];
+                $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
+                $patient_charge->charge_name = $request->charge_name[$key];
+                $patient_charge->standard_charges = $request->standard_charges[$key];
+                $patient_charge->tax = $request->tax[$key];
+                $patient_charge->qty = $request->qty[$key];
+                $patient_charge->amount = $request->amount[$key];
+                $patient_charge->generated_by = Auth::user()->id;
+                $patient_charge->billing_status = '0';
+                $patient_charge->save();
 
-            if ($request->charge_category[$key] == '1') {
-                $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
-                // dd($charge_detp);
-                $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
+                if ($request->charge_category[$key] == '1') {
+                    $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
+                    // dd($charge_detp);
+                    $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
 
-                if ($chargedetailstestp == null) {
-                    $pathology_patient_test = new PathologyPatientTest();
-                    $pathology_patient_test->case_id = $request->case_id;
-                    $pathology_patient_test->date = $request->date;
-                    $pathology_patient_test->section = 'EMG';
-                    $pathology_patient_test->patient_id = $request->patient_id;
-                    $pathology_patient_test->test_id =  $charge_detp->id;
-                    $pathology_patient_test->emg_id = $request->emg_id;
-                    $pathology_patient_test->generated_by = Auth::user()->id;
-                    $pathology_patient_test->billing_status = '2';
-                    $pathology_patient_test->test_status = '0';
-                    $pathology_patient_test->save();
-                } else {
-                    $chargedetailstestp->billing_status = '2';
-                    $chargedetailstestp->save();
+                    if ($chargedetailstestp == null) {
+                        $pathology_patient_test = new PathologyPatientTest();
+                        $pathology_patient_test->case_id = $request->case_id;
+                        $pathology_patient_test->date = $request->date;
+                        $pathology_patient_test->section = 'EMG';
+                        $pathology_patient_test->patient_id = $request->patient_id;
+                        $pathology_patient_test->test_id =  $charge_detp->id;
+                        $pathology_patient_test->emg_id = $request->emg_id;
+                        $pathology_patient_test->generated_by = Auth::user()->id;
+                        $pathology_patient_test->billing_status = '2';
+                        $pathology_patient_test->test_status = '0';
+                        $pathology_patient_test->save();
+                    } else {
+                        $chargedetailstestp->billing_status = '2';
+                        $chargedetailstestp->save();
+                    }
+                }
+                if ($request->charge_category[$key] == '2') {
+                    $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
+                    // dd( $charge_detr);
+                    $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
+
+                    if ($chargedetailstestr == null) {
+                        $radiology_patient_test = new RadiologyPatientTest();
+                        $radiology_patient_test->case_id = $request->case_id;
+                        $radiology_patient_test->date = $request->date;
+                        $radiology_patient_test->section = 'EMG';
+                        $radiology_patient_test->patient_id = $request->patient_id;
+                        $radiology_patient_test->test_id = $charge_detr->id;
+                        $radiology_patient_test->emg_id = $request->emg_id;
+                        $radiology_patient_test->generated_by = Auth::user()->id;
+                        $radiology_patient_test->billing_status = '2';
+                        $radiology_patient_test->test_status = '0';
+                        $radiology_patient_test->save();
+                    } else {
+                        $chargedetailstestr->billing_status = '2';
+                        $chargedetailstestr->save();
+                    }
                 }
             }
-            if ($request->charge_category[$key] == '2') {
-                $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
-                // dd( $charge_detr);
-                $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
-
-                if ($chargedetailstestr == null) {
-                    $radiology_patient_test = new RadiologyPatientTest();
-                    $radiology_patient_test->case_id = $request->case_id;
-                    $radiology_patient_test->date = $request->date;
-                    $radiology_patient_test->section = 'EMG';
-                    $radiology_patient_test->patient_id = $request->patient_id;
-                    $radiology_patient_test->test_id = $charge_detr->id;
-                    $radiology_patient_test->emg_id = $request->emg_id;
-                    $radiology_patient_test->generated_by = Auth::user()->id;
-                    $radiology_patient_test->billing_status = '2';
-                    $radiology_patient_test->test_status = '0';
-                    $radiology_patient_test->save();
-                } else {
-                    $chargedetailstestr->billing_status = '2';
-                    $chargedetailstestr->save();
-                }
-            }
-        }
-        DB::commit();
-        return redirect()->route('charges-list-emg', ['id' => base64_encode($request->emg_id)])->with('success', "Charges Added Successfully");
+            DB::commit();
+            return redirect()->route('charges-list-emg', ['id' => base64_encode($request->emg_id)])->with('success', "Charges Added Successfully");
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);
@@ -348,12 +355,12 @@ class EmgController extends Controller
         $emg_id = base64_decode($id);
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
         $emg_patient_details = EmgPatientDetails::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.guardian_name', 'patients.guardian_contact_no', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'emg_patient_details.patient_type', 'patients.address', 'patients.blood_group', 'emg_patient_details.ticket_fees', 'patients.patient_prefix', 'patients.id as patient_id', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'departments.department_name', 'emg_patient_details.appointment_date', 'emg_patient_details.medico_legal_case', 'emg_details.emg_prefix', 'emg_details.id as emg_id')
-        ->join('emg_details', 'emg_details.id', '=', 'emg_patient_details.emg_details_id')
-        ->join('patients', 'patients.id', '=', 'emg_details.patient_id')
-        ->join('users', 'users.id', '=', 'emg_patient_details.cons_doctor')
-        ->join('departments', 'departments.id', '=', 'emg_patient_details.department_id')
-        ->where('emg_details.id', $emg_id)
-        ->first();
+            ->join('emg_details', 'emg_details.id', '=', 'emg_patient_details.emg_details_id')
+            ->join('patients', 'patients.id', '=', 'emg_details.patient_id')
+            ->join('users', 'users.id', '=', 'emg_patient_details.cons_doctor')
+            ->join('departments', 'departments.id', '=', 'emg_patient_details.department_id')
+            ->where('emg_details.id', $emg_id)
+            ->first();
 
         // dd($emg_patient_details);
 
@@ -361,7 +368,6 @@ class EmgController extends Controller
         return $pdf->stream('emg_prescription.pdf');
 
         return redirect()->route('emg-patient-list')->with('success', ' Sucessfully');
-
     }
 
     public function delete_emg_registation($id)
@@ -369,13 +375,129 @@ class EmgController extends Controller
         try {
             DB::beginTransaction();
             $emg_id = base64_decode($id);
-            EmgDetails::where('id',$emg_id)->delete();
-            EmgPatientDetails::where('emg_details_id',$emg_id)->delete();
+            EmgDetails::where('id', $emg_id)->delete();
+            EmgPatientDetails::where('emg_details_id', $emg_id)->delete();
             DB::commit();
             return redirect()->back()->with('success', 'Registation Deleted Successfully');
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->back()->with('error', $th->getMessage());
         }
+    }
+
+    public function emg_operation($id)
+    {
+        $emg_id = base64_decode($id);
+        // dd($emg_id);
+        $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
+
+        $section_id =  OperationTheather::where('emg_id', $emg_id)->first();
+        // dd( $section_id);
+        $operation_booking  = OperationBooking::where('id', $section_id->operation_booking_id)->first();
+        // dd($operation_booking);
+        $operation_booking_id =  $operation_booking->id;
+
+        $case_id = CaseReference::where('id', $section_id->case_id)->first();
+        $section_name = $case_id->section_id;
+
+        $operation_details = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark')
+            ->leftjoin('operation_theathers', 'operation_theathers.operation_booking_id', '=', 'operation_bookings.id')
+            ->leftjoin('patients', 'patients.id', '=', 'operation_theathers.patient_id')
+            ->leftjoin('departments', 'departments.id', '=', 'operation_theathers.operation_department')
+            ->leftjoin('users', 'users.id', '=', 'operation_bookings.consultant_doctor')
+            ->leftjoin('operations', 'operations.id', '=', 'operation_theathers.operation_id')
+            ->leftjoin('operation_types', 'operation_types.id', '=', 'operation_theathers.operation_type')
+            ->leftjoin('operation_catagories', 'operation_catagories.id', '=', 'operation_theathers.operation_category_id')
+            ->where('operation_bookings.id', $operation_booking_id)
+            ->where('operation_theathers.operation_booking_id', $operation_booking_id)
+            ->first();
+
+        // dd($operation_details);
+
+        return view('emg.operation-emg.operation-details', compact('operation_details', 'emg_patient_details', 'emg_id', 'section_name', 'operation_booking_id'));
+    }
+
+    public function edit_emg_operation(Request $request, $id)
+    {
+        $operation_booking_id = base64_decode($id);
+        $operation_booking = OperationBooking::where('id', '=',  $operation_booking_id)->first();
+
+        // dd( $operation_booking );
+        $operation_theathers = OperationTheather::where('operation_booking_id', '=',  $operation_booking_id)->first();
+        // dd($operation_theathers);
+        $emg_patient_details = EmgDetails::where('id', $operation_theathers->emg_id)->first();
+
+        $patient_id = $operation_theathers->patient_id;
+        $patient_details_information = Patient::where('id', '=', $patient_id)->first();
+        $departments = Department::where('is_active', '1')->get();
+        $doctor = User::where('role', '=', 'Doctor')->get();
+        $nurse = User::where('role', '=', 'Nurse')->get();
+        $staff = User::where('role', '=', 'staff')->get();
+        $operation_department = Operation::all();
+        $operation_catagory = OperationCatagory::all();
+        $operation_type = OperationType::all();
+        $all_patient = Patient::all();
+
+        return view('emg.operation-emg.edit-operation-details-in-emg', compact('operation_booking_id', 'departments', 'all_patient', 'doctor', 'nurse', 'staff', 'operation_catagory', 'operation_type', 'operation_department', 'operation_booking', 'operation_theathers', 'patient_details_information', 'emg_patient_details'));
+    }
+
+
+    public function update_emg_operation(Request $request)
+    {
+        // dd($request->all());
+
+        try {
+            DB::beginTransaction();
+
+            $operation_booking = OperationBooking::find($request->operation_booking_id);
+            $operation_booking->operation_date_from               = $request->operation_date_from;
+            $operation_booking->operation_date_to                 = $request->operation_date_to;
+            $operation_booking->consultant_doctor                 = $request->consultant_doctor;
+            $operation_booking->ass_consultant_1                  = $request->ass_consultant_1;
+            $operation_booking->ass_consultant_2                  = $request->ass_consultant_2;
+            $operation_booking->anesthetist                        = $request->anesthetist;
+            $operation_booking->anaethesia_type                    = $request->anaethesia_type;
+            $operation_booking->ot_technician                      = $request->ot_technician;
+            $operation_booking->ot_assistant                       = $request->ot_assistant;
+            $operation_booking->remark                             = $request->remark;
+            $operation_booking->generated_by                        = Auth::user()->id;
+            $operation_booking->status                             = $request->status;
+            $operation_booking->save();
+
+            $operation_theathers = OperationTheather::find($request->operation_theater_id);
+            $operation_theathers->operation_booking_id               = $operation_booking->id;
+            $operation_theathers->case_id                            = $request->case_id;
+            $operation_theathers->section                            = $request->section;
+            $operation_theathers->opd_id                             = '';
+            $operation_theathers->ipd_id                             = '';
+            $operation_theathers->emg_id                             = $request->section_id;
+            $operation_theathers->patient_id                         = $request->patient_id;
+            $operation_theathers->operation_department               = $request->operation_department;
+            $operation_theathers->operation_category_id              = $request->operation_category_id;
+            $operation_theathers->operation_id                       = $request->operation_id;
+            $operation_theathers->operation_type                     = $request->operation_type;
+            $operation_theathers->remark                             = $request->remark;
+            $operation_theathers->save();
+
+            DB::commit();
+
+            return redirect()->route('emg-operation-in-emg', ['id' => base64_encode($request->section_id)])->with('success', 'Operation Booking Updated Sucessfully');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', $th->getMessage());
+        }
+    }
+
+    public function blood_bank_details_in_emg($id)
+    {
+        $emg_id = base64_decode($id);
+
+        $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
+        $patient_details_information = Patient::where('id', '=', $emg_patient_details->patient_id)->first();
+        $blood_details = BloodIssue::where('patient_id', $emg_patient_details->patient_id)->get();
+        // dd($blood_details);/
+        $components_details = BloodComponentIssue::where('patient_id', $emg_patient_details->patient_id)->get();
+
+        return view('emg.blood-bank.blood-details', compact('emg_id', 'emg_patient_details', 'blood_details', 'components_details', 'patient_details_information'));
     }
 }

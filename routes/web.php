@@ -1624,6 +1624,11 @@ Route::group(['middleware' => ['permission:Blood Bank'], 'prefix' => 'blood-bank
         Route::group(['middleware' => ['permission:View blood details']], function () {
             Route::get('add-blood-components-details/{id?}', [ComponentsController::class, 'add_blood_components_details'])->name('add-blood-components-details');
             Route::post('save-blood-components-details', [ComponentsController::class, 'save_blood_components_details'])->name('save-blood-components-details');
+
+            Route::get('add-blood-components-issue-details/{blood_group_id?}/{id?}', [ComponentsController::class, 'add_blood_components_issue_details'])->name('add-blood-components-issue-details');
+            Route::post('save-blood-components-issue-details', [ComponentsController::class, 'save_blood_components_issue_details'])->name('save-blood-components-issue-details');
+
+            Route::post('add-blood-components-issue-belling-for-a-patient/{blood_group_id?}/{id?}', [ComponentsController::class, 'add_blood_components_issue_belling_for_a_patient'])->name('add-blood-components-issue-belling-for-a-patient');
         });
     });
     //=================== Components ======================
@@ -2628,14 +2633,71 @@ Route::group(['middleware' => ['permission:bill summary'], 'prefix' => 'bill-sum
 Route::group(['middleware' => ['permission:main operation'], 'prefix' => 'operation'], function () {
     Route::get('main-operation', [MainOperationController::class, 'index'])->name('main-operation');
 
-    // Route::any('add-operation', [MainOperationController::class, 'operation_booking'])->name('add-operation');
-
-    // Route::any('add-operation/{id?}', [MainOperationController::class, 'operation_booking'])->name('add-operation');
-
     Route::post('save-operation-booking', [MainOperationController::class, 'save_operation_booking'])->name('save-operation-booking');
 
     Route::get('add-operation', [MainOperationController::class, 'add_operation'])->name('add-operation');
     Route::any('booking-operation', [MainOperationController::class, 'operation_booking'])->name('booking-operation');
     Route::post('find-operation-catagory-by-department', [MainOperationController::class, 'find_operation_catagory_by_department'])->name('find-operation-catagory-by-department');
+    Route::post('find-operation-name-by-catagory', [MainOperationController::class, 'find_operation_name_by_catagory'])->name('find-operation-name-by-catagory');
+
+    Route::group(['middleware' => ['permission:delete operation main']], function () {
+        Route::get('delete-operation-booking-details/{id}', [MainOperationController::class, 'delete_operation_booking_details'])->name('delete-operation-booking-details');
+    });
+
+    Route::group(['middleware' => ['permission:view operation main']], function () {
+        Route::get('view-operation-booking-details/{id}', [MainOperationController::class, 'view_operation_booking_details'])->name('view-operation-booking-details');
+    });
+
+    Route::group(['middleware' => ['permission:edit operation main']], function () {
+        Route::get('edit-operation-booking-details/{id?}', [MainOperationController::class, 'edit_operation_booking_details'])->name('edit-operation-booking-details');
+        Route::post('update-operation-booking-details', [MainOperationController::class, 'update_operation_booking_details'])->name('update-operation-booking-details');
+    });
 });
 //================================= Main Operation  ==============================
+
+//================================= OPD Operation Deratils ====================================
+Route::group(['middleware' => ['permission:OPD Operation']], function () {
+    Route::get('opd-operation-in-opd/{id}', [OpdController::class, 'opd_operation'])->name('opd-operation-in-opd');
+    Route::get('edit-opd-operation-in-opd/{id}', [OpdController::class, 'edit_opd_operation'])->name('edit-opd-operation-in-opd');
+    Route::post('update-operation-booking-details-in-opd', [OpdController::class, 'update_opd_operation'])->name('update-operation-booking-details-in-opd');
+});
+//================================= OPD Operation Deratils===================================
+
+
+//================================= IPD Operation Deratils ====================================
+Route::group(['middleware' => ['permission:OPD Operation']], function () {
+    Route::get('ipd-operation-in-ipd/{id?}', [IpdController::class, 'ipd_operation'])->name('ipd-operation-in-ipd');
+    Route::get('edit-ipd-operation-in-ipd/{id}', [IpdController::class, 'edit_ipd_operation'])->name('edit-ipd-operation-in-ipd');
+    Route::post('update-operation-booking-details-in-ipd', [IpdController::class, 'update_ipd_operation'])->name('update-operation-booking-details-in-ipd');
+});
+//================================= IPD Operation Deratils===================================
+
+
+//================================= Emg Operation Deratils ====================================
+Route::group(['middleware' => ['permission:EMG Operation']], function () {
+    Route::get('emg-operation-in-emg/{id?}', [EmgController::class, 'emg_operation'])->name('emg-operation-in-emg');
+    Route::get('edit-emg-operation-in-emg/{id}', [EmgController::class, 'edit_emg_operation'])->name('edit-emg-operation-in-emg');
+    Route::post('update-operation-booking-details-in-emg', [EmgController::class, 'update_emg_operation'])->name('update-operation-booking-details-in-emg');
+});
+//================================= Emg Operation Deratils===================================
+
+
+//================================= Blood Bank In Opd  ====================================
+Route::group(['middleware' => ['permission:Opd Blood Bank Details']], function () {
+    Route::get('blood-bank-detials-in-opd/{id?}', [OpdController::class, 'blood_bank_details_in_opd'])->name('blood-bank-detials-in-opd');
+});
+//================================= Blood Bank In Opd ===================================
+
+
+//================================= Blood Bank In Ipd  ====================================
+Route::group(['middleware' => ['permission:Ipd Blood Bank Details']], function () {
+    Route::get('blood-bank-detials-in-ipd/{id?}', [IpdController::class, 'blood_bank_details_in_ipd'])->name('blood-bank-detials-in-ipd');
+});
+//================================= Blood Bank In Ipd ===================================
+
+
+//================================= Blood Bank In Emg  ====================================
+Route::group(['middleware' => ['permission:Emg Blood Bank Details']], function () {
+    Route::get('blood-bank-detials-in-emg/{id?}', [EmgController::class, 'blood_bank_details_in_emg'])->name('blood-bank-detials-in-emg');
+});
+//================================= Blood Bank In Emg ===================================

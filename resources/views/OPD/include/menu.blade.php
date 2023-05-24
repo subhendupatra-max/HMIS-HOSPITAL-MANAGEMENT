@@ -25,3 +25,6 @@
 
 <a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('physical-condition-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-receipt"></i> Physical Conditions</a>
 
+<a class="dropdown-item {{ Request::segment(2) == 'opd-operation' ? 'active' : '' }}" href="{{ route('opd-operation-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-receipt"></i> Operation</a>
+
+<a class="dropdown-item {{ Request::segment(2) == 'opd-blood-issue' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa-solid fa-droplet"></i>Blood Details</a>

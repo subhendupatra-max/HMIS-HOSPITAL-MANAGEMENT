@@ -9,7 +9,10 @@ use App\Models\bloodBank\Blood;
 use App\Models\bloodBank\Components;
 use App\Models\bloodBank\ComponentsName;
 use App\Models\bloodBank\UnitType;
+use App\Models\Patient;
+use App\Models\User;
 use App\Models\bloodBank\ComponentsDetail;
+use App\Models\BloodComponentIssue;
 
 class ComponentsController extends Controller
 {
@@ -50,5 +53,63 @@ class ComponentsController extends Controller
         } else {
             return back()->withErrors(['error' => 'Unable to added, Try Again Later.']);
         }
+    }
+
+    public function add_blood_components_issue_details($blood_group_id, $id, Request $request)
+    {
+        $components_id  = base64_decode($id);
+        $blood_group_id = base64_decode($blood_group_id);
+        $blood_groups_id = BloodGroup::where('id', $blood_group_id)->first(); //a
+        $blood_details = Components::where('id', $components_id)->first();
+        $issed_by = User::all();
+        $blood_groups = BloodGroup::all();
+        $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
+        $getBag = Components::where('blood_group_id', $blood_group_id)->get();
+
+        return view('Blood_Bank.blood-components.blood-components-issue', compact('issed_by', 'getBag', 'blood_details', 'blood_groups_id', 'components_id', 'all_patient', 'blood_groups'));
+    }
+
+    public function save_blood_components_issue_details(Request $request)
+    {
+        // dd('hii');
+        // dd($request->all());
+
+        $blood_components_issue = new BloodComponentIssue();
+        $blood_components_issue->patient_id         = $request->patient_id;
+        $blood_components_issue->components_id      = $request->components_id;
+        $blood_components_issue->blood_group_id     = $request->blood_group_id;
+        $blood_components_issue->issue_date         = $request->issue_date;
+        $blood_components_issue->issed_by           = $request->issed_by;
+        $blood_components_issue->reference_name     = $request->reference_name;
+        $blood_components_issue->technician         = $request->technician;
+        $blood_components_issue->blood_group        = $request->blood_group;
+        $blood_components_issue->bag                = $request->bag;
+        $blood_components_issue->components_qty      = $request->components_qty;
+        $blood_components_issue->note               = $request->note;
+        $status = $blood_components_issue->save();
+
+        if ($status) {
+            return redirect()->route('blood-details', ['id' => base64_encode($request->blood_group_id)])->with('success', 'Blood Components Issued Successfully.');
+        } else {
+            return back()->withErrors(['error' => 'Unable to added, Try Again Later.']);
+        }
+    }
+
+    public function add_blood_components_issue_belling_for_a_patient($blood_group_id, $id, Request $request)
+    {
+        // dd($request->patient_id);
+        $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
+        $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
+
+        $components_id = base64_decode($id);
+        $blood_group_id = base64_decode($blood_group_id);
+        $blood_groups_id = BloodGroup::where('id', $blood_group_id)->first(); //a
+        $blood_details = Components::where('id', $components_id)->first();
+        $issed_by = User::all();
+        $blood_groups = BloodGroup::all();
+        $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
+        $getBag = Components::where('blood_group_id', $blood_group_id)->get();
+
+        return view('Blood_Bank.blood-components.blood-components-issue', compact('issed_by', 'blood_groups', 'getBag', 'blood_details', 'blood_groups_id', 'components_id', 'all_patient', 'patient_details_information'));
     }
 }

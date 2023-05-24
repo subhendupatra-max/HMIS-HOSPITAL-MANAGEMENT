@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+ @extends('layouts.layout')
 @section('content')
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -120,7 +120,7 @@
                                                 <td>{{ @$item->getComponentsDetails->institution}}</td>
                                                 <td>
                                                     @can('View blood components Details')
-                                                    <a href="{{ route('add-blood-issue-details',['blood_group_id'=> base64_encode($blood_groups_details_for_this_blood_group->id) , 'id'=> base64_encode($item->id)  ]) }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Issue </a>
+                                                    <a href="{{ route('add-blood-components-issue-details',['blood_group_id'=> base64_encode($blood_groups_details_for_this_blood_group->id) , 'id'=> base64_encode($item->id)  ]) }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Issue </a>
                                                     @endcan
                                                 </td>
                                             </tr>

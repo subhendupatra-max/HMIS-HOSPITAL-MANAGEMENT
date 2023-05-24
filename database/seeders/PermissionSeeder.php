@@ -815,6 +815,7 @@ class PermissionSeeder extends Seeder
 
         //master operation
         Permission::create(['name' => 'main operation']);
-
+        Permission::create(['name' => 'edit operation main']);
+        Permission::create(['name' => 'delete operation main']);
     }
 }

@@ -10,13 +10,13 @@
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
                     {{-- ================== add new patient ====================== --}}
-                    <div class="options px-5 pt-2  border-bottom pb-1">
+                    <!-- <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
                                 <a class="btn btn-primary btn-sm" href="{{route('add_new_patient')}}"><i class="fa fa-plus"></i> Add New Patient</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     {{-- ================== add new patient ====================== --}}
 
                     {{-- ================== Search patient ====================== --}}
@@ -110,16 +110,15 @@
                                     <input type="datetime-local" class="form-control" id="issue_date" value="{{ old('issue_date') }}" name="issue_date">
                                     <small class="text-danger">{{ $errors->first('issue_date') }}</small>
                                 </div>
-
                                 <div class="form-group col-md-3">
-                                    <label for="doctor" class="form-label">Hospital Doctor <span class="text-danger">*</span></label>
-                                    <select id="doctor" class="form-control" name="doctor">
+                                    <label for="issed_by" class="form-label">Issued By <span class="text-danger">*</span></label>
+                                    <select id="issed_by" class="form-control" name="issed_by">
                                         <option value=" ">Select </option>
-                                        @foreach ($doctor as $item)
+                                        @foreach ($issed_by as $item)
                                         <option value="{{$item->id}}">{{$item->first_name}} {{$item->last_name}}</option>
                                         @endforeach
                                     </select>
-                                    @error('doctor')
+                                    @error('issed_by')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -162,92 +161,29 @@
                                     @enderror
                                 </div>
 
+                                <!-- <div class="col-md-12"> -->
                                 <div class="form-group col-md-3">
-                                    <label for="charge_category" class="form-label">Charges Catagory <span class="text-danger">*</span></label>
-                                    <select id="charge_category" class="form-control select2-show-search" name="charge_category" onchange="getCatagory(this.value)">
-                                        <option value=" ">Select Catagory</option>
-                                        @foreach ($catagory as $item)
-                                        <option value="{{$item->id}}">{{$item->charges_catagories_name}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('charge_category')
-                                    <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
 
+                                    <label class="form-label">Blood Qty</label>
+                                    <input type="text" name="blood_qty" class="form-control" />
+
+                                </div>
                                 <div class="form-group col-md-3">
-                                    <label for="charge_name" class="form-label">Charge Name<span class="text-danger">*</span></label>
-                                    <select name="charge_name" class="form-control select2-show-search" id="charge_name">
-                                        <option value="">Select Charge Name...</option>
-                                    </select>
-                                    <small class="text-danger">{{ $errors->first('charge_name') }}</small>
-                                </div>
 
-                                <div class="form-group col-md-4">
-                                    <label for="standard_charges" class="form-label"> Standard Charges<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" onkeyup="getStandardCharges()" id="standard_charges" name="standard_charges" value=" ">
-                                    <small class="text-danger">{{ $errors->first('standard_charges') }}</small>
+                                    <label class="form-label">Note</label>
+                                    <textarea name="note" class="form-control"></textarea>
+
                                 </div>
+                                <!-- </div> -->
+
 
                             </div>
                         </div>
                         <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
-                        <div class="options px-5 pt-5  border-bottom pb-3">
-                            <div class="container mt-5">
-                                <div class="d-flex justify-content-end">
-                                    <span class="biltext">Total</span>
-                                    <input type="text" readonly class="form-control myfld" id="total" name="total">
-                                </div>
 
-                                <div class="d-flex justify-content-end">
-                                    <input type="text" name="getdiscount" onkeyup="discountCalculate()" placeholder="Enter Discount" class="form-control myfld2" id="getdiscount">
-                                    <input type="text" class="form-control myfld1" id="calculateDiscount" name="discount">
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <input type="text" name="taxfeildid" placeholder="Enter Tax" onkeyup="calculateTax()" class="form-control myfld2" id="taxfeildid">
-                                    <input type="text" class="form-control myfld1" id="taxid" name="taxid">
-                                </div>
-
-                                <div class="d-flex justify-content-end thrdarea">
-                                    <span class="biltext">Net Amount</span>
-                                    <input type="text" class="form-control myfld" id="net_amount" name="net_amount" readonly>
-                                </div>
-
-                                <div class="d-flex justify-content-end thrdarea">
-
-                                    <select id="payment_mode" class="form-control myfld2" name="payment_mode">
-                                        <option value="">Select Payment Amount</option>
-                                        @foreach (Config::get('static.payment_mode_name') as $lang => $item)
-                                        <option value="{{$item}}"> {{$item}}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('payment_mode')
-                                    <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-
-                                    <input type="text" class="form-control myfld1" id="payment_amount" name="payment_amount" placeholder="Enter Payment Amount" readonly>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="form-label">Blood Qty</label>
-                                            <input type="text" name="blood_qty" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6 d-block">
-                                            <label class="form-label">Note</label>
-                                            <textarea name="note" class="form-control"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
                         <div class="btn-list p-3">
 
-                            <button class="btn btn-primary btn-sm float-right " type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button>
+                            <!-- <button class="btn btn-primary btn-sm float-right " type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button> -->
                             <button class="btn btn-primary btn-sm float-right mr-2" type="submit" name="save"><i class="fa fa-file"></i> Submit</button>
                     </form>
                 </div>

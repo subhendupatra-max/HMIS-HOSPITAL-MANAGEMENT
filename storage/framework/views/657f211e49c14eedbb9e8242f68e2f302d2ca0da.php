@@ -1,4 +1,4 @@
-
+ 
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -121,7 +121,7 @@
                                                 <td><?php echo e(@$item->getComponentsDetails->institution); ?></td>
                                                 <td>
                                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('View blood components Details')): ?>
-                                                    <a href="<?php echo e(route('add-blood-issue-details',['blood_group_id'=> base64_encode($blood_groups_details_for_this_blood_group->id) , 'id'=> base64_encode($item->id)  ])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Issue </a>
+                                                    <a href="<?php echo e(route('add-blood-components-issue-details',['blood_group_id'=> base64_encode($blood_groups_details_for_this_blood_group->id) , 'id'=> base64_encode($item->id)  ])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Issue </a>
                                                     <?php endif; ?>
                                                 </td>
                                             </tr>

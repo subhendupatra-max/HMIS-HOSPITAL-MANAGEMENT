@@ -16,6 +16,12 @@ $login_details = DB::table('users')
     
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+
     <!-- Meta data -->
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -165,11 +171,11 @@ $login_details = DB::table('users')
                         </div>
                     </li>
 
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="#">
                             <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/hospital-bed (1).png')); ?>"></div>Bed
                         </a>
-                    </li>
+                    </li> -->
                     
             <div class=" menu-item">
                 <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>"></div>
@@ -470,68 +476,60 @@ $login_details = DB::table('users')
                 </li>
             </div>
 
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/patient (2).png')); ?>">
-                    </div> Others
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <?php if(auth()->user()->can('Inventory')): ?>
-                    <li><a class="dropdown-item" href="<?php echo e(route('item-stock-listing')); ?>">Inventory</a></li>
-                    <?php endif; ?>
-                    <?php if(auth()->user()->can('Birth and Death Record')): ?>
-                    <!-- <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#">Birth & Death <i class="fa fa-chevron-right"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Birth Record</a></li>
-                            <li><a href="#">Death Record</a></li>
-                        </ul>
-                    </li> -->
-                    <li class="dropdown-submenu">
-                    <a tabindex="-1" href="#">appointment <i class="fa fa-chevron-right"></i></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">shift-details</a></li>
-                      <li><a href="#">slots-details</a></li>
-                    </ul>
-                  </li>
-                    <?php endif; ?>
+            <div class=" menu-item">
+                <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>"></div>
+                <li class="dropdown">
 
-                    <?php if(auth()->user()->can('False Generation')): ?>
-                    <li class="dropdown-submenu  <?php echo e(Request::segment(1) == 'false-patient' ? 'nav-active' : ''); ?>">
-                        <a tabindex="-1" href="#">False Generation <i class="fa fa-chevron-right"></i></a>
-                        <ul class="dropdown-menu">
-                            <?php if(auth()->user()->can('OPD False')): ?>
-                            <li><a href="<?php echo e(route('opd-false-generation')); ?>" class="<?php echo e(Request::segment(2) == 'opd-false' ? 'active' : ''); ?>"> OPD</a></li>
-                            <?php endif; ?>
-                            <?php if(auth()->user()->can('EMG False')): ?>
-                            <li><a href="<?php echo e(route('emg-false-generation')); ?>" class="<?php echo e(Request::segment(2) == 'emg-false' ? 'active' : ''); ?>"> EMG</a></li>
-                            <?php endif; ?>
-                            <?php if(auth()->user()->can('IPD False')): ?>
-                            <li><a href="<?php echo e(route('ipd-false-generation')); ?>" class="<?php echo e(Request::segment(2) == 'ipd-false' ? 'active' : ''); ?>"> IPD</a></li>
-                            <?php endif; ?>
-                        </ul>
-                    </li>
-                    <?php endif; ?>
-                    <li><a class="dropdown-item" href="<?php echo e(route('referral')); ?>">Referral</a></li>
-                    <?php if(auth()->user()->can('ambulance')): ?>
-                    <li><a class="dropdown-item" href="<?php echo e(route('ambulance-call-details')); ?>">Ambulance</a></li>
-                    <?php endif; ?>
-                    <?php if(auth()->user()->can('front office')): ?>
-                    <li><a class="dropdown-item" href="<?php echo e(route('all-visit-details')); ?>">Font Office</a></li>
-                    <?php endif; ?>
-                    <?php if(auth()->user()->can('Blood Bank')): ?>
-                    <li><a class="dropdown-item" href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
-                    <?php endif; ?>
-                    <?php if(auth()->user()->can('master operation')): ?>
-                    <li><a class="dropdown-item" href="<?php echo e(route('main-operation')); ?>">Operation</a></li>
-                    <?php endif; ?>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Inventory</a></li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Birth and Death record<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="#">Birth Record</a></li>
+                                <li><a href="#">Death Record</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+
+
+                                <li><a href="#">Opd</a></li>
+                                <li><a href="#">Ipd</a></li>
+
+                            </ul>
+                        </li>
+                        <li><a href="#">Refferal</a></li>
+                        <li><a href="#">Font office</a></li>
+                        <li><a href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
+                        <li><a href="<?php echo e(route('main-operation')); ?>">Operation</a></li>
+                        <li><a href="<?php echo e(route('main-operation')); ?>">Permission</a></li>
+
+            </div>
+
+            <?php if(auth()->user()->can('view role') ||
+            auth()->user()->can('asign userBasedPermission') ||
+            auth()->user()->can('view permission') ||
+            auth()->user()->can('asign roleToUser') ||
+            auth()->user()->can('view permission')): ?>
+            <li class="dropdown-submenu">
+                <a tabindex="-1" href="#">Permission<i class="fa fa-chevron-right"></i></a>
+                <ul class="dropdown-menu">
+
+                    <li><a  href="<?php echo e(route('roleList')); ?>">Role</a></li>
+                    <li><a href="#"></a></li>
+
                 </ul>
             </li>
+            <?php endif; ?>
             </ul>
             </li>
             </ul>
-            </li>
-            </ul>
+
+
 
     </div>
 

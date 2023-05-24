@@ -8,19 +8,16 @@
                 <div class="col-md-6 card-title">
                     <h4 class="pro-user-username mb-3 font-weight-bold">{{ @$patient_details->prefix }} {{
                         @$patient_details->first_name }} {{ @$patient_details->middle_name }} {{ @$patient_details->last_name }} ( {{
-                        @$patient_details->patient_prefix }}{{ @$patient_details->id }} ) <i
-                            class="fa fa-check-circle text-success"></i></h4>
+                        @$patient_details->patient_prefix }}{{ @$patient_details->id }} ) <i class="fa fa-check-circle text-success"></i></h4>
                 </div>
 
                 <div class="col-md-6 text-right">
 
                     @can('edit patient')
-                    <a href="{{ route('edit-patient-details', base64_encode($patient_details->id)) }}"
-                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
+                    <a href="{{ route('edit-patient-details', base64_encode($patient_details->id)) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
                     @endcan
 
-                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
+                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" style="">
 
                         <a class="dropdown-item" href="{{ route('opd-registration', base64_encode($patient_details->id)) }}"><i class="fa fa-plus"></i> OPD Registation</a>
@@ -170,8 +167,7 @@
                             @if (isset($opd_registaion_list))
                             @foreach ($opd_registaion_list as $value)
                             <tr>
-                                <td><a class="textlink"
-                                        href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}">{{
+                                <td><a class="textlink" href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}">{{
                                         @$value->id }}</a>
                                 </td>
                                 <td>
@@ -181,8 +177,7 @@
                                     {{ @$value->all_patient_details->last_name }}({{ @$value->all_patient_details->id
                                     }})<br>
                                     <i class="fa fa-venus-mars text-primary"></i>
-                                    {{ @$value->all_patient_details->gender }} <i
-                                        class="fa fa-calendar-plus-o text-primary"></i>
+                                    {{ @$value->all_patient_details->gender }} <i class="fa fa-calendar-plus-o text-primary"></i>
                                     @if (@$value->all_patient_details->year != 0)
                                     {{ @$value->all_patient_details->year }}y
                                     @endif
@@ -218,17 +213,11 @@
                                 </td>
                                 <td>
                                     <div class="card-options">
-                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i
-                                                class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
-                                            <a class="dropdown-item"
-                                                href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}"><i
-                                                    class="fa fa-eye"></i> View</a>
+                                            <a class="dropdown-item" href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}"><i class="fa fa-eye"></i> View</a>
 
-                                            <a class="dropdown-item"
-                                                href="{{ route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id)) }}"><i
-                                                    class="fa fa-print"></i>
+                                            <a class="dropdown-item" href="{{ route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id)) }}"><i class="fa fa-print"></i>
                                                 Print</a>
                                         </div>
                                     </div>
@@ -261,8 +250,7 @@
                             @foreach ($emg_registaion_list as $value)
                             <tr>
 
-                                <td><a class="textlink"
-                                        href="{{route('emg-patient-profile',['id'=>base64_encode($value->id)])}}">{{
+                                <td><a class="textlink" href="{{route('emg-patient-profile',['id'=>base64_encode($value->id)])}}">{{
                                         @$value->emg_prefix }}{{ @$value->id }}</a></td>
                                 <td>
                                     {{ @$value->all_patient_details->prefix }} {{
@@ -271,8 +259,7 @@
                                     @$value->all_patient_details->last_name }} ({{ @$value->all_patient_details->id
                                     }})<br>
                                     <i class="fa fa-venus-mars text-primary"></i> {{
-                                    @$value->all_patient_details->gender }} <i
-                                        class="fa fa-calendar-plus-o text-primary"></i> {{
+                                    @$value->all_patient_details->gender }} <i class="fa fa-calendar-plus-o text-primary"></i> {{
                                     @$value->all_patient_details->year }}Y {{ @$value->all_patient_details->month }}M {{
                                     @$value->all_patient_details->day }}D
                                 </td>
@@ -291,14 +278,10 @@
                                 </td>
                                 <td>
                                     <div class="card-options">
-                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i
-                                                class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
-                                            <a class="dropdown-item"
-                                                href="{{route('emg-patient-profile',['id'=>base64_encode($value->id)])}}"><i
-                                                    class="fa fa-eye"></i> View</a>
+                                            <a class="dropdown-item" href="{{route('emg-patient-profile',['id'=>base64_encode($value->id)])}}"><i class="fa fa-eye"></i> View</a>
 
                                         </div>
                                     </div>
@@ -330,8 +313,7 @@
                             @if (isset($ipd_patient_list))
                             @foreach ($ipd_patient_list as $value)
                             <tr>
-                                <td><a class="textlink"
-                                        href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{
+                                <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{
                                         @$value->ipd_prefix }}{{ @$value->id }}</a></td>
                                 <td>
                                     <i class="fa fa-user text-primary"></i> {{ @$value->all_patient_details->prefix }}
@@ -381,9 +363,7 @@
                                 </td>
                                 <td>
                                     <div class="card-options">
-                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i
-                                                class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
                                             <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
                                             @can('')
