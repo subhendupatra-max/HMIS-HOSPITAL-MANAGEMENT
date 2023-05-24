@@ -88,7 +88,7 @@
                                                 {{ @$patient_details_information->year == '0'?'':$patient_details_information->year.'y' }}
                                                 {{ @$patient_details_information->month == '0'?'':$patient_details_information->month.'m' }}
                                                 {{ @$patient_details_information->day == '0'?'':$patient_details_information->day.'d' }}
-                        
+
                                             </td>
                                         </tr>
                                         <tr>

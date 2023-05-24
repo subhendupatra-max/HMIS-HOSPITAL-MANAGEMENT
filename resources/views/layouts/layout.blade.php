@@ -476,6 +476,31 @@ $login_details = DB::table('users')
             <div class=" menu-item">
                 <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
                 <li class="dropdown">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (2).png') }}">
+                    </div> Others
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    @if (auth()->user()->can('Inventory'))
+                    <li><a class="dropdown-item" href="{{ route('item-stock-listing') }}">Inventory</a></li>
+                    @endif
+                    @if (auth()->user()->can('Birth and Death Record'))
+                    <!-- <li class="dropdown-submenu">
+                        <a tabindex="-1" href="#">Birth & Death <i class="fa fa-chevron-right"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Birth Record</a></li>
+                            <li><a href="#">Death Record</a></li>
+                        </ul>
+                    </li> -->
+                    <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">appointment <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">shift-details</a></li>
+                      <li><a href="#">slots-details</a></li>
+                    </ul>
+                  </li>
+                    @endif
 
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -531,6 +556,22 @@ $login_details = DB::table('users')
                 <a class="nav-link" href="{{ route('bed-status-list') }}">
                     <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}"></div>Bed
                 </a>
+                    <li><a class="dropdown-item" href="{{ route('referral') }}">Referral</a></li>
+                    @if (auth()->user()->can('ambulance'))
+                    <li><a class="dropdown-item" href="{{ route('ambulance-call-details') }}">Ambulance</a></li>
+                    @endif
+                    @if (auth()->user()->can('front office'))
+                    <li><a class="dropdown-item" href="{{ route('all-visit-details') }}">Font Office</a></li>
+                    @endif
+                    @if (auth()->user()->can('Blood Bank'))
+                    <li><a class="dropdown-item" href="{{ route('all-blood-details') }}">Blood Bank</a></li>
+                    @endif
+                    @if (auth()->user()->can('master operation'))
+                    <li><a class="dropdown-item" href="{{ route('main-operation') }}">Operation</a></li>
+                    @endif
+                </ul>
+            </li>
+            </ul>
             </li>
             </ul>
          

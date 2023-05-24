@@ -123,6 +123,8 @@ use App\Http\Controllers\false\EmgFalseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\false\IpdFalseController;
 
+use App\Http\Controllers\MainOperationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -143,7 +145,7 @@ Route::get('/', function () {
 // })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 require __DIR__ . '/auth.php';
@@ -2394,6 +2396,14 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::group(['middleware' => ['permission:edit bed transfar history']], function () {
             Route::post('update-bed-hidtroy-from-date', [BedTransfarController::class, 'update_bed_transfar_from_date'])->name('update-bed-hidtroy-from-date');
         });
+
+        Route::group(['middleware' => ['permission:edit bed transfar history']], function () {
+            Route::post('update-bed-hidtroy-from-date', [BedTransfarController::class, 'update_bed_transfar_from_date'])->name('update-bed-hidtroy-from-date');
+        });
+
+        Route::group(['middleware' => ['permission:print bed transfar history']], function () {
+            Route::get('bed-transfar-history-print-in-ipd/{ipd_id}', [BedTransfarController::class, 'bed_transfar_history_print_in_ipd'])->name('bed-transfar-history-print-in-ipd');
+        });
     });
 
     // =============================== Bed Transfar ====================================================
@@ -2533,15 +2543,14 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::post('save-ipd-charges-details', [IpdChargeController::class, 'save_ipd_charges_details'])->name('save-ipd-charges-details');
     });
     // ================================ ipd charges =================================================
- // =============================== ipd status change ==================================================
- Route::group(['middleware' => ['permission:ipd status change']], function () {
-    Route::post('update-status-ipd', [IpdController::class, 'update_status'])->name('update-status-ipd');
-});
-// ================================ ipd charges =================================================
-Route::group(['middleware' => ['permission:ipd delete']], function () {
-    Route::get('ipd-patient-delete/{ipd_id?}', [IpdController::class, 'ipd_patient_delete'])->name('ipd-patient-delete');
-});
-
+    // =============================== ipd status change ==================================================
+    Route::group(['middleware' => ['permission:ipd status change']], function () {
+        Route::post('update-status-ipd', [IpdController::class, 'update_status'])->name('update-status-ipd');
+    });
+    // ================================ ipd charges =================================================
+    Route::group(['middleware' => ['permission:ipd delete']], function () {
+        Route::get('ipd-patient-delete/{ipd_id?}', [IpdController::class, 'ipd_patient_delete'])->name('ipd-patient-delete');
+    });
 });
 //================================= Ipd ===================================================
 
@@ -2634,3 +2643,20 @@ Route::group(['middleware' => ['permission:Report'], 'prefix' => 'report'], func
 
 
 
+//================================= Bill Summary ==============================
+
+//=================================  Main Operation ==============================
+Route::group(['middleware' => ['permission:main operation'], 'prefix' => 'operation'], function () {
+    Route::get('main-operation', [MainOperationController::class, 'index'])->name('main-operation');
+
+    // Route::any('add-operation', [MainOperationController::class, 'operation_booking'])->name('add-operation');
+
+    // Route::any('add-operation/{id?}', [MainOperationController::class, 'operation_booking'])->name('add-operation');
+
+    Route::post('save-operation-booking', [MainOperationController::class, 'save_operation_booking'])->name('save-operation-booking');
+
+    Route::get('add-operation', [MainOperationController::class, 'add_operation'])->name('add-operation');
+    Route::any('booking-operation', [MainOperationController::class, 'operation_booking'])->name('booking-operation');
+    Route::post('find-operation-catagory-by-department', [MainOperationController::class, 'find_operation_catagory_by_department'])->name('find-operation-catagory-by-department');
+});
+//================================= Main Operation  ==============================

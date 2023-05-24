@@ -92,26 +92,33 @@ class BedTransfarController extends Controller
     public function update_bed_transfar_from_date(Request $request)
     {
         try {
-        DB::beginTransaction();
-       $PatientBedHistory =  PatientBedHistory::find($request->bed_histry_id);
-       $PatientBedHistory->from_date = $request->from_time;
-       $PatientBedHistory->save();
+            DB::beginTransaction();
+            $PatientBedHistory =  PatientBedHistory::find($request->bed_histry_id);
+            $PatientBedHistory->from_date = $request->from_time;
+            $PatientBedHistory->save();
 
-       $sec_max = PatientBedHistory::where('ipd_id', $PatientBedHistory->ipd_id)
-       ->orderBy('id', 'DESC')
-       ->offset(1)
-       ->limit(1)
-       ->first();
+            $sec_max = PatientBedHistory::where('ipd_id', $PatientBedHistory->ipd_id)
+                ->orderBy('id', 'DESC')
+                ->offset(1)
+                ->limit(1)
+                ->first();
 
-       $sec_max->to_date = $request->from_time;
-       $sec_max->save();
+            $sec_max->to_date = $request->from_time;
+            $sec_max->save();
 
-       DB::commit();
-       return redirect()->back()->with('success', "Bed teansfer date Update Successfully");
-       } catch (\Throwable $th) {
-           DB::rollback();
-           return back()->withErrors(['error' => $th->getMessage()]);
-       
-       }
+            DB::commit();
+            return redirect()->back()->with('success', "Bed teansfer date Update Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
+    }
+
+    public function bed_transfar_history_print_in_ipd($ipd_id)
+    {
+        $ipdId = base64_decode($ipd_id);
+        $ipd_details = IpdDetails::where('id', $ipdId)->first();
+        $bedHistory =  PatientBedHistory::where('ipd_id', $ipdId)->get();
+        return view('ipd._print.patient_bed_history', compact('bedHistory', 'ipd_details'));
     }
 }

@@ -480,13 +480,20 @@ $login_details = DB::table('users')
                     <li><a class="dropdown-item" href="<?php echo e(route('item-stock-listing')); ?>">Inventory</a></li>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('Birth and Death Record')): ?>
-                    <li class="dropdown-submenu">
+                    <!-- <li class="dropdown-submenu">
                         <a tabindex="-1" href="#">Birth & Death <i class="fa fa-chevron-right"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Birth Record</a></li>
                             <li><a href="#">Death Record</a></li>
                         </ul>
-                    </li>
+                    </li> -->
+                    <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">appointment <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">shift-details</a></li>
+                      <li><a href="#">slots-details</a></li>
+                    </ul>
+                  </li>
                     <?php endif; ?>
 
                     <?php if(auth()->user()->can('False Generation')): ?>
@@ -514,6 +521,9 @@ $login_details = DB::table('users')
                     <?php endif; ?>
                     <?php if(auth()->user()->can('Blood Bank')): ?>
                     <li><a class="dropdown-item" href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('master operation')): ?>
+                    <li><a class="dropdown-item" href="<?php echo e(route('main-operation')); ?>">Operation</a></li>
                     <?php endif; ?>
                 </ul>
             </li>
