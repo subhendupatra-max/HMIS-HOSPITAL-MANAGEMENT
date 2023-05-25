@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -13,7 +12,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-4">
-                            <input type="hidden" value="<?php echo e($grn_list->grn_id); ?>" name="grn_id">
+
                             <label class="requisition_header">Purchase Order <span class="text-danger">*</span></label>
                             <select class="form-control select2-show-search" onchange="findPOdetails(this.value)" name="po_no" id="po">
                                 <?php if(!empty($po_list)): ?>
@@ -22,7 +21,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 grncreateadd">
                             <label class="requisition_header">Medicine Rec. Date<span class="text-danger">*</span></label>
                             <input type="date" name="medicine_rec_date" class="form-control" value="<?php echo e(@$grn_list->medicine_rec_date); ?>">
                             <?php $__errorArgs = ['medicine_rec_date'];
@@ -36,7 +35,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grncreateadd">
                             <label class="requisition_header">Bill Rec. Date</label>
                             <input type="date" name="bill_rec_date" class="form-control" value="<?php echo e(@$grn_list->bill_rec_date); ?>">
                             <?php $__errorArgs = ['bill_rec_date'];
@@ -50,22 +49,22 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grneditadd">
                             <label class="requisition_header">Challan No.</label>
                             <input type="text" name="challan_no" class="form-control" value="<?php echo e(@$grn_list->challan_no); ?>">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grneditadd">
                             <label class="requisition_header">Challan Date (DD-MM-YYYY)</label>
                             <input type="text" name="challan_date" class="form-control" value="<?php echo e(@$grn_list->challan_date); ?>">
                         </div>
                         
 
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 grneditadd">
                             <label class="requisition_header">Invoice No.</label>
                             <input type="text" name="invoice_no" class="form-control" value="<?php echo e(@$grn_list->invoice_no); ?>">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grneditadd">
                             <label class="requisition_header">Invoice Date (DD-MM-YYYY)</label>
                             <input type="text" name="invoice_date" class="form-control" value="<?php echo e(@$grn_list->invoice_date); ?>">
                         </div>
@@ -280,4 +279,5 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/pharmacy/purchase/grn/grn-edit.blade.php ENDPATH**/ ?>

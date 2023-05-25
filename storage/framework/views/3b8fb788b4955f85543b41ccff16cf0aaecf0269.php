@@ -31,8 +31,12 @@
                         <th scope="col">Gurdian Name</th>
                         <th scope="col">Mobile No.</th>
                         <th scope="col">Case Id</th>
+<<<<<<< HEAD
                         <th scope="col">Visit Details</th>
                         <th scope="col">Appointment Date</th>
+=======
+                        <th scope="col">Last Visit Details</th>
+>>>>>>> sucharitaroy
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -42,6 +46,54 @@
                     <tr>
                         <td><a class="textlink"
                                 href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
+<<<<<<< HEAD
+=======
+                        </td>
+                        <td>
+                            <?php echo e(@$value->all_patient_details->prefix); ?>
+
+                            <?php echo e(@$value->all_patient_details->first_name); ?>
+
+                            <?php echo e(@$value->all_patient_details->middle_name); ?>
+
+                            <?php echo e(@$value->all_patient_details->last_name); ?>(<?php echo e(@$value->all_patient_details->id); ?>)<br>
+                            <i class="fa fa-venus-mars text-primary"></i>
+                            <?php echo e(@$value->all_patient_details->gender); ?> <i
+                                class="fa fa-calendar-plus-o text-primary"></i>
+                            <?php if(@$value->all_patient_details->year != 0): ?>
+                            <?php echo e(@$value->all_patient_details->year); ?>y
+                            <?php endif; ?>
+                            <?php if(@$value->all_patient_details->month != 0): ?>
+                            <?php echo e(@$value->all_patient_details->month); ?>m
+                            <?php endif; ?>
+                            <?php if(@$value->all_patient_details->day != 0): ?>
+                            <?php echo e(@$value->all_patient_details->day); ?>d
+                            <?php endif; ?>
+
+                        </td>
+                        <td><?php echo e(@$value->all_patient_details->guardian_name); ?></td>
+                        <td><?php echo e(@$value->all_patient_details->phone); ?></td>
+                        <td><?php echo e(@$value->case_id); ?></td>
+                        <td>
+                            <?php if(isset($value->latest_opd_visit_details_for_patient->department_id)): ?>
+                            <i class="fa fa-cubes text-primary"></i>
+                            <?php echo e(@$value->latest_opd_visit_details_for_patient->department_details->department_name); ?>
+
+                            <br>
+                            <?php endif; ?>
+                            <?php if(isset($value->latest_opd_visit_details_for_patient->cons_doctor)): ?>
+                            <i class="fas fa-user-md text-primary"></i>
+                            <?php echo e(@$value->latest_opd_visit_details_for_patient->doctor->first_name); ?>
+
+                            <?php echo e(@$value->latest_opd_visit_details_for_patient->doctor->last_name); ?><br>
+                            <?php endif; ?>
+                            <?php if(isset($value->latest_opd_visit_details_for_patient->appointment_date)): ?>
+                            <i class="fa fa-calendar text-primary"></i>
+                            <?php echo e(date('d-m-Y h:i A',
+                            strtotime($value->latest_opd_visit_details_for_patient->appointment_date))); ?>
+
+                            <?php endif; ?>
+>>>>>>> sucharitaroy
                         </td>
                         <td>
                             <?php echo e(@$value->all_patient_details->prefix); ?>
@@ -105,7 +157,11 @@
                                     <?php endif; ?>
 
                                     <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id))); ?>"><i class="fa fa-print"></i>
+<<<<<<< HEAD
                                          Print</a>
+=======
+                                        Print</a>
+>>>>>>> sucharitaroy
 
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd billing')): ?>
                                     <a class="dropdown-item"
@@ -115,8 +171,12 @@
                                     <?php endif; ?>
                                     <a class="dropdown-item"
                                         href="<?php echo e(route('payment-listing-in-opd', ['id' => base64_encode($value->id)])); ?>"><i
+<<<<<<< HEAD
                                             class="fa fa-rupee-sign"></i> Take Payment</a>
                                     <a class="dropdown-item"  href="<?php echo e(route('ipd-registation-from-opd', ['id' => base64_encode($value->id), 'patient_source' => 'opd', 'source_id' => $value->id])); ?>"><i class="fa fa-bed"></i> Admission</a>
+=======
+                                            class="fa fa-rupee-sign"></i>Take Payment</a>
+>>>>>>> sucharitaroy
 
                                 </div>
                             </div>

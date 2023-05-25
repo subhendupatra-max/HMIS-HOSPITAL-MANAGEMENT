@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -61,7 +60,7 @@ unset($__errorArgs, $__bag); ?>
 
                         <div class="col-md-3 newuserrchange ">
                             <label for="store_room" class="form-label">Store Room <span class="text-danger">*</span></label>
-                            <select name="store_room" class="select2-show-search">
+                            <select name="store_room" class="form-control select2-show-search">
                                 <option value="">Select One</option>
                                 <?php if($store_room_list): ?>
                                     <?php $__currentLoopData = $store_room_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -71,9 +70,9 @@ unset($__errorArgs, $__bag); ?>
                             </select>
                         </div>
 
-                        <div class="col-md-3 newuserrchange">
-                             <label for="date" class="form-label">Date <span class="text-danger">*</span></label> 
-                       
+                        <div class="col-md-3  addrequistiondate">
+                             <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+
                             <input type="datetime-local" class="form-control" id="date" name="date" required>
                             <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -244,7 +243,7 @@ unset($__errorArgs, $__bag); ?>
                     </button>
                 </div>
                 <div class="modal-body pd-20">
-                    
+
 
                     <form id="myForm" action="<?php echo e(route('add-medicine-catagory-and-medicine-name')); ?>" method="POST">
                         <?php echo csrf_field(); ?>
@@ -363,7 +362,7 @@ unset($__errorArgs, $__bag); ?>
                     $.each(response, function(key, value) {
                         $('#medicine_name' + rowid).append(
                             `<option value="${value.id}">${value.medicine_name}</option>`);
-                       
+
                     });
                 },
                 error: function(error) {

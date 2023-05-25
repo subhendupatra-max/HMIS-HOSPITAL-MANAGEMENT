@@ -45,7 +45,7 @@
 
                         <div class="col-md-3 newuserrchange ">
                             <label for="store_room" class="form-label">Store Room <span class="text-danger">*</span></label>
-                            <select name="store_room" class="select2-show-search">
+                            <select name="store_room" class="form-control select2-show-search">
                                 <option value="">Select One</option>
                                 @if ($store_room_list)
                                     @foreach ($store_room_list as $value)
@@ -55,9 +55,9 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3 newuserrchange">
-                             <label for="date" class="form-label">Date <span class="text-danger">*</span></label> 
-                       
+                        <div class="col-md-3  addrequistiondate">
+                             <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
+
                             <input type="datetime-local" class="form-control" id="date" name="date" required>
                             @error('date')
                                 <span class="text-danger">{{ $message }}</span>
@@ -202,7 +202,7 @@
                     </button>
                 </div>
                 <div class="modal-body pd-20">
-                    
+
 
                     <form id="myForm" action="{{ route('add-medicine-catagory-and-medicine-name') }}" method="POST">
                         @csrf
@@ -319,7 +319,7 @@
                     $.each(response, function(key, value) {
                         $('#medicine_name' + rowid).append(
                             `<option value="${value.id}">${value.medicine_name}</option>`);
-                       
+
                     });
                 },
                 error: function(error) {

@@ -171,8 +171,12 @@ $login_details = DB::table('users')
                         </div>
                     </li>
 
-
-              
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/hospital-bed (1).png')); ?>"></div>Bed
+                        </a>
+                    </li> -->
+                    
             <div class=" menu-item">
                 <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>"></div>
                 <li class="dropdown">
@@ -491,74 +495,83 @@ $login_details = DB::table('users')
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
                             <ul class="dropdown-menu">
-                                <?php if(auth()->user()->can('OPD False')): ?>
-                                <li><a href="<?php echo e(route('opd-false-generation')); ?>" class="<?php echo e(Request::segment(2) == 'opd-false' ? 'active' : ''); ?>"> OPD</a></li>
-                                <?php endif; ?>
-                                <?php if(auth()->user()->can('EMG False')): ?>
-                                <li><a href="<?php echo e(route('emg-false-generation')); ?>" class="<?php echo e(Request::segment(2) == 'emg-false' ? 'active' : ''); ?>"> EMG</a></li>
-                                <?php endif; ?>
-                                <?php if(auth()->user()->can('IPD False')): ?>
-                                <li><a href="<?php echo e(route('ipd-false-generation')); ?>" class="<?php echo e(Request::segment(2) == 'ipd-false' ? 'active' : ''); ?>"> IPD</a></li>
-                                <?php endif; ?>
+
+
+                                <li><a href="#">Opd</a></li>
+                                <li><a href="#">Ipd</a></li>
+
                             </ul>
                         </li>
                         <li><a href="#">Refferal</a></li>
                         <li><a href="#">Font office</a></li>
-                        <li><a href="#">Blood Bank</a></li>
-                        <li><a href="#">Operation</a></li>
+                        <li><a href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
+                        <li><a href="<?php echo e(route('main-operation')); ?>">Operation</a></li>
+
+                        <?php if(auth()->user()->can('view role') ||
+                        auth()->user()->can('asign userBasedPermission') ||
+                        auth()->user()->can('view permission') ||
+                        auth()->user()->can('asign roleToUser') ||
+                        auth()->user()->can('view permission')): ?>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Permission<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="<?php echo e(route('roleList')); ?>">Role</a></li>
+                                <li><a href="#"></a></li>
+
+                            </ul>
+                        </li>
+                        <?php endif; ?>
 
             </div>
-            <?php if(auth()->user()->can('Report')): ?>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/investigation.png')); ?>"></div>
-                    Reports
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <?php if(auth()->user()->can('OPD Patient Report')): ?>
-                    <a class="dropdown-item" href="<?php echo e(route('opd-patient-report')); ?>">OPD Patient Report</a>
-                    <?php endif; ?>
-                    <a class="dropdown-item" href="">OPD Income Report</a>
-                    <a class="dropdown-item" href="">EMG Patient Report</a>
-                    <a class="dropdown-item" href="">EMG Income Report</a>
-                    <a class="dropdown-item" href="">IPD Patient Report</a>
-                    <a class="dropdown-item" href="">IPD Income Report</a>
-                </div>
-            </li>
-            <?php endif; ?>
-            <li class="nav-item">
-                <a class="nav-link" href="<?php echo e(route('bed-status-list')); ?>">
-                    <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/hospital-bed (1).png')); ?>"></div>Bed
-                </a>
+
+            </ul>
             </li>
             </ul>
-         
-            </li>
-            
-            </ul>
+
+
 
 
     </div>
 
-    
-    <div class="popup-link">
-        <a href="#popup1">
-            <div class="dashprofileimg"><img src="<?php echo e(asset('public/profile_picture')); ?>/<?php echo e($login_details->profile_image); ?>"></div>
-    </div>
-    <div id="popup1" class="popup-container">
-        <div class="popup-content">
-            <a href="#" class="close">&times;</a>
-            <img src="<?php echo e(asset('public/profile_picture')); ?>/<?php echo e($login_details->profile_image); ?>" style="width: 50px;
-            height: 50px;
-            cursor: default;
-            margin: 0px 0px 0px 151px;">
-            <h3 style="margin: 5px 0px 0px 110px;"> <?php echo e($login_details->first_name); ?>
+             <div class=" menu-item">
+              <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>" ></div>  <li class="dropdown">
 
-                <?php echo e($login_details->last_name); ?></h3>
-            <span class="badge badge-light badge-pill" style="margin:5px 0px 10px 97px;"><?php echo e($login_details->role); ?></span>
-            
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
+                 <ul class="dropdown-menu" role="menu">
+                   <li><a href="#">Inventory</a></li>
+                   <li class="dropdown-submenu">
+                     <a tabindex="-1" href="#">Birth and Death record<i class="fa fa-chevron-right"></i></a>
+                     <ul class="dropdown-menu">
+
+
+                       <li><a href="#">Birth Record</a></li>
+                       <li><a href="#">Death Record</a></li>
+
+                     </ul>
+                   </li>
+                   <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+
+                      <li><a href="#">Opd</a></li>
+                      <li><a href="#">Ipd</a></li>
+
+                    </ul>
+                  </li>
+                   <li><a href="#">Refferal</a></li>
+                   <li><a href="#">Font office</a></li>
+                   <li><a href="#">Blood Bank</a></li>
+                   <li><a href="#">Operation</a></li>
+
+              </div>
+        </ul>
+      </li>
+      </ul>
+
             <a class="btn btn-success btn-sm" href="<?php echo e(route('user-profile')); ?>/<?php echo e(base64_encode(Auth::id())); ?>"><i class='fas fa-address-card'></i> Profile</a>
-            <form method="POST"  action="<?php echo e(route('logout')); ?>">
+            <form method="POST" action="<?php echo e(route('logout')); ?>">
                 <?php echo csrf_field(); ?>
                 <button class="btn btn-primary btn-sm text-center" style="margin: 0px 0px 0px 140px" type="submit"><i class="fa fa-sign-out-alt"></i> Log Out</button>
             </form>
@@ -586,20 +599,20 @@ $login_details = DB::table('users')
 
     <div class="row">
         <?php echo $__env->yieldContent('content'); ?>
-    </div>
+      </div>
 
-    <!--Footer-->
-    <footer class="footer">
-        <div class="container">
-            <div class="row align-items-center flex-row-reverse">
-                <div class="col-md-12 col-sm-12 text-center">
-                    Copyright © 2022 <a href="#"><?php echo e(@$general_details->software_name); ?></a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
-                    All rights reserved.
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Back to top -->
+     <!--Footer-->
+     <footer class="footer">
+         <div class="container">
+             <div class="row align-items-center flex-row-reverse">
+                 <div class="col-lg-12 footer-text">
+                     Copyright © 2022 <a href="#"><?php echo e(@$general_details->software_name); ?></a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
+                     All rights reserved.
+                 </div>
+             </div>
+         </div>
+     </footer>
+     <!-- Back to top -->
     <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
 
 
@@ -688,8 +701,8 @@ $login_details = DB::table('users')
     <script src="<?php echo e(asset('public/assets/plugins/wysiwyag/jquery.richtext.js')); ?>"></script>
     <script src="<?php echo e(asset('public/assets/js/form-editor.js')); ?>"></script>
     
-    
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     
 
 </body>
@@ -730,4 +743,5 @@ $login_details = DB::table('users')
             });
         }
     }
-</script><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/layouts/layout.blade.php ENDPATH**/ ?>
+</script>
+<?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/layouts/layout.blade.php ENDPATH**/ ?>
