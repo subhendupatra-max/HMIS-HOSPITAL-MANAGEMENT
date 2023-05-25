@@ -10,6 +10,7 @@ use App\Models\Diagonasis;
 use App\Models\Patient;
 use App\Models\Bed;
 use App\Models\PatientBedHistory;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class PatientDischargeController extends Controller
@@ -20,69 +21,80 @@ class PatientDischargeController extends Controller
         $discharged_patient = DischargedPatient::all();
         $ipd_details = IpdDetails::where('id', $ipdId)->first();
         $ipd_patient_details = IpdDetails::where('id', $ipdId)->first();
-        $patient_details = Patient::where('id',$ipd_details->patient_id)->first();
+        $patient_details = Patient::where('id', $ipd_details->patient_id)->first();
         // dd($ipd_patient_details);
         $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipdId)->get();
-
         $icd_code = Diagonasis::all();
-        return view('Ipd.discharge-patient.add-discharge-patient', compact('discharged_patient', 'ipdId', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code','patient_details'));
+        return view('Ipd.discharge-patient.add-discharge-patient', compact('discharged_patient', 'ipdId', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code', 'patient_details'));
     }
 
     public function add_patient_discharge($ipd_id)
     {
+        $ipdId = base64_decode($ipd_id);
         $ipd_id = base64_decode($ipd_id);
         $discharged_patient = DischargedPatient::all();
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
         $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
         $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipd_id)->get();
+        $patient_details = Patient::where('id', $ipd_details->patient_id)->first();
         $icd_code = Diagonasis::all();
-        return view('Ipd.discharge-patient.add-discharge-patient', compact('discharged_patient', 'ipd_id', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code'));
+        $doctor = User::where('role', 'Doctor')->get();
+        return view('Ipd.discharge-patient.add-discharge-patient', compact('discharged_patient', 'ipd_id', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code', 'ipdId', 'patient_details', 'doctor'));
     }
 
 
     public function save_patient_discharge(Request $request)
     {
-        $validate = $request->validate([
-            'patient_id' => 'required',
-            'discharge_date' => 'required',
-            'discharge_status' => 'required',
-            'icd_code' => 'required',
-        ]);
-        try {
-            DB::beginTransaction();
+        // $validate = $request->validate([
+        //     'patient_id' => 'required',
+        //     'discharge_date' => 'required',
+        //     'discharge_status' => 'required',
+        //     'icd_code' => 'required',
+        // ]);
+        // try {
+        //     DB::beginTransaction();
 
-            //SAVE in ipd details
-            $ipd_details = new DischargedPatient();
-            $ipd_details->ipd_id                      = $request->ipd_id;
-            $ipd_details->case_id                     = $request->case_id;
-            $ipd_details->patient_id                  = $request->patient_id;
-            $ipd_details->discharge_date              = \Carbon\Carbon::parse($request->discharge_date)->format('Y-m-d h:m:s');
-            $ipd_details->discharge_status            = $request->discharge_status;
-            $ipd_details->icd_code                    = $request->icd_code;
-            $ipd_details->note                        = $request->note;
-            $ipd_details->operation                   = $request->operation;
-            $ipd_details->diagnosis                   = $request->diagnosis;
-            $ipd_details->investigation               = $request->investigation;
-            $ipd_details->treatment_home              = $request->treatment_home;
-            $status =  $ipd_details->save();
-            //SAVE in ipd details
+        //SAVE in ipd details
+        $ipd_details = new DischargedPatient();
+        $ipd_details->ipd_id                                        = $request->ipd_id;
+        $ipd_details->case_id                                       = $request->case_id;
+        $ipd_details->patient_id                                    = $request->patient_id;
+        $ipd_details->discharge_date                                = \Carbon\Carbon::parse($request->discharge_date)->format('Y-m-d h:m:s');
+        $ipd_details->discharge_status                              = $request->discharge_status;
+        $ipd_details->icd_code                                      = $request->icd_code;
+        $ipd_details->diagonsis_admission_time                      = $request->diagonsis_admission_time;
+        $ipd_details->final_diagonsis_discharge                     = $request->final_diagonsis_discharge;
+        $ipd_details->diagnosis                                     = $request->diagnosis;
+        $ipd_details->complaiints_duraiton                          = $request->complaiints_duraiton;
+        $ipd_details->presenting_illness                            = $request->presenting_illness;
+        $ipd_details->physical_examinaiton_at_admission             = $request->physical_examinaiton_at_admission;
+        $ipd_details->history_alcoholism                            = $request->history_alcoholism;
+        $ipd_details->medical_surgical_history                      = $request->medical_surgical_history;
+        $ipd_details->family_history_diagnosis                      = $request->family_history_diagnosis;
+        $ipd_details->summary_inves_during_hos                      = $request->summary_inves_during_hos;
+        $ipd_details->course_complications                          = $request->course_complications;
+        $ipd_details->dischage_advice                               = $request->dischage_advice;
+        $ipd_details->refferal_hospital_name                        = $request->refferal_hospital_name;
+        $ipd_details->doctor_name                                   = $request->doctor_name;
+        $status      =  $ipd_details->save();
+        //SAVE in ipd details
 
-            IpdDetails::where('id', $ipd_details->ipd_id)->update(['discharged' => 'yes', 'discharged_date' => $ipd_details->discharge_date]);
+        IpdDetails::where('id', $ipd_details->ipd_id)->update(['discharged' => 'yes', 'discharged_date' => $ipd_details->discharge_date]);
 
-            PatientBedHistory::where('ipd_id', $ipd_details->id)->update(['is_present' => 'no', 'to_date' => $ipd_details->discharge_date]);
+        PatientBedHistory::where('ipd_id', $ipd_details->id)->update(['is_present' => 'no', 'to_date' => $ipd_details->discharge_date]);
 
-            Bed::where('id', $ipd_details->bed)->update(['is_used' => 'Under Maintenance']);
+        Bed::where('id', $ipd_details->bed)->update(['is_used' => 'Under Maintenance']);
 
-            DB::commit();
-            if ($status) {
-                return redirect()->route('add-discharged-patient-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', 'Ipd Patient Discharged Sucessfully');
-            } else {
-                return redirect()->route('add-discharged-patient-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', 'Something went wrong');
-            }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->back()->with('error', $th->getMessage());
+        DB::commit();
+        if ($status) {
+            return redirect()->route('add-discharged-patient-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', 'Ipd Patient Discharged Sucessfully');
+        } else {
+            return redirect()->route('add-discharged-patient-in-ipd', ['ipd_id' => base64_encode($request->ipd_id)])->with('success', 'Something went wrong');
         }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->back()->with('error', $th->getMessage());
+        // }
     }
 
     public function all_discharged_patient_in_ipd()
@@ -91,5 +103,23 @@ class PatientDischargeController extends Controller
 
 
         return view('Ipd.discharge-patient.all-discharge-patient-listing', compact('discharged_patient'));
+    }
+
+    public function edit_patient_discharge($ipd_id, $discharge_id)
+    {
+        $ipdId = base64_decode($ipd_id);
+        $ipd_id = base64_decode($ipd_id);
+
+        $discharge_id = base64_decode($discharge_id);
+        $discharged_patient = DischargedPatient::all();
+        $ipd_details = IpdDetails::where('id', $ipd_id)->first();
+        $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
+        $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipd_id)->first();
+        dd($patient_discharge_details);
+        dd($patient_discharge_details);
+        $patient_details = Patient::where('id', $ipd_details->patient_id)->first();
+        $icd_code = Diagonasis::all();
+        $doctor = User::where('role', 'Doctor')->get();
+        return view('Ipd.discharge-patient.edit-discharge-patient', compact('discharged_patient', 'ipd_id', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code', 'ipdId', 'patient_details', 'doctor'));
     }
 }

@@ -13,7 +13,9 @@
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-payment' ? 'active' : '' }}" href="{{ route('ipd-payment-details', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-rupee-sign"></i> Payment</a>
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-bed-history' ? 'active' : '' }}" href="{{ route('bed-transfar-history-in-ipd', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-bed"></i> Bed History</a>
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-physical-condition' ? 'active' : '' }}" href="{{ route('physical-condition-in-ipd', ['ipd_id' => base64_encode(@$ipd_details->id)]) }}"><i class="fa fa-prescription-bottle"></i> Physical Condition </a>
+
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-discharged' ? 'active' : '' }}" href="{{ route('discharged-patient-in-ipd', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="far fa-calendar-check"></i> Discharge Patient</a>
+    
     @can('IPD Pathology Investigation')
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-pathology-investigation' ? 'active' : '' }}" href="{{ route('ipd-pathology-investigation', ['id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-microscope"></i> Pathology Investigation</a>
     @endcan

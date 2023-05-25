@@ -33,8 +33,8 @@ class CreateDischargedPatientsTable extends Migration
             $table->longText('summary_inves_during_hos');
             $table->longText('course_complications');
             $table->longText('dischage_advice');
-            $table->string('doctor_signature');
-            $table->string('attendant_signature');
+            $table->string('refferal_hospital_name');
+            $table->string('doctor_name');
             $table->timestamps();
         });
     }

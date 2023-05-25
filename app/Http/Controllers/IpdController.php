@@ -46,6 +46,8 @@ use App\Models\OperationCatagory;
 use App\Models\OperationType;
 use App\Models\BloodComponentIssue;
 use App\Models\bloodBank\BloodIssue;
+use App\Models\DischargedPatient;
+
 use PDF;
 
 class IpdController extends Controller
@@ -92,13 +94,14 @@ class IpdController extends Controller
 
         $payment_amount = Payment::where('ipd_id', $ipd_id)->sum('payment_amount');
         $billing_amount = Billing::where('ipd_id', $ipd_id)->sum('grand_total');
+        $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipd_id)->first();
 
         $PathologyTestDetails = PathologyPatientTest::where('case_id', $ipd_details->case_id)->get();
-        // dd($PathologyTestDetails);
+        //  dd($patient_discharge_details);
         $RadiologyTestDetails = RadiologyPatientTest::where('case_id', $ipd_details->case_id)->get();
         // dd($RadiologyTestDetails);
 
-        return view('Ipd.ipd-profile', compact('paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'PhysicalDetails'));
+        return view('Ipd.ipd-profile', compact('paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'PhysicalDetails', 'patient_discharge_details'));
     }
 
     public function find_doctor_and_ward_by_department_in_opd(Request $request)
@@ -134,82 +137,84 @@ class IpdController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        $result =  Bed::where('id', $request->bed)->where('is_used', 'no')->first();
-        if ($result == null) {
-            return redirect()->back()->with('success', 'Select Another Bed');
-        }
-        //SAVE in CASE reference
-        $caseReference = new CaseReference;
-        $caseReference->patient_id = $request->patient_id;
-        $caseReference->section = 'IPD';
-        $caseReference->save();
-        //SAVE in CASE reference
+            $result =  Bed::where('id', $request->bed)->where('is_used', 'no')->first();
+            if ($result == null) {
+                return redirect()->back()->with('success', 'Select Another Bed');
+            }
+            //SAVE in CASE reference
+            $caseReference = new CaseReference;
+            $caseReference->patient_id = $request->patient_id;
+            $caseReference->section = 'IPD';
+            $caseReference->save();
+            //SAVE in CASE reference
 
-        $patient_update = Patient::find($request->patient_id);
-        $patient_update->date_of_birth = $request->date_of_birth;
-        $patient_update->year = $request->date_of_birth_year;
-        $patient_update->month = $request->date_of_birth_month;
-        $patient_update->day = $request->date_of_birth_day;
-        $patient_update->save();
+            $patient_update = Patient::find($request->patient_id);
+            $patient_update->date_of_birth = $request->date_of_birth;
+            $patient_update->year = $request->date_of_birth_year;
+            $patient_update->month = $request->date_of_birth_month;
+            $patient_update->day = $request->date_of_birth_day;
+            $patient_update->save();
 
-        $ipd_prefix = Prefix::where('name', 'ipd')->first();
+            $ipd_prefix = Prefix::where('name', 'ipd')->first();
 
-        //SAVE in ipd details
-        $ipd_details = new IpdDetails();
-        $ipd_details->admitted_by                 = $request->admitted_by;
-        $ipd_details->admitted_by_contact_no      = $request->admitted_by_contact_no;
-        $ipd_details->ipd_prefix                  = $ipd_prefix->prefix;
-        $ipd_details->patient_id                  = $request->patient_id;
-        $ipd_details->patient_source_id           = $request->patient_source_id;
-        $ipd_details->patient_source              = $request->patient_source;
-        $ipd_details->case_id                     = $caseReference->id;
-        $ipd_details->appointment_date            = $request->appointment_date;
-        $ipd_details->credit_limit                = $request->credit_limit;
-        $ipd_details->bp                          = $request->bp;
-        $ipd_details->height                      = $request->height;
-        $ipd_details->weight                      = $request->weight;
-        $ipd_details->pulse                       = $request->pulse;
-        $ipd_details->temperature                 = $request->temperature;
-        $ipd_details->respiration                 = $request->respiration;
-        $ipd_details->known_allergies             = $request->any_known_allergies;
-        $ipd_details->symptoms_type               = $request->symptoms_type;
-        $ipd_details->symptoms                    = $request->symptoms_title;
-        $ipd_details->symptoms_description        = $request->symptoms_description;
-        $ipd_details->patient_type                = $request->patient_type;
-        $ipd_details->tpa_organization            = $request->tpa_organization;
-        $ipd_details->type_no                     = $request->type_no;
-        $ipd_details->note                        = $request->note;
-        $ipd_details->refference                  = $request->reference;
-        $ipd_details->cons_doctor                 = $request->cons_doctor;
-        $ipd_details->department_id               = $request->department;
-        $ipd_details->bed                         = $request->bed;
-        $ipd_details->bed_ward_id                 = $request->ward;
-        $ipd_details->bed_unit_id                 = $request->unit;
-        $ipd_details->generated_by                = Auth::user()->id;
-        $ipd_details->save();
-        //SAVE in ipd details
+            //SAVE in ipd details
+            $ipd_details = new IpdDetails();
+            $ipd_details->admitted_by                 = $request->admitted_by;
+            $ipd_details->admitted_by_contact_no      = $request->admitted_by_contact_no;
+            $ipd_details->ipd_prefix                  = $ipd_prefix->prefix;
+            $ipd_details->patient_id                  = $request->patient_id;
+            $ipd_details->patient_source_id           = $request->patient_source_id;
+            $ipd_details->patient_source              = $request->patient_source;
+            $ipd_details->case_id                     = $caseReference->id;
+            $ipd_details->appointment_date            = $request->appointment_date;
+            $ipd_details->credit_limit                = $request->credit_limit;
+            $ipd_details->bp                          = $request->bp;
+            $ipd_details->height                      = $request->height;
+            $ipd_details->weight                      = $request->weight;
+            $ipd_details->pulse                       = $request->pulse;
+            $ipd_details->temperature                 = $request->temperature;
+            $ipd_details->respiration                 = $request->respiration;
+            $ipd_details->known_allergies             = $request->any_known_allergies;
+            $ipd_details->symptoms_type               = $request->symptoms_type;
+            $ipd_details->symptoms                    = $request->symptoms_title;
+            $ipd_details->symptoms_description        = $request->symptoms_description;
+            $ipd_details->patient_type                = $request->patient_type;
+            $ipd_details->tpa_organization            = $request->tpa_organization;
+            $ipd_details->type_no                     = $request->type_no;
+            $ipd_details->note                        = $request->note;
+            $ipd_details->refference                  = $request->reference;
+            $ipd_details->cons_doctor                 = $request->cons_doctor;
+            $ipd_details->department_id               = $request->department;
+            $ipd_details->bed                         = $request->bed;
+            $ipd_details->bed_ward_id                 = $request->ward;
+            $ipd_details->bed_unit_id                 = $request->unit;
+            $ipd_details->generated_by                = Auth::user()->id;
+            $ipd_details->save();
+            //SAVE in ipd details
 
 
-        //bed status update in bed table
-        Bed::where('id', $request->bed)->update(['is_used' => 'yes']);
-        //bed status update in bed table
+            //bed status update in bed table
+            Bed::where('id', $request->bed)->update(['is_used' => 'yes']);
+            //bed status update in bed table
 
-        //bed history update in bed table
-        $patient_bed_history = new PatientBedHistory();
-        $patient_bed_history->patient_id = $request->patient_id;
-        $patient_bed_history->case_id = $caseReference->id;
-        $patient_bed_history->ipd_id = $ipd_details->id;
-        $patient_bed_history->department_id = $request->department;
-        $patient_bed_history->bed_ward_id = $request->ward;
-        $patient_bed_history->bed_unit_id = $request->unit;
-        $patient_bed_history->bed_id = $request->bed;
-        $patient_bed_history->from_date = $request->appointment_date;
-        $patient_bed_history->save();
-        //bed history update in bed table
+            //bed history update in bed table
+            $patient_bed_history = new PatientBedHistory();
+            $patient_bed_history->patient_id = $request->patient_id;
+            $patient_bed_history->case_id = $caseReference->id;
+            $patient_bed_history->ipd_id = $ipd_details->id;
+            $patient_bed_history->department_id = $request->department;
+            $patient_bed_history->bed_ward_id = $request->ward;
+            $patient_bed_history->bed_unit_id = $request->unit;
+            $patient_bed_history->bed_id = $request->bed;
+            $patient_bed_history->from_date = $request->appointment_date;
+            $patient_bed_history->save();
+            //bed history update in bed table
 
-        DB::commit();
-        return redirect()->route('ipd-patient-listing')->with('success', 'Ipd Registation Sucessfully');
+            DB::commit();
 
+            // $ipd_details = IpdDetails::where('id', $ipd_details->id)->first();
+
+            return redirect()->route('ipd-patient-listing')->with('success', 'Ipd Registation Sucessfully');
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->back()->with('error', $th->getMessage());
@@ -527,11 +532,11 @@ class IpdController extends Controller
     {
         $operation_booking_id = base64_decode($id);
         $operation_booking = OperationBooking::where('id', '=',  $operation_booking_id)->first();
-      
+
         // dd( $operation_booking );
         $operation_theathers = OperationTheather::where('operation_booking_id', '=',  $operation_booking_id)->first();
         // dd($operation_theathers);
-        $ipd_details = IpdDetails::where('id',$operation_theathers->ipd_id)->first();
+        $ipd_details = IpdDetails::where('id', $operation_theathers->ipd_id)->first();
         $patient_id = $operation_theathers->patient_id;
         $patient_details_information = Patient::where('id', '=', $patient_id)->first();
         $departments = Department::where('is_active', '1')->get();
@@ -543,7 +548,7 @@ class IpdController extends Controller
         $operation_type = OperationType::all();
         $all_patient = Patient::all();
 
-        return view('IPD.operation-ipd.edit-operation-details-in-ipd', compact('operation_booking_id', 'departments', 'all_patient', 'doctor', 'nurse', 'staff', 'operation_catagory', 'operation_type', 'operation_department', 'operation_booking', 'operation_theathers', 'patient_details_information','ipd_details'));
+        return view('IPD.operation-ipd.edit-operation-details-in-ipd', compact('operation_booking_id', 'departments', 'all_patient', 'doctor', 'nurse', 'staff', 'operation_catagory', 'operation_type', 'operation_department', 'operation_booking', 'operation_theathers', 'patient_details_information', 'ipd_details'));
     }
 
 
@@ -603,6 +608,6 @@ class IpdController extends Controller
         // dd($blood_details);/
         $components_details = BloodComponentIssue::where('patient_id', $ipd_details->patient_id)->get();
 
-        return view('ipd.blood-bank.blood-details', compact('ipd_id', 'ipd_details', 'blood_details', 'components_details','patient_details_information'));
+        return view('ipd.blood-bank.blood-details', compact('ipd_id', 'ipd_details', 'blood_details', 'components_details', 'patient_details_information'));
     }
 }

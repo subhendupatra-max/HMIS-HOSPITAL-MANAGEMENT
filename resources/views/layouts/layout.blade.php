@@ -172,7 +172,6 @@ $login_details = DB::table('users')
                         </div>
                     </li>
 
-<<<<<<< HEAD
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">
                             <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}"></div>Bed
@@ -202,10 +201,6 @@ $login_details = DB::table('users')
                 <li><a class="dropdown-item" href="#">Symptoms</a></li>
             </ul>
             </li> --}}
-=======
-
-              
->>>>>>> 5947f202bb568de31e897da895d7028df7e2e723
             <div class=" menu-item">
                 <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
                 <li class="dropdown">
@@ -508,7 +503,6 @@ $login_details = DB::table('users')
             <div class=" menu-item">
                 <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
                 <li class="dropdown">
-<<<<<<< HEAD
 
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -536,132 +530,30 @@ $login_details = DB::table('users')
                         <li><a href="#">Font office</a></li>
                         <li><a href="{{ route('all-blood-details') }}">Blood Bank</a></li>
                         <li><a href="{{ route('main-operation') }}">Operation</a></li>
-                        <li><a href="{{ route('main-operation') }}">Permission</a></li>
 
-            </div>
-
-            @if (auth()->user()->can('view role') ||
-            auth()->user()->can('asign userBasedPermission') ||
-            auth()->user()->can('view permission') ||
-            auth()->user()->can('asign roleToUser') ||
-            auth()->user()->can('view permission'))
-            <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Permission<i class="fa fa-chevron-right"></i></a>
-                <ul class="dropdown-menu">
-
-                    <li><a  href="{{ route('roleList') }}">Role</a></li>
-                    <li><a href="#"></a></li>
-
-=======
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (2).png') }}">
-                    </div> Others
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    @if (auth()->user()->can('Inventory'))
-                    <li><a class="dropdown-item" href="{{ route('item-stock-listing') }}">Inventory</a></li>
-                    @endif
-                    @if (auth()->user()->can('Birth and Death Record'))
-                    <!-- <li class="dropdown-submenu">
-                        <a tabindex="-1" href="#">Birth & Death <i class="fa fa-chevron-right"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Birth Record</a></li>
-                            <li><a href="#">Death Record</a></li>
-                        </ul>
-                    </li> -->
-                    <li class="dropdown-submenu">
-                    <a tabindex="-1" href="#">appointment <i class="fa fa-chevron-right"></i></a>
-                    <ul class="dropdown-menu">
-                      <li><a href="#">shift-details</a></li>
-                      <li><a href="#">slots-details</a></li>
-                    </ul>
-                  </li>
-                    @endif
-
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Inventory</a></li>
+                        @if (auth()->user()->can('view role') ||
+                        auth()->user()->can('asign userBasedPermission') ||
+                        auth()->user()->can('view permission') ||
+                        auth()->user()->can('asign roleToUser') ||
+                        auth()->user()->can('view permission'))
                         <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Birth and Death record<i class="fa fa-chevron-right"></i></a>
+                            <a tabindex="-1" href="#">Permission<i class="fa fa-chevron-right"></i></a>
                             <ul class="dropdown-menu">
 
-                                <li><a href="#">Birth Record</a></li>
-                                <li><a href="#">Death Record</a></li>
+                                <li><a href="{{ route('roleList') }}">Role</a></li>
+                                <li><a href="#"></a></li>
 
                             </ul>
                         </li>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                @if (auth()->user()->can('OPD False'))
-                                <li><a href="{{ route('opd-false-generation') }}" class="{{ Request::segment(2) == 'opd-false' ? 'active' : '' }}"> OPD</a></li>
-                                @endif
-                                @if (auth()->user()->can('EMG False'))
-                                <li><a href="{{ route('emg-false-generation') }}" class="{{ Request::segment(2) == 'emg-false' ? 'active' : '' }}"> EMG</a></li>
-                                @endif
-                                @if (auth()->user()->can('IPD False'))
-                                <li><a href="{{ route('ipd-false-generation') }}" class="{{ Request::segment(2) == 'ipd-false' ? 'active' : '' }}"> IPD</a></li>
-                                @endif
-                            </ul>
-                        </li>
-                        <li><a href="#">Refferal</a></li>
-                        <li><a href="#">Font office</a></li>
-                        <li><a href="#">Blood Bank</a></li>
-                        <li><a href="#">Operation</a></li>
+                        @endif
 
             </div>
-            @if (auth()->user()->can('Report'))
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <div class="icon-new"><img src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>
-                    Reports
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    @if (auth()->user()->can('OPD Patient Report'))
-                    <a class="dropdown-item" href="{{ route('opd-patient-report') }}">OPD Patient Report</a>
-                    @endif
-                    <a class="dropdown-item" href="">OPD Income Report</a>
-                    <a class="dropdown-item" href="">EMG Patient Report</a>
-                    <a class="dropdown-item" href="">EMG Income Report</a>
-                    <a class="dropdown-item" href="">IPD Patient Report</a>
-                    <a class="dropdown-item" href="">IPD Income Report</a>
-                </div>
-            </li>
-            @endif
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('bed-status-list') }}">
-                    <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed (1).png') }}"></div>Bed
-                </a>
-                    <li><a class="dropdown-item" href="{{ route('referral') }}">Referral</a></li>
-                    @if (auth()->user()->can('ambulance'))
-                    <li><a class="dropdown-item" href="{{ route('ambulance-call-details') }}">Ambulance</a></li>
-                    @endif
-                    @if (auth()->user()->can('front office'))
-                    <li><a class="dropdown-item" href="{{ route('all-visit-details') }}">Font Office</a></li>
-                    @endif
-                    @if (auth()->user()->can('Blood Bank'))
-                    <li><a class="dropdown-item" href="{{ route('all-blood-details') }}">Blood Bank</a></li>
-                    @endif
-                    @if (auth()->user()->can('master operation'))
-                    <li><a class="dropdown-item" href="{{ route('main-operation') }}">Operation</a></li>
-                    @endif
->>>>>>> 5947f202bb568de31e897da895d7028df7e2e723
-                </ul>
-            </li>
-            @endif
+
             </ul>
             </li>
             </ul>
-<<<<<<< HEAD
 
 
-=======
-         
-            </li>
-            
-            </ul>
->>>>>>> 5947f202bb568de31e897da895d7028df7e2e723
 
 
     </div>
@@ -679,11 +571,12 @@ $login_details = DB::table('users')
             cursor: default;
             margin: 0px 0px 0px 151px;">
             <h3 style="margin: 5px 0px 0px 110px;"> {{ $login_details->first_name }}
-                {{ $login_details->last_name }}</h3>
+                {{ $login_details->last_name }}
+            </h3>
             <span class="badge badge-light badge-pill" style="margin:5px 0px 10px 97px;">{{ $login_details->role }}</span>
-            
+
             <a class="btn btn-success btn-sm" href="{{ route('user-profile') }}/{{ base64_encode(Auth::id()) }}"><i class='fas fa-address-card'></i> Profile</a>
-            <form method="POST"  action="{{ route('logout') }}">
+            <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button class="btn btn-primary btn-sm text-center" style="margin: 0px 0px 0px 140px" type="submit"><i class="fa fa-sign-out-alt"></i> Log Out</button>
             </form>
