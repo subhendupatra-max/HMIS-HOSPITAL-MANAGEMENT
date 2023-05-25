@@ -610,4 +610,12 @@ class IpdController extends Controller
 
         return view('ipd.blood-bank.blood-details', compact('ipd_id', 'ipd_details', 'blood_details', 'components_details', 'patient_details_information'));
     }
+
+    public function print_ipd_discharge_patient($ipd_id)
+    {
+        $ipd_id = base64_decode($ipd_id);
+        $ipd_details = IpdDetails::where('id', $ipd_id)->first();
+
+        return view('Ipd._print.ipd-admission-form', compact('ipd_details'));
+    }
 }

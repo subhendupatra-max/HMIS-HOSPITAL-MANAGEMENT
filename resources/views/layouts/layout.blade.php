@@ -593,16 +593,6 @@ $login_details = DB::table('users')
                     </div>
 
                 </ul>
-<<<<<<< HEAD
-                </li>
-                <li class="nav-item {{ Request::segment(1) == 'pharmacy' ? 'active' : '' }}">
-                    <a class="nav-link" href="{{ route('bed-status-list') }}">
-                        <div class="icon-new"><img
-                                src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>Bed
-                    </a>
-                </li>
-
-=======
                 </li>
                 <li class="nav-item {{ Request::segment(1) == 'pharmacy' ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('bed-status-list') }}">
@@ -611,7 +601,6 @@ $login_details = DB::table('users')
                     </a>
                 </li>
           
->>>>>>> 0b4bc699e33c7973154b75411c9fa7b79e89ef06
                 @if (auth()->user()->can('Report'))
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -636,11 +625,7 @@ $login_details = DB::table('users')
                     </div>
                 </li>
                 @endif
-<<<<<<< HEAD
-
-=======
              
->>>>>>> 0b4bc699e33c7973154b75411c9fa7b79e89ef06
                 </ul>
 
 

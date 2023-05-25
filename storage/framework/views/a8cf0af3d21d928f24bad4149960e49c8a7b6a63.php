@@ -11,6 +11,8 @@
                 <div class="col-md-8 text-right">
 
                     <div class="d-block">
+                        <a href="<?php echo e(route('print-ipd-discharge-patient',['ipd_id' => base64_encode(@$ipd_details->id)] )); ?>" class="btn btn-primary btn-sm"><i class="far fa-calendar-check"></i> Admission Form</a>
+
                         <?php if($ipd_details->discharged == 'no'): ?>
                         <a href="<?php echo e(route('discharged-patient-in-ipd',['ipd_id' => base64_encode(@$ipd_details->id)] )); ?>" class="btn btn-primary btn-sm"><i class="far fa-calendar-check"></i> Discharged Patient</a>
                         <?php endif; ?>
