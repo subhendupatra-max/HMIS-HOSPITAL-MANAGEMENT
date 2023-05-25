@@ -4502,6 +4502,8 @@ button.close {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
+  color: #fff;
+  font-weight: 600;
 }
 
 .navbar-brand img{
@@ -26857,15 +26859,16 @@ top: -29px;
 
 .popup-content {
     /* background-color: #fefefe; */
-    margin: auto;
+    /* margin: auto; */
     padding: 20px;
     border: 1px solid #888;
     /* width: 50%; */
-    margin-left: 68%;
-    width: 30%;
+    margin-left: 70%;
+    width: 23%;
     background: #fff;  /* fallback for old browsers */
 
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    margin-top:-20px;
 }
 .popup-content p{
     font-size: 12px;

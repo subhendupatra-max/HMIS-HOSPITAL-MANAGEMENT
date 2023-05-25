@@ -36,8 +36,7 @@
                                 <th class="border-bottom-0">Case Id </th>
                                 <th class="border-bottom-0">Date</th>
                                 <th class="border-bottom-0">Patient Name </th>
-                                <th class="border-bottom-0">Amount</th>
-
+                                <th class="border-bottom-0">Amount(Rs)</th>
                                 <th>Action</th>
 
                             </tr>
@@ -46,7 +45,9 @@
                             @if(@$medicine_bill)
                             @foreach ($medicine_bill as $value)
                             <tr>
-                                <td>{{ @$value->bill_prefix }}{{ @$value->id }}</td>
+                                <td><a class="dropdown-item text-info" href="{{ route('medicine-bill-details', ['bill_id' => base64_encode($value->id)]) }}">
+                                     {{ @$value->id }}
+                                </a></td>
                                 <td>{{ @$value->case_id }}</td>
                                 <td>{{ date('d-m-Y h:i a',strtotime($value->bill_date)) }}</td>
                                 <td>{{ @$value->all_patient_details->prefix }} {{ @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name }} {{ @$value->all_patient_details->last_name }}<br>
@@ -61,10 +62,12 @@
                                             <a class="dropdown-item" href="{{ route('medicine-bill-details', ['bill_id' => base64_encode($value->id)]) }}">
                                                 <i class="fa fa-eye"></i> View
                                             </a>
-
+                                            @can('print medicine bill')
                                             <a class="dropdown-item" href="{{route('print-medicine-bill',['bill_id'=>base64_encode($value->id)])}}">
                                                 <i class="fa fa-print"></i> Print
                                             </a>
+                                            @endcan
+
 
 
                                             <a class="dropdown-item" href="{{route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])}}">

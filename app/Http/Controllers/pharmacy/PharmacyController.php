@@ -9,12 +9,14 @@ use App\Models\MedicineStock;
 use App\Models\Patient;
 use App\Models\Payment;
 use App\Models\Prefix;
+use App\Models\AllHeader;
 use App\Models\MedicineBilling;
 use App\Models\MedicineBillingDetails;
 use App\Models\caseReference;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class PharmacyController extends Controller
 {
@@ -114,31 +116,12 @@ class PharmacyController extends Controller
                 $patient_charge->mrp = $request->mrp[$key];
                 $patient_charge->sale_price = $request->sale_price[$key];
                 $patient_charge->qty = $request->qty[$key];
+                $patient_charge->cgst = $request->cgst[$key];
+                $patient_charge->sgst = $request->sgst[$key];
                 $patient_charge->unit_id = $request->unit_id[$key];
-                $patient_charge->tax = $request->tax[$key];
                 $patient_charge->amount = $request->amount[$key];
                 $patient_charge->status = '';
                 $patient_charge->save();
-            }
-
-            if ($request->payment_amount != null || $request->payment_amount != 0 || $request->payment_amount != '') {
-                // ====================== add payment =======================================
-                $payment_prefix = Prefix::where('name', 'payment')->first();
-                $payment = new Payment();
-                $payment->patient_id = $request->patientId;
-                $payment->case_id = $request->case_id;
-                $payment->section = $request->section;
-                $payment->opd_id = $request->opd_id;
-                $payment->emg_id = $request->emg_id;
-                $payment->ipd_id = $request->ipd_id;
-                $payment->payment_prefix = $payment_prefix->prefix;
-                $payment->payment_amount = $request->payment_amount;
-                $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
-                $payment->payment_recived_by = Auth::user()->id;
-                $payment->payment_mode = $request->payment_mode;
-                $payment->note = $request->note;
-                $payment->save();
-                // ====================== add payment =======================================
             }
 
             DB::commit();
@@ -173,12 +156,26 @@ class PharmacyController extends Controller
     {
         $id = base64_decode($bill_id);
         $medicine_bill = MedicineBilling::where('id', $id)->first();
-        $medicine_bill_details = MedicineBillingDetails::select('medicine_units.medicine_unit_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_name', 'medicine_billing_details.amount', 'medicine_billing_details.qty')
+        $medicine_bill_details = MedicineBillingDetails::select('medicine_units.medicine_unit_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_name as med_nam', 'medicine_billing_details.amount', 'medicine_billing_details.*')
             ->leftjoin('medicine_catagories', 'medicine_billing_details.medicine_category', '=', 'medicine_catagories.id')
             ->leftjoin('medicines', 'medicine_billing_details.medicine_name', '=', 'medicines.id')
             ->leftjoin('medicine_units', 'medicine_billing_details.unit_id', '=', 'medicine_units.id')
             ->where('medicine_billing_id', $id)
             ->get();
         return view('pharmacy.generate-bill.bill-details', compact('medicine_bill_details', 'medicine_bill'));
+    }
+    public function print_medicine_bill($bill_id){
+        $id = base64_decode($bill_id);
+        $medicine_bill = MedicineBilling::where('id', $id)->first();
+        $medicine_bill_details = MedicineBillingDetails::select('medicine_units.medicine_unit_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_name as med_nam', 'medicine_billing_details.amount', 'medicine_billing_details.*')
+            ->leftjoin('medicine_catagories', 'medicine_billing_details.medicine_category', '=', 'medicine_catagories.id')
+            ->leftjoin('medicines', 'medicine_billing_details.medicine_name', '=', 'medicines.id')
+            ->leftjoin('medicine_units', 'medicine_billing_details.unit_id', '=', 'medicine_units.id')
+            ->where('medicine_billing_id', $id)
+            ->get();
+
+        $header_image = AllHeader::where('header_name', 'medicine_bill')->first();
+        $pdf = PDF::loadView('pharmacy.generate-bill.bill-print', compact('medicine_bill_details', 'medicine_bill','header_image'));
+        return $pdf->stream('medicine-bill.pdf');
     }
 }

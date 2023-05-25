@@ -184,6 +184,7 @@ class PatientController extends Controller
         $emg_registaion_list = EmgDetails::where('ins_by', 'ori')->where('patient_id', $id)->orderBy('id', 'desc')->get();
         $opd_registaion_list = OpdDetails::where('ins_by', 'ori')->where('patient_id', $id)->orderBy('id', 'desc')->get();
         $ipd_patient_list = IpdDetails::where('is_active', '1')->where('patient_id', $id)->where('ins_by', 'ori')->get();
+        
         return view('setup.patient.patient-details', compact('patient_details','opd_registaion_list','emg_registaion_list','ipd_patient_list'));
     }
 
