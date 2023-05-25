@@ -737,7 +737,7 @@ a:hover {
 }
 
 .footer a:not(.btn) {
-    color: #705ec8;
+    color: #00dcff;
 }
 
 @media (max-width: 767.98px) and (min-width: 576px) {
