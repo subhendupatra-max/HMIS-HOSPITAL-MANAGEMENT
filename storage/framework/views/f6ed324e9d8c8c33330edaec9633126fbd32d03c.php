@@ -534,24 +534,41 @@ $login_details = DB::table('users')
 
     </div>
 
-    
-    <div class="popup-link">
-        <a href="#popup1">
-            <div class="dashprofileimg"><img src="<?php echo e(asset('public/profile_picture')); ?>/<?php echo e($login_details->profile_image); ?>"></div>
-    </div>
-    <div id="popup1" class="popup-container">
-        <div class="popup-content">
-            <a href="#" class="close">&times;</a>
-            <img src="<?php echo e(asset('public/profile_picture')); ?>/<?php echo e($login_details->profile_image); ?>" style="width: 50px;
-            height: 50px;
-            cursor: default;
-            margin: 0px 0px 0px 151px;">
-            <h3 style="margin: 5px 0px 0px 110px;"> <?php echo e($login_details->first_name); ?>
+             <div class=" menu-item">
+              <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>" ></div>  <li class="dropdown">
 
-                <?php echo e($login_details->last_name); ?>
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
+                 <ul class="dropdown-menu" role="menu">
+                   <li><a href="#">Inventory</a></li>
+                   <li class="dropdown-submenu">
+                     <a tabindex="-1" href="#">Birth and Death record<i class="fa fa-chevron-right"></i></a>
+                     <ul class="dropdown-menu">
 
-            </h3>
-            <span class="badge badge-light badge-pill" style="margin:5px 0px 10px 97px;"><?php echo e($login_details->role); ?></span>
+
+                       <li><a href="#">Birth Record</a></li>
+                       <li><a href="#">Death Record</a></li>
+
+                     </ul>
+                   </li>
+                   <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+
+                      <li><a href="#">Opd</a></li>
+                      <li><a href="#">Ipd</a></li>
+
+                    </ul>
+                  </li>
+                   <li><a href="#">Refferal</a></li>
+                   <li><a href="#">Font office</a></li>
+                   <li><a href="#">Blood Bank</a></li>
+                   <li><a href="#">Operation</a></li>
+
+              </div>
+        </ul>
+      </li>
+      </ul>
 
             <a class="btn btn-success btn-sm" href="<?php echo e(route('user-profile')); ?>/<?php echo e(base64_encode(Auth::id())); ?>"><i class='fas fa-address-card'></i> Profile</a>
             <form method="POST" action="<?php echo e(route('logout')); ?>">
@@ -582,20 +599,20 @@ $login_details = DB::table('users')
 
     <div class="row">
         <?php echo $__env->yieldContent('content'); ?>
-    </div>
+      </div>
 
-    <!--Footer-->
-    <footer class="footer">
-        <div class="container">
-            <div class="row align-items-center flex-row-reverse">
-                <div class="col-md-12 col-sm-12 text-center">
-                    Copyright © 2022 <a href="#"><?php echo e(@$general_details->software_name); ?></a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
-                    All rights reserved.
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Back to top -->
+     <!--Footer-->
+     <footer class="footer">
+         <div class="container">
+             <div class="row align-items-center flex-row-reverse">
+                 <div class="col-lg-12 footer-text">
+                     Copyright © 2022 <a href="#"><?php echo e(@$general_details->software_name); ?></a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
+                     All rights reserved.
+                 </div>
+             </div>
+         </div>
+     </footer>
+     <!-- Back to top -->
     <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
 
 
@@ -684,8 +701,8 @@ $login_details = DB::table('users')
     <script src="<?php echo e(asset('public/assets/plugins/wysiwyag/jquery.richtext.js')); ?>"></script>
     <script src="<?php echo e(asset('public/assets/js/form-editor.js')); ?>"></script>
     
-    
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     
 
 </body>
@@ -726,4 +743,5 @@ $login_details = DB::table('users')
             });
         }
     }
-</script><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/layouts/layout.blade.php ENDPATH**/ ?>
+</script>
+<?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/layouts/layout.blade.php ENDPATH**/ ?>
