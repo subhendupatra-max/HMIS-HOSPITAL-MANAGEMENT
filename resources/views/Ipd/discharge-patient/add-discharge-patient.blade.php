@@ -30,8 +30,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="ipd_no" class="form-label">IPD No<span class="text-danger">*</span></label>
-                        <input type="text" readonly class="form-control" id="ipd_no" name="ipd_no" value="{{ $ipd_details->id }}" />
-
+                        <input type="text" readonly class="form-control" id="ipd_no" value="{{ $ipd_details->id }}" />
                     </div>
 
                     <div class="form-group col-md-4">
@@ -51,17 +50,17 @@
 
                     <div class="form-group col-md-4">
                         <label for="doctor_name" class="form-label">Department<span class="text-danger">*</span></label>
-                        <input type="text" readonly class="form-control" id="doctor_name" name="doctor_name" value="{{ $ipd_details->department_details->department_name }} " />
+                        <input type="text" readonly class="form-control" value="{{ $ipd_details->department_details->department_name }} " />
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="doctor_name" class="form-label">UHID<span class="text-danger">*</span></label>
-                        <input type="text" readonly class="form-control" id="doctor_name" name="doctor_name" value="{{ $patient_details->id }} " />
+                        <input type="text" readonly class="form-control" value="{{ $patient_details->id }} " />
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="doctor_name" class="form-label">Admission Date<span class="text-danger">*</span></label>
-                        <input type="text" readonly class="form-control" id="doctor_name" name="doctor_name" value="{{ $ipd_details->appointment_date }} " />
+                        <input type="text" readonly class="form-control" value="{{ $ipd_details->appointment_date }} " />
                     </div>
 
                     <div class="form-group col-md-4">

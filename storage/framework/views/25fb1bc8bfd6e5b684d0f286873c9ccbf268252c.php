@@ -24,6 +24,7 @@
             <form action="<?php echo e(route('update-discharged-patient-in-ipd')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <div class="row">
+                     <input type="hidden" name="discharged_patient_id" value="<?php echo e($patient_discharge_details->id); ?>" />
                     <input type="hidden" name="ipd_id" value="<?php echo e($ipdId); ?>" />
                     <input type="hidden" name="case_id" value="<?php echo e($ipd_patient_details->case_id); ?>" />
                     <input type="hidden" name="patient_id" value="<?php echo e($ipd_patient_details->patient_id); ?>" />
@@ -120,36 +121,36 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="form-group col-md-4">
                         <label for="complaiints_duraiton" class="form-label">Presenting Complaints with Duration and Reason for Admission </label>
-                        <textarea class="form-control" id="complaiints_duraiton" name="complaiints_duraiton" value="<?php echo e(@$patient_discharge_details->complaiints_duraiton); ?> "></textarea>
+                        <textarea class="form-control" id="complaiints_duraiton" name="complaiints_duraiton"><?php echo e(@$patient_discharge_details->complaiints_duraiton); ?></textarea>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="presenting_illness" class="form-label">Summary of Presenting Illness</label>
-                        <textarea class="form-control" id="presenting_illness" name="presenting_illness" value="<?php echo e(@$patient_discharge_details->presenting_illness); ?> "></textarea>
+                        <textarea class="form-control" id="presenting_illness" name="presenting_illness" v><?php echo e(@$patient_discharge_details->presenting_illness); ?></textarea>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="physical_examinaiton_at_admission" class="form-label">Key findings, on physical examination at the time of admission</label>
-                        <textarea class="form-control" id="physical_examinaiton_at_admission" name="physical_examinaiton_at_admission" value="<?php echo e(@$patient_discharge_details->physical_examinaiton_at_admission); ?> "></textarea>
+                        <textarea class="form-control" id="physical_examinaiton_at_admission" name="physical_examinaiton_at_admission"><?php echo e(@$patient_discharge_details->physical_examinaiton_at_admission); ?></textarea>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="history_alcoholism" class="form-label"> History of alcoholism, tobacco or substance abuse, if nay</label>
-                        <textarea class="form-control" id="history_alcoholism" name="history_alcoholism" value="<?php echo e(@$patient_discharge_details->history_alcoholism); ?> "></textarea>
+                        <textarea class="form-control" id="history_alcoholism" name="history_alcoholism"><?php echo e(@$patient_discharge_details->history_alcoholism); ?></textarea>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="medical_surgical_history" class="form-label"> Significant Past Medical and Surgical History, if any</label>
-                        <textarea class="form-control" id="medical_surgical_history" name="medical_surgical_history" value="<?php echo e(@$patient_discharge_details->medical_surgical_history); ?> "></textarea>
+                        <textarea class="form-control" id="medical_surgical_history" name="medical_surgical_history"> <?php echo e(@$patient_discharge_details->medical_surgical_history); ?></textarea>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="family_history_diagnosis" class="form-label"> Family History if significant/ relevant to diagnosis or treatment</label>
-                        <textarea class="form-control" id="family_history_diagnosis" name="family_history_diagnosis" value="<?php echo e(@$patient_discharge_details->family_history_diagnosis); ?> "></textarea>
+                        <textarea class="form-control" id="family_history_diagnosis" name="family_history_diagnosis"><?php echo e(@$patient_discharge_details->family_history_diagnosis); ?></textarea>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="summary_inves_during_hos" class="form-label"> Summary of key invesigations during Hospitalization<span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="summary_inves_during_hos" name="summary_inves_during_hos" value="<?php echo e(@$patient_discharge_details->summary_inves_during_hos); ?> "></textarea>
+                        <textarea class="form-control" id="summary_inves_during_hos" name="summary_inves_during_hos"> <?php echo e(@$patient_discharge_details->summary_inves_during_hos); ?> </textarea>
                     </div>
 
                     <div class="form-group col-md-4">
@@ -167,7 +168,7 @@ unset($__errorArgs, $__bag); ?>
                         <select name="discharge_status" class="form-control" id="discharge_status" required onchange="hide(this.value)">
                             <option value="">Select...</option>
                             <?php $__currentLoopData = Config::get('static.discharge_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $dischargeType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($dischargeType); ?>" <?php echo e($dischargeType == @$patient_discharge_details->discharge_status); ?>> <?php echo e($dischargeType); ?>
+                            <option value="<?php echo e($dischargeType); ?>" <?php echo e($dischargeType == @$patient_discharge_details->discharge_status ? 'selected' : " "); ?>> <?php echo e($dischargeType); ?>
 
                             </option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

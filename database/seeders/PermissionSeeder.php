@@ -813,7 +813,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'OPD Radiology Investigation']);
 
         Permission::create(['name' => 'Create Prescription for OPD']);
-        
+
         Permission::create(['name' => 'bed-status']);
 
 
@@ -826,5 +826,8 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'main operation']);
         Permission::create(['name' => 'edit operation main']);
         Permission::create(['name' => 'delete operation main']);
+
+        //patient discharge print
+        Permission::create(['name' => 'ipd discharged patient print']);
     }
 }
