@@ -36,7 +36,7 @@
 
                         <div class="col-md-2">
                             <label> Role <span class="text-danger">*</span></label>
-                            <select class="form-control select2-show-search select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="role" id="role">
+                            <select class="form-control select2-show-search " tabindex="-1" aria-hidden="true" name="role" id="role">
                                 <optgroup>
                                     <option value=" ">Select Role </option>
                                     @if (isset($all_role))
@@ -87,7 +87,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserlistchange">
+                        <div class="col-md-3 newuserlistchange">
 
                             <input type="text" name="first_name" value="{{ $user_details->first_name }}" id="first_name" required="">
                             <label for="first_name"> First Name <span class="text-danger">*</span></label>
@@ -96,7 +96,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 newuserlistchange ">
 
                             <input type="text" name="last_name" value="{{ $user_details->last_name }}" id="last_name" required="">
                             <label for="last_name"> Last Name <span class="text-danger">*</span></label>
@@ -105,7 +105,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 newuserlistchange ">
 
 
                             <input type="text" name="father_name" value="{{ $user_details->father_name }}" id="father_name" required="">
@@ -115,7 +115,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 newuserlistchange ">
 
                             <input type="text" name="mother_name" value="{{ $user_details->mother_name }}" id="mother_name">
                             <label for="mother_name"> Mother Name</label>
@@ -123,7 +123,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-3 newuserchangee">
+                        <div class="col-md-2 newuserchangee">
 
                             <select name="gender" class="form-control" id="gender">
                                 <option value="">Gender <span class="text-danger">*</span></option>
@@ -139,7 +139,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3 newuserchangee ">
+                        <div class="col-md-2 newuserchangee ">
 
                             <select name="marital_status" class="form-control" id="marital_status">
                                 <option value="">Metrial Status</option>
@@ -154,7 +154,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3 newuserchangee ">
+                        <div class="form-group col-md-2 newuserchangee ">
 
                             <select name="blood_group" class="form-control" id="blood_group">
                                 <option value="">Blood Group</option>
@@ -166,7 +166,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3 ">
+                        <div class="col-md-2 ">
 
 
 
@@ -179,7 +179,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3 datetypeform">
+                        <div class="col-md-2 datetypeform">
 
                             <lable class="datetype">Date of Joining</lable>
                             <input type="date" name="date_of_joining" id="date_of_joining" @if (isset($user_details->date_of_joining)) value="{{ date('Y-m-d', strtotime($user_details->date_of_joining)) }}" @endif>
@@ -188,7 +188,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3 newuserchangeeli">
+                        <div class="col-md-2 newuserchangeeli">
 
                             <input type="number" name="phone_no" id="phone_no" value="{{ $user_details->phone_no }}" required="">
                             <label for="phone_no"> Phone</label>

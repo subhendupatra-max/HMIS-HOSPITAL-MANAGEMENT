@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -43,7 +42,7 @@ unset($__errorArgs, $__bag); ?>
 
                         <div class="col-md-2">
                             <label> Role <span class="text-danger">*</span></label>
-                            <select class="form-control select2-show-search select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="role" id="role">
+                            <select class="form-control select2-show-search " tabindex="-1" aria-hidden="true" name="role" id="role">
                                 <optgroup>
                                     <option value=" ">Select Role </option>
                                     <?php if(isset($all_role)): ?>
@@ -124,7 +123,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserlistchange">
+                        <div class="col-md-3 newuserlistchange">
 
                             <input type="text" name="first_name" value="<?php echo e($user_details->first_name); ?>" id="first_name" required="">
                             <label for="first_name"> First Name <span class="text-danger">*</span></label>
@@ -140,7 +139,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 newuserlistchange ">
 
                             <input type="text" name="last_name" value="<?php echo e($user_details->last_name); ?>" id="last_name" required="">
                             <label for="last_name"> Last Name <span class="text-danger">*</span></label>
@@ -156,7 +155,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 newuserlistchange ">
 
 
                             <input type="text" name="father_name" value="<?php echo e($user_details->father_name); ?>" id="father_name" required="">
@@ -173,7 +172,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 newuserlistchange ">
 
                             <input type="text" name="mother_name" value="<?php echo e($user_details->mother_name); ?>" id="mother_name">
                             <label for="mother_name"> Mother Name</label>
@@ -188,7 +187,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-3 newuserchangee">
+                        <div class="col-md-2 newuserchangee">
 
                             <select name="gender" class="form-control" id="gender">
                                 <option value="">Gender <span class="text-danger">*</span></option>
@@ -212,7 +211,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 newuserchangee ">
+                        <div class="col-md-2 newuserchangee ">
 
                             <select name="marital_status" class="form-control" id="marital_status">
                                 <option value="">Metrial Status</option>
@@ -235,7 +234,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="form-group col-md-3 newuserchangee ">
+                        <div class="form-group col-md-2 newuserchangee ">
 
                             <select name="blood_group" class="form-control" id="blood_group">
                                 <option value="">Blood Group</option>
@@ -248,7 +247,7 @@ unset($__errorArgs, $__bag); ?>
                             </select>
                         </div>
 
-                        <div class="col-md-3 ">
+                        <div class="col-md-2 ">
 
 
 
@@ -268,7 +267,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 datetypeform">
+                        <div class="col-md-2 datetypeform">
 
                             <lable class="datetype">Date of Joining</lable>
                             <input type="date" name="date_of_joining" id="date_of_joining" <?php if(isset($user_details->date_of_joining)): ?> value="<?php echo e(date('Y-m-d', strtotime($user_details->date_of_joining))); ?>" <?php endif; ?>>
@@ -284,7 +283,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 newuserchangeeli">
+                        <div class="col-md-2 newuserchangeeli">
 
                             <input type="number" name="phone_no" id="phone_no" value="<?php echo e($user_details->phone_no); ?>" required="">
                             <label for="phone_no"> Phone</label>
@@ -543,4 +542,5 @@ unset($__errorArgs, $__bag); ?>
 
 <script src="<?php echo e(asset('assets/js/jquery-3.6.0.min.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/appPages/Users/edit-user.blade.php ENDPATH**/ ?>
