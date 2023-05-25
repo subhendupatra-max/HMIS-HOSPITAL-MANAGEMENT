@@ -6,19 +6,16 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    <h4 class="pro-user-username mb-3 font-weight-bold"><?php echo e(@$patient_details->prefix); ?> <?php echo e(@$patient_details->first_name); ?> <?php echo e(@$patient_details->middle_name); ?> <?php echo e(@$patient_details->last_name); ?> ( <?php echo e(@$patient_details->patient_prefix); ?><?php echo e(@$patient_details->id); ?> ) <i
-                            class="fa fa-check-circle text-success"></i></h4>
+                    <h4 class="pro-user-username mb-3 font-weight-bold"><?php echo e(@$patient_details->prefix); ?> <?php echo e(@$patient_details->first_name); ?> <?php echo e(@$patient_details->middle_name); ?> <?php echo e(@$patient_details->last_name); ?> ( <?php echo e(@$patient_details->patient_prefix); ?><?php echo e(@$patient_details->id); ?> ) <i class="fa fa-check-circle text-success"></i></h4>
                 </div>
 
                 <div class="col-md-6 text-right">
 
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
-                    <a href="<?php echo e(route('edit-patient-details', base64_encode($patient_details->id))); ?>"
-                        class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
+                    <a href="<?php echo e(route('edit-patient-details', base64_encode($patient_details->id))); ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
                     <?php endif; ?>
 
-                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
+                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" style="">
 
                         <a class="dropdown-item" href="<?php echo e(route('opd-registration', base64_encode($patient_details->id))); ?>"><i class="fa fa-plus"></i> OPD Registation</a>
@@ -165,15 +162,34 @@
                                 <th scope="col">Mobile No.</th>
                                 <th scope="col">Case Id</th>
                                 <th scope="col">Last Visit Details</th>
+                                <th scope="col">TAT(Turn around time)</th>
+                                <th scope="col">Total Billing(Rs)</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if(isset($opd_registaion_list)): ?>
                             <?php $__currentLoopData = $opd_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                            $appoint_date = $value->latest_opd_visit_details_for_patient->appointment_date;
+                            $last_activity = DB::table('billings')->where('section','OPD')->where('case_id',$value->case_id)->orderBy('id','DESC')->first();
+
+                            $total_billing = DB::table('billings')->where('section','OPD')->where('case_id',$value->case_id)->sum('grand_total');
+
+
+                            if($last_activity != null){
+                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->bill_date));
+                            $startDate_ = new DateTime($appoint_date);
+                            $endDate_ = new DateTime($end_date);
+                            $interval = $startDate_->diff($endDate_);
+                            $tat = $interval->format('%a days %h hours, %i minutes');
+                            }else{
+                                $tat = 'Only registation done';
+                            }
+
+                             ?>
                             <tr>
-                                <td><a class="textlink"
-                                        href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
+                                <td><a class="textlink" href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
                                 </td>
                                 <td>
                                     <?php echo e(@$value->all_patient_details->prefix); ?>
@@ -184,8 +200,7 @@
 
                                     <?php echo e(@$value->all_patient_details->last_name); ?>(<?php echo e(@$value->all_patient_details->id); ?>)<br>
                                     <i class="fa fa-venus-mars text-primary"></i>
-                                    <?php echo e(@$value->all_patient_details->gender); ?> <i
-                                        class="fa fa-calendar-plus-o text-primary"></i>
+                                    <?php echo e(@$value->all_patient_details->gender); ?> <i class="fa fa-calendar-plus-o text-primary"></i>
                                     <?php if(@$value->all_patient_details->year != 0): ?>
                                     <?php echo e(@$value->all_patient_details->year); ?>y
                                     <?php endif; ?>
@@ -220,19 +235,15 @@
 
                                     <?php endif; ?>
                                 </td>
+                                <td><?php echo $tat; ?></td>
+                                <td><?php echo e(@$total_billing); ?></td>
                                 <td>
                                     <div class="card-options">
-                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i
-                                                class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
-                                            <a class="dropdown-item"
-                                                href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><i
-                                                    class="fa fa-eye"></i> View</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><i class="fa fa-eye"></i> View</a>
 
-                                            <a class="dropdown-item"
-                                                href="<?php echo e(route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id))); ?>"><i
-                                                    class="fa fa-print"></i>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id))); ?>"><i class="fa fa-print"></i>
                                                 Print</a>
                                         </div>
                                     </div>
@@ -257,20 +268,37 @@
                                 <th scope="col">G. Name/P. Type</th>
                                 <th scope="col">Medico Legal Case</th>
                                 <th scope="col">Appointment Date</th>
+                                <th scope="col">TAT(Turn around time)</th>
+                                <th scope="col">Total Billing(Rs)</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if(isset($emg_registaion_list)): ?>
                             <?php $__currentLoopData = $emg_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                            $appoint_date = $value->all_emg_visit_details->appointment_date;
+                            $last_activity = DB::table('billings')->where('section','EMG')->where('case_id',$value->case_id)->orderBy('id','DESC')->first();
+
+                            $total_billing = DB::table('billings')->where('section','EMG')->where('case_id',$value->case_id)->sum('grand_total');
+
+                            if($last_activity != null){
+                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->bill_date));
+                            $startDate_ = new DateTime($appoint_date);
+                            $endDate_ = new DateTime($end_date);
+                            $interval = $startDate_->diff($endDate_);
+                            $tat = $interval->format('%a days %h hours, %i minutes');
+                            }else{
+                                $tat = 'Only registation done';
+                            }
+
+                             ?>
                             <tr>
 
-                                <td><a class="textlink"
-                                        href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->emg_prefix); ?><?php echo e(@$value->id); ?></a></td>
+                                <td><a class="textlink" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->emg_prefix); ?><?php echo e(@$value->id); ?></a></td>
                                 <td>
                                     <?php echo e(@$value->all_patient_details->prefix); ?> <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?> (<?php echo e(@$value->all_patient_details->id); ?>)<br>
-                                    <i class="fa fa-venus-mars text-primary"></i> <?php echo e(@$value->all_patient_details->gender); ?> <i
-                                        class="fa fa-calendar-plus-o text-primary"></i> <?php echo e(@$value->all_patient_details->year); ?>Y <?php echo e(@$value->all_patient_details->month); ?>M <?php echo e(@$value->all_patient_details->day); ?>D
+                                    <i class="fa fa-venus-mars text-primary"></i> <?php echo e(@$value->all_patient_details->gender); ?> <i class="fa fa-calendar-plus-o text-primary"></i> <?php echo e(@$value->all_patient_details->year); ?>Y <?php echo e(@$value->all_patient_details->month); ?>M <?php echo e(@$value->all_patient_details->day); ?>D
                                 </td>
                                 <td><?php echo e(@$value->all_patient_details->phone); ?></td>
                                 <td>
@@ -285,16 +313,14 @@
 
                                     <?php endif; ?>
                                 </td>
+                                <td><?php echo e(@$tat); ?></td>
+                                <td><?php echo e(@$total_billing); ?></td>
                                 <td>
                                     <div class="card-options">
-                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i
-                                                class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
-                                            <a class="dropdown-item"
-                                                href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->id)])); ?>"><i
-                                                    class="fa fa-eye"></i> View</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->id)])); ?>"><i class="fa fa-eye"></i> View</a>
 
                                         </div>
                                     </div>
@@ -319,15 +345,35 @@
                                 <th scope="col">Admission Information</th>
                                 <th scope="col">Admission Date</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">TAT(Turn around time)</th>
+                                <th scope="col">Total Billing(Rs)</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if(isset($ipd_patient_list)): ?>
                             <?php $__currentLoopData = $ipd_patient_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                            $appoint_date = $value->appointment_date;
+                            $last_activity = DB::table('billings')->where('section','IPD')->where('case_id',$value->case_id)->orderBy('id','DESC')->first();
+
+                            
+                            $total_billing = DB::table('billings')->where('section','IPD')->where('case_id',$value->case_id)->sum('grand_total');
+
+
+                            if($last_activity != null){
+                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->bill_date));
+                            $startDate_ = new DateTime($appoint_date);
+                            $endDate_ = new DateTime($end_date);
+                            $interval = $startDate_->diff($endDate_);
+                            $tat = $interval->format('%a days %h hours, %i minutes');
+                            }else{
+                                $tat = 'Only registation done';
+                            }
+
+                             ?>
                             <tr>
-                                <td><a class="textlink"
-                                        href="<?php echo e(route('ipd-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->ipd_prefix); ?><?php echo e(@$value->id); ?></a></td>
+                                <td><a class="textlink" href="<?php echo e(route('ipd-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->ipd_prefix); ?><?php echo e(@$value->id); ?></a></td>
                                 <td>
                                     <i class="fa fa-user text-primary"></i> <?php echo e(@$value->all_patient_details->prefix); ?>
 
@@ -369,11 +415,11 @@
                                     <span class="badge badge-secondary">Discharged</span>
                                     <?php endif; ?>
                                 </td>
+                                <td><?php echo e(@$tat); ?></td>
+                                <td><?php echo e(@$total_billing); ?></td>
                                 <td>
                                     <div class="card-options">
-                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i
-                                                class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
                                             <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>

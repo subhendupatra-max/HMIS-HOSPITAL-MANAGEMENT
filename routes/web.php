@@ -1413,8 +1413,13 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
 
             Route::get('medicine-bill-details/{bill_id?}', [PharmacyController::class, 'details_medicine_bill'])->name('medicine-bill-details');
             Route::get('edit-medicine-bill/{bill_id?}', [PharmacyController::class, 'edit_medicine_bill'])->name('edit-medicine-bill');
-            Route::get('delete-medicine-bill/{bill_id?}', [PharmacyController::class, 'delete_medicine_bill'])->name('delete-medicine-bill');
-            Route::get('print-medicine-bill/{bill_id?}', [PharmacyController::class, 'print_medicine_bill'])->name('print-medicine-bill');
+            Route::group(['middleware' => ['permission:delete medicine bill']], function () {
+                Route::get('delete-medicine-bill/{bill_id?}', [PharmacyController::class, 'delete_medicine_bill'])->name('delete-medicine-bill');
+            });
+            Route::group(['middleware' => ['permission:print medicine bill']], function () {
+                Route::get('print-medicine-bill/{bill_id?}', [PharmacyController::class, 'print_medicine_bill'])->name('print-medicine-bill');
+            });
+
         });
     });
     Route::group(['middleware' => ['permission:medicine stock']], function () {
@@ -2646,10 +2651,32 @@ Route::group(['middleware' => ['permission:bed-status'], 'prefix' => 'bed-status
 
 //================================= Reports ==============================
 Route::group(['middleware' => ['permission:Report'], 'prefix' => 'report'], function () {
+     //for opd patient report
     Route::group(['middleware' => ['permission:OPD Patient Report']], function () {
         Route::get('opd-patient-report', [ReportController::class, 'opd_patient_index'])->name('opd-patient-report');
         Route::post('fetch-opd-patient-report', [ReportController::class, 'fetch_opd_patient_report'])->name('fetch-opd-patient-report');
     });
+    //for ipd patient report
+    Route::group(['middleware' => ['permission:IPD Patient Report']], function () {
+        Route::get('ipd-patient-report', [ReportController::class, 'ipd_patient_index'])->name('ipd-patient-report');
+        Route::post('fetch-ipd-patient-report', [ReportController::class, 'fetch_ipd_patient_report'])->name('fetch-ipd-patient-report');
+    });
+      //for emg patient report
+      Route::group(['middleware' => ['permission:EMG Patient Report']], function () {
+        Route::get('emg-patient-report', [ReportController::class, 'emg_patient_index'])->name('emg-patient-report');
+        Route::post('fetch-emg-patient-report', [ReportController::class, 'fetch_emg_patient_report'])->name('fetch-emg-patient-report');
+    });
+
+    //for opd income report
+        Route::group(['middleware' => ['permission:OPD Income Report']], function () {
+                Route::get('opd-income-report', [ReportController::class, 'opd_income_report_index'])->name('opd-income-report');
+                Route::post('fetch-opd-income-report', [ReportController::class, 'fetch_opd_income_report'])->name('fetch-opd-patient-report');
+        });
+        Route::group(['middleware' => ['permission:Payment Report']], function () {
+            Route::get('payment-report', [ReportController::class, 'payment_report_index'])->name('payment-report');
+            Route::post('fetch-payment-report', [ReportController::class, 'fetch_payment_report'])->name('fetch-payment-report');
+        });
+
 });
 //================================= Reports ==============================
 

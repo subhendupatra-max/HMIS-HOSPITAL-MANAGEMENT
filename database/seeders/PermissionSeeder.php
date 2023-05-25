@@ -795,6 +795,8 @@ class PermissionSeeder extends Seeder
 
         //medicine 
         Permission::create(['name' => 'Medicine Details']);
+        Permission::create(['name' => 'print medicine bill']);
+        Permission::create(['name' => 'delete medicine bill']);
 
         //charges opd
         Permission::create(['name' => 'add opd charges']);
@@ -821,6 +823,8 @@ class PermissionSeeder extends Seeder
         // Reports
         Permission::create(['name' => 'Report']);
         Permission::create(['name' => 'OPD Patient Report']);
+        Permission::create(['name' => 'EMG Patient Report']);
+        Permission::create(['name' => 'Payment Report']);
 
         //master operation
         Permission::create(['name' => 'main operation']);

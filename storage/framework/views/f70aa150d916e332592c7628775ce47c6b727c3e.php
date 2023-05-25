@@ -22,7 +22,7 @@
                     
                     <div class="options px-5 pt-5  border-bottom pb-3">
 
-                        <form method="post" action="<?php echo e(route('add-blood-issue-belling-for-a-patient',['blood_group_id'=> base64_encode($blood_groups_id->id), 'id'=> base64_encode($blood_details->id)  ])); ?>">
+                        <form method="post" action="<?php echo e(route('add-blood-components-issue-belling-for-a-patient',['blood_group_id'=> base64_encode($blood_groups_id->id), 'id'=> base64_encode($blood_details->id)  ])); ?>">
                             <?php echo csrf_field(); ?>
                             <div class="row">
                                 <div class="col-md-12 mb-2">
@@ -107,13 +107,13 @@ unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <div class="col-lg-8 col-xl-8">
-                    <form method="post" action="<?php echo e(route('save-blood-issue-details')); ?>">
+                    <form method="post" action="<?php echo e(route('save-blood-components-issue-details')); ?>">
                         <?php echo csrf_field(); ?>
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
                                 <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
                                 <input type="hidden" name="blood_group_id" value="<?php echo e($blood_groups_id->id); ?>" />
-                                <input type="hidden" name="blood_id" value="<?php echo e($blood_id); ?>" />
+                                <input type="hidden" name="components_id" value="<?php echo e($components_id); ?>" />
                                 <div class="form-group col-md-3">
                                     <label for="issue_date" class="form-label">Issue Date<span class="text-danger">*</span></label>
                                     <input type="datetime-local" class="form-control" id="issue_date" value="<?php echo e(old('issue_date')); ?>" name="issue_date">
@@ -195,7 +195,7 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="form-group col-md-3">
 
                                     <label class="form-label">Blood Qty</label>
-                                    <input type="text" name="blood_qty" class="form-control" />
+                                    <input type="text" name="components_qty" class="form-control" />
 
                                 </div>
                                 <div class="form-group col-md-3">
@@ -209,12 +209,11 @@ unset($__errorArgs, $__bag); ?>
 
                             </div>
                         </div>
-                        <input type="hidden" name="patientId" value="<?php echo e(@$patient_details_information->id); ?>" />
+
 
                         <div class="btn-list p-3">
 
-                            <!-- <button class="btn btn-primary btn-sm float-right " type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button> -->
-                            <button class="btn btn-primary btn-sm float-right mr-2" type="submit" name="save"><i class="fa fa-file"></i> Submit</button>
+                            <button class="btn btn-primary btn-sm" type="submit" name="save"><i class="fa fa-file"></i> Submit</button>
                     </form>
                 </div>
             </div>
@@ -222,7 +221,7 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     function getStandardCharges() {
         let standard_charges = $('#standard_charges').val();
         $('#total').val(standard_charges);
@@ -321,8 +320,8 @@ unset($__errorArgs, $__bag); ?>
             });
         });
     });
-</script>
+</script> -->
 
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/Blood_Bank/add-blood-issue-details.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/Blood_Bank/blood-components/blood-components-issue.blade.php ENDPATH**/ ?>

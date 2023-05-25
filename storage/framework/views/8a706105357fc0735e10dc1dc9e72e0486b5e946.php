@@ -29,7 +29,8 @@
 
                                                     <?php echo e(@$patient->middle_name); ?>
 
-                                                    <?php echo e(@$patient->last_name); ?> (
+                                                    <?php echo e(@$patient->last_name); ?>(
+                                                        <?php echo e(@$patient->phone); ?> ) (
                                                     <?php echo e(@$patient->id); ?> ) </option>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 <?php endif; ?>
@@ -148,7 +149,8 @@ unset($__errorArgs, $__bag); ?>
                                                 </th>
                                                 <th scope="col" style="width: 8%">Unit <span
                                                         class="text-danger">*</span></th>
-                                                <th scope="col" style="width: 8%">Tax <span class="text-danger">*</span>
+                                                <th scope="col" style="width: 8%">CGST <span class="text-danger">*</span>
+                                                    <th scope="col" style="width: 8%">SGST <span class="text-danger">*</span>
                                                 </th>
                                                 <th scope="col" style="width: 8%">Amount <span
                                                         class="text-danger">*</span></th>
@@ -175,64 +177,8 @@ unset($__errorArgs, $__bag); ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-8 add-medicinedesignn">
-                                                <label>Billing Date <span class="text-danger">*</span></label>
-                                                <input type="datetime-local" required class="form-control" name="bill_date" value="<?php echo e(date('Y-m-d H:i')); ?>" />
-                                                <?php $__errorArgs = ['bill_date'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                            <div class="col-md-8 add-medicinedesignn">
-                                                <label >Note </label>
+                                  
                                                 
-                                                <input type="text" name="note" id="note" >
-                                            </div>
-                                            <div class="col-md-4 add-medicinedesignin">
-                                                <label>Payment Amount </label>
-                                                <input type="text" name="payment_amount"  />
-                                                <?php $__errorArgs = ['payment_amount'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                            <div class="col-md-4 add-medicinedesign">
-                                                <label>Payment Mode</label>
-                                                <select class="form-control" name="payment_mode">
-                                                    <option value="">Select One...</option>
-                                                    <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $payment_mode_name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <option value="<?php echo e($payment_mode_name); ?>"> <?php echo e($payment_mode_name); ?>
-
-                                                        </option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </select>
-                                                <?php $__errorArgs = ['payment_mode'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="options px-5 pt-5  border-bottom pb-3">
                                             <div class="container mt-5">
@@ -256,16 +202,15 @@ unset($__errorArgs, $__bag); ?>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
 
 
                         <div class="btn-list p-3">
                             <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
                                     class="fa fa-calculator"></i> Calculate</button>
-                            <button class="btn btn-primary btn-sm float-right " type="submit" value="save"
+                            <button class="btn btn-primary btn-sm float-right mr-2" type="submit" value="save"
                                 name="save"><i class="fa fa-file"></i> Save</button>
-                            <button class="btn btn-primary btn-sm float-right mr-2" value="save_and_print"
-                                name="save_and_print" type="submit"><i class="fa fa-paste"></i> Save & Print</button>
+                            
                         </div>
                     </form>
                 </div>
@@ -310,8 +255,11 @@ unset($__errorArgs, $__bag); ?>
                         </td>
                         <td><input type="text" readonly name="unit[]" id="unit${i}" class="form-control" /><input type="hidden" name="unit_id[]" id="unit_id${i}" class="form-control" />
                                 </td>
-                                <td>
-                            <input class="form-control" value="0" id="tax${i}" onkeyup="getamount(${i})" name="tax[]" type="text"/>
+                        <td>
+                            <input class="form-control" value="0" id="cgst${i}" onkeyup="getamount(${i})" name="cgst[]" type="text"/>
+                        </td>
+                        <td>
+                            <input class="form-control" value="0" id="sgst${i}" onkeyup="getamount(${i})" name="sgst[]" type="text"/>
                         </td>
                         <td>
                             <input class="form-control" readonly id="amount${i}" name="amount[]" type="text" />
@@ -327,13 +275,22 @@ unset($__errorArgs, $__bag); ?>
 
         function getamount(rowid) {
             var qty = $('#qty' + rowid).val();
-            var tax = $('#tax' + rowid).val();
+            console.log(qty);
+            var cgst = $('#cgst' + rowid).val();
+            console.log(cgst);
+            var sgst = $('#sgst' + rowid).val();
+            console.log(sgst);
             var price = $('#sale_price' + rowid).val();
+            console.log(price);
             var qty_p = parseFloat(qty) * parseFloat(price);
-            var tax_a = parseFloat(qty_p) * (parseFloat(tax) / 100);
+            console.log(qty_p);
+            var gst = parseFloat(cgst) + parseFloat(sgst);
+            var tax_a = parseFloat(qty_p) * (parseFloat(gst) / 100);
+            console.log(tax_a);
             var amount = parseFloat(qty_p) + parseFloat(tax_a);
-
+            console.log(amount);
             $('#amount' + rowid).val(amount);
+            gettotal();
         }
 
         function getMedicineName(category_id, rowid) {
