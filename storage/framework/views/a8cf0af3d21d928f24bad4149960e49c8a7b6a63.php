@@ -9,7 +9,21 @@
                     Profile
                 </div>
                 <div class="col-md-8 text-right">
+
                     <div class="d-block">
+                        <?php if($ipd_details->discharged == 'no'): ?>
+                        <a href="<?php echo e(route('discharged-patient-in-ipd',['ipd_id' => base64_encode(@$ipd_details->id)] )); ?>" class="btn btn-primary btn-sm"><i class="far fa-calendar-check"></i> Discharged Patient</a>
+                        <?php endif; ?>
+
+                        <?php if($ipd_details->discharged == 'yes'): ?>
+
+                        <a href="<?php echo e(route('print-discharged-patient-in-ipd',['ipd_id' => base64_encode($ipd_details->id)] )); ?>" class="btn btn-primary btn-sm"><i class="far fa-file"></i> Print Discharge Patient</a>
+                        <?php endif; ?>
+
+                        <?php if($ipd_details->discharged == 'yes'): ?>
+                        <a href="<?php echo e(route('edit-discharged-patient-in-ipd',['ipd_id' => base64_encode(@$ipd_details->id),'discharge_id' => base64_encode($patient_discharge_details->id) ] )); ?>" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit Discharge Patient</a>
+                        <?php endif; ?>
+
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
                             <?php echo $__env->make('ipd.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>

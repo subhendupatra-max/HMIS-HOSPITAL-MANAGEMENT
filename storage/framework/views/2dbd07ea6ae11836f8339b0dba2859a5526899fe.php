@@ -101,7 +101,7 @@ unset($__errorArgs, $__bag); ?>
 
                                                 <?php echo e(@$patient_details_information->day == '0'?'':$patient_details_information->day.'d'); ?>
 
-                        
+
                                             </td>
                                         </tr>
                                         <tr>

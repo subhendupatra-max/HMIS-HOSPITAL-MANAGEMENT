@@ -506,28 +506,29 @@ $login_details = DB::table('users')
                         <li><a href="#">Font office</a></li>
                         <li><a href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
                         <li><a href="<?php echo e(route('main-operation')); ?>">Operation</a></li>
-                        <li><a href="<?php echo e(route('main-operation')); ?>">Permission</a></li>
+
+                        <?php if(auth()->user()->can('view role') ||
+                        auth()->user()->can('asign userBasedPermission') ||
+                        auth()->user()->can('view permission') ||
+                        auth()->user()->can('asign roleToUser') ||
+                        auth()->user()->can('view permission')): ?>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Permission<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="<?php echo e(route('roleList')); ?>">Role</a></li>
+                                <li><a href="#"></a></li>
+
+                            </ul>
+                        </li>
+                        <?php endif; ?>
 
             </div>
 
-            <?php if(auth()->user()->can('view role') ||
-            auth()->user()->can('asign userBasedPermission') ||
-            auth()->user()->can('view permission') ||
-            auth()->user()->can('asign roleToUser') ||
-            auth()->user()->can('view permission')): ?>
-            <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">Permission<i class="fa fa-chevron-right"></i></a>
-                <ul class="dropdown-menu">
-
-                    <li><a  href="<?php echo e(route('roleList')); ?>">Role</a></li>
-                    <li><a href="#"></a></li>
-
-                </ul>
-            </li>
-            <?php endif; ?>
             </ul>
             </li>
             </ul>
+
 
 
 
@@ -541,8 +542,22 @@ $login_details = DB::table('users')
     <div id="popup1" class="popup-container">
         <div class="popup-content">
             <a href="#" class="close">&times;</a>
-            <h3> <img src="<?php echo e(asset('public/profile_picture')); ?>/<?php echo e($login_details->profile_image); ?>" style="width: 40px;height:40px">Name</h3>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+            <img src="<?php echo e(asset('public/profile_picture')); ?>/<?php echo e($login_details->profile_image); ?>" style="width: 50px;
+            height: 50px;
+            cursor: default;
+            margin: 0px 0px 0px 151px;">
+            <h3 style="margin: 5px 0px 0px 110px;"> <?php echo e($login_details->first_name); ?>
+
+                <?php echo e($login_details->last_name); ?>
+
+            </h3>
+            <span class="badge badge-light badge-pill" style="margin:5px 0px 10px 97px;"><?php echo e($login_details->role); ?></span>
+
+            <a class="btn btn-success btn-sm" href="<?php echo e(route('user-profile')); ?>/<?php echo e(base64_encode(Auth::id())); ?>"><i class='fas fa-address-card'></i> Profile</a>
+            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                <?php echo csrf_field(); ?>
+                <button class="btn btn-primary btn-sm text-center" style="margin: 0px 0px 0px 140px" type="submit"><i class="fa fa-sign-out-alt"></i> Log Out</button>
+            </form>
         </div>
     </div>
     <div class="dash-bellicon">

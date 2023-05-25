@@ -229,7 +229,7 @@ unset($__errorArgs, $__bag); ?>
                                 <option value="">Select Test Name</option>
                                 <?php if(isset($all_test)): ?>
                                 <?php $__currentLoopData = $all_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
+                                <option value="<?php echo e($test->id); ?>"><?php echo e($test->parameter_name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <?php endif; ?>
                             </select>

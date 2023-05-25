@@ -2305,7 +2305,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     Route::group(['middleware' => ['permission:edit IPD registation']], function () {
         Route::get('edit-ipd-registation/{ipd_id}', [IpdController::class, 'edit_ipd_registration'])->name('edit-ipd-registation');
 
-        Route::post('update-ipd-registation', [IpdController::class, 'updaste_ipd_registation'])->name('update-ipd-registation');
+        Route::post('update-ipd-registation', [IpdController::class, 'update_ipd_registation'])->name('update-ipd-registation');
     });
 
     Route::group(['middleware' => ['permission:IPD profile'], 'prefix' => 'ipd-profile'], function () {
@@ -2329,6 +2329,13 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
             Route::get('add-discharged-patient-in-ipd/{ipd_id}', [PatientDischargeController::class, 'add_patient_discharge'])->name('add-discharged-patient-in-ipd');
 
             Route::post('save-discharged-patient-in-ipd', [PatientDischargeController::class, 'save_patient_discharge'])->name('save-discharged-patient-in-ipd');
+
+            Route::get('edit-discharged-patient-in-ipd/{ipd_id?}/{discharge_id?}', [PatientDischargeController::class, 'edit_patient_discharge'])->name('edit-discharged-patient-in-ipd');
+
+            Route::post('update-discharged-patient-in-ipd', [PatientDischargeController::class, 'update_patient_discharge'])->name('update-discharged-patient-in-ipd');
+        });
+        Route::group(['middleware' => ['permission:ipd discharged patient print']], function () {
+            Route::get('print-discharged-patient-in-ipd/{ipd_id}', [PatientDischargeController::class, 'print_discharged_patient_in_ipd'])->name('print-discharged-patient-in-ipd');
         });
     });
     // ================================= Discharged Patient ==================================================

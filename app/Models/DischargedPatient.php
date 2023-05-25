@@ -9,8 +9,13 @@ class DischargedPatient extends Model
 {
     use HasFactory;
 
-    public function getIpdDetails()
+    public function ipd_details()
     {
         $this->belongsTo(IpdDetails::class, 'ipd_id', 'id');
+    }
+
+    public function patient_details()
+    {
+        $this->belongsTo(Patient::class, 'patient_id', 'id');
     }
 }

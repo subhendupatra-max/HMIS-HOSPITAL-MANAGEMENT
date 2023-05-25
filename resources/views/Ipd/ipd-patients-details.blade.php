@@ -17,8 +17,7 @@
                         @endcan --}}
 
                         @can('')
-                        <a href="{{ route('all-discharged-patient-in-ipd') }}" class="btn btn-primary btn-sm"><i
-                                class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
+                        <a href="{{ route('all-discharged-patient-in-ipd') }}" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
                             Discharged Patient</a>
                         @endcan
 
@@ -98,8 +97,7 @@
                             </td>
                             <td>
                                 <div class="card-options">
-                                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
+                                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right" style="">
                                         <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
                                         @can('')
@@ -107,14 +105,12 @@
                                             Form</a>
                                         @endcan
                                         @can('ipd status change')
-                                        <a class="dropdown-item" href="#"
-                                            onclick="statusButton(<?php echo $value->id; ?>)">
+                                        <a class="dropdown-item" href="#" onclick="statusButton(<?php echo $value->id; ?>)">
                                             <i class="fa fa-file"></i> Status Change</a>
                                         @endcan
                                         @can('')
 
-                                        <a class="dropdown-item"
-                                            href="{{ route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])}}">
+                                        <a class="dropdown-item" href="{{ route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])}}">
                                             <i class="fa fa-edit"></i> Edit</a>
                                         @endcan
                                         @can('ipd delete')
@@ -139,8 +135,7 @@
 
 {{-- ====================patient status change(admission/discharged planed/discharged) ================== --}}
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -154,7 +149,7 @@
             <form action="{{ route('update-status-ipd') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <input type="hidden" name="ipd_id"  id="ipd_id_"/>
+                    <input type="hidden" name="ipd_id" id="ipd_id_" />
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>

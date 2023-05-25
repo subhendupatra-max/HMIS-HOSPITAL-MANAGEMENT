@@ -193,6 +193,7 @@ $login_details = DB::table('users')
                         </a>
                     </li> -->
                     
+<<<<<<< HEAD
                     <div class=" menu-item">
                         <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>"></div>
                         <li class="dropdown">
@@ -203,6 +204,11 @@ $login_details = DB::table('users')
                                 <?php if(auth()->user()->can('General Setting')): ?>
                                 <li><a href="<?php echo e(route('general_setting_details')); ?>">General Settings</a></li>
                                 <?php endif; ?>
+=======
+            <div class=" menu-item">
+                <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>"></div>
+                <li class="dropdown">
+>>>>>>> 506c53e37ed7cb0a21ca1ec125a0fb23afd655da
 
                                 <?php if(auth()->user()->can('Charges Master')): ?>
                                 <li class="dropdown-submenu">
@@ -605,6 +611,7 @@ $login_details = DB::table('users')
 
 
 
+<<<<<<< HEAD
 
             </div>
 
@@ -637,6 +644,106 @@ $login_details = DB::table('users')
                                 type="submit"><i class="fa fa-sign-out-alt"></i> Log Out</button>
                         </form>
                     </div>
+=======
+                            </ul>
+                        </li>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+
+
+                                <li><a href="#">Opd</a></li>
+                                <li><a href="#">Ipd</a></li>
+
+                            </ul>
+                        </li>
+                        <li><a href="#">Refferal</a></li>
+                        <li><a href="#">Font office</a></li>
+                        <li><a href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
+                        <li><a href="<?php echo e(route('main-operation')); ?>">Operation</a></li>
+
+                        <?php if(auth()->user()->can('view role') ||
+                        auth()->user()->can('asign userBasedPermission') ||
+                        auth()->user()->can('view permission') ||
+                        auth()->user()->can('asign roleToUser') ||
+                        auth()->user()->can('view permission')): ?>
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Permission<i class="fa fa-chevron-right"></i></a>
+                            <ul class="dropdown-menu">
+
+                                <li><a href="<?php echo e(route('roleList')); ?>">Role</a></li>
+                                <li><a href="#"></a></li>
+
+                            </ul>
+                        </li>
+                        <?php endif; ?>
+
+            </div>
+
+            </ul>
+            </li>
+            </ul>
+
+
+
+
+    </div>
+
+             <div class=" menu-item">
+              <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>" ></div>  <li class="dropdown">
+
+               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
+                 <ul class="dropdown-menu" role="menu">
+                   <li><a href="#">Inventory</a></li>
+                   <li class="dropdown-submenu">
+                     <a tabindex="-1" href="#">Birth and Death record<i class="fa fa-chevron-right"></i></a>
+                     <ul class="dropdown-menu">
+
+
+                       <li><a href="#">Birth Record</a></li>
+                       <li><a href="#">Death Record</a></li>
+
+                     </ul>
+                   </li>
+                   <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+
+
+                      <li><a href="#">Opd</a></li>
+                      <li><a href="#">Ipd</a></li>
+
+                    </ul>
+                  </li>
+                   <li><a href="#">Refferal</a></li>
+                   <li><a href="#">Font office</a></li>
+                   <li><a href="#">Blood Bank</a></li>
+                   <li><a href="#">Operation</a></li>
+
+              </div>
+        </ul>
+      </li>
+      </ul>
+
+            <a class="btn btn-success btn-sm" href="<?php echo e(route('user-profile')); ?>/<?php echo e(base64_encode(Auth::id())); ?>"><i class='fas fa-address-card'></i> Profile</a>
+            <form method="POST" action="<?php echo e(route('logout')); ?>">
+                <?php echo csrf_field(); ?>
+                <button class="btn btn-primary btn-sm text-center" style="margin: 0px 0px 0px 140px" type="submit"><i class="fa fa-sign-out-alt"></i> Log Out</button>
+            </form>
+        </div>
+    </div>
+    <div class="dash-bellicon">
+        <div class="bell">
+            <div class="popup-link">
+                <a href="#popup1notification">
+                    <div class="dashprofileimg"> <img src="<?php echo e(asset('public/assets/images/brand/bell.png')); ?>"></div>
+            </div>
+            <div id="popup1notification" class="popup-container">
+                <div class="popup-content">
+                    <a href="#" class="close">&times;</a>
+                    <h3> <img src="<?php echo e(asset('public/assets/images/brand/user.png')); ?>">Name</h3>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+>>>>>>> 506c53e37ed7cb0a21ca1ec125a0fb23afd655da
                 </div>
                 
                 
@@ -646,8 +753,9 @@ $login_details = DB::table('users')
 
     <div class="row">
         <?php echo $__env->yieldContent('content'); ?>
-    </div>
+      </div>
 
+<<<<<<< HEAD
     <!--Footer-->
     <footer class="footer">
         <div class="container">
@@ -661,6 +769,20 @@ $login_details = DB::table('users')
         </div>
     </footer>
     <!-- Back to top -->
+=======
+     <!--Footer-->
+     <footer class="footer">
+         <div class="container">
+             <div class="row align-items-center flex-row-reverse">
+                 <div class="col-lg-12 footer-text">
+                     Copyright © 2022 <a href="#"><?php echo e(@$general_details->software_name); ?></a>. Designed by <a href="https://devantitsolutions.com/" target="_blank">Devant IT Solutions Pvt. Ltd.</a>
+                     All rights reserved.
+                 </div>
+             </div>
+         </div>
+     </footer>
+     <!-- Back to top -->
+>>>>>>> 506c53e37ed7cb0a21ca1ec125a0fb23afd655da
     <a href="#top" id="back-to-top"><i class="fe fe-chevrons-up"></i></a>
 
 
@@ -749,8 +871,8 @@ $login_details = DB::table('users')
     <script src="<?php echo e(asset('public/assets/plugins/wysiwyag/jquery.richtext.js')); ?>"></script>
     <script src="<?php echo e(asset('public/assets/js/form-editor.js')); ?>"></script>
     
-    
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     
 
 </body>
@@ -791,4 +913,5 @@ $login_details = DB::table('users')
             });
         }
     }
-</script><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/layouts/layout.blade.php ENDPATH**/ ?>
+</script>
+<?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/layouts/layout.blade.php ENDPATH**/ ?>

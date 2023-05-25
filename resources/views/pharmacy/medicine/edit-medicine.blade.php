@@ -10,7 +10,7 @@
                     @csrf
                     <div class="row">
                         <input type="hidden" name="id" value="{{ $editMedicine->id }}" />
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 editmediadd">
                             <input type="text"id="medicine_name" name="medicine_name"
                                 value="{{ $editMedicine->medicine_name }}" required="">
                             <label for="medicine_name">Medicine Name </label>
@@ -19,10 +19,10 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
-                            <label for="medicine_catagory" class="form-label">Medicine Category <span
+                        <div class="form-group col-md-3 editmediaddtwo">
+                            <label for="medicine_catagory">Medicine Category <span
                                     class="text-danger">*</span></label>
-                            <select class="form-control select2-show-search select2-hidden-accessible"
+                            <select class="form-control select2-show-search "
                                 value="{{ old('medicine_catagory') }}" name="medicine_catagory" id="medicine_catagory"
                                 required>
                                 <optgroup>
@@ -39,7 +39,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 editmediadd">
                             <input type="text"id="medicine_company" name="medicine_company"
                                 value="{{ $editMedicine->medicine_company }}" required="">
                             <label for="medicine_company">Enter Medicine Company </label>
@@ -48,7 +48,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 editmediadd">
                             <input type="text"id="medicine_composition" name="medicine_composition"
                                 value="{{ $editMedicine->medicine_composition }}" required="">
                             <label for="medicine_composition">Enter Medicine Composition </label>
@@ -57,7 +57,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 editmedicineadd">
                             <input type="text"id="medicine_group" name="medicine_group"
                                 value="{{ $editMedicine->medicine_group }}"required="">
                             <label for="medicine_composition">Enter Medicine Group </label>
@@ -66,7 +66,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 editmedicineadd">
                             <input type="text"id="medicine_group" id="unit" name="unit"
                                 value="{{ $editMedicine->unit }}"required="">
                             <label for="unit">Enter Unit <span class="text-danger">*</span></label>
@@ -75,7 +75,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 editmedicineadd">
                             <input type="text"id="medicine_group" id="min_level" name="min_level"
                                 value="{{ $editMedicine->min_level }}"required="">
                             <label for="min_level">Enter Low Level <span class="text-danger">*</span></label>
@@ -92,7 +92,7 @@
                         @enderror
                     </div> --}}
 
-                        <div class="form-group col-md-3">
+                        <div class="form-group col-md-3 editmedicineadd">
                             <input type="text" id="tax" name="tax"
                                 value="{{ $editMedicine->tax }}"required="">
                             <label for="tax">Enter Tax <span class="text-danger">*</span></label>
@@ -101,7 +101,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3 newuserrchange">
+                        <div class="form-group col-md-3 editmedicineadd">
                             <input type="text" id="note" name="note"
                                 value="{{ $editMedicine->note }}"required="">
                             <label for="note"> Note</label>
@@ -110,8 +110,8 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-6">
-                            <h6 class="Heading">Medicine Photo </h6>
+                        <div class="form-group col-md-6 editmedi">
+                            <label for="note"> Medicine_photo</label>
                             <input type="file" id="medicine_photo" name="medicine_photo"
                                 value="{{ old('medicine_photo') }}">
                             @error('medicine_photo')
