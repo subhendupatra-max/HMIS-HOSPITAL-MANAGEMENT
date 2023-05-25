@@ -795,6 +795,8 @@ class PermissionSeeder extends Seeder
 
         //medicine 
         Permission::create(['name' => 'Medicine Details']);
+        Permission::create(['name' => 'print medicine bill']);
+        Permission::create(['name' => 'delete medicine bill']);
 
         //charges opd
         Permission::create(['name' => 'add opd charges']);
@@ -813,7 +815,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'OPD Radiology Investigation']);
 
         Permission::create(['name' => 'Create Prescription for OPD']);
-        
+
         Permission::create(['name' => 'bed-status']);
 
 
@@ -821,10 +823,15 @@ class PermissionSeeder extends Seeder
         // Reports
         Permission::create(['name' => 'Report']);
         Permission::create(['name' => 'OPD Patient Report']);
+        Permission::create(['name' => 'EMG Patient Report']);
+        Permission::create(['name' => 'Payment Report']);
 
         //master operation
         Permission::create(['name' => 'main operation']);
         Permission::create(['name' => 'edit operation main']);
         Permission::create(['name' => 'delete operation main']);
+
+        //patient discharge print
+        Permission::create(['name' => 'ipd discharged patient print']);
     }
 }

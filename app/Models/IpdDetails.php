@@ -50,4 +50,5 @@ class IpdDetails extends Model
     {
         return $this->belongsTo(PatientBedHistory::class, 'id', 'ipd_id');
     }
+   
 }

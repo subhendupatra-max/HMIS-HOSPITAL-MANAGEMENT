@@ -30,14 +30,32 @@
 
                     <div class="form-group col-md-4">
                         <label for="ipd_no" class="form-label">IPD No<span class="text-danger">*</span></label>
-                        <input type="text" readonly class="form-control" id="ipd_no" name="ipd_no" value="<?php echo e($ipd_details->id); ?>" />
+                        <input type="text" readonly class="form-control" id="ipd_no" value="<?php echo e($ipd_details->id); ?>" />
 
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="doctor_name" class="form-label">Treating Consultant's Name<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="doctor_name" name="doctor_name" value="<?php echo e(old('doctor_name')); ?>" />
+                        <select name="doctor_name" class="form-control" id="doctor_name">
+                            <option value="">Select...</option>
+                            <?php $__currentLoopData = $doctor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($name->id); ?>"> <?php echo e($name->first_name); ?> <?php echo e($name->last_name); ?>
+
+                            </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                        <?php $__errorArgs = ['doctor_name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                     </div>
+
 
                     <div class="form-group col-md-4">
                         <label for="doctor_name" class="form-label">Department<span class="text-danger">*</span></label>

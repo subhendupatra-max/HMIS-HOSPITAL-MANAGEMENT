@@ -17,7 +17,7 @@
                         <div class="row">
                             <div class="col-md-4 form-group">
                                
-                                <select class="form-control select2-show-search" id="stored_room" name="stored_room">
+                                <select class="form-control select2-show-search" id="stored_room" name="stored_room" required>
                                     <option value="">Select Store Room</option>
                                     @if ($store_room)
                                     @foreach ($store_room as $value)
@@ -34,14 +34,8 @@
                             <div class="col-md-4 form-group">
                              
 
-                                <select class="form-control select2-show-search select2-hidden-accessible" value="{{ old('medicine_catagory') }}" name="medicine_category" onchange="getMedicineName(this.value)" id="medicine_category" required>
-                                    <optgroup>
-                                        <option value=" ">Select Medicine Catagory<span class="text-danger">*</span>
-                                        </option>
-                                        @foreach ($medicine_catagory as $value)
-                                        <option value="{{ $value->id }}" {{ @$value->id == $medicine_details->medicine_catagory ? 'selected' : " " }}>{{ $value->medicine_catagory_name }}</option>
-                                        @endforeach
-                                    </optgroup>
+                                <select class="form-control select2-show-search" name="medicine_category" id="medicine_category" required>
+                                        <option value="{{ @$medicine_details->id }}">{{ @$medicine_details->catagory_name->medicine_catagory_name }}</option>
                                 </select>
                                 <label for="medicine_category">Medicine Catagory<span class="text-danger">*</span> </label>
                                 @error('medicine_category')
@@ -50,9 +44,9 @@
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <select name="medicine_name" id="medicine_name"
+                                <select name="medicine_name" required id="medicine_name"
                                 class="form-control select2-show-search">
-                                <option value="">Select One...</option>
+                                <option value="{{ @$medicine_details->id }}">{{ @$medicine_details->medicine_name }}</option>
                             </select>
                             <label for="batch_no">Medicine Name<span class="text-danger">*</span> </label>
                                 @error('medicine_name')
@@ -62,7 +56,7 @@
 
                             <div class="col-md-4 form-group">
 
-                                <input type="text" id="batch_no" name="batch_no" value="{{ old('batch_no') }}" required />
+                                <input type="text" id="batch_no"  name="batch_no" value="{{ old('batch_no') }}" required />
                                 <label for="batch_no">Batch No<span class="text-danger">*</span> </label>
 
                                 @error('batch_no')
@@ -81,7 +75,7 @@
 
                             <div class="col-md-4 form-group">
 
-                                <input type="text" id="quantity" name="quantity" value="{{ old('quantity') }}" required />
+                                <input type="text" id="quantity"  name="quantity" onkeyup="getAmount(this.value)" value="{{ old('quantity') }}" required />
                                 <label for="quantity">Quantity<span class="text-danger">*</span> </label>
 
                                 @error('quantity')
@@ -90,7 +84,6 @@
                             </div>
 
                             <div class="col-md-4 form-group">
-
                                 <input type="text" id="mrp" name="mrp" value="{{ old('mrp') }}" required />
                                 <label for="mrp">MRP <span class="text-danger">*</span> </label>
                                 @error('mrp')
@@ -98,17 +91,38 @@
                                 @enderror
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="sale_price" name="sale_price" value="{{ old('sale_price') }}" required />
+                                <input type="text" id="sale_price"  name="sale_price" value="{{ old('sale_price') }}" required />
                                 <label for="sale_price">Sale Price<span class="text-danger">*</span> </label>
                                 @error('sale_price')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="purchase_price" name="purchase_price" value="{{ old('purchase_price') }}" required />
+                                <input type="text" id="purchase_price" onkeyup="getAmount(this.value)" name="purchase_price" value="{{ old('purchase_price') }}" required />
                                 <label for="purchase_price">Purchase Price<span class="text-danger">*</span> </label>
 
                                 @error('purchase_price')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <input type="text" id="igst" name="igst" onkeyup="getAmount(this.value)" value="0" required />
+                                <label for="igst">IGST </label>
+                                @error('igst')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <input type="text" id="cgst" name="cgst" onkeyup="getAmount(this.value)" value="0" required />
+                                <label for="cgst">CGST  </label>
+                                @error('cgst')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <input type="text" id="sgst" name="sgst" onkeyup="getAmount()" value="0" required />
+                                <label for="sgst">SGST </label>
+                                @error('sgst')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -134,27 +148,17 @@
 @endcan
 
 <script>
-            function getMedicineName(category_id) {
-            $('#medicine_name').html('<option value="">Select One...</option>');
-            $.ajax({
-                url: "{{ route('find-medicine-name-by-category') }}",
-                type: "POST",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    medicine_category_id: category_id,
-                },
-                success: function(response) {
+        //  function getAmount()
+        //  {
+        //     var sgst = $('#sgst').val();
+        //     var cgst = $('#cgst').val();
+        //     var igst = $('#igst').val();
+        //     var purchase_price = $('#purchase_price').val();
+        //     var quantity = $('#quantity').val();
 
-                    $.each(response, function(key, value) {
-                        $('#medicine_name').append(
-                            `<option value="${value.id}">${value.medicine_name}</option>`);
-                    });
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
+
+
+        //  }
 </script>
 
 @endsection

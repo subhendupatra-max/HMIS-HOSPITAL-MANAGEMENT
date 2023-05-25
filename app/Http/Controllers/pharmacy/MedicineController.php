@@ -16,6 +16,7 @@ use App\Models\MedicineUnit;
 use App\Models\SimilarMedicine;
 use Faker\Provider\Medical;
 use Google\Service\ChromePolicy\Resource\Media;
+use DB;
 
 class MedicineController extends Controller
 {
@@ -201,30 +202,41 @@ class MedicineController extends Controller
         $validate = $request->validate([
             'medicine_name'             => 'required',
             'medicine_category'         => 'required',
+            'stored_room'               => 'required',
+            'batch_no'                  => 'required',
+            'expiry_date'               => 'required',
+            'quantity'                  => 'required',
+            'mrp'                       => 'required',
+            'sale_price'                => 'required',
+            'purchase_price'            => 'required',
         ]);
 
         try {
-
+            DB::beginTransaction();
             $medicine = new MedicineStock();
             $medicine->stored_room              = $request->stored_room;
             $medicine->medicine_category        = $request->medicine_category;
             $medicine->medicine_name            = $request->medicine_name;
             $medicine->batch_no                 = $request->batch_no;
-            $medicine->expiry_date              = date('Y-m-d', strtotime($request->expiry_date));
+            $medicine->expiry_date              = $request->expiry_date;
             $medicine->quantity                 = $request->quantity;
             $medicine->mrp                      = $request->mrp;
             $medicine->unit                     = $request->unit;
             $medicine->sale_price               = $request->sale_price;
+            $medicine->cgst                     = $request->cgst;
+            $medicine->sgst                     = $request->sgst;
+            $medicine->igst                     = $request->igst;
             $medicine->purchase_price           = $request->purchase_price;
             $medicine->amount                   = $request->amount;
             $status =  $medicine->save();
-
+            // DB::commit();
             if ($status) {
                 return redirect()->route('all-medicine-stock')->with('success', 'Medicine Added Sucessfully');
             } else {
                 return redirect()->route('all-medicine-stock')->with('error', "Something Went Wrong");
             }
         } catch (\Throwable $th) {
+            DB::rollback();
             return redirect()->route('all-medicine-stock')->with('error', "Something Went Wrong");
         }
     }

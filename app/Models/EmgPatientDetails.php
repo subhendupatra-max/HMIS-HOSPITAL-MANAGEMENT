@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Department;
+use App\Models\EmgDetails;
 
 class EmgPatientDetails extends Model
 {
@@ -14,4 +15,16 @@ class EmgPatientDetails extends Model
     {
         return $this->belongsTo(Department::class,'department_id','id');
     }
+
+    public function emg_details_data()
+    {
+        return $this->belongsTo(EmgDetails::class, 'emg_details_id', 'id');
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'cons_doctor', 'id');
+    }
+
+
 }

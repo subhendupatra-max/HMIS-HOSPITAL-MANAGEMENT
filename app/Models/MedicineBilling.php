@@ -12,4 +12,8 @@ class MedicineBilling extends Model
     {
         return $this->belongsTo(Patient::class,'patient_id','id');
     }
+    public function generated_by_details()
+    {
+        return $this->belongsTo(User::class,'created_by','id');
+    }
 }

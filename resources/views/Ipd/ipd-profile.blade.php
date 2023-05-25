@@ -11,14 +11,17 @@
                 <div class="col-md-8 text-right">
 
                     <div class="d-block">
-                        <a href="{{ route('discharged-patient-in-ipd',['ipd_id' => base64_encode($ipd_details->id)] ) }}" class="btn btn-primary btn-sm"><i class="far fa-user"></i>Back To Admit</a>
-
                         @if($ipd_details->discharged == 'no')
-                        <a href="{{ route('discharged-patient-in-ipd',['ipd_id' => base64_encode($patient_discharge_details->id)] ) }}" class="btn btn-primary btn-sm"><i class="far fa-calendar-check"></i> Discharge Patient</a>
-                        @else
-                        <a href="{{ route('discharged-patient-in-ipd',['ipd_id' => base64_encode($ipd_details->id)] ) }}" class="btn btn-primary btn-sm"><i class="far fa-file"></i> Print Discharge Patient</a>
+                        <a href="{{ route('discharged-patient-in-ipd',['ipd_id' => base64_encode(@$ipd_details->id)] ) }}" class="btn btn-primary btn-sm"><i class="far fa-calendar-check"></i> Discharged Patient</a>
+                        @endif
 
-                        <a href="{{ route('edit-discharged-patient-in-ipd',['ipd_id' => base64_encode(@$ipd_details->id)] ) }}" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit Discharge Patient</a>
+                        @if($ipd_details->discharged == 'yes')
+
+                        <a href="{{ route('print-discharged-patient-in-ipd',['ipd_id' => base64_encode($ipd_details->id)] ) }}" class="btn btn-primary btn-sm"><i class="far fa-file"></i> Print Discharge Patient</a>
+                        @endif
+
+                        @if($ipd_details->discharged == 'yes')
+                        <a href="{{ route('edit-discharged-patient-in-ipd',['ipd_id' => base64_encode(@$ipd_details->id),'discharge_id' => base64_encode($patient_discharge_details->id) ] ) }}" class="btn btn-primary btn-sm"><i class="far fa-edit"></i> Edit Discharge Patient</a>
                         @endif
 
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>

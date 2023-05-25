@@ -160,12 +160,32 @@
                                 <th scope="col">Mobile No.</th>
                                 <th scope="col">Case Id</th>
                                 <th scope="col">Last Visit Details</th>
+                                <th scope="col">TAT(Turn around time)</th>
+                                <th scope="col">Total Billing(Rs)</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (isset($opd_registaion_list))
                             @foreach ($opd_registaion_list as $value)
+                            <?php
+                            $appoint_date = $value->latest_opd_visit_details_for_patient->appointment_date;
+                            $last_activity = DB::table('billings')->where('section','OPD')->where('case_id',$value->case_id)->orderBy('id','DESC')->first();
+
+                            $total_billing = DB::table('billings')->where('section','OPD')->where('case_id',$value->case_id)->sum('grand_total');
+
+
+                            if($last_activity != null){
+                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->bill_date));
+                            $startDate_ = new DateTime($appoint_date);
+                            $endDate_ = new DateTime($end_date);
+                            $interval = $startDate_->diff($endDate_);
+                            $tat = $interval->format('%a days %h hours, %i minutes');
+                            }else{
+                                $tat = 'Only registation done';
+                            }
+
+                             ?>
                             <tr>
                                 <td><a class="textlink" href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}">{{
                                         @$value->id }}</a>
@@ -211,6 +231,8 @@
                                     strtotime($value->latest_opd_visit_details_for_patient->appointment_date)) }}
                                     @endif
                                 </td>
+                                <td><?php echo $tat; ?></td>
+                                <td>{{ @$total_billing }}</td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
@@ -242,12 +264,31 @@
                                 <th scope="col">G. Name/P. Type</th>
                                 <th scope="col">Medico Legal Case</th>
                                 <th scope="col">Appointment Date</th>
+                                <th scope="col">TAT(Turn around time)</th>
+                                <th scope="col">Total Billing(Rs)</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (isset($emg_registaion_list))
                             @foreach ($emg_registaion_list as $value)
+                            <?php
+                            $appoint_date = $value->all_emg_visit_details->appointment_date;
+                            $last_activity = DB::table('billings')->where('section','EMG')->where('case_id',$value->case_id)->orderBy('id','DESC')->first();
+
+                            $total_billing = DB::table('billings')->where('section','EMG')->where('case_id',$value->case_id)->sum('grand_total');
+
+                            if($last_activity != null){
+                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->bill_date));
+                            $startDate_ = new DateTime($appoint_date);
+                            $endDate_ = new DateTime($end_date);
+                            $interval = $startDate_->diff($endDate_);
+                            $tat = $interval->format('%a days %h hours, %i minutes');
+                            }else{
+                                $tat = 'Only registation done';
+                            }
+
+                             ?>
                             <tr>
 
                                 <td><a class="textlink" href="{{route('emg-patient-profile',['id'=>base64_encode($value->id)])}}">{{
@@ -276,6 +317,8 @@
                                     {{ date('d-m-Y h:i A',strtotime($value->all_emg_visit_details->appointment_date)) }}
                                     @endif
                                 </td>
+                                <td>{{ @$tat }}</td>
+                                <td>{{ @$total_billing }}</td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
@@ -306,12 +349,33 @@
                                 <th scope="col">Admission Information</th>
                                 <th scope="col">Admission Date</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">TAT(Turn around time)</th>
+                                <th scope="col">Total Billing(Rs)</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (isset($ipd_patient_list))
                             @foreach ($ipd_patient_list as $value)
+                            <?php
+                            $appoint_date = $value->appointment_date;
+                            $last_activity = DB::table('billings')->where('section','IPD')->where('case_id',$value->case_id)->orderBy('id','DESC')->first();
+
+                            
+                            $total_billing = DB::table('billings')->where('section','IPD')->where('case_id',$value->case_id)->sum('grand_total');
+
+
+                            if($last_activity != null){
+                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->bill_date));
+                            $startDate_ = new DateTime($appoint_date);
+                            $endDate_ = new DateTime($end_date);
+                            $interval = $startDate_->diff($endDate_);
+                            $tat = $interval->format('%a days %h hours, %i minutes');
+                            }else{
+                                $tat = 'Only registation done';
+                            }
+
+                             ?>
                             <tr>
                                 <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{
                                         @$value->ipd_prefix }}{{ @$value->id }}</a></td>
@@ -361,6 +425,8 @@
                                     <span class="badge badge-secondary">Discharged</span>
                                     @endif
                                 </td>
+                                <td>{{ @$tat }}</td>
+                                <td>{{ @$total_billing }}</td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>

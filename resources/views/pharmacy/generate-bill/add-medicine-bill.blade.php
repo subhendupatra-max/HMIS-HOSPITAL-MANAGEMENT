@@ -27,7 +27,8 @@
                                                     == $patient->id ? 'Selected' : '' }}>
                                                     {{ @$patient->prefix }} {{ @$patient->first_name }}
                                                     {{ @$patient->middle_name }}
-                                                    {{ @$patient->last_name }} (
+                                                    {{ @$patient->last_name }}(
+                                                        {{ @$patient->phone }} ) (
                                                     {{ @$patient->id }} ) </option>
                                                 @endforeach
                                                 @endif
@@ -140,7 +141,8 @@
                                                 </th>
                                                 <th scope="col" style="width: 8%">Unit <span
                                                         class="text-danger">*</span></th>
-                                                <th scope="col" style="width: 8%">Tax <span class="text-danger">*</span>
+                                                <th scope="col" style="width: 8%">CGST <span class="text-danger">*</span>
+                                                    <th scope="col" style="width: 8%">SGST <span class="text-danger">*</span>
                                                 </th>
                                                 <th scope="col" style="width: 8%">Amount <span
                                                         class="text-danger">*</span></th>
@@ -167,7 +169,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                  {{--   <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-8 add-medicinedesignn">
                                                 <label>Billing Date <span class="text-danger">*</span></label>
@@ -179,7 +181,7 @@
                                             <div class="col-md-8 add-medicinedesignn">
                                                 <label >Note </label>
                                                 {{-- <textarea  name="note"></textarea> --}}
-                                                <input type="text" name="note" id="note" >
+                                                {{-- <input type="text" name="note" id="note" >
                                             </div>
                                             <div class="col-md-4 add-medicinedesignin">
                                                 <label>Payment Amount </label>
@@ -202,7 +204,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-md-6">
                                         <div class="options px-5 pt-5  border-bottom pb-3">
                                             <div class="container mt-5">
@@ -219,16 +221,16 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
 
 
                         <div class="btn-list p-3">
                             <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
                                     class="fa fa-calculator"></i> Calculate</button>
-                            <button class="btn btn-primary btn-sm float-right " type="submit" value="save"
+                            <button class="btn btn-primary btn-sm float-right mr-2" type="submit" value="save"
                                 name="save"><i class="fa fa-file"></i> Save</button>
-                            <button class="btn btn-primary btn-sm float-right mr-2" value="save_and_print"
-                                name="save_and_print" type="submit"><i class="fa fa-paste"></i> Save & Print</button>
+                            {{-- <button class="btn btn-primary btn-sm float-right " value="save_and_print"
+                                name="save_and_print" type="submit"><i class="fa fa-paste"></i> Save & Print</button> --}}
                         </div>
                     </form>
                 </div>
@@ -273,8 +275,11 @@
                         </td>
                         <td><input type="text" readonly name="unit[]" id="unit${i}" class="form-control" /><input type="hidden" name="unit_id[]" id="unit_id${i}" class="form-control" />
                                 </td>
-                                <td>
-                            <input class="form-control" value="0" id="tax${i}" onkeyup="getamount(${i})" name="tax[]" type="text"/>
+                        <td>
+                            <input class="form-control" value="0" id="cgst${i}" onkeyup="getamount(${i})" name="cgst[]" type="text"/>
+                        </td>
+                        <td>
+                            <input class="form-control" value="0" id="sgst${i}" onkeyup="getamount(${i})" name="sgst[]" type="text"/>
                         </td>
                         <td>
                             <input class="form-control" readonly id="amount${i}" name="amount[]" type="text" />
@@ -290,13 +295,22 @@
 
         function getamount(rowid) {
             var qty = $('#qty' + rowid).val();
-            var tax = $('#tax' + rowid).val();
+            console.log(qty);
+            var cgst = $('#cgst' + rowid).val();
+            console.log(cgst);
+            var sgst = $('#sgst' + rowid).val();
+            console.log(sgst);
             var price = $('#sale_price' + rowid).val();
+            console.log(price);
             var qty_p = parseFloat(qty) * parseFloat(price);
-            var tax_a = parseFloat(qty_p) * (parseFloat(tax) / 100);
+            console.log(qty_p);
+            var gst = parseFloat(cgst) + parseFloat(sgst);
+            var tax_a = parseFloat(qty_p) * (parseFloat(gst) / 100);
+            console.log(tax_a);
             var amount = parseFloat(qty_p) + parseFloat(tax_a);
-
+            console.log(amount);
             $('#amount' + rowid).val(amount);
+            gettotal();
         }
 
         function getMedicineName(category_id, rowid) {

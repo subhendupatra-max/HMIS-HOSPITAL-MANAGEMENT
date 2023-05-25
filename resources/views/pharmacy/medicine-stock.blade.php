@@ -8,11 +8,10 @@
                 Medicine Stock
                 </div>
                 <div class="col-md-6 text-right">
-
                 </div>
             </div>
-
         </div>
+        @include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
