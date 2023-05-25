@@ -100,8 +100,7 @@
                                 <td>{{ @$value->payment_prefix }}{{ @$value->id }}</td>
                                 <td>{{ @$value->payment_amount }}</td>
                                 
-                                <td>{{ date('d-m-Y h:i A',
-                                    strtotime(@$value->payment_date)) }}</td>
+                                <td>{{ date('d-m-Y h:i A',strtotime(@$value->payment_date)) }}</td>
                                
                                 <td>{{ @$value->payment_mode }}</td>
                                 <td>

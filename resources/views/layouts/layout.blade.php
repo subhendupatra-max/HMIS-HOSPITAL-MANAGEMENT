@@ -21,8 +21,7 @@ $login_details = DB::table('users')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+   
 
 
     <!-- Meta data -->
@@ -43,8 +42,6 @@ $login_details = DB::table('users')
     <link href="{{ asset('public/assets/css/dark.css') }}" rel="stylesheet" />
     <link href="{{ asset('public/assets/css/skin-modes.css') }}" rel="stylesheet" />
     <link href="{{ asset('public/assets/plugins/wysiwyag/richtext.css') }}" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <!-- Animate css -->
     <link href="{{ asset('public/assets/css/animated.css') }}" rel="stylesheet" />
@@ -788,8 +785,7 @@ $login_details = DB::table('users')
     <script src="{{ asset('public/assets/plugins/wysiwyag/jquery.richtext.js') }}"></script>
     <script src="{{ asset('public/assets/js/form-editor.js') }}"></script>
     {{--    --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+
     {{--    --}}
 
 </body>

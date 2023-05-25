@@ -25,4 +25,6 @@
 
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-timeline' ? 'active' : ''); ?>" href="<?php echo e(route('physical-condition-in-opd', ['id' => base64_encode($opd_patient_details->id)])); ?>"><i class="fa fa-receipt"></i> Physical Conditions</a>
 
-<?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/OPD/include/menu.blade.php ENDPATH**/ ?>
+<a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-operation' ? 'active' : ''); ?>" href="<?php echo e(route('opd-operation-in-opd', ['id' => base64_encode($opd_patient_details->id)])); ?>"><i class="fa fa-receipt"></i> Operation</a>
+
+<a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-blood-issue' ? 'active' : ''); ?>" href="<?php echo e(route('blood-bank-detials-in-opd', ['id' => base64_encode($opd_patient_details->id)])); ?>"><i class="fa-solid fa-droplet"></i>Blood Details</a><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/OPD/include/menu.blade.php ENDPATH**/ ?>
