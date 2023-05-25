@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -13,7 +12,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-4">
-                            
+                            <label class="requisition_header">Purchase Order <span class="text-danger">*</span></label>
                             <select class="form-control select2-show-search" onchange="findPOdetails(this.value)" name="po_no" id="po">
                                 <option value="">Select One<span class="text-danger">*</span></option>
                                 <?php if(!empty($po_list)): ?>
@@ -24,7 +23,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 grncreateadd">
                             <label class="requisition_header1">Medicine Rec. Date<span class="text-danger">*</span></label>
                             <input type="date" name="medicine_rec_date" class="form-control">
 
@@ -39,7 +38,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grncreateadd">
                             <label class="requisition_header1">Bill Rec. Date</label>
                             <input type="date" name="bill_rec_date" class="form-control">
                             <?php $__errorArgs = ['bill_rec_date'];
@@ -53,12 +52,12 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-4 newadd">
+                        <div class="col-md-4 grnnewadd">
                             
                             <input type="text" id="challan_no"  name="challan_no" required="">
                             <label for="Challan No."> Challan No.</label>
                         </div>
-                        <div class="col-md-4 newadd">
+                        <div class="col-md-4 grnnewadd">
                             
                             <input type="text" id="challan_date"  name="challan_date" required="">
                             <label for="challan_date">Challan Date </label>
@@ -66,12 +65,12 @@ unset($__errorArgs, $__bag); ?>
                         
 
 
-                        <div class="col-md-4 newadd">
+                        <div class="col-md-4 grnnewadd">
                             
                             <input type="text" id="invoice_no"  name="challan_date" required="">
                             <label for="invoice_no">Invoice No. </label>
                         </div>
-                        <div class="col-md-4 newadd">
+                        <div class="col-md-4 grnnewadd">
                             
                             <input type="text" id="invoice_date"  name="invoice_date" required="">
                             <label for="Invoice Date">Invoice Date  </label>

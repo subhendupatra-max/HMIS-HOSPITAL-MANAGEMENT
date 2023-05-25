@@ -162,18 +162,12 @@ unset($__errorArgs, $__bag); ?>
                                                         <small class="text-danger"><?php echo e($errors->first('date_of_birth_month')); ?></small>
                                                     </div>
                                                     <div class="col-lg-4  ">
-<<<<<<< HEAD
-                                                        
-                                                        <input type="text" id="date_of_birth_day" value="<?php echo e(@$patient->day); ?>" >
-                                                        <label for="date_of_birth_day"> Day</label>
-=======
 
                                                         <input type="text" id="date_of_birth_day" onkeyup="getage()"
                                                             required name="date_of_birth_day"
                                                             value="<?php echo e(@$patient->day); ?>">
                                                         <label for="date_of_birth_day"> Day <span
                                                                 class="text-danger">*</span></label>
->>>>>>> b99e1d023c371500f61b068d5f3a8735506e1fce
                                                         <small class="text-danger"><?php echo e($errors->first('date_of_birth_day')); ?></small>
                                                     </div>
                                                 </div>
@@ -268,12 +262,8 @@ unset($__errorArgs, $__bag); ?>
                                                     required>
                                                     <option value="">Select Country... </option>
                                                     <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $countrys): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-<<<<<<< HEAD
-                                                    <option value="<?php echo e($countrys->id); ?>" <?php echo e(@$countrys->id == @$patient->country ? 'selected' : " "); ?>><?php echo e($countrys->country_name); ?></option>
-=======
                                                     <option value="<?php echo e($countrys->id); ?>" <?php echo e(@$countrys->id ==
                                                         @$patient->country ? 'selected' : " "); ?>><?php echo e($countrys->country_name); ?></option>
->>>>>>> b99e1d023c371500f61b068d5f3a8735506e1fce
                                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
                                                 <small class="text-danger"><?php echo e($errors->first('country')); ?></small>
@@ -290,15 +280,10 @@ unset($__errorArgs, $__bag); ?>
 
 
                                             <div class="form-group col-md-2 addpatientdesign ">
-<<<<<<< HEAD
-                                                <label for="district">District <span class="text-danger">*</span></label>
-                                                <select name="district" class="form-control select2-show-search" id="district" required>
-=======
                                                 <label for="district">District <span
                                                         class="text-danger">*</span></label>
                                                 <select name="district" class="form-control select2-show-search"
                                                     id="district" required>
->>>>>>> b99e1d023c371500f61b068d5f3a8735506e1fce
                                                     <option value="">Select District...</option>
                                                 </select>
                                                 <small class="text-danger"><?php echo e($errors->first('district')); ?></small>
@@ -306,16 +291,9 @@ unset($__errorArgs, $__bag); ?>
 
                                             <div class="form-group col-md-2 addpatientdesignpin ">
 
-<<<<<<< HEAD
-                                                <input type="text" id="pin_no"id="pin_no" name="pin_no"
-                                                value="<?php echo e(@$patient->pin_no); ?>" >
-                                            <label for="pin_no">Pin No.<span
-                                                    class="text-danger">*</span></label>
-=======
                                                 <input type="text" id="pin_no" id="pin_no" name="pin_no"
                                                     value="<?php echo e(@$patient->pin_no); ?>" required>
                                                 <label for="pin_no">Pin No.<span class="text-danger">*</span></label>
->>>>>>> b99e1d023c371500f61b068d5f3a8735506e1fce
                                                 <small class="text-danger"><?php echo e($errors->first('pin_no')); ?></small>
                                             </div>
                                         </div>
@@ -346,16 +324,11 @@ unset($__errorArgs, $__bag); ?>
                                             </div>
 
                                             <div class="form-group col-md-2 addpatientdesignpin">
-<<<<<<< HEAD
-                                                <label for="country_local">Country <span class="text-danger">*</span></label>
-                                                <select name="country_local" class="form-control select2-show-search" id="country_local" onchange="getLocalCountry(this.value,<?php echo e($patient->state); ?> , <?php echo e($patient->district); ?>)" onchange="showDetails(this.value)">
-=======
                                                 <label for="country_local">Country <span
                                                         class="text-danger">*</span></label>
                                                 <select name="country_local" class="form-control select2-show-search"
                                                     id="country_local"
                                                     onchange="getLocalCountry(this.value,<?php echo e($patient->state); ?> , <?php echo e($patient->district); ?>)">
->>>>>>> b99e1d023c371500f61b068d5f3a8735506e1fce
                                                     <option value="">Select Country... </option>
                                                     <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <option value="<?php echo e($item->id); ?>" <?php echo e(@$item->id ==
@@ -365,22 +338,6 @@ unset($__errorArgs, $__bag); ?>
 
                                             </div>
 
-<<<<<<< HEAD
-
-                                              <div class="form-group col-md-2 addpatientdesignpin">
-                                               <label for="state_local">State <span class="text-danger">*</span></label>
-                                               <select name="state_local" class="form-control select2-show-search" id="state_local" onchange="getLocalDistricts(this.value,<?php echo e($patient->district); ?>)">
-                                               <option value="">Select State...</option>
-                                                </select>
-                                                <small class="text-danger"><?php echo e($errors->first('state_local')); ?></small>
-                                                </div>
-
-
-                                            <div class="form-group col-md-2 addpatientdesignpin">
-                                                <label for="district_local">District <span class="text-danger">*</span></label>
-                                                <select name="district_local" class="form-control select2-show-search" id="district_local">
-                                                 <option value="">Select District...</option>
-=======
 
                                             <div class="form-group col-md-2 addpatientdesignpin">
                                                 <label for="state_local">State <span
@@ -400,7 +357,6 @@ unset($__errorArgs, $__bag); ?>
                                                 <select name="district_local" class="form-control select2-show-search"
                                                     id="district_local">
                                                     <option value="">Select District...</option>
->>>>>>> b99e1d023c371500f61b068d5f3a8735506e1fce
                                                 </select>
 
                                             </div>
@@ -437,47 +393,16 @@ unset($__errorArgs, $__bag); ?>
                                             </div>
 
                                             <div class="form-group col-md-5 addpatientdesign d-inline-block">
-<<<<<<< HEAD
-
-                                                <input type="email"  value="<?php echo e($patient->identification_number); ?>"
-                                                id="identification_number" name="identification_number"
-                                                >
-                                            <label for="identification_number">National Identification Number<span
-                                                    class="text-danger">*</span></label>
-                                                <small class="text-danger"><?php echo e($errors->first('identification_number')); ?></small>
-=======
                                                 <input type="text" value="<?php echo e($patient->identification_number); ?>"
                                                     id="identification_number" name="identification_number">
                                                 <label for="identification_number">National Identification Number
                                                 </label>
->>>>>>> b99e1d023c371500f61b068d5f3a8735506e1fce
                                             </div>
                                         </div>
 
                                         <!-- </div> -->
                                     </div>
                                 </div>
-<<<<<<< HEAD
-
-
-                                <div class="card-body border-top hospital_allcardbodydesign ">
-                                    <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Select Type</h5>
-                                    <div class="main-profile-contact-list ">
-                                        <div class="form-group col-md-6 addpatientdesigntype">
-                                            <label for="type"> <SPAN style="color:blue;font-weight: 600;">TYPE</SPAN> </label>
-                                            <select name="type" class="form-control select2-show-search" id="type">
-                                                <option value="" <?php if(isset($type)): ?> <?php echo e($type == '' ? 'selected' : ''); ?> <?php endif; ?>>Select One.....</option>
-                                                <option value="opd" <?php if(isset($type)): ?> <?php echo e($type == 'opd' ? 'selected' : ''); ?> <?php endif; ?>>OPD Registation</option>
-                                                <option value="emg" <?php if(isset($type)): ?> <?php echo e($type == 'emg' ? 'selected' : ''); ?> <?php endif; ?>>EMG Registation</option>
-                                            </select>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-
-=======
->>>>>>> b99e1d023c371500f61b068d5f3a8735506e1fce
                                 <div class="modal-footer justify-content-center">
                                     <button class="btn btn-indigo" type="submit">Save</button>
                                 </div>
@@ -594,7 +519,7 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <script>
-    function getage(dob_) {
+    function getagefromdate(dob_) {
         const dob = new Date(dob_);
         const nw = new Date();
 
@@ -681,7 +606,6 @@ unset($__errorArgs, $__bag); ?>
 
 <script>
     function getLocalCountry(local_country_id, local_state_id, local_district_id,identification_name=null) {
-        alert(local_country_id);
         $('#state_local').val('');
         $("#state_local").html("<option value='l'>Select... </option>");
         $.ajax({
@@ -739,37 +663,6 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <script>
-<<<<<<< HEAD
-    function localAddress() {
-        if (document.getElementById("checkboxforaddress").checked) {
-            var address = $('#address').val();
-            // var country = $('#country').val();
-            // var state = $('#state').val();
-            // var district = $('#district').val();
-            var pin_no = $('#pin_no').val();
-
-            $('#local_address').val(address);
-            // $('#country_local').val(country);
-            // $('#state_local').val(state);
-            // $('#district_local').val(district);
-            $('#local_pin_no').val(pin_no);
-        } else {
-            $('#local_address').val(' ');
-            // $('#country_local').val(' ');
-            // $('#state_local').val(' ');
-            // $('#district_local').val(' ');
-            $('#local_pin_no').val(' ');
-        }
-    }
-</script>
-
-<script>
-
-</script>
-
-<?php $__env->stopSection(); ?>
-
-=======
     function same_as_address_localaddress() {
             if (document.getElementById("vjrvervre").checked) {;
                 $('#same_address').attr('style','display:none',true);
@@ -782,5 +675,4 @@ unset($__errorArgs, $__bag); ?>
 
 
 <?php $__env->stopSection(); ?>
->>>>>>> b99e1d023c371500f61b068d5f3a8735506e1fce
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/patient/edit-patient.blade.php ENDPATH**/ ?>

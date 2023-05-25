@@ -8405,15 +8405,20 @@ body.fixed-header .header {
   padding: 1.25rem 0; }
 
 footer.footer {
-  background: #fff;
+  background:#fff ;
   font-size: 0.875rem;
   border-top: 0;
   padding: 1.25rem 0;
   box-shadow: 16px 0px 16px rgba(24, 23, 38, 0.06);
   border-top: 1px solid #ebecf1;
   display: block;
-  margin-top: auto; }
+  margin-top: auto;
+   color: #000;
+}
+.footer-text{
 
+
+}
 .footer .social {
   margin: 0 auto; }
   .footer .social ul li {
@@ -26136,7 +26141,7 @@ margin: 15px 0px 0px 0px;
 }
 .newuserchange
 {
-margin: 23px 0px 0px 0px;
+margin: 29px 0px 0px 0px;
 }
 .Heading
 {
@@ -26727,10 +26732,51 @@ top: -29px;
   margin: 39px 0px 0px 0px;
 }
 /* ---------------------------------------------------- */
-
-
-
-
+.useraddd{
+    margin: 10px 0px 0px 0px;
+}
+.useradddone{
+    margin: 5px 0px 0px 0px;
+}
+.useradddtwo{
+    margin: 27px 0px 0px 0px;
+}
+.useraddthree{
+    margin: 40px 0px 0px 0px;
+}
+.useradddtwoo{
+    margin: 33px 0px 0px 0px;
+}
+.newuserlisttchangee{
+    margin: 32px 0px 0px 0px;
+}
+.newuserlisttfour{
+    margin: 21px 0px 0px 0px;
+}
+.editmedicineadd{
+    margin: 30px 0px 0px 0px;
+}
+.editmediadd{
+    margin: 10px 0px 0px 0px;
+}
+.editmediaddtwo{
+    margin: 5px 0px 0px 0px;
+}
+.editmedi{
+    margin: 20px 0px 0px 0px;
+}
+.addrequistiondate{
+    margin: 37px 0px 0px 0px;
+}
+.grncreateadd{
+    margin: 8px 0px 0px 0px;
+}
+.grnnewadd{
+    margin: 23px 0px 0px 0px;
+}
+.grneditadd{
+    margin: 27px 0px 10px 0px;
+}
 /* ---------------------------------------------------------- */
 
 /* ---------------------------------------------------------- */
@@ -26943,8 +26989,8 @@ font-size: 15px;
 /* ------------------------------------------ */
 /* ------------------------------------------ */
  .piebox{
- margin: -9px 81px 0px 0px;
-left: 12%;
+ margin: -9px 0px 0px 0px;
+left: %;
 
 padding: 10px 10px;
 border-radius: 2%;
@@ -26954,7 +27000,7 @@ border-radius: 2%;
     box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22); */
 
 width: 100%;
-padding: 10px 10px 10px 23px;
+padding: 10px 10px 10px 22px;
 border-radius: 2%;
 }
 .graph {
@@ -27064,7 +27110,7 @@ border-radius: 2%;
     }
     .piebox {
         margin: 0px 0px 0px 0px;
-        left: 1%;
+        left: %;
     }
     .bar-graph{
         overflow-x: scroll;

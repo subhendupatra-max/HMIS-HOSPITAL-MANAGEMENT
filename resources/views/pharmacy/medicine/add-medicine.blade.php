@@ -9,7 +9,7 @@
             <form action="{{ route('save-medicine-details') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmediadd">
                         {{-- <label for="medicine_name" class="form-label">Medicine Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="medicine_name" name="medicine_name" value="{{ old('medicine_name') }}" placeholder="Enter Medicine Number" required> --}}
                         <input type="text" id="medicine_name" name="medicine_name" value="{{ old('medicine_name') }}" required />
@@ -19,23 +19,23 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
-                        {{-- <label for="medicine_catagory" class="form-label">Medicine Category <span class="text-danger">*</span></label> --}}
-                        <select class="form-control select2-show-search select2-hidden-accessible" value="{{ old('medicine_catagory') }}" name="medicine_catagory" id="medicine_catagory" required>
-                            <optgroup>
+                    <div class="form-group col-md-3 editmediaddtwo">
+                         <label for="medicine_catagory">Medicine Category <span class="text-danger">*</span></label>
+                        <select class="form-control select2-show-search " value="{{ old('medicine_catagory') }}" name="medicine_catagory" id="medicine_catagory" required>
+
                                 <option value=" ">Select Medicine Catagory<span class="text-danger">*</span>
                                 </option>
                                 @foreach ($medicine_catagory as $item)
                                 <option value="{{ $item->id }}">{{ $item->medicine_catagory_name }}</option>
                                 @endforeach
-                            </optgroup>
+
                         </select>
                         @error('medicine_catagory')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmediadd">
                         {{-- <label for="medicine_company" class="form-label">Medicine Company </label>
                         <input type="text" class="form-control" id="medicine_company" name="medicine_company" value="{{ old('medicine_company') }}" placeholder="Enter Medicine Company "> --}}
                         <input type="text" id="medicine_company" name="medicine_company" value="{{ old('medicine_company') }}" required />
@@ -45,7 +45,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmediadd">
                         {{-- <label for="medicine_composition" class="form-label">Medicine Composition </label>
                         <input type="text" class="form-control" id="medicine_composition" name="medicine_composition" value="{{ old('medicine_composition') }}" placeholder="Enter Medicine Composition"> --}}
                         <input type="text" id="medicine_composition" name="medicine_composition" value="{{ old('medicine_composition') }}" required />
@@ -55,7 +55,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmedicineadd">
                         {{-- <label for="medicine_group" class="form-label">Medicine Group </label>
                         <input type="text" class="form-control" id="medicine_group" name="medicine_group" value="{{ old('medicine_group') }}" placeholder="Enter Medicine Group"> --}}
                         <input type="text" id="medicine_group" name="medicine_group" value="{{ old('medicine_group') }}" required />
@@ -65,7 +65,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmedicineadd">
                         {{-- <label for="unit" class="form-label">Unit <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="unit" name="unit" value="{{ old('unit') }}" placeholder="Enter Unit "> --}}
                         <input type="text" id="unit" name="unit" value="{{ old('unit') }}" required />
@@ -75,7 +75,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmedicineadd">
                         {{-- <label for="min_level" class="form-label">Low Level <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="min_level" name="min_level" value="{{ old('min_level') }}" placeholder="Enter Min Level"> --}}
                         <input type="text" id="min_level" name="min_level" value="{{ old('min_level') }}" required />
@@ -93,7 +93,7 @@
                     @enderror
                 </div> --}}
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-3 editmedicineadd">
                     {{-- <label for="tax" class="form-label">Tax</label>
                         <input type="text" class="form-control" id="tax" name="tax" value="{{ old('tax') }}" placeholder="Enter Tax"> --}}
                     <input type="text" id="tax" name="tax" value="{{ old('tax') }}" required />
@@ -104,7 +104,7 @@
                 </div>
 
 
-                <div class="form-group col-md-3 newuserrchange ">
+                <div class="form-group col-md-3 editmedicineadd ">
                     {{-- <label for="note" class="form-label"> Note </label>
                         <textarea name="note" class="form-control"> </textarea> --}}
                     <input type="text" id="note" name="note" required />
@@ -114,11 +114,11 @@
                     @enderror
                 </div>
 
-                <div class="form-group col-md-6">
-                    {{-- <label for="medicine_photo" class="form-label">Medicine Photo </label>
-                        <input type="file" id="medicine_photo" name="medicine_photo" value="{{ old('medicine_photo') }}"> --}}
-                    <h6 class="Heading">Medicine Photo</h6>
-                    <input type="file" id="medicine_photo" name="medicine_photo" value="{{ old('medicine_photo') }}" required />
+                <div class="form-group col-md-6 editmedi ">
+                     <label for="medicine_photo">Medicine Photo </label>
+                        <input type="file" id="medicine_photo" name="medicine_photo" value="{{ old('medicine_photo') }}">
+
+
                     {{-- <label for="medicine_photo">Medicine Photo</label>  --}}
                     @error('medicine_photo')
                     <span class="text-danger">{{ $message }}</span>

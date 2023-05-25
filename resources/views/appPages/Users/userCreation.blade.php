@@ -21,20 +21,24 @@
                     <div class="row">
                         <!-- //password  -->
 
+                        <div class="card-body hospital_allcardbodydesign">
+                            <h5 class="font-weight-bold"><i class="fas fa-user"></i> Personal Information</h5>
+                            <div class="main-profile-bio mb-0">
+                                <div class="row">
+                           <div class="col-md-2 useraddd">
 
-                        <div class="col-md-2">
                             {{-- <label class="form-label">Employee Id <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="employee_id"  value="{{old('employee_id')}}" name="employee_id" placeholder="Employee Id" > --}}
-                            <input type="text" id="employee_id" value="{{ old('employee_id') }}" name="employee_id" required="">
+                            <input type="text" id="employee_id" value="{{ old('employee_id') }}" name="employee_id">
                             <label for="employee_id"> Employee Id <span class="text-danger">*</span></label>
                             @error('employee_id')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="col-md-2">
-                            {{-- <label class="form-label">Role <span class="text-danger">*</span></label>  --}}
-                            <select class="form-control select2-show-search select2-hidden-accessible" value="{{ old('role') }}" tabindex="-1" aria-hidden="true" name="role" id="role">
+                        <div class="col-md-2 useradddone">
+                             <label>Role <span class="text-danger">*</span></label>
+                            <select class="form-control select2-show-search " value="{{ old('role') }}" tabindex="-1" aria-hidden="true" name="role" id="role">
                                 <optgroup>
                                     @foreach ($all_role as $item)
                                     <option value="{{ $item->name }}">{{ $item->name }}</option>
@@ -46,7 +50,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 useraddd">
                             <input type="text" id="designation" value="{{ old('designation') }}" name="designation" >
                             <label for="designation"> Designation </label>
                             @error('designation')
@@ -54,7 +58,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3 useradddone">
                             <label class="form-label">Department </label>
                             <select class="form-control select2-show-search" name="department" id="department">
                                 <option value="">Select Department</option>
@@ -67,7 +71,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3 useraddd">
                             <input type="text" id="specialist" value="{{ old('specialist') }}" name="specialist">
                             <label for="specialist"> Specialist </label>
                             @error('specialist')
@@ -75,7 +79,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserlistchange">
+                        <div class="col-md-3 useradddtwo">
                             <input type="text" name="first_name" value="{{ old('first_name') }}" id="first_name" required="">
                             <label for="first_name"> First Name <span class="text-danger">*</span></label>
                             @error('first_name')
@@ -83,7 +87,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserlistchange">
+                        <div class="col-md-3 useradddtwo">
                             <input type="text" name="last_name" value="{{ old('last_name') }}" id="last_name" required="">
                             <label for="last_name"> Last Name <span class="text-danger">*</span></label>
                             @error('last_name')
@@ -91,7 +95,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 useradddtwo ">
                             <input type="text" name="father_name" value="{{ old('father_name') }}" id="father_name">
                             <label for="father_name"> Father Name</label>
                             @error('father_name')
@@ -99,15 +103,15 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 useradddtwo ">
                             <input type="text" name="mother_name" value="{{ old('mother_name') }}" id="mother_name">
                             <label for="mother_name"> Mother Name</label>
                             @error('mother_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-3 newuserchange">
-                            {{-- <label class="form-label">Gender <span class="text-danger">*</span></label>  --}}
+                        <div class="col-md-2 newuserchange">
+                             <label >Gender <span class="text-danger">*</span></label>
                             <select name="gender" class="form-control" id="gender" value="{{ old('gender') }}">
                                 <option value="">Gender <span class="text-danger">*</span> </option>
                                 @foreach (Config::get('static.gender') as $lang => $genders)
@@ -119,8 +123,8 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3 newuserchange">
-                            {{-- <label class="form-label">Metrial Status </label>  --}}
+                        <div class="col-md-2 newuserchange">
+                         <label>Metrial Status </label>
                             <select name="marital_status" class="form-control" id="marital_status" value="{{ old('marital_status') }}">
                                 <option value="">Metrial Status <span class="text-danger">*</span> </option>
                                 @foreach (Config::get('static.marital_status') as $lang => $marital)
@@ -132,9 +136,9 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3 newuserchange">
-                            {{-- <label for="blood_group" class="form-label">Blood Group <span
-                                        class="text-danger">*</span></label>  --}}
+                        <div class="form-group col-md-2 newuserchange">
+                             <label for="blood_group" >Blood Group <span
+                                        class="text-danger">*</span></label>
                             <select name="blood_group" class="form-control" id="blood_group" value="{{ old('blood_group') }}">
                                 <option value="">Blood Group<span class="text-danger">*</span> </option>
                                 @foreach (Config::get('static.blood_groups') as $lang => $blood_group)
@@ -143,25 +147,25 @@
                             </select>
                         </div>
 
-                        <div class="col-md-3">
-                            {{-- <label class="form-label">Date Of Birth <span class="text-danger">*</span></label>  --}}
-                            <h6 class="Heading">Date Of Birth <span class="text-danger">*</span></h6>
+                        <div class="col-md-2 useraddthree">
+                             <label >Date Of Birth <span class="text-danger">*</span></label>
+
                             <input type="date" name="date_of_birth" id="date_of_birth">
                             @error('date_of_birth')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2 useraddthree">
 
-                            <h6 class="Heading">Date Of Joining<span class="text-danger">*</span></h6>
+                            <label >Date Of joining <span class="text-danger">*</span></label>
                             <input type="date" name="date_of_joining" id="date_of_joining" value="{{ old('date_of_joining') }}">
                             @error('date_of_joining')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="col-md-3 newuserlisttchange">
+                        <div class="col-md-2 useradddtwoo">
 
                             <input type="number" name="phone_no" id="phone_no" value="{{ old('phone_no') }}" required="">
                             <label for="phone_no"> Phone</label>
@@ -170,7 +174,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3  newuserlisttchange">
+                        <div class="col-md-3  newuserlisttchangee">
 
                             <input type="number" name="whatsapp_no" id="whatsapp_no" value="{{ old('whatsapp_no') }}">
                             <label for="whatsapp_no">Whatsapp No </label>
@@ -179,18 +183,18 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3 newuserlisttchange ">
+                        <div class="col-md-3 newuserlisttchangee ">
 
-                            {{-- <input type="number" name="emg_phone_no" id="emg_phone_no"
+                         <input type="number" name="emg_phone_no" id="emg_phone_no"
                                     value="{{ old('emg_phone_no') }}" required="">
-                            <label for="whatsapp_no">Emergency Phone No. </label> --}}
+                            <label for="whatsapp_no">Emergency Phone No. </label>
 
                             @error('emg_phone_no')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
 
-                        <div class="col-md-3 newuserrchange ">
+                        <div class="col-md-3 newuserlisttchangee ">
 
                             <input type="email" name="email" id="email" value="{{ old('email') }}" required="">
                             <label for="email">Email <span class="text-danger">*</span></label>
@@ -199,16 +203,22 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3">
-                            {{-- <label class="form-label">Photo (512 x 512)</label>
-                                <input type="file" onchange="readURL(this);" name="profile_image" id="profile_image">  --}}
-                            <h6 class="Heading">Photo (512 x 512)</h6>
-                            <input type="file" onchange="readURL(this);" name="profile_image" id="profile_image">
+                        <div class="col-md-3 newuserlisttfour">
+                            <label class="form-label">Photo (512 x 512)</label>
+                                <input type="file" onchange="readURL(this);" name="profile_image" id="profile_image">
+
+
                             @error('profile_image')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body hospital_allcardbodydesign">
+                            <h5 class="font-weight-bold"><i class="fas fa-map-marker-alt"></i> Address</h5>
+                            <div class="main-profile-bio mb-0">
+                                <div class="row">
                         <div class="col-md-6 newuserchange ">
 
                             <input type="text" name="current_address" id="current_address" required="">
@@ -226,8 +236,14 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
-                        <div class="col-md-3 newuserchange ">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body hospital_allcardbodydesign">
+                            <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Others</h5>
+                            <div class="main-profile-bio mb-0">
+                                <div class="row">
+                        <div class="col-md-2 newuserchange ">
 
                             <input type="text" name="qualification" id="qualification">
                             <label for="qualification">Qualification</label>
@@ -245,7 +261,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserchange ">
+                        <div class="col-md-3 newuserchange ">
 
                             <input type="text" name="specialization" id="specialization" >
                             <label for="specialization">Specialization</label>
@@ -254,7 +270,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 newuserchange ">
+                        <div class="col-md-4 newuserchange ">
 
                             <input type="text" name="note" id="note">
                             <label for="note">Note</label>
@@ -262,6 +278,13 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body hospital_allcardbodydesign">
+                            <h5 class="font-weight-bold"><i class="fas fa-tasks"></i>Identification Details</h5>
+                            <div class="main-profile-bio mb-0">
+                                <div class="row">
 
                         <div class="col-md-4 newuserchange ">
 
@@ -292,8 +315,9 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                                </div>
+                            </div>
 
-                    </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-9">

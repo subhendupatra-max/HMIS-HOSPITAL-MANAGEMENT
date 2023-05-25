@@ -13,7 +13,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-4">
-                            {{-- <label class="requisition_header">Purchase Order <span class="text-danger">*</span></label> --}}
+                            <label class="requisition_header">Purchase Order <span class="text-danger">*</span></label>
                             <select class="form-control select2-show-search" onchange="findPOdetails(this.value)" name="po_no" id="po">
                                 <option value="">Select One<span class="text-danger">*</span></option>
                                 @if(!empty($po_list))
@@ -24,7 +24,7 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 grncreateadd">
                             <label class="requisition_header1">Medicine Rec. Date<span class="text-danger">*</span></label>
                             <input type="date" name="medicine_rec_date" class="form-control">
 
@@ -32,20 +32,20 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grncreateadd">
                             <label class="requisition_header1">Bill Rec. Date</label>
                             <input type="date" name="bill_rec_date" class="form-control">
                             @error('bill_rec_date')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-4 newadd">
+                        <div class="col-md-4 grnnewadd">
                             {{-- <label class="requisition_header">Challan No.</label>
                             <input type="text" name="challan_no" class="form-control"> --}}
                             <input type="text" id="challan_no"  name="challan_no" required="">
                             <label for="Challan No."> Challan No.</label>
                         </div>
-                        <div class="col-md-4 newadd">
+                        <div class="col-md-4 grnnewadd">
                             {{-- <label class="requisition_header">Challan Date (DD-MM-YYYY)</label>
                             <input type="text" name="challan_date" class="form-control"> --}}
                             <input type="text" id="challan_date"  name="challan_date" required="">
@@ -57,13 +57,13 @@
             </div> --}}
 
 
-                        <div class="col-md-4 newadd">
+                        <div class="col-md-4 grnnewadd">
                             {{-- <label class="requisition_header">Invoice No.</label>
                             <input type="text" name="invoice_no" class="form-control"> --}}
                             <input type="text" id="invoice_no"  name="challan_date" required="">
                             <label for="invoice_no">Invoice No. </label>
                         </div>
-                        <div class="col-md-4 newadd">
+                        <div class="col-md-4 grnnewadd">
                             {{-- <label class="requisition_header">Invoice Date (DD-MM-YYYY)</label>
                             <input type="text" name="invoice_date" class="form-control"> --}}
                             <input type="text" id="invoice_date"  name="invoice_date" required="">

@@ -13,7 +13,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-4">
-                            <input type="hidden" value="{{$grn_list->grn_id}}" name="grn_id">
+
                             <label class="requisition_header">Purchase Order <span class="text-danger">*</span></label>
                             <select class="form-control select2-show-search" onchange="findPOdetails(this.value)" name="po_no" id="po">
                                 @if(!empty($po_list))
@@ -22,25 +22,25 @@
                             </select>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 grncreateadd">
                             <label class="requisition_header">Medicine Rec. Date<span class="text-danger">*</span></label>
                             <input type="date" name="medicine_rec_date" class="form-control" value="{{@$grn_list->medicine_rec_date}}">
                             @error('medicine_rec_date')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grncreateadd">
                             <label class="requisition_header">Bill Rec. Date</label>
                             <input type="date" name="bill_rec_date" class="form-control" value="{{@$grn_list->bill_rec_date}}">
                             @error('bill_rec_date')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grneditadd">
                             <label class="requisition_header">Challan No.</label>
                             <input type="text" name="challan_no" class="form-control" value="{{@$grn_list->challan_no}}">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grneditadd">
                             <label class="requisition_header">Challan Date (DD-MM-YYYY)</label>
                             <input type="text" name="challan_date" class="form-control" value="{{@$grn_list->challan_date}}">
                         </div>
@@ -50,11 +50,11 @@
             </div> --}}
 
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 grneditadd">
                             <label class="requisition_header">Invoice No.</label>
                             <input type="text" name="invoice_no" class="form-control" value="{{@$grn_list->invoice_no}}">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 grneditadd">
                             <label class="requisition_header">Invoice Date (DD-MM-YYYY)</label>
                             <input type="text" name="invoice_date" class="form-control" value="{{@$grn_list->invoice_date}}">
                         </div>
