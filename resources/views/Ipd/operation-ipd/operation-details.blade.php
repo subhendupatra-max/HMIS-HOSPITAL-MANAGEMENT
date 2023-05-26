@@ -23,6 +23,9 @@
 
             </div>
         </div>
+        <div class="card-header">
+            @include('ipd.include.patient-name')
+        </div>
         <div class="card-body p-0">
             <div class="card-body border-top">
                 <h5 class="font-weight-bold">Operation Booking Details </h5>

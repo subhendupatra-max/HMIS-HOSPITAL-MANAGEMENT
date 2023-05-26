@@ -50,5 +50,9 @@ class IpdDetails extends Model
     {
         return $this->belongsTo(PatientBedHistory::class, 'id', 'ipd_id');
     }
+    public function tpa_details()
+    {
+        return $this->belongsTo(TpaManagement::class, 'tpa_organization', 'id');
+    }
    
 }

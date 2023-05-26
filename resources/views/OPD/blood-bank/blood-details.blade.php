@@ -5,8 +5,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                <h4 class="pro-user-username mb-3 font-weight-bold"> {{
-                        @$patient_details_information->first_name }} {{ @$patient_details_information->middle_name }} {{ @$patient_details_information->last_name }} ({{ @$patient_details_information->patient_prefix }})<i class="fa fa-check-circle text-success"></i></h4>
+                    <h4 class="pro-user-username mb-3 font-weight-bold"> Blood Issue And Components Issue Details </h4>
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
@@ -20,7 +19,9 @@
                 </div>
             </div>
         </div>
-
+        <div class="card-header">
+            @include('OPD.include.patient-name')
+        </div>
         @include('message.notification')
 
         <div class="card-body">

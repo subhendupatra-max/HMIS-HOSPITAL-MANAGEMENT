@@ -12,11 +12,17 @@
                         @can('add timeline list emg')
                         <a href="{{ route('add-timeline-lisitng-in-emg',['id' => base64_encode($emg_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Timeline </a>
                         @endcan
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right" style="">
+                            @include('emg.include.menu')
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="card-header">
+            @include('emg.include.patient-name')
+        </div>
         <div class="card-body">
             <div class="col-xl-12 col-lg-12 col-md-12">
                 <div class="latest-timeline scrollbar3" id="scrollbar3">
@@ -43,4 +49,4 @@
         </div>
     </div>
 </div>
-    @endsection
+@endsection

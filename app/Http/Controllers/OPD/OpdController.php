@@ -46,6 +46,7 @@ use App\Models\OperationBooking;
 use App\Models\OperationType;
 use App\Models\OperationCatagory;
 use App\Models\Operation;
+use App\Models\Diagonasis;
 use PDF;
 use App\Models\BloodComponentIssue;
 
@@ -450,8 +451,9 @@ class OpdController extends Controller
         $patient_source_id = $visit_details->opd_prefix . '' . $visit_details->id;
         $case_id = $visit_details->case_id;
         $patient_source = 'OPD';
+        $icd_code  = Diagonasis::all();
 
-        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units'));
+        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units','icd_code'));
     }
 
     public function get_charge_category(Request $request)

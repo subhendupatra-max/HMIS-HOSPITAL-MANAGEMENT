@@ -599,7 +599,7 @@ $login_details = DB::table('users')
                                 src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>Bed
                     </a>
                 </li>
-
+          
                 @if (auth()->user()->can('Report'))
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -624,7 +624,7 @@ $login_details = DB::table('users')
                     </div>
                 </li>
                 @endif
-
+             
                 </ul>
 
 

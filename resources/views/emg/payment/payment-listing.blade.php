@@ -9,14 +9,20 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        @can('opd payment')
+                        @can('emg payment')
                         <a href="{{ route('add-payment-in-emg',['id'=> base64_encode($emg_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Payment </a>
                         @endcan
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right" style="">
+                            @include('emg.include.menu')
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="card-header">
+            @include('emg.include.patient-name')
+        </div>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -62,4 +68,4 @@
         </div>
     </div>
 </div>
-    @endsection
+@endsection

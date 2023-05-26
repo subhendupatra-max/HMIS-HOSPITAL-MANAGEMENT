@@ -75,18 +75,15 @@ unset($__errorArgs, $__bag); ?>
                                             <input type="hidden" name="old_or_new[]" value="old" />
                                             <input type="hidden" name="charge_id_old[]" value="<?php echo e($value->id); ?>" />
                                             <td>
-                                                
                                                 <select class="form-control select2-show-search" name="charge_set[]" id="charge_set<?php echo e($key); ?>">
                                                     <option value="<?php echo e(@$value->charge_set); ?> " ><?php echo e(@$value->charge_set); ?> </option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <select class="form-control select2-show-search" name="charge_type[]" id="charge_type<?php echo e($key); ?>" >
-
                                                         <option value="<?php echo e($value->charge_type); ?>" > <?php echo e($value->charge_type); ?>
 
                                                         </option>
-                                                 
                                                 </select>
                                             </td>
                                             <td>
@@ -176,16 +173,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="col-md-6">
                                             <label class="form-label">Payment Amount </label>
                                             <input type="text" name="payment_amount" class="form-control" />
-                                            <?php $__errorArgs = ['payment_amount'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="text-danger"><?php echo e($message); ?></span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                 
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">Payment Mode</label>
@@ -197,16 +185,7 @@ unset($__errorArgs, $__bag); ?>
                                                     </option>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
-                                            <?php $__errorArgs = ['payment_mode'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="text-danger"><?php echo e($message); ?></span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                
                                         </div>
                                     </div>
                                 </div>
@@ -303,7 +282,7 @@ unset($__errorArgs, $__bag); ?>
         function addNewrow() {
             var html = `<tr id="row${i}">
                         <input type="hidden" name="old_or_new[]" value="new" />
-                        <input type="hidden" name="charge_id[]" value="" />
+                        <input type="hidden" name="charge_id_old[]" value="" />
                             <td>
                                 <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
                                     <option value="" disable >Select One..</option>

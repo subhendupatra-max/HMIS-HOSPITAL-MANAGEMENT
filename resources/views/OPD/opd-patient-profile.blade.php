@@ -15,9 +15,16 @@
                         <div class="dropdown-menu dropdown-menu-right" style="">
                             @include('OPD.include.menu')
                         </div>
+
+
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card-header">
+
+            @include('OPD.include.patient-name')
+
         </div>
         <div class="card-body p-0">
             <div class="row no-gutters">
@@ -25,15 +32,15 @@
                 <div class="col-lg-4 col-xl-4 border-right">
 
                     {{-- ================== patient name ====================== --}}
-                    <div class="options px-5 pt-2  border-bottom pb-1">
-                        <div class="row">
+                    <!-- <div class="options px-5 pt-2  border-bottom pb-1"> -->
+                    <!-- <div class="row">
                             <div class="col-md-12 mb-2">
                                 <span class="profileHeding">{{ @$opd_patient_details->patient_details->first_name }}
                                     {{ @$opd_patient_details->patient_details->middle_name }}
                                     {{ @$opd_patient_details->patient_details->last_name }}({{ @$opd_patient_details->patient_details->patient_prefix }}{{ @$opd_patient_details->patient_details->id }})</span>
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
+                    <!-- </div> -->
                     {{-- ================== patient name ====================== --}}
 
                     {{-- ================== patient information ====================== --}}

@@ -12,6 +12,7 @@ use App\Models\Bed;
 use App\Models\DeathReport;
 use App\Models\PatientBedHistory;
 use App\Models\User;
+use App\Models\AllHeader;
 use Illuminate\Support\Facades\DB;
 
 class PatientDischargeController extends Controller
@@ -77,9 +78,6 @@ class PatientDischargeController extends Controller
             $ipd_details->complaiints_duraiton                          = $request->complaiints_duraiton;
             $ipd_details->presenting_illness                            = $request->presenting_illness;
             $ipd_details->physical_examinaiton_at_admission             = $request->physical_examinaiton_at_admission;
-            $ipd_details->history_alcoholism                            = $request->history_alcoholism;
-            $ipd_details->medical_surgical_history                      = $request->medical_surgical_history;
-            $ipd_details->family_history_diagnosis                      = $request->family_history_diagnosis;
             $ipd_details->summary_inves_during_hos                      = $request->summary_inves_during_hos;
             $ipd_details->course_complications                          = $request->course_complications;
             $ipd_details->dischage_advice                               = $request->dischage_advice;
@@ -165,9 +163,6 @@ class PatientDischargeController extends Controller
             $ipd_details->complaiints_duraiton                          = $request->complaiints_duraiton;
             $ipd_details->presenting_illness                            = $request->presenting_illness;
             $ipd_details->physical_examinaiton_at_admission             = $request->physical_examinaiton_at_admission;
-            $ipd_details->history_alcoholism                            = $request->history_alcoholism;
-            $ipd_details->medical_surgical_history                      = $request->medical_surgical_history;
-            $ipd_details->family_history_diagnosis                      = $request->family_history_diagnosis;
             $ipd_details->summary_inves_during_hos                      = $request->summary_inves_during_hos;
             $ipd_details->course_complications                          = $request->course_complications;
             $ipd_details->dischage_advice                               = $request->dischage_advice;
@@ -205,8 +200,24 @@ class PatientDischargeController extends Controller
     {
         $ipd_id = base64_decode($ipd_id);
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
-        $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipd_details->id)->first();
-        dd($patient_discharge_details);
-        return view('ipd._print.discharged_patient', compact('patient_discharge_details'));
+        $patient_discharge_details =  DischargedPatient::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'ipd_details.appointment_date', 'ipd_details.ipd_prefix', 'ipd_details.id as ipd_id', 'patients.phone', 'patients.guardian_name', 'patients.year', 'patients.month', 'patients.day', 'patients.gender', 'ipd_details.patient_type', 'wards.ward_name as wardname', 'bed_units.bedUnit_name', 'departments.department_name', 'beds.bed_name', 'patients.address', 'states.name as state_name', 'districts.name as district_name', 'discharged_patients.dischage_advice', 'discharged_patients.course_complications', 'discharged_patients.summary_inves_during_hos', 'ipd_details.family_history_diagnosis', 'ipd_details.medical_surgical_history', 'ipd_details.history_alcoholism', 'discharged_patients.physical_examinaiton_at_admission', 'ipd_patient_physical_details.height', 'ipd_patient_physical_details.weight', 'ipd_patient_physical_details.pulse', 'ipd_patient_physical_details.bp', 'ipd_patient_physical_details.temperature', 'ipd_patient_physical_details.respiration', 'ipd_details.patient_source', 'ipd_details.patient_source_id', 'diagonases.diagonasis_name', 'discharged_patients.final_diagonsis_discharge', 'discharged_patients.diagonsis_admission_time', 'tpa_management.TPA_name', 'ipd_details.type_no')
+            ->where('discharged_patients.ipd_id', $ipd_details->id)
+            ->leftjoin('ipd_details', 'ipd_details.id', '=', 'discharged_patients.ipd_id')
+            ->leftjoin('patients', 'patients.id', '=', 'discharged_patients.patient_id')
+            ->leftjoin('ipd_patient_physical_details', 'ipd_patient_physical_details.ipd_id', '=', 'discharged_patients.ipd_id')
+            ->leftjoin('users', 'users.id', '=', 'ipd_details.cons_doctor')
+            ->leftjoin('wards', 'wards.id', '=', 'ipd_details.bed_ward_id')
+            ->leftjoin('bed_units', 'bed_units.id', '=', 'ipd_details.bed_unit_id')
+            ->leftjoin('departments', 'departments.id', '=', 'ipd_details.department_id')
+            ->leftjoin('beds', 'beds.id', '=', 'ipd_details.bed')
+            ->leftjoin('states', 'states.id', '=', 'patients.state')
+            ->leftjoin('districts', 'districts.id', '=', 'patients.district')
+            ->leftjoin('diagonases', 'diagonases.id', '=', 'discharged_patients.icd_code')
+            ->leftjoin('tpa_management', 'tpa_management.id', '=', 'ipd_details.tpa_organization')
+            ->first();
+
+        // dd($patient_discharge_details);
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+        return view('ipd._print.discharged_patient', compact('patient_discharge_details', 'header_image'));
     }
 }

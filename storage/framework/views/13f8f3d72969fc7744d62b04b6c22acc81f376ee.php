@@ -12,7 +12,7 @@
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                        <a href="<?php echo e(route('add-medicaiton-dose',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Medication</a>
+                        <a href="<?php echo e(route('add-medicaiton-dose',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-pills"></i> Add Medication</a>
                         <?php endif; ?>
 
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
@@ -24,12 +24,15 @@
             </div>
 
         </div>
+        <div class="card-header">
+            <?php echo $__env->make('ipd.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body ">
             <div class="row no-gutters">
                 <div class="col-md-12 mt-2">
                     <div class="table-responsive">
-                        <table class="table table-bordered text-nowrap" id="example1">
+                        <table class="table table-bordered text-nowrap" id="example">
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0">Sl. No</th>

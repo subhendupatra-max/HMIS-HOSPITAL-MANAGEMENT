@@ -11,7 +11,7 @@
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
                     
- 
+
                     <div class="options px-5  pb-3">
                         <div class="row">
                             <hr class="hr_line">
@@ -100,43 +100,39 @@
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
                                 <div class="form-group col-md-2 newaddappon">
-                                    <label for="date_of_birth">Date Of Birth <span
-                                            class="text-danger">*</span></label>
-                                    <input type="date" required class="form-control" id="date_of_birth"
-                                         name="date_of_birth"
-                                        onchange="getagefromdate(this.value)" value="<?php echo e(date('Y-m-d',strtotime($visit_details->all_patient_details->date_of_birth))); ?>"
-                                        required />
+                                    <label for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label>
+                                    <input type="date" required class="form-control" id="date_of_birth" name="date_of_birth" onchange="getagefromdate(this.value)" value="<?php echo e(date('Y-m-d',strtotime($visit_details->all_patient_details->date_of_birth))); ?>" required />
                                     <small class="text-danger"><?php echo e($errors->first('date_of_birth')); ?></small>
                                 </div>
 
                                 <div class="form-group col-md-4 ">
                                     <div class="row">
                                         <div class="col-lg-4 newdesignadd">
-                                            <input type="text" required  onkeyup="getage()" id="date_of_birth_year" value="<?php echo e($visit_details->all_patient_details->year); ?>" name="date_of_birth_year">
+                                            <input type="text" required onkeyup="getage()" id="date_of_birth_year" value="<?php echo e($visit_details->all_patient_details->year); ?>" name="date_of_birth_year">
                                             <label for="date_of_birth_year"> Year</label>
                                             <small class="text-danger"><?php echo e($errors->first('date_of_birth_year')); ?></small>
                                         </div>
 
                                         <div class="col-lg-4 newdesignadd">
-                                            <input type="text" required  onkeyup="getage()" id="date_of_birth_month" value="<?php echo e($visit_details->all_patient_details->month); ?>" name="date_of_birth_month">
+                                            <input type="text" required onkeyup="getage()" id="date_of_birth_month" value="<?php echo e($visit_details->all_patient_details->month); ?>" name="date_of_birth_month">
                                             <label for="date_of_birth_month"> Month</label>
                                             <small class="text-danger"><?php echo e($errors->first('date_of_birth_month')); ?></small>
 
                                         </div>
                                         <div class="col-lg-4 newdesignadd">
-                                            <input type="text" required onkeyup="getage()"  id="date_of_birth_day" value="<?php echo e($visit_details->all_patient_details->day); ?>"  name="date_of_birth_day">
+                                            <input type="text" required onkeyup="getage()" id="date_of_birth_day" value="<?php echo e($visit_details->all_patient_details->day); ?>" name="date_of_birth_day">
                                             <label for="date_of_birth_day"> Day</label>
                                             <small class="text-danger"><?php echo e($errors->first('date_of_birth_day')); ?></small>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-3 newdesignadd">
-                                    <input type="text" required  id="admitted_by" value="<?php echo e($visit_details->all_patient_details->local_guardian_name); ?>"  name="admitted_by">
+                                    <input type="text" required id="admitted_by" value="<?php echo e($visit_details->all_patient_details->local_guardian_name); ?>" name="admitted_by">
                                     <label for="admitted_by"> Admitted By</label>
                                     <small class="text-danger"><?php echo e($errors->first('admitted_by')); ?></small>
                                 </div>
                                 <div class="col-md-3 newdesignadd">
-                                    <input type="text" required  id="admitted_by_contact_no" value="<?php echo e($visit_details->all_patient_details->local_guardian_contact_no); ?>"  name="admitted_by_contact_no">
+                                    <input type="text" required id="admitted_by_contact_no" value="<?php echo e($visit_details->all_patient_details->local_guardian_contact_no); ?>" name="admitted_by_contact_no">
                                     <label for="admitted_by_contact_no"> Admitted By Contact No.</label>
                                     <small class="text-danger"><?php echo e($errors->first('admitted_by_contact_no')); ?></small>
                                 </div>
@@ -159,11 +155,9 @@ unset($__errorArgs, $__bag); ?>
                                     <label for="height">Admission Date <span class="text-danger">*</span></label>
                                     <?php if(auth()->user()->can('appointment date')): ?>
                                     
-                                    <input type="datetime-local" value="<?php echo e(old('appointment_date')); ?>"
-                                        id="appointment_date" name="appointment_date">
+                                    <input type="datetime-local" value="<?php echo e(old('appointment_date')); ?>" id="appointment_date" name="appointment_date">
                                     <?php else: ?>
-                                    <input type="datetime-local" value="<?php echo e(old('appointment_date')); ?>"
-                                        id="appointment_date" name="appointment_date">
+                                    <input type="datetime-local" value="<?php echo e(old('appointment_date')); ?>" id="appointment_date" name="appointment_date">
                                     <?php endif; ?>
 
                                     <?php $__errorArgs = ['appointment_date'];
@@ -186,8 +180,7 @@ unset($__errorArgs, $__bag); ?>
 
                                 <div class="col-md-4 ipd-registrationproadd">
                                     <label for="patient_type">Patient Type <span class="text-danger">*</span></label>
-                                    <select name="patient_type" onchange="getDetailsAccordingType(this.value)"
-                                        class="form-control select2-show-search" id="patient_type">
+                                    <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
                                         <option value="">Select</option>
                                         <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $patient_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($patient_type); ?>"> <?php echo e($patient_type); ?></option>
@@ -207,10 +200,8 @@ unset($__errorArgs, $__bag); ?>
 
                                 </div>
                                 <div class="col-md-4 frefesd ipd-registrationproadd" style="display:none">
-                                    <label for="tpa_organization">TPA Organization <span
-                                            class="text-danger">*</span></label>
-                                    <select name="tpa_organization" class="form-control select2-show-search"
-                                        id="tpa_organization">
+                                    <label for="tpa_organization">TPA Organization <span class="text-danger">*</span></label>
+                                    <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
                                         <option value="">Select</option>
                                         <?php $__currentLoopData = $tpa_management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tpaManagement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($tpaManagement->id); ?>">
@@ -221,10 +212,8 @@ unset($__errorArgs, $__bag); ?>
                                     </select>
                                 </div>
                                 <div class="col-md-4 frefesds ipd-registrationproadd" style="display:none">
-                                    <label for="type_no"><span id="lableName"></span><span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>"
-                                        id="type_no" />
+                                    <label for="type_no"><span id="lableName"></span><span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>" id="type_no" />
                                 </div>
                                 <div class="col-md-4 ipd-registrationproadd">
                                     <label for="reference">Reference</label>
@@ -239,8 +228,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="col-md-4 ipd-registrationproadd ">
                                     <label for="department">Department <span class="text-danger">*</span></label>
-                                    <select name="department" class="form-control select2-show-search" id="department"
-                                        onchange="getDoctor_ward(this.value)">
+                                    <select name="department" class="form-control select2-show-search" id="department" onchange="getDoctor_ward(this.value)">
                                         <option value="">Select</option>
                                         <?php $__currentLoopData = $departments; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $department): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($department->id); ?>">
@@ -263,8 +251,7 @@ unset($__errorArgs, $__bag); ?>
 
                                 <div class="col-md-4 ipd-registrationproadd">
                                     <label for="cons_doctor"> Doctor <span class="text-danger">*</span></label>
-                                    <select name="cons_doctor" class="form-control select2-show-search"
-                                        id="cons_doctor">
+                                    <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor">
                                         <option value="">Select..</option>
                                     </select>
                                     <?php $__errorArgs = ['cons_doctor'];
@@ -281,8 +268,7 @@ unset($__errorArgs, $__bag); ?>
 
                                 <div class="col-md-4 ipd-registrationproadd">
                                     <label for="ward"> Ward <span class="text-danger">*</span></label>
-                                    <select name="ward" onchange="getBed()" class="form-control select2-show-search"
-                                        id="bed_ward">
+                                    <select name="ward" onchange="getBed()" class="form-control select2-show-search" id="bed_ward">
                                         <option value="">Select..</option>
                                     </select>
                                     <?php $__errorArgs = ['ward'];
@@ -299,8 +285,7 @@ unset($__errorArgs, $__bag); ?>
 
                                 <div class="col-md-4 ipd-registrationproadd">
                                     <label for="unit"> Unit <span class="text-danger">*</span></label>
-                                    <select name="unit" onchange="getBed()" class="form-control select2-show-search"
-                                        id="unit">
+                                    <select name="unit" onchange="getBed()" class="form-control select2-show-search" id="unit">
                                         <option value="">Select..</option>
                                         <?php $__currentLoopData = $units; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $unit): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($unit->id); ?>"> <?php echo e($unit->bedUnit_name); ?>
@@ -338,6 +323,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
+                            <hr class="hr_line">
                             <div class="row">
                                 <div class="col-md-6 ipd-registrationproaddd">
                                     <input type="text" id="note" name="note">
@@ -347,16 +333,57 @@ unset($__errorArgs, $__bag); ?>
                                     <input type="text" id="any_known_allergies" name="any_known_allergies">
                                     <label for="any_known_allergies">Any Known Allergies</label>
                                 </div>
+
                             </div>
+
+                            <hr class="hr_line">
+                            <div class="row">
+                                <div class="col-md-6 ipd-registrationproadd">
+                                    <label for="icd_code" class="form-label">Final Diagnosis at the time of Admission </label>
+                                    <select name="icd_code_at_the_time_of_admission" class="form-control" id="icd_code_at_the_time_of_admission" required>
+                                        <option value="">Select...</option>
+                                        <?php $__currentLoopData = $icd_code; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $icd_codes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($icd_codes->id); ?>"> <?php echo e($icd_codes->diagonasis_name); ?>(<?php echo e($icd_codes->icd_code); ?>)
+                                        </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php $__errorArgs = ['icd_code_at_the_time_of_admission'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
+                                <div class="col-md-6 ipd-registrationproaddd">
+                                    <textarea class="form-control" id="history_alcoholism" name="history_alcoholism" value="<?php echo e(old('history_alcoholism')); ?> "></textarea>
+                                    <label for="history_alcoholism" class="form-label"> History of alcoholism, tobacco or substance abuse, if any</label>
+                                </div>
+                                <div class="col-md-6 ipd-registrationproaddd">
+                                    <textarea class="form-control" id="medical_surgical_history" name="medical_surgical_history" value="<?php echo e(old('medical_surgical_history')); ?> "></textarea>
+                                    <label for="medical_surgical_history" class="form-label"> Significant Past Medical and Surgical History, if any</label>
+                                </div>
+                                <div class="col-md-6 ipd-registrationproaddd">
+                                    <textarea class="form-control" id="family_history_diagnosis" name="family_history_diagnosis" value="<?php echo e(old('family_history_diagnosis')); ?> "></textarea>
+                                    <label for="family_history_diagnosis" class="form-label"> Family History if significant/ relevant to diagnosis or treatment</label>
+                                </div>
+
+
+                            </div>
+
+
+
                             <div class="mt-5 text-right">
 
-                                <button name="save" value="save" class="btn btn-primary" type="submit"><i
-                                        class="fa fa-file"></i> Save</button>
+                                <button name="save" value="save" class="btn btn-primary" type="submit"><i class="fa fa-file"></i> Save</button>
                             </div>
                         </div>
                     </form>
-                    </div>
-                
+                </div>
+
             </div>
         </div>
     </div>
@@ -520,15 +547,15 @@ unset($__errorArgs, $__bag); ?>
     }
 </script>
 <script>
-    function getage(){
-        var year =  $('#date_of_birth_year').val();
-        var month =  $('#date_of_birth_month').val();
-        var days =  $('#date_of_birth_day').val();
+    function getage() {
+        var year = $('#date_of_birth_year').val();
+        var month = $('#date_of_birth_month').val();
+        var days = $('#date_of_birth_day').val();
         // var duration = {years: 40, months: 2, days: 3}; // duration object
         var currentDate = new Date(); // current date object
-        var date = new Date(currentDate.getFullYear() - year, 
-                    currentDate.getMonth() - month, 
-                    currentDate.getDate() - days); // subtracting duration from current date
+        var date = new Date(currentDate.getFullYear() - year,
+            currentDate.getMonth() - month,
+            currentDate.getDate() - days); // subtracting duration from current date
         var yyyy = date.getFullYear().toString(); // extracting year
         var mm = (date.getMonth() + 1).toString().padStart(2, '0'); // extracting month and padding with 0 if needed
         var dd = date.getDate().toString().padStart(2, '0'); // extracting day and padding with 0 if needed
@@ -538,40 +565,40 @@ unset($__errorArgs, $__bag); ?>
 </script>
 <script>
     function getagefromdate(dob_) {
-            const dob = new Date(dob_);
-            const nw = new Date();
+        const dob = new Date(dob_);
+        const nw = new Date();
 
-            let dob_year = dob.getFullYear();
-            let dob_month = dob.getMonth() + 1;
-            let dob_day = dob.getDate();
+        let dob_year = dob.getFullYear();
+        let dob_month = dob.getMonth() + 1;
+        let dob_day = dob.getDate();
 
-            let nw_year = nw.getFullYear();
-            let nw_month = nw.getMonth() + 1;
-            let nw_day = nw.getDate();
+        let nw_year = nw.getFullYear();
+        let nw_month = nw.getMonth() + 1;
+        let nw_day = nw.getDate();
 
-            let dob_in_date = ((parseInt(dob_year) * parseInt(365)) + (parseInt(dob_month) * parseInt(30)) + parseInt(
-                dob_day));
-            let now_in_date = ((parseInt(nw_year) * parseInt(365)) + (parseInt(nw_month) * parseInt(30)) + parseInt(
-                nw_day));
-            if (now_in_date >= dob_in_date) {
-                let diffe_date = parseInt(parseInt(now_in_date) - parseInt(dob_in_date));
+        let dob_in_date = ((parseInt(dob_year) * parseInt(365)) + (parseInt(dob_month) * parseInt(30)) + parseInt(
+            dob_day));
+        let now_in_date = ((parseInt(nw_year) * parseInt(365)) + (parseInt(nw_month) * parseInt(30)) + parseInt(
+            nw_day));
+        if (now_in_date >= dob_in_date) {
+            let diffe_date = parseInt(parseInt(now_in_date) - parseInt(dob_in_date));
 
-                let year = parseInt(diffe_date / 365);
-                let remnder = diffe_date % 365;
+            let year = parseInt(diffe_date / 365);
+            let remnder = diffe_date % 365;
 
-                let month = parseInt(remnder / 30);
-                let days = remnder % 30;
+            let month = parseInt(remnder / 30);
+            let days = remnder % 30;
 
-                $('#date_of_birth_year').val(year);
-                $('#date_of_birth_month').val(month);
-                $('#date_of_birth_day').val(days);
-            } else {
+            $('#date_of_birth_year').val(year);
+            $('#date_of_birth_month').val(month);
+            $('#date_of_birth_day').val(days);
+        } else {
 
-                alert('Enter a Valid Date');
-                $('#date_of_birth').reset();
-            }
-
+            alert('Enter a Valid Date');
+            $('#date_of_birth').reset();
         }
+
+    }
 </script>
 
 

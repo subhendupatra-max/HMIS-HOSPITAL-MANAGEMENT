@@ -6,8 +6,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    <h4 class="pro-user-username mb-3 font-weight-bold"> {{
-                        @$operation_details->first_name }} {{ @$operation_details->middle_name }} {{ @$operation_details->last_name }} ({{ @$operation_details->patient_prefix }})<i class="fa fa-check-circle text-success"></i></h4>
+                    <h4 class="pro-user-username mb-3 font-weight-bold"> Operation Booking Details<i class="fa fa-check-circle text-success"></i></h4>
                 </div>
 
                 <div class="col-md-6 text-right">
@@ -22,6 +21,9 @@
                 </div>
 
             </div>
+        </div>
+        <div class="card-header">
+            @include('emg.include.patient-name')
         </div>
         <div class="card-body p-0">
             <div class="card-body border-top">

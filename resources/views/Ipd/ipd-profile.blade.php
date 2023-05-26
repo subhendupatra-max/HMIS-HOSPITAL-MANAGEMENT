@@ -11,6 +11,8 @@
                 <div class="col-md-8 text-right">
 
                     <div class="d-block">
+                        <a href="{{ route('print-ipd-addmission-form',['ipd_id' => base64_encode(@$ipd_details->id)] ) }}" class="btn btn-primary btn-sm"><i class="far fa-calendar-check"></i> Admission Form</a>
+
                         @if($ipd_details->discharged == 'no')
                         <a href="{{ route('discharged-patient-in-ipd',['ipd_id' => base64_encode(@$ipd_details->id)] ) }}" class="btn btn-primary btn-sm"><i class="far fa-calendar-check"></i> Discharged Patient</a>
                         @endif
@@ -32,13 +34,16 @@
                 </div>
             </div>
         </div>
+        <div class="card-header">
+            @include('ipd.include.patient-name')
+        </div>
         <div class="card-body p-0">
             <div class="row no-gutters">
                 {{-- ========================================================================================= --}}
                 <div class="col-lg-4 col-xl-4 border-right">
 
                     {{-- ================== patient name ====================== --}}
-                    <div class="options px-5 pt-2  border-bottom pb-1">
+                    <!-- <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
                                 <span class="profileHeding">{{ @$ipd_details->all_patient_details->first_name }}
@@ -48,7 +53,7 @@
                                     @$ipd_details->all_patient_details->id }})</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     {{-- ================== patient name ====================== --}}
 
                     {{-- ================== patient information ====================== --}}

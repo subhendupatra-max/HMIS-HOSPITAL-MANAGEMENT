@@ -20,8 +20,7 @@ $login_details = DB::table('users')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+   
 
 
     <!-- Meta data -->
@@ -42,8 +41,6 @@ $login_details = DB::table('users')
     <link href="<?php echo e(asset('public/assets/css/dark.css')); ?>" rel="stylesheet" />
     <link href="<?php echo e(asset('public/assets/css/skin-modes.css')); ?>" rel="stylesheet" />
     <link href="<?php echo e(asset('public/assets/plugins/wysiwyag/richtext.css')); ?>" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <!-- Animate css -->
     <link href="<?php echo e(asset('public/assets/css/animated.css')); ?>" rel="stylesheet" />
@@ -544,7 +541,9 @@ $login_details = DB::table('users')
 
                                     </ul>
                                 </li>
-                                <li><a href="#">Refferal</a></li>
+                                <?php if(auth()->user()->can('referral')): ?>
+                                <li><a href="<?php echo e(route('referral')); ?>">Refferal</a></li>
+                                <?php endif; ?>
                                 <li><a href="#">Font office</a></li>
                                 <li><a href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
                                 <li><a href="<?php echo e(route('main-operation')); ?>">Operation</a></li>
@@ -748,8 +747,7 @@ $login_details = DB::table('users')
     <script src="<?php echo e(asset('public/assets/plugins/wysiwyag/jquery.richtext.js')); ?>"></script>
     <script src="<?php echo e(asset('public/assets/js/form-editor.js')); ?>"></script>
     
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+
     
 
 </body>

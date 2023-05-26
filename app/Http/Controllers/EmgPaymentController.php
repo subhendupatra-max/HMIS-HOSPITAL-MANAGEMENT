@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EmgPayment;
+use App\Models\EmgDetails;
 
 class EmgPaymentController extends Controller
 {
@@ -13,8 +14,9 @@ class EmgPaymentController extends Controller
         $emg_id = base64_decode($id);
         $emgPayment = EmgPayment::all();
         $emgPaymentDetails =  EmgPayment::where('emg_id', $emg_id)->get();
+        $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
 
-        return view('emg.payment.payment-listing', compact('emgPayment', 'emg_id', 'emgPaymentDetails'));
+        return view('emg.payment.payment-listing', compact('emgPayment', 'emg_id', 'emgPaymentDetails','emg_patient_details'));
     }
 
     public function add_payment_in_emg($id)

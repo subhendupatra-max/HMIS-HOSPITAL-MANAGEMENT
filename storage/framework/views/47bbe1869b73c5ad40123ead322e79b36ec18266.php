@@ -9,13 +9,13 @@
 <body>
 
     <style>
-        @page {
+        @page  {
             size: A4 portrait;
             margin: 0;
             / change the margins as you want them to be. /
         }
 
-        @media print {
+        @media  print {
 
             html,
             body {
@@ -55,7 +55,7 @@
             <tr style="text-align: center;">
                 <td>
                     <!-- <img src="./assets/images/1571895010.png " style="width: 600px;"> -->
-                    <img src="{{ asset('public/assets/images/header') }}/{{$header_image->logo}}" alt="" style="width: 80%;">
+                    <img src="<?php echo e(asset('public/assets/images/header')); ?>/<?php echo e($header_image->logo); ?>" alt="" style="width: 80%;">
                 </td>
             </tr>
 
@@ -63,16 +63,16 @@
         <table style="margin: 10px 0px 0px 0px;">
             <tr>
                 <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:280px">
-                    <b>UHID No. : {{ $patient_discharge_details->ipd_prefix }}{{ $patient_discharge_details->ipd_id }}</b>
+                    <b>UHID No. : <?php echo e($patient_discharge_details->ipd_prefix); ?><?php echo e($patient_discharge_details->ipd_id); ?></b>
                 </td>
                 <td rowspan="2" style="text-align: center;border: 1px solid #899499;width: 250px;height:60px">
-                    <!-- <img src="{{ asset('public/hospital_details/barcode.png') }}" style="width: 80px;"> -->
+                    <!-- <img src="<?php echo e(asset('public/hospital_details/barcode.png')); ?>" style="width: 80px;"> -->
 
-                    @php
+                    <?php
                     $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
-                    @endphp
+                    ?>
 
-                    <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$patient_discharge_details->ipd_prefix @$patient_discharge_details->ipd_id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 150px;height:60px">
+                    <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$patient_discharge_details->ipd_prefix @$patient_discharge_details->ipd_id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 150px;height:60px">
                 </td>
                 <td rowspan="2" style="text-align: center;border: 1px solid #899499;width: 70px;height:70px">
                     <?php
@@ -80,19 +80,19 @@
                     ?>
 
 
-                    <!-- <img src="{{ asset('public/hospital_details/qr.png') }}" style="width: 80px;"> -->
-                    <span style="width: 60px;height:60px">{!! QrCode::size(90)->generate($ipd_de); !!} </span>
-                    <!-- <img src="{{public_path().'/qr/'.$patient_discharge_details->ipd_prefix}}" style="width:70px; height: 85px;position: absolute;right: 0px;top:10px; border: 2px solid #d3d1d1; padding: 4px;"> -->
+                    <!-- <img src="<?php echo e(asset('public/hospital_details/qr.png')); ?>" style="width: 80px;"> -->
+                    <span style="width: 60px;height:60px"><?php echo QrCode::size(90)->generate($ipd_de); ?> </span>
+                    <!-- <img src="<?php echo e(public_path().'/qr/'.$patient_discharge_details->ipd_prefix); ?>" style="width:70px; height: 85px;position: absolute;right: 0px;top:10px; border: 2px solid #d3d1d1; padding: 4px;"> -->
 
                 </td>
                 <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:280px">
-                    <b>Admission Date : {{ $patient_discharge_details->appointment_date }}</b>
+                    <b>Admission Date : <?php echo e($patient_discharge_details->appointment_date); ?></b>
                 </td>
 
             </tr>
             <tr>
-                <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b> IPD no. : {{ $patient_discharge_details->ipd_prefix }}/{{ $patient_discharge_details->ipd_id }}</b></td>
-                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Patient Source:{{ $patient_discharge_details->patient_source }} Source Id:{{ $patient_discharge_details->patient_source_id}}</b></td>
+                <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b> IPD no. : <?php echo e($patient_discharge_details->ipd_prefix); ?>/<?php echo e($patient_discharge_details->ipd_id); ?></b></td>
+                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Patient Source:<?php echo e($patient_discharge_details->patient_source); ?> Source Id:<?php echo e($patient_discharge_details->patient_source_id); ?></b></td>
 
             </tr>
         </table>
@@ -102,19 +102,22 @@
                     Patient Name
                 </th>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->first_name }} {{ $patient_discharge_details->middle_name }} {{ $patient_discharge_details->last_name }}
+                    <?php echo e($patient_discharge_details->first_name); ?> <?php echo e($patient_discharge_details->middle_name); ?> <?php echo e($patient_discharge_details->last_name); ?>
+
                 </td>
                 <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Guardian Name
                 </th>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->guardian_name }}
+                    <?php echo e($patient_discharge_details->guardian_name); ?>
+
                 </td>
                 <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Mobile No.
                 </th>
                 <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->phone }}
+                    <?php echo e($patient_discharge_details->phone); ?>
+
                 </td>
             </tr>
             <tr>
@@ -122,19 +125,22 @@
                     Age
                 </th>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->year }}-{{ $patient_discharge_details->month }}-{{ $patient_discharge_details->day }}
+                    <?php echo e($patient_discharge_details->year); ?>-<?php echo e($patient_discharge_details->month); ?>-<?php echo e($patient_discharge_details->day); ?>
+
                 </td>
                 <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Gender
                 </th>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->gender }}
+                    <?php echo e($patient_discharge_details->gender); ?>
+
                 </td>
                 <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Patient Type
                 </th>
                 <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->patient_type }}
+                    <?php echo e($patient_discharge_details->patient_type); ?>
+
                 </td>
             </tr>
             <tr>
@@ -142,19 +148,22 @@
                     Dr. In Charge
                 </th>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->doctor_first_name }} {{ $patient_discharge_details->doctor_last_name }}
+                    <?php echo e($patient_discharge_details->doctor_first_name); ?> <?php echo e($patient_discharge_details->doctor_last_name); ?>
+
                 </td>
                 <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Ward
                 </th>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->wardname }}
+                    <?php echo e($patient_discharge_details->wardname); ?>
+
                 </td>
                 <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Unit
                 </th>
                 <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->bedUnit_name }}
+                    <?php echo e($patient_discharge_details->bedUnit_name); ?>
+
                 </td>
             </tr>
             <tr>
@@ -162,7 +171,8 @@
                     Department:
                 </th>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->department_name }}
+                    <?php echo e($patient_discharge_details->department_name); ?>
+
                 </td>
                 <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Floor
@@ -174,7 +184,8 @@
                     Bed
                 </th>
                 <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->bed_name }}
+                    <?php echo e($patient_discharge_details->bed_name); ?>
+
                 </td>
             </tr>
 
@@ -186,27 +197,30 @@
                 </th>
 
                 <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->address }} {{ $patient_discharge_details->state_name }} {{ $patient_discharge_details->district_name }}
+                    <?php echo e($patient_discharge_details->address); ?> <?php echo e($patient_discharge_details->state_name); ?> <?php echo e($patient_discharge_details->district_name); ?>
+
                 </td>
 
             </tr>
-            @if($patient_discharge_details->patient_type == 'Swasthya Sathi' || $patient_discharge_details->patient_type == 'TPA' )
+            <?php if($patient_discharge_details->patient_type == 'Swasthya Sathi' || $patient_discharge_details->patient_type == 'TPA' ): ?>
             <tr>
                 <th colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
 
-                    @if($patient_discharge_details->patient_type == 'Swasthya Sathi')
+                    <?php if($patient_discharge_details->patient_type == 'Swasthya Sathi'): ?>
                     Swasthya Sathi No.
-                    @elseif($patient_discharge_details->patient_type == 'TPA')
-                    TPA {{$patient_discharge_details->TPA_name}}
-                    @endif
+                    <?php elseif($patient_discharge_details->patient_type == 'TPA'): ?>
+                    TPA <?php echo e($patient_discharge_details->TPA_name); ?>
+
+                    <?php endif; ?>
 
                 </th>
                 <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{@$ipd_details->type_no}}
+                    <?php echo e(@$ipd_details->type_no); ?>
+
                 </td>
 
             </tr>
-            @endif
+            <?php endif; ?>
         </table>
         <table style="width: 100%; margin: 10px 0px 0px 0px;border: 1px solid #899499;border-collapse: collapse;">
             <tr>
@@ -214,19 +228,22 @@
                     Provisional Diagnosis at the time of Admission
                 </th>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->diagonsis_admission_time }}
+                    <?php echo e($patient_discharge_details->diagonsis_admission_time); ?>
+
                 </td>
                 <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Final Diagnosis at time of Discharge
                 </th>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->final_diagonsis_discharge }}
+                    <?php echo e($patient_discharge_details->final_diagonsis_discharge); ?>
+
                 </td>
                 <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Icd-10 Code(s) for Final Diagnosis
                 </th>
                 <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->diagonasis_name  }}
+                    <?php echo e($patient_discharge_details->diagonasis_name); ?>
+
                 </td>
             </tr>
 
@@ -251,11 +268,11 @@
             </tr>
 
             <tr>
-                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ $patient_discharge_details->height}} </td>
-                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"> {{ $patient_discharge_details->weight}}</td>
-                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ $patient_discharge_details->bp}}</td>
-                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ $patient_discharge_details->temperature}}</td>
-                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ $patient_discharge_details->respiration}}</td>
+                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"><?php echo e($patient_discharge_details->height); ?> </td>
+                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"> <?php echo e($patient_discharge_details->weight); ?></td>
+                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"><?php echo e($patient_discharge_details->bp); ?></td>
+                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"><?php echo e($patient_discharge_details->temperature); ?></td>
+                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"><?php echo e($patient_discharge_details->respiration); ?></td>
             </tr>
         </table>
 
@@ -265,7 +282,8 @@
                     History of alcoholism,tobacco or substance abuse,if any
                 </th>
                 <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->history_alcoholism  }}
+                    <?php echo e($patient_discharge_details->history_alcoholism); ?>
+
                 </td>
 
             </tr>
@@ -274,7 +292,8 @@
                     Significant Past Medical and Surgical History ,if any
                 </th>
                 <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->medical_surgical_history  }}
+                    <?php echo e($patient_discharge_details->medical_surgical_history); ?>
+
                 </td>
 
             </tr>
@@ -283,7 +302,8 @@
                     Family History if significant/relevant to diagnosis or treatment
                 </th>
                 <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->family_history_diagnosis  }}
+                    <?php echo e($patient_discharge_details->family_history_diagnosis); ?>
+
                 </td>
 
             </tr>
@@ -295,7 +315,8 @@
                     Summary of key investigations during Hospitalization
                 </th>
                 <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->summary_inves_during_hos  }}
+                    <?php echo e($patient_discharge_details->summary_inves_during_hos); ?>
+
                 </td>
 
             </tr>
@@ -304,7 +325,8 @@
                     Course in the Hspital including complications if any
                 </th>
                 <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->course_complications  }}
+                    <?php echo e($patient_discharge_details->course_complications); ?>
+
                 </td>
 
             </tr>
@@ -313,7 +335,8 @@
                     Advice on Discharge
                 </th>
                 <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    {{ $patient_discharge_details->dischage_advice  }}
+                    <?php echo e($patient_discharge_details->dischage_advice); ?>
+
                 </td>
 
             </tr>
@@ -321,4 +344,4 @@
     </div>
 </body>
 
-</html>
+</html><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/ipd/_print/discharged_patient.blade.php ENDPATH**/ ?>
