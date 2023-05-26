@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -23,8 +22,11 @@
                     <div class="row">
                         <!-- //password  -->
 
-
-                        <div class="col-md-2">
+                        <div class="card-body hospital_allcardbodydesign">
+                            <h5 class="font-weight-bold"><i class="fas fa-user"></i> Personal Information</h5>
+                            <div class="main-profile-bio mb-0">
+                                <div class="row">
+                        <div class="col-md-2 useraddd">
 
                             <input type="text" id="employee_id" value="<?php echo e($user_details->employee_id); ?>" name="employee_id" required="">
                             <label for="employee_id"> Employee Id <span class="text-danger">*</span></label>
@@ -41,9 +43,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 useradddone">
                             <label> Role <span class="text-danger">*</span></label>
-                            <select class="form-control select2-show-search select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="role" id="role">
+                            <select class="form-control select2-show-search " tabindex="-1" aria-hidden="true" name="role" id="role">
                                 <optgroup>
                                     <option value=" ">Select Role </option>
                                     <?php if(isset($all_role)): ?>
@@ -68,7 +70,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 useraddd">
 
                             <input type="text" id="designation" value="<?php echo e($user_details->designation); ?>" name="designation">
                             <label for="first_name"> Designation </label>
@@ -84,9 +86,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3  useradddone">
                             <label class="form-label">Department </label>
-                            <select class="form-control select2-show-search select2-hidden-accessible" tabindex="-1" aria-hidden="true" name="department" id="department">
+                            <select class="form-control select2-show-search " tabindex="-1" aria-hidden="true" name="department" id="department">
                                 <option value=" ">Select Department</option>
                                 <?php if(isset($department)): ?>
                                 <?php $__currentLoopData = $department; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -109,7 +111,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-3 useraddd">
                             <input type="text" id="specialist" value="<?php echo e($user_details->specialist); ?>" name="specialist">
                             <label for="specialist"> Specialist </label>
                             <?php $__errorArgs = ['specialist'];
@@ -124,7 +126,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserlistchange">
+                        <div class="col-md-3 useradddtwo">
 
                             <input type="text" name="first_name" value="<?php echo e($user_details->first_name); ?>" id="first_name" required="">
                             <label for="first_name"> First Name <span class="text-danger">*</span></label>
@@ -140,7 +142,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 useradddtwo">
 
                             <input type="text" name="last_name" value="<?php echo e($user_details->last_name); ?>" id="last_name" required="">
                             <label for="last_name"> Last Name <span class="text-danger">*</span></label>
@@ -156,7 +158,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 useradddtwo ">
 
 
                             <input type="text" name="father_name" value="<?php echo e($user_details->father_name); ?>" id="father_name" required="">
@@ -173,7 +175,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserlistchange ">
+                        <div class="col-md-3 useradddtwo ">
 
                             <input type="text" name="mother_name" value="<?php echo e($user_details->mother_name); ?>" id="mother_name">
                             <label for="mother_name"> Mother Name</label>
@@ -188,8 +190,8 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-                        <div class="col-md-3 newuserchangee">
-
+                        <div class="col-md-2 newuserchange">
+                            <label >Gender <span class="text-danger">*</span></label>
                             <select name="gender" class="form-control" id="gender">
                                 <option value="">Gender <span class="text-danger">*</span></option>
 
@@ -212,8 +214,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 newuserchangee ">
-
+                        <div class="col-md-2 newuserchange ">
+                            <label>Metrial Status </label>
                             <select name="marital_status" class="form-control" id="marital_status">
                                 <option value="">Metrial Status</option>
                                 <?php $__currentLoopData = Config::get('static.marital_status'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $marital): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -235,8 +237,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="form-group col-md-3 newuserchangee ">
-
+                        <div class="form-group col-md-2 newuserchange ">
+                            <label for="blood_group" >Blood Group <span
+                                class="text-danger">*</span></label>
                             <select name="blood_group" class="form-control" id="blood_group">
                                 <option value="">Blood Group</option>
                                 <?php $__currentLoopData = Config::get('static.blood_groups'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $blood_group): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -248,12 +251,11 @@ unset($__errorArgs, $__bag); ?>
                             </select>
                         </div>
 
-                        <div class="col-md-3 ">
+                        <div class="col-md-2 useraddthree">
 
 
 
-                            
-                            <lable class="datetype">Date</lable>
+                        <label >Date Of Birth <span class="text-danger">*</span></label>
                             <input type="date" name="date_of_birth" id="date_of_birth" <?php if(isset($user_details->date_of_birth)): ?> value="<?php echo e(date('Y-m-d', strtotime($user_details->date_of_birth))); ?>" <?php endif; ?>>
 
                             <?php $__errorArgs = ['date_of_birth'];
@@ -268,9 +270,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 datetypeform">
+                        <div class="col-md-2 useraddthree">
+                            <label >Date Of joining <span class="text-danger">*</span></label>
 
-                            <lable class="datetype">Date of Joining</lable>
                             <input type="date" name="date_of_joining" id="date_of_joining" <?php if(isset($user_details->date_of_joining)): ?> value="<?php echo e(date('Y-m-d', strtotime($user_details->date_of_joining))); ?>" <?php endif; ?>>
                             <?php $__errorArgs = ['date_of_joining'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -284,7 +286,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 newuserchangeeli">
+                        <div class="col-md-2 useradddtwoo">
 
                             <input type="number" name="phone_no" id="phone_no" value="<?php echo e($user_details->phone_no); ?>" required="">
                             <label for="phone_no"> Phone</label>
@@ -300,7 +302,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 newuserchangeeli">
+                        <div class="col-md-3 newuserlisttchangee">
 
                             <input type="number" name="whatsapp_no" id="whatsapp_no" value="<?php echo e($user_details->whatsapp_no); ?>">
                             <label for="whatsapp_no">Whatsapp No </label>
@@ -316,7 +318,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 newuserchangeeli ">
+                        <div class="col-md-3 newuserlisttchangee ">
 
                             <input type="number" name="emg_phone_no" id="emg_phone_no" value="<?php echo e($user_details->emg_phone_no); ?>">
                             <label for="whatsapp_no">Emergency Phone No. </label>
@@ -332,7 +334,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 newuserrchange ">
+                        <div class="col-md-3 newuserlisttchangee ">
 
                             <input type="email" name="email" id="email" value="<?php echo e($user_details->email); ?>" required="">
                             <label for="email">Email </label>
@@ -364,7 +366,13 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body hospital_allcardbodydesign">
+                            <h5 class="font-weight-bold"><i class="fas fa-map-marker-alt"></i> Address</h5>
+                            <div class="main-profile-bio mb-0">
+                                <div class="row">
                         <div class="col-md-6 newuserrchange ">
 
                             <input type="text" name="current_address" id="current_address" value="<?php echo e($user_details->current_address); ?>">
@@ -396,8 +404,14 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-
-                        <div class="col-md-3 newuserchange">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body hospital_allcardbodydesign">
+                            <h5 class="font-weight-bold"><i class="fa fa-cube "></i> Others</h5>
+                            <div class="main-profile-bio mb-0">
+                                <div class="row">
+                        <div class="col-md-2 newuserchange">
 
                             <input type="text" name="qualification" id="qualification" <?php echo e($user_details->qualification); ?> >
                             <label for="qualification">Qualification</label>
@@ -429,7 +443,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserchange ">
+                        <div class="col-md-3 newuserchange ">
 
                             <input type="text" name="specialization" id="specialization" <?php echo e($user_details->specialization); ?> >
                             <label for="specialization">Specialization</label>
@@ -445,7 +459,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-6 newuserchange">
+                        <div class="col-md-4 newuserchange">
 
                             <input type="text" name="note" id="note" <?php echo e($user_details->note); ?> >
                             <label for="note">Note</label>
@@ -460,7 +474,13 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-
+                    </div>
+                </div>
+            </div>
+            <div class="card-body hospital_allcardbodydesign">
+                <h5 class="font-weight-bold"><i class="fas fa-tasks"></i>Identification Details</h5>
+                <div class="main-profile-bio mb-0">
+                    <div class="row">
                         <div class="col-md-4 newuserchange ">
 
                             <input type="text" name="pan_number" id="pan_number" value="<?php echo e($user_details->pan_number); ?>">
@@ -508,7 +528,9 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
-
+                    </div>
+                </div>
+            </div>
                     </div>
                     <hr>
                     <div class="row">
@@ -543,4 +565,5 @@ unset($__errorArgs, $__bag); ?>
 
 <script src="<?php echo e(asset('assets/js/jquery-3.6.0.min.js')); ?>"></script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/appPages/Users/edit-user.blade.php ENDPATH**/ ?>
