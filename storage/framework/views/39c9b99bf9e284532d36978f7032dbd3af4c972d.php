@@ -36,8 +36,7 @@
                                 <th class="border-bottom-0">Case Id </th>
                                 <th class="border-bottom-0">Date</th>
                                 <th class="border-bottom-0">Patient Name </th>
-                                <th class="border-bottom-0">Amount</th>
-
+                                <th class="border-bottom-0">Amount(Rs)</th>
                                 <th>Action</th>
 
                             </tr>
@@ -46,7 +45,10 @@
                             <?php if(@$medicine_bill): ?>
                             <?php $__currentLoopData = $medicine_bill; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><?php echo e(@$value->bill_prefix); ?><?php echo e(@$value->id); ?></td>
+                                <td><a class="dropdown-item text-info" href="<?php echo e(route('medicine-bill-details', ['bill_id' => base64_encode($value->id)])); ?>">
+                                     <?php echo e(@$value->id); ?>
+
+                                </a></td>
                                 <td><?php echo e(@$value->case_id); ?></td>
                                 <td><?php echo e(date('d-m-Y h:i a',strtotime($value->bill_date))); ?></td>
                                 <td><?php echo e(@$value->all_patient_details->prefix); ?> <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?><br>
@@ -62,10 +64,12 @@
                                             <a class="dropdown-item" href="<?php echo e(route('medicine-bill-details', ['bill_id' => base64_encode($value->id)])); ?>">
                                                 <i class="fa fa-eye"></i> View
                                             </a>
-
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print medicine bill')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('print-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
                                                 <i class="fa fa-print"></i> Print
                                             </a>
+                                            <?php endif; ?>
+
 
 
                                             <a class="dropdown-item" href="<?php echo e(route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">

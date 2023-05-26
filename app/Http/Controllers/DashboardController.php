@@ -12,6 +12,7 @@ use App\Models\PathologyPatientTest;
 use can;
 use Carbon\Carbon;
 use App\Models\MedicineBilling;
+use App\Models\Billing;
 
 class DashboardController extends Controller
 {
@@ -106,6 +107,31 @@ class DashboardController extends Controller
 
         // dd($pharmacy_income);
 
-        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'pharmacy_income'));
+        //all billing details
+
+        $opd_billing_details = Billing::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->where('section', 'OPD')
+            ->sum('grand_total');
+
+        $ipd_billing_details = Billing::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->where('section', 'IPD')
+            ->sum('grand_total');
+
+        $emg_billing_details = Billing::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->where('section', 'EMG')
+            ->sum('grand_total');
+
+
+
+        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'pharmacy_income', 'opd_billing_details', 'ipd_billing_details', 'emg_billing_details'));
     }
 }
