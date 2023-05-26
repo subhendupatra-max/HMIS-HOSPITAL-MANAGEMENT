@@ -12,7 +12,8 @@ class ReferralController extends Controller
 {
     public function index()
     {
-        return view('referral.referral-listing');
+        $refferal_person = Referral::all();
+        return view('referral.referral-listing',compact('refferal_person'));
     }
 
     public function add_referral()
@@ -26,30 +27,73 @@ class ReferralController extends Controller
         
         $request->validate([
             'referral_name'          => 'required',
-            'phone_no'               => 'required|numeric',
+            'phone_no'               => 'required',
             'standard_commission'    => 'required',
         ]);
-
-        $model = Module::get();
 
         $referral = new Referral();
         $referral->referral_name        = $request->referral_name;
         $referral->phone_no             = $request->phone_no;
+        $referral->address             = $request->address;
         $referral->standard_commission  = $request->standard_commission;
-
+        $referral->opd_commission  = $request->opd_commission;
+        $referral->emg_commission  = $request->emg_commission;
+        $referral->ipd_commission  = $request->ipd_commission;
+        $referral->pharmacy_commission  = $request->pharmacy_commission;
+        $referral->pathology_commission  = $request->pathology_commission;
+        $referral->radiology_commission  = $request->radiology_commission;
+        $referral->blood_bank_commission  = $request->blood_bank_commission;
+        $referral->ambulance_commission  = $request->ambulance_commission;
         $status = $referral->save();
-        foreach($request->post('ref_commision') as $key => $val)
-        {
-            $module_id = $key+1;
-            $referral_commission = new ReferralCommision();
-            $referral_commission->referral_id        = $referral->id;
-            $referral_commission->module_id          = $module_id;
-            $referral_commission->commission         = $val;
-            $referral_commission->save();
-        }
 
         if ($status) {
             return redirect()->route('referral')->with('success', 'Referral Person Added Sucessfully');
+        } else {
+            return back()->with('error', "Something Went Wrong");
+        }
+    }
+
+    public function delete_referral($id){
+        $ref_id  =  base64_decode($id);
+        $referral = Referral::find($ref_id);
+        $referral->delete();
+        if (true) {
+            return redirect()->route('referral')->with('success', 'Referral Person Deleted Sucessfully');
+        } else {
+            return back()->with('error', "Something Went Wrong");
+        }
+    }
+
+    public function edit_referral($id)
+    {
+        $ref_id  =  base64_decode($id);
+        $referral = Referral::find($ref_id);
+        return view('referral.edit-referral', compact('referral'));
+    }
+    public function update_referral(Request $request){
+        $request->validate([
+            'referral_name'          => 'required',
+            'phone_no'               => 'required',
+            'standard_commission'    => 'required',
+        ]);
+
+        $referral = Referral::find($request->refferal_id);
+        $referral->referral_name        = $request->referral_name;
+        $referral->phone_no             = $request->phone_no;
+        $referral->address             = $request->address;
+        $referral->standard_commission  = $request->standard_commission;
+        $referral->opd_commission  = $request->opd_commission;
+        $referral->emg_commission  = $request->emg_commission;
+        $referral->ipd_commission  = $request->ipd_commission;
+        $referral->pharmacy_commission  = $request->pharmacy_commission;
+        $referral->pathology_commission  = $request->pathology_commission;
+        $referral->radiology_commission  = $request->radiology_commission;
+        $referral->blood_bank_commission  = $request->blood_bank_commission;
+        $referral->ambulance_commission  = $request->ambulance_commission;
+        $status = $referral->save();
+
+        if ($status) {
+            return redirect()->route('referral')->with('success', 'Referral Person Update Sucessfully');
         } else {
             return back()->with('error', "Something Went Wrong");
         }

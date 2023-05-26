@@ -1,16 +1,6 @@
 
 <?php $__env->startSection('content'); ?>
 
-<!-- ===============================Alert Message======================================= -->
-<?php if(session('success')): ?>
-<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"> ×</button><?php echo e(session('success')); ?></div>
-<?php endif; ?>
-<?php if(session()->has('error')): ?>
-<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"> ×</button><?php echo e(session('error')); ?></div>
-<?php endif; ?>
-<!-- ================================Alert Message====================================== -->
-
-
 <?php
 $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 ?>
@@ -20,27 +10,20 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
+            <div class="card-new">
             <div class="card-title">
                 Purchase Order Details
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Print Medicine Purchase Order')): ?>
                 <a href="<?php echo e(route('po-print',['po_id'=> base64_encode($po_list->id)])); ?>" class="btn btn-primary btn-sm allbtndemo"><i class="fa fa-print"> Print</i></a>
                 <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Send PO with feedback form')): ?>
-                <a href="#" class="btn btn-primary btn-sm allbtndemoff" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope"></i> Mail <i class="fa fa-caret-down"></i></a>
-                <div class="dropdown-menu dropdown-menu-right" style="">
-                    <a class="dropdown-item" href="<?php echo e(route('send-po-feedback')); ?>/<?php echo e(base64_encode($po_list->id)); ?>/<?php echo e(base64_encode($po_list->get_vendor_details->id)); ?>"><i class="fa fa-envelope"></i> PO Send to Vendor With Feedback Form</a>
-                </div>
-                <?php endif; ?>
+        
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('permission on po section')): ?>
                 <a href="#" class="btn btn-primary btn-sm allbtndemoffff" data-target="#modaldemo1241" data-toggle="modal"><i class="fa fa-user"> Permission</i></a>
                 <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('New Vendor Add in PO section')): ?>
-                <?php if(!empty($po_list->po_status >= 18)): ?>
-                <a class="btn btn-primary btn-sm allbtndeaddnew" data-target="#modaldemo3fgfg" data-toggle="modal" href="#"><i class="fa fa-list"></i> Vendors/Quatations</a>
-                <?php endif; ?>
-                <?php endif; ?>
+            </div>
             </div>
         </div>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view medicine requisition')): ?>
         <div class="card-body">
             <div class="col-md-12">
@@ -112,12 +95,8 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <th>#</th>
                             <th>Requisition Id</th>
                             <th>Medicine Name</th>
-                            <th>Medicine Catagory</th>
                             <th>Medicine Unit</th>
                             <th>Quantity</th>
-                            <th>GST</th>
-                            <th>Rate</th>
-                            <th>Amount</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,35 +105,16 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                         <tr>
                             <th scope="row"><?php echo e($loop->iteration); ?></th>
                             <td><?php echo e(@$item->req_id); ?></td>
-                            <td><?php echo e(@$item->fetch_medicine_name->medicine_name); ?></td>
-                            <td><?php echo e(@$item->fetch_medicine_catagory->medicine_catagory_name); ?></td>
+                            <td><?php echo e(@$item->fetch_medicine_name->medicine_name); ?>(<?php echo e(@$item->fetch_medicine_name->catagory_name->medicine_catagory_name); ?>)</td>
                             <td><?php echo e(@$item->fetch_medicine_unit->medicine_unit_name); ?></td>
                             <td><?php echo e(@$item->quantity); ?></td>
-                            <td><?php echo e(@$item->gst); ?></td>
-                            <td><?php echo e(@$item->rate); ?></td>
-                            <td><?php echo e(@$item->amount); ?></td>
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <?php endif; ?>
                     </tbody>
                 </table>
-                <hr>
-                <div class="container mt-5" style="margin-left: -53px;">
-                    <div class="d-flex justify-content-end">
-                        <span class="bilpo_name">Total </span><span class="bilpo_value"> : <?php echo e(@$po_list->total); ?></span>
 
-                    </div>
-                    <?php if(!empty($po_list->extra_charges_name) && !empty($po_list->extra_charges_value)): ?>
-                    <div class="d-flex justify-content-end">
-                        <span class="bilpo_name"><?php echo e(@$po_list->extra_charges_name); ?></span><span class="bilpo_value"> : <?php echo e(@$po_list->extra_charges_value); ?></span>
-                    </div>
-                    <?php endif; ?>
 
-                    <div class="d-flex justify-content-end" style="color:#0101c5">
-                        <span class="bilpo_name">Grand Total </span><span class="bilpo_value"> : <?php echo e(@$po_list->grand_total); ?></span>
-
-                    </div>
-                </div>
             </div><!-- bd -->
         </div>
         <?php endif; ?>
@@ -222,12 +182,7 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                         <label class="form-label">Status <span class="text-danger">*</span></label>
                         <select class="form-control" name="status">
                             <option vlue="" disabled>Select One</option>
-                            <option value="16" <?php if ($po_list->status == 16) {
-                                                    echo "selected";
-                                                } ?>>Purchase Order Holded</option>
-                            <option value="15" <?php if ($po_list->status == 15) {
-                                                    echo "selected";
-                                                } ?>>Purchase Order Cancelled</option>
+                            
                             <option value="17" <?php if ($po_list->status == 17) {
                                                     echo "selected";
                                                 } ?>>Purchase Order Confirmed</option>
@@ -244,89 +199,7 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 
 
 <!-- ================================ vendor quatation details========================= -->
-<div class="modal" id="modaldemo3fgfg">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content modal-content-demo">
-            <div class="modal-header">
-                <h6 class="modal-title">Add Vendor/Quatation</h6>
 
-                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-
-                <div class="table-responsive">
-                    <table class="table table-striped card-table table-vcenter text-nowrap">
-                        <thead>
-                            <tr>
-                                <th>Vendor Details</th>
-                                <th>Quatation</th>
-                                <th>Select Quatation</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if(isset($sl_vender)): ?>
-                            <?php $__currentLoopData = $sl_vender; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <tr>
-                                <td><?php echo e($value->sl_vendors_join->vendor_name); ?>
-
-                                    <br>
-                                    <?php if($value->status == 1): ?>
-                                    <a class="btn btn-pill btn-secondary btn-sm" href="#" type="button">Selected</a>
-                                    <?php endif; ?>
-                                    <?php if($value->status == 2): ?>
-                                    <a class="btn btn-pill btn-warning btn-sm" href="#" type="button">Hold</a>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <?php if($value->vendor_quatation != null): ?>
-                                    <a style="color:blue" href="<?php echo e(asset('public/quatation/')); ?>/<?php echo e(@$value->vendor_quatation); ?>" target="_blank"><i class="fa fa-eye"></i> View Quatation</a>
-                                    <?php endif; ?>
-                                </td>
-                                <td>
-                                    <form method="POST" action="<?php echo e(route('vendor-select-change-afetr-po')); ?>">
-                                        <?php echo csrf_field(); ?>
-                                        <textarea name="note" class="form-control"><?php echo e(@$value->comment); ?></textarea>
-                                        <input type="hidden" name="po_id" value="<?php echo e(@$po_list->id); ?>">
-                                        <br>
-                                        <select name="selection" class="form-control" required>
-                                            <option value="">Select One</option>
-                                            <option value="1" <?php if ($value->status == 1) {
-                                                                    echo "Selected";
-                                                                } ?>>Selected</option>
-                                            <option value="2" <?php if ($value->status == 2) {
-                                                                    echo "Selected";
-                                                                } ?>>Hold</option>
-                                        </select>
-                                        <br>
-                                        <!--       <select name="item_quataion" required class="select2-show-search" class="form-control">
-                                            <option value="0" selected>All Item</option>
-                                            <?php if(isset($requisition_item) && $requisition_item != ''): ?>
-                                            <?php $__currentLoopData = $requisition_item; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $requisition): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <option value="<?php echo e($requisition->requisition_details_id); ?>"><?php echo e(@$requisition->item_name); ?><br>(<?php echo e(@$requisition->item_description); ?>)</option>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            <?php endif; ?>
-                                        </select> -->
-
-                                        <input type="hidden" name="vendor_id" value="<?php echo e($value->sl_vendors_join->id); ?>">
-                                        <input type="hidden" name="req_no" value="<?php echo e($value->req_id); ?>">
-                                        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Select</button>
-                                        <br>
-                                    </form>
-                                </td>
-
-                            </tr>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</div>
 <!-- ================================ vendor quatation details========================= -->
 
 <!--  -->

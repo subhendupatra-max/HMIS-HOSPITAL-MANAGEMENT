@@ -13,10 +13,10 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6 ">
-                                <label class="form-label">Stroe Room <span class="text-danger">*</span></label>
+                                <label class="form-label">Store Room <span class="text-danger">*</span></label>
                                 <select class="form-control select2-show-search" onchange="findrequisition()" id="storeroom"
                                     name="store_room_id">
-                                    <option value="">Select Stroe Room</option>
+                                    <option value="">Select Store Room</option>
                                     <?php if($storeroomList): ?>
                                         <?php $__currentLoopData = $storeroomList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <option value="<?php echo e($value->id); ?>"><?php echo e($value->name); ?></option>
@@ -34,8 +34,8 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                            <div class="col-md-6">
-                                
+                            <div class="col-md-6 purchaseadd">
+                             <label class="form-label">Date <span class="text-danger">*</span></label>  
 
                                 <input type="datetime-local" name="po_date" class="form-control">
                                 <?php $__errorArgs = ['po_date'];
@@ -50,7 +50,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
 
-                            <div class="col-md-6" id="gofgk">
+                            <div class="col-md-6  addpurchase" addpurchase id="gofgk" >
                                 <label class="form-label">Vendor <span class="text-danger">*</span></label>
                                 <select class="form-control select2-show-search" id="ven" name="vendor"
                                     onchange="findrequisition()">
@@ -73,10 +73,11 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" style="margin: 18px 0px 0px 0px;">
                                 <label class="form-label">Requisition <span class="text-danger">*</span></label>
                                 <select class="form-control select2-show-search"
                                     onchange="findrequisitiondetails(this.value)" name="requisition_no" id="requisitiohbf">
+                                    <option value="">Select One.....</option>
                                 </select>
                             </div>
 
@@ -91,12 +92,10 @@ unset($__errorArgs, $__bag); ?>
                                     <tr>
                                         <th scope="col" style="width: 40%">Medicine <span class="text-danger">*</span>
                                         </th>
+                                        <th scope="col" style="width: 25%">Unit <span class="text-danger">*</span>
+                                        </th>
                                         <th scope="col" style="width: 25%">Quantity <span class="text-danger">*</span>
                                         </th>
-                                        <th scope="col" style="width: 7%">GST <span class="text-danger">*</span></th>
-                                        <th scope="col" style="width: 13%">Rate <span class="text-danger">*</span></th>
-                                        <th scope="col" style="width: 15%">Amount <span class="text-danger">*</span></th>
-
                                     </tr>
                                 </thead>
                                 <tbody id="alltextre">
@@ -116,24 +115,8 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
 
-                    <div class="container mt-5">
-                        <div class="d-flex justify-content-end">
-                            <span class="biltext">Total</span>
-                            <input type="text" name="total" readonly id="total_am" class="form-control myfld">
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <input type="text" name="extra_charges_name" placeholder="Enter Extra Charges Name"
-                                class="form-control myfld2">
-                            <input type="text" name="extra_charges_value" value="00" class="form-control myfld1"
-                                id="extra_chages">
-                        </div>
-                        <div class="d-flex justify-content-end thrdarea">
-                            <span class="biltext">Grand Total</span>
-                            <input type="text" name="grand_total" readonly id="grnd_total" value="00"
-                                class="form-control myfld">
-                        </div>
-                    </div>
-                    <div class="col-md-12">
+                    
+                    <div class="col-md-12" style="margin: 55px 0px 0px 0px;">
                         <div class="row">
                             <div class="col-md-6">
                                 <label class="form-label">Note</label>
@@ -142,8 +125,7 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                     <div class=" text-right">
-                        <button class="btn btn-success" onclick="gettotal()" type="button"><i class="fa fa-calculator"></i>
-                            Calculate</button>
+                        
                         <button class="btn btn-primary" type="submit"><i class="fa fa-send"></i> Submit</button>
                     </div>
                     <!-- End Table with stripped rows -->
@@ -177,13 +159,13 @@ unset($__errorArgs, $__bag); ?>
 
     <script type="text/javascript">
         function findrequisition() {
-            $('#requisitiohbf').empty();
+            $('#requisitiohbf').html('<option value="">Select One.....</option>');
             $('#alltextre').empty();
             $("#ven").prop("selected", false);
             var html = "<option>Select One</option>";
             var storeroom = $('#storeroom').val();
             var vendor_id = $('#ven').val();
-
+            var html = '';
             $.ajax({
 
                 url: "<?php echo e(route('get-requisition-details')); ?>/" + vendor_id + "/" + storeroom,
@@ -225,27 +207,16 @@ unset($__errorArgs, $__bag); ?>
                             res.requisition_prefix + "" + res.requisition_id +
                             '"/><input class="form-control" type="hidden" name="requisition_details_id[]" required readonly value="' +
                             res.requisition_details_id +
-                            '" /><input class="form-control" type="hidden" name="catagory[]" required readonly value="' +
-                            res.medicine_catagories_id +
                             '" /><input class="form-control" type="hidden" name="unit[]" required readonly value="' +
                             res.medicine_units_id +
-                            '" /><td><a href="<?php echo e(route('medicine-requisition-details')); ?>/' + res
-                            .requisition_id +
-                            '" target="_blank"><span class="req_no_style">Requisition No - ' + res
+                            '" /><td><span class="req_no_style">Requisition No - ' + res
                             .requisition_prefix + res.requisition_id +
-                            '</span></a><select name="medicine[]" required class="form-control" readonly><option value="' +
-                            res.medicine_id + '">' + res.medicine_name + '(' + res.quantity + ')' +
-                            '(Catagory :' + res.medicine_catagory_name + ')(Unit :' + res
-                            .medicine_unit_name +
-                            ')</option></select></td><td><input type="text" required name="qty[]" value="' +
+                            '</span><select name="medicine[]" required class="form-control" readonly><option value="' +
+                            res.medicine_id + '">' + res.medicine_name+'('+res.medicine_catagory_name+')' +
+                            '</option></select></td><td><select name="unit[]" required class="form-control" readonly><option value="' +res.medicine_units_id + '">' + res.medicine_unit_name +
+                            '</option></select></td><td><input type="text" required name="qty[]" value="' +
                             res.quantity + '" onkeyup="getamount(' + i + ')" id="qty' + i +
-                            '" class="form-control" style="width: 60%; float: left;"><td><input type="text" onkeyup="getamount(' +
-                            i + ')" required name="gst[]" id="gst' + i +
-                            '" class="form-control"></td><td><input type="text"  onkeyup="getamount(' +
-                            i + ')" id="rate' + i +
-                            '" required name="rate[]" class="form-control"></td><td><input type="text" required name="amount[]" id="amount' +
-                            i +
-                            '" class="form-control grgrtg"></td><td><button type="button" class="btn btn-danger" onclick="remove(' +
+                            '" class="form-control" ><td><button type="button" class="btn btn-danger" onclick="remove(' +
                             i + ')"><i class="fa fa-trash"></i></button></td></tr>';
                         $('#subhendu').append(html);
                         i = i + 1;

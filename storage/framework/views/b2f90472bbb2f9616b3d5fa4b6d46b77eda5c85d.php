@@ -77,7 +77,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <div class="col-md-4 form-group">
 
-                                <input type="text" id="batch_no" required name="batch_no" value="<?php echo e(old('batch_no')); ?>" required />
+                                <input type="text" id="batch_no"  name="batch_no" value="<?php echo e(old('batch_no')); ?>" required />
                                 <label for="batch_no">Batch No<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['batch_no'];
@@ -93,7 +93,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="date" id="expiry_date" required name="expiry_date" value="<?php echo e(old('expiry_date')); ?>" required />
+                                <input type="date" id="expiry_date" name="expiry_date" value="<?php echo e(old('expiry_date')); ?>" required />
                                 <label for="expiry_date">Expiry Date<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['expiry_date'];
@@ -110,7 +110,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <div class="col-md-4 form-group">
 
-                                <input type="text" id="quantity" required name="quantity" value="<?php echo e(old('quantity')); ?>" required />
+                                <input type="text" id="quantity"  name="quantity" onkeyup="getAmount(this.value)" value="<?php echo e(old('quantity')); ?>" required />
                                 <label for="quantity">Quantity<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['quantity'];
@@ -140,7 +140,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="sale_price" name="sale_price" value="<?php echo e(old('sale_price')); ?>" required />
+                                <input type="text" id="sale_price"  name="sale_price" value="<?php echo e(old('sale_price')); ?>" required />
                                 <label for="sale_price">Sale Price<span class="text-danger">*</span> </label>
                                 <?php $__errorArgs = ['sale_price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -154,7 +154,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="purchase_price" name="purchase_price" value="<?php echo e(old('purchase_price')); ?>" required />
+                                <input type="text" id="purchase_price" onkeyup="getAmount(this.value)" name="purchase_price" value="<?php echo e(old('purchase_price')); ?>" required />
                                 <label for="purchase_price">Purchase Price<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['purchase_price'];
@@ -169,7 +169,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="igst" name="igst" value="0" required />
+                                <input type="text" id="igst" name="igst" onkeyup="getAmount(this.value)" value="0" required />
                                 <label for="igst">IGST </label>
                                 <?php $__errorArgs = ['igst'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -183,7 +183,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="cgst" name="cgst" value="0" required />
+                                <input type="text" id="cgst" name="cgst" onkeyup="getAmount(this.value)" value="0" required />
                                 <label for="cgst">CGST  </label>
                                 <?php $__errorArgs = ['cgst'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -197,7 +197,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="sgst" name="sgst" value="0" required />
+                                <input type="text" id="sgst" name="sgst" onkeyup="getAmount()" value="0" required />
                                 <label for="sgst">SGST </label>
                                 <?php $__errorArgs = ['sgst'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -239,27 +239,17 @@ unset($__errorArgs, $__bag); ?>
 <?php endif; ?>
 
 <script>
-            function getMedicineName(category_id) {
-            $('#medicine_name').html('<option value="">Select One...</option>');
-            $.ajax({
-                url: "<?php echo e(route('find-medicine-name-by-category')); ?>",
-                type: "POST",
-                data: {
-                    _token: '<?php echo e(csrf_token()); ?>',
-                    medicine_category_id: category_id,
-                },
-                success: function(response) {
+        //  function getAmount()
+        //  {
+        //     var sgst = $('#sgst').val();
+        //     var cgst = $('#cgst').val();
+        //     var igst = $('#igst').val();
+        //     var purchase_price = $('#purchase_price').val();
+        //     var quantity = $('#quantity').val();
 
-                    $.each(response, function(key, value) {
-                        $('#medicine_name').append(
-                            `<option value="${value.id}">${value.medicine_name}</option>`);
-                    });
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        }
+
+
+        //  }
 </script>
 
 <?php $__env->stopSection(); ?>

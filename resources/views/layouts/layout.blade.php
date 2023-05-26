@@ -20,7 +20,7 @@ $login_details = DB::table('users')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+   
 
 
     <!-- Meta data -->
@@ -40,8 +40,6 @@ $login_details = DB::table('users')
     <link href="{{ asset('public/assets/css/dark.css') }}" rel="stylesheet" />
     <link href="{{ asset('public/assets/css/skin-modes.css') }}" rel="stylesheet" />
     <link href="{{ asset('public/assets/plugins/wysiwyag/richtext.css') }}" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <!-- Animate css -->
     <link href="{{ asset('public/assets/css/animated.css') }}" rel="stylesheet" />
@@ -242,34 +240,59 @@ $login_details = DB::table('users')
                                 @can('complain type')
                                 <li><a href="{{ route('add-complain-type-in-front-office') }}">Complain Type</a>
                                 </li>
-                                @endcan
-                                @can('source')
-                                <li><a href="{{ route('add-source-in-front-office') }}">Source</a></li>
-                                @endcan
-                                @can('appointment priority')
-                                <li><a href="{{ route('add-appointment-priority-in-front-office') }}">Appointment
-                                        Priority</a></li>
-                                @endcan
-                            </ul>
-                        </li>
-                        @endif
-                        @if (auth()->user()->can('charges package'))
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Charges Package <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                @can('package name')
-                                <li><a href="{{ route('charges-package-name-details') }}">package name</a></li>
-                                @endcan
-                                @can('package catagory')
-                                <li><a href="{{ route('charges-package-catagory-details') }}">package
-                                        catagory</a></li>
-                                @endcan
-                                @can('package sub catagory')
-                                <li><a href="{{ route('charges-package-sub-catagory-details') }}">package sub
-                                        catagory</a></li>
-                                @endcan
-                            </ul>
-                        </li>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
+                                    <ul class="dropdown-menu">
+
+
+                                        <li><a href="#">Opd</a></li>
+                                        <li><a href="#">Ipd</a></li>
+
+                                    </ul>
+                                </li>
+                                @if (auth()->user()->can('referral'))
+                                <li><a href="{{ route('referral') }}">Refferal</a></li>
+                                @endif
+                                <li><a href="#">Font office</a></li>
+                                <li><a href="{{ route('all-blood-details') }}">Blood Bank</a></li>
+                                <li><a href="{{ route('main-operation') }}">Operation</a></li>
+
+                                @if (auth()->user()->can('view role') ||
+                                auth()->user()->can('asign userBasedPermission') ||
+                                auth()->user()->can('view permission') ||
+                                auth()->user()->can('asign roleToUser') ||
+                                auth()->user()->can('view permission'))
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">Permission<i class="fa fa-chevron-right"></i></a>
+                                    <ul class="dropdown-menu">
+
+                                        <li><a href="{{ route('roleList') }}">Role</a></li>
+                                        <li><a href="#"></a></li>
+
+                                    </ul>
+                                </li>
+                                @endif
+
+                    </div>
+
+                </ul>
+                </li>
+                <li class="nav-item {{ Request::segment(1) == 'pharmacy' ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('bed-status-list') }}">
+                        <div class="icon-new"><img
+                                src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>Bed
+                    </a>
+                </li>
+
+                @if (auth()->user()->can('Report'))
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="icon-new"><img src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>
+                        Reports
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @if (auth()->user()->can('OPD Patient Report'))
+                        <a class="dropdown-item" href="{{ route('opd-patient-report') }}">OPD Patient Report</a>
                         @endif
 
                         @if (auth()->user()->can('Setup Inventory'))
@@ -525,27 +548,9 @@ $login_details = DB::table('users')
 
                     </ul>
                 </li>
-            </div>
+                @endif
 
-            <div class=" menu-item">
-                <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
-                <li class="dropdown">
-
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Inventory</a></li>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Birth and Death record<i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-
-                                <li><a href="#">Birth Record</a></li>
-                                <li><a href="#">Death Record</a></li>
-
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
+                </ul>
 
 
                                 <li><a href="#">Opd</a></li>
@@ -766,10 +771,16 @@ $login_details = DB::table('users')
     <!-- INTERNAL WYSIWYG Editor js -->
     <script src="{{ asset('public/assets/plugins/wysiwyag/jquery.richtext.js') }}"></script>
     <script src="{{ asset('public/assets/js/form-editor.js') }}"></script>
+<<<<<<< HEAD
     {{-- --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     {{-- --}}
+=======
+    {{--    --}}
+
+    {{--    --}}
+>>>>>>> 15cec4d223785f686503fa1ebb54beb3a709cc73
 
 </body>
 

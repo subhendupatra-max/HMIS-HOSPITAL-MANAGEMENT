@@ -836,5 +836,9 @@ class PermissionSeeder extends Seeder
 
         //setup brand-manufacturer
         Permission::create(['name' => 'brand-manufacturer']);
+        //referral
+        Permission::create(['name' => 'referral']);
+
+
     }
 }

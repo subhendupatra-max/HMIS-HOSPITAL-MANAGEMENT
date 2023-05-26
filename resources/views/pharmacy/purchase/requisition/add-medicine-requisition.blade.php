@@ -64,7 +64,7 @@
                             @enderror
                         </div>
 
-                        <div class="form-group col-md-3 newuserrchange">
+                        {{-- <div class="form-group col-md-3 newuserrchange">
                             <label for="need_permission" class="form-label">Need permission <span class="text-danger">*</span></label>
                             <select id="need_permission" class="form-control" name="need_permission"
                                 onclick="fdsfds(this.value)">
@@ -75,9 +75,9 @@
                             @error('need_permission')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div>
+                        </div> --}}
 
-                        <div class="form-group col-md-7 newuserrchange" style="display:none;" id="pop">
+                        {{-- <div class="form-group col-md-7 newuserrchange" style="display:none;" id="pop">
 
                             <div class="form-group col-md-5 d-inline-block">
                                 <label class="form-label">Permission Authority <span class="text-danger">*</span></label>
@@ -108,7 +108,7 @@
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
 
 
                         {{-- <div class="text-center py-4 m-r m-auto mt-3">
@@ -121,9 +121,7 @@
                             <table class="table card-table table-vcenter text-nowrap" id="subhendu">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="width: 30%">Medicine Catagory<span
-                                                class="text-danger">*</span></th>
-                                        <th scope="col" style="width: 30%">Medicine Name<span
+                                        <th scope="col" style="width: 60%">Medicine Name<span
                                                 class="text-danger">*</span></th>
                                         <th scope="col" style="width: 30%">Medicine Unit<span
                                                 class="text-danger">*</span></th>
@@ -135,44 +133,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="trLength">
-                                    @if (isset($medicinedata) && !empty($medicinedata))
-                                        <?php $i = 0; ?>
-                                        @foreach ($medicinedata as $item)
-                                            <tr id="rowid{{ $loop->iteration }}">
-                                                <td>
-
-                                                    <input type="hidden" class="form-control" name="medicine_catagory[]"
-                                                        value="{{ $item->catagory_id }}" />
-
-                                                    <input type="text" readonly class="form-control"
-                                                        value="{{ $item->medicine_catagory_name }}" />
-                                                </td>
-                                                <td>
-                                                    <input type="hidden" class="form-control"
-                                                        name="medicine_name[]"value="{{ $item->medicine_id }}" />
-
-                                                    <input type="text" readonly class="form-control"
-                                                        value="{{ $item->medicine_name }}" />
-                                                </td>
-                                                <td>
-                                                    <input type="hidden" class="form-control" name="medicine_unit[]"
-                                                        value="{{ $item->unit_id }}" />
-
-                                                    <input type="text" readonly class="form-control"
-                                                        value="{{ $item->medicine_unit_name }}" />
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="qty[]" />
-                                                </td>
-                                                <td>
-                                                    <button type="button" class="btn btn-danger"
-                                                        onclick="removerow({{ $loop->iteration }})"><i
-                                                            class="fa fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                            <?php $i = $i + 1; ?>
-                                        @endforeach
-                                    @endif
+                                 
                                 </tbody>
                             </table>
                         </div>
@@ -190,63 +151,7 @@
 
     </div>
 
-    <!-- medicne add model -->
 
-    <div id="modaldemo1" class="modal fade">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content ">
-                <div class="modal-header pd-x-20">
-                    <h5 class=" lh-3"><a href="#" class="font-weight-bold">Add Medicine</a></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body pd-20">
-
-
-                    <form id="myForm" action="{{ route('add-medicine-catagory-and-medicine-name') }}" method="POST">
-                        @csrf
-
-                        <div class="table-responsive">
-                            <table id="example1" class="table table-borderless text-nowrap key-buttons">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" style="width: 30%">#</th>
-                                        <th scope="col" style="width: 30%">Medicine Catagory</th>
-                                        <th scope="col" style="width: 30%">Medicine Name</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($medicine as $value)
-                                        <tr>
-                                            <td>
-                                                <input type="checkbox" name="seleteMedicine[]" id="seleteMedicine"
-                                                    value="{{ $value->id }}" />
-                                            </td>
-                                            <td>
-                                                {{ $value->catagory_name->medicine_catagory_name }}
-                                            </td>
-                                            <td>
-                                                {{ $value->medicine_name }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-
-
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" type="submit" onclick="fetchAllMedicine()">Submit</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </form>
-
-                </div><!-- modal-body -->
-
-            </div>
-        </div><!-- modal-dialog -->
-    </div><!-- modal -->
 
     <!-- medicne add model -->
 
@@ -255,22 +160,13 @@
         i = i + 1;
 
         function addnewrow() {
-            var html = `
-                        <tr id="rowid${i}">
-                        <td>
-                        <select class="form-control select2-show-search " value="{{ old('medicine_catagory') }}" onchange="getCatagoryId(this.value,${i})" name="medicine_catagory[]" id="medicine_catagory${i}" required>
-                            <optgroup>
-                                <option value=" ">Select Medicine Catagory </option>
-                                @foreach ($medicine_catagory as $item)
-                                <option value="{{ $item->id }}">{{ $item->medicine_catagory_name }}</option>
-                                @endforeach
-                            </optgroup>
-                        </select>
-                        </td>
-
+            var html = `<tr id="rowid${i}">
                         <td>
                         <select name="medicine_name[]" class="form-control select2-show-search" id="medicine_name${i}" required onchange="getMedicineNameId(this.value,${i})">
                             <option value="">Select Medicine Name...</option>
+                            @foreach ($medicine_name as $item)
+                                <option value="{{ $item->id }}">{{ @$item->medicine_name }}({{ @$item->catagory_name->medicine_catagory_name }})</option>
+                            @endforeach
                         </select>
                         </td>
 

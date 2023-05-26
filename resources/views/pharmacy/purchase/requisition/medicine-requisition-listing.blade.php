@@ -14,7 +14,7 @@
                         @endcan
 
                         @can('medicine purchase order')
-                        <a href="{{ route('all-medicine-purchase-order-listing') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus mr-1"></i>P.O.</a>
+                        <a href="{{ route('all-medicine-purchase-order-listing') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus mr-1"></i>Purchase Order</a>
                         @endcan
 
                         @can('GRN')
@@ -28,7 +28,7 @@
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
-                    <table class="table card-table table-vcenter text-nowrap table-default">
+                    <table id="example" class="table table-bordered text-nowrap key-buttons">
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
@@ -74,7 +74,7 @@
                         </tbody>
 
                     </table>
-                    {!! $medicine_requisition->links() !!}
+             
                 </div>
             </div>
         </div>

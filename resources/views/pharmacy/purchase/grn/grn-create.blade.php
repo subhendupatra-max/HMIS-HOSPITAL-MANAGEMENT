@@ -104,12 +104,20 @@
                         <table class="table card-table table-vcenter text-nowrap" id="subhendu">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 25%">Req Id <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 55%">Item <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 18%">Quantity <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 15%">Req Id <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 25%">Medicine Name <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">Batch No. <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">Quantity <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">MRP <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">P Rate <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">S Rate <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">Expire Date <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">Discount(%) </th>
+                                    <th scope="col" style="width: 10%">CGST(%) </th>
+                                    <th scope="col" style="width: 10%">SGST(%) </th>
+                                    <th scope="col" style="width: 10%">IGST(%) </th>
+                                    <th scope="col" style="width: 10%">Amount <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 2%"></th>
-
-
                                 </tr>
                             </thead>
                             <tbody id="alltextre">
@@ -124,16 +132,6 @@
                     <div class="d-flex justify-content-end">
                         <span class="biltext">Invoice Value</span>
                          <input type="text" name="invoice_value" id="invoice_value" class="form-control myfld">
-
-                    </div>
-                    <div class="d-flex justify-content-end thrdarea">
-                        <span class="biltext">PO. Value</span>
-                        <input type="text" name="po_value" id="po_value" class="form-control myfld">
-                    </div>
-
-                    <div class="d-flex justify-content-end thrdarea">
-                        <span class="biltext">Purpose</span>
-                        <textarea name="purpose" class="form-control myfld"></textarea>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -192,7 +190,6 @@
 
     function findPOdetails(po_id) {
         $.ajax({
-
             url: "{{ route('get-po-item-details') }}/" + po_id,
             type: "get",
             dataType: 'json',
@@ -208,11 +205,9 @@
 
                 $.each(resp.po_item, function(input, res) {
                     console.log(res);
-                    // console.log(res.brands_id);
-                    var html = '<tr id="rowid' + i + '"><td><input class="form-control" type="hidden" name="po_details_id[]" required readonly value="' + res.purchase_order_details_id + '" /><input class="form-control" type="text" name="req[]" required readonly value="' + res.req_id + '" /></td><td><input class="form-control" type="hidden" name="amount[]" required readonly value="' + res.amount + '" /><input class="form-control" type="hidden" name="rate[]" required readonly value="' + res.rate + '" /><input class="form-control" type="hidden" name="gst[]" required readonly value="' + res.gst + '" /><input class="form-control" type="hidden" name="catagory[]" required readonly value="' + res.catagory_id + '" /><input class="form-control" type="hidden" name="unit[]" required readonly value="' + res.unit_id + '" /><select name="medicine[]" required class="form-control" readonly><option value="' + res.medicine_id + '">' + res.medicine_name + '(' + res.quantity + ')(Catagory :' + res.medicine_catagory_name + ')(Unit :' + res.medicine_unit_name + ')</option></select></td><td><input type="hidden" required name="ori_qty[]" value="' + res.quantity + '" ><input type="text" required name="qty[]" value="' + (parseFloat(res.quantity) - parseFloat(res.grn_qty)) + '" id="qty' + i + '" class="form-control" style="width: 60%; float: left;"></td><td><button type="button" class="btn btn-danger" onclick="remove(' + i + ')"><i class="fa fa-times"></i></button></td></tr>';
+                    var html = '<tr id="rowid' + i + '"><td><input class="form-control" type="hidden" name="po_details_id[]" required readonly value="' + res.purchase_order_details_id + '" /><input class="form-control" type="text" name="req[]" required readonly value="' + res.req_no + '" /></td><td><input class="form-control" type="hidden" name="amount[]" required readonly value="' + res.amount + '" /><input class="form-control" type="hidden" name="rate[]" required readonly value="' + res.rate + '" /><input class="form-control" type="hidden" name="gst[]" required readonly value="' + res.gst + '" /><input class="form-control" type="hidden" name="catagory[]" required readonly value="' + res.catagory_id + '" /><input class="form-control" type="hidden" name="unit[]" required readonly value="' + res.unit_id + '" /><select name="medicine[]" required class="form-control" readonly> <option value="' + res.medicine_id + '">' + res.medicine_name + '</option></select></td><td><input type="text" name="batch_no[]" id="batch_no' + i + '" /></td><td><input type="hidden" required name="ori_qty[]" value="' + res.quantity + '"><input type="text" required name="qty[]" value="' + (parseFloat(res.quantity) - parseFloat(res.grn_qty)) + '" id="qty' + i + '" class="form-control" style="width: 60%; float: left;"></td><td><input type="text" name="mrp[]" id="mrp' + i + '" /></td><td><input type="text" name="p_rate[]" id="p_rate' + i + '" /></td><td><input type="text" name="s_rate[]" id="s_rate' + i + '" /></td><td><input type="text" name="expire_date[]" id="expire_date' + i + '" /></td><td><input type="text" name="discount[]" id="discount' + i + '" /></td><td><input type="text" name="cgst[]" id="cgst' + i + '" /></td><td><input type="text" name="sgst[]" id="sgst' + i + '" /></td><td><input type="text" name="igst[]" id="igst' + i + '" /></td><td><input type="text" name="amount[]" id="amount' + i + '" /></td><td><button type="button" class="btn btn-danger btn-sm" onclick="remove(' + i + ')"><i class="fa fa-times"></i></button></td></tr>';
                     $('#subhendu').append(html);
                     i = i + 1;
-
                 });
                 $('#jsdfbujdg').val(i);
             }

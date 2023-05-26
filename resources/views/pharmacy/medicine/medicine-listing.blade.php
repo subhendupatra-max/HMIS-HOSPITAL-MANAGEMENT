@@ -12,9 +12,9 @@
                         @can('add medicine')
                         <a href="{{ route('add-medicine-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-tablets"></i> Add Medicine</a>
                         @endcan
-                        {{-- @can('')
+                        @can('')
                         <a href="{{ route('all-medicine-requisition-listing') }}" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Purchase </a>
-                        @endcan --}}
+                        @endcan
                     </div>
                 </div>
             </div>

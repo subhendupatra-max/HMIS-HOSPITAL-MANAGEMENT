@@ -13,7 +13,9 @@
     <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-payment' ? 'active' : ''); ?>" href="<?php echo e(route('ipd-payment-details', ['ipd_id' => base64_encode($ipd_details->id)])); ?>"><i class="fa fa-rupee-sign"></i> Payment</a>
     <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-bed-history' ? 'active' : ''); ?>" href="<?php echo e(route('bed-transfar-history-in-ipd', ['ipd_id' => base64_encode($ipd_details->id)])); ?>"><i class="fa fa-bed"></i> Bed History</a>
     <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-physical-condition' ? 'active' : ''); ?>" href="<?php echo e(route('physical-condition-in-ipd', ['ipd_id' => base64_encode(@$ipd_details->id)])); ?>"><i class="fa fa-prescription-bottle"></i> Physical Condition </a>
+
     <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-discharged' ? 'active' : ''); ?>" href="<?php echo e(route('discharged-patient-in-ipd', ['ipd_id' => base64_encode($ipd_details->id)])); ?>"><i class="far fa-calendar-check"></i> Discharge Patient</a>
+    
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('IPD Pathology Investigation')): ?>
     <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('ipd-pathology-investigation', ['id' => base64_encode($ipd_details->id)])); ?>"><i class="fa fa-microscope"></i> Pathology Investigation</a>
     <?php endif; ?>

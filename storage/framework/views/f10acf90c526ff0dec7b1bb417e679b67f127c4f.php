@@ -9,12 +9,9 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        
-
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add medicine')): ?>
                         <a href="<?php echo e(route('add-medicine-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-tablets"></i> Add Medicine</a>
                         <?php endif; ?>
-
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
                         <a href="<?php echo e(route('all-medicine-requisition-listing')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-shopping-cart"></i> Purchase </a>
                         <?php endif; ?>
@@ -22,7 +19,7 @@
                 </div>
             </div>
         </div>
-
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">

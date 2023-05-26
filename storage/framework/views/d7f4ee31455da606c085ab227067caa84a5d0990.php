@@ -105,25 +105,11 @@
                         Req No.
                     </th>
                     <th style="padding: 7px 0px 7px 0px;border-right:2px solid black;border-bottom:2px solid black;">
-                        Description of Goods
+                        Description of Medicine
                     </th>
-                    <th style="padding: 7px 0px 7px 0px;border-right:2px solid black;border-bottom:2px solid black;">
-                        SGST Rate
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;border-right:2px solid black;border-bottom:2px solid black;">
-                        CGST Rate
-                    </th>
+                
                     <th style="padding: 7px 0px 7px 0px;border-right:2px solid black;border-bottom:2px solid black;">
                         Quantity
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;border-right:2px solid black;border-bottom:2px solid black;">
-                        Rate
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;border-right:2px solid black;border-bottom:2px solid black;">
-                        Per
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;border-right:2px solid black;border-bottom:2px solid black;">
-                        Amount
                     </th>
                 </tr>
             <?php if(!empty($po_item)): ?>
@@ -140,121 +126,16 @@
                     <td style="padding: 7px 0px 7px 7px;vertical-align:top;border-bottom: 2px solid black;border-right: 2px solid black;">
                         <b><?php echo e(@$value->fetch_medicine_name->medicine_name); ?></b>
                     </td>
+                
                     <td style="padding: 7px 0px 7px 0px;text-align: center;vertical-align:top;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        <?php echo($value->gst/2); ?>%
+                        <b><?php echo e(@$value->quantity); ?> <?php echo e(@$value->fetch_medicine_name->unit_name->medicine_unit_name); ?> </b>
                     </td>
-                    <td style="padding: 7px 0px 7px 0px;text-align: center;vertical-align:top;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        <?php echo($value->gst/2); ?>%
-                    </td>
-                    <td style="padding: 7px 0px 7px 0px;text-align: center;vertical-align:top;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        <b><?php echo e(@$value->quantity); ?> </b>
-                    </td>
-                    <td style="padding: 7px 0px 7px 0px;text-align: center;vertical-align:top;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        <?php echo e(@$value->rate); ?>
-
-                    </td>
-                    <td style="padding: 7px 7px 7px 7px;text-align: center;vertical-align:top;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        <?php echo e(@$value->units); ?>
-
-                    </td>
-                    <td style="padding: 7px 7px 7px 7px;text-align: center;vertical-align:top;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        <b><?php echo e(@$value->amount); ?></b>
-                    </td>
+                  
                  </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <?php endif; ?>
-                 <tr style="text-align: right; font-size: 13px;">
-                    <th style="padding: 7px 0px 7px 0px;border-left: 2px solid black;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;text-align: center;border-bottom: 2px solid black;border-right: 2px solid black;">
-                     Rs <?php echo e($po_list->total); ?>
-
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;text-align: center;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        Rs <?php echo e($po_list->total); ?>
-
-                    </th>
-                 </tr>
-                                 <tr style="text-align: right; font-size: 13px;">
-                    <th style="padding: 7px 0px 7px 0px;border-left: 2px solid black;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;text-align: center;border-bottom: 2px solid black;border-right: 2px solid black;">
-                     <?php echo e($po_list->extra_charges_name); ?>
-
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;text-align: center;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        Rs <?php echo e($po_list->extra_charges_value); ?>
-
-                    </th>
-                 </tr>
-                <tr style="text-align: right; font-size: 13px;">
-                    <th style="padding: 7px 0px 7px 0px;border-left: 2px solid black;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;text-align: center;border-bottom: 2px solid black;border-right: 2px solid black;">
-                     Grand Total
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 7px 7px 0px;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        
-                    </th>
-                    <th style="padding: 7px 0px 7px 0px;text-align: center;border-bottom: 2px solid black;border-right: 2px solid black;">
-                        Rs <?php echo e($po_list->grand_total); ?>
-
-                    </th>
-                 </tr>
+                
+              
             </table>
       <!-- ============================main area======================================== -->
       <!-- ============================footer area===================================== -->

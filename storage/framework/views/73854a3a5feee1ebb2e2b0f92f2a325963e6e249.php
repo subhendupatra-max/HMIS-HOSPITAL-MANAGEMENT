@@ -14,7 +14,7 @@
                         <?php endif; ?>
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine purchase order')): ?>
-                        <a href="<?php echo e(route('all-medicine-purchase-order-listing')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus mr-1"></i>P.O.</a>
+                        <a href="<?php echo e(route('all-medicine-purchase-order-listing')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus mr-1"></i>Purchase Order</a>
                         <?php endif; ?>
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('GRN')): ?>
@@ -28,7 +28,7 @@
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
-                    <table class="table card-table table-vcenter text-nowrap table-default">
+                    <table id="example" class="table table-bordered text-nowrap key-buttons">
                         <thead>
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
@@ -74,8 +74,7 @@
                         </tbody>
 
                     </table>
-                    <?php echo $medicine_requisition->links(); ?>
-
+             
                 </div>
             </div>
         </div>

@@ -129,8 +129,7 @@ unset($__errorArgs, $__bag); ?>
                                 <td><?php echo e(@$value->payment_prefix); ?><?php echo e(@$value->id); ?></td>
                                 <td><?php echo e(@$value->payment_amount); ?></td>
                                 
-                                <td><?php echo e(date('d-m-Y h:i A',
-                                    strtotime(@$value->payment_date))); ?></td>
+                                <td><?php echo e(date('d-m-Y h:i A',strtotime(@$value->payment_date))); ?></td>
                                
                                 <td><?php echo e(@$value->payment_mode); ?></td>
                                 <td>
