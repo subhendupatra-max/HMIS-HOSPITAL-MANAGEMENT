@@ -87,7 +87,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-3 useradddtwo">
+                        <div class="col-md-3  ">
                             <input type="text" name="last_name" value="{{ old('last_name') }}" id="last_name" required="">
                             <label for="last_name"> Last Name <span class="text-danger">*</span></label>
                             @error('last_name')
