@@ -1401,7 +1401,6 @@ Route::group(['middleware' => ['permission:referral']], function () {
         Route::post('update-referral', [ReferralController::class, 'update_referral'])->name('update-referral');
     });
     Route::group(['middleware' => ['permission:referral person']], function () {
-        
     });
 });
 // ================================ referral ==============================================
@@ -2676,11 +2675,25 @@ Route::group(['middleware' => ['permission:Report'], 'prefix' => 'report'], func
         Route::post('fetch-emg-patient-report', [ReportController::class, 'fetch_emg_patient_report'])->name('fetch-emg-patient-report');
     });
 
-    //for opd income report
-    Route::group(['middleware' => ['permission:OPD Income Report']], function () {
-        Route::get('opd-income-report', [ReportController::class, 'opd_income_report_index'])->name('opd-income-report');
-        Route::post('fetch-opd-income-report', [ReportController::class, 'fetch_opd_income_report'])->name('fetch-opd-patient-report');
+    //for opd billing report
+    Route::group(['middleware' => ['permission:OPD Billing Report']], function () {
+        Route::get('opd-billing-report', [ReportController::class, 'opd_billing_report_index'])->name('opd-billing-report');
+        Route::post('fetch-opd-billing-report', [ReportController::class, 'fetch_opd_billing_report'])->name('fetch-opd-billing-report');
     });
+
+    //for ipd billing report
+    Route::group(['middleware' => ['permission:IPD Billing Report']], function () {
+        Route::get('ipd-billing-report', [ReportController::class, 'ipd_billing_report_index'])->name('ipd-billing-report');
+        Route::post('fetch-ipd-billing-report', [ReportController::class, 'fetch_ipd_billing_report'])->name('fetch-ipd-billing-report');
+    });
+
+     //for emg billing report
+     Route::group(['middleware' => ['permission:EMG Billing Report']], function () {
+        Route::get('emg-billing-report', [ReportController::class, 'emg_billing_report_index'])->name('emg-billing-report');
+        Route::post('fetch-emg-billing-report', [ReportController::class, 'fetch_emg_billing_report'])->name('fetch-emg-billing-report');
+    });
+
+    //for payment report
     Route::group(['middleware' => ['permission:Payment Report']], function () {
         Route::get('payment-report', [ReportController::class, 'payment_report_index'])->name('payment-report');
         Route::post('fetch-payment-report', [ReportController::class, 'fetch_payment_report'])->name('fetch-payment-report');
