@@ -19,13 +19,16 @@
                 </div>
             </div>
         </div>
+        <div class="card-header">
+            @include('emg.include.patient-name')
+        </div>
         <div class="card-body p-0">
             <div class="row no-gutters">
                 {{-- ========================================================================================= --}}
                 <div class="col-lg-4 col-xl-4 border-right">
 
                     {{-- ================== patient name ====================== --}}
-                    <div class="options px-5 pt-2  border-bottom pb-1">
+                    <!-- <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
                                 <span class="profileHeding">{{ @$emg_patient_details->patient_details->first_name }}
@@ -33,7 +36,7 @@
                                     {{ @$emg_patient_details->patient_details->last_name }}({{ @$emg_patient_details->patient_details->patient_prefix }}{{ @$emg_patient_details->patient_details->id }})</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     {{-- ================== patient name ====================== --}}
 
                     {{-- ================== patient information ====================== --}}
@@ -130,7 +133,7 @@
                                         <span class="font-weight-semibold w-50"> Patient Type :- </span>
                                     </td>
                                     <td class="py-2 px-0">
-                                    {{ $emg_patient_details->all_emg_visit_details->patient_type }}
+                                        {{ $emg_patient_details->all_emg_visit_details->patient_type }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -141,7 +144,7 @@
                                         <span class="font-weight-semibold w-50"> Case Id :- </span>
                                     </td>
                                     <td class="py-2 px-0">
-                                    {{ $emg_patient_details->case_id }}
+                                        {{ $emg_patient_details->case_id }}
                                     </td>
                                 </tr>
                             </tbody>

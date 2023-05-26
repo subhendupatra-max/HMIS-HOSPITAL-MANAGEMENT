@@ -133,7 +133,7 @@ unset($__errorArgs, $__bag); ?>
                         <label for="physical_examinaiton_at_admission" class="form-label">Key findings, on physical examination at the time of admission</label>
                         <textarea class="form-control" id="physical_examinaiton_at_admission" name="physical_examinaiton_at_admission"><?php echo e(@$patient_discharge_details->physical_examinaiton_at_admission); ?></textarea>
                     </div>
-                    <div class="form-group col-md-4">
+                    <!-- <div class="form-group col-md-4">
                         <label for="history_alcoholism" class="form-label"> History of alcoholism, tobacco or substance abuse, if nay</label>
                         <textarea class="form-control" id="history_alcoholism" name="history_alcoholism"><?php echo e(@$patient_discharge_details->history_alcoholism); ?></textarea>
                     </div>
@@ -146,7 +146,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group col-md-4">
                         <label for="family_history_diagnosis" class="form-label"> Family History if significant/ relevant to diagnosis or treatment</label>
                         <textarea class="form-control" id="family_history_diagnosis" name="family_history_diagnosis"><?php echo e(@$patient_discharge_details->family_history_diagnosis); ?></textarea>
-                    </div>
+                    </div> -->
 
                     <div class="form-group col-md-4">
                         <label for="summary_inves_during_hos" class="form-label"> Summary of key invesigations during Hospitalization<span class="text-danger">*</span></label>

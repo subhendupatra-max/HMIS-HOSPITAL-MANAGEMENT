@@ -2,7 +2,7 @@
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-profile' ? 'active' : '' }}" href="{{ route('ipd-profile', ['id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-home"></i> Profile</a>
     <a class="dropdown-item {{ Request::segment(2) == 'oxygen-monitoring' ? 'active' : '' }}" href="{{ route('add-oxygen-monitoring-details', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-dna"></i> Oxygen Monitoring</a>
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-medication' ? 'active' : '' }}" href="{{ route('show-medicaiton-dose', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-tablets"></i> Medication</a>
-    <a class="dropdown-item {{ Request::segment(2) == 'ipd-operation' ? 'active' : '' }}" href="{{ route('show-ipd-operation-details', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-scissors"></i> Operation</a>
+    <!-- <a class="dropdown-item {{ Request::segment(2) == 'ipd-operation' ? 'active' : '' }}" href="{{ route('show-ipd-operation-details', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-scissors"></i> Operation</a> -->
 
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-nurse-note' ? 'active' : '' }}" href="{{ route('ipd-nurse-note-details', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-user-nurse"></i> Nurse Note</a>
     @can('ipd billing')
@@ -26,7 +26,7 @@
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-timeline' ? 'active' : '' }}" href="{{ route('timeline-lisitng-in-ipd', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="far fa-calendar-check"></i> Timeline</a>
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-operation' ? 'active' : '' }}" href="{{ route('ipd-operation-in-ipd', ['id' => base64_encode($ipd_details->id)]) }}"><i class="far fa-calendar-check"></i> Operation</a>
 
-    <a class="dropdown-item {{ Request::segment(2) == 'ipd-blood-details' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-ipd', ['id' => base64_encode($ipd_details->id)]) }}"><i class="fa-solid fa-droplet"></i>Blood Details</a>
+    <a class="dropdown-item {{ Request::segment(2) == 'ipd-blood-details' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-ipd', ['id' => base64_encode($ipd_details->id)]) }}"><i class="fas fa-tint"></i>Blood Details</a>
  
 
 

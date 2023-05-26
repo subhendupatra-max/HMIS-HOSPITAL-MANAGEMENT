@@ -20,7 +20,9 @@
                 </div>
             </div>
         </div>
-
+        <div class="card-header">
+            @include('OPD.include.patient-name')
+        </div>
 
         <div class="card-body">
             <div class="col-xl-12 col-lg-12 col-md-12">

@@ -27,4 +27,5 @@
 
 <a class="dropdown-item {{ Request::segment(2) == 'opd-operation' ? 'active' : '' }}" href="{{ route('opd-operation-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-receipt"></i> Operation</a>
 
-<a class="dropdown-item {{ Request::segment(2) == 'opd-blood-issue' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa-solid fa-droplet"></i>Blood Details</a>
+<a class="dropdown-item {{ Request::segment(2) == 'opd-blood-issue' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fas fa-tint"></i> Blood Details</a>
+

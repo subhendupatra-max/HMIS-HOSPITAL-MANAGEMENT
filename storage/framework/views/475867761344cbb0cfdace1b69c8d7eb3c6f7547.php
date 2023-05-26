@@ -6,7 +6,7 @@
 
 </head>
 <script>
-  // window.print();
+  window.print();
 </script>
 <style>
   @page  {
@@ -62,7 +62,8 @@
   <table style="width: 100%; border:1px soild black;border-collapse: collapse">
     <tr style="text-align: center;">
       <td>
-        <img src="./image/1571895010.png" style="width: 100%;">
+        <!-- <img src="./image/1571895010.png" style="width: 100%;"> -->
+        <img src="<?php echo e(asset('public/assets/images/header')); ?>/<?php echo e($header_image->logo); ?>" alt="" style="width: 100%;">
       </td>
     </tr>
     <tr style="width:100%">
@@ -77,8 +78,12 @@
           <b>UHID No. : <?php echo e($ipd_details->all_patient_details->patient_prefix); ?>/<?php echo e($ipd_details->all_patient_details->id); ?></b>
         </td>
         <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
-          <img src="./image/qr.png" style="width: 80px;">
+          <!-- <img src="./image/qr.png" style="width: 80px;"> -->
+          <?php
+          $ipd_de = $ipd_details->ipd_prefix . '' . $ipd_details->ipd_id;
+          ?>
 
+          <span style="width: 80px;height:60px"><?php echo QrCode::size(90)->generate($ipd_de); ?> </span>
         </td>
         <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
           <!-- <img src="./image/barcodee.png" style="width: 80px;"> -->
@@ -86,7 +91,7 @@
           $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
           ?>
 
-          <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$ipd_details->ipd_prefix @$ipd_details->ipd_id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 80px;height:40px">
+          <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$ipd_details->ipd_prefix @$ipd_details->ipd_id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 190px;height:60px">
         </td>
         <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
           <b>Admission Date : <?php echo e($ipd_details->appointment_date); ?></b>
@@ -205,16 +210,25 @@
         </td>
 
       </tr>
+      <?php if($ipd_details->patient_type == 'Swasthya Sathi' || $ipd_details->patient_type == 'TPA' ): ?>
       <tr>
         <th colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($ipd_details->patient_type); ?>
+          <?php if($ipd_details->patient_type == 'Swasthya Sathi'): ?>
+          Swasthya Sathi No.
+          <?php elseif($ipd_details->patient_type == 'TPA'): ?>
+          TPA <?php echo e($ipd_details->tpa_details->TPA_name); ?>
+
+          <?php endif; ?>
 
         </th>
         <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          19071997166295813
+          <?php echo e($ipd_details->type_no); ?>
+
         </td>
 
       </tr>
+      <?php endif; ?>
+
     </table>
 
     <p style="font-size: 13px; margin-top: 30px;">

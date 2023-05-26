@@ -2760,6 +2760,6 @@ Route::group(['middleware' => ['permission:Emg Blood Bank Details']], function (
 
 //================================= Ipd Admission Form  ====================================
 Route::group(['middleware' => ['permission:Emg Blood Bank Details']], function () {
-    Route::get('print-ipd-discharge-patient/{ipd_id?}', [IpdController::class, 'print_ipd_discharge_patient'])->name('print-ipd-discharge-patient');
+    Route::get('print-ipd-addmission-form/{ipd_id?}', [IpdController::class, 'print_ipd_addmission_form'])->name('print-ipd-addmission-form');
 });
 //================================= Ipd Admission Form ===================================

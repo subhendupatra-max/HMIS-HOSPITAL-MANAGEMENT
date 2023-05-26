@@ -52,7 +52,7 @@ class User extends Authenticatable
         'local_identification_number',
 
 
-];
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

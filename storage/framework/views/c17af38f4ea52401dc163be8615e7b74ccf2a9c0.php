@@ -26,5 +26,5 @@
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-timeline' ? 'active' : ''); ?>" href="<?php echo e(route('physical-condition-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa fa-file"></i> Physical Conditions</a>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-operation' ? 'active' : ''); ?>" href="<?php echo e(route('emg-operation-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="far fa-calendar-check"></i> Operation</a>
 
-<a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('blood-bank-detials-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa-solid fa-droplet"></i> Blood Details</a>
+<a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('blood-bank-detials-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fas fa-tint"></i> Blood Details</a>
 <?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/emg/include/menu.blade.php ENDPATH**/ ?>

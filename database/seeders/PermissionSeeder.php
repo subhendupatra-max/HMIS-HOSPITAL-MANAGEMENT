@@ -833,5 +833,8 @@ class PermissionSeeder extends Seeder
 
         //patient discharge print
         Permission::create(['name' => 'ipd discharged patient print']);
+
+        //setup brand-manufacturer
+        Permission::create(['name' => 'brand-manufacturer']);
     }
 }

@@ -20,6 +20,9 @@
                 </div>
             </div>
         </div>
+        <div class="card-header">
+            @include('emg.include.patient-name')
+        </div>
         @if (session('success'))
         <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{ session('success') }}</div>
         @endif

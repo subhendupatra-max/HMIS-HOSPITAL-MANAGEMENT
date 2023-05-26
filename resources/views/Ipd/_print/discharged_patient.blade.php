@@ -2,6 +2,9 @@
 <html>
 <title>Statement Of Marks</title>
 <meta charset="utf-8">
+<script>
+    window.print();
+</script>
 
 <body>
 
@@ -51,39 +54,45 @@
         <table style="width: 100%;">
             <tr style="text-align: center;">
                 <td>
-                    <img src="./assets/images/1571895010.png " style="width: 600px;">
+                    <!-- <img src="./assets/images/1571895010.png " style="width: 600px;"> -->
+                    <img src="{{ asset('public/assets/images/header') }}/{{$header_image->logo}}" alt="" style="width: 80%;">
                 </td>
             </tr>
 
         </table>
         <table style="margin: 10px 0px 0px 0px;">
             <tr>
-                <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-                    <b>UHID No. : {{ $patient_discharge_details->ipd_prefix }}/{{ $patient_discharge_details->ipd_id }}</b>
+                <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:280px">
+                    <b>UHID No. : {{ $patient_discharge_details->ipd_prefix }}{{ $patient_discharge_details->ipd_id }}</b>
                 </td>
-                <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
+                <td rowspan="2" style="text-align: center;border: 1px solid #899499;width: 250px;height:60px">
                     <!-- <img src="{{ asset('public/hospital_details/barcode.png') }}" style="width: 80px;"> -->
 
                     @php
                     $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                     @endphp
 
-                    <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$patient_discharge_details->ipd_prefix @$patient_discharge_details->ipd_id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 80px;height:40px">
+                    <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$patient_discharge_details->ipd_prefix @$patient_discharge_details->ipd_id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 150px;height:60px">
                 </td>
-                <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
-                    <img src="{{ asset('public/hospital_details/qr.png') }}" style="width: 80px;">
+                <td rowspan="2" style="text-align: center;border: 1px solid #899499;width: 70px;height:70px">
+                    <?php
+                    $ipd_de = $patient_discharge_details->ipd_prefix . '' . $patient_discharge_details->ipd_id;
+                    ?>
 
+
+                    <!-- <img src="{{ asset('public/hospital_details/qr.png') }}" style="width: 80px;"> -->
+                    <span style="width: 60px;height:60px">{!! QrCode::size(90)->generate($ipd_de); !!} </span>
                     <!-- <img src="{{public_path().'/qr/'.$patient_discharge_details->ipd_prefix}}" style="width:70px; height: 85px;position: absolute;right: 0px;top:10px; border: 2px solid #d3d1d1; padding: 4px;"> -->
 
                 </td>
-                <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
+                <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:280px">
                     <b>Admission Date : {{ $patient_discharge_details->appointment_date }}</b>
                 </td>
 
             </tr>
             <tr>
                 <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b> IPD no. : {{ $patient_discharge_details->ipd_prefix }}/{{ $patient_discharge_details->ipd_id }}</b></td>
-                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Patient Source:{{ $patient_discharge_details->patient_source }} Source Id:{{ $patient_discharge_details->patient_source_id}};</b></td>
+                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Patient Source:{{ $patient_discharge_details->patient_source }} Source Id:{{ $patient_discharge_details->patient_source_id}}</b></td>
 
             </tr>
         </table>
@@ -181,15 +190,23 @@
                 </td>
 
             </tr>
+            @if($patient_discharge_details->patient_type == 'Swasthya Sathi' || $patient_discharge_details->patient_type == 'TPA' )
             <tr>
                 <th colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    Swastya Sathi No.
+
+                    @if($patient_discharge_details->patient_type == 'Swasthya Sathi')
+                    Swasthya Sathi No.
+                    @elseif($patient_discharge_details->patient_type == 'TPA')
+                    TPA {{$patient_discharge_details->TPA_name}}
+                    @endif
+
                 </th>
                 <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                    ksjdfkh
+                    {{@$ipd_details->type_no}}
                 </td>
 
             </tr>
+            @endif
         </table>
         <table style="width: 100%; margin: 10px 0px 0px 0px;border: 1px solid #899499;border-collapse: collapse;">
             <tr>
@@ -270,6 +287,9 @@
                 </td>
 
             </tr>
+
+        </table>
+        <table style="width: 100%; border-collapse: collapse; margin: 10px 0px 0px 0px;">
             <tr>
                 <th colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                     Summary of key investigations during Hospitalization

@@ -46,6 +46,7 @@ use App\Models\OperationCatagory;
 use App\Models\OperationType;
 use App\Models\BloodComponentIssue;
 use App\Models\bloodBank\BloodIssue;
+use App\Models\Diagonasis;
 use App\Models\DischargedPatient;
 
 use PDF;
@@ -69,8 +70,8 @@ class IpdController extends Controller
         $symptoms_types = SymptomsType::get();
         $patient_source_name = $patient_source;
         $case_id = OpdDetails::where('patient_id', '=', $patient_id)->first();
-
-        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'patient_details', 'patient_id', 'tpa_management', 'patient_source_name', 'patient_source_id', 'case_id'));
+        $icd_code  = Diagonasis::all();
+        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'patient_details', 'patient_id', 'tpa_management', 'patient_source_name', 'patient_source_id', 'case_id', 'icd_code'));
     }
 
     public  function profile($id)
@@ -188,6 +189,10 @@ class IpdController extends Controller
             $ipd_details->bed                         = $request->bed;
             $ipd_details->bed_ward_id                 = $request->ward;
             $ipd_details->bed_unit_id                 = $request->unit;
+            $ipd_details->history_alcoholism          = $request->history_alcoholism;
+            $ipd_details->medical_surgical_history    = $request->medical_surgical_history;
+            $ipd_details->family_history_diagnosis    = $request->family_history_diagnosis;
+            $ipd_details->icd_code_at_the_time_of_admission  = $request->icd_code_at_the_time_of_admission;
             $ipd_details->generated_by                = Auth::user()->id;
             $ipd_details->save();
             //SAVE in ipd details
@@ -239,8 +244,9 @@ class IpdController extends Controller
         $patient_source_id = $visit_details->opd_prefix . '' . $visit_details->id;
         $case_id = $visit_details->case_id;
         $patient_source = 'OPD';
+        $icd_code  = Diagonasis::all();
 
-        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units'));
+        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units', 'icd_code'));
     }
 
     public function edit_ipd_registration($ipd_id)
@@ -302,6 +308,9 @@ class IpdController extends Controller
             $ipd_details->bed                         = $request->bed;
             $ipd_details->bed_ward_id                 = $request->ward;
             $ipd_details->bed_unit_id                 = $request->unit;
+            $ipd_details->history_alcoholism          = $request->history_alcoholism;
+            $ipd_details->medical_surgical_history    = $request->medical_surgical_history;
+            $ipd_details->family_history_diagnosis    = $request->family_history_diagnosis;
             $ipd_details->generated_by                = Auth::user()->id;
             $ipd_details->save();
             //SAVE in ipd details
@@ -523,6 +532,8 @@ class IpdController extends Controller
             ->where('operation_theathers.operation_booking_id', $operation_booking_id)
             ->first();
 
+
+
         // dd($operation_details);
 
         return view('IPD.operation-ipd.operation-details', compact('operation_details', 'ipd_details', 'ipd_id', 'section_name', 'operation_booking_id'));
@@ -611,11 +622,11 @@ class IpdController extends Controller
         return view('ipd.blood-bank.blood-details', compact('ipd_id', 'ipd_details', 'blood_details', 'components_details', 'patient_details_information'));
     }
 
-    public function print_ipd_discharge_patient($ipd_id)
+    public function print_ipd_addmission_form($ipd_id)
     {
         $ipd_id = base64_decode($ipd_id);
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
-
-        return view('Ipd._print.ipd-admission-form', compact('ipd_details'));
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+        return view('Ipd._print.ipd-admission-form', compact('ipd_details', 'header_image')) . redirect('ipd/ipd-profile/ipd-profile/' . base64_encode($ipd_id));
     }
 }

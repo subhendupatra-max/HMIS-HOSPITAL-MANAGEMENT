@@ -21,7 +21,9 @@
                 </div>
             </div>
         </div>
-
+        <div class="card-header">
+            @include('OPD.include.patient-name')
+        </div>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
