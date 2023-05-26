@@ -20,6 +20,9 @@
                 </div>
             </div>
         </div>
+        <div class="card-header">
+            <?php echo $__env->make('ipd.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
         <div class="card-body p-0">
             <div class="col-xl-12 col-lg-12 col-md-12 mt-3">
                 <div class="latest-timeline scrollbar3" id="scrollbar3">

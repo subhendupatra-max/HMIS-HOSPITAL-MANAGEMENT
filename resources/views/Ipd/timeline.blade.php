@@ -20,6 +20,9 @@
                 </div>
             </div>
         </div>
+        <div class="card-header">
+            @include('ipd.include.patient-name')
+        </div>
         <div class="card-body p-0">
             <div class="col-xl-12 col-lg-12 col-md-12 mt-3">
                 <div class="latest-timeline scrollbar3" id="scrollbar3">

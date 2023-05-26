@@ -19,6 +19,7 @@
             </div>
 
         </div>
+        
         @include('message.notification')
         <div class="card-body ">
             <form action="{{ route('save-bed-transfar-history') }}" method="POST" enctype="multipart/form-data">
