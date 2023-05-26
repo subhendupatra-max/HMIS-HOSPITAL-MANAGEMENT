@@ -833,5 +833,10 @@ class PermissionSeeder extends Seeder
 
         //patient discharge print
         Permission::create(['name' => 'ipd discharged patient print']);
+
+        //referral
+        Permission::create(['name' => 'referral']);
+
+
     }
 }

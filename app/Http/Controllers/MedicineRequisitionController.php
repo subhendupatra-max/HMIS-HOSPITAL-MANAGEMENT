@@ -31,8 +31,7 @@ class MedicineRequisitionController extends Controller
 
         $medicine_requisition = MedicineRequisition::where('is_delete', 0)
             ->orderBy('medicine_requisitions.id', 'DESC')
-            ->paginate(20);
-
+            ->get();
         return view('pharmacy.purchase.requisition.medicine-requisition-listing', compact('medicine_requisition'));
     }
 
@@ -40,11 +39,11 @@ class MedicineRequisitionController extends Controller
     {
         $store_room_list = MedicineStoreRoom::where('is_active', '1')->get();
         $medicine_catagory = MedicineCatagory::all();
-        $medicine = Medicine::all();
+        $medicine_name = Medicine::all();
         $medicineUnit = MedicineUnit::all();
         $user_list = User::where('is_active', '1')->get();
 
-        return view('pharmacy.purchase.requisition.add-medicine-requisition', compact('medicine_catagory', 'user_list', 'store_room_list', 'medicine', 'medicineUnit'));
+        return view('pharmacy.purchase.requisition.add-medicine-requisition', compact('medicine_catagory', 'user_list', 'store_room_list', 'medicineUnit','medicine_name'));
     }
 
     public function save_medicine_requisition_details(Request $request)
@@ -52,67 +51,29 @@ class MedicineRequisitionController extends Controller
         try {
             DB::beginTransaction();
             $general_details = DB::table('general_settings')->first();
-
             $validate = $request->validate([
                 'date'                      => 'required',
-
             ]);
-
-            $permission = $request->post('need_permission');
-
             $prefix = Prefix::where('name', '=', 'medicine_requisition')->first();
-
-            if ($permission == 'yes') {
-                $requisition = new MedicineRequisition();
-                $requisition->requisition_prefix               = $prefix->prefix;
-                $requisition->store_room_id                    = $request->store_room;
-                $requisition->date                             = $request->date;
-                $requisition->checked_by                       = $request->checked_by;
-                $requisition->requested_by                     = $request->requested_by;
-                $requisition->genarated_by                     = Auth::user()->id;
-                $requisition->status                           = 1;
-                $status     =  $requisition->save();
-            } else {
-                $requisition = new MedicineRequisition();
-                $requisition->requisition_prefix               = $prefix->prefix;
-                $requisition->store_room_id                    = $request->store_room;
-                $requisition->date                             = $request->date;
-                $requisition->checked_by                       = $request->checked_by;
-                $requisition->requested_by                     = $request->requested_by;
-                $requisition->genarated_by                     = Auth::user()->id;
-                $requisition->status                           = 3;
-                $status     =  $requisition->save();
-            }
-
-
-
-            foreach ($request->medicine_catagory as $key => $medicine_catagory) {
+            $requisition = new MedicineRequisition();
+            $requisition->requisition_prefix               = $prefix->prefix;
+            $requisition->store_room_id                    = $request->store_room;
+            $requisition->date                             = $request->date;
+            $requisition->checked_by                       = $request->checked_by;
+            $requisition->requested_by                     = $request->requested_by;
+            $requisition->genarated_by                     = Auth::user()->id;
+            $requisition->status                           = 3;
+            $status     =  $requisition->save();
+            
+            foreach ($request->medicine_name as $key => $medicine_catagory) {
                 $requisition_details = new MedicineRequisitionDetails();
                 $requisition_details->requisition_id              = $requisition->id;
-                $requisition_details->medicine_catagory           = $request->medicine_catagory[$key];
                 $requisition_details->medicine_name               = $request->medicine_name[$key];
                 $requisition_details->medicine_unit               = $request->medicine_unit[$key];
                 $requisition_details->quantity                    = $request->qty[$key];
                 $status = $requisition_details->save();
             }
-
-
-            if ($permission == 'yes') {
-                foreach ($request->permission_authority as $key => $permission_authority) {
-                    $permission = new MedicineRequisitionPermission();
-                    $permission->requisition_id              = $requisition->id;
-                    $permission->user_id                     = $request->permission_authority[$key];
-                    $permission->permission_type             = $request->permission_type;
-                    $permission->need_permission             = $request->need_permission;
-                    $permission->status                      = 'Pending';
-                    $permission->date                        = '';
-                    $permission->comment                     = '';
-                    $status = $permission->save();
-                }
-            }
-
-            DB::commit();
-
+            // DB::commit();
             if ($status) {
                 return redirect()->route('all-medicine-requisition-listing')->with('success', 'Requisition Added Sucessfully');
             } else {

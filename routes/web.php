@@ -1391,10 +1391,18 @@ Route::group(['middleware' => ['permission:Bed Status']], function () {
 // ================================bed status==============================================
 
 // ================================ referral ==============================================
-Route::group(['middleware' => ['permission:Bed Status']], function () {
-    Route::get('referral', [ReferralController::class, 'index'])->name('referral');
-    Route::get('add-referral', [ReferralController::class, 'add_referral'])->name('add-referral');
-    Route::post('save-referral', [ReferralController::class, 'save_referral'])->name('save-referral');
+Route::group(['middleware' => ['permission:referral']], function () {
+    Route::group(['middleware' => ['permission:referral person']], function () {
+        Route::get('referral', [ReferralController::class, 'index'])->name('referral');
+        Route::get('add-referral', [ReferralController::class, 'add_referral'])->name('add-referral');
+        Route::post('save-referral', [ReferralController::class, 'save_referral'])->name('save-referral');
+        Route::get('delete-refferal-person/{id?}', [ReferralController::class, 'delete_referral'])->name('delete-refferal-person');
+        Route::get('edit-refferal/{id?}', [ReferralController::class, 'edit_referral'])->name('edit-refferal');
+        Route::post('update-referral', [ReferralController::class, 'update_referral'])->name('update-referral');
+    });
+    Route::group(['middleware' => ['permission:referral person']], function () {
+        
+    });
 });
 // ================================ referral ==============================================
 

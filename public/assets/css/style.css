@@ -25525,12 +25525,12 @@ object, embed, video {
 .allbtndemo
 {
   position: absolute;
-  right: 20px;
+  right: 16px;
 }
 .allbtndemooo
 {
   position: absolute;
-  right: 110px;
+  right: 97px;
 }
 .req_no_style
 {
@@ -25560,7 +25560,7 @@ object, embed, video {
 .allbtndemoffff
 {
   position: absolute;
-  right: 174px;
+  right: 91px;
 }
 .ggdtretewsss
 {
@@ -25601,8 +25601,21 @@ object, embed, video {
   border-top: none !important;
 
 }
-
-
+.vendor_quatation{
+  width: 50%;
+}
+.permissionadd{
+  margin: 26px 0px 0px 0px;
+}
+.purchaseadd{
+  margin: 8px 0px 0px 0px;
+}
+.addpurchase{
+  margin: 19px 0px 0px 0px;
+}
+.addpurchaseone{
+  margin: 10px 0px 0px 0px;
+}
 /*==========================================dashboard css=======================================*/
 :root
 {
@@ -27054,6 +27067,9 @@ border-radius: 2%;
   }
   .icon-new1{
     margin: 0px 5px 0px 0px;
+  }
+  .card-new{
+    padding: 5px 0px;
   }
 /* ------------------------------------------- */
 

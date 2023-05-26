@@ -566,7 +566,9 @@ $login_details = DB::table('users')
 
                                     </ul>
                                 </li>
-                                <li><a href="#">Refferal</a></li>
+                                @if (auth()->user()->can('referral'))
+                                <li><a href="{{ route('referral') }}">Refferal</a></li>
+                                @endif
                                 <li><a href="#">Font office</a></li>
                                 <li><a href="{{ route('all-blood-details') }}">Blood Bank</a></li>
                                 <li><a href="{{ route('main-operation') }}">Operation</a></li>

@@ -46,9 +46,9 @@ class PurchaseOrderController extends Controller
 
     public function get_requisition_item_details($requisition_id)
     {
-        $requisition_item_list = MedicineRequisitionDetails::join('medicine_catagories', 'medicine_catagories.id', '=', 'medicine_requisition_details.medicine_catagory')
-            ->join('medicine_units', 'medicine_units.id', '=', 'medicine_requisition_details.medicine_unit')
-            ->join('medicines', 'medicines.id', '=', 'medicine_requisition_details.medicine_name')
+        $requisition_item_list = MedicineRequisitionDetails::join('medicines', 'medicines.id', '=', 'medicine_requisition_details.medicine_name')
+            ->join('medicine_units', 'medicine_units.id', '=', 'medicines.unit')
+            ->join('medicine_catagories', 'medicine_catagories.id', '=', 'medicines.medicine_catagory')
             ->join('medicine_requisitions', 'medicine_requisitions.id', '=', 'medicine_requisition_details.requisition_id')
             ->select('medicine_requisition_details.id as requisition_details_id', 'medicine_requisitions.requisition_prefix', 'medicine_requisition_details.requisition_id', 'medicine_requisition_details.quantity', 'medicine_catagories.id as medicine_catagories_id', 'medicine_units.id as medicine_units_id', 'medicine_units.medicine_unit_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_name', 'medicines.id as medicine_id')
             ->where('medicine_requisition_details.requisition_id', $requisition_id)
@@ -84,6 +84,8 @@ class PurchaseOrderController extends Controller
 
     public function save_medicine_purchase_order_details(Request $req)
     {
+        try {
+            DB::beginTransaction();
         $prefix = DB::table('prefixes')->where('name', '=', 'medicine_purchase_order')->first();
 
         $validator = $req->validate([
@@ -99,10 +101,6 @@ class PurchaseOrderController extends Controller
         $po_save->po_prefix     = $prefix->prefix;
         $po_save->po_date       = $req->po_date;
         $po_save->vendor                    = $req->vendor;
-        $po_save->total                     = $req->total;
-        $po_save->extra_charges_name        = $req->extra_charges_name;
-        $po_save->extra_charges_value       = $req->extra_charges_value;
-        $po_save->grand_total               = $req->grand_total;
         $po_save->generated_by              = Auth::id();
         $po_save->note                      = $req->note;
         $po_save->status                    = 10;
@@ -132,31 +130,30 @@ class PurchaseOrderController extends Controller
                 'req_no' => $req_id_no[$i],
                 'req_details_id' => $requisition_details_id[$i],
                 'medicine_name' => $item[$i],
-                'medicine_catagory_id' => $catagory[$i],
                 'medicine_unit_id' => $unit[$i],
                 'quantity' => $quantity[$i],
-                'gst' => $gst[$i],
-                'rate' => $rate[$i],
-                'amount' => $amount[$i],
             );
             $po_details_id = PurchaseOrderDetails::insertGetId($po_details);
             MedicineRequisitionDetails::where('id', $requisition_details_id[$i])->update(['po_status' => '1']);
-            $i_love_you = MedicineRequisitionDetails::where('requisition_id', $req_id_no[$i])->where('po_status', '0')->count();
+            $i__you = MedicineRequisitionDetails::where('requisition_id', $req_id_no[$i])->where('po_status', '0')->count();
 
-            if ($i_love_you > 0) {
+            if ($i__you > 0) {
                 MedicineRequisition::where('id', $req_id_no[$i])->update(['status' => 11]);
             } else {
                 MedicineRequisition::where('id', $req_id_no[$i])->update(['status' => 10]);
                 MedicineRequisition::where('id', $req_id_no[$i])->update(['po_status' => '1']);
             }
         }
+        DB::commit();
         if ($po_id != null) {
             return redirect()->route('all-medicine-purchase-order-listing')->with('success', "Purchase Order Added Sucessfully");
-            // return redirect()->route('medicine-requisition-details', ['id' => ($id)]);
 
         } else {
             return redirect()->route('all-medicine-purchase-order-listing')->with('error', "Something Went Wrong");
         }
+    } catch (\Throwable $th) {
+        return redirect()->route('all-medicine-purchase-order-listing')->with('error', "Something Went Wrong");
+    }
     }
 
     public function purchase_order_details($id)

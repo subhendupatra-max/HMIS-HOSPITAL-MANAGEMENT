@@ -4,7 +4,7 @@
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Add Referral Person </h4>
+            <h4 class="card-title">Edit Referral Person </h4>
         </div>
         <!-- ================== message============================== -->
         @if (session('success'))
@@ -19,16 +19,17 @@
 
         <div class="card-body">
             <form class="form-horizontal" enctype="multipart/form-data" method="POST"
-                action="{{ route('save-referral') }}">
+                action="{{ route('update-referral') }}">
                 @csrf
+                <input type="hidden" name="refferal_id" value="{{ @$referral->id }}"/>
                 <div class="col-md-12">
                     <div class="row">
 
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-6 newaddappon">
-                                    <input type="text" value="{{ old('referral_name') }}" name="referral_name"
-                                        id="referral_name" required="">
+                                    <input type="text" name="referral_name"
+                                        id="referral_name" required="" value="{{ @$referral->referral_name }}">
                                     <label for="referral_name">Referral Name <span class="text-danger">*</span></label>
                                     @error('referral_name')
                                     <span class="text-danger">{{ $message }}</span>
@@ -37,7 +38,7 @@
 
                                 <div class="col-md-6 newaddappon">
 
-                                    <input type="text" value="{{ old('phone_no') }}" name="phone_no" id="phone_no"
+                                    <input type="text" value="{{ @$referral->phone_no }}"  name="phone_no" id="phone_no"
                                         required="">
                                     <label for="phone_no">Enter Phone No<span class="text-danger">*</span></label>
                                     @error('phone_no')
@@ -46,7 +47,7 @@
                                 </div>
                                 <div class="col-md-12 newaddappon">
 
-                                    <input type="text" value="{{ old('address') }}" name="address" id="address"
+                                    <input type="text" value="{{ @$referral->address }}"  name="address" id="address"
                                         required="">
                                     <label for="address">Address<span class="text-danger">*</span></label>
                                     @error('address')
@@ -56,7 +57,7 @@
 
                                 <div class="col-md-6 newaddappon">
 
-                                    <input type="text" value="{{ old('standard_commission') }}"
+                                    <input type="text" value="{{ @$referral->standard_commission }}"
                                         name="standard_commission" id="standard_commission" required="">
                                     <label for="standard_commission">Standard Commission (%)<span
                                             class="text-danger">*</span></label>
@@ -81,7 +82,7 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-6 newaddappon">
-                                    <input type="text" value="{{ old('opd_commission') }}" name="opd_commission"
+                                    <input type="text" value="{{ @$referral->opd_commission }}" name="opd_commission"
                                         id="opd_commission" required="">
                                     <label for="opd_commission">OPD Commission (%)<span class="text-danger">*</span></label>
                                     @error('opd_commission')
@@ -90,7 +91,7 @@
                                 </div>
 
                                 <div class="col-md-6 newaddappon">
-                                    <input type="text" value="{{ old('emg_commission') }}" name="emg_commission" id="emg_commission"
+                                    <input type="text" value="{{ @$referral->emg_commission }}"name="emg_commission" id="emg_commission"
                                         required="">
                                     <label for="emg_commission">EMG Commission (%)<span class="text-danger">*</span></label>
                                     @error('emg_commission')
@@ -99,7 +100,7 @@
                                 </div>
 
                                 <div class="col-md-6 newaddappon">
-                                    <input type="text" value="{{ old('ipd_commission') }}" name="ipd_commission" id="ipd_commission"
+                                    <input type="text" value="{{ @$referral->ipd_commission }}" name="ipd_commission" id="ipd_commission"
                                         required="">
                                     <label for="ipd_commission">IPD Commission (%)<span class="text-danger">*</span></label>
                                     @error('ipd_commission')
@@ -108,7 +109,7 @@
                                 </div>
 
                                 <div class="col-md-6 newaddappon">
-                                    <input type="text" value="{{ old('pharmacy_commission') }}"
+                                    <input type="text" value="{{ @$referral->pharmacy_commission }}"
                                         name="pharmacy_commission" id="pharmacy_commission" required="">
                                     <label for="pharmacy_commission">Pharmacy Commission (%)<span
                                             class="text-danger">*</span></label>
@@ -117,7 +118,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 newaddappon">
-                                    <input type="text" value="{{ old('pathology_commission') }}"
+                                    <input type="text" value="{{ @$referral->pathology_commission }}"
                                         name="pathology_commission" id="pathology_commission" required="">
                                     <label for="pathology_commission">Pathology Commission (%)<span
                                             class="text-danger">*</span></label>
@@ -126,7 +127,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 newaddappon">
-                                    <input type="text" value="{{ old('radiology_commission') }}"
+                                    <input type="text" value="{{ @$referral->radiology_commission }}"
                                         name="radiology_commission" id="radiology_commission" required="">
                                     <label for="radiology_commission">Radiology Commission (%)<span
                                             class="text-danger">*</span></label>
@@ -135,7 +136,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 newaddappon">
-                                    <input type="text" value="{{ old('blood_bank_commission') }}"
+                                    <input type="text" value="{{ @$referral->blood_bank_commission }}"
                                         name="blood_bank_commission" id="blood_bank_commission" required="">
                                     <label for="blood_bank_commission">Blood Bank Commission (%)<span
                                             class="text-danger">*</span></label>
@@ -144,7 +145,7 @@
                                     @enderror
                                 </div>
                                 <div class="col-md-6 newaddappon">
-                                    <input type="text" value="{{ old('ambulance_commission') }}"
+                                    <input type="text" value="{{ @$referral->ambulance_commission }}"
                                         name="ambulance_commission" id="ambulance_commission" required="">
                                     <label for="ambulance_commission">Ambulance Commission (%)<span
                                             class="text-danger">*</span></label>
@@ -159,7 +160,7 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-9">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Add
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Update
                                 Referral</button>
                         </div>
                     </div>

@@ -541,7 +541,9 @@ $login_details = DB::table('users')
 
                                     </ul>
                                 </li>
-                                <li><a href="#">Refferal</a></li>
+                                <?php if(auth()->user()->can('referral')): ?>
+                                <li><a href="<?php echo e(route('referral')); ?>">Refferal</a></li>
+                                <?php endif; ?>
                                 <li><a href="#">Font office</a></li>
                                 <li><a href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
                                 <li><a href="<?php echo e(route('main-operation')); ?>">Operation</a></li>

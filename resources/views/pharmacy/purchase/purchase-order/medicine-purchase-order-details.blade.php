@@ -1,16 +1,6 @@
 @extends('layouts.layout')
 @section('content')
 
-<!-- ===============================Alert Message======================================= -->
-@if (session('success'))
-<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"> ×</button>{{session('success')}}</div>
-@endif
-@if (session()->has('error'))
-<div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"> ×</button>{{session('error')}}</div>
-@endif
-<!-- ================================Alert Message====================================== -->
-
-
 @php
 $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 @endphp
@@ -20,27 +10,20 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
+            <div class="card-new">
             <div class="card-title">
                 Purchase Order Details
                 @can('Print Medicine Purchase Order')
                 <a href="{{ route('po-print',['po_id'=> base64_encode($po_list->id)]) }}" class="btn btn-primary btn-sm allbtndemo"><i class="fa fa-print"> Print</i></a>
                 @endcan
-                @can('Send PO with feedback form')
-                <a href="#" class="btn btn-primary btn-sm allbtndemoff" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-envelope"></i> Mail <i class="fa fa-caret-down"></i></a>
-                <div class="dropdown-menu dropdown-menu-right" style="">
-                    <a class="dropdown-item" href="{{route('send-po-feedback')}}/{{base64_encode($po_list->id)}}/{{base64_encode($po_list->get_vendor_details->id)}}"><i class="fa fa-envelope"></i> PO Send to Vendor With Feedback Form</a>
-                </div>
-                @endcan
+        
                 @can('permission on po section')
                 <a href="#" class="btn btn-primary btn-sm allbtndemoffff" data-target="#modaldemo1241" data-toggle="modal"><i class="fa fa-user"> Permission</i></a>
                 @endcan
-                @can('New Vendor Add in PO section')
-                @if(!empty($po_list->po_status >= 18))
-                <a class="btn btn-primary btn-sm allbtndeaddnew" data-target="#modaldemo3fgfg" data-toggle="modal" href="#"><i class="fa fa-list"></i> Vendors/Quatations</a>
-                @endif
-                @endcan
+            </div>
             </div>
         </div>
+        @include('message.notification')
         @can('view medicine requisition')
         <div class="card-body">
             <div class="col-md-12">
@@ -112,12 +95,8 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <th>#</th>
                             <th>Requisition Id</th>
                             <th>Medicine Name</th>
-                            <th>Medicine Catagory</th>
                             <th>Medicine Unit</th>
                             <th>Quantity</th>
-                            <th>GST</th>
-                            <th>Rate</th>
-                            <th>Amount</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,35 +105,16 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{@$item->req_id}}</td>
-                            <td>{{@$item->fetch_medicine_name->medicine_name}}</td>
-                            <td>{{@$item->fetch_medicine_catagory->medicine_catagory_name}}</td>
+                            <td>{{@$item->fetch_medicine_name->medicine_name}}({{@$item->fetch_medicine_name->catagory_name->medicine_catagory_name}})</td>
                             <td>{{@$item->fetch_medicine_unit->medicine_unit_name}}</td>
                             <td>{{@$item->quantity}}</td>
-                            <td>{{@$item->gst}}</td>
-                            <td>{{@$item->rate}}</td>
-                            <td>{{@$item->amount}}</td>
                         </tr>
                         @endforeach
                         @endif
                     </tbody>
                 </table>
-                <hr>
-                <div class="container mt-5" style="margin-left: -53px;">
-                    <div class="d-flex justify-content-end">
-                        <span class="bilpo_name">Total </span><span class="bilpo_value"> : {{@$po_list->total}}</span>
 
-                    </div>
-                    @if(!empty($po_list->extra_charges_name) && !empty($po_list->extra_charges_value))
-                    <div class="d-flex justify-content-end">
-                        <span class="bilpo_name">{{@$po_list->extra_charges_name}}</span><span class="bilpo_value"> : {{@$po_list->extra_charges_value}}</span>
-                    </div>
-                    @endif
 
-                    <div class="d-flex justify-content-end" style="color:#0101c5">
-                        <span class="bilpo_name">Grand Total </span><span class="bilpo_value"> : {{@$po_list->grand_total}}</span>
-
-                    </div>
-                </div>
             </div><!-- bd -->
         </div>
         @endcan
@@ -222,12 +182,12 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                         <label class="form-label">Status <span class="text-danger">*</span></label>
                         <select class="form-control" name="status">
                             <option vlue="" disabled>Select One</option>
-                            <option value="16" <?php if ($po_list->status == 16) {
+                            {{-- <option value="16" <?php if ($po_list->status == 16) {
                                                     echo "selected";
                                                 } ?>>Purchase Order Holded</option>
                             <option value="15" <?php if ($po_list->status == 15) {
                                                     echo "selected";
-                                                } ?>>Purchase Order Cancelled</option>
+                                                } ?>>Purchase Order Cancelled</option> --}}
                             <option value="17" <?php if ($po_list->status == 17) {
                                                     echo "selected";
                                                 } ?>>Purchase Order Confirmed</option>
@@ -244,7 +204,7 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 
 
 <!-- ================================ vendor quatation details========================= -->
-<div class="modal" id="modaldemo3fgfg">
+{{-- <div class="modal" id="modaldemo3fgfg">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content modal-content-demo">
             <div class="modal-header">
@@ -325,7 +285,7 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 
         </div>
     </div>
-</div>
+</div> --}}
 <!-- ================================ vendor quatation details========================= -->
 
 <!--  -->

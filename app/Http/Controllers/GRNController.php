@@ -44,10 +44,10 @@ class GRNController extends Controller
             ->first();
 
 
-        $po_item = PurchaseOrderDetails::join('medicine_catagories', 'medicine_catagories.id', '=', 'purchase_order_details.medicine_catagory_id')
-            ->join('medicine_units', 'medicine_units.id', '=', 'purchase_order_details.medicine_unit_id')
-            ->join('medicines', 'medicines.id', '=', 'purchase_order_details.medicine_name')
-            ->select('purchase_order_details.id as purchase_order_details_id', 'purchase_order_details.req_id', 'purchase_order_details.gst', 'purchase_order_details.quantity', 'purchase_order_details.grn_qty', 'purchase_order_details.rate', 'purchase_order_details.amount', 'purchase_order_details.req_id', 'medicines.medicine_name', 'medicine_catagories.id as catagory_id', 'medicine_units.id as unit_id', 'medicines.id as medicine_id', 'medicine_catagories.medicine_catagory_name', 'purchase_order_details.quantity', 'medicine_units.medicine_unit_name')
+        $po_item = PurchaseOrderDetails::join('medicines', 'medicines.id', '=', 'purchase_order_details.medicine_name')
+            ->join('medicine_units', 'medicine_units.id', '=', 'medicines.unit')
+            ->join('medicine_catagories', 'medicine_catagories.id', '=', 'medicines.medicine_catagory')
+            ->select('purchase_order_details.id as purchase_order_details_id', 'purchase_order_details.req_id', 'purchase_order_details.grn_qty', 'purchase_order_details.req_no', 'medicines.medicine_name', 'medicine_catagories.id as catagory_id', 'medicine_units.id as unit_id', 'medicines.id as medicine_id', 'medicine_catagories.medicine_catagory_name', 'purchase_order_details.quantity', 'medicine_units.medicine_unit_name')
             ->where('purchase_order_details.purchase_order_id', $po_id)
             ->where(
                 function ($query) {
