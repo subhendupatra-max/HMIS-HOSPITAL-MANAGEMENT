@@ -227,123 +227,129 @@
                 </div>
             </div>
         </div>
-         <div class="col-lg-6 piebox">
-          <canvas width="500" id="myChart"></canvas>
-         </div>
+     
+
+    <div class="col-lg-6 piebox">
+      <canvas width="500" id="myChart"></canvas>
     </div>
-
   </div>
-  <!-- Jquery js-->
-  <script src="<?php echo e(asset('public/assets/js/jquery-3.5.1.min.js')); ?>"></script>
+  </div>
 
-  <!-- Bootstrap4 js-->
-  <script src="<?php echo e(asset('public/assets/plugins/bootstrap/popper.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/bootstrap/js/bootstrap.min.js')); ?>"></script>
+</div>
+<!-- Jquery js-->
+<script src="<?php echo e(asset('public/assets/js/jquery-3.5.1.min.js')); ?>"></script>
 
-  <!--Othercharts js-->
-  <script src="<?php echo e(asset('public/assets/plugins/othercharts/jquery.sparkline.min.js')); ?>"></script>
+<!-- Bootstrap4 js-->
+<script src="<?php echo e(asset('public/assets/plugins/bootstrap/popper.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/bootstrap/js/bootstrap.min.js')); ?>"></script>
 
-  <!-- Circle-progress js-->
-  <script src="<?php echo e(asset('public/assets/js/circle-progress.min.js')); ?>"></script>
+<!--Othercharts js-->
+<script src="<?php echo e(asset('public/assets/plugins/othercharts/jquery.sparkline.min.js')); ?>"></script>
 
-  <!-- Jquery-rating js-->
-  <script src="<?php echo e(asset('public/assets/plugins/rating/jquery.rating-stars.js')); ?>"></script>
+<!-- Circle-progress js-->
+<script src="<?php echo e(asset('public/assets/js/circle-progress.min.js')); ?>"></script>
 
-  <!--Sidemenu js-->
-  <script src="<?php echo e(asset('public/assets/plugins/sidemenu/sidemenu.js')); ?>"></script>
+<!-- Jquery-rating js-->
+<script src="<?php echo e(asset('public/assets/plugins/rating/jquery.rating-stars.js')); ?>"></script>
 
-  <!-- P-scroll js-->
-  <script src="<?php echo e(asset('public/assets/plugins/p-scrollbar/p-scrollbar.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/p-scrollbar/p-scroll1.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/p-scrollbar/p-scroll.js')); ?>"></script>
+<!--Sidemenu js-->
+<script src="<?php echo e(asset('public/assets/plugins/sidemenu/sidemenu.js')); ?>"></script>
 
-
-  <!--INTERNAL Peitychart js-->
-  <script src="<?php echo e(asset('public/assets/plugins/peitychart/jquery.peity.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/peitychart/peitychart.init.js')); ?>"></script>
-
-  <!--INTERNAL Apexchart js-->
-  <script src="<?php echo e(asset('public/assets/js/apexcharts.js')); ?>"></script>
-
-  <!--INTERNAL ECharts js-->
-  <script src="<?php echo e(asset('public/assets/plugins/echarts/echarts.js')); ?>"></script>
-
-  <!--INTERNAL Chart js -->
-  <script src="<?php echo e(asset('public/assets/plugins/chart/chart.bundle.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/chart/utils.js')); ?>"></script>
-
-  <!-- INTERNAL Select2 js -->
-  <script src="<?php echo e(asset('public/assets/plugins/select2/select2.full.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/js/select2.js')); ?>"></script>
-
-  <!--INTERNAL Moment js-->
-  <script src="<?php echo e(asset('public/assets/plugins/moment/moment.js')); ?>"></script>
-
-  <!--INTERNAL Index js-->
-  <script src="<?php echo e(asset('public/assets/js/index1.js')); ?>"></script>
-
-  <!-- Simplebar JS -->
-  <script src="<?php echo e(asset('public/assets/plugins/simplebar/js/simplebar.min.js')); ?>"></script>
-  <!-- Custom js-->
-  <script src="<?php echo e(asset('public/assets/js/custom.js')); ?>"></script>
-
-  <!-- INTERNAL Data tables -->
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/jquery.dataTables.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/dataTables.bootstrap4.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/dataTables.buttons.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/buttons.bootstrap4.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/jszip.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/pdfmake.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/vfs_fonts.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/buttons.html5.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/buttons.print.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/js/buttons.colVis.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/datatable/responsive.bootstrap4.min.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/js/datatables.js')); ?>"></script>
-
-  <script src="<?php echo e(asset('public/assets/plugins/flot/jquery.flot.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/flot/jquery.flot.fillbetween.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/flot/jquery.flot.pie.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/js/flot.js')); ?>"></script>
+<!-- P-scroll js-->
+<script src="<?php echo e(asset('public/assets/plugins/p-scrollbar/p-scrollbar.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/p-scrollbar/p-scroll1.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/p-scrollbar/p-scroll.js')); ?>"></script>
 
 
+<!--INTERNAL Peitychart js-->
+<script src="<?php echo e(asset('public/assets/plugins/peitychart/jquery.peity.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/peitychart/peitychart.init.js')); ?>"></script>
 
-  <!-- Switcher js-->
-  <script src="<?php echo e(asset('public/assets/switcher/js/switcher.js')); ?>"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<!--INTERNAL Apexchart js-->
+<script src="<?php echo e(asset('public/assets/js/apexcharts.js')); ?>"></script>
 
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="<?php echo e(asset('public/assets/plugins/notify/js/notifIt.js')); ?>"></script>
-  <!-- INTERNAL WYSIWYG Editor js -->
-  <script src="<?php echo e(asset('public/assets/plugins/wysiwyag/jquery.richtext.js')); ?>"></script>
-  <script src="<?php echo e(asset('public/assets/js/form-editor.js')); ?>"></script>
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-  <script src="https://code.highcharts.com/highcharts.js"></script>
+<!--INTERNAL ECharts js-->
+<script src="<?php echo e(asset('public/assets/plugins/echarts/echarts.js')); ?>"></script>
+
+<!--INTERNAL Chart js -->
+<script src="<?php echo e(asset('public/assets/plugins/chart/chart.bundle.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/chart/utils.js')); ?>"></script>
+
+<!-- INTERNAL Select2 js -->
+<script src="<?php echo e(asset('public/assets/plugins/select2/select2.full.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/js/select2.js')); ?>"></script>
+
+<!--INTERNAL Moment js-->
+<script src="<?php echo e(asset('public/assets/plugins/moment/moment.js')); ?>"></script>
+
+<!--INTERNAL Index js-->
+<script src="<?php echo e(asset('public/assets/js/index1.js')); ?>"></script>
+
+<!-- Simplebar JS -->
+<script src="<?php echo e(asset('public/assets/plugins/simplebar/js/simplebar.min.js')); ?>"></script>
+<!-- Custom js-->
+<script src="<?php echo e(asset('public/assets/js/custom.js')); ?>"></script>
+
+<!-- INTERNAL Data tables -->
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/jquery.dataTables.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/dataTables.bootstrap4.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/dataTables.buttons.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/buttons.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/jszip.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/pdfmake.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/vfs_fonts.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/buttons.html5.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/buttons.print.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/js/buttons.colVis.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/datatable/responsive.bootstrap4.min.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/js/datatables.js')); ?>"></script>
+
+<script src="<?php echo e(asset('public/assets/plugins/flot/jquery.flot.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/flot/jquery.flot.fillbetween.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/plugins/flot/jquery.flot.pie.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/js/flot.js')); ?>"></script>
+
+
+
+<!-- Switcher js-->
+<script src="<?php echo e(asset('public/assets/switcher/js/switcher.js')); ?>"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="<?php echo e(asset('public/assets/plugins/notify/js/notifIt.js')); ?>"></script>
+<!-- INTERNAL WYSIWYG Editor js -->
+<script src="<?php echo e(asset('public/assets/plugins/wysiwyag/jquery.richtext.js')); ?>"></script>
+<script src="<?php echo e(asset('public/assets/js/form-editor.js')); ?>"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+
+
+
+<script>
  
 
-    
-    <script>
-        var ctx = document.getElementById("myChart").getContext('2d');
+  var ctx = document.getElementById("myChart").getContext('2d');
 
-        var myChart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-              labels: ["OPD",	"IPD",	"Pathology",	"Radiology", "Pharmacy","Refferal" ],
-            datasets: [{
-                data: [500,	50,	1000,100,300 , 400], // Specify the data values array
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ["OPD", "IPD", "EMG", ],
+      datasets: [{
+        data: [<?php echo $opd_billing_details ?>, <?php echo $ipd_billing_details ?>, <?php echo $emg_billing_details ?>], // Specify the data values array
 
-                borderColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896','#e27d60','#553d67'], // Add custom color border
-                backgroundColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896','#e27d60','#553d67'], // Add custom color background (Points and Fill)
-                borderWidth: 1 // Specify bar border width
-            }]},
-
-        options: {
-          responsive: true, // Instruct chart js to respond nicely.
-          maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
-        }
-    });
-    </script>
+        borderColor: ['#2196f38c', '#f443368c', '#3f51b570', ], // Add custom color border
+        backgroundColor: ['#2196f38c', '#f443368c', '#3f51b570'], // Add custom color background (Points and Fill)
+        borderWidth: 1 // Specify bar border width
+      }]
+    },
+    options: {
+    responsive: true, // Instruct chart js to respond nicely.
+    maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+    }
+  });
+</script>
    <script>
     var barChartData = {
         labels: [

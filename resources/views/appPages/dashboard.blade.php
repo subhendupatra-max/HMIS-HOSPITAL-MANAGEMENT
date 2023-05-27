@@ -227,11 +227,12 @@
                 </div>
             </div>
         </div>
-      </div>
-    </div>
+     
+
     <div class="col-lg-6 piebox">
       <canvas width="500" id="myChart"></canvas>
     </div>
+  </div>
   </div>
 
 </div>
@@ -326,6 +327,29 @@
 
 {{-- --}}
 {{--  --}}
+<script>
+ 
+
+  var ctx = document.getElementById("myChart").getContext('2d');
+
+  var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ["OPD", "IPD", "EMG", ],
+      datasets: [{
+        data: [<?php echo $opd_billing_details ?>, <?php echo $ipd_billing_details ?>, <?php echo $emg_billing_details ?>], // Specify the data values array
+
+        borderColor: ['#2196f38c', '#f443368c', '#3f51b570', ], // Add custom color border
+        backgroundColor: ['#2196f38c', '#f443368c', '#3f51b570'], // Add custom color background (Points and Fill)
+        borderWidth: 1 // Specify bar border width
+      }]
+    },
+    options: {
+    responsive: true, // Instruct chart js to respond nicely.
+    maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+    }
+  });
+</script>
    <script>
     var barChartData = {
         labels: [
