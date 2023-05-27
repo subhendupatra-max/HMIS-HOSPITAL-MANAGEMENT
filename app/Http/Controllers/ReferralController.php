@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Referral;
 use App\Models\Module;
+use App\Models\IpdDetails;
+use App\Models\OpdVisitDetails;
+use App\Models\EmgPatientDetails;
 use App\Models\ReferralCommision;
 use Illuminate\Http\Request;
 
@@ -97,5 +100,13 @@ class ReferralController extends Controller
         } else {
             return back()->with('error', "Something Went Wrong");
         }
+    }
+    public function view_referral($id){
+        $ref_id  =  base64_decode($id);
+        $referral = Referral::find($ref_id);
+        $emg_registaion_list = EmgPatientDetails::where('ins_by', 'ori')->where('refference', $ref_id)->orderBy('id', 'desc')->get();
+        $opd_registaion_list = OpdVisitDetails::where('ins_by', 'ori')->where('refference', $ref_id)->orderBy('id', 'desc')->get();
+        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('refference', $ref_id)->where('ins_by', 'ori')->get();
+        return view('referral.view-referral', compact('referral','emg_registaion_list','opd_registaion_list','ipd_patient_list'));
     }
 }

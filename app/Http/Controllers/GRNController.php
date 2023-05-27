@@ -63,7 +63,7 @@ class GRNController extends Controller
 
     public function save_grn(Request $req)
     {
-
+dd($req->all());
         $po_id = $req->po_no;
 
         $validator = $req->validate([
@@ -73,16 +73,16 @@ class GRNController extends Controller
         $grn_prefix = DB::table('prefixes')->where('name', '=', 'grn')->first();
         $challan_copy = '';
         $invoice_copy = '';
-        if ($req->hasfile('challan_copy')) {
-            $file = $req->file('challan_copy');
-            $challan_copy = rand() . '.' . $file->getClientOriginalExtension();
-            $file->move("challan_copy/", $challan_copy);
-        }
-        if ($req->hasfile('invoice_copy')) {
-            $file = $req->file('invoice_copy');
-            $invoice_copy = rand() . '.' . $file->getClientOriginalExtension();
-            $file->move("invoice_copy/", $invoice_copy);
-        }
+        // if ($req->hasfile('challan_copy')) {
+        //     $file = $req->file('challan_copy');
+        //     $challan_copy = rand() . '.' . $file->getClientOriginalExtension();
+        //     $file->move("challan_copy/", $challan_copy);
+        // }
+        // if ($req->hasfile('invoice_copy')) {
+        //     $file = $req->file('invoice_copy');
+        //     $invoice_copy = rand() . '.' . $file->getClientOriginalExtension();
+        //     $file->move("invoice_copy/", $invoice_copy);
+        // }
 
         $item_id = $req->post('medicine');
         $unit_id = $req->post('unit');

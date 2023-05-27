@@ -27071,6 +27071,7 @@ border-radius: 2%;
   .card-new{
     padding: 5px 0px;
   }
+ 
 /* ------------------------------------------- */
 
 /* ------------------------------------------- */
@@ -27163,4 +27164,14 @@ border-radius: 2%;
 {
    height: 400px;
    overflow-y: scroll;
+}
+.wrapper_bar{
+  display: block;
+    /* margin: 5em auto; */
+    /* border: 1px solid #555; */
+    position: relative;
+    background: #ebeef1;
+    margin: 0px 0px 0px 12px;
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+    width: 700px;
 }

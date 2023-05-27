@@ -14,7 +14,7 @@
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Medicine GRN Create')): ?>
 
-                        <a href="<?php echo e(route('medicine-grn-create')); ?>" class="btn btn-primary"><i class="fa fa-plus"></i> Create GRN</a>
+                        <a href="<?php echo e(route('medicine-grn-create')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Create GRN</a>
 
                         <?php endif; ?>
                     </div>

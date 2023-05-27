@@ -1,19 +1,19 @@
-@extends('layouts.layout')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    <h4 class="pro-user-username mb-3 font-weight-bold">{{ @$referral->referral_name }}  <i class="fa fa-check-circle text-success"></i></h4>
+                    <h4 class="pro-user-username mb-3 font-weight-bold"><?php echo e(@$referral->referral_name); ?>  <i class="fa fa-check-circle text-success"></i></h4>
                 </div>
 
                 <div class="col-md-6 text-right">
 
-                    @can('edit patient')
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
                     <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
-                    @endcan
+                    <?php endif; ?>
 
                     <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" style="">
@@ -38,35 +38,39 @@
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Phone No </span>
                                         </td>
-                                        <td class="py-2 px-5">{!!$referral->phone_no!!}</td>
+                                        <td class="py-2 px-5"><?php echo $referral->phone_no; ?></td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <spddress class="font-weight-semibold w-50">Address </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {{ @$referral->address }}
+                                            <?php echo e(@$referral->address); ?>
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">OPD Commission(%) </span>
                                         </td>
-                                        <td class="py-2 px-5">{{ @$referral->opd_commission }}
+                                        <td class="py-2 px-5"><?php echo e(@$referral->opd_commission); ?>
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50"> IPD Commission(%) </span>
                                         </td>
-                                        <td class="py-2 px-5">{{ @$referral->ipd_commission }}
+                                        <td class="py-2 px-5"><?php echo e(@$referral->ipd_commission); ?>
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">EMG Commission(%) </span>
                                         </td>
-                                        <td class="py-2 px-5">{{ @$referral->emg_commission }}
+                                        <td class="py-2 px-5"><?php echo e(@$referral->emg_commission); ?>
+
                                         </td>
                                     </tr>
                            
@@ -75,7 +79,8 @@
                                             <span class="font-weight-semibold w-50"> Pharmacy Commission(%) </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {{ @$referral->pharmacy_commission }}
+                                            <?php echo e(@$referral->pharmacy_commission); ?>
+
                                         </td>
                                     </tr>
                                   
@@ -111,8 +116,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (isset($opd_registaion_list))
-                            @foreach ($opd_registaion_list as $value)
+                            <?php if(isset($opd_registaion_list)): ?>
+                            <?php $__currentLoopData = $opd_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
                             $appoint_date = $value->appointment_date;
                             $last_activity = DB::table('billings')->where('section','OPD')->where('case_id',$value->opd_details_data->case_id)->orderBy('id','DESC')->first();
@@ -132,69 +137,71 @@
 
                              ?>
                             <tr>
-                                <td><a class="textlink" href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}">{{
-                                        @$value->id }}</a>
+                                <td><a class="textlink" href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
                                 </td>
                                 <td>
-                                    {{ @$value->opd_details_data->all_patient_details->prefix }}
-                                    {{ @$value->opd_details_data->all_patient_details->first_name }}
-                                    {{ @$value->opd_details_data->all_patient_details->middle_name }}
-                                    {{ @$value->opd_details_data->all_patient_details->last_name }}({{ @$value->opd_details_data->all_patient_details->id
-                                    }})<br>
+                                    <?php echo e(@$value->opd_details_data->all_patient_details->prefix); ?>
+
+                                    <?php echo e(@$value->opd_details_data->all_patient_details->first_name); ?>
+
+                                    <?php echo e(@$value->opd_details_data->all_patient_details->middle_name); ?>
+
+                                    <?php echo e(@$value->opd_details_data->all_patient_details->last_name); ?>(<?php echo e(@$value->opd_details_data->all_patient_details->id); ?>)<br>
                                     <i class="fa fa-venus-mars text-primary"></i>
-                                    {{ @$value->opd_details_data->all_patient_details->gender }} <i class="fa fa-calendar-plus-o text-primary"></i>
-                                    @if (@$value->opd_details_data->all_patient_details->year != 0)
-                                    {{ @$value->opd_details_data->all_patient_details->year }}y
-                                    @endif
-                                    @if (@$value->opd_details_data->all_patient_details->month != 0)
-                                    {{ @$value->opd_details_data->all_patient_details->month }}m
-                                    @endif
-                                    @if (@$value->opd_details_data->all_patient_details->day != 0)
-                                    {{ @$value->opd_details_data->all_patient_details->day }}d
-                                    @endif
+                                    <?php echo e(@$value->opd_details_data->all_patient_details->gender); ?> <i class="fa fa-calendar-plus-o text-primary"></i>
+                                    <?php if(@$value->opd_details_data->all_patient_details->year != 0): ?>
+                                    <?php echo e(@$value->opd_details_data->all_patient_details->year); ?>y
+                                    <?php endif; ?>
+                                    <?php if(@$value->opd_details_data->all_patient_details->month != 0): ?>
+                                    <?php echo e(@$value->opd_details_data->all_patient_details->month); ?>m
+                                    <?php endif; ?>
+                                    <?php if(@$value->opd_details_data->all_patient_details->day != 0): ?>
+                                    <?php echo e(@$value->opd_details_data->all_patient_details->day); ?>d
+                                    <?php endif; ?>
 
                                 </td>
-                                <td>{{ @$value->opd_details_data->all_patient_details->guardian_name }}</td>
-                                <td>{{ @$value->opd_details_data->all_patient_details->phone }}</td>
-                                <td>{{ @$value->opd_details_data->case_id }}</td>
+                                <td><?php echo e(@$value->opd_details_data->all_patient_details->guardian_name); ?></td>
+                                <td><?php echo e(@$value->opd_details_data->all_patient_details->phone); ?></td>
+                                <td><?php echo e(@$value->opd_details_data->case_id); ?></td>
                                 <td>
-                                    @if (isset($value->department_id))
+                                    <?php if(isset($value->department_id)): ?>
                                     <i class="fa fa-cubes text-primary"></i>
-                                    {{
-                                    @$value->department_details->department_name
-                                    }}
+                                    <?php echo e(@$value->department_details->department_name); ?>
+
                                     <br>
-                                    @endif
-                                    @if (isset($value->cons_doctor))
+                                    <?php endif; ?>
+                                    <?php if(isset($value->cons_doctor)): ?>
                                     <i class="fas fa-user-md text-primary"></i>
-                                    {{ @$value->doctor->first_name }}
-                                    {{ @$value->doctor->last_name }}<br>
-                                    @endif
-                                    @if (isset($value->appointment_date))
+                                    <?php echo e(@$value->doctor->first_name); ?>
+
+                                    <?php echo e(@$value->doctor->last_name); ?><br>
+                                    <?php endif; ?>
+                                    <?php if(isset($value->appointment_date)): ?>
                                     <i class="fa fa-calendar text-primary"></i>
-                                    {{ date('d-m-Y h:i A',
-                                    strtotime($value->appointment_date)) }}
-                                    @endif
+                                    <?php echo e(date('d-m-Y h:i A',
+                                    strtotime($value->appointment_date))); ?>
+
+                                    <?php endif; ?>
                                 </td>
                                 <td><?php echo $tat; ?></td>
-                                <td>{{ @$total_billing }}</td>
+                                <td><?php echo e(@$total_billing); ?></td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
-                                            <a class="dropdown-item" href="{{ route('opd-profile', ['id' => base64_encode($value->opd_details_data->id)]) }}"><i class="fa fa-eye"></i> View</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->opd_details_data->id)])); ?>"><i class="fa fa-eye"></i> View</a>
 
-                                            <a class="dropdown-item" href="{{ route('print-opd-patient', base64_encode(@$value->id)) }}"><i class="fa fa-print"></i>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->id))); ?>"><i class="fa fa-print"></i>
                                                 Print</a>
-                                            <a class="dropdown-item" href="{{ route('print-opd-patient', base64_encode(@$value->id)) }}"><i class="fa fa-cube"></i>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->id))); ?>"><i class="fa fa-cube"></i>
                                                 Apply Commission</a>
                                         </div>
                                     </div>
                                 </td>
 
                             </tr>
-                            @endforeach
-                            @endif
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -217,8 +224,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (isset($emg_registaion_list))
-                            @foreach ($emg_registaion_list as $value)
+                            <?php if(isset($emg_registaion_list)): ?>
+                            <?php $__currentLoopData = $emg_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
                             $appoint_date = $value->appointment_date;
                             $last_activity = DB::table('billings')->where('section','EMG')->where('case_id',$value->emg_details_data->case_id)->orderBy('id','DESC')->first();
@@ -238,41 +245,33 @@
                              ?>
                             <tr>
 
-                                <td><a class="textlink" href="{{route('emg-patient-profile',['id'=>base64_encode($value->emg_details_data->id)])}}">{{
-                                        @$value->emg_details_data->emg_prefix }}{{ @$value->emg_details_data->id }}</a></td>
+                                <td><a class="textlink" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->emg_details_data->id)])); ?>"><?php echo e(@$value->emg_details_data->emg_prefix); ?><?php echo e(@$value->emg_details_data->id); ?></a></td>
                                 <td>
-                                    {{ @$value->emg_details_data->all_patient_details->prefix }} {{
-                                    @$value->emg_details_data->all_patient_details->first_name }} {{
-                                    @$value->emg_details_data->all_patient_details->middle_name }} {{
-                                    @$value->emg_details_data->all_patient_details->last_name }} ({{ @$value->emg_details_data->all_patient_details->id
-                                    }})<br>
-                                    <i class="fa fa-venus-mars text-primary"></i> {{
-                                    @$value->emg_details_data->all_patient_details->gender }} <i class="fa fa-calendar-plus-o text-primary"></i> {{
-                                    @$value->emg_details_data->all_patient_details->year }}Y {{ @$value->emg_details_data->all_patient_details->month }}M {{
-                                    @$value->emg_details_data->all_patient_details->day }}D
+                                    <?php echo e(@$value->emg_details_data->all_patient_details->prefix); ?> <?php echo e(@$value->emg_details_data->all_patient_details->first_name); ?> <?php echo e(@$value->emg_details_data->all_patient_details->middle_name); ?> <?php echo e(@$value->emg_details_data->all_patient_details->last_name); ?> (<?php echo e(@$value->emg_details_data->all_patient_details->id); ?>)<br>
+                                    <i class="fa fa-venus-mars text-primary"></i> <?php echo e(@$value->emg_details_data->all_patient_details->gender); ?> <i class="fa fa-calendar-plus-o text-primary"></i> <?php echo e(@$value->emg_details_data->all_patient_details->year); ?>Y <?php echo e(@$value->emg_details_data->all_patient_details->month); ?>M <?php echo e(@$value->emg_details_data->all_patient_details->day); ?>D
                                 </td>
-                                <td>{{ @$value->emg_details_data->all_patient_details->phone }}</td>
+                                <td><?php echo e(@$value->emg_details_data->all_patient_details->phone); ?></td>
                                 <td>
-                                    <i class="fa fa-user-secret text-primary"></i> {{
-                                    @$value->emg_details_data->all_patient_details->guardian_name }}<br>
-                                    <i class="fa fa-adjust text-primary"></i> {{
-                                    @$value->emg_details_data->all_emg_visit_details->patient_type }}
+                                    <i class="fa fa-user-secret text-primary"></i> <?php echo e(@$value->emg_details_data->all_patient_details->guardian_name); ?><br>
+                                    <i class="fa fa-adjust text-primary"></i> <?php echo e(@$value->emg_details_data->all_emg_visit_details->patient_type); ?>
+
                                 </td>
-                                <td>{{ @$value->medico_legal_case }}</td>
+                                <td><?php echo e(@$value->medico_legal_case); ?></td>
                                 <td>
-                                    @if(isset($value->appointment_date))
-                                    {{ date('d-m-Y h:i A',strtotime($value->appointment_date)) }}
-                                    @endif
+                                    <?php if(isset($value->appointment_date)): ?>
+                                    <?php echo e(date('d-m-Y h:i A',strtotime($value->appointment_date))); ?>
+
+                                    <?php endif; ?>
                                 </td>
-                                <td>{{ @$tat }}</td>
-                                <td>{{ @$total_billing }}</td>
+                                <td><?php echo e(@$tat); ?></td>
+                                <td><?php echo e(@$total_billing); ?></td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
-                                            <a class="dropdown-item" href="{{route('emg-patient-profile',['id'=>base64_encode($value->emg_details_data->id)])}}"><i class="fa fa-eye"></i> View</a>
-                                            <a class="dropdown-item" href="{{ route('print-opd-patient', base64_encode(@$value->id)) }}"><i class="fa fa-cube"></i>
+                                            <a class="dropdown-item" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->emg_details_data->id)])); ?>"><i class="fa fa-eye"></i> View</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->id))); ?>"><i class="fa fa-cube"></i>
                                                 Apply Commission</a>
 
                                         </div>
@@ -280,8 +279,8 @@
                                 </td>
 
                             </tr>
-                            @endforeach
-                            @endif
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -304,8 +303,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @if (isset($ipd_patient_list))
-                            @foreach ($ipd_patient_list as $value)
+                            <?php if(isset($ipd_patient_list)): ?>
+                            <?php $__currentLoopData = $ipd_patient_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
                             $appoint_date = $value->appointment_date;
                             $last_activity = DB::table('billings')->where('section','IPD')->where('case_id',$value->case_id)->orderBy('id','DESC')->first();
@@ -326,73 +325,67 @@
 
                              ?>
                             <tr>
-                                <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{
-                                        @$value->ipd_prefix }}{{ @$value->id }}</a></td>
+                                <td><a class="textlink" href="<?php echo e(route('ipd-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->ipd_prefix); ?><?php echo e(@$value->id); ?></a></td>
                                 <td>
-                                    <i class="fa fa-user text-primary"></i> {{ @$value->all_patient_details->prefix }}
-                                    {{ @$value->all_patient_details->first_name }} {{
-                                    @$value->all_patient_details->middle_name }} {{
-                                    @$value->all_patient_details->last_name }}({{ @$value->all_patient_details->id }})
+                                    <i class="fa fa-user text-primary"></i> <?php echo e(@$value->all_patient_details->prefix); ?>
+
+                                    <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?>(<?php echo e(@$value->all_patient_details->id); ?>)
                                     <br>
                                     <i class="fa fa-users text-primary"></i>
-                                    {{ @$value->all_patient_details->guardian_name }}
+                                    <?php echo e(@$value->all_patient_details->guardian_name); ?>
+
                                     <br>
-                                    <i class="fa fa-venus-mars text-primary"></i> {{
-                                    @$value->all_patient_details->gender }} //
+                                    <i class="fa fa-venus-mars text-primary"></i> <?php echo e(@$value->all_patient_details->gender); ?> //
 
 
-                                    <i class="fa fa-calendar-plus-o text-primary"></i> {{
-                                    @$value->all_patient_details->year }}Y {{ @$value->all_patient_details->month }}M {{
-                                    @$value->all_patient_details->day }}D
+                                    <i class="fa fa-calendar-plus-o text-primary"></i> <?php echo e(@$value->all_patient_details->year); ?>Y <?php echo e(@$value->all_patient_details->month); ?>M <?php echo e(@$value->all_patient_details->day); ?>D
 
                                 </td>
-                                <td>{{ @$value->all_patient_details->phone }}</td>
+                                <td><?php echo e(@$value->all_patient_details->phone); ?></td>
                                 <td>
-                                    @if(isset($value->department_id))
-                                    <i class="fa fa-cubes text-primary"></i> {{
-                                    @$value->department_details->department_name }}( {{
-                                    @$value->department_details->department_code }}) <br>
-                                    @endif
-                                    @if(isset($value->cons_doctor))
-                                    <i class="fas fa-user-md text-primary"></i> {{ @$value->doctor_details->first_name
-                                    }} {{ @$value->doctor_details->last_name }} <br>
-                                    @endif
-                                    @if(isset($value->bed_ward_id))
-                                    <i class="fa fa-bed text-primary"></i> {{ @$value->bed_details->bed_name }} - {{
-                                    @$value->ward_details->ward_name }} - {{ @$value->unit_details->bedUnit_name }}
-                                    @endif
+                                    <?php if(isset($value->department_id)): ?>
+                                    <i class="fa fa-cubes text-primary"></i> <?php echo e(@$value->department_details->department_name); ?>( <?php echo e(@$value->department_details->department_code); ?>) <br>
+                                    <?php endif; ?>
+                                    <?php if(isset($value->cons_doctor)): ?>
+                                    <i class="fas fa-user-md text-primary"></i> <?php echo e(@$value->doctor_details->first_name); ?> <?php echo e(@$value->doctor_details->last_name); ?> <br>
+                                    <?php endif; ?>
+                                    <?php if(isset($value->bed_ward_id)): ?>
+                                    <i class="fa fa-bed text-primary"></i> <?php echo e(@$value->bed_details->bed_name); ?> - <?php echo e(@$value->ward_details->ward_name); ?> - <?php echo e(@$value->unit_details->bedUnit_name); ?>
+
+                                    <?php endif; ?>
                                 </td>
                                 <td>
-                                    {{ date('d-m-Y h:i A',strtotime($value->appointment_date)) }}
+                                    <?php echo e(date('d-m-Y h:i A',strtotime($value->appointment_date))); ?>
+
                                 </td>
                                 <td>
-                                    @if($value->status == 'admitted')
+                                    <?php if($value->status == 'admitted'): ?>
                                     <span class="badge badge-success">Admission</span>
-                                    @elseif ($value->status == 'discharged_planed')
+                                    <?php elseif($value->status == 'discharged_planed'): ?>
                                     <span class="badge badge-warning">Discharge Planed</span>
-                                    @else
+                                    <?php else: ?>
                                     <span class="badge badge-secondary">Discharged</span>
-                                    @endif
+                                    <?php endif; ?>
                                 </td>
-                                <td>{{ @$tat }}</td>
-                                <td>{{ @$total_billing }}</td>
+                                <td><?php echo e(@$tat); ?></td>
+                                <td><?php echo e(@$total_billing); ?></td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
                                             <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
-                                            @can('')
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
                                             <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission
                                                 Form</a>
-                                            <a class="dropdown-item" href="{{ route('print-opd-patient', base64_encode(@$value->id)) }}"><i class="fa fa-cube"></i>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->id))); ?>"><i class="fa fa-cube"></i>
                                                     Apply Commission</a>
-                                            @endcan
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
-                            @endif
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
@@ -402,4 +395,5 @@
     </div>
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/referral/view-referral.blade.php ENDPATH**/ ?>

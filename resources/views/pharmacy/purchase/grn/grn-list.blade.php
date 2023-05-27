@@ -14,7 +14,7 @@
 
                         @can('Medicine GRN Create')
 
-                        <a href="{{route('medicine-grn-create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Create GRN</a>
+                        <a href="{{route('medicine-grn-create')}}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Create GRN</a>
 
                         @endcan
                     </div>

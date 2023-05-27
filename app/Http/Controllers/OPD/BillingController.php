@@ -72,6 +72,7 @@ class BillingController extends Controller
 
     public function get_charge_name(Request $request)
     {
+       // dd($request->all());
         if ($request->chargeSet == 'Normal') {
             $charge_details = Charge::select('charges.charges_name as charges_name', 'charges.id as charge_id')->where('charges_catagory_id', $request->chargeCategory)->where('charges_sub_catagory_id', $request->chargeSubCategory)->where('type', $request->chargeType)->get();
         }

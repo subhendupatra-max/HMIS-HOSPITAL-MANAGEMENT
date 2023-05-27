@@ -15,9 +15,16 @@
                         <div class="dropdown-menu dropdown-menu-right" style="">
                             <?php echo $__env->make('OPD.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
+
+
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="card-header">
+
+            <?php echo $__env->make('OPD.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
         </div>
         <div class="card-body p-0">
             <div class="row no-gutters">
@@ -25,8 +32,8 @@
                 <div class="col-lg-4 col-xl-4 border-right">
 
                     
-                    <div class="options px-5 pt-2  border-bottom pb-1">
-                        <div class="row">
+                    <!-- <div class="options px-5 pt-2  border-bottom pb-1"> -->
+                    <!-- <div class="row">
                             <div class="col-md-12 mb-2">
                                 <span class="profileHeding"><?php echo e(@$opd_patient_details->patient_details->first_name); ?>
 
@@ -34,8 +41,8 @@
 
                                     <?php echo e(@$opd_patient_details->patient_details->last_name); ?>(<?php echo e(@$opd_patient_details->patient_details->patient_prefix); ?><?php echo e(@$opd_patient_details->patient_details->id); ?>)</span>
                             </div>
-                        </div>
-                    </div>
+                        </div> -->
+                    <!-- </div> -->
                     
 
                     

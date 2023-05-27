@@ -1399,10 +1399,9 @@ Route::group(['middleware' => ['permission:referral']], function () {
         Route::get('delete-refferal-person/{id?}', [ReferralController::class, 'delete_referral'])->name('delete-refferal-person');
         Route::get('edit-refferal/{id?}', [ReferralController::class, 'edit_referral'])->name('edit-refferal');
         Route::post('update-referral', [ReferralController::class, 'update_referral'])->name('update-referral');
+        Route::get('view-refferal/{id?}', [ReferralController::class, 'view_referral'])->name('view-refferal');
     });
-    Route::group(['middleware' => ['permission:referral person']], function () {
-        
-    });
+
 });
 // ================================ referral ==============================================
 
