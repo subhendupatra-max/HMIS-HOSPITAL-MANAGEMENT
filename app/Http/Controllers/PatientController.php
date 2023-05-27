@@ -92,16 +92,14 @@ class PatientController extends Controller
             $patient->pin_no = $request->pin_no;
             $patient->identification_name = $request->identification_name;
             $patient->identification_number = $request->identification_number;
-            if(isset($request->localaddress_and_address_are_same))
-            {  
+            if (isset($request->localaddress_and_address_are_same)) {
                 $patient->local_address = $request->address;
                 $patient->country_local = $request->country;
                 $patient->state_local = $request->state;
                 $patient->district_local = $request->district;
                 $patient->local_pin_no = $request->pin_no;
-            }
-            else{
-                $patient->local_address = $request->local_address;     
+            } else {
+                $patient->local_address = $request->local_address;
                 $patient->country_local = $request->country_local;
                 $patient->state_local = $request->state_local;
                 $patient->district_local = $request->district_local;
@@ -184,17 +182,19 @@ class PatientController extends Controller
         $emg_registaion_list = EmgDetails::where('ins_by', 'ori')->where('patient_id', $id)->orderBy('id', 'desc')->get();
         $opd_registaion_list = OpdDetails::where('ins_by', 'ori')->where('patient_id', $id)->orderBy('id', 'desc')->get();
         $ipd_patient_list = IpdDetails::where('is_active', '1')->where('patient_id', $id)->where('ins_by', 'ori')->get();
-        
-        return view('setup.patient.patient-details', compact('patient_details','opd_registaion_list','emg_registaion_list','ipd_patient_list'));
+
+        return view('setup.patient.patient-details', compact('patient_details', 'opd_registaion_list', 'emg_registaion_list', 'ipd_patient_list'));
     }
 
     public function edit_new_patient($id, Request $request)
     {
         $id = base64_decode($id);
+        dd($id);
         $blood_group = BloodGroup::all();
         $state = State::all();
         $districts = District::all();
         $patient = Patient::where('id', '=', $id)->first();
+        dd($patient);
         $country = Country::all();
 
         return view('setup.patient.edit-patient', compact('patient', 'blood_group', 'state', 'districts', 'country'));
@@ -273,16 +273,14 @@ class PatientController extends Controller
             $patient->country = $request->country;
             $patient->district = $request->district;
             $patient->pin_no = $request->pin_no;
-            if(isset($request->localaddress_and_address_are_same))
-            {  
+            if (isset($request->localaddress_and_address_are_same)) {
                 $patient->local_address = $request->address;
                 $patient->country_local = $request->country;
                 $patient->state_local = $request->state;
                 $patient->district_local = $request->district;
                 $patient->local_pin_no = $request->pin_no;
-            }
-            else{
-                $patient->local_address = $request->local_address;     
+            } else {
+                $patient->local_address = $request->local_address;
                 $patient->country_local = $request->country_local;
                 $patient->state_local = $request->state_local;
                 $patient->district_local = $request->district_local;
@@ -349,16 +347,14 @@ class PatientController extends Controller
             $patient->country = $request->country;
             $patient->district = $request->district;
             $patient->pin_no = $request->pin_no;
-            if(isset($request->localaddress_and_address_are_same))
-            {  
+            if (isset($request->localaddress_and_address_are_same)) {
                 $patient->local_address = $request->address;
                 $patient->country_local = $request->country;
                 $patient->state_local = $request->state;
                 $patient->district_local = $request->district;
                 $patient->local_pin_no = $request->pin_no;
-            }
-            else{
-                $patient->local_address = $request->local_address;     
+            } else {
+                $patient->local_address = $request->local_address;
                 $patient->country_local = $request->country_local;
                 $patient->state_local = $request->state_local;
                 $patient->district_local = $request->district_local;
@@ -370,7 +366,7 @@ class PatientController extends Controller
             $patient->save();
 
             DB::commit();
-            return redirect()->route('opd-registration',['id'=>base64_encode($id)])->with('success', 'Patient Updated Sucessfully');
+            return redirect()->route('opd-registration', ['id' => base64_encode($id)])->with('success', 'Patient Updated Sucessfully');
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect('edit-new-patient/' . $id)->with('error', $th->getMessage());
@@ -425,16 +421,14 @@ class PatientController extends Controller
             $patient->country = $request->country;
             $patient->district = $request->district;
             $patient->pin_no = $request->pin_no;
-            if(isset($request->localaddress_and_address_are_same))
-            {  
+            if (isset($request->localaddress_and_address_are_same)) {
                 $patient->local_address = $request->address;
                 $patient->country_local = $request->country;
                 $patient->state_local = $request->state;
                 $patient->district_local = $request->district;
                 $patient->local_pin_no = $request->pin_no;
-            }
-            else{
-                $patient->local_address = $request->local_address;     
+            } else {
+                $patient->local_address = $request->local_address;
                 $patient->country_local = $request->country_local;
                 $patient->state_local = $request->state_local;
                 $patient->district_local = $request->district_local;
@@ -446,7 +440,7 @@ class PatientController extends Controller
             $patient->save();
 
             DB::commit();
-            return redirect()->route('emg-registation',base64_encode($id))->with('success', 'Patient Updated Sucessfully');
+            return redirect()->route('emg-registation', base64_encode($id))->with('success', 'Patient Updated Sucessfully');
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect('edit-new-patient/' . $id)->with('error', $th->getMessage());

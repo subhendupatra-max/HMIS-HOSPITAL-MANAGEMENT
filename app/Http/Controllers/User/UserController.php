@@ -233,9 +233,9 @@ class UserController extends Controller
 
         ]);
 
-        // try {
+        try {
 
-        //     DB::beginTransaction();
+            DB::beginTransaction();
 
             if ($request->hasfile('profile_image')) {
 
@@ -281,10 +281,10 @@ class UserController extends Controller
             ]);
             // DB::commit();
 
-        //     return redirect()->route('user-list')->with('success', 'User Updated Sucessfully');
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return redirect()->back()->with('error', $th->getMessage());
-        // }
+            return redirect()->route('user-list')->with('success', 'User Updated Sucessfully');
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 }
