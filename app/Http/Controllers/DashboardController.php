@@ -116,8 +116,29 @@ class DashboardController extends Controller
         $before_nine_billing = Billing::where('bill_date','like','2023-05-19%')->sum('grand_total');
         $before_ten_billing = Billing::where('bill_date','like','2023-05-18%')->sum('grand_total');
 
-        // dd($pharmacy_income);
+        $opd_billing_details = Billing::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->where('section', 'OPD')
+            ->sum('grand_total');
 
-        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'pharmacy_income','before_today_billing','before_two_billing','before_three_billing','before_four_billing','before_five_billing','before_six_billing','before_seven_billing','before_eight_billing','before_nine_billing','before_ten_billing'));
+        $ipd_billing_details = Billing::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->where('section', 'IPD')
+            ->sum('grand_total');
+
+        $emg_billing_details = Billing::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->where('section', 'EMG')
+            ->sum('grand_total');
+
+
+
+        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'pharmacy_income', 'opd_billing_details', 'ipd_billing_details', 'emg_billing_details','before_today_billing','before_two_billing','before_three_billing','before_four_billing','before_five_billing','before_six_billing','before_seven_billing','before_eight_billing','before_nine_billing','before_ten_billing'));
     }
 }

@@ -45,22 +45,13 @@
 
                     <?php if(isset($patient_details_information)): ?>
                     
-                    <?php $__errorArgs = ['patientId'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                    <span class="text-danger"><?php echo e($message); ?></span>
-                    <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
                     <div class="options px-5  pb-3">
                         <div class="row">
 
                             <hr class="hr_line">
 
                             <div class="card-body text-center">
+                          
                                 <div class="pro-user">
                                     <h4 class="pro-user-username text-dark mb-1 font-weight-bold">
                                         <?php echo e($patient_details_information->prefix); ?> <?php echo e($patient_details_information->first_name); ?>
@@ -93,9 +84,13 @@ unset($__errorArgs, $__bag); ?>
                                             <td class="py-2 px-5">
                                                 <span class="font-weight-semibold w-50">Age </span>
                                             </td>
-                                            <td class="py-2 px-5"><?php echo e(@$patient_details_information->year); ?>y
-                                                <?php echo e(@$patient_details_information->month); ?>m
-                                                <?php echo e(@$patient_details_information->day); ?>d
+                                            <td class="py-2 px-5">
+                                                <?php echo e(@$patient_details_information->year == '0'?'':$patient_details_information->year.'y'); ?>
+
+                                                <?php echo e(@$patient_details_information->month == '0'?'':$patient_details_information->month.'m'); ?>
+
+                                                <?php echo e(@$patient_details_information->day == '0'?'':$patient_details_information->day.'d'); ?>
+
                                             </td>
                                         </tr>
                                         <tr>
@@ -131,10 +126,25 @@ unset($__errorArgs, $__bag); ?>
                 </div>
 
                 <div class="col-lg-8 col-xl-8">
+                    <div class="options px-5 pt-1 pb-3">
+                    <div class="row">
+                        <?php $__errorArgs = ['patient_id'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+                </div>
                     <form method="post" action="<?php echo e(route('add-emg-registation')); ?>">
                         <?php echo csrf_field(); ?>
                         <div class="options px-5 pt-1  border-bottom pb-3">
                             <div class="row">
+                    
                                 <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
 
                                 <div class="form-group col-md-4 emgdesign">
@@ -175,15 +185,13 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
 
-                                <div class="form-group col-md-4 emgregistext">
+                                
                                     
-                                    <input type="text" id="case"  name="case" value="<?php echo e(old('case')); ?>" required="">
-                                    <label for="height"> case<span class="text-danger">*</span> </label>
-                                </div>
+                                    
                                 <div class="form-group col-md-4 emgdesignselect">
                                      <label for="patient_type">Patient Type <span class="text-danger">*</span></label>
                                     <select name="patient_type" onchange="getDetailsAccordingType(this.value)" class="form-control select2-show-search" id="patient_type">
-                                        <option value="">Patient Type <span class="text-danger">*</span> </option>
+                                        <option value="">Select Patient Type... </option>
                                         <?php $__currentLoopData = Config::get('static.patient_types'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $patient_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($patient_type); ?>"> <?php echo e($patient_type); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -201,10 +209,10 @@ endif;
 unset($__errorArgs, $__bag); ?>
 
                                 </div>
-                                <div class="form-group  col-md-4  emgdesignselect" style="display: none">
+                                <div class="form-group  col-md-4  emgdesignselect" style="display: none" id="tpa_organizationcxvc">
                                      <label for="tpa_organization" >TPA Organization <span class="text-danger">*</span></label>
                                     <select name="tpa_organization" class="form-control select2-show-search" id="tpa_organization">
-                                        <option value="">Tpa organization<span class="text-danger">*</span></option>
+                                        <option value="">Select Tpa organization...</option>
                                         <?php $__currentLoopData = $tpa_management; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $tpaManagement): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($tpaManagement->id); ?>">
                                             <?php echo e($tpaManagement->TPA_name); ?>
@@ -213,14 +221,14 @@ unset($__errorArgs, $__bag); ?>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                 </div>
-                                <div class="col-md-4" style="display: none">
+                                <div class="form-group col-md-4 emgdesignselect" id="frefesd" style="display: none">
                                     <label for="type_no" ><span id="lableName"></span><span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="type_no" value="<?php echo e(old('type_no')); ?>" id="type_no" />
                                 </div>
                                 <div class="form-group col-md-4 emgdesignselect">
                                      <label for="reference" class="form-label">Reference</label>
                                     <select name="reference" class="form-control select2-show-search" id="reference">
-                                        <option value="">Reference</option>
+                                        <option value="">Select Reference Name.....</option>
                                         <?php $__currentLoopData = $referer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $reference): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($reference->id); ?>"> <?php echo e($reference->referral_name); ?>
 
@@ -238,7 +246,6 @@ unset($__errorArgs, $__bag); ?>
 
                                         </option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
                                     </select>
                                     <?php $__errorArgs = ['department'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -269,10 +276,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="form-group col-md-4 emgdesignin ">
-
-                                        <label class="form-label">Ticket Fees</label>
-                                        <input type="text" name="ticket_fees" value="<?php echo e(@$ticket_fees->ticket_fees); ?>" class="form-control" />
-
+                                    <label class="form-label">Ticket Fees</label>
+                                    <input type="text" name="ticket_fees" value="<?php echo e(@$ticket_fees->ticket_fees); ?>" class="form-control" />
                                 </div>
 
                             </div>
@@ -354,19 +359,19 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="row">
                                     <div class="col-md-6 emgregistext ">
                                         
-                                        <input type="text" id="Note"  name="Note"  required="">
-                                        <label for="Note">Note<span class="text-danger">*</span> </label>
+                                        <input type="text" id="Note"  name="Note" >
+                                        <label for="Note">Note </label>
                                     </div>
                                     <div class="col-md-6 emgregistext">
                                         
-                                        <input type="text" id="any_known_allergies"  name="any_known_allergies"  required="">
-                                        <label for="Any Known Allergies">Any Known Allergies<span class="text-danger">*</span> </label>
+                                        <input type="text" id="any_known_allergies"  name="any_known_allergies" >
+                                        <label for="Any Known Allergies">Any Known Allergies</label>
                                     </div>
                                 </div>
 
                                 <hr class="hr_line">
-                                <input type="checkbox" id="opd_belling" value="emg_belling_from_emg" />
-                                <span style="font-weight: 500;color:blue"> Are You Want To Create <b>Emg Belling</b>
+                                <input type="checkbox" id="opd_belling" name="emg_billing_from_emg" value="emg_billing_from_emg" />
+                                <span style="font-weight: 500;color:blue"> Are You Want To Create <b> Billing</b> now
                                     ?</span>
 
                             </div>
@@ -383,52 +388,6 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
 </div>
-
-<form action="<?php echo e(route('patient-age-edit')); ?>" method="POST">
-    <?php echo csrf_field(); ?>
-    <div class="modal" id="editAge">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title">Edit Age</h6><button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
-                        <div class="form-group col-md-12">
-                            <label for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label>
-                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getage(this.value)" value="<?php echo e(@$patient_details_information->date_of_birth); ?>">
-                            <small class="text-danger"><?php echo e($errors->first('date_of_birth')); ?></small>
-                        </div>
-
-                        <div class="form-group col-md-12">
-                            <label>Age (yy-mm-dd) <span class="text-danger">*</span></label>
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <input type="text" class="form-control" id="date_of_birth_year" name="year" placeholder="Year" value="<?php echo e(@$patient_details_information->year); ?>" required>
-                                    <small class="text-danger"><?php echo e($errors->first('date_of_birth_year')); ?></small>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <input type="text" class="form-control" id="date_of_birth_month" name="month" placeholder="Month" value="<?php echo e(@$patient_details_information->month); ?>" required>
-                                    <small class="text-danger"><?php echo e($errors->first('date_of_birth_month')); ?></small>
-                                </div>
-                                <div class="col-lg-4">
-                                    <input type="text" class="form-control" value="<?php echo e(@$patient_details_information->day); ?>" id="date_of_birth_day" name="day" placeholder="Day" required>
-                                    <small class="text-danger"><?php echo e($errors->first('date_of_birth_day')); ?></small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button class="btn btn-indigo" type="submit">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 
 <script>
     function takeTicketFees() {
@@ -456,19 +415,19 @@ unset($__errorArgs, $__bag); ?>
     }
 
     function getDetailsAccordingType(val) {
-
         if (val == 'TPA') {
-            $('.frefesd').removeAttr('style', true);
-            $('.frefesds').removeAttr('style', true);
+            $('#frefesd').removeAttr('style', true);
             $('#lableName').text('TPA ID');
-            $('#tpa_organization').attr(true);
+            $('#tpa_organizationcxvc').removeAttr('style', true);
         } else if (val == 'Swasthya Sathi') {
-            $('.frefesds').removeAttr('style', true);
-            $('.frefesd').attr('style', 'display:none', true);
+            
+            $('#frefesd').attr('style', 'display:none', true);
+            $('#tpa_organizationcxvc').attr('style', 'display:none', true);
             $('#lableName').text('Swasthya Sathi ID');
         } else {
-            $('.frefesd').attr('style', 'display:none', true);
-            $('.frefesds').attr('style', 'display:none', true);
+            $('#frefesd').attr('style', 'display:none', true);
+            $('#tpa_organizationcxvc').attr('style', 'display:none', true);
+            
         }
     }
 </script>

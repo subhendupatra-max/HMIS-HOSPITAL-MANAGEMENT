@@ -10,13 +10,11 @@
                 <div class="col-md-6 text-right">
                     <div class="d-block">
                         {{-- @can('add patient')
-                        <a href="{{ route('import-patient') }}" class="btn btn-primary btn-sm"><i
-                                class="fa fa-upload"></i>
-                            Import Patient </a>
+                        <a href="{{ route('import-patient') }}" class="btn btn-primary btn-sm"><i class="fa fa-upload"></i>
+                        Import Patient </a>
                         @endcan --}}
                         @can('add patient')
-                        <a href="{{ route('add_new_patient') }}" class="btn btn-primary btn-sm"><i
-                                class="fa fa-hospital-user"></i></i> Add New Patient </a>
+                        <a href="{{ route('add_new_patient') }}" class="btn btn-primary btn-sm"><i class="fa fa-hospital-user"></i></i> Add New Patient </a>
                         @endcan
                     </div>
                 </div>
@@ -24,7 +22,7 @@
         </div>
 
         @include('message.notification')
-    
+
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -45,8 +43,7 @@
                             @foreach ($all_patient as $all_patients)
                             <tr>
 
-                                <td><a href="{{ route('patient-details-profile', base64_encode($all_patients->id)) }}"
-                                        class="textlink">{{ $all_patients->id }}</a>
+                                <td><a href="{{ route('patient-details-profile', base64_encode($all_patients->id)) }}" class="textlink">{{ $all_patients->id }}</a>
                                 </td>
                                 <td>{{ $all_patients->prefix }} {{ $all_patients->first_name }}
                                     {{ $all_patients->middle_name }} {{ $all_patients->last_name }}
@@ -63,33 +60,22 @@
 
                                     <div class="card-options">
 
-                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false"> <i
-                                                class="fa fa-ellipsis-v"></i></a>
+                                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
-                                            <a class="dropdown-item"
-                                                href="{{ route('patient-details-profile', base64_encode($all_patients->id)) }}"><i
-                                                    class="fa fa-eye"></i> View</a>
+                                            <a class="dropdown-item" href="{{ route('patient-details-profile', base64_encode($all_patients->id)) }}"><i class="fa fa-eye"></i> View</a>
                                             @can('edit patient')
-                                            <a class="dropdown-item"
-                                                href="{{ route('edit-patient-details', base64_encode($all_patients->id)) }}">
+                                            <a class="dropdown-item" href="{{ route('edit-patient-details', base64_encode($all_patients->id)) }}">
                                                 <i class="fa fa-edit"></i> Edit</a>
                                             @endcan
                                             @can('delete patient')
-                                            <a class="dropdown-item"
-                                                href="{{ route('delete-patient-details', base64_encode($all_patients->id)) }}"><i
-                                                    class="fa fa-trash"></i> Delete</a>
+                                            <a class="dropdown-item" href="{{ route('delete-patient-details', base64_encode($all_patients->id)) }}"><i class="fa fa-trash"></i> Delete</a>
                                             @endcan
                                             @can('OPD registation')
-                                            <a class="dropdown-item"
-                                                href="{{ route('opd-registration', base64_encode($all_patients->id)) }}"><i
-                                                    class="fa fa-file-alt"></i> OPD Registation</a>
+                                            <a class="dropdown-item" href="{{ route('opd-registration', base64_encode($all_patients->id)) }}"><i class="fa fa-file-alt"></i> OPD Registation</a>
                                             @endcan
                                             @can('Emg registation')
-                                            <a class="dropdown-item"
-                                                href="{{ route('emg-registation', base64_encode($all_patients->id)) }}"><i
-                                                    class="fa fa-file-alt"></i> EMG Registation</a>
+                                            <a class="dropdown-item" href="{{ route('emg-registation', base64_encode($all_patients->id)) }}"><i class="fa fa-file-alt"></i> EMG Registation</a>
                                             @endcan
                                         </div>
                                     </div>
@@ -106,4 +92,4 @@
     </div>
 </div>
 
-    @endsection
+@endsection

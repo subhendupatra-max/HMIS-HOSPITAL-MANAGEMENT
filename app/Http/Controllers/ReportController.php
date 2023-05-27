@@ -14,17 +14,18 @@ use App\Models\EmgPatientDetails;
 
 class ReportController extends Controller
 {
-    public function opd_patient_index(){
-        $departments = Department::where('is_active','1')->get();
-        $doctors = User::where('is_active','1')->where('role','Doctor')->get();
-        return view('report.opd_patient_report',compact('departments','doctors'));
+    public function opd_patient_index()
+    {
+        $departments = Department::where('is_active', '1')->get();
+        $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
+        return view('report.opd_patient_report', compact('departments', 'doctors'));
     }
     public function fetch_opd_patient_report(Request $request)
     {
         $all_search_data = $request->all();
-       
-        $departments = Department::where('is_active','1')->get();
-        $doctors = User::where('is_active','1')->where('role','Doctor')->get();
+
+        $departments = Department::where('is_active', '1')->get();
+        $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
         $opd_patient_report = OpdVisitDetails::where(function ($query) use ($request) {
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
@@ -49,21 +50,22 @@ class ReportController extends Controller
             }
         })->get();
 
-       
-        return view('report.opd_patient_report',compact('opd_patient_report','all_search_data','departments','doctors'));
+
+        return view('report.opd_patient_report', compact('opd_patient_report', 'all_search_data', 'departments', 'doctors'));
     }
 
-    public function ipd_patient_index(){
-        $departments = Department::where('is_active','1')->get();
-        $doctors = User::where('is_active','1')->where('role','Doctor')->get();
-        return view('report.ipd_patient_report',compact('departments','doctors'));
+    public function ipd_patient_index()
+    {
+        $departments = Department::where('is_active', '1')->get();
+        $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
+        return view('report.ipd_patient_report', compact('departments', 'doctors'));
     }
     public function fetch_ipd_patient_report(Request $request)
     {
         $all_search_data = $request->all();
-       
-        $departments = Department::where('is_active','1')->get();
-        $doctors = User::where('is_active','1')->where('role','Doctor')->get();
+
+        $departments = Department::where('is_active', '1')->get();
+        $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
         $ipd_patient_report = IpdDetails::where(function ($query) use ($request) {
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
@@ -86,20 +88,21 @@ class ReportController extends Controller
         })->get();
 
         // dd($ipd_patient_report);
-        return view('report.ipd_patient_report',compact('ipd_patient_report','all_search_data','departments','doctors'));
+        return view('report.ipd_patient_report', compact('ipd_patient_report', 'all_search_data', 'departments', 'doctors'));
     }
 
-    public function emg_patient_index(){
-        $departments = Department::where('is_active','1')->get();
-        $doctors = User::where('is_active','1')->where('role','Doctor')->get();
-        return view('report.emg_patient_report',compact('departments','doctors'));
+    public function emg_patient_index()
+    {
+        $departments = Department::where('is_active', '1')->get();
+        $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
+        return view('report.emg_patient_report', compact('departments', 'doctors'));
     }
     public function fetch_emg_patient_report(Request $request)
     {
         $all_search_data = $request->all();
-       
-        $departments = Department::where('is_active','1')->get();
-        $doctors = User::where('is_active','1')->where('role','Doctor')->get();
+
+        $departments = Department::where('is_active', '1')->get();
+        $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
         $emg_patient_report = EmgPatientDetails::where(function ($query) use ($request) {
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
@@ -117,7 +120,7 @@ class ReportController extends Controller
                 $query->where('appointment_date', '<=', $request->to_date);
             }
         })->get();
-        return view('report.emg_patient_report',compact('emg_patient_report','all_search_data','departments','doctors'));
+        return view('report.emg_patient_report', compact('emg_patient_report', 'all_search_data', 'departments', 'doctors'));
     }
 
     public function payment_report_index()
@@ -128,7 +131,7 @@ class ReportController extends Controller
     public function fetch_payment_report(Request $request)
     {
         $all_search_data = $request->all();
-       
+
         $payment_report = Payment::where(function ($query) use ($request) {
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
@@ -146,7 +149,89 @@ class ReportController extends Controller
                 $query->where('payment_date', '<=', $request->to_date);
             }
         })->get();
-        return view('report.payment_report',compact('payment_report','all_search_data'));
+        return view('report.payment_report', compact('payment_report', 'all_search_data'));
     }
 
+    public function opd_billing_report_index()
+    {
+
+        return view('report.billing-report.opd_billing_report');
+    }
+
+    public function fetch_opd_billing_report(Request $request)
+    {
+        $all_search_data = $request->all();
+
+        $billing_report = Billing::where(function ($query) use ($request) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+            if ($request->from_date != '') {
+                $query->where('bill_date', '>=', $request->from_date);
+            }
+            if ($request->to_date != '') {
+                $query->where('bill_date', '<=', $request->to_date);
+            }
+        })->where('section', 'OPD')
+            ->get();
+
+        // dd($billing_report);
+
+        return view('report.billing-report.opd_billing_report', compact('billing_report', 'all_search_data'));
+    }
+
+    public function ipd_billing_report_index()
+    {
+
+        return view('report.billing-report.ipd_billing_report');
+    }
+
+    public function fetch_ipd_billing_report(Request $request)
+    {
+        $all_search_data = $request->all();
+
+        $billing_report = Billing::where(function ($query) use ($request) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+            if ($request->from_date != '') {
+                $query->where('bill_date', '>=', $request->from_date);
+            }
+            if ($request->to_date != '') {
+                $query->where('bill_date', '<=', $request->to_date);
+            }
+        })->where('section', 'IPD')
+            ->get();
+
+        // dd($billing_report);
+
+        return view('report.billing-report.ipd_billing_report', compact('billing_report', 'all_search_data'));
+    }
+    public function emg_billing_report_index()
+    {
+
+        return view('report.billing-report.emg_billing_report');
+    }
+
+    public function fetch_emg_billing_report(Request $request)
+    {
+        $all_search_data = $request->all();
+
+        $billing_report = Billing::where(function ($query) use ($request) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+            if ($request->from_date != '') {
+                $query->where('bill_date', '>=', $request->from_date);
+            }
+            if ($request->to_date != '') {
+                $query->where('bill_date', '<=', $request->to_date);
+            }
+        })->where('section', 'EMG')
+            ->get();
+
+        // dd($billing_report);
+
+        return view('report.billing-report.emg_billing_report', compact('billing_report', 'all_search_data'));
+    }
 }
