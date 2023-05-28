@@ -56,8 +56,8 @@ class PatientDischargeController extends Controller
         //     'discharge_status' => 'required',
         //     'icd_code' => 'required',
         // ]);
-        try {
-            DB::beginTransaction();
+        // try {
+            // DB::beginTransaction();
 
             $p_bed_update = PatientBedHistory::where('ipd_id', $request->ipd_id)->where('to_date', '=', null)->orderBy('id', 'DESC')->first();
             $p_bed_update->is_present = 'no';
@@ -101,10 +101,10 @@ class PatientDischargeController extends Controller
             } else {
                 return redirect()->route('add-discharged-patient-in-ipd')->with('success', 'Something went wrong');
             }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->back()->with('error', $th->getMessage());
-        }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->back()->with('error', $th->getMessage());
+        // }
     }
 
     public function all_discharged_patient_in_ipd()

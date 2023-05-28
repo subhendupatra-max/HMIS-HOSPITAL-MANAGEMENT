@@ -41,52 +41,43 @@ unset($__errorArgs, $__bag); ?>
                                             </div>
 
                                             <div class="form-group col-md-2 newdesignadd ">
-                                                <input type="text" id="first_name" value="<?php echo e(@$patient->first_name); ?>"
-                                                    name="first_name">
-                                                <label for="first_name"> Pateient's First name<span
-                                                        class="text-danger">*</span> </label>
+                                                <input type="text" id="first_name" value="<?php echo e(@$patient->first_name); ?>" name="first_name">
+                                                <label for="first_name"> Pateient's First name<span class="text-danger">*</span> </label>
                                                 <small class="text-danger"><?php echo e($errors->first('first_name')); ?></small>
                                             </div>
 
                                             <div class="form-group col-md-2 newdesignadd">
 
-                                                <input type="text" id="middle_name" value="<?php echo e(@$patient->middle_name); ?>"
-                                                    name="middle_name">
+                                                <input type="text" id="middle_name" value="<?php echo e(@$patient->middle_name); ?>" name="middle_name">
                                                 <label for="middle_name"> Pateient's Middile name </label>
 
                                             </div>
 
                                             <div class="form-group col-md-2 newdesignadd">
 
-                                                <input type="text" id="last_name" value="<?php echo e(@$patient->last_name); ?>"
-                                                    name="last_name">
-                                                <label for="last_name"> Pateient's Last name <span
-                                                        class="text-danger">*</span></label>
+                                                <input type="text" id="last_name" value="<?php echo e(@$patient->last_name); ?>" name="last_name">
+                                                <label for="last_name"> Pateient's Last name <span class="text-danger">*</span></label>
                                                 <small class="text-danger"><?php echo e($errors->first('last_name')); ?></small>
                                             </div>
 
 
                                             <div class="form-group col-md-2 newdesignadd">
 
-                                                <input type="email" id="email_no" value="<?php echo e(@$patient->email); ?>"
-                                                    name="email_no">
+                                                <input type="email" id="email_no" value="<?php echo e(@$patient->email); ?>" name="email_no">
                                                 <label for="email_no"> Email Id </label>
 
                                             </div>
 
                                             <div class="form-group col-md-2 newdesignadd">
 
-                                                <input type="text" id="Phone_no" name="phone"
-                                                    value="<?php echo e(@$patient->phone); ?>">
-                                                <label for="phone_no"> Pateient's Phone No<span
-                                                        class="text-danger">*</span></label>
+                                                <input type="text" id="Phone_no" name="phone" value="<?php echo e(@$patient->phone); ?>">
+                                                <label for="phone_no"> Pateient's Phone No<span class="text-danger">*</span></label>
                                                 <small class="text-danger"><?php echo e($errors->first('phone')); ?></small>
                                             </div>
 
                                             <div class="form-group col-md-2 newdesign ">
                                                 <label for="marital_status">Marital Status </label>
-                                                <select name="marital_status" class="form-control select2-show-search"
-                                                    id="marital_status">
+                                                <select name="marital_status" class="form-control select2-show-search" id="marital_status">
                                                     <option value="">Select One...</option>
                                                     <?php $__currentLoopData = Config::get('static.marital_status'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $marital): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <option value="<?php echo e($marital); ?>" <?php echo e(@$marital==$patient->marital_status
@@ -109,8 +100,7 @@ unset($__errorArgs, $__bag); ?>
 
                                             <div class="form-group col-md-2 newuserlisttchange">
                                                 <label for="gender">Gender <span class="text-danger">*</span></label>
-                                                <select name="gender" required class="form-control select2-show-search"
-                                                    id="gender">
+                                                <select name="gender" required class="form-control select2-show-search" id="gender">
                                                     <option value="">Select</option>
                                                     <?php $__currentLoopData = Config::get('static.gender'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $genders): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <option value="<?php echo e($genders); ?>" <?php echo e(@$genders==$patient->gender ?
@@ -130,12 +120,8 @@ unset($__errorArgs, $__bag); ?>
                                             </div>
 
                                             <div class="form-group col-md-2 newaddappon">
-                                                <label for="date_of_birth">Date Of Birth <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="date" class="form-control" id="date_of_birth"
-                                                    name="date_of_birth" onchange="getagefromdate(this.value)"
-                                                    value="<?php echo e(date('Y-m-d',strtotime($patient->date_of_birth))); ?>"
-                                                    required>
+                                                <label for="date_of_birth">Date Of Birth <span class="text-danger">*</span></label>
+                                                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" onchange="getagefromdate(this.value)" value="<?php echo e(date('Y-m-d',strtotime($patient->date_of_birth))); ?>" required>
 
                                                 <small class="text-danger"><?php echo e($errors->first('date_of_birth')); ?></small>
                                             </div>
@@ -145,29 +131,21 @@ unset($__errorArgs, $__bag); ?>
                                                 <div class="row">
                                                     <div class="col-lg-4">
 
-                                                        <input type="text" id="date_of_birth_year" onkeyup="getage()"
-                                                            required name="date_of_birth_year" value=" <?php echo e(@$patient->year); ?>">
-                                                        <label for="date_of_birth_year"> Year <span
-                                                                class="text-danger">*</span></label>
+                                                        <input type="text" id="date_of_birth_year" onkeyup="getage()" required name="date_of_birth_year" value=" <?php echo e(@$patient->year); ?>">
+                                                        <label for="date_of_birth_year"> Year <span class="text-danger">*</span></label>
                                                         <small class="text-danger"><?php echo e($errors->first('date_of_birth_year')); ?></small>
                                                     </div>
 
                                                     <div class="col-lg-4 ">
 
-                                                        <input type="text" id="date_of_birth_month"
-                                                            value="<?php echo e(@$patient->month); ?>" onkeyup="getage()" required
-                                                            name="date_of_birth_month">
-                                                        <label for="date_of_birth_month"> Month <span
-                                                                class="text-danger">*</span></label>
+                                                        <input type="text" id="date_of_birth_month" value="<?php echo e(@$patient->month); ?>" onkeyup="getage()" required name="date_of_birth_month">
+                                                        <label for="date_of_birth_month"> Month <span class="text-danger">*</span></label>
                                                         <small class="text-danger"><?php echo e($errors->first('date_of_birth_month')); ?></small>
                                                     </div>
                                                     <div class="col-lg-4  ">
 
-                                                        <input type="text" id="date_of_birth_day" onkeyup="getage()"
-                                                            required name="date_of_birth_day"
-                                                            value="<?php echo e(@$patient->day); ?>">
-                                                        <label for="date_of_birth_day"> Day <span
-                                                                class="text-danger">*</span></label>
+                                                        <input type="text" id="date_of_birth_day" onkeyup="getage()" required name="date_of_birth_day" value="<?php echo e(@$patient->day); ?>">
+                                                        <label for="date_of_birth_day"> Day <span class="text-danger">*</span></label>
                                                         <small class="text-danger"><?php echo e($errors->first('date_of_birth_day')); ?></small>
                                                     </div>
                                                 </div>
@@ -187,22 +165,16 @@ unset($__errorArgs, $__bag); ?>
                                                 <div class="row">
                                                     <div class="form-group col-md-6 newuserchangee">
 
-                                                        <input type="text" id="guardian_name"
-                                                            value="<?php echo e(@$patient->guardian_name); ?>" name="guardian_name"
-                                                            required />
-                                                        <label for="guardian_name"> Guardian's Name<span
-                                                                class="text-danger">*</span></label>
+                                                        <input type="text" id="guardian_name" value="<?php echo e(@$patient->guardian_name); ?>" name="guardian_name" required />
+                                                        <label for="guardian_name"> Guardian's Name<span class="text-danger">*</span></label>
                                                         <small class="text-danger"><?php echo e($errors->first('guardian_name')); ?></small>
 
                                                     </div>
 
                                                     <div class="form-group col-md-6 newuserchangee">
 
-                                                        <input type="text" id="guardian_contact_no"
-                                                            value="<?php echo e(@$patient->guardian_contact_no); ?>"
-                                                            name="guardian_contact_no">
-                                                        <label for="guardian_contact_no"> Guardian's Phone No<span
-                                                                class="text-danger">*</span></label>
+                                                        <input type="text" id="guardian_contact_no" value="<?php echo e(@$patient->guardian_contact_no); ?>" name="guardian_contact_no">
+                                                        <label for="guardian_contact_no"> Guardian's Phone No<span class="text-danger">*</span></label>
                                                         <small class="text-danger"><?php echo e($errors->first('guardian_contact_no')); ?></small>
 
                                                     </div>
@@ -211,27 +183,21 @@ unset($__errorArgs, $__bag); ?>
                                         </div>
 
                                         <div class="col-lg-6">
-                                            <h5 class="font-weight-bold"> <input type="checkbox" id="myCheckbox"
-                                                    onchange="myFunction()"> <i class="fas fa-user-circle"></i> Local
+                                            <h5 class="font-weight-bold"> <input type="checkbox" id="myCheckbox" onchange="myFunction()"> <i class="fas fa-user-circle"></i> Local
                                                 Gurdian Name</h5>
                                             <div class="main-profile-contact-list ">
                                                 <div class="row">
                                                     <div class="form-group col-md-6 newuserchangeedesign">
 
-                                                        <input type="text" id="local_guardian_name"
-                                                            value="<?php echo e(@$patient->local_guardian_name); ?>"
-                                                            name="local_guardian_name">
-                                                        <label for="local_guardian_name"> Local Guardian's Name<span
-                                                                class="text-danger">*</span></label>
+                                                        <input type="text" id="local_guardian_name" value="<?php echo e(@$patient->local_guardian_name); ?>" name="local_guardian_name">
+                                                        <label for="local_guardian_name"> Local Guardian's Name<span class="text-danger">*</span></label>
                                                         <small class="text-danger"><?php echo e($errors->first('local_guardian_name')); ?></small>
 
                                                     </div>
 
                                                     <div class="form-group col-md-6 newuserchangeedesign ">
 
-                                                        <input type="text" id="local_guardian_contact_no"
-                                                            value="<?php echo e(@$patient->local_guardian_contact_no); ?>"
-                                                            name="local_guardian_contact_no">
+                                                        <input type="text" id="local_guardian_contact_no" value="<?php echo e(@$patient->local_guardian_contact_no); ?>" name="local_guardian_contact_no">
                                                         <label for="Local Gurdian Contact No"> Local Guardian's Phone
                                                             No<span class="text-danger">*</span></label>
                                                         <small class="text-danger"><?php echo e($errors->first('local_guardian_contact_no')); ?></small>
@@ -248,18 +214,14 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="row">
                                             <div class="form-group col-md-4 newuserchangee ">
 
-                                                <input type="text" id="address" value="<?php echo e(@$patient->address); ?>"
-                                                    name="address" required>
+                                                <input type="text" id="address" value="<?php echo e(@$patient->address); ?>" name="address" required>
                                                 <label for="address">Address<span class="text-danger">*</span></label>
                                                 <small class="text-danger"><?php echo e($errors->first('address')); ?></small>
                                             </div>
 
                                             <div class="form-group col-md-2 addpatientdesign">
                                                 <label for="country">Country <span class="text-danger">*</span></label>
-                                                <select name="country" class="form-control select2-show-search"
-                                                    id="country"
-                                                    onchange="getCountry(this.value,<?php echo e($patient->state); ?> , <?php echo e($patient->district); ?>)"
-                                                    required>
+                                                <select name="country" class="form-control select2-show-search" id="country" onchange="getCountry(this.value,<?php echo e($patient->state); ?> , <?php echo e($patient->district); ?>)" required>
                                                     <option value="">Select Country... </option>
                                                     <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $countrys): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <option value="<?php echo e($countrys->id); ?>" <?php echo e(@$countrys->id ==
@@ -271,8 +233,7 @@ unset($__errorArgs, $__bag); ?>
 
                                             <div class="form-group col-md-2 addpatientdesign">
                                                 <label for="state">State <span class="text-danger">*</span></label>
-                                                <select name="state" class="form-control select2-show-search" id="state"
-                                                    onchange="getDistricts(this.value,<?php echo e($patient->district); ?>)" required>
+                                                <select name="state" class="form-control select2-show-search" id="state" onchange="getDistricts(this.value,<?php echo e($patient->district); ?>)" required>
                                                     <option value="">Select State...</option>
                                                 </select>
                                                 <small class="text-danger"><?php echo e($errors->first('state')); ?></small>
@@ -280,10 +241,8 @@ unset($__errorArgs, $__bag); ?>
 
 
                                             <div class="form-group col-md-2 addpatientdesign ">
-                                                <label for="district">District <span
-                                                        class="text-danger">*</span></label>
-                                                <select name="district" class="form-control select2-show-search"
-                                                    id="district" required>
+                                                <label for="district">District <span class="text-danger">*</span></label>
+                                                <select name="district" class="form-control select2-show-search" id="district" required>
                                                     <option value="">Select District...</option>
                                                 </select>
                                                 <small class="text-danger"><?php echo e($errors->first('district')); ?></small>
@@ -291,8 +250,7 @@ unset($__errorArgs, $__bag); ?>
 
                                             <div class="form-group col-md-2 addpatientdesignpin ">
 
-                                                <input type="text" id="pin_no" id="pin_no" name="pin_no"
-                                                    value="<?php echo e(@$patient->pin_no); ?>" required>
+                                                <input type="text" id="pin_no" id="pin_no" name="pin_no" value="<?php echo e(@$patient->pin_no); ?>" required>
                                                 <label for="pin_no">Pin No.<span class="text-danger">*</span></label>
                                                 <small class="text-danger"><?php echo e($errors->first('pin_no')); ?></small>
                                             </div>
@@ -302,8 +260,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
 
                                 <div class="card-body border-top hospital_allcardbodydesign">
-                                    <input type="checkbox" name="localaddress_and_address_are_same"
-                                        onchange="same_as_address_localaddress()" id="vjrvervre" value="yes" />
+                                    <input type="checkbox" name="localaddress_and_address_are_same" onchange="same_as_address_localaddress()" id="vjrvervre" value="yes" />
                                     <span style="font-weight: bold !important;
                                         font-size: 15px;color:#0a1272; margin-bottom:3px;">Is
                                         Address And Local Address Same ?
@@ -315,20 +272,15 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="row">
                                             <div class="form-group col-md-4 addpatientdesignaddress  ">
 
-                                                <input type="text" id="local_address"
-                                                    value="<?php echo e(@$patient->local_address); ?>" name="local_address">
-                                                <label for="local_address">Enter Local Address<span
-                                                        class="text-danger">*</span></label>
+                                                <input type="text" id="local_address" value="<?php echo e(@$patient->local_address); ?>" name="local_address">
+                                                <label for="local_address">Enter Local Address<span class="text-danger">*</span></label>
                                                 <small class="text-danger"><?php echo e($errors->first('local_address')); ?></small>
 
                                             </div>
 
                                             <div class="form-group col-md-2 addpatientdesignpin">
-                                                <label for="country_local">Country <span
-                                                        class="text-danger">*</span></label>
-                                                <select name="country_local" class="form-control select2-show-search"
-                                                    id="country_local"
-                                                    onchange="getLocalCountry(this.value,<?php echo e($patient->state); ?> , <?php echo e($patient->district); ?>)">
+                                                <label for="country_local">Country <span class="text-danger">*</span></label>
+                                                <select name="country_local" class="form-control select2-show-search" id="country_local" onchange="getLocalCountry(this.value,<?php echo e($patient->state); ?> , <?php echo e($patient->district); ?>)">
                                                     <option value="">Select Country... </option>
                                                     <?php $__currentLoopData = $country; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <option value="<?php echo e($item->id); ?>" <?php echo e(@$item->id ==
@@ -340,11 +292,8 @@ unset($__errorArgs, $__bag); ?>
 
 
                                             <div class="form-group col-md-2 addpatientdesignpin">
-                                                <label for="state_local">State <span
-                                                        class="text-danger">*</span></label>
-                                                <select name="state_local" class="form-control select2-show-search"
-                                                    id="state_local"
-                                                    onchange="getLocalDistricts(this.value,<?php echo e($patient->district); ?>)">
+                                                <label for="state_local">State <span class="text-danger">*</span></label>
+                                                <select name="state_local" class="form-control select2-show-search" id="state_local" onchange="getLocalDistricts(this.value,<?php echo e($patient->district); ?>)">
                                                     <option value="">Select State...</option>
                                                 </select>
 
@@ -352,20 +301,16 @@ unset($__errorArgs, $__bag); ?>
 
 
                                             <div class="form-group col-md-2 addpatientdesignpin">
-                                                <label for="district_local">District <span
-                                                        class="text-danger">*</span></label>
-                                                <select name="district_local" class="form-control select2-show-search"
-                                                    id="district_local">
+                                                <label for="district_local">District <span class="text-danger">*</span></label>
+                                                <select name="district_local" class="form-control select2-show-search" id="district_local">
                                                     <option value="">Select District...</option>
                                                 </select>
 
                                             </div>
 
                                             <div class="form-group col-md-2 addpin">
-                                                <label for="local_pin_no">Pin No. <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" class="form-control" id="local_pin_no"
-                                                    name="local_pin_no" value="<?php echo e($patient->local_pin_no); ?>">
+                                                <label for="local_pin_no">Pin No. <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="local_pin_no" name="local_pin_no" value="<?php echo e($patient->local_pin_no); ?>">
 
 
                                             </div>
@@ -380,21 +325,19 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group col-md-12 " id="indentification">
                                             <div class="form-group col-md-5 addpatientdesignin d-inline-block">
                                                 <label for="identification_name"> Identification Name </label>
-                                                <select name="identification_name"
-                                                    class="form-control select2-show-search" id="identification_name">
+                                                <select name="identification_name" class="form-control select2-show-search" id="identification_name">
                                                     <option value="">Select One...</option>
-                                <option value="Voter Card" <?php if( $patient->identification_name ==
-                                    'Voter Card'): ?> selected <?php endif; ?>>Voter Card</option>
-                                <option value="Aadhar Card" <?php if( $patient->identification_name ==
-                                    'Aadhar Card'): ?> selected <?php endif; ?>>Aadhar Card</option>
-                                <option value="Ration Card" <?php if( $patient->identification_name ==
-                                    'Ration Card'): ?> selected <?php endif; ?>>Ration Card</option>
+                                                    <option value="Voter Card" <?php if( $patient->identification_name ==
+                                                        'Voter Card'): ?> selected <?php endif; ?>>Voter Card</option>
+                                                    <option value="Aadhar Card" <?php if( $patient->identification_name ==
+                                                        'Aadhar Card'): ?> selected <?php endif; ?>>Aadhar Card</option>
+                                                    <option value="Ration Card" <?php if( $patient->identification_name ==
+                                                        'Ration Card'): ?> selected <?php endif; ?>>Ration Card</option>
                                                 </select>
                                             </div>
 
                                             <div class="form-group col-md-5 addpatientdesign d-inline-block">
-                                                <input type="text" value="<?php echo e($patient->identification_number); ?>"
-                                                    id="identification_number" name="identification_number">
+                                                <input type="text" value="<?php echo e($patient->identification_number); ?>" id="identification_number" name="identification_number">
                                                 <label for="identification_number">National Identification Number
                                                 </label>
                                             </div>
@@ -416,15 +359,15 @@ unset($__errorArgs, $__bag); ?>
 
 </div>
 <script>
-    function getage(){
-        var year =  $('#date_of_birth_year').val();
-        var month =  $('#date_of_birth_month').val();
-        var days =  $('#date_of_birth_day').val();
+    function getage() {
+        var year = $('#date_of_birth_year').val();
+        var month = $('#date_of_birth_month').val();
+        var days = $('#date_of_birth_day').val();
         // var duration = {years: 40, months: 2, days: 3}; // duration object
         var currentDate = new Date(); // current date object
-        var date = new Date(currentDate.getFullYear() - year, 
-                    currentDate.getMonth() - month, 
-                    currentDate.getDate() - days); // subtracting duration from current date
+        var date = new Date(currentDate.getFullYear() - year,
+            currentDate.getMonth() - month,
+            currentDate.getDate() - days); // subtracting duration from current date
         var yyyy = date.getFullYear().toString(); // extracting year
         var mm = (date.getMonth() + 1).toString().padStart(2, '0'); // extracting month and padding with 0 if needed
         var dd = date.getDate().toString().padStart(2, '0'); // extracting day and padding with 0 if needed
@@ -433,7 +376,7 @@ unset($__errorArgs, $__bag); ?>
     }
 </script>
 <script>
-    function showDetails(value,identification_name=null) {
+    function showDetails(value, identification_name = null) {
         var sel = '';
         if (identification_name == "Voter Card") {
             var sel = 'selected';
@@ -477,13 +420,13 @@ unset($__errorArgs, $__bag); ?>
                     let sel = (value.id == state_id ? 'selected' : '');
                     $('#state').append(`<option value="${value.id}" ${sel}>${value.name}</option>`);
                 });
-                
+
                 getDistricts(state_id, district_id);
             },
             error: function(error) {
                 console.log(error);
             }
-           
+
         });
     }
 </script>
@@ -605,7 +548,7 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <script>
-    function getLocalCountry(local_country_id, local_state_id, local_district_id,identification_name=null) {
+    function getLocalCountry(local_country_id, local_state_id, local_district_id, identification_name = null) {
         $('#state_local').val('');
         $("#state_local").html("<option value='l'>Select... </option>");
         $.ajax({
@@ -627,7 +570,7 @@ unset($__errorArgs, $__bag); ?>
                 console.log(error);
             }
         });
-       // showDetails(local_country_id,identification_name);
+        // showDetails(local_country_id,identification_name);
     }
 </script>
 
@@ -664,12 +607,13 @@ unset($__errorArgs, $__bag); ?>
 
 <script>
     function same_as_address_localaddress() {
-            if (document.getElementById("vjrvervre").checked) {;
-                $('#same_address').attr('style','display:none',true);
-            } else {
-                $('#same_address').removeAttr('style',true);
-            }
+        if (document.getElementById("vjrvervre").checked) {
+            ;
+            $('#same_address').attr('style', 'display:none', true);
+        } else {
+            $('#same_address').removeAttr('style', true);
         }
+    }
 </script>
 
 
