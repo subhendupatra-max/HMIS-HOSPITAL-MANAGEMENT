@@ -23,6 +23,7 @@
         <div class="card-header">
             @include('emg.include.patient-name')
         </div>
+        @include('message.notification')
         <div class="card-body">
             <div class="col-xl-12 col-lg-12 col-md-12">
                 <div class="latest-timeline scrollbar3" id="scrollbar3">

@@ -23,6 +23,7 @@
         <div class="card-header">
             <?php echo $__env->make('emg.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -50,7 +51,7 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-payment-in-emg')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('edit-payment-in-emg',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('edit-payment-in-emg',['id'=> base64_encode($item->id),'emg_id'=> base64_encode($emg_patient_details->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
                                             <?php endif; ?>
 
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-payment-in-emg')): ?>

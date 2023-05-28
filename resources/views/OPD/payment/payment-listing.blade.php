@@ -24,6 +24,7 @@
         <div class="card-header">
             @include('OPD.include.patient-name')
         </div>
+        @include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">

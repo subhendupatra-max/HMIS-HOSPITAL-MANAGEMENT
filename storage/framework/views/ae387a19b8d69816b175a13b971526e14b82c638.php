@@ -10,8 +10,7 @@
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
-                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
                             <?php echo $__env->make('OPD.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
@@ -43,7 +42,7 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="form-group col-md-6">
                         <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
-                        <input type="datetime-local" class="form-control" id="date" name="date"  <?php if(isset($editTimeline->date)): ?> value="<?php echo e(date('Y-m-d h:m:s',strtotime($editTimeline->date))); ?>" <?php endif; ?>>
+                        <input type="datetime-local" class="form-control" id="date" name="date" <?php if(isset($editTimeline->date)): ?> value="<?php echo e(date('Y-m-d h:m:s',strtotime($editTimeline->date))); ?>" <?php endif; ?>>
                         <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -57,7 +56,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label for="description" class="form-label">Description<span class="text-danger">*</span></label>
+                        <label for="description" class="form-label">Description</label>
                         <textarea name="description" class="form-control"> <?php echo e($editTimeline->description); ?></textarea>
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -99,5 +98,4 @@ unset($__errorArgs, $__bag); ?>
 
 
 <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/OPD/timeline/edit-timeline.blade.php ENDPATH**/ ?>

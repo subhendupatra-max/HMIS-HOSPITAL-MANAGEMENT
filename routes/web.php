@@ -2147,7 +2147,7 @@ Route::group(['middleware' => ['permission:emg payment'], 'prefix' => 'emg-payme
         Route::get('delete-payment-in-emg/{id}', [EmgPaymentController::class, 'delete_payment_in_emg'])->name('delete-payment-in-emg');
     });
     Route::group(['middleware' => ['permission:edit emg payment']], function () {
-        Route::get('edit-payment-in-emg/{id}', [EmgPaymentController::class, 'edit_payment_in_emg'])->name('edit-payment-in-emg');
+        Route::get('edit-payment-in-emg/{id?}/{emg_id?}', [EmgPaymentController::class, 'edit_payment_in_emg'])->name('edit-payment-in-emg');
         Route::post('update-payment-in-emg', [EmgPaymentController::class, 'update_payment_in_emg'])->name('update-payment-in-emg');
     });
 });

@@ -23,6 +23,7 @@
         <div class="card-header">
             @include('emg.include.patient-name')
         </div>
+        @include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -76,4 +77,4 @@
         </div>
     </div>
 </div>
-    @endsection
+@endsection

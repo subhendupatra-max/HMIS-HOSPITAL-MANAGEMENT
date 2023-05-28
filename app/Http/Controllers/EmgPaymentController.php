@@ -16,16 +16,18 @@ class EmgPaymentController extends Controller
         $emgPaymentDetails =  EmgPayment::where('emg_id', $emg_id)->get();
         $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
 
-        return view('emg.payment.payment-listing', compact('emgPayment', 'emg_id', 'emgPaymentDetails','emg_patient_details'));
+        return view('emg.payment.payment-listing', compact('emgPayment', 'emg_id', 'emgPaymentDetails', 'emg_patient_details'));
     }
 
     public function add_payment_in_emg($id)
     {
         $emg_id = base64_decode($id);
+        // dd($emg_id);
         // dd( $emg_id );
-        $emg_patient_details =  EmgPayment::where('emg_id', $emg_id)->get();
+        $emg_patient_detail =  EmgPayment::where('emg_id', $emg_id)->get();
+        $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
         // dd( $emg_patient_details );
-        return view('emg.payment.add-payment', compact('emg_id', 'emg_patient_details'));
+        return view('emg.payment.add-payment', compact('emg_id', 'emg_patient_details', 'emg_patient_detail'));
     }
 
     public function save_payment_in_emg(Request $request)
@@ -51,13 +53,15 @@ class EmgPaymentController extends Controller
         }
     }
 
-    public function edit_payment_in_emg($id)
+    public function edit_payment_in_emg($id, $emg_id)
     {
         $e_id = base64_decode($id);
+        $emg_id = base64_decode($emg_id);
         $payment = EmgPayment::all();
         $editEmgPaymentDetails = EmgPayment::where('id', $e_id)->first();
+        $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
 
-        return view('emg.payment.edit-payment', compact('payment', 'editEmgPaymentDetails'));
+        return view('emg.payment.edit-payment', compact('payment', 'editEmgPaymentDetails', 'emg_patient_details'));
     }
 
     public function update_payment_in_emg(Request $request)

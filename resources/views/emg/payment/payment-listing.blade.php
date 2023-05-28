@@ -23,6 +23,7 @@
         <div class="card-header">
             @include('emg.include.patient-name')
         </div>
+        @include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -50,7 +51,7 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             @can('edit-payment-in-emg')
-                                            <a class="dropdown-item" href="{{ route('edit-payment-in-emg',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-edit"></i> Edit</a>
+                                            <a class="dropdown-item" href="{{ route('edit-payment-in-emg',['id'=> base64_encode($item->id),'emg_id'=> base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-edit"></i> Edit</a>
                                             @endcan
 
                                             @can('delete-payment-in-emg')
