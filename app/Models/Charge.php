@@ -14,7 +14,6 @@ class Charge extends Model
         'charges_sub_catagory_id',
         'charges_unit_id',
         'charges_name',
-        'standard_charges',
         'date',
         'description',
     ];
@@ -29,4 +28,5 @@ class Charge extends Model
     {
         return $this->belongsTo(ChargesSubCatagory::class, 'charges_sub_catagory_id', 'id');
     }
+
 }

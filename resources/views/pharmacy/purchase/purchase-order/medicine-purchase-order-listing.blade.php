@@ -12,7 +12,7 @@
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         @can('add medicine purchase order')
-                        <a href="{{route('add-medicine-purchase-order')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Create Purchase Order</a>
+                        <a href="{{route('add-medicine-purchase-order')}}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Create Purchase Order</a>
                         @endcan
                     </div>
                 </div>
@@ -20,12 +20,7 @@
             </div>
         </div>
 
-        @if (session('success'))
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{session('success')}}</div>
-        @endif
-        @if (session()->has('error'))
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{session('error')}}</div>
-        @endif
+        @include('message.notification')
         @can('View Medicine Purchase Order')
 
         <div class="card-body">
@@ -58,17 +53,17 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
                                             @can('Print Medicine Purchase Order')
-                                            <a class="dropdown-item" href="{{url('po-print')}}/{{base64_encode($po->po_id)}}"><i class="fa fa-print"></i> Print</a>
+                                            <a class="dropdown-item" href="{{ route('po-print',['po_id'=> base64_encode($po->id)]) }}"><i class="fa fa-print"></i> Print</a>
                                             @endcan
                                             <a class="dropdown-item" href="{{route('purchase-order-details')}}/{{base64_encode($po->id)}}"><i class="fa fa-eye"></i> View</a>
-                                            @can('Edit medicine purchase order')
+                                            {{-- @can('Edit medicine purchase order')
                                             @if($po->po_status<=11 || $po->po_status==17)
-                                                <a class="dropdown-item" href="{{route('po-edit')}}/{{base64_encode($po->id)}}"><i class="fa fa-edit"></i> Edit</a>
+                                                <a class="dropdown-item" href=""><i class="fa fa-edit"></i> Edit</a>
                                                 @endif
-                                                @endcan
-                                                @can('delete medicine purchase order')
-                                                <a class="dropdown-item" href="{{url('po-delete')}}/{{base64_encode($po->po_id)}}"><i class="fa fa-trash"></i> Delete</a>
-                                                @endcan
+                                                @endcan --}}
+                                            @can('delete medicine purchase order')
+                                            <a class="dropdown-item" href="{{ route('po-delete',['id'=>base64_encode($po->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>

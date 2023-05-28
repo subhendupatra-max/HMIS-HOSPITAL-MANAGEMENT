@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add pathology unit')): ?>
@@ -6,19 +8,15 @@
         <div class="card-header">
             <h4 class="card-title">Add Pathology Unit</h4>
         </div>
-        <?php if(session('success')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-        <?php if(session()->has('error')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
-        <?php endif; ?>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <form method="POST" action="<?php echo e(route('save-pathology-unit-details')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">
                         
-                        <input type="text"id="unit_name" name="unit_name">
+               
+                        <textarea class="content" name="unit_name"></textarea>
                         <label class="medicinelabel" for="unit_name">Pathology Unit name</label>
                         <?php $__errorArgs = ['unit_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

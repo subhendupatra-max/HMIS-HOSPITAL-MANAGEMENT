@@ -257,11 +257,20 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                     <a href="<?php echo e(route('print-requisition',['id'=>$requisition_details->id])); ?>"
                         class="btn btn-primary btn-sm allbtndemo"><i class="fa fa-print"> Print</i></a>
                     <?php endif; ?>
-
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine requisition')): ?>
+                    <?php if(!empty($requisition_details->status > 2)): ?>
+                    <a class="btn btn-primary btn-sm " style="margin:0px 0px 0px 852px"
+                    href="<?php echo e(route('edit-medicine-requisition-details',['id'=> base64_encode($requisition_details->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
+                    <?php endif; ?>
+                    <?php endif; ?>
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine requisition')): ?>
+                    <a class="btn btn-primary btn-sm" style="margin:0px 0px 0px -152px" href="<?php echo e(route('delete-medicine-requisition-details',['id'=> base64_encode($requisition_details->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
+                    <?php endif; ?>
                     <?php if(!empty($requisition_details->status > 2)): ?>
                     <a class="btn btn-primary btn-sm  allbtndemooo" data-target="#modaldemo3" data-toggle="modal"
                         href="#"><i class="fa fa-list"></i> Vendors/Quatations</a>
                     <?php endif; ?>
+              
                 </div>
 
                 <div class="card-body">

@@ -16,6 +16,6 @@ class Medicine extends Model
 
     public function unit_name()
     {
-        return $this->belongsTo(MedicineUnit::class, 'unit' , 'id');
+        return $this->belongsTo(MedicineUnit::class, 'unit' , 'id')->latest();
     }
 }

@@ -125,27 +125,6 @@
     </div>
     </div>
 
-
-
-    <script type="text/javascript">
-        function gettotal() {
-            var no_of_row = $('#subhendu tr').length;
-            console.log('aaa=>', no_of_row);
-
-            var t = 0;
-            $("input[name='amount[]']").map(function() {
-                t = t + parseFloat($(this).val());
-            }).get();
-
-            var extra = $('#extra_chages').val();
-
-            var grnd_total = parseFloat(t) + parseFloat(extra);
-            $('#total_am').val(t);
-            $('#grnd_total').val(grnd_total);
-
-        }
-    </script>
-
     <script type="text/javascript">
         function findrequisition() {
             $('#requisitiohbf').html('<option value="">Select One.....</option>');
@@ -205,7 +184,7 @@
                             '</option></select></td><td><select name="unit[]" required class="form-control" readonly><option value="' +res.medicine_units_id + '">' + res.medicine_unit_name +
                             '</option></select></td><td><input type="text" required name="qty[]" value="' +
                             res.quantity + '" onkeyup="getamount(' + i + ')" id="qty' + i +
-                            '" class="form-control" ><td><button type="button" class="btn btn-danger" onclick="remove(' +
+                            '" class="form-control" ><td><button type="button" class="btn btn-danger btn-sm" onclick="remove(' +
                             i + ')"><i class="fa fa-trash"></i></button></td></tr>';
                         $('#subhendu').append(html);
                         i = i + 1;
@@ -213,26 +192,6 @@
                 }
             });
             //    $('#requisitiohbf').('option[value=' +requisition_id+ ']').prop('disabled',true);
-        }
-    </script>
-
-    <script type="text/javascript">
-        function getamount(i) {
-
-
-            var gst = $('#gst' + i).val();
-            console.log(gst);
-            var rate = $('#rate' + i).val();
-            console.log(rate);
-            var qty = $('#qty' + i).val();
-            console.log(qty);
-
-            var amnt = (parseFloat(rate) * parseFloat(qty) * parseFloat(gst)) / 100;
-            var t_amnt = parseFloat(amnt) + (parseFloat(rate) * parseFloat(qty));
-
-            $('#amount' + i).val(t_amnt);
-
-
         }
     </script>
 

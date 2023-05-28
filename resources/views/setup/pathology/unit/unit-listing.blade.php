@@ -8,12 +8,7 @@
         <div class="card-header">
             <h4 class="card-title">Add Pathology Unit</h4>
         </div>
-        @if (session('success'))
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{session('success')}}</div>
-        @endif
-        @if (session()->has('error'))
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{session('error')}}</div>
-        @endif
+        @include('message.notification')
         <div class="card-body">
             <form method="POST" action="{{ route('save-pathology-unit-details') }}">
                 @csrf
@@ -21,7 +16,8 @@
                     <div class="form-group">
                         {{--  <label for="unit_name" class="form-label">Pathology Unit name <span class="text-danger">*</span></label>
                         <textarea class="content" id="unit_name" name="unit_name" required ></textarea>  --}}
-                        <input type="text"id="unit_name" name="unit_name">
+               
+                        <textarea class="content" name="unit_name"></textarea>
                         <label class="medicinelabel" for="unit_name">Pathology Unit name</label>
                         @error('unit_name')
                         <span class="text-danger">{{ $message }}</span>

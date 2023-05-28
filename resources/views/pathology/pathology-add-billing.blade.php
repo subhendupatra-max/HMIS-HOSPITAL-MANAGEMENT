@@ -33,7 +33,7 @@
                                         <option value="{{@$patient->id}}" {{ @$patient_details_information->id ==
                                             $patient->id ? 'Selected' : '' }}>{{@$patient->prefix}}
                                             {{@$patient->first_name}} {{@$patient->middle_name}}
-                                            {{@$patient->last_name}} ( {{@$patient->id}} ) </option>
+                                            {{@$patient->last_name}} ( {{@$patient->id}} )( {{@$patient->phone}} ) </option>
                                         @endforeach
                                         @endif
                                     </select>
@@ -106,6 +106,13 @@
                                             <td class="py-2 px-5"><span style="color:blue">{{@$patient_reg_details->id
                                                     }}</span></td>
                                         </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Patient Type </span>
+                                            </td>
+                                            <td class="py-2 px-5"><span style="color:blue">{{@$patient_reg_details->id
+                                                    }}</span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -132,12 +139,10 @@
                                 <table class="table card-table table-vcenter text-nowrap" id="subhendu">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="width: 48%">Test Name <span
+                                            <th scope="col" style="width: 78%">Test Name <span
                                                     class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 10%">Charge <span class="text-danger">*</span></th>
-                                            <th scope="col" style="width: 10%">Qty <span class="text-danger">*</span></th>
-                                                <th scope="col" style="width: 10%">Tax <span class="text-danger">*</span></th>
-                                            <th scope="col" style="width: 20%">Amount <span class="text-danger">*</span>
+                                         
+                                            <th scope="col" style="width: 20%">Price <span class="text-danger">*</span>
                                             </th>
                                             <th scope="col" style="width: 2%">
                                                 <button class="btn btn-success btn-sm" onclick="addnewrow()"><i
@@ -154,6 +159,7 @@
                         <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
                         <input type="hidden" name="section" value="{{ @$patient_reg_details->section }}" />
                         <input type="hidden" name="case_id" value="{{ @$patient_reg_details->id }}" />
+                        <input type="hidden" name="patient_type" value="{{ @$patient_reg_details->id }}" />
 
                         <div class="options px-5 pt-5  border-bottom pb-3">
 
@@ -161,60 +167,16 @@
                                 <div class="container mt-5">
                                     <div class="d-flex justify-content-end">
                                         <span class="biltext">Total</span>
-                                        {{-- <input type="text" name="total" readonly id="total_am"
-                                            class="form-control myfld"> --}}
+                                
                                         <input type="text" id="total_am" name="total"
                                              class="myfld" />
-                                        {{-- <label for="doctor_fees"> Enter Doctor Fees<span
-                                                class="text-danger">*</span></label> --}}
+                           
                                         @error('total')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
 
-                                    {{-- <div class="d-flex justify-content-end"> --}}
-                                        {{-- <input type="text" name="extra_charges_name"
-                                            placeholder="Enter Extra Charges Name" class="form-control myfld2"> --}}
-
-                                        {{-- <input type="text" id="Enter Extra Charges Name"
-                                            placeholder="Enter Extra Charges Name" name="extra_charges_name"
-                                            class="form-control myfld2" required /> --}}
-                                        {{-- <input onkeyup="gettotal()" type="text" name="extra_charges_value"
-                                            value="00" class="form-control myfld1" id="extra_chages"> --}}
-                                        {{-- </div> --}}
-                                    {{-- <div class="d-flex justify-content-end mt-2"> --}}
-                                        {{-- <span class="biltext">Discount (% / flat)</span> --}}
-                                        {{-- <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
-                                            id="total_discount" class="form-control myfld"> --}}
-                                        {{-- <input type="text" onkeyup="gettotal()" value="0" id="total_discount"
-                                            name="total_discount" class="form-control myfld" required /> --}}
-                                        {{-- <select name="discount_type" onchange="gettotal()" id="discount_type"
-                                            class="form-control myfld" style="width: 75px">
-                                            <option value="percentage" selected>%</option>
-                                            <option value="flat">Flat</option>
-                                        </select> --}}
-                                        {{--
-                                    </div> --}}
-                                    {{-- <div class="d-flex justify-content-end mt-2"> --}}
-                                        {{-- <span class="biltext">Tax</span> --}}
-                                        {{-- <input type="text" name="total_tax" onkeyup="gettotal()" value="0"
-                                            id="total_tax" class="form-control myfld"> --}}
-                                        {{-- <input type="text" onkeyup="gettotal()" value="0" id="total_tax"
-                                            name="total_tax" class="form-control myfld" required /> --}}
-                                        {{--
-                                    </div> --}}
-                                    {{-- <div class="d-flex justify-content-end thrdarea"> --}}
-                                        {{-- <span class="biltext">Grand Total</span> --}}
-                                        {{-- <input type="text" name="grand_total" readonly id="grnd_total" value="00"
-                                            class="form-control myfld"> --}}
-                                        {{-- <input type="text" onkeyup="gettotal()" value="0" id="grand_total"
-                                            name="grand_total" class="form-control myfld" required />
-                                        @error('grnd_total')
-                                        <br>
-                                        <span class="text-danger">{{ $message }}</span>
-                                        @enderror --}}
-                                        {{--
-                                    </div> --}}
+                              
                                 </div>
                             </div>
 
@@ -238,7 +200,7 @@
     var i = 0;
 
     function addnewrow() {
-        var html = '<tr id="rowid' + i + '"><td><select required  class="form-control select2-show-search" name="test_id[]" id="test_id' + i + '" onchange="getTestAmount(this.value,' + i + ')"><option value="">Select Test Name</option> @if(isset($pathology_all_test)) @foreach ($pathology_all_test as $key => $value)<option value="{{$value->id}}">{{$value->test_name}}</option> @endforeach @endif</select></td><td><input type="text" required name="charge[]" class="form-control" onkeyup="gettotal('+i+')" id="charge' + i + '"></td><td><input type="text" required name="qty[]" class="form-control" onkeyup="gettotal('+i+')" id="qty' + i + '"></td><td> <input type="text" required name="tax[]" value="0" class="form-control" onkeyup="gettotal('+i+')" id="tax' + i + '"></td><td><input type="text" required name="amount[]" class="form-control" onkeyup="gettotal('+i+')" id="amount' + i + '"></td><td><button class="btn btn-danger btn-sm" onclick="remove(' + i + ')"><i class="fa fa-times"></i></button></td></tr>';
+        var html = '<tr id="rowid' + i + '"><td><select required  class="form-control select2-show-search" name="test_id[]" id="test_id' + i + '" onchange="getTestAmount(this.value,' + i + ')"><option value="">Select Test Name</option> @if(isset($pathology_all_test)) @foreach ($pathology_all_test as $key => $value)<option value="{{$value->id}}">{{$value->test_name}}</option> @endforeach @endif</select></td><td><input type="text" required name="charge[]" class="form-control" onkeyup="gettotal('+i+')" id="charge' + i + '"></td><td><button class="btn btn-danger btn-sm" onclick="remove(' + i + ')"><i class="fa fa-times"></i></button></td></tr>';
 
         $('#subhendu').append(html);
         i = i + 1;
@@ -270,70 +232,15 @@
         gettotal(i);
     }
 </script>
+
 <script type="text/javascript">
-    function gettotal(i = null) {
-
-        var charge_amount = $('#charge'+i).val();
-        var qty = $('#qty'+i).val();
-        var tax = $('#tax'+i).val();
-        var now_charge = charge_amount * qty;
-        var amount = parseFloat(parseFloat(now_charge) + parseFloat(now_charge * (tax / 100)));
-        $('#amount'+i).val(amount.toFixed(2));
-
-
+    function gettotal() {
         var no_of_row = $('#subhendu tr').length;
-        // console.log('aaa=>', no_of_row);
-
         var t = 0;
-        $("input[name='amount[]']").map(function() {
-            t = t + parseFloat($(this).val());
-        }).get();
-        $('#total_am').val(t.toFixed(2));
-
-        // var extra = $('#extra_chages').val();
-        // var total_discount = $('#total_discount').val();
-        // if ($('#discount_type').val() == 'percentage') {
-        //     var r = parseFloat(t) + parseFloat(extra) + ((parseFloat(t) + parseFloat(extra)) * (parseFloat(total_discount) / 100));
-        // } else {
-        //     var r = parseFloat(t) + parseFloat(extra) + parseFloat(total_discount);
-        // }
-        // var total_tax = $('#total_tax').val();
-        // if (total_tax != 0) {
-        //     var grnd_total = r + (r * (total_tax / 100));
-        // } else {
-        //     var grnd_total = r;
-        // }
-
-        // $('#grnd_total').val(grnd_total);
-
-    }
-</script>
-<script type="text/javascript">
-    function gettotalsss() {
-        var no_of_row = $('#subhendu tr').length;
-        console.log('aaa=>', no_of_row);
-
-        var t = 0;
-        $("input[name='amount[]']").map(function() {
+        $("input[name='charge[]']").map(function() {
             t = t + parseFloat($(this).val());
         }).get();
         $('#total_am').val(t);
-
-        var extra = $('#extra_chages').val();
-        var total_discount = $('#total_discount').val();
-        if ($('#discount_type').val() == 'percentage') {
-            var r = parseFloat(t) + parseFloat(extra) + ((parseFloat(t) + parseFloat(extra)) * (parseFloat(total_discount) / 100));
-        } else {
-            var r = parseFloat(t) + parseFloat(extra) + parseFloat(total_discount);
-        }
-        var total_tax = $('#total_tax').val();
-        if (total_tax != 0) {
-            var grnd_total = r + (r * (total_tax / 100));
-        } else {
-            var grnd_total = r;
-        }
-
-        $('#grnd_total').val(grnd_total);
 
     }
 </script>

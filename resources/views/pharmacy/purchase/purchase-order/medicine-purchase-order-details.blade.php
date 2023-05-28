@@ -9,20 +9,30 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
-        <div class="card-header">
-            <div class="card-new">
-            <div class="card-title">
-                Purchase Order Details
-                @can('Print Medicine Purchase Order')
-                <a href="{{ route('po-print',['po_id'=> base64_encode($po_list->id)]) }}" class="btn btn-primary btn-sm allbtndemo"><i class="fa fa-print"> Print</i></a>
-                @endcan
         
-                @can('permission on po section')
-                <a href="#" class="btn btn-primary btn-sm allbtndemoffff" data-target="#modaldemo1241" data-toggle="modal"><i class="fa fa-user"> Permission</i></a>
+        <div class="card-header d-block">
+            <div class="row">
+                <div class="col-md-6 card-title">
+                    Purchase Order Details
+                </div>
+                @can('Job Print')
+                <div class="col-md-6 text-right">
+                    <div class="d-block">
+                        @can('Print Medicine Purchase Order')
+                        <a href="{{ route('po-print',['po_id'=> base64_encode($po_list->id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-print"> Print</i></a>
+                        @endcan
+                        {{-- @can('Edit medicine purchase order')
+                        <a href="{{ route('po-edit',['po_id'=> base64_encode($po_list->id)]) }}" class="btn btn-primary btn-sm" ><i class="fa fa-edit"> Edit</i></a>
+                        @endcan --}}
+                        @can('delete medicine purchase order')
+                        <a href="{{ route('po-delete',['id'=>base64_encode($po_list->id)]) }}" class="btn btn-primary btn-sm" ><i class="fa fa-trash"> Delete</i></a>
+                        @endcan
+                    </div>
+                </div>
                 @endcan
-            </div>
             </div>
         </div>
+
         @include('message.notification')
         @can('view medicine requisition')
         <div class="card-body">
@@ -95,8 +105,9 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <th>#</th>
                             <th>Requisition Id</th>
                             <th>Medicine Name</th>
-                            <th>Medicine Unit</th>
                             <th>Quantity</th>
+                            <th>Unit</th>
+                         
                         </tr>
                     </thead>
                     <tbody>
@@ -106,8 +117,9 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{@$item->req_id}}</td>
                             <td>{{@$item->fetch_medicine_name->medicine_name}}({{@$item->fetch_medicine_name->catagory_name->medicine_catagory_name}})</td>
-                            <td>{{@$item->fetch_medicine_unit->medicine_unit_name}}</td>
                             <td>{{@$item->quantity}}</td>
+                            <td>{{@$item->fetch_medicine_unit->medicine_unit_name}}</td>
+                           
                         </tr>
                         @endforeach
                         @endif

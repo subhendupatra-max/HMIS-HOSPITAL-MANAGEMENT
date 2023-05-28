@@ -199,9 +199,7 @@ $login_details = DB::table('users')
                                 <li><a href="<?php echo e(route('charges-sub-catagory-details')); ?>">Charges sub
                                         catagory</a></li>
                                 <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('charges unit')): ?>
-                                <li><a href="<?php echo e(route('charges-unit-details')); ?>">Charges Unit</a></li>
-                                <?php endif; ?>
+                                
                             </ul>
                         </li>
                         <?php endif; ?>

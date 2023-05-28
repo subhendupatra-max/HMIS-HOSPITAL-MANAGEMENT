@@ -224,9 +224,9 @@ $login_details = DB::table('users')
                                 <li><a href="{{ route('charges-sub-catagory-details') }}">Charges sub
                                         catagory</a></li>
                                 @endcan
-                                @can('charges unit')
+                                {{-- @can('charges unit')
                                 <li><a href="{{ route('charges-unit-details') }}">Charges Unit</a></li>
-                                @endcan
+                                @endcan --}}
                             </ul>
                         </li>
                         @endif

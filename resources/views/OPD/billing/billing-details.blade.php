@@ -83,8 +83,8 @@
                         </div>
                         <div class="col-md-12 mt-3 mb-3">
                             <span class="requisition_header">Appoved Discount By </span><span class="requisition_text">
-                                : {{ $discount_details->discount->given_by_details->first_name }} {{
-                                $discount_details->discount->given_by_details->last_name }} </span>
+                                : {{ @$discount_details->discount->given_by_details->first_name }} {{
+                                @$discount_details->discount->given_by_details->last_name }} </span>
                         </div>
                         @endif
 

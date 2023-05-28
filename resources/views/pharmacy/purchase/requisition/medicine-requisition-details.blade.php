@@ -249,11 +249,20 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                     <a href="{{ route('print-requisition',['id'=>$requisition_details->id]) }}"
                         class="btn btn-primary btn-sm allbtndemo"><i class="fa fa-print"> Print</i></a>
                     @endcan
-
+                    @can('edit medicine requisition')
+                    @if(!empty($requisition_details->status > 2))
+                    <a class="btn btn-primary btn-sm " style="margin:0px 0px 0px 852px"
+                    href="{{ route('edit-medicine-requisition-details',['id'=> base64_encode($requisition_details->id)]) }}"><i class="fa fa-edit"></i> Edit</a>
+                    @endif
+                    @endcan
+                    @can('delete medicine requisition')
+                    <a class="btn btn-primary btn-sm" style="margin:0px 0px 0px -152px" href="{{ route('delete-medicine-requisition-details',['id'=> base64_encode($requisition_details->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
+                    @endcan
                     @if(!empty($requisition_details->status > 2))
                     <a class="btn btn-primary btn-sm  allbtndemooo" data-target="#modaldemo3" data-toggle="modal"
                         href="#"><i class="fa fa-list"></i> Vendors/Quatations</a>
                     @endif
+              
                 </div>
 
                 <div class="card-body">

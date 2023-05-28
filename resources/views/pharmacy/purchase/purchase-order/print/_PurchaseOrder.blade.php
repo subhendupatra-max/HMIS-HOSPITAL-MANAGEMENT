@@ -61,12 +61,10 @@
 
     <div style="position:relative;background-color:#fff;padding:30px;">
       <!-- ========================================heading============================== -->
-            <table cellspacing="0" border="0" width="100%" hright="100%" style="text-align:center;margin-top: 0px;width: 100%;border-bottom: none;">
+            <table cellspacing="0" border="0" width="100%" hright="100%" style="text-align:center;margin-top: 0px;width: 100%;border-bottom: 2px solid black;">
                  <tr>
-                        <td class="headingdesign">
-                            <label class="marksheetheading">
-                                PURCHASE ORDER
-                            </label>
+                        <td>
+                            <img src="{{ asset('public/assets/images/header') }}/{{$header->logo}}" alt="" style="width: 80%;" >
                         </td>
                  </tr>
             </table>

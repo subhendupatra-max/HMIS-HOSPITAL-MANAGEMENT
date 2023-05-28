@@ -1510,6 +1510,9 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
 
                     Route::get('/get-requisition-item-details/{requisition_id?}', [PurchaseOrderController::class, 'get_requisition_item_details'])->name('get-requisition-item-details');
                 });
+                Route::group(['middleware' => ['permission:delete medicine purchase order']], function () {
+                    Route::get('po-delete/{id?}', [PurchaseOrderController::class, 'po_delete'])->name('po-delete');
+                });
                 Route::group(['middleware' => ['permission:save feedback']], function () {
                     Route::post('feedback-save', [PurchaseOrderController::class, 'save_feedback'])->name('feedback-save');
                 });
@@ -1527,7 +1530,7 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
                 });
 
                 Route::group(['middleware' => ['permission:edit medicine purchase order']], function () {
-                    Route::get('po-edit/{po_id?}', [PurchaseOrderController::class, 'edit_po'])->name('po-edit');
+                    Route::get('po-edit/{id?}', [PurchaseOrderController::class, 'edit_po'])->name('po-edit');
                     Route::post('/po-update', [PurchaseOrderController::class, 'po_update'])->name('po-update');
                 });
 
@@ -1736,6 +1739,7 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
         // ============= pathology master ====================
         // ============= pathology test ====================
         Route::group(['middleware' => ['permission:pathology test']], function () {
+            Route::any('getcharges-amount', [PathologyController::class, 'getcharges_amount'])->name('getcharges-amount');
             Route::get('pathology-test-list', [PathologyController::class, 'pathology_test_list'])->name('pathology-test-list');
             Route::group(['middleware' => ['permission:add pathology test']], function () {
                 Route::get('add-pathology-test', [PathologyController::class, 'add_pathology_test'])->name('add-pathology-test');
@@ -1759,7 +1763,7 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
     });
     //pathology test
 
-    Route::post('find-range-by-parameter', [PathologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter');
+    Route::post('find-range-by-parameter-pathology', [PathologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter-pathology');
     Route::post('find-unit-by-parameter', [PathologyController::class, 'find_unit_by_parameter'])->name('find-unit-by-parameter');
 
     Route::group(['middleware' => ['permission:delete pathology test']], function () {
@@ -1769,7 +1773,7 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
         Route::get('edit-pathology-test-details/{id}', [PathologyController::class, 'edit_pathology_test_details'])->name('edit-pathology-test-details');
         Route::post('update-pathology-test-details', [PathologyController::class, 'update_pathology_test_details'])->name('update-pathology-test-details');
     });
-
+    Route::get('view-pathology-test-details/{id}', [PathologyController::class, 'view_pathology_test_details'])->name('view-pathology-test-details');
     Route::get('add-pathology-report', [PathologyController::class, 'add_pathology_report'])->name('add-pathology-report');
 });
 // ================================== Pathology Main =================

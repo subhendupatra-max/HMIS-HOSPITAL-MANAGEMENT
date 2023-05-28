@@ -85,7 +85,7 @@
     function getParameter(i) {
         var parameter = $('#test_parameter_name' + i).val();
         $.ajax({
-            url: "{{ route('find-range-by-parameter') }}",
+            url: "{{ route('find-range-by-parameter-pathology') }}",
             type: "POST",
             data: {
                 _token: '{{ csrf_token() }}',

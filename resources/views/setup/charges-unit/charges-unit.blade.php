@@ -8,12 +8,7 @@
         <div class="card-header">
             <h4 class="card-title">Add Charges Unit</h4>
         </div>
-        @if (session('success'))
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{session('success')}}</div>
-        @endif
-        @if (session()->has('error'))
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{session('error')}}</div>
-        @endif
+       @include('message.notification')
         <div class="card-body">
             <form method="POST" action="{{ route('save-charges-unit-details') }}">
                 @csrf

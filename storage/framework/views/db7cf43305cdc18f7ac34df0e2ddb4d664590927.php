@@ -35,7 +35,7 @@
 
                                             <?php echo e(@$patient->first_name); ?> <?php echo e(@$patient->middle_name); ?>
 
-                                            <?php echo e(@$patient->last_name); ?> ( <?php echo e(@$patient->id); ?> ) </option>
+                                            <?php echo e(@$patient->last_name); ?> ( <?php echo e(@$patient->id); ?> )( <?php echo e(@$patient->phone); ?> ) </option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         <?php endif; ?>
                                     </select>
@@ -115,6 +115,12 @@ unset($__errorArgs, $__bag); ?>
                                             </td>
                                             <td class="py-2 px-5"><span style="color:blue"><?php echo e(@$patient_reg_details->id); ?></span></td>
                                         </tr>
+                                        <tr>
+                                            <td class="py-2 px-5">
+                                                <span class="font-weight-semibold w-50">Patient Type </span>
+                                            </td>
+                                            <td class="py-2 px-5"><span style="color:blue"><?php echo e(@$patient_reg_details->id); ?></span></td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -148,12 +154,10 @@ unset($__errorArgs, $__bag); ?>
                                 <table class="table card-table table-vcenter text-nowrap" id="subhendu">
                                     <thead>
                                         <tr>
-                                            <th scope="col" style="width: 48%">Test Name <span
+                                            <th scope="col" style="width: 78%">Test Name <span
                                                     class="text-danger">*</span></th>
-                                                    <th scope="col" style="width: 10%">Charge <span class="text-danger">*</span></th>
-                                            <th scope="col" style="width: 10%">Qty <span class="text-danger">*</span></th>
-                                                <th scope="col" style="width: 10%">Tax <span class="text-danger">*</span></th>
-                                            <th scope="col" style="width: 20%">Amount <span class="text-danger">*</span>
+                                         
+                                            <th scope="col" style="width: 20%">Price <span class="text-danger">*</span>
                                             </th>
                                             <th scope="col" style="width: 2%">
                                                 <button class="btn btn-success btn-sm" onclick="addnewrow()"><i
@@ -170,6 +174,7 @@ unset($__errorArgs, $__bag); ?>
                         <input type="hidden" name="patientId" value="<?php echo e(@$patient_details_information->id); ?>" />
                         <input type="hidden" name="section" value="<?php echo e(@$patient_reg_details->section); ?>" />
                         <input type="hidden" name="case_id" value="<?php echo e(@$patient_reg_details->id); ?>" />
+                        <input type="hidden" name="patient_type" value="<?php echo e(@$patient_reg_details->id); ?>" />
 
                         <div class="options px-5 pt-5  border-bottom pb-3">
 
@@ -177,10 +182,10 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="container mt-5">
                                     <div class="d-flex justify-content-end">
                                         <span class="biltext">Total</span>
-                                        
+                                
                                         <input type="text" id="total_am" name="total"
                                              class="myfld" />
-                                        
+                           
                                         <?php $__errorArgs = ['total'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -193,28 +198,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
 
-                                    
-                                        
-
-                                        
-                                        
-                                        
-                                    
-                                        
-                                        
-                                        
-                                        
-                                        
-                                    
-                                        
-                                        
-                                        
-                                        
-                                    
-                                        
-                                        
-                                        
-                                        
+                              
                                 </div>
                             </div>
 
@@ -238,7 +222,7 @@ unset($__errorArgs, $__bag); ?>
     var i = 0;
 
     function addnewrow() {
-        var html = '<tr id="rowid' + i + '"><td><select required  class="form-control select2-show-search" name="test_id[]" id="test_id' + i + '" onchange="getTestAmount(this.value,' + i + ')"><option value="">Select Test Name</option> <?php if(isset($pathology_all_test)): ?> <?php $__currentLoopData = $pathology_all_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><option value="<?php echo e($value->id); ?>"><?php echo e($value->test_name); ?></option> <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> <?php endif; ?></select></td><td><input type="text" required name="charge[]" class="form-control" onkeyup="gettotal('+i+')" id="charge' + i + '"></td><td><input type="text" required name="qty[]" class="form-control" onkeyup="gettotal('+i+')" id="qty' + i + '"></td><td> <input type="text" required name="tax[]" value="0" class="form-control" onkeyup="gettotal('+i+')" id="tax' + i + '"></td><td><input type="text" required name="amount[]" class="form-control" onkeyup="gettotal('+i+')" id="amount' + i + '"></td><td><button class="btn btn-danger btn-sm" onclick="remove(' + i + ')"><i class="fa fa-times"></i></button></td></tr>';
+        var html = '<tr id="rowid' + i + '"><td><select required  class="form-control select2-show-search" name="test_id[]" id="test_id' + i + '" onchange="getTestAmount(this.value,' + i + ')"><option value="">Select Test Name</option> <?php if(isset($pathology_all_test)): ?> <?php $__currentLoopData = $pathology_all_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?><option value="<?php echo e($value->id); ?>"><?php echo e($value->test_name); ?></option> <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> <?php endif; ?></select></td><td><input type="text" required name="charge[]" class="form-control" onkeyup="gettotal('+i+')" id="charge' + i + '"></td><td><button class="btn btn-danger btn-sm" onclick="remove(' + i + ')"><i class="fa fa-times"></i></button></td></tr>';
 
         $('#subhendu').append(html);
         i = i + 1;
@@ -270,70 +254,15 @@ unset($__errorArgs, $__bag); ?>
         gettotal(i);
     }
 </script>
+
 <script type="text/javascript">
-    function gettotal(i = null) {
-
-        var charge_amount = $('#charge'+i).val();
-        var qty = $('#qty'+i).val();
-        var tax = $('#tax'+i).val();
-        var now_charge = charge_amount * qty;
-        var amount = parseFloat(parseFloat(now_charge) + parseFloat(now_charge * (tax / 100)));
-        $('#amount'+i).val(amount.toFixed(2));
-
-
+    function gettotal() {
         var no_of_row = $('#subhendu tr').length;
-        // console.log('aaa=>', no_of_row);
-
         var t = 0;
-        $("input[name='amount[]']").map(function() {
-            t = t + parseFloat($(this).val());
-        }).get();
-        $('#total_am').val(t.toFixed(2));
-
-        // var extra = $('#extra_chages').val();
-        // var total_discount = $('#total_discount').val();
-        // if ($('#discount_type').val() == 'percentage') {
-        //     var r = parseFloat(t) + parseFloat(extra) + ((parseFloat(t) + parseFloat(extra)) * (parseFloat(total_discount) / 100));
-        // } else {
-        //     var r = parseFloat(t) + parseFloat(extra) + parseFloat(total_discount);
-        // }
-        // var total_tax = $('#total_tax').val();
-        // if (total_tax != 0) {
-        //     var grnd_total = r + (r * (total_tax / 100));
-        // } else {
-        //     var grnd_total = r;
-        // }
-
-        // $('#grnd_total').val(grnd_total);
-
-    }
-</script>
-<script type="text/javascript">
-    function gettotalsss() {
-        var no_of_row = $('#subhendu tr').length;
-        console.log('aaa=>', no_of_row);
-
-        var t = 0;
-        $("input[name='amount[]']").map(function() {
+        $("input[name='charge[]']").map(function() {
             t = t + parseFloat($(this).val());
         }).get();
         $('#total_am').val(t);
-
-        var extra = $('#extra_chages').val();
-        var total_discount = $('#total_discount').val();
-        if ($('#discount_type').val() == 'percentage') {
-            var r = parseFloat(t) + parseFloat(extra) + ((parseFloat(t) + parseFloat(extra)) * (parseFloat(total_discount) / 100));
-        } else {
-            var r = parseFloat(t) + parseFloat(extra) + parseFloat(total_discount);
-        }
-        var total_tax = $('#total_tax').val();
-        if (total_tax != 0) {
-            var grnd_total = r + (r * (total_tax / 100));
-        } else {
-            var grnd_total = r;
-        }
-
-        $('#grnd_total').val(grnd_total);
 
     }
 </script>

@@ -13,6 +13,7 @@ use App\Models\Medicine;
 use App\Models\MedicineStore;
 use App\Models\MedicineStoreRoom;
 use App\Models\User;
+use App\Models\AllHeader;
 use App\Models\MedicineRequisitionDetails;
 use App\Models\PurchaseOrderDetails;
 use Illuminate\Support\Facades\DB;
@@ -26,7 +27,7 @@ class PurchaseOrderController extends Controller
 {
     public function medicine_purchase_order_details()
     {
-        $po_list = PurchaseOrder::where('is_delete', 0)->get();
+        $po_list = PurchaseOrder::where('is_delete', 0)->orderBy('id', 'DESC')->get();
 
         return view('pharmacy.purchase.purchase-order.medicine-purchase-order-listing', compact('po_list'));
     }
@@ -103,7 +104,7 @@ class PurchaseOrderController extends Controller
         $po_save->vendor                    = $req->vendor;
         $po_save->generated_by              = Auth::id();
         $po_save->note                      = $req->note;
-        $po_save->status                    = 10;
+        $po_save->status                    = 17;
         $po_save->is_delete                 = 0;
         $po_save->save();
 
@@ -152,6 +153,7 @@ class PurchaseOrderController extends Controller
             return redirect()->route('all-medicine-purchase-order-listing')->with('error', "Something Went Wrong");
         }
     } catch (\Throwable $th) {
+        DB::rollback();
         return redirect()->route('all-medicine-purchase-order-listing')->with('error', "Something Went Wrong");
     }
     }
@@ -274,9 +276,9 @@ class PurchaseOrderController extends Controller
 
         $po_item = PurchaseOrderDetails::where('purchase_order_details.purchase_order_id', $po_id)
             ->get();
-
-        $pdf = PDF::loadView('pharmacy.purchase.purchase-order.print._PurchaseOrder', compact('po_list', 'po_item'));
-        return $pdf->download('purchase-order.pdf');
+        $header = AllHeader::where('header_name','common_header')->first();
+        $pdf = PDF::loadView('pharmacy.purchase.purchase-order.print._PurchaseOrder', compact('header','po_list', 'po_item'));
+        return $pdf->stream('purchase-order.pdf');
         return redirect()->back();
     }
 
@@ -320,7 +322,6 @@ class PurchaseOrderController extends Controller
 
     public function edit_po($id)
     {
-        $user_workshop = Auth::user()->workshop;
         $storeroomList = MedicineStoreRoom::where('is_active', '1')->get();
         $requisition_list = MedicineRequisition::where('status', '>=', 10)->where('is_delete', 1)->get();
         $vendor_list = Vendor::where('is_active', '1')->get();
@@ -342,7 +343,7 @@ class PurchaseOrderController extends Controller
 
         $sl_vender = Vendor::where('is_active', '1')->get();
 
-        return view('pharmacy.purchase.purchase-order.edit-purchase-order-details', compact('storeroomList', 'user_list', 'requisition_list', 'sl_vender', 'po_item', 'po_list'));
+        return view('pharmacy.purchase.purchase-order.edit-purchase-order-details', compact('storeroomList', 'user_list', 'requisition_list', 'sl_vender', 'po_item', 'po_list','vendor_list'));
     }
 
     public function po_update(Request $req)
@@ -431,5 +432,37 @@ class PurchaseOrderController extends Controller
     {
         $PurchaseOrderDetails = PurchaseOrderDetails::select('id', 'purchase_order_id', 'req_id', 'req_details_id')->where('purchase_order_id', $id)->get()->toArray();
         return $PurchaseOrderDetails;
+    }
+
+    public function po_delete($id){
+        $po_id = base64_decode($id);
+        try {
+            DB::beginTransaction();
+            $po_details = PurchaseOrderDetails::where('purchase_order_id', $po_id)->get();
+            foreach($po_details as $value)
+            {
+                $medi_req = MedicineRequisition::where('id',$value->req_no)->first();
+                $medi_req->status = '9';
+                $medi_req->po_status = '0';
+                $medi_req->save();
+
+                $mdicine_details = MedicineRequisitionDetails::where('id',$value->req_details_id)->first();
+                $mdicine_details->po_status = '0';
+                $mdicine_details->save();  
+            }
+            PurchaseOrderDetails::where('purchase_order_id', $po_id)->delete();
+            PurchaseOrder::where('id',$po_id)->delete();
+            DB::commit();
+            if (true) {
+                return redirect()->route('all-medicine-purchase-order-listing')->with('success', "Purchase Order Deleted Sucessfully");
+    
+            } else {
+                return redirect()->route('all-medicine-purchase-order-listing')->with('error', "Something Went Wrong");
+            }
+        }
+        catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('all-medicine-purchase-order-listing')->with('error', "Something Went Wrong");
+        }
     }
 }

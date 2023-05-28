@@ -14,6 +14,7 @@ use App\Models\MedicineRequisitionPermission;
 use App\Models\MedicineStoreRoom;
 use App\Models\MedicineUnit;
 use App\Models\Prefix;
+use App\Models\AllHeader;
 use App\Models\SaveMedicineAll;
 use Illuminate\Support\Facades\Auth;
 use App\Models\VendorQuatation;
@@ -28,7 +29,6 @@ class MedicineRequisitionController extends Controller
 {
     public function medicine_requisition_details()
     {
-
         $medicine_requisition = MedicineRequisition::where('is_delete', 0)
             ->orderBy('medicine_requisitions.id', 'DESC')
             ->get();
@@ -46,11 +46,23 @@ class MedicineRequisitionController extends Controller
         return view('pharmacy.purchase.requisition.add-medicine-requisition', compact('medicine_catagory', 'user_list', 'store_room_list', 'medicineUnit','medicine_name'));
     }
 
+    public function edit_medicine_requisition_details($id){
+        $medi_req_id = base64_decode($id);
+        $store_room_list = MedicineStoreRoom::where('is_active', '1')->get();
+        $medicine_catagory = MedicineCatagory::all();
+        $medicine_name = Medicine::all();
+        $medicineUnit = MedicineUnit::all();
+        $user_list = User::where('is_active', '1')->get();
+        $medicine_requisition = MedicineRequisitionDetails::where('requisition_id',$medi_req_id)->get();
+        $medicine_requisition_main = MedicineRequisition::where('id',$medi_req_id)->first();
+        return view('pharmacy.purchase.requisition.edit-medicine-requisition', compact('medicine_catagory', 'user_list', 'store_room_list', 'medicineUnit','medicine_name','medicine_requisition','medi_req_id','medicine_requisition_main'));
+    }
+
     public function save_medicine_requisition_details(Request $request)
     {
         try {
             DB::beginTransaction();
-            $general_details = DB::table('general_settings')->first();
+           // $general_details = DB::table('general_settings')->first();
             $validate = $request->validate([
                 'date'                      => 'required',
             ]);
@@ -73,13 +85,52 @@ class MedicineRequisitionController extends Controller
                 $requisition_details->quantity                    = $request->qty[$key];
                 $status = $requisition_details->save();
             }
-            // DB::commit();
+            DB::commit();
             if ($status) {
                 return redirect()->route('all-medicine-requisition-listing')->with('success', 'Requisition Added Sucessfully');
             } else {
                 return redirect()->route('all-medicine-requisition-listing')->with('error', "Something Went Wrong");
             }
         } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('all-medicine-requisition-listing')->with('error', "Something Went Wrong");
+        }
+    }
+    public function update_medicine_requisition_details(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+           // $general_details = DB::table('general_settings')->first();
+            $validate = $request->validate([
+                'date'                      => 'required',
+            ]);
+            $prefix = Prefix::where('name', '=', 'medicine_requisition')->first();
+            $requisition = MedicineRequisition::find($request->id);
+            $requisition->requisition_prefix               = $prefix->prefix;
+            $requisition->store_room_id                    = $request->store_room;
+            $requisition->date                             = $request->date;
+            $requisition->checked_by                       = $request->checked_by;
+            $requisition->requested_by                     = $request->requested_by;
+            $requisition->genarated_by                     = Auth::user()->id;
+            $requisition->status                           = 3;
+            $status     =  $requisition->save();
+            MedicineRequisitionDetails::where('requisition_id',$request->id)->delete();
+            foreach ($request->medicine_name as $key => $medicine_catagory) {
+                $requisition_details = new MedicineRequisitionDetails();
+                $requisition_details->requisition_id              = $requisition->id;
+                $requisition_details->medicine_name               = $request->medicine_name[$key];
+                $requisition_details->medicine_unit               = $request->medicine_unit[$key];
+                $requisition_details->quantity                    = $request->qty[$key];
+                $status = $requisition_details->save();
+            }
+            DB::commit();
+            if ($status) {
+                return redirect()->route('all-medicine-requisition-listing')->with('success', 'Requisition Update Sucessfully');
+            } else {
+                return redirect()->route('all-medicine-requisition-listing')->with('error', "Something Went Wrong");
+            }
+        } catch (\Throwable $th) {
+            DB::rollback();
             return redirect()->route('all-medicine-requisition-listing')->with('error', "Something Went Wrong");
         }
     }
@@ -405,14 +456,17 @@ class MedicineRequisitionController extends Controller
 
         $vendor_selected_quataion = VendorQuatation::where('req_id', $id)->where('status', 1)->get();
 
+        $header = AllHeader::where('header_name','common_header')->first();
+
         $requisition_item = MedicineRequisitionDetails::select('medicine_requisition_details.id as requisition_details_id', 'medicine_requisition_details.quantity', 'medicine_catagories.medicine_catagory_name', 'medicine_units.medicine_unit_name', 'medicines.medicine_name', 'medicine_requisition_details.po_status')
-            ->join('medicine_catagories', 'medicine_catagories.id', '=', 'medicine_requisition_details.medicine_catagory')
-            ->join('medicine_units', 'medicine_units.id', '=', 'medicine_requisition_details.medicine_unit')
             ->join('medicines', 'medicines.id', '=', 'medicine_requisition_details.medicine_name')
+            ->join('medicine_catagories', 'medicine_catagories.id', '=', 'medicines.medicine_catagory')
+            ->join('medicine_units', 'medicine_units.id', '=', 'medicine_requisition_details.medicine_unit')
+            
             ->where('requisition_id', $id)
             ->get();
 
-        $pdf = PDF::loadView('pharmacy.purchase.requisition.print._printReq', compact('requisition_details', 'requisition_requested_by', 'requisition_item', 'vendor_selected_quataion'));
+        $pdf = PDF::loadView('pharmacy.purchase.requisition.print._printReq', compact('requisition_details', 'requisition_requested_by', 'requisition_item', 'vendor_selected_quataion','header'));
         // return view('jiii');
         return $pdf->setPaper('a4')->setWarnings(false)->stream('myfile.pdf');
 

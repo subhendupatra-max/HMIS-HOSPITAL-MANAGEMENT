@@ -14,27 +14,7 @@
                                         class="fa fa-file"></i>
                                     Generate Bill </a>
                             @endcan
-
-                            @can('pathology test')
-                                <a href="{{ route('pathology-test-list') }}" class="btn btn-primary btn-sm"><i
-                                        class="fa fa-vials"></i> Pathology Test </a>
-                            @endcan
-                            @can('pathology test master')
-                            <a href="{{ route('pathology-test-master-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
-                            @endcan
-
-                            @can('pathology-test-to-a-patient')
-                            <a href="{{ route('pathology-test-charge') }}" class="btn btn-primary btn-sm"><i class="fa fa-microscope"></i> Patient's Test </a>
-                            @endcan 
-
-                            {{-- @can('pathology Package')
-                            <a href="{{ route('pathology-test-package') }}" class="btn btn-primary btn-sm"><i class="fa fa-microscope"></i> Package </a>
-                            @endcan --}}
-
-                            {{-- @can('')
-                                <a href="{{ route('add_new_patient') }}" class="btn btn-primary btn-sm"><i
-                                        class="fa fa-user"></i> Pending Test </a>
-                                @endcan --}}
+                
                         </div>
                     </div>
                 </div>

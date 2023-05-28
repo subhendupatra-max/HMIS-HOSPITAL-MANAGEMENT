@@ -21,7 +21,9 @@
                 </div>
             </div>
         </div>
-
+        <div class="card-header">
+            <?php echo $__env->make('OPD.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">

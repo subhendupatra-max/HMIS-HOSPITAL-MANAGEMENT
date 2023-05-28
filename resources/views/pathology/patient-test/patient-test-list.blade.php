@@ -5,19 +5,21 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-4 card-title">
-                    Pathology Test
+                    Patient's Test 
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         @can('add-pathology-test-to-a-patient')
                         <a href="{{ route('add-pathology-test-to-a-patient') }}" class="btn btn-primary btn-sm"><i class="fa fa-money-bill"></i> Add </a>
                         @endcan
+                        @can('pathology billing list')
+                        <a href="{{ route('pathology-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-rupee-sign"></i> Billing </a>
+                        @endcan
+                      
                         @can('pathology test')
                         <a href="{{ route('pathology-test-list') }}" class="btn btn-primary btn-sm"><i class="fa fa-vials"></i> Pathology Test </a>
                         @endcan
-                        @can('pathology test master')
-                        <a href="{{ route('pathology-test-master-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
-                        @endcan
+                       
 
                     </div>
                 </div>

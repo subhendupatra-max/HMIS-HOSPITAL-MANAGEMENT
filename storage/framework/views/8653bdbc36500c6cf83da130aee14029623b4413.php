@@ -14,22 +14,7 @@
                                         class="fa fa-file"></i>
                                     Generate Bill </a>
                             <?php endif; ?>
-
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology test')): ?>
-                                <a href="<?php echo e(route('pathology-test-list')); ?>" class="btn btn-primary btn-sm"><i
-                                        class="fa fa-vials"></i> Pathology Test </a>
-                            <?php endif; ?>
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology test master')): ?>
-                            <a href="<?php echo e(route('pathology-test-master-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
-                            <?php endif; ?>
-
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology-test-to-a-patient')): ?>
-                            <a href="<?php echo e(route('pathology-test-charge')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-microscope"></i> Patient's Test </a>
-                            <?php endif; ?> 
-
-                            
-
-                            
+                
                         </div>
                     </div>
                 </div>

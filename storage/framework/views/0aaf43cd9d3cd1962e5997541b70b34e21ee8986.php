@@ -1,3 +1,5 @@
+
+
 <?php $__env->startSection('content'); ?>
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit pathology unit')): ?>
@@ -18,8 +20,9 @@
                 <div class="">
                   <input type="hidden" name="id" value="<?php echo e($editUnit->id); ?>">
                     <div class="form-group">
-                        
-                        <input type="text"id="unit_name" name="unit_name" value="<?php echo e($editUnit->unit_name); ?>">
+                    
+                        <textarea class="content" name="unit_name"><?php echo e($editUnit->unit_name); ?></textarea>
+        
                         <label class="medicinelabel" for="unit_name">Pathology Unit name</label>
                         <?php $__errorArgs = ['unit_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

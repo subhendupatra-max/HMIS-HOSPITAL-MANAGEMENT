@@ -5,19 +5,21 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-4 card-title">
-                    Pathology Test
+                    Patient's Test 
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add-pathology-test-to-a-patient')): ?>
                         <a href="<?php echo e(route('add-pathology-test-to-a-patient')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-money-bill"></i> Add </a>
                         <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology billing list')): ?>
+                        <a href="<?php echo e(route('pathology-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-rupee-sign"></i> Billing </a>
+                        <?php endif; ?>
+                      
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology test')): ?>
                         <a href="<?php echo e(route('pathology-test-list')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-vials"></i> Pathology Test </a>
                         <?php endif; ?>
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology test master')): ?>
-                        <a href="<?php echo e(route('pathology-test-master-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
-                        <?php endif; ?>
+                       
 
                     </div>
                 </div>

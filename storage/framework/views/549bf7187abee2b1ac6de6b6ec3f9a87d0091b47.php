@@ -36,9 +36,9 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="form-group ">
                         <div class="descriptionadd">
-                        <label for="description" class="descriptiononelabel">Description</label>
-                        <input type="text"id="description" name="description"value=" <?php echo e(old('description')); ?> " >
-                        <small class="text-danger"><?php echo e($errors->first('description')); ?></small>
+                            <label for="description" class="descriptiononelabel">Description</label>
+                            <input type="text" id="description" name="description" value=" <?php echo e(old('description')); ?> ">
+                            <small class="text-danger"><?php echo e($errors->first('description')); ?></small>
                         </div>
                     </div>
 
@@ -99,6 +99,6 @@ unset($__errorArgs, $__bag); ?>
     </div>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>
-<?php $__env->stopSection(); ?>
 
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/charges-catagory/charges-catagory-listing.blade.php ENDPATH**/ ?>

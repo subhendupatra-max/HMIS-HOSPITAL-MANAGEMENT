@@ -9,20 +9,28 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
-        <div class="card-header">
-            <div class="card-new">
-            <div class="card-title">
-                Purchase Order Details
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Print Medicine Purchase Order')): ?>
-                <a href="<?php echo e(route('po-print',['po_id'=> base64_encode($po_list->id)])); ?>" class="btn btn-primary btn-sm allbtndemo"><i class="fa fa-print"> Print</i></a>
-                <?php endif; ?>
         
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('permission on po section')): ?>
-                <a href="#" class="btn btn-primary btn-sm allbtndemoffff" data-target="#modaldemo1241" data-toggle="modal"><i class="fa fa-user"> Permission</i></a>
+        <div class="card-header d-block">
+            <div class="row">
+                <div class="col-md-6 card-title">
+                    Purchase Order Details
+                </div>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Job Print')): ?>
+                <div class="col-md-6 text-right">
+                    <div class="d-block">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Print Medicine Purchase Order')): ?>
+                        <a href="<?php echo e(route('po-print',['po_id'=> base64_encode($po_list->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-print"> Print</i></a>
+                        <?php endif; ?>
+                        
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine purchase order')): ?>
+                        <a href="<?php echo e(route('po-delete',['id'=>base64_encode($po_list->id)])); ?>" class="btn btn-primary btn-sm" ><i class="fa fa-trash"> Delete</i></a>
+                        <?php endif; ?>
+                    </div>
+                </div>
                 <?php endif; ?>
-            </div>
             </div>
         </div>
+
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('view medicine requisition')): ?>
         <div class="card-body">
@@ -95,8 +103,9 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <th>#</th>
                             <th>Requisition Id</th>
                             <th>Medicine Name</th>
-                            <th>Medicine Unit</th>
                             <th>Quantity</th>
+                            <th>Unit</th>
+                         
                         </tr>
                     </thead>
                     <tbody>
@@ -106,8 +115,9 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <th scope="row"><?php echo e($loop->iteration); ?></th>
                             <td><?php echo e(@$item->req_id); ?></td>
                             <td><?php echo e(@$item->fetch_medicine_name->medicine_name); ?>(<?php echo e(@$item->fetch_medicine_name->catagory_name->medicine_catagory_name); ?>)</td>
-                            <td><?php echo e(@$item->fetch_medicine_unit->medicine_unit_name); ?></td>
                             <td><?php echo e(@$item->quantity); ?></td>
+                            <td><?php echo e(@$item->fetch_medicine_unit->medicine_unit_name); ?></td>
+                           
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <?php endif; ?>
