@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class PathologyCatagoryController extends Controller
 {
-    
+
     public function catagory_details()
     {
         $catagory = PathologyCatagory::all();
@@ -24,7 +24,7 @@ class PathologyCatagoryController extends Controller
 
         $status = PathologyCatagory::Insert([
             'catagory_name' => $request->catagory_name,
-           
+
         ]);
 
         if ($status) {
@@ -50,7 +50,7 @@ class PathologyCatagoryController extends Controller
 
         $catagory = PathologyCatagory::find($request->id);
         $catagory->catagory_name = $request->catagory_name;
-       
+
         $status = $catagory->save();
 
         if ($status) {

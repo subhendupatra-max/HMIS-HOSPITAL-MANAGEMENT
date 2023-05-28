@@ -17,4 +17,9 @@ class Billing extends Model
     {
         return $this->belongsTo(Patient::class, 'patient_id', 'id');
     }
+
+    public function discount_details()
+    {
+        return $this->belongsTo(Discount::class,'discount_id','id');
+    }
 }

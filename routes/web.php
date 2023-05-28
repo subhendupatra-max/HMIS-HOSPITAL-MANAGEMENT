@@ -1907,6 +1907,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::group(['middleware' => ['permission:edit opd billing']], function () {
             Route::get('edit-opd-bill/{bill_id}/{id}]', [BillingController::class, 'edit_opd_bill'])->name('edit-opd-bill');
         });
+        Route::post('update-new-opd-billing', [BillingController::class, 'update_new_opd_billing'])->name('update-new-opd-billing');
         Route::group(['middleware' => ['permission:delete opd billing']], function () {
             Route::get('delete-opd-bill/{bill_id}', [BillingController::class, 'delete_opd_bill'])->name('delete-opd-bill');
         });
@@ -2687,8 +2688,8 @@ Route::group(['middleware' => ['permission:Report'], 'prefix' => 'report'], func
         Route::post('fetch-ipd-billing-report', [ReportController::class, 'fetch_ipd_billing_report'])->name('fetch-ipd-billing-report');
     });
 
-     //for emg billing report
-     Route::group(['middleware' => ['permission:EMG Billing Report']], function () {
+    //for emg billing report
+    Route::group(['middleware' => ['permission:EMG Billing Report']], function () {
         Route::get('emg-billing-report', [ReportController::class, 'emg_billing_report_index'])->name('emg-billing-report');
         Route::post('fetch-emg-billing-report', [ReportController::class, 'fetch_emg_billing_report'])->name('fetch-emg-billing-report');
     });

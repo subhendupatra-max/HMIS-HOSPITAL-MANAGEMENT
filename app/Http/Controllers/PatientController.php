@@ -189,12 +189,12 @@ class PatientController extends Controller
     public function edit_new_patient($id, Request $request)
     {
         $id = base64_decode($id);
-        dd($id);
+        // dd($id);
         $blood_group = BloodGroup::all();
         $state = State::all();
         $districts = District::all();
         $patient = Patient::where('id', '=', $id)->first();
-        dd($patient);
+        // dd($patient);
         $country = Country::all();
 
         return view('setup.patient.edit-patient', compact('patient', 'blood_group', 'state', 'districts', 'country'));
@@ -227,6 +227,7 @@ class PatientController extends Controller
     public function update_new_patient_details(Request $request)
     {
         $id = $request->id;
+        // dd($id);
         $patient_prefix = Prefix::where('name', 'patient')->first();
 
         $request->validate([

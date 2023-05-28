@@ -1,5 +1,5 @@
-@extends('layouts.layout')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
     <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
         <div class="card">
             <div class="card-header d-block">
@@ -12,7 +12,7 @@
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                             <div class="dropdown-menu dropdown-menu-right" style="">
-                                @include('OPD.include.menu')
+                                <?php echo $__env->make('OPD.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                             </div>
                         </div>
                     </div>
@@ -24,11 +24,11 @@
             $('#charge_category' + rowid).html('<option value="" >Select One..</option>');
             var div_data = "";
             $.ajax({
-                url: "{{ route('get-category') }}",
+                url: "<?php echo e(route('get-category')); ?>",
                 type: "post",
                 data: {
                     chargeSet: id,
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                 },
                 dataType: 'json',
                 success: function(res) {
@@ -52,12 +52,12 @@
             $('#charge_sub_category' + rowid).html('<option value="">Select One..</option>');
             var div_data = '';
             $.ajax({
-                url: "{{ route('get-subcategory-by-category') }}",
+                url: "<?php echo e(route('get-subcategory-by-category')); ?>",
                 type: "post",
                 data: {
                     categoryId: charge_category,
                     chargeSet: set_id,
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                 },
                 dataType: 'json',
                 success: function(res) {
@@ -88,14 +88,14 @@
             $('#charge_name' + row_id).html('<option value="">Select One..</option>');
             var div_data = '';
             $.ajax({
-                url: "{{ route('get-charge-name') }}",
+                url: "<?php echo e(route('get-charge-name')); ?>",
                 type: "post",
                 data: {
                     chargeSet: chargeSet_,
                     chargeType: chargeType_,
                     chargeCategory: chargeCategory_,
                     chargeSubCategory: charge_subCategory_,
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                 },
                 dataType: 'json',
                 success: function(res) {
@@ -111,22 +111,29 @@
             
         }
     </script>
-            <form method="post" action="{{ route('update-new-opd-billing') }}">
-                @csrf
-                <input type="hidden" name="bill_id" value="{{ $billId }}" />
-                <input type="hidden" name="case_id" value="{{ $opd_patient_details->case_id }}" />
+            <form method="post" action="<?php echo e(route('update-new-opd-billing')); ?>">
+                <?php echo csrf_field(); ?>
+                <input type="hidden" name="bill_id" value="<?php echo e($billId); ?>" />
+                <input type="hidden" name="case_id" value="<?php echo e($opd_patient_details->case_id); ?>" />
                 <input type="hidden" name="section" value="OPD" />
-                <input type="hidden" name="opd_id" value="{{ $opd_patient_details->id }}" />
-                <input type="hidden" name="patient_id" value="{{ $opd_patient_details->patient_id }}" />
+                <input type="hidden" name="opd_id" value="<?php echo e($opd_patient_details->id); ?>" />
+                <input type="hidden" name="patient_id" value="<?php echo e($opd_patient_details->patient_id); ?>" />
                 <div class="card-body">
                     <div class="col-md-12 mb-2">
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="form-label">Billing Date <span class="text-danger">*</span></label>
-                                <input type="datetime-local" required class="form-control" name="bill_date" value="{{ date('Y-m-d H:i',strtotime($bill_details->bill_date)) }}" />
-                                @error('bill_date')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
+                                <input type="datetime-local" required class="form-control" name="bill_date" value="<?php echo e(date('Y-m-d H:i',strtotime($bill_details->bill_date))); ?>" />
+                                <?php $__errorArgs = ['bill_date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                             </div>
                         </div>
                     </div>
@@ -154,135 +161,86 @@
                                     </tr>
                                 </thead>
                                 <tbody id="chargeTable">
-                                    @if(@$patient_charge_details)
-                                    @foreach ($patient_charge_details as $key => $value)
+                                    <?php if(@$patient_charge_details): ?>
+                                    <?php $__currentLoopData = $patient_charge_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <script type="text/javascript">
-                                        getChargeCategory('<?php echo $value->charge_set ?>',{{ $key }},{{ $value->charge_category }});
+                                        getChargeCategory('<?php echo $value->charge_set ?>',<?php echo e($key); ?>,<?php echo e($value->charge_category); ?>);
 
-                                        getSub_cate_by_cate({{ $value->charge_category }},'<?php echo $value->charge_set ?>',{{ $key }},{{ $value->charge_sub_category }});
+                                        getSub_cate_by_cate(<?php echo e($value->charge_category); ?>,'<?php echo $value->charge_set ?>',<?php echo e($key); ?>,<?php echo e($value->charge_sub_category); ?>);
                                         
 
-                                        get_charges_name({{ $value->charge_sub_category }},{{ $key }},{{ $value->charge_category }},'<?php echo $value->charge_type ?>','<?php echo $value->charge_set ?>',{{ $value->charge_name }});
+                                        get_charges_name(<?php echo e($value->charge_sub_category); ?>,<?php echo e($key); ?>,<?php echo e($value->charge_category); ?>,'<?php echo $value->charge_type ?>','<?php echo $value->charge_set ?>',<?php echo e($value->charge_name); ?>);
 
                                     </script>
-                                    <tr id="row{{ $key }}">
+                                    <tr id="row<?php echo e($key); ?>">
                                         <input type="hidden" name="old_or_new[]" value="new" />
                                         <input type="hidden" name="charge_id_old[]" value="" />
-                                        <input type="hidden" name="patient_charge_id[]" value="{{ $value->id }}" />
+                                        <input type="hidden" name="patient_charge_id[]" value="<?php echo e($value->id); ?>" />
                                             <td>
-                                                <select class="form-control select2-show-search" onchange="getChargeCategory(this.value,{{ $key }},{{ $value->charge_category }})" name="charge_set[]" id="charge_set{{ $key }}">
+                                                <select class="form-control select2-show-search" onchange="getChargeCategory(this.value,<?php echo e($key); ?>,<?php echo e($value->charge_category); ?>)" name="charge_set[]" id="charge_set<?php echo e($key); ?>">
                                                     <option value="" >Select One..</option>
-                                                    <option value="Normal" {{ $value->charge_set == 'Normal' ?
-                                                        'selected':'' }}>Normal</option>
-                                                    <option value="Package" {{ $value->charge_set == 'Package' ?
-                                                        'selected':'' }}>Package</option>
+                                                    <option value="Normal" <?php echo e($value->charge_set == 'Normal' ?
+                                                        'selected':''); ?>>Normal</option>
+                                                    <option value="Package" <?php echo e($value->charge_set == 'Package' ?
+                                                        'selected':''); ?>>Package</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type{{ $key }}">
+                                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type<?php echo e($key); ?>">
                                                     <option value=" " selected  >Select One... </option>
-                                                    @foreach (Config::get('static.charges_type') as $lang => $charges_type)
-                                                        <option value="{{ $charges_type }}" {{ $value->charge_type
-                                                            == $charges_type ? 'selected':'' }}> {{ $charges_type }}
+                                                    <?php $__currentLoopData = Config::get('static.charges_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $charges_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                        <option value="<?php echo e($charges_type); ?>" <?php echo e($value->charge_type
+                                                            == $charges_type ? 'selected':''); ?>> <?php echo e($charges_type); ?>
+
                                                         </option>
-                                                    @endforeach
+                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 </select>
                                             </td>
                                             <td>
-                                                <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(this.value,'<?php echo $value->charge_set ?>',{{ $key }})" name="charge_category[]" id="charge_category{{ $key }}">
+                                                <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(this.value,'<?php echo $value->charge_set ?>',<?php echo e($key); ?>)" name="charge_category[]" id="charge_category<?php echo e($key); ?>">
                                                     <option value="">Select One..</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category{{ $key }}" onchange="get_charges_name(this.value,{{ $key }})" >
+                                                <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category<?php echo e($key); ?>" onchange="get_charges_name(this.value,<?php echo e($key); ?>)" >
                                                     <option value="">Select One..</option>
                                                 </select>
                                             </td>
                                             <td>
-                                                <select class="form-control select2-show-search" onchange="getcharges({{ $key }})" name="charge_name[]" id="charge_name{{ $key }}">
+                                                <select class="form-control select2-show-search" onchange="getcharges(<?php echo e($key); ?>)" name="charge_name[]" id="charge_name<?php echo e($key); ?>">
                                                     <option value="">Select One..</option>
                                                 </select>
                                             </td>
                 
                                             <td>
-                                                <input class="form-control" onkeyup="getamountwithtax({{ $key }})" name="standard_charges[]" value="{{ $value->standard_charges }}" id="standard_charges{{ $key }}" />
+                                                <input class="form-control" onkeyup="getamountwithtax(<?php echo e($key); ?>)" name="standard_charges[]" value="<?php echo e($value->standard_charges); ?>" id="standard_charges<?php echo e($key); ?>" />
                                             </td>
                                             <td>
-                                                <input class="form-control" value="{{ $value->qty }}" onkeyup="getamountwithtax({{ $key }})"  name="qty[]" id="qty{{ $key }}" />
+                                                <input class="form-control" value="<?php echo e($value->qty); ?>" onkeyup="getamountwithtax(<?php echo e($key); ?>)"  name="qty[]" id="qty<?php echo e($key); ?>" />
                                             </td>
                                             <td>
-                                                <input class="form-control" value="{{ $value->tax }}" onkeyup="getamountwithtax({{ $key }})"  name="tax[]" id="tax{{ $key }}" />
+                                                <input class="form-control" value="<?php echo e($value->tax); ?>" onkeyup="getamountwithtax(<?php echo e($key); ?>)"  name="tax[]" id="tax<?php echo e($key); ?>" />
                                             </td>
                                             <td>
-                                                <input class="form-control" value="{{ $value->amount }}" name="amount[]" id="amount{{ $key }}" />
+                                                <input class="form-control" value="<?php echo e($value->amount); ?>" name="amount[]" id="amount<?php echo e($key); ?>" />
                                             </td>
                                             <td>
                                                 <button class="btn btn-danger btn-sm"  type="button"
-                                                        onclick="rowRemove({{ $key }})"><i class="fa fa-times"></i></button>
+                                                        onclick="rowRemove(<?php echo e($key); ?>)"><i class="fa fa-times"></i></button>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                    @endif
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
 
-                                    {{-- @if(@$old_applied_charges)
-                                    @foreach ($old_applied_charges as $key=>$value)
-                                        <tr id="row{{ $key }}" style="background-color:#e6f5ed">
-                                            <input type="hidden" name="old_or_new[]" value="old" />
-                                            <input type="hidden" name="charge_id_old[]" value="{{ $value->id }}" />
-                                            <td>
-                                                <select class="form-control select2-show-search" name="charge_set[]" id="charge_set{{ $key }}">
-                                                    <option value="{{ @$value->charge_set}} " >{{ @$value->charge_set}} </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type{{ $key }}" >
-                                                        <option value="{{ $value->charge_type }}" > {{ $value->charge_type }}
-                                                        </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control select2-show-search"  name="charge_category[]" id="charge_category{{ $key }}">
-                                                    <option value="{{ $value->charge_category }}">{{ $value->charges_category_details->charges_catagories_name }}</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category{{ $key }}" >
-                                                    <option value="{{ $value->charge_sub_category }}">{{ $value->charges_sub_category_details->charges_sub_catagories_name }}</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control select2-show-search" name="charge_name[]" id="charge_name{{ $key }}">
-                                                    <option value={{ $value->charge_name }}>{{ $value->charges_name_details->charges_name }}</option>
-                                                </select>
-                                            </td>
-                
-                                            <td>
-                                                <input class="form-control" name="standard_charges[]" id="standard_charges{{ $key }}" value="{{ $value->standard_charges }}" readonly />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" value="{{ $value->qty }}" readonly  name="qty[]" id="qty{{ $key }}" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" value="{{ $value->tax }}" readonly  name="tax[]" id="tax{{ $key }}" />
-                                            </td>
-                                            <td>
-                                                <input class="form-control" value="{{ $value->amount }}" readonly name="amount[]" id="amount{{ $key }}" />
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-danger btn-sm"  type="button"
-                                                        onclick="rowRemove({{ $key }})"><i class="fa fa-times"></i></button>
-                                            </td>
-                                        </tr>                                     
-                                    @endforeach
-                                    @endif --}}
+                                    
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="border-bottom border-top">
-                       <span style="color: #ff6014;font-size: 14px;"> Are You want to add Medicine Bill ?<input type="checkbox" id="add_medicine_bill" name="add_medicine_bill" onchange="addMedicineBill({{ $opd_patient_details->case_id }})" value="yes" /></span>
+                       <span style="color: #ff6014;font-size: 14px;"> Are You want to add Medicine Bill ?<input type="checkbox" id="add_medicine_bill" name="add_medicine_bill" onchange="addMedicineBill(<?php echo e($opd_patient_details->case_id); ?>)" value="yes" /></span>
                         <div class="table-responsive" id="fjafiao" style="display: none">
-                            @if(@$medicine_charges[0]->id != null || @$medicine_charges[0]->id != '' )
+                            <?php if(@$medicine_charges[0]->id != null || @$medicine_charges[0]->id != '' ): ?>
                             <table class="table card-table table-vcenter text-nowrap">
                                 <thead>
                                     <tr>
@@ -297,22 +255,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($medicine_charges as $key=>$value)
-                                    <tr id="medicineRow{{ $key }}">
-                                        <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id{{ $key }}" value="{{ $value->id }}" />
-                                        <td>{{$loop->iteration}}</td>
-                                        <td>{{ $value->bill_prefix }}{{ $value->id }}</td>
-                                        <td>{{ date('d-m-Y h:i a',strtotime($value->bill_date))}}</td>
-                                        <td><input text="text" readonly class="form-control" name="medicine_amount[]" id="medicine_amount{{ $key }}" value="{{ $value->total_amount }}" /></td>
+                                    <?php $__currentLoopData = $medicine_charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <tr id="medicineRow<?php echo e($key); ?>">
+                                        <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id<?php echo e($key); ?>" value="<?php echo e($value->id); ?>" />
+                                        <td><?php echo e($loop->iteration); ?></td>
+                                        <td><?php echo e($value->bill_prefix); ?><?php echo e($value->id); ?></td>
+                                        <td><?php echo e(date('d-m-Y h:i a',strtotime($value->bill_date))); ?></td>
+                                        <td><input text="text" readonly class="form-control" name="medicine_amount[]" id="medicine_amount<?php echo e($key); ?>" value="<?php echo e($value->total_amount); ?>" /></td>
                                         <td><button class="btn btn-danger btn-sm"  type="button"
-                                            onclick="medicinerowRemove({{ $key }})"><i class="fa fa-times"></i></button></td>
+                                            onclick="medicinerowRemove(<?php echo e($key); ?>)"><i class="fa fa-times"></i></button></td>
                                     </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
-                            @else
+                            <?php else: ?>
                             <span style="color:blue">Don't Have any bill !!</span>
-                            @endif
+                            <?php endif; ?>
                         </div>
                     </div>
                      <div class="row border-bottom">
@@ -322,7 +280,7 @@
                                     <div class="row">
                                         <div class="col-md-12 editbill">
                                             <label>Note </label>
-                                            {{-- <textarea class="form-control" name="note"></textarea> --}}
+                                            
                                             <input type="text" id="Note" name="Note">
                                         </div>
                                         <div class="col-md-6 edittbilll">
@@ -334,10 +292,11 @@
                                             <label >Payment Mode</label>
                                              <select class="form-control" name="payment_mode"> 
                                                 <option value="">Select One...</option>
-                                                @foreach (Config::get('static.payment_mode_name') as $lang => $payment_mode_name)
-                                                    <option value="{{ $payment_mode_name }}"> {{ $payment_mode_name }}
+                                                <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $payment_mode_name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <option value="<?php echo e($payment_mode_name); ?>"> <?php echo e($payment_mode_name); ?>
+
                                                     </option>
-                                                @endforeach
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </select>
                                 
                                         </div>
@@ -373,10 +332,17 @@
                                         <span class="biltext">Grand Total</span>
                                         <input type="text" name="grand_total" readonly id="grnd_total" value="00"
                                             class="form-control myfld">
-                                        @error('grand_total')
+                                        <?php $__errorArgs = ['grand_total'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
                                             <br>
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                            <span class="text-danger"><?php echo e($message); ?></span>
+                                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                                     </div> 
                                 </div>
                             </div>
@@ -389,8 +355,7 @@
                                 class="fa fa-calculator"></i> Calculate</button>
                         <button class="btn btn-primary btn-sm float-right mr-2" type="submit" name="save" value="save"><i
                                 class="fa fa-file"></i> Save</button>
-                        {{-- <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit"  value="save_and_print"><i
-                                class="fa fa-paste"></i> Save & Print</button> --}}
+                        
                     </div>
                 </div>
             </form>
@@ -439,10 +404,11 @@
                             <td>
                                 <select class="form-control select2-show-search" name="charge_type[]" id="charge_type${i}" >
                                     <option value=" " >Select One... </option>
-                                    @foreach (Config::get('static.charges_type') as $lang => $charges_type)
-                                        <option value="{{ $charges_type }}" > {{ $charges_type }}
+                                    <?php $__currentLoopData = Config::get('static.charges_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $charges_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($charges_type); ?>" > <?php echo e($charges_type); ?>
+
                                         </option>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </td>
                             <td>
@@ -495,14 +461,14 @@
             $('#charge_name' + row_id).empty();
             var div_data = '<option value="">Select One..</option>';
             $.ajax({
-                url: "{{ route('get-charge-name') }}",
+                url: "<?php echo e(route('get-charge-name')); ?>",
                 type: "post",
                 data: {
                     chargeSet: charge_set,
                     chargeType: charge_type,
                     chargeCategory: charge_category,
                     chargeSubCategory: charge_sub_category,
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                 },
                 dataType: 'json',
                 success: function(res) {
@@ -529,12 +495,12 @@
             $('#charge_sub_category' + row_id).html('<option value="">Select One..</option>');
             var div_data = '';
             $.ajax({
-                url: "{{ route('get-subcategory-by-category') }}",
+                url: "<?php echo e(route('get-subcategory-by-category')); ?>",
                 type: "post",
                 data: {
                     categoryId: category_id,
                     chargeSet: charge_set,
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                 },
                 dataType: 'json',
                 success: function(res) {
@@ -587,12 +553,12 @@
             let charge_set = $('#charge_set' + row_id).val();
             $('#standard_charges' + row_id).empty();
             $.ajax({
-                url: "{{ route('get-charge-amount') }}",
+                url: "<?php echo e(route('get-charge-amount')); ?>",
                 type: "post",
                 data: {
                     chargeName: charge_name,
                     chargeSet: charge_set,
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                 },
                 dataType: 'json',
                 success: function(res) {
@@ -649,4 +615,6 @@
             $('#grnd_total').val(grnd_total);
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/OPD/billing/edit-billing.blade.php ENDPATH**/ ?>
