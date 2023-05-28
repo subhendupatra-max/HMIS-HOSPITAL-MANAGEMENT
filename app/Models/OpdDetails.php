@@ -33,4 +33,21 @@ class OpdDetails extends Model
     {
         return $this->belongsTo(State::class, 'state', 'id');
     }
+    public function doctor_details()
+    {
+        return $this->belongsTo(User::class,'cons_doctor','id');
+    }
+    public function department_details()
+    {
+        return $this->belongsTo(Department::class,'department_id','id');
+    }
+    public function tpa_details()
+    {
+        return $this->belongsTo(Diagonasis::class,'tpa_organization','id');
+    }
+    public function billing_details()
+    {
+        return $this->belongsTo(Billing::class,'id','opd_id');
+    }
+   
 }

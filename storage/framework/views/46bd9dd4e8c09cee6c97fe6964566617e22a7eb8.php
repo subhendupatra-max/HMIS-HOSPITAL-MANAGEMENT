@@ -324,37 +324,6 @@
 
 
 <script>
-  // <?php
-      // $i = 0;
-      // if ($opd_billing_details[0]->id != null) {
-      //   foreach ($opd_billing_details as $value) {
-      //     $i = $i + $value->grand_total;
-      //   }
-      // }
-      // 
-      ?>
-
-  // <?php
-      // $ipd = 0;
-      // if ($ipd_billing_details[0]->id != null) {
-      //   foreach ($ipd_billing_details as $value) {
-      //     $ipd = $i + $value->grand_total;
-      //   }
-      // }
-      // 
-      ?>
-
-  // <?php
-      // $emg = 0;
-      // if ($emg_billing_details[0]->id != null) {
-      //   foreach ($emg_billing_details as $value) {
-      //     $emg = $i + $value->grand_total;
-      //   }
-      // }
-      // 
-      ?>
-
-
   var ctx = document.getElementById("myChart").getContext('2d');
 
   var myChart = new Chart(ctx, {
