@@ -13,15 +13,15 @@
 
                     <div class="form-group col-md-4">
                         <label for="from_title" class="form-label">From Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="from_title" name="from_title"  required>
+                        <input type="text" class="form-control" id="from_title" name="from_title" required>
                         @error('from_title')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="reference_no" class="form-label">Reference No <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="reference_no" name="reference_no"  >
+                        <label for="reference_no" class="form-label">Reference No </label>
+                        <input type="text" class="form-control" id="reference_no" name="reference_no">
                         @error('reference_no')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -44,15 +44,15 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="to_title" class="form-label">To Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="to_title" name="to_title"  required>
+                        <label for="to_title" class="form-label">To Title </label>
+                        <input type="text" class="form-control" id="to_title" name="to_title" required>
                         @error('to_title')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                        <label for="date" class="form-label">Date</label>
                         <input type="date" class="form-control" id="date" name="date">
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
@@ -66,7 +66,7 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                
+
                 </div>
 
                 <div class="text-center m-auto">

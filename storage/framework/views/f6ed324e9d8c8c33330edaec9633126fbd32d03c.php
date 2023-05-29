@@ -199,301 +199,299 @@ $login_details = DB::table('users')
                                 <li><a href="<?php echo e(route('charges-sub-catagory-details')); ?>">Charges sub
                                         catagory</a></li>
                                 <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('charges unit')): ?>
-                                <li><a href="<?php echo e(route('charges-unit-details')); ?>">Charges Unit</a></li>
-                                <?php endif; ?>
-                            </ul>
+                                
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('front office')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Front Office <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('purpose')): ?>
+                        <li><a href="<?php echo e(route('add-purpose-in-front-office')); ?>">Purpose</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('complain type')): ?>
+                        <li><a href="<?php echo e(route('add-complain-type-in-front-office')); ?>">Complain Type</a>
                         </li>
                         <?php endif; ?>
-                        <?php if(auth()->user()->can('front office')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Front Office <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('purpose')): ?>
-                                <li><a href="<?php echo e(route('add-purpose-in-front-office')); ?>">Purpose</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('complain type')): ?>
-                                <li><a href="<?php echo e(route('add-complain-type-in-front-office')); ?>">Complain Type</a>
-                                </li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('source')): ?>
-                                <li><a href="<?php echo e(route('add-source-in-front-office')); ?>">Source</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('appointment priority')): ?>
-                                <li><a href="<?php echo e(route('add-appointment-priority-in-front-office')); ?>">Appointment
-                                        Priority</a></li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('source')): ?>
+                        <li><a href="<?php echo e(route('add-source-in-front-office')); ?>">Source</a></li>
                         <?php endif; ?>
-                        <?php if(auth()->user()->can('charges package')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Charges Package <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('package name')): ?>
-                                <li><a href="<?php echo e(route('charges-package-name-details')); ?>">package name</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('package catagory')): ?>
-                                <li><a href="<?php echo e(route('charges-package-catagory-details')); ?>">package
-                                        catagory</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('package sub catagory')): ?>
-                                <li><a href="<?php echo e(route('charges-package-sub-catagory-details')); ?>">package sub
-                                        catagory</a></li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('appointment priority')): ?>
+                        <li><a href="<?php echo e(route('add-appointment-priority-in-front-office')); ?>">Appointment
+                                Priority</a></li>
                         <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('charges package')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Charges Package <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('package name')): ?>
+                        <li><a href="<?php echo e(route('charges-package-name-details')); ?>">package name</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('package catagory')): ?>
+                        <li><a href="<?php echo e(route('charges-package-catagory-details')); ?>">package
+                                catagory</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('package sub catagory')): ?>
+                        <li><a href="<?php echo e(route('charges-package-sub-catagory-details')); ?>">package sub
+                                catagory</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
 
-                        <?php if(auth()->user()->can('Setup Inventory')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Setup Inventory <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item')): ?>
-                                <li><a href="<?php echo e(route('inventory-item-list')); ?>">Inventory Item</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Catagory')): ?>
-                                <li><a href="<?php echo e(route('add-inventory-item-catagory')); ?>">Inventory Item
-                                        Catagory</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Unit')): ?>
-                                <li><a href="<?php echo e(route('add-inventory-item-unit')); ?>">Inventory Item Unit</a>
-                                </li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Brand')): ?>
-                                <li><a href="<?php echo e(route('add-inventory-item-brand')); ?>">Inventory Item Brand</a>
-                                </li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Manufacture')): ?>
-                                <li><a href="<?php echo e(route('add-inventory-manufacture')); ?>">Inventory Item
-                                        Manufacture</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Type')): ?>
-                                <li><a href="<?php echo e(route('add-inventory-item-type')); ?>">Inventory Item Type</a>
-                                </li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Store Room')): ?>
-                                <li><a href="<?php echo e(route('add-inventory-item-store-room')); ?>">Inventory Store
-                                        Room</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Attribute')): ?>
-                                <li><a href="<?php echo e(route('inventory-item-attribute')); ?>">Inventory Item
-                                        Attribute</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Vendor')): ?>
-                                <li><a href="<?php echo e(route('inventory-vendor')); ?>">Inventory Vendor</a></li>
-                                <?php endif; ?>
-                            </ul>
+                <?php if(auth()->user()->can('Setup Inventory')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Setup Inventory <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item')): ?>
+                        <li><a href="<?php echo e(route('inventory-item-list')); ?>">Inventory Item</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Catagory')): ?>
+                        <li><a href="<?php echo e(route('add-inventory-item-catagory')); ?>">Inventory Item
+                                Catagory</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Unit')): ?>
+                        <li><a href="<?php echo e(route('add-inventory-item-unit')); ?>">Inventory Item Unit</a>
                         </li>
                         <?php endif; ?>
-                        <?php if(auth()->user()->can('setup pharmacy')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#"> Pharmacy<i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine storeroom')): ?>
-                                <li><a href="<?php echo e(route('medicine-store-room-details')); ?>">medicine storeroom</a>
-                                </li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine store')): ?>
-                                <li><a href="<?php echo e(route('medicine-store-details')); ?>">medicine store</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine rack')): ?>
-                                <li><a href="<?php echo e(route('medicine-rack-details')); ?>">medicine rack</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine supplier')): ?>
-                                <li><a href="<?php echo e(route('medicine-supplier-details')); ?>">medicine supplier</a>
-                                </li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine dosage')): ?>
-                                <li><a href="<?php echo e(route('medicine-dosage-details')); ?>">medicine dosage</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine unit')): ?>
-                                <li><a href="<?php echo e(route('medicine-unit-details')); ?>">medicine unit</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('dose interval')): ?>
-                                <li><a href="<?php echo e(route('dose-interval-details')); ?>">dose interval</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('dose duration')): ?>
-                                <li><a href="<?php echo e(route('dose-duration-details')); ?>">dose duration</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine vendor')): ?>
-                                <li><a href="<?php echo e(route('medicine-vendor-details')); ?>">medicine vendor</a></li>
-                                <?php endif; ?>
-                            </ul>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Brand')): ?>
+                        <li><a href="<?php echo e(route('add-inventory-item-brand')); ?>">Inventory Item Brand</a>
                         </li>
                         <?php endif; ?>
-                        <?php if(auth()->user()->can('Finding')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Finding<i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Finding')): ?>
-                                <li><a href="<?php echo e(route('finding')); ?>">Finding</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('finding category')): ?>
-                                <li><a href="<?php echo e(route('finding-category-add')); ?>">finding category</a></li>
-                                <?php endif; ?>
-                            </ul>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Manufacture')): ?>
+                        <li><a href="<?php echo e(route('add-inventory-manufacture')); ?>">Inventory Item
+                                Manufacture</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Type')): ?>
+                        <li><a href="<?php echo e(route('add-inventory-item-type')); ?>">Inventory Item Type</a>
                         </li>
                         <?php endif; ?>
-                        <?php if(auth()->user()->can('All Header')): ?>
-                        <li><a href="<?php echo e(route('all-header-listing')); ?>">All Header</a></li>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Store Room')): ?>
+                        <li><a href="<?php echo e(route('add-inventory-item-store-room')); ?>">Inventory Store
+                                Room</a></li>
                         <?php endif; ?>
-                        <?php if(auth()->user()->can('Master Operation')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Operation <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Item Attribute')): ?>
+                        <li><a href="<?php echo e(route('inventory-item-attribute')); ?>">Inventory Item
+                                Attribute</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Inventory Vendor')): ?>
+                        <li><a href="<?php echo e(route('inventory-vendor')); ?>">Inventory Vendor</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('setup pharmacy')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#"> Pharmacy<i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine storeroom')): ?>
+                        <li><a href="<?php echo e(route('medicine-store-room-details')); ?>">medicine storeroom</a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine store')): ?>
+                        <li><a href="<?php echo e(route('medicine-store-details')); ?>">medicine store</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine rack')): ?>
+                        <li><a href="<?php echo e(route('medicine-rack-details')); ?>">medicine rack</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine supplier')): ?>
+                        <li><a href="<?php echo e(route('medicine-supplier-details')); ?>">medicine supplier</a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine dosage')): ?>
+                        <li><a href="<?php echo e(route('medicine-dosage-details')); ?>">medicine dosage</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine unit')): ?>
+                        <li><a href="<?php echo e(route('medicine-unit-details')); ?>">medicine unit</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('dose interval')): ?>
+                        <li><a href="<?php echo e(route('dose-interval-details')); ?>">dose interval</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('dose duration')): ?>
+                        <li><a href="<?php echo e(route('dose-duration-details')); ?>">dose duration</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('medicine vendor')): ?>
+                        <li><a href="<?php echo e(route('medicine-vendor-details')); ?>">medicine vendor</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('Finding')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Finding<i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Finding')): ?>
+                        <li><a href="<?php echo e(route('finding')); ?>">Finding</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('finding category')): ?>
+                        <li><a href="<?php echo e(route('finding-category-add')); ?>">finding category</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('All Header')): ?>
+                <li><a href="<?php echo e(route('all-header-listing')); ?>">All Header</a></li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('Master Operation')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Operation <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
 
-                                <li><a href="<?php echo e(route('operation-details')); ?>">operation-details</a></li>
-                                <li><a href="<?php echo e(route('operation-catagory-details')); ?>">operation-catagory-details</a>
-                                </li>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('operation type')): ?>
-                                <li><a href="<?php echo e(route('operation-type-details')); ?>">operation-type-details</a>
-                                </li>
-                                <?php endif; ?>
-                            </ul>
+                        <li><a href="<?php echo e(route('operation-details')); ?>">operation-details</a></li>
+                        <li><a href="<?php echo e(route('operation-catagory-details')); ?>">operation-catagory-details</a>
                         </li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('Opd')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Opd <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd unit')): ?>
-                                <li><a href="<?php echo e(route('opd-unit-details')); ?>">opd-unit-details</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd setup')): ?>
-                                <li><a href="<?php echo e(route('opd-setup-details')); ?>">opd-setup-details</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd ticket fees')): ?>
-                                <li><a href="<?php echo e(route('opd-ticket-fees-details')); ?>">opd-ticket-fees-details</a>
-                                </li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('Emg setUp')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Emg setUp <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Emg setUp</a></li>
-                            </ul>
-                        </li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('pathology')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">pathology <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology catagory')): ?>
-                                <li><a href="<?php echo e(route('pathology-catagory-details')); ?>">pathology catagory</a>
-                                </li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology unit')): ?>
-                                <li><a href="<?php echo e(route('pathology-unit-details')); ?>">pathology unit</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology parameter')): ?>
-                                <li><a href="<?php echo e(route('pathology-parameter-details')); ?>">pathology parameter</a>
-                                </li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
-                        <?php endif; ?>
-
-                        <?php if(auth()->user()->can('radiology')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">radiology <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('radiology catagory')): ?>
-                                <li><a href="<?php echo e(route('radiology-catagory-details')); ?>">radiology catagory</a>
-                                </li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('radiology unit')): ?>
-                                <li><a href="<?php echo e(route('radiology-unit-details')); ?>">radiology unit</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('radiology parameter')): ?>
-                                <li><a href="<?php echo e(route('radiology-parameter-details')); ?>">radiology parameter</a>
-                                </li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
-                        <?php endif; ?>
-
-                        <?php if(auth()->user()->can('blood bank')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Blood bank <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('blood bank product')): ?>
-                                <li><a href="<?php echo e(route('blood-bank-product-details')); ?>">blood bank product</a>
-                                </li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Blood unit type')): ?>
-                                <li><a href="<?php echo e(route('add-blood-unit-type')); ?>">Blood unit type</a></li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('appointment')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Appointment <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('shift')): ?>
-                                <li><a href="<?php echo e(route('shift-details')); ?>">shift-details</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('slots')): ?>
-                                <li><a href="<?php echo e(route('slots-details')); ?>">slots-details</a></li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('symptoms')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">symptoms <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('symptoms head')): ?>
-                                <li><a href="<?php echo e(route('symptoms-head-details')); ?>">symptoms head</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('symptoms type')): ?>
-                                <li><a href="<?php echo e(route('symptoms-type-details')); ?>">symptoms type</a></li>
-                                <?php endif; ?>
-                            </ul>
-                        </li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('Department')): ?>
-                        <li><a href="<?php echo e(route('department-details')); ?>">Department</a></li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('tpa management')): ?>
-                        <li><a href="<?php echo e(route('tpa-management-details')); ?>">tpa management</a></li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('diagonasis')): ?>
-                        <li><a href="<?php echo e(route('diagonasis-details')); ?>">diagonasis</a></li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('prefix')): ?>
-                        <li><a href="<?php echo e(route('prefixList')); ?>">prefix</a></li>
-                        <?php endif; ?>
-                        <?php if(auth()->user()->can('Bed Master')): ?>
-                        <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">Bed <i class="fa fa-chevron-right"></i></a>
-                            <ul class="dropdown-menu">
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('bed')): ?>
-                                <li><a href="<?php echo e(route('bed-details')); ?>">bed</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('bed type')): ?>
-                                <li><a href="<?php echo e(route('bed-type-details')); ?>">bed type</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('bedUnit')): ?>
-                                <li><a href="<?php echo e(route('bed-unit-details')); ?>">bedUnit</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('bedgroup')): ?>
-                                <li><a href="<?php echo e(route('bedgroup-details')); ?>">bedgroup</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ward')): ?>
-                                <li><a href="<?php echo e(route('ward-details')); ?>">ward</a></li>
-                                <?php endif; ?>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('floor')): ?>
-                                <li><a href="<?php echo e(route('floor-details')); ?>">floor</a></li>
-                                <?php endif; ?>
-                            </ul>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('operation type')): ?>
+                        <li><a href="<?php echo e(route('operation-type-details')); ?>">operation-type-details</a>
                         </li>
                         <?php endif; ?>
                     </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('Opd')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Opd <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd unit')): ?>
+                        <li><a href="<?php echo e(route('opd-unit-details')); ?>">opd-unit-details</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd setup')): ?>
+                        <li><a href="<?php echo e(route('opd-setup-details')); ?>">opd-setup-details</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd ticket fees')): ?>
+                        <li><a href="<?php echo e(route('opd-ticket-fees-details')); ?>">opd-ticket-fees-details</a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('Emg setUp')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Emg setUp <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Emg setUp</a></li>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('pathology')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">pathology <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology catagory')): ?>
+                        <li><a href="<?php echo e(route('pathology-catagory-details')); ?>">pathology catagory</a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology unit')): ?>
+                        <li><a href="<?php echo e(route('pathology-unit-details')); ?>">pathology unit</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology parameter')): ?>
+                        <li><a href="<?php echo e(route('pathology-parameter-details')); ?>">pathology parameter</a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+
+                <?php if(auth()->user()->can('radiology')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">radiology <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('radiology catagory')): ?>
+                        <li><a href="<?php echo e(route('radiology-catagory-details')); ?>">radiology catagory</a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('radiology unit')): ?>
+                        <li><a href="<?php echo e(route('radiology-unit-details')); ?>">radiology unit</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('radiology parameter')): ?>
+                        <li><a href="<?php echo e(route('radiology-parameter-details')); ?>">radiology parameter</a>
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+
+                <?php if(auth()->user()->can('blood bank')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Blood bank <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('blood bank product')): ?>
+                        <li><a href="<?php echo e(route('blood-bank-product-details')); ?>">blood bank product</a>
+                        </li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Blood unit type')): ?>
+                        <li><a href="<?php echo e(route('add-blood-unit-type')); ?>">Blood unit type</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('appointment')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Appointment <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('shift')): ?>
+                        <li><a href="<?php echo e(route('shift-details')); ?>">shift-details</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('slots')): ?>
+                        <li><a href="<?php echo e(route('slots-details')); ?>">slots-details</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('symptoms')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">symptoms <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('symptoms head')): ?>
+                        <li><a href="<?php echo e(route('symptoms-head-details')); ?>">symptoms head</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('symptoms type')): ?>
+                        <li><a href="<?php echo e(route('symptoms-type-details')); ?>">symptoms type</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('Department')): ?>
+                <li><a href="<?php echo e(route('department-details')); ?>">Department</a></li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('tpa management')): ?>
+                <li><a href="<?php echo e(route('tpa-management-details')); ?>">tpa management</a></li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('diagonasis')): ?>
+                <li><a href="<?php echo e(route('diagonasis-details')); ?>">diagonasis</a></li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('prefix')): ?>
+                <li><a href="<?php echo e(route('prefixList')); ?>">prefix</a></li>
+                <?php endif; ?>
+                <?php if(auth()->user()->can('Bed Master')): ?>
+                <li class="dropdown-submenu">
+                    <a tabindex="-1" href="#">Bed <i class="fa fa-chevron-right"></i></a>
+                    <ul class="dropdown-menu">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('bed')): ?>
+                        <li><a href="<?php echo e(route('bed-details')); ?>">bed</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('bed type')): ?>
+                        <li><a href="<?php echo e(route('bed-type-details')); ?>">bed type</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('bedUnit')): ?>
+                        <li><a href="<?php echo e(route('bed-unit-details')); ?>">bedUnit</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('bedgroup')): ?>
+                        <li><a href="<?php echo e(route('bedgroup-details')); ?>">bedgroup</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ward')): ?>
+                        <li><a href="<?php echo e(route('ward-details')); ?>">ward</a></li>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('floor')): ?>
+                        <li><a href="<?php echo e(route('floor-details')); ?>">floor</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php endif; ?>
+                </ul>
                 </li>
             </div>
 
@@ -529,7 +527,12 @@ $login_details = DB::table('users')
                         <li><a href="#">Font office</a></li>
                         <li><a href="<?php echo e(route('all-blood-details')); ?>">Blood Bank</a></li>
                         <li><a href="<?php echo e(route('main-operation')); ?>">Operation</a></li>
-
+                        <?php if(auth()->user()->can('ambulance')): ?>
+                        <li><a href="<?php echo e(route('ambulance-call-details')); ?>">Ambulance</a></li>
+                        <?php endif; ?>
+                        <?php if(auth()->user()->can('front office')): ?>
+                        <li><a href="<?php echo e(route('all-visit-details')); ?>">Front Office</a></li>
+                        <?php endif; ?>
                         <?php if(auth()->user()->can('view role') ||
                         auth()->user()->can('asign userBasedPermission') ||
                         auth()->user()->can('view permission') ||

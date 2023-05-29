@@ -14,17 +14,17 @@
                         <a href="{{ route('add-visit-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Visitor </a>
                         @endcan
                         @can('call log')
-                        <a href="{{ route('all-phone-call-log-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Call Log </a>
+                        <a href="{{ route('all-phone-call-log-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-phone"></i> Call Log </a>
                         @endcan
 
                         @can('complain')
-                        <a href="{{ route('all-complain-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Complain </a>
+                        <a href="{{ route('all-complain-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-pen"></i></i> Complain </a>
                         @endcan
 
                         <div class="card-options carddrpdwn_area">
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v"></i>
-                                 Postal
+                                <i class="fa fa-ellipsis-v"></i>
+                                Postal
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" style="">
 
@@ -41,6 +41,7 @@
                 </div>
             </div>
         </div>
+        @include('message.notification')
 
         <div class="card-body">
             <div class="">

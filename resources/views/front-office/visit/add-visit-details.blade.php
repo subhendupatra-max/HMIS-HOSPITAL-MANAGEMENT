@@ -26,7 +26,7 @@
                     <div class="form-group col-md-4">
                         <!-- <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required> -->
-                        <input type="text" id="name" name="name"required="">
+                        <input type="text" id="name" name="name" required="">
                         <label for="name"> Enter Name<span class="text-danger">*</span></label>
                         @error('name')
                         <span class="text-danger">{{ $message }}</span>
@@ -36,7 +36,7 @@
                     <div class="form-group col-md-4">
                         <!-- <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone" required> -->
-                        <input type="text" id="phone" name="phone"required="">
+                        <input type="text" id="phone" name="phone" required>
                         <label for="phone"> Enter Phone No<span class="text-danger">*</span></label>
                         @error('phone')
                         <span class="text-danger">{{ $message }}</span>
@@ -46,15 +46,15 @@
                     <div class="form-group col-md-4">
                         <!-- <label for="id_card" class="form-label">ID Card<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="id_card" name="id_card" placeholder="Enter ID Card" > -->
-                        <input type="text" id="id_card" name="id_card"required="">
-                        <label for="id_card"> Enter ID Card<span class="text-danger">*</span></label>
+                        <input type="text" id="id_card" name="id_card">
+                        <label for="id_card"> Enter ID Card</label>
                         @error('id_card')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="visit_to" class="form-label">Visit To<span class="text-danger">*</span></label> -->
+                        <label for="visit_to" class="form-label">Visit To<span class="text-danger">*</span></label>
                         <select id="visit_to" class="form-control" name="visit_to" onchange="visitWith(this.value)">
                             <option value="">Visit To<span class="text-danger">*</span></option>
                             @foreach (Config::get('static.visit_to') as $lang => $item)
@@ -68,7 +68,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="visit_to_name" class="form-label">IPD/OPD/Staff<span class="text-danger">*</span></label>
-                        <select name="visit_to_name" class="form-control select2-show-search" id="visit_to_name" >
+                        <select name="visit_to_name" class="form-control select2-show-search" id="visit_to_name">
                             <option value="">Select...</option>
                         </select>
                         <small class="text-danger">{{ $errors->first('visit_to_name') }}</small>
@@ -77,8 +77,8 @@
                     <div class="form-group col-md-4 newaddvisitext">
                         <!-- <label for="number_of_person" class="form-label"> Number Of Person<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="number_of_person" name="number_of_person" > -->
-                        <input type="text" id="number_of_person" name="number_of_person" required="">
-                        <label for="number_of_person">  Number Of Person<span class="text-danger">*</span></label>
+                        <input type="text" id="number_of_person" name="number_of_person">
+                        <label for="number_of_person"> Number Of Person</label>
                         @error('number_of_person')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -95,8 +95,8 @@
 
                     <div class="form-group col-md-4">
                         <!-- <label for="in_time" class="form-label">In Time<span class="text-danger">*</span></label> -->
-                        <h6>In Time<span class="text-danger">*</span></h6>
-                        <input type="time"  class="form-control" id="in_time" name="in_time">
+                        <h6>In Time</h6>
+                        <input type="time" class="form-control" id="in_time" name="in_time" >
                         @error('in_time')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -104,8 +104,8 @@
 
                     <div class="form-group col-md-4">
                         <!-- <label for="out_time" class="form-label">Out Time<span class="text-danger">*</span></label> -->
-                        <h6>Out Time<span class="text-danger">*</span></h6>
-                        <input type="time"  class="form-control" id="out_time" name="out_time">
+                        <h6>Out Time</h6>
+                        <input type="time" class="form-control" id="out_time" name="out_time">
                         @error('out_time')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -114,8 +114,8 @@
                     <div class="form-group col-md-4 newaddvisitext">
                         <!-- <label for="note" class="form-label">Note</label>
                         <textarea class="form-control" id="note" name="note"> </textarea> -->
-                        <input type="text" id="note" name="note" required="">
-                        <label for="note">Note<span class="text-danger">*</span></label>
+                        <input type="text" id="note" name="note" >
+                        <label for="note">Note</label>
                         @error('note')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -146,8 +146,8 @@
 
 <script>
     function visitWith(visitor_type) {
-         $("#visit_to_name").val('');
-         var div_data = 'Select One...';
+        $("#visit_to_name").val('');
+        var div_data = 'Select One...';
 
         $.ajax({
             url: "{{ route('find-staff-by-visitor') }}",
@@ -161,7 +161,7 @@
                 if (response.staff != null && response.staff != " ") {
                     $.each(response.staff, function(key, value) {
                         div_data += `<option value="${value.id}">${value.first_name} ${value.last_name}</option>`;
-                        
+
                     });
                     $('#visit_to_name').html(div_data);
                 }
@@ -169,16 +169,16 @@
                 if (response.opd != null && response.opd != " ") {
                     $.each(response.opd, function(key, value) {
                         div_data += `<option value="${value.id}">${value.first_name} ${value.middle_name} ${value.last_name} </option>`;
-                     
+
                     });
                     $('#visit_to_name').html(div_data);
                 }
 
                 if (response.emg != null && response.emg != " ") {
                     $.each(response.emg, function(key, value) {
-                        
+
                         div_data += `<option value="${value.id}">${value.first_name} ${value.middle_name} ${value.last_name} </option>`;
-                      
+
                     });
                     $('#visit_to_name').html(div_data);
                 }

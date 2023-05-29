@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="id_card" class="form-label">ID Card<span class="text-danger">*</span></label>
+                        <label for="id_card" class="form-label">ID Card</label>
                         <input type="text" class="form-control" id="id_card" name="id_card" placeholder="Enter ID Card"value="{{ $editVisit->id_card}}" >
                         @error('id_card')
                         <span class="text-danger">{{ $message }}</span>
@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="visit_to" class="form-label">Visit To<span class="text-danger">*</span></label>
+                        <label for="visit_to" class="form-label">Visit To</label>
                         <select id="visit_to" class="form-control" name="visit_to" onchange="visitWith(this.value)">
                             <option value="">Select...</option>
                             @foreach (Config::get('static.visit_to') as $lang => $item)
@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="visit_to_name" class="form-label">IPD/OPD/Staff<span class="text-danger">*</span></label>
+                        <label for="visit_to_name" class="form-label">IPD/OPD/Staff</label>
                         <select name="visit_to_name" class="form-control select2-show-search" id="visit_to_name" >
                             <option value="">Select...</option>
                         </select>
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="number_of_person" class="form-label"> Number Of Person<span class="text-danger">*</span></label>
+                        <label for="number_of_person" class="form-label"> Number Of Person</label>
                         <input type="text" class="form-control" id="number_of_person" name="number_of_person" value="{{ $editVisit->number_of_person }}">
                         @error('number_of_person')
                         <span class="text-danger">{{ $message }}</span>
@@ -78,7 +78,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                        <label for="date" class="form-label">Date</label>
                         <input type="date" class="form-control" id="date" name="date" @if(isset($editVisit->date)) value="{{ date('Y-m-d',strtotime($editVisit->date)) }}" @endif>
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
@@ -86,7 +86,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="in_time" class="form-label">In Time<span class="text-danger">*</span></label>
+                        <label for="in_time" class="form-label">In Time</label>
                         <input type="time"  class="form-control" id="in_time" name="in_time" @if(isset($editVisit->in_time)) value="{{$editVisit->in_time}}" @endif>
                         @error('in_time')
                         <span class="text-danger">{{ $message }}</span>
@@ -94,7 +94,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="out_time" class="form-label">Out Time<span class="text-danger">*</span></label>
+                        <label for="out_time" class="form-label">Out Time</label>
                         <input type="time"  class="form-control" id="out_time" name="out_time" @if(isset($editVisit->out_time)) value="{{$editVisit->out_time}}" @endif>
                         @error('out_time')
                         <span class="text-danger">{{ $message }}</span>

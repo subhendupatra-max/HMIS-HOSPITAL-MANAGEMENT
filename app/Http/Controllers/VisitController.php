@@ -62,10 +62,8 @@ class VisitController extends Controller
             'purpose'           => 'required',
             'name'              => 'required',
             'phone'             => 'required',
-            'in_time'           => 'required',
-            'out_time'          => 'required',
         ]);
-       
+
         $filename = '';
         if ($request->hasfile('attach_document')) {
             $file = $request->file('attach_document');
@@ -111,11 +109,9 @@ class VisitController extends Controller
             'purpose'           => 'required',
             'name'              => 'required',
             'phone'             => 'required',
-            'in_time'           => 'required',
-            'out_time'          => 'required',
         ]);
 
-        
+
         $filename = '';
         if ($request->hasfile('attach_document')) {
             $file = $request->file('attach_document');
@@ -145,8 +141,7 @@ class VisitController extends Controller
             return redirect()->route('all-visit-details')->with('error', "Something Went Wrong");
         }
     }
-
-    public function delete_charges_catagory_details($id)
+    public function delete_visit_details($id)
     {
         Visit::find($id)->delete();
 
@@ -158,8 +153,8 @@ class VisitController extends Controller
 
     public function all_phone_call_log_listing()
     {
-      $phoneLog = PhoneCallLog::all();
-      return view('front-office.call-log.call-listing',compact('phoneLog'));
+        $phoneLog = PhoneCallLog::all();
+        return view('front-office.call-log.call-listing', compact('phoneLog'));
     }
 
     public function add_call_log_details()
@@ -172,7 +167,7 @@ class VisitController extends Controller
         $request->validate([
             'name'              => 'required',
         ]);
-             
+
         $call = new PhoneCallLog();
         $call->name                          = $request->name;
         $call->phone                         = $request->phone;
@@ -194,7 +189,7 @@ class VisitController extends Controller
     public function edit_call_log_details($id)
     {
         $editPhoneLog = PhoneCallLog::find($id);
-        return view('front-office.call-log.edit-call',compact('editPhoneLog'));
+        return view('front-office.call-log.edit-call', compact('editPhoneLog'));
     }
 
     public function update_call_log_details(Request $request)
@@ -202,7 +197,7 @@ class VisitController extends Controller
         $request->validate([
             'name'              => 'required',
         ]);
-             
+
         $call = PhoneCallLog::find($request->id);
         $call->name                          = $request->name;
         $call->phone                         = $request->phone;

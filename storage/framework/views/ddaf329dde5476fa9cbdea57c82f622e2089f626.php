@@ -14,17 +14,17 @@
                         <a href="<?php echo e(route('add-visit-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Visitor </a>
                         <?php endif; ?>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('call log')): ?>
-                        <a href="<?php echo e(route('all-phone-call-log-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Call Log </a>
+                        <a href="<?php echo e(route('all-phone-call-log-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-phone"></i> Call Log </a>
                         <?php endif; ?>
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('complain')): ?>
-                        <a href="<?php echo e(route('all-complain-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Complain </a>
+                        <a href="<?php echo e(route('all-complain-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-pen"></i></i> Complain </a>
                         <?php endif; ?>
 
                         <div class="card-options carddrpdwn_area">
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v"></i>
-                                 Postal
+                                <i class="fa fa-ellipsis-v"></i>
+                                Postal
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" style="">
 
@@ -41,6 +41,7 @@
                 </div>
             </div>
         </div>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
         <div class="card-body">
             <div class="">

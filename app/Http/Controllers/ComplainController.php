@@ -12,7 +12,7 @@ class ComplainController extends Controller
     public function all_complain_listing()
     {
         $complain = Complain::all();
-        return view('front-office.complain.complain-listing',compact('complain'));
+        return view('front-office.complain.complain-listing', compact('complain'));
     }
 
     public function add_complain_details()
@@ -59,8 +59,8 @@ class ComplainController extends Controller
 
     public function edit_complain_details($id)
     {
-        $editComplain = Complain::where('id',$id)->first();
-      
+        $editComplain = Complain::where('id', $id)->first();
+
         return view('front-office.complain.edit-complain', compact('editComplain'));
     }
 
@@ -89,12 +89,12 @@ class ComplainController extends Controller
         $complain->description                    = $request->description;
         $complain->action_taken                   = $request->action_taken;
         $complain->assigned                       = $request->assigned;
-        $complain->attach_document                = $filename ;
+        $complain->attach_document                = $filename;
         $complain->note                           = $request->note;
         $status = $complain->save();
 
         if ($status) {
-            return redirect()->route('all-complain-details')->with('success', " Complain Added Successfully");
+            return redirect()->route('all-complain-details')->with('success', " Complain Updated Successfully");
         } else {
             return redirect()->route('all-complain-details')->with('error', " Something Went Wrong");
         }
