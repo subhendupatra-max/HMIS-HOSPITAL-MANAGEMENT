@@ -1708,10 +1708,18 @@ Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathol
         Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
             Route::get('pathology-patient-test-list', [PathologyController::class, 'pathology_test_charge'])->name('pathology-test-charge');
         });
+        Route::group(['middleware' => ['permission:print pathology result']], function () {
+            Route::get('print-pathology-result/{id}', [PathologyController::class, 'print_pathology_result'])->name('print-pathology-result');
+        });
+        Route::post('change-sample-status', [PathologyController::class, 'change_sample_status'])->name('change-sample-status');
         Route::group(['middleware' => ['permission:add-pathology-test-to-a-patient']], function () {
             Route::get('add-pathology-test-to-a-patient', [PathologyController::class, 'pathology_test_charge_add'])->name('add-pathology-test-to-a-patient');
             Route::post('add-pathology-test-for-a-patient', [PathologyController::class, 'add_pathology_charges_for_a_patient'])->name('add-pathology-charges-for-a-patient');
             Route::post('save-pathology-patient-test', [PathologyController::class, 'save_pathology_charge'])->name('save-pathology-charge');
+        });
+        Route::group(['middleware' => ['permission:add pathology test result details']], function () {
+            Route::get('add-pathology-test-result-details/{id}', [PathologyController::class, 'add_pathology_test_result_details'])->name('add-pathology-test-result-details');
+            Route::post('update-pathology-report', [PathologyController::class, 'update_pathology_report'])->name('update-pathology-report');
         });
         Route::group(['middleware' => ['permission:edit-pathology-test-to-a-patient']], function () {
             Route::get('edit-pathology-test-patient/{id}', [PathologyController::class, 'edit_pathology_test_patient'])->name('edit-pathology-test-patient');

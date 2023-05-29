@@ -10,14 +10,14 @@
             <div class="row no-gutters">
                 <div class="col-lg-5 col-xl-4 border-right">
                     {{-- ================== add new patient ====================== --}}
-                    <div class="options px-5 pt-2  border-bottom pb-1">
+                    {{-- <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
                                 <a class="btn btn-primary btn-sm" href="{{route('add_new_patient')}}"><i
                                         class="fa fa-plus"></i> Add New Patient</a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- ================== add new patient ====================== --}}
 
                     {{-- ================== Search patient ====================== --}}
@@ -110,7 +110,7 @@
                                             <td class="py-2 px-5">
                                                 <span class="font-weight-semibold w-50">Patient Type </span>
                                             </td>
-                                            <td class="py-2 px-5"><span style="color:blue">{{@$patient_reg_details->id
+                                            <td class="py-2 px-5"><span style="color:blue">{{@$p_type
                                                     }}</span></td>
                                         </tr>
                                     </tbody>
@@ -159,7 +159,7 @@
                         <input type="hidden" name="patientId" value="{{ @$patient_details_information->id }}" />
                         <input type="hidden" name="section" value="{{ @$patient_reg_details->section }}" />
                         <input type="hidden" name="case_id" value="{{ @$patient_reg_details->id }}" />
-                        <input type="hidden" name="patient_type" value="{{ @$patient_reg_details->id }}" />
+                        <input type="hidden" name="patient_type" id="patient_type" value="{{ @$p_type }}" />
 
                         <div class="options px-5 pt-5  border-bottom pb-3">
 
@@ -185,8 +185,8 @@
                             <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
                                     class="fa fa-calculator"></i> Calculate</button>
                             <button class="btn btn-primary btn-sm float-right" value="save" type="submit" name="save"><i class="fa fa-file"></i> Save</button>
-                            <button class="btn btn-primary btn-sm float-right mr-2" value="save_and_print" name="save_and_print"
-                                type="submit"><i class="fa fa-paste"></i> Save & Print</button>
+                            {{-- <button class="btn btn-primary btn-sm float-right mr-2" value="save_and_print" name="save_and_print"
+                                type="submit"><i class="fa fa-paste"></i> Save & Print</button> --}}
                         </div>
                     </form>
                 </div>
@@ -207,29 +207,32 @@
     }
 
     function getTestAmount(test_id, i) {
+        var patient_type = $('#patient_type').val();
+       // alert(patient_type);
         $.ajax({
             url: "{{ route('find-test-amount-by-test') }}",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
-                testId: test_id,
+                _token : '{{ csrf_token() }}',
+                testId : test_id,
+                p_type : patient_type,
             },
             success: function(response) {
-                $('#charge' + i).val(response.total_amount);
+                $('#charge' + i).val(response.standard_charges);
 
             },
             error: function(error) {
                 console.log(error);
             }
         });
-        gettotal(i);
+       
     }
 </script>
 <!-- ===========================Add New Item Using New Row=========================== -->
 <script type="text/javascript">
     function remove(i) {
         $('#rowid' + i).remove();
-        gettotal(i);
+        gettotal();
     }
 </script>
 

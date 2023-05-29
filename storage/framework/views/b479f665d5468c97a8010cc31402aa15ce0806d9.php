@@ -88,17 +88,17 @@ unset($__errorArgs, $__bag); ?>
                                             </td>
                                             <td>
                                                 <select class="form-control select2-show-search"  name="charge_category[]" id="charge_category<?php echo e($key); ?>">
-                                                    <option value="<?php echo e($value->charge_category); ?>"><?php echo e($value->charges_category_details->charges_catagories_name); ?></option>
+                                                    <option value="<?php echo e($value->charge_category); ?>"><?php echo e(@$value->charges_category_details->charges_catagories_name); ?></option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category<?php echo e($key); ?>" >
-                                                    <option value="<?php echo e($value->charge_sub_category); ?>"><?php echo e($value->charges_sub_category_details->charges_sub_catagories_name); ?></option>
+                                                    <option value="<?php echo e($value->charge_sub_category); ?>"><?php echo e(@$value->charges_sub_category_details->charges_sub_catagories_name); ?></option>
                                                 </select>
                                             </td>
                                             <td>
                                                 <select class="form-control select2-show-search" name="charge_name[]" id="charge_name<?php echo e($key); ?>">
-                                                    <option value=<?php echo e($value->charge_name); ?>><?php echo e($value->charges_name_details->charges_name); ?></option>
+                                                    <option value="<?php echo e(@$value->charge_name); ?>"><?php echo e(@$value->charges_name_details->charges_name); ?></option>
                                                 </select>
                                             </td>
                 
@@ -242,12 +242,12 @@ unset($__errorArgs, $__bag); ?>
                                 class="fa fa-calculator"></i> Calculate</button>
                         <button class="btn btn-primary btn-sm float-right " type="submit" name="save" value="save"><i
                                 class="fa fa-file"></i> Save</button>
-                        <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit"  value="save_and_print"><i
+                        <button class="btn btn-primary btn-sm float-right mr-2" name="save" type="submit"  value="save_and_print"><i
                                 class="fa fa-paste"></i> Save & Print</button>
                     </div>
                 </div>
             </form>
-        </div>
+    </div>
     </div>
 
     </div>

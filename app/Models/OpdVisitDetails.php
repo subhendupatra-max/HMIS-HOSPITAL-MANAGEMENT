@@ -15,6 +15,9 @@ class OpdVisitDetails extends Model
     {
         return $this->belongsTo(Department::class, 'department_id', 'id');
     }
+    public function TpaManagement(){
+        return $this->belongsTo(TpaManagement::class, 'tpa_organization', 'id');
+    }
     public function doctor()
     {
         return $this->belongsTo(User::class, 'cons_doctor', 'id');

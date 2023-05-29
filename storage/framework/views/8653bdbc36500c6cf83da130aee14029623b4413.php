@@ -19,6 +19,7 @@
                     </div>
                 </div>
             </div>
+            <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology billing list')): ?>
                 <div class="card-body">
                     <div class="">
