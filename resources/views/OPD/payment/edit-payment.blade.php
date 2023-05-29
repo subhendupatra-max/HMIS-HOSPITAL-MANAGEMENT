@@ -36,7 +36,7 @@
 
                     <div class="form-group col-md-6">
                         <label for="amount" class="form-label">Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="amount" name="amount" value="{{ $editOpdPaymentDetails->amount }}">
+                        <input type="text" class="form-control" id="amount" name="amount" value="{{ $editOpdPaymentDetails->payment_amount }}">
                         @error('amount')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

@@ -613,9 +613,12 @@ class IpdController extends Controller
     {
         $ipd_id = base64_decode($id);
 
-        $ipd_details = OpdDetails::where('id', $ipd_id)->first();
+        $ipd_details = IpdDetails::where('id', $ipd_id)->first();
+
         $patient_details_information = Patient::where('id', '=', $ipd_details->patient_id)->first();
+
         $blood_details = BloodIssue::where('patient_id', $ipd_details->patient_id)->get();
+
         // dd($blood_details);/
         $components_details = BloodComponentIssue::where('patient_id', $ipd_details->patient_id)->get();
 

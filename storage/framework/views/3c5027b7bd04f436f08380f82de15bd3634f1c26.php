@@ -23,6 +23,7 @@
         <div class="card-header">
             <?php echo $__env->make('emg.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <div class="col-xl-12 col-lg-12 col-md-12">
                 <div class="latest-timeline scrollbar3" id="scrollbar3">
