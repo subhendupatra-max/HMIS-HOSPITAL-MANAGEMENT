@@ -310,6 +310,9 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'pathology test']);
         Permission::create(['name' => 'add pathology test']);
 
+        Permission::create(['name' => 'add pathology test result details']);
+        Permission::create(['name' => 'print pathology result']);
+
         //pathology test master
         Permission::create(['name' => 'pathology test master']);
         Permission::create(['name' => 'add pathology test master']);

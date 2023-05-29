@@ -25,6 +25,9 @@ class EmgPatientDetails extends Model
     {
         return $this->belongsTo(User::class, 'cons_doctor', 'id');
     }
+    public function TpaManagement(){
+        return $this->belongsTo(TpaManagement::class, 'tpa_organization', 'id');
+    }
 
 
 }

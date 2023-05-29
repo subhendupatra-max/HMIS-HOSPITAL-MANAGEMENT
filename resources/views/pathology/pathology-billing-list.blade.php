@@ -19,6 +19,7 @@
                     </div>
                 </div>
             </div>
+            @include('message.notification')
             @can('pathology billing list')
                 <div class="card-body">
                     <div class="">

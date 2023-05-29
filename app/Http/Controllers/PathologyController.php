@@ -17,6 +17,8 @@ use App\Models\ChargesWithChargesType;
 use App\Models\PathologyTestMaster;
 use App\Models\PathologyTestMasterDetails;
 use App\Models\PathologyUnit;
+use App\Models\ChargeType;
+use App\Models\PathologyReport;
 use App\Models\Patient;
 use App\Models\caseReference;
 use App\Models\TestWithParameter;
@@ -24,7 +26,9 @@ use App\Models\PathologyBilling;
 use App\Models\PathologyBillingDetails;
 use App\Models\Prefix;
 use Auth;
+use PDF;
 use App\Models\PatientCharge;
+use App\Models\AllHeader;
 use App\Models\PathologyCharge;
 use App\Models\IpdDetails;
 use App\Models\OpdDetails;
@@ -48,7 +52,10 @@ class PathologyController extends Controller
     }
     public function find_test_amount_by_test(Request $request)
     {
-        $test_amount = PathologyTest::find($request->testId);
+        $p_type = ChargeType::where('charge_type_name',$request->p_type)->first();
+        $charge_id = PathologyTest::find($request->testId);
+        //dd($p_type);
+        $test_amount = ChargesWithChargesType::where('charge_id',$charge_id->charge)->where('charge_type_id',$p_type->id)->first();
         return response()->json($test_amount);
     }
     public function add_pathology_billing_for_a_patient(Request $request)
@@ -59,20 +66,35 @@ class PathologyController extends Controller
         $patient_reg_details = caseReference::where('patient_id', $request->patient_id)->orderBy('id', 'desc')->first();
         if($patient_reg_details->section == 'OPD'){
             $patient_type =  OpdDetails::where('case_id',$patient_reg_details->id)->first();
-            if($patient_type == 'TPA')
-            //$p_type = 
+            if($patient_type->latest_opd_visit_details_for_patient->patient_type == 'TPA'){
+                $p_type = $patient_type->latest_opd_visit_details_for_patient->TpaManagement->TPA_name;
+            }
+            else{
+                $p_type = $patient_type->latest_opd_visit_details_for_patient->patient_type;
+            } 
         }
         if($patient_reg_details->section == 'IPD'){
             $patient_type =  IpdDetails::where('case_id',$patient_reg_details->id)->first();
+            if($patient_type->patient_type == 'TPA'){
+                $p_type = $patient_type->TpaManagement->TPA_name;
+            }
+            else{
+                $p_type = $patient_type->patient_type;
+            } 
         }
         if($patient_reg_details->section == 'EMG'){
             $patient_type =  EmgDetails::where('case_id',$patient_reg_details->id)->first();
+            if($patient_type->all_emg_visit_details->patient_type == 'TPA'){
+                $p_type = $patient_type->all_emg_visit_details->TpaManagement->TPA_name;
+            }
+            else{
+                $p_type = $patient_type->all_emg_visit_details->patient_type;
+            } 
         }
-        return view('pathology.pathology-add-billing', compact('all_patient', 'patient_details_information', 'pathology_all_test', 'patient_reg_details'));
+        return view('pathology.pathology-add-billing', compact('all_patient', 'patient_details_information', 'pathology_all_test', 'patient_reg_details','p_type'));
     }
     public function save_pathology_billing(Request $request)
     {
-        //dd($request->all());
         request()->validate(
             [
                 'billing_date' => 'required',
@@ -107,12 +129,47 @@ class PathologyController extends Controller
                 $patient_charge->pathology_billing_id = $bill->id;
                 $patient_charge->pathology_id = $request->test_id[$key];
                 $patient_charge->charge_amount = $request->charge[$key];
-                $patient_charge->qty = $request->qty[$key];
-                $patient_charge->tax = $request->tax[$key];
-                $patient_charge->amount = $request->amount[$key];
                 $patient_charge->status = '';
                 $patient_charge->save();
+            
+            $pathology_patient_test = new PathologyPatientTest();
+
+            $case_details = caseReference::where('id', $request->case_id)->first();
+            if ($case_details->section == 'OPD') {
+                $section_details = OpdDetails::where('case_id', $request->case_id)->first();
+                $pathology_patient_test->opd_id = $section_details->id;
+            } elseif ($case_details->section == 'EMG') {
+                $section_details = EmgDetails::where('case_id', $request->case_id)->first();
+                $pathology_patient_test->emg_id = $section_details->id;
+            } else {
+                $section_details = IpdDetails::where('case_id', $request->case_id)->first();
+                $pathology_patient_test->ipd_id = $section_details->id;
             }
+            $path_details = PathologyPatientTest::where('case_id',$request->case_id)->where('test_id',$request->test_id)->where('test_status','=','0')->first();
+            if($path_details == null)
+            {
+            $pathology_patient_test->case_id = $request->case_id;
+            $pathology_patient_test->date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+            $pathology_patient_test->section = $case_details->section;
+            $pathology_patient_test->patient_id = $request->patientId;
+            $pathology_patient_test->test_id = $request->test_id[$key];
+            $pathology_patient_test->generated_by = Auth::user()->id;
+            $pathology_patient_test->billing_status = '1';
+            $pathology_patient_test->test_status = '0';
+            $pathology_patient_test->save();
+            }
+
+            $test_details = PathologyParameterWithTest::select('pathology_parameters.id as paramet_id','pathology_units.id as pathology_unit_id','pathology_parameters.parameter_name','pathology_parameters.reference_range','pathology_units.unit_name')->leftjoin('pathology_parameters','pathology_parameters.id','=','pathology_parameter_with_tests.pathology_parameter_id')->leftjoin('pathology_units','pathology_units.id','=','pathology_parameters.unit_id')->where('pathology_parameter_with_tests.pathology_test_id', $request->test_id[$key])->get(); 
+
+            foreach($test_details as $k=>$vale){
+                $PathologyReport = new PathologyReport();
+                $PathologyReport->pathology_patient_test_id = $pathology_patient_test->id;
+                $PathologyReport->parameter_id              = $vale->paramet_id;
+                $PathologyReport->reference_range           = $vale->reference_range;
+                $PathologyReport->unit                      = $vale->pathology_unit_id;
+                $PathologyReport->save();
+            }
+        }
             DB::commit();
             return redirect()->route('pathology-details')->with('success', "Pathology Bill Successfully Created");
         } catch (\Throwable $th) {
@@ -382,8 +439,36 @@ class PathologyController extends Controller
         return view('pathology.test.edit', compact('parameter','catagory', 'chargeCatagory', 'all_test','pathology_test_details','pathology_test'));  
     }
 
-    public function add_test()
+    public function add_pathology_test_result_details($id)
     {
+        $p_id = base64_decode($id);
+        $pathology_patient_test_details = PathologyPatientTest::where('id', $p_id)->first();
+        $patient_details = Patient::where('id',$pathology_patient_test_details->patient_id)->first();
+        $pathologyParameterResult = PathologyReport::select('pathology_reports.id','pathology_parameters.parameter_name','pathology_parameters.reference_range','pathology_units.unit_name','pathology_reports.report_value','pathology_reports.parameter_description')->leftjoin('pathology_parameters','pathology_parameters.id','=','pathology_reports.parameter_id')->leftjoin('pathology_units','pathology_units.id','=','pathology_reports.unit')->where('pathology_reports.pathology_patient_test_id', $p_id)->get();
+       // dd($pathologyParameterResult);
+        
+        $patho_test = PathologyTest::find($pathology_patient_test_details->test_id);
+
+       // dd($patho_test);
+        
+        return view('pathology.add-pathology-test-result-details', compact('pathology_patient_test_details','patient_details','pathologyParameterResult','patho_test','p_id'));
+    }
+
+    public function update_pathology_report(Request $request){
+       // dd($request->all());
+       foreach($request->id as $key => $value){
+        $oathology_report_details = PathologyReport::where('id',$request->id[$key])->first();
+        $oathology_report_details->report_value = $request->report_value[$key];
+        $oathology_report_details->parameter_description = $request->parameter_description[$key];
+       // dd($oathology_report_details)
+        $oathology_report_details->save();
+    }
+    if (true) {
+        return redirect()->route('pathology-test-charge')->with('success', 'Report Update Sucessfully');
+    } else {
+        return redirect()->back()->with('error', "Something Went Wrong");
+    }
+
     }
 
     public function pathology_test_charge()
@@ -391,6 +476,16 @@ class PathologyController extends Controller
         $pathology_patient_test = PathologyPatientTest::where('ins_by', 'ori')->get();
         return view('pathology.patient-test.patient-test-list', compact('pathology_patient_test'));
     }
+    public function change_sample_status(Request $request)
+    {
+        $pathology_patient_test = PathologyPatientTest::where('id', $request->id)->update(['test_status'=>$request->sample_status]);
+        if (true) {
+            return redirect()->route('pathology-test-charge')->with('success', 'Sample Collected Sucessfully');
+        } else {
+            return redirect()->back()->with('error', "Something Went Wrong");
+        }
+    }
+
     public function pathology_test_charge_add()
     {
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
@@ -508,6 +603,18 @@ class PathologyController extends Controller
     {
         $charge_details = ChargesWithChargesType::join('charge_types','charges_with_charges_types.charge_type_id','=','charge_types.id')->where('charges_with_charges_types.charge_id',$request->charges)->get();
         return response()->json($charge_details);
+    }
+
+    public function print_pathology_result($id){
+        $p_id = base64_decode($id);
+        $pathology_patient_test_details = PathologyPatientTest::where('id', $p_id)->first();
+        $patient_details = Patient::where('id',$pathology_patient_test_details->patient_id)->first();
+        $pathologyParameterResult = PathologyReport::select('pathology_reports.id','pathology_parameters.parameter_name','pathology_parameters.reference_range','pathology_units.unit_name','pathology_reports.report_value','pathology_reports.parameter_description')->leftjoin('pathology_parameters','pathology_parameters.id','=','pathology_reports.parameter_id')->leftjoin('pathology_units','pathology_units.id','=','pathology_reports.unit')->where('pathology_reports.pathology_patient_test_id', $p_id)->get();
+        
+        $patho_test = PathologyTest::find($pathology_patient_test_details->test_id);
+        $header_image = AllHeader::where('header_name','pathology_report')->first();
+        $pdf = PDF::loadView('pathology.printReport',compact('header_image','pathology_patient_test_details','patient_details','pathologyParameterResult','patho_test'));
+        return $pdf->stream('pathology-report.pdf');
     }
 
     // =====================pathology test============================
