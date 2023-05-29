@@ -727,18 +727,12 @@ class OpdController extends Controller
         // dd($opd_id);
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
         // dd($opd_patient_details);
-        // $operation_booking = RadiologyPatientTest::where('ins_by', 'ori')->where('case_id', $opd_patient_details->case_id)->get();
-
-        // $operation_booking_id = base64_decode($id);
-        $section_id =  OperationTheather::where('opd_id', $opd_id)->first();
-        // dd( $section_id);
-        $operation_booking  = OperationBooking::where('id', $section_id->operation_booking_id)->first();
-        // dd($operation_booking);
-        $operation_booking_id =  $operation_booking->id;
-
-        $case_id = CaseReference::where('id', $section_id->case_id)->first();
-        $section_name = $case_id->section_id;
-
+        $patient_details_information = Patient::where('id', '=', $opd_patient_details->patient_id)->first();
+        // dd($patient_details_information);
+        $operation_theathers  = OperationTheather::where('patient_id', $opd_patient_details->patient_id)->get();
+        // dd($patient_details_information);
+        $operation_booking = OperationBooking::where('id', $operation_theathers->operation_booking_id)->get();
+        $operation_booking_id = $operation_booking->id;
         $operation_details = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark')
             ->leftjoin('operation_theathers', 'operation_theathers.operation_booking_id', '=', 'operation_bookings.id')
             ->leftjoin('patients', 'patients.id', '=', 'operation_theathers.patient_id')
@@ -747,13 +741,13 @@ class OpdController extends Controller
             ->leftjoin('operations', 'operations.id', '=', 'operation_theathers.operation_id')
             ->leftjoin('operation_types', 'operation_types.id', '=', 'operation_theathers.operation_type')
             ->leftjoin('operation_catagories', 'operation_catagories.id', '=', 'operation_theathers.operation_category_id')
-            ->where('operation_bookings.id', $operation_booking_id)
-            ->where('operation_theathers.operation_booking_id', $operation_booking_id)
+            ->where('operation_bookings.id', $operation_booking->id)
+            ->where('operation_theathers.operation_booking_id', $operation_booking->id)
             ->first();
 
         // dd($operation_details);
 
-        return view('OPD.operation.operation-details', compact('operation_details', 'opd_patient_details', 'opd_id', 'section_name', 'operation_booking_id'));
+        return view('OPD.operation.operation-details', compact('operation_details', 'opd_patient_details', 'operation_booking_id'));
     }
 
     public function edit_opd_operation(Request $request, $id)
