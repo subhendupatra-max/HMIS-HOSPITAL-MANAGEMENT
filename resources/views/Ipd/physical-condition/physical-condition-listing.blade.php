@@ -23,7 +23,7 @@
         <div class="card-header">
             @include('ipd.include.patient-name')
         </div>
-
+        @include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">

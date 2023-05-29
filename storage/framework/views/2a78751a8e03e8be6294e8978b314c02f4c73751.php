@@ -68,7 +68,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
-
+ 
                     <div class="form-group col-md-6">
                         <label for="attach_document" class="form-label">Attach Document </label>
                         <input type="file" id="attach_document" name="attach_document">

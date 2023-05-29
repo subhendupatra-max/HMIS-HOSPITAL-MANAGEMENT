@@ -6,7 +6,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-4 card-title">
-                    Add Payment
+                    Edit Payment
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
@@ -19,15 +19,16 @@
                 </div>
             </div>
         </div>
-
         <div class="card-body">
-            <form action="<?php echo e(route('save-payment-in-opd')); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo e(route('update-payment-in-opd')); ?>" method="POST">
                 <?php echo csrf_field(); ?>
                 <div class="row">
-                    <input type="hidden" name="opd_id" value="<?php echo e($opd_id); ?>" />
+                    <input type="hidden" name="id" value="<?php echo e($editOpdPaymentDetails->id); ?>" />
+                    <input type="hidden" name="opd_id" value="<?php echo e($editOpdPaymentDetails->opd_id); ?>" />
+
                     <div class="form-group col-md-6">
                         <label for="payment_date" class="form-label">Date <span class="text-danger">*</span></label>
-                        <input type="datetime-local" class="form-control" id="payment_date" name="payment_date" required>
+                        <input type="datetime-local" class="form-control" id="payment_date" name="payment_date" required <?php if(isset($editOpdPaymentDetails->payment_date)): ?> value="<?php echo e(date('Y-m-d h:m:s',strtotime($editOpdPaymentDetails->payment_date))); ?>" <?php endif; ?>>
                         <?php $__errorArgs = ['payment_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -42,7 +43,7 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="form-group col-md-6">
                         <label for="amount" class="form-label">Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="amount" name="amount" value="<?php echo e(old('amount')); ?>">
+                        <input type="text" class="form-control" id="amount" name="amount" value="<?php echo e($editOpdPaymentDetails->payment_amount); ?>">
                         <?php $__errorArgs = ['amount'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -60,7 +61,7 @@ unset($__errorArgs, $__bag); ?>
                         <select id="payment_mode" class="form-control" name="payment_mode">
                             <option value="">Select Payment Mode... </option>
                             <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
+                            <option value="<?php echo e($item); ?>" <?php echo e($item == $editOpdPaymentDetails->payment_mode ? 'selected' : " "); ?>> <?php echo e($item); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php $__errorArgs = ['payment_mode'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -77,7 +78,7 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="form-group col-md-6">
                         <label for="note" class="form-label">Note </label>
-                        <input name="note" id="note" class="form-control" />
+                        <textarea name="note" id="note" class="form-control"> <?php echo e($editOpdPaymentDetails->note); ?> </textarea>
                         <?php $__errorArgs = ['note'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -104,4 +105,4 @@ unset($__errorArgs, $__bag); ?>
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/OPD/payment/add-payment.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/OPD/payment/edit-payment.blade.php ENDPATH**/ ?>

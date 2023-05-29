@@ -91,7 +91,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
                 </div>
                 <div class="text-center m-auto">
-                    <button type="submit" class="btn btn-primary">Save Timeline</button>
+                    <button type="submit" class="btn btn-primary">Save Nurse Note</button>
                 </div>
         </div>
         </form>
