@@ -18,7 +18,7 @@
             </div>
         </div>
 
-
+        @include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">

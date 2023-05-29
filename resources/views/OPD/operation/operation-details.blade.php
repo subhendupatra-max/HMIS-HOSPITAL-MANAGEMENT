@@ -11,9 +11,7 @@
                 </div>
 
                 <div class="col-md-6 text-right">
-                    @can('edit patient')
-                    <a href="{{ route('edit-opd-operation-in-opd',['id' => base64_encode($operation_booking_id)] ) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
-                    @endcan
+
 
                     <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" style="">
@@ -38,14 +36,14 @@
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Operation Name </span>
                                         </td>
-                                        <td class="py-2 px-5">{!!$operation_details->operation_name!!}</td>
+                                        <td class="py-2 px-5">{!!@$operation_details->operation_name!!}</td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Operation Department </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$operation_details->department_name!!}
+                                            {!!@$operation_details->department_name!!}
                                         </td>
                                     </tr>
                                     <tr>
@@ -75,7 +73,7 @@
                                     <tr>
                                         <?php $nurse2 = DB::table('operation_bookings')->select('users.first_name as nurse_first_names', 'users.last_name as nurse_last_names')->leftjoin('users', 'users.id', '=', 'operation_bookings.ass_consultant_2')->first()   ?>
                                         <td class="py-2 px-5">
-                                            <span class="font-weight-semibold w-50">Local Guardian Name </span>
+                                            <span class="font-weight-semibold w-50">Assistant Consultant 2</span>
                                         </td>
                                         <td class="py-2 px-5">
                                             {{ @$nurse2->nurse_first_names }} {{ @$nurse2->nurse_last_names }}
@@ -125,7 +123,7 @@
                                             <span class="font-weight-semibold w-50">Operaiton Type</span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$operation_details->operation_type_name!!}
+                                            {!!@$operation_details->operation_type_name!!}
                                         </td>
                                     </tr>
                                     <tr>
@@ -133,7 +131,7 @@
                                             <span class="font-weight-semibold w-50">From Date</span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$operation_details->operation_date_from!!}
+                                            {!!@$operation_details->operation_date_from!!}
                                         </td>
                                     </tr>
                                     <tr>
@@ -141,7 +139,7 @@
                                             <span class="font-weight-semibold w-50">To Date</span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$operation_details->operation_date_to!!}
+                                            {!!@$operation_details->operation_date_to!!}
                                         </td>
                                     </tr>
                                     <tr>
@@ -149,7 +147,7 @@
                                             <span class="font-weight-semibold w-50">Case Id</span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$operation_details->case_id!!}
+                                            {!!@$operation_details->case_id!!}
                                         </td>
                                     </tr>
                                     <tr>
@@ -157,7 +155,7 @@
                                             <span class="font-weight-semibold w-50">Section</span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$operation_details->section!!}
+                                            {!!@$operation_details->section!!}
                                             <a class="textlink" href="{{ route('opd-profile', ['id' => base64_encode($section_name)]) }}">({{@$section_name}})</a>
 
                                         </td>
@@ -168,11 +166,11 @@
                                         </td>
                                         <td class="py-2 px-5">
                                             @if($operation_details->status == 'Pending')
-                                            <span class="badge badge-warning"> {!!$operation_details->status!!}</span>
-                                            @elseif($operation_details->status == 'Complete')
-                                            <span class="badge badge-success"> {!!$operation_details->status!!}</span>
+                                            <span class="badge badge-warning"> {!!@$operation_details->status!!}</span>
+                                            @elseif(@$operation_details->status == 'Complete')
+                                            <span class="badge badge-success"> {!!@$operation_details->status!!}</span>
                                             @else
-                                            <span class="badge badge-secondary"> {!!$operation_details->status!!}</span>
+                                            <span class="badge badge-secondary"> {!!@$operation_details->status!!}</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -182,7 +180,7 @@
                                             <span class="font-weight-semibold w-50"> Remark </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$operation_details->remark !!}
+                                            {!!@$operation_details->remark !!}
                                         </td>
                                     </tr>
 

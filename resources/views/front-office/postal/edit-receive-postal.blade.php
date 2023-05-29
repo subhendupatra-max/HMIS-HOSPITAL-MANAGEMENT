@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="reference_no" class="form-label">Reference No <span class="text-danger">*</span></label>
+                        <label for="reference_no" class="form-label">Reference No </label>
                         <input type="text" class="form-control" id="reference_no" name="reference_no" value="{{ $editReceive->reference_no}}"  >
                         @error('reference_no')
                         <span class="text-danger">{{ $message }}</span>
@@ -44,7 +44,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="to_title" class="form-label">To Title <span class="text-danger">*</span></label>
+                        <label for="to_title" class="form-label">To Title </label>
                         <input type="text" class="form-control" id="to_title" name="to_title"  value="{{ $editReceive->to_title}}" >
                         @error('to_title')
                         <span class="text-danger">{{ $message }}</span>
@@ -52,7 +52,7 @@
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                        <label for="date" class="form-label">Date</label>
                         <input type="date" class="form-control" id="date" name="date" @if(isset($editReceive->date))  value="{{ date('Y-m-d',strtotime($editReceive->date))}}" @endif>
                         @error('date')
                         <span class="text-danger">{{ $message }}</span>
