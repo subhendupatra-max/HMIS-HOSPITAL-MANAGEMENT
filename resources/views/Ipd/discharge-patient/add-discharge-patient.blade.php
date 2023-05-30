@@ -200,7 +200,7 @@
 
                     </div>
                 </div>
-              
+
                 <hr>
                 <div class="text-center m-auto">
                     <button type="submit" class="btn btn-primary">Save Discharged Patient</button>
