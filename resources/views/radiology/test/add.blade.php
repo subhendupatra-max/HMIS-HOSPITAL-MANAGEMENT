@@ -104,36 +104,17 @@
                     </div>
 
                     <div class="form-group col-md-4 addnewblade">
-                        <label for="charge">Charges <span class="text-danger">*</span></label>
+                        <label for="charge">Charge Name <span class="text-danger">*</span></label>
                         <select name="charge" class="form-control select2-show-search" id="charge" required>
                             <option value="">Select charge...</option>
                         </select>
                         <small class="text-danger">{{ $errors->first('charge') }}</small>
                     </div>
-
-                    <div class="form-group col-md-4 addnewde">
-                        <!-- <label for="tax">Tax<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax"> -->
-                        <input type="text" id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" required="">
-                        <label for="tax">Tax <span class="text-danger">*</span></label>
-                        <small class="text-danger">{{ $errors->first('tax') }}</small>
+                    <div class="form-group col-md-12 addnewblade">
+                        <label>Description</label>
+                        <textarea class="content" name="description"></textarea>
                     </div>
 
-                    <div class="form-group col-md-4 addnewde">
-                        <!-- <label for="standard_charges">Charge Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="standard_charges" onkeyup="totalAmount()" name="standard_charges"> -->
-                        <input type="text" id="standard_charges" onkeyup="totalAmount()" name="standard_charges" required="">
-                        <label for="standard_charges">Charge Amount <span class="text-danger">*</span></label>
-                        <small class="text-danger">{{ $errors->first('standard_charges') }}</small>
-                    </div>
-
-                    <div class="form-group col-md-4 addnewde">
-                        <!-- <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="total_amount" name="total_amount" readonly> -->
-                        <input type="text" id="total_amount" name="total_amount" readonly required="">
-                        <label for="total_amount">Total Amount <span class="text-danger">*</span></label>
-                        <small class="text-danger">{{ $errors->first('total_amount') }}</small>
-                    </div>
                 </div>
 
                 <div class="form-group col-md-12 mt-0 ">
@@ -143,7 +124,10 @@
                     <table class="table card-table table-vcenter text-nowrap" id="subhendu">
                         <thead>
                             <tr>
-                                <th scope="col" style="width: 98%"> Test Master Name <span class="text-danger">*</span></th>
+                                <th scope="col" style="width: 40%"> Test Parameter Name <span class="text-danger">*</span></th>
+                                <th scope="col" style="width: 30%">Reference Range <span class="text-danger">*</span></th>
+                                <th scope="col" style="width: 28%">Unit <span class="text-danger">*</span>
+                                </th>
                                 <th scope="col" style="width: 2%">
                                     <button type="button" class="btn btn-success" onclick="addnewrow()"><i class="fa fa-plus"></i></button>
                                 </th>
@@ -162,6 +146,7 @@
     </div>
 
 </div>
+{{--
 <script>
     var i = 1;
 
@@ -191,7 +176,59 @@
         $('#rowid' + i).remove();
     }
 </script>
+--}}
 
+<script>
+    var i = 1;
+
+    function addnewrow() {
+        var html = `<tr id="rowid${i}">
+                        <td><select id="test_parameter_name${i}" onchange="getParameter(${i})" class="form-control select2-show-search"
+                        name="test_parameter_name[]">
+                        <option value="">Select Parameter Name</option>
+                        @foreach ($parameter as $item)
+                        <option value="{{ $item->id }}">{{ $item->parameter_name }}</option>
+                        @endforeach
+                        </select>
+                        </td>
+                        <td>
+                        <span id="reference_range${i}"></span>
+                        </td>
+                        <td>
+                        <span id="unit${i}"></span>
+                        </td>
+                        </tr>`;
+        $('#subhendu').append(html);
+        i = i + 1;
+    }
+</script>
+<script>
+    function getParameter(i) {
+        var parameter = $('#test_parameter_name' + i).val();
+        $.ajax({
+            url: "{{ route('find-range-by-parameter-in-radiology') }}",
+            type: "POST",
+            data: {
+                _token: '{{ csrf_token() }}',
+                parameter_id: parameter,
+            },
+
+            success: function(response) {
+                console.log(response);
+                const reference_range = response.range_value.reference_range;
+                console.log(reference_range);
+                const unit = response.unit_value.unit_name;
+                console.log(unit);
+                console.log(i);
+                $('#reference_range' + i).html(reference_range);
+                $('#unit' + i).html(unit);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
 
 <script>
     $(document).ready(function() {

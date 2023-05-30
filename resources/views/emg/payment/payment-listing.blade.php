@@ -57,6 +57,10 @@
                                             @can('delete-payment-in-emg')
                                             <a class="dropdown-item" href="{{ route('delete-payment-in-emg',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
                                             @endcan
+
+                                            @can('print-payment-in-emg')
+                                            <a class="dropdown-item" href="{{ route('print-payment-in-emg',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Print</a>
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>

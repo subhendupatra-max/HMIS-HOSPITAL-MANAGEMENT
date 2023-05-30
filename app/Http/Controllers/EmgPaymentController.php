@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EmgPayment;
 use App\Models\EmgDetails;
+use App\Models\AllHeader;
+use App\Models\Payment;
 
 class EmgPaymentController extends Controller
 {
@@ -92,5 +94,18 @@ class EmgPaymentController extends Controller
         $id = base64_decode($id);
         EmgPayment::find($id)->delete();
         return back()->with('success', "Payment Deleted Successfully");
+    }
+
+    public function payment_print_in_emg($id)
+    {
+        $emg_id = base64_decode($id);
+        // dd($emg_id);
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+
+        $emg_patient_details = EMGDetails::where('id', $emg_id)->first();
+        // dd($emg_patient_details);
+        $emgPaymentDetails =  Payment::where('emg_id', $emg_id)->where('section', 'EMG')->first();
+        // dd($opdPaymentDetails);
+        return view('emg.payment.print-payment', compact('emg_id', 'emgPaymentDetails', 'emg_patient_details', 'header_image'));
     }
 }

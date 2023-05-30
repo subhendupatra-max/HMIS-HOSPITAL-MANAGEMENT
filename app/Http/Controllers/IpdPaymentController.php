@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\IpdDetails;
 use App\Models\Payment;
 use App\Models\Prefix;
+use App\Models\AllHeader;
 use Illuminate\Support\Facades\Auth;
 
 class IpdPaymentController extends Controller
@@ -104,5 +105,18 @@ class IpdPaymentController extends Controller
         Payment::where('id', $id)->first()->delete();
 
         return back()->with('success', 'Payment Deleted Sucessfully');
+    }
+
+    public function payment_print_in_ipd($id)
+    {
+        $ipd_id = base64_decode($id);
+        // dd($ipd_id);
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+
+        $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
+
+        $ipdPaymentDetails =  Payment::where('ipd_id', $ipd_id)->where('section', 'IPD')->first();
+        // dd($ipdPaymentDetails);
+        return view('Ipd.payment.print-payment', compact('ipd_id', 'ipdPaymentDetails', 'ipd_patient_details', 'header_image'));
     }
 }
