@@ -1792,6 +1792,47 @@ Route::group(['middleware' => ['permission:radiology main'], 'prefix' => 'radiol
     //     Route::get('radiology-billing-list', [RadiologyController::class, 'radiology_test_charge'])->name('radiology-details');
     // });
 
+    // --- #
+    Route::group(['middleware' => ['permission:pathology billing list']], function () {
+        Route::get('radiology-billing-list', [RadiologyController::class, 'radiology_billing_list'])->name('radiology-details');
+    });
+
+    Route::group(['middleware' => ['permission:add radiology bill']], function () {
+        Route::get('add-radiology-billing', [RadiologyController::class, 'add_radiology_bill'])->name('add-radiology-billing');
+        Route::any('add-radiology-billing-for-a-patient', [RadiologyController::class, 'add_radiology_billing_for_a_patient'])->name('add-radiology-billing-for-a-patient');
+
+        Route::post('find-test-amount-by-test-add', [RadiologyController::class, 'find_test_amount_by_test_add'])->name('find-test-amount-by-test-add');
+
+        Route::post('save-radiology-billing', [RadiologyController::class, 'save_radiology_billing'])->name('save-radiology-billing');
+    });
+
+
+    Route::group(['middleware' => ['permission:add radiology test result details']], function () {
+        Route::get('add-radiology-test-result-details/{id}', [RadiologyController::class, 'add_radiology_test_result_details'])->name('add-radiology-test-result-details');
+        Route::post('update-radiology-report', [RadiologyController::class, 'update_radiology_report'])->name('update-radiology-report');
+    });
+
+    Route::group(['middleware' => ['permission:print radiology result']], function () {
+        Route::get('print-radiology-result/{id}', [RadiologyController::class, 'print_radiology_result'])->name('print-radiology-result');
+    });
+
+    // -- *
+
+
+    Route::group(['middleware' => ['permission:delete radiology test']], function () {
+        Route::get('delete-radiology-test-details/{id}', [RadiologyController::class, 'delete_radiology_test_details'])->name('delete-radiology-test-details');
+    });
+    Route::group(['middleware' => ['permission:edit pathology test']], function () {
+        Route::get('edit-radiology-test-details/{id}', [RadiologyController::class, 'edit_radiology_test_details'])->name('edit-radiology-test-details');
+        Route::post('update-radiology-test-details', [RadiologyController::class, 'update_radiology_test_details'])->name('update-radiology-test-details');
+    });
+    Route::get('view-pathology-test-details/{id}', [PathologyController::class, 'view_pathology_test_details'])->name('view-pathology-test-details');
+    Route::get('add-pathology-report', [PathologyController::class, 'add_pathology_report'])->name('add-pathology-report');
+
+
+
+    // -----
+    Route::post('find-range-by-parameter-radiology', [RadiologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter-radiology');
 
     Route::get('view-radiology-test-details/{id}', [RadiologyController::class, 'view_radiology_test_details'])->name('view-radiology-test-details');
 
@@ -1836,7 +1877,7 @@ Route::group(['middleware' => ['permission:radiology main'], 'prefix' => 'radiol
             });
         });
         // ============= radiology test ====================
-        Route::post('find-range-by-parameter', [RadiologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter');
+        Route::post('find-range-by-parameter-in-radiology', [RadiologyController::class, 'find_range_by_parameter_in_radiology'])->name('find-range-by-parameter-in-radiology');
     });
 });
 // ================================== Radiology Main =================
@@ -1851,10 +1892,10 @@ Route::group(['middleware' => ['permission:ambulance']], function () {
         Route::get('add-ambulance-details', [AmbulanceController::class, 'add_ambulance_details'])->name('add-ambulance-details');
         Route::post('save-ambulance-details', [AmbulanceController::class, 'save_ambulance_details'])->name('save-ambulance-details');
     });
-    Route::group(['middleware' => ['permission:delete radiology test']], function () {
+    Route::group(['middleware' => ['permission:delete ambulance test']], function () {
         Route::get('delete-ambulance-details/{id}', [AmbulanceController::class, 'delete_ambulance_details'])->name('delete-ambulance-details');
     });
-    Route::group(['middleware' => ['permission:edit radiology test']], function () {
+    Route::group(['middleware' => ['permission:edit ambulance test']], function () {
         Route::get('edit-ambulance-details/{id}', [AmbulanceController::class, 'edit_ambulance_details'])->name('edit-ambulance-details');
         Route::post('update-ambulance-details', [AmbulanceController::class, 'update_ambulance_details'])->name('update-ambulance-details');
     });

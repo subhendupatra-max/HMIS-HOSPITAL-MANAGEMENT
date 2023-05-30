@@ -30,7 +30,7 @@ unset($__errorArgs, $__bag); ?>
                         <!-- <label for="short_name" class="form-label">Short Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="short_name" name="short_name" placeholder="Enter Short Name" value="<?php echo e(old('short_name')); ?>" required> -->
                         <input type="text" id="short_name"  value="<?php echo e(old('short_name')); ?>" name="short_name" required="">
-                        <label for="short_name">Short Name<span class="text-danger">*</span></label>
+                        <label for="short_name">Short Name</label>
                         <?php $__errorArgs = ['short_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -47,7 +47,7 @@ unset($__errorArgs, $__bag); ?>
                         <!-- <label for="test_type" class="form-label">Test Type<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="test_type" name="test_type" placeholder="Enter Test Type" value="<?php echo e(old('test_type')); ?>" required> -->
                         <input type="text" id="test_type" name="test_type"   value="<?php echo e(old('test_type')); ?>" required="">
-                        <label for="test_type">Test Type<span class="text-danger">*</span></label>
+                        <label for="test_type">Test Type</label>
                         <?php $__errorArgs = ['test_type'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -84,7 +84,7 @@ unset($__errorArgs, $__bag); ?>
                         <!-- <label for="sub_catagory" class="form-label"> Sub Catagory<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="sub_catagory" name="sub_catagory" placeholder="Enter Sub Catagory Name" value="<?php echo e(old('sub_catagory')); ?>" required> -->
                         <input type="text"id="sub_catagory" name="sub_catagory"value="<?php echo e(old('sub_catagory')); ?>"  required="">
-                        <label for="sub_catagory">Sub Catagory<span class="text-danger">*</span></label>
+                        <label for="sub_catagory">Sub Catagory</label>
                         <?php $__errorArgs = ['sub_catagory'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -101,7 +101,7 @@ unset($__errorArgs, $__bag); ?>
                         <!-- <label for="method" class="form-label"> Method <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="method" name="method" placeholder="Enter Sub Catagory Name" value="<?php echo e(old('method')); ?>" required> -->
                         <input type="text" id="method" name="method"  value="<?php echo e(old('method')); ?>" required="">
-                        <label for="method">Method<span class="text-danger">*</span></label>
+                        <label for="method">Method</label>
                         <?php $__errorArgs = ['method'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -118,7 +118,7 @@ unset($__errorArgs, $__bag); ?>
                         <!-- <label for="report_days" class="form-label"> Report Days <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="report_days" name="report_days" placeholder="Enter Report Days" value="<?php echo e(old('report_days')); ?>" required> -->
                         <input type="text"  id="report_days" name="report_days"  value="<?php echo e(old('report_days')); ?>" required="">
-                        <label for="report_days">Report Days <span class="text-danger">*</span></label>
+                        <label for="report_days">Report Days </label>
                         <?php $__errorArgs = ['report_days'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -160,56 +160,45 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4 addnewblade">
-                         <label for="charge">Charges <span class="text-danger">*</span></label>
+                         <label for="charge">Charge Name <span class="text-danger">*</span></label>
                         <select name="charge" class="form-control select2-show-search" id="charge" required>
                             <option value="">Select charge...</option>
                         </select>
                         <small class="text-danger"><?php echo e($errors->first('charge')); ?></small>
                     </div>
 
-                    <div class="form-group col-md-4 addnewde">
-                        <!-- <label for="tax">Tax<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tax" value="<?php echo e(old('tax')); ?>" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax"> -->
-                        <input type="text"  id="tax" value="<?php echo e(old('tax')); ?>" onkeyup="totalAmount()" name="tax"  required="">
-                        <label for="tax">Tax <span class="text-danger">*</span></label>
-                        <small class="text-danger"><?php echo e($errors->first('tax')); ?></small>
+                    <div class="form-group col-md-8 addnewde" >
+                        <span id="charge_details" style="font-size: 16px;"></span>
                     </div>
 
-                    <div class="form-group col-md-4 addnewde">
-                        <!-- <label for="standard_charges">Charge Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="standard_charges" onkeyup="totalAmount()" name="standard_charges"> -->
-                        <input type="text" id="standard_charges" onkeyup="totalAmount()" name="standard_charges"  required="">
-                        <label for="standard_charges">Charge Amount <span class="text-danger">*</span></label>
-                        <small class="text-danger"><?php echo e($errors->first('standard_charges')); ?></small>
-                    </div>
 
-                    <div class="form-group col-md-4 addnewde">
-                        <!-- <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="total_amount" name="total_amount" readonly> -->
-                        <input type="text" id="total_amount" name="total_amount" readonly required="">
-                        <label for="total_amount">Total Amount <span class="text-danger">*</span></label>
-                        <small class="text-danger"><?php echo e($errors->first('total_amount')); ?></small>
+                    
+                    <div class="form-group col-md-12 addnewblade">
+                        <label >Description</label>
+                        <textarea class="content" name="description"></textarea>
                     </div>
                 </div>
 
+
                 <div class="form-group col-md-12 mt-0 ">
-                    <hr>
-                </div>
-                <div class="form-group col-md-12 mt-0 ">
-                    <table class="table card-table table-vcenter text-nowrap" id="subhendu">
+                    <table class="table card-table table-vcenter text-nowrap">
                         <thead>
                             <tr>
-                                <th scope="col" style="width: 98%"> Test Master Name <span class="text-danger">*</span></th>
+                                <th scope="col" style="width: 30%"> Test Parameter Name <span class="text-danger">*</span></th>
+                                <th scope="col" style="width: 40%">Reference Range <span class="text-danger">*</span></th>
+                                <th scope="col" style="width: 28%">Unit <span class="text-danger">*</span>
+                                </th>
                                 <th scope="col" style="width: 2%">
                                     <button type="button" class="btn btn-success" onclick="addnewrow()"><i class="fa fa-plus"></i></button>
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody  id="subhendu">
                             <!-- dynamic row -->
                         </tbody>
                     </table>
                 </div>
+                
                 <div class="text-center m-auto">
                     <button type="submit" class="btn btn-primary">Save Test</button>
                 </div>
@@ -220,33 +209,57 @@ unset($__errorArgs, $__bag); ?>
 </div>
 <script>
     var i = 1;
+
     function addnewrow() {
         var html = `<tr id="rowid${i}">
-                        <td>
-                            <select id="master_test_name${i}" class="form-control select2-show-search"
-                                name="master_test_name[]">
-                                <option value="">Select Test Name</option>
-                                <?php if(isset($all_test)): ?>
-                                <?php $__currentLoopData = $all_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $test): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option value="<?php echo e($test->id); ?>"><?php echo e($test->test_name); ?></option>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php endif; ?>
-                            </select>
+                        <td><select id="test_parameter_name${i}" onchange="getParameter(${i})" class="form-control select2-show-search"
+                        name="test_parameter_name[]">
+                        <option value="">Select Parameter Name</option>
+                        <?php $__currentLoopData = $parameter; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->parameter_name); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
                         </td>
                         <td>
-                            <button type="button" class="btn btn-danger" onclick="remove(${i})"><i class="fa fa-times"></i></button>
+                        <span id="reference_range${i}"></span>
                         </td>
-                    </tr>`;
+                        <td>
+                        <span id="unit${i}"></span>
+                        </td>
+                        </tr>`;
         $('#subhendu').append(html);
         i = i + 1;
     }
 </script>
 <script>
-    function remove(i)
-    {
-         $('#rowid'+i).remove();
+    function getParameter(i) {
+        var parameter = $('#test_parameter_name' + i).val();
+        $.ajax({
+            url: "<?php echo e(route('find-range-by-parameter-pathology')); ?>",
+            type: "POST",
+            data: {
+                _token: '<?php echo e(csrf_token()); ?>',
+                parameter_id: parameter,
+            },
+
+            success: function(response) {
+                console.log(response);
+                const reference_range = response.range_value.reference_range;
+                console.log(reference_range);
+                const unit = response.unit_value.unit_name;
+                console.log(unit);
+                console.log(i);
+                $('#reference_range' + i).html(reference_range);
+                $('#unit' + i).html(unit);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
     }
 </script>
+
+
 
 
 <script>
@@ -319,9 +332,9 @@ unset($__errorArgs, $__bag); ?>
         $("#charge").change(function(event) {
             event.preventDefault();
             let charge = $(this).val();
-
+            var div_data = '';
             $.ajax({
-                url: "<?php echo e(route('find-charge-by-statndard-charges')); ?>",
+                url: "<?php echo e(route('getcharges-amount')); ?>",
                 type: "POST",
                 data: {
                     _token: '<?php echo e(csrf_token()); ?>',
@@ -329,8 +342,11 @@ unset($__errorArgs, $__bag); ?>
                 },
 
                 success: function(response) {
+                    $.each(response, function(key, value) {
+                        div_data += `For ${value.charge_type_name} : ${value.standard_charges} Rs , `
+                    });
                     console.log(response);
-                    $('#standard_charges').val(response.standard_charges);
+                    $('#charge_details').append(div_data);
                 },
                 error: function(error) {
                     console.log(error);
@@ -340,15 +356,7 @@ unset($__errorArgs, $__bag); ?>
     });
 </script>
 
-<script>
-    function totalAmount() {
-        $("#total_amount").val(00);
-        var taxAmount = $("#tax").val();
-        var chargeAmount = $("#standard_charges").val();
-        var totalAmount = parseInt(chargeAmount * taxAmount / 100) + parseInt(chargeAmount);
-        $("#total_amount").val(totalAmount);
-    }
-</script>
+
 
 
 <script>

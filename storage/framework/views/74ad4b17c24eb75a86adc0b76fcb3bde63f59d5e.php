@@ -19,12 +19,7 @@
                 <?php endif; ?>
             </div>
         </div>
-        <?php if(session('success')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-        <?php if(session()->has('error')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
-        <?php endif; ?>
+      <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -35,7 +30,6 @@
                                 <th class="border-bottom-0">Charges name</th>
                                 <th class="border-bottom-0">Catagory Name</th>
                                 <th class="border-bottom-0">Sub Catagory Name</th>
-                                <th class="border-bottom-0">Type</th>
                                 <th class="border-bottom-0">Standard Charges </th>
                                 <th class="border-bottom-0">Date</th>
                                 <th class="border-bottom-0">Description</th>
@@ -51,9 +45,19 @@
                                 <td><?php echo e(@$item->charges_name); ?></td>
                                 <td><?php echo e(@$item->charges_catagory->charges_catagories_name); ?></td>
                                 <td><?php echo e(@$item->charges_sub_catagory->charges_sub_catagories_name); ?></td>
-                                <td><?php echo e(@$item->type); ?></td>
-
-                                <td><?php echo e(@$item->standard_charges); ?></td>
+                                <td>
+                                    <?php
+                                    $charge_with_type = DB::table('charges_with_charges_types')
+                                    ->join('charge_types','charges_with_charges_types.charge_type_id','=','charge_types.id')
+                                    ->where('charges_with_charges_types.charge_id',$item->id)
+                                    ->get();
+                                    if(@$charge_with_type[0]->charge_type_id != null){
+                                        foreach($charge_with_type as $value){
+                                            echo $value->charge_type_name." : ".$value->standard_charges." Rs<br>";
+                                        }
+                                    }
+                                    ?>
+                                </td>
                                 <td><?php echo e(@$item->date); ?></td>
                                 <td><?php echo e(@$item->description); ?></td>
                                 <td>
