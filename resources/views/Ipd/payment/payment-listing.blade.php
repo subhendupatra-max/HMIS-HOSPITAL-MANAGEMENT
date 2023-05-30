@@ -65,6 +65,11 @@
                                                 <a class="dropdown-item" href="{{ route('delete-ipd-payment-details',['id' => base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
                                                 @endcan
 
+                                                
+                                            @can('print-payment-in-ipd')
+                                            <a class="dropdown-item" href="{{ route('print-payment-in-ipd',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Print</a>
+                                            @endcan
+
                                             </div>
                                         </div>
                                     </td>

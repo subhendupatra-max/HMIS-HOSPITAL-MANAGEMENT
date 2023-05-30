@@ -1827,6 +1827,7 @@ Route::group(['middleware' => ['permission:radiology main'], 'prefix' => 'radiol
         Route::post('update-radiology-test-details', [RadiologyController::class, 'update_radiology_test_details'])->name('update-radiology-test-details');
     });
     Route::get('view-pathology-test-details/{id}', [PathologyController::class, 'view_pathology_test_details'])->name('view-pathology-test-details');
+
     Route::get('add-pathology-report', [PathologyController::class, 'add_pathology_report'])->name('add-pathology-report');
 
 
@@ -1999,6 +2000,9 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     //================================= OPD payment ====================================
     Route::group(['middleware' => ['permission:opd payment'], 'prefix' => 'opd-payment'], function () {
         Route::get('payment-listing-in-opd/{id}', [OpdPaymentController::class, 'payment_listing_in_opd'])->name('payment-listing-in-opd');
+
+        Route::get('print-payment-in-opd/{id}', [OpdPaymentController::class, 'payment_print_in_opd'])->name('print-payment-in-opd');
+
         Route::group(['middleware' => ['permission:add opd payment']], function () {
             Route::get('add-payment-in-opd/{id}', [OpdPaymentController::class, 'add_payment_in_opd'])->name('add-payment-in-opd');
             Route::post('save-payment-in-opd', [OpdPaymentController::class, 'save_payment_in_opd'])->name('save-payment-in-opd');
@@ -2192,6 +2196,9 @@ Route::group(['middleware' => ['permission:emg billing'], 'prefix' => 'emg-billi
 //================================= Emg payment ====================================
 Route::group(['middleware' => ['permission:emg payment'], 'prefix' => 'emg-payment'], function () {
     Route::get('payment-listing-in-emg/{id}', [EmgPaymentController::class, 'payment_listing_in_emg'])->name('payment-listing-in-emg');
+
+    Route::get('print-payment-in-emg/{id}', [EmgPaymentController::class, 'payment_print_in_emg'])->name('print-payment-in-emg');
+
     Route::group(['middleware' => ['permission:add emg payment']], function () {
         Route::get('add-payment-in-emg/{id}', [EmgPaymentController::class, 'add_payment_in_emg'])->name('add-payment-in-emg');
         Route::post('save-payment-in-emg', [EmgPaymentController::class, 'save_payment_in_emg'])->name('save-payment-in-emg');
@@ -2601,6 +2608,10 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::group(['middleware' => ['permission:timeline list ipd']], function () {
             Route::get('ipd-payment-details/{ipd_id}', [IpdPaymentController::class, 'ipd_payment_details'])->name('ipd-payment-details');
         });
+
+        Route::get('print-payment-in-ipd/{id}', [IpdPaymentController::class, 'payment_print_in_ipd'])->name('print-payment-in-ipd');
+
+
         Route::group(['middleware' => ['permission:add ipd payment']], function () {
             Route::get('add-ipd-payment-details/{ipd_id}', [IpdPaymentController::class, 'add_ipd_payment_details'])->name('add-ipd-payment-details');
             Route::post('save-ipd-payment-details', [IpdPaymentController::class, 'save_ipd_payment_details'])->name('save-ipd-payment-details');

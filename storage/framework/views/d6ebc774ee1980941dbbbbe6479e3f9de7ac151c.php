@@ -12,8 +12,7 @@
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd payment')): ?>
                         <a href="<?php echo e(route('add-payment-in-opd',['id'=> base64_encode($opd_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-rupee-sign"></i> Add Payment </a>
                         <?php endif; ?>
-                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
                             <?php echo $__env->make('OPD.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
@@ -61,6 +60,10 @@
                                             <a class="dropdown-item" href="<?php echo e(route('delete-payment-in-opd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                             <?php endif; ?>
 
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-payment-in-opd')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-payment-in-opd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Print</a>
+                                            <?php endif; ?>
+
                                         </div>
                                     </div>
                                 </td>
@@ -75,5 +78,4 @@
         </div>
     </div>
     <?php $__env->stopSection(); ?>
-
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/OPD/payment/payment-listing.blade.php ENDPATH**/ ?>

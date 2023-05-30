@@ -31,4 +31,9 @@ class EmgDetails extends Model
     // {
     //     return $this->belongsTo(State::class, 'state', 'id');
     // }
+
+    public function tpa_details()
+    {
+        return $this->belongsTo(Diagonasis::class, 'tpa_organization', 'id');
+    }
 }
