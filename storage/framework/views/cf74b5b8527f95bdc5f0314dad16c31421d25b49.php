@@ -14,24 +14,12 @@
                                         class="fa fa-file"></i>
                                     Generate Bill </a>
                             <?php endif; ?>
-
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology test')): ?>
-                                <a href="<?php echo e(route('pathology-test-list')); ?>" class="btn btn-primary btn-sm"><i
-                                        class="fa fa-vials"></i> Pathology Test </a>
-                            <?php endif; ?>
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology test master')): ?>
-                            <a href="<?php echo e(route('pathology-test-master-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-mortar-pestle"></i> Test Master </a>
-                            <?php endif; ?>
-
-                            
-
-                            
-
-                            
+                
                         </div>
                     </div>
                 </div>
             </div>
+            <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('pathology billing list')): ?>
                 <div class="card-body">
                     <div class="">
@@ -42,9 +30,7 @@
                                         <th class="border-bottom-0">Sl. No</th>
                                         <th class="border-bottom-0">Bill No.</th>
                                         <th class="border-bottom-0">Patient Details</th>
-                                        <th class="border-bottom-0">Test Details</th>
-                                        <th class="border-bottom-0">Reference Details</th>
-                                        <th class="border-bottom-0">Charges Amount</th>
+                                        <th class="border-bottom-0">Amount</th>
                                         <th class="border-bottom-0">Status</th>
                                         <th class="border-bottom-0">Action</th>
                                     </tr>
@@ -52,14 +38,14 @@
                                 </thead>
 
                                 <tbody>
-                                    
-                                    <tr>
-                                        <td>1</td>
-                                        <td>1</td>
-                                        <td>subhendu patra(1)</td>
-                                        <td>CVC</td>
-                                        <td>Tithi Das</td>
-                                        <td>100</td>
+                                    <?php if(isset($pathology_bill_details)): ?>
+                                        <?php $__currentLoopData = $pathology_bill_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <tr>
+                                        <td><?php echo e($loop->iteration); ?></td>
+                                        <td><?php echo e(@$value->bill_prefix); ?><?php echo e(@$value->id); ?></td>
+                                        <td><?php echo e(@$value->all_patient_details->prefix); ?> <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?><br>
+                                            <?php echo e(@$value->all_patient_details->patient_prefix); ?><?php echo e(@$value->all_patient_details->id); ?></td>
+                                        <td><?php echo e(@$value->total_amount); ?></td>
                                         <td><a href="#"><span class="badge badge-danger">Accepted</span></a></td>
                                         <td>
                                             <div class="card-options">
@@ -79,7 +65,10 @@
                                                 </div>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> 
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                             
+                                    <?php endif; ?>
+                                   
 
                                 </tbody>
                             </table>

@@ -49,5 +49,6 @@ class OpdDetails extends Model
     {
         return $this->belongsTo(Billing::class,'id','opd_id');
     }
-   
+
+  
 }

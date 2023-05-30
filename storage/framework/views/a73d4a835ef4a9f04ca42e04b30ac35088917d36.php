@@ -65,6 +65,11 @@
                                                 <a class="dropdown-item" href="<?php echo e(route('delete-ipd-payment-details',['id' => base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                                 <?php endif; ?>
 
+                                                
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-payment-in-ipd')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-payment-in-ipd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Print</a>
+                                            <?php endif; ?>
+
                                             </div>
                                         </div>
                                     </td>

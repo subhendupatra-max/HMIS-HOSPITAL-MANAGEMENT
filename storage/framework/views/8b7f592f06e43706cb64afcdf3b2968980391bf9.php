@@ -57,6 +57,10 @@
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-payment-in-emg')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('delete-payment-in-emg',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                             <?php endif; ?>
+
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-payment-in-emg')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-payment-in-emg',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Print</a>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </td>

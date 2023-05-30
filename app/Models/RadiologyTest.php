@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RadiologyTest extends Model
 {
     use HasFactory;
-    public function pathology_catagory()
+    public function radiology_catagory()
     {
         return $this->belongsTo(RadiologyCatagory::class, 'catagory_id', 'id');
     }
