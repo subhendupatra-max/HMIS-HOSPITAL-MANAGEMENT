@@ -87,21 +87,24 @@
     
           <tr>
              <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;font-weight: 700;">Medicine Name</td>
-             <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;font-weight: 700;" >Category</td>
+             
              <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;font-weight: 700;">Batch No</td>
+             <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;font-weight: 700;" >Price</td>
              <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;font-weight: 700;">Quantity</td>
               <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;font-weight: 700;">CGST(%)</td>
                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;font-weight: 700;">SGST(%)</td>
+               <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;font-weight: 700;">IGST(%)</td>
                 <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;font-weight: 700;">Amount(Rs)</td>
          </tr>
          @foreach ($medicine_bill_details as $value)
          <tr>
-            <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->med_nam }}</td>
-            <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"> {!! @$value->medicine_catagory_name !!} </td>
+            <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->med_nam }}({!! @$value->medicine_catagory_name !!})</td>
             <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->medicine_batch }}</td>
-            <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{!! @$value->qty !!} {!! @$value->unit !!}</td>
+            <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"> {!! @$value->sale_price !!} </td>
+            <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{!! @$value->qty !!} {!! @$value->medicine_unit_name !!}</td>
             <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"> {{ @$value->cgst }} </td>
             <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->sgst }} </td>
+            <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->igst }} </td>
             <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{!! @$value->amount !!}</td>
          </tr>
          @endforeach

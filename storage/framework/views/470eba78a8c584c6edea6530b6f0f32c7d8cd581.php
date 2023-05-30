@@ -114,13 +114,13 @@ unset($__errorArgs, $__bag); ?>
                         <table class="table card-table table-vcenter text-nowrap" id="subhendu">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 15%">Req Id <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">Req Id <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 25%">Medicine Name <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 10%">Batch No. <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Quantity <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">MRP <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 10%">Discount(%) </th>
+                                    <th scope="col" style="width: 5%">Discount(%) </th>
                                     <th scope="col" style="width: 10%">P Rate <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">S Rate <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Expire Date <span class="text-danger">*</span>
@@ -267,17 +267,18 @@ unset($__errorArgs, $__bag); ?>
 <script type="text/javascript">
     function getamount(row_id) {
         var p_rate = $('#p_rate' + row_id).val();
+        var qty = $('#qty' + row_id).val();
         var sgst = $('#sgst' + row_id).val();
         var cgst = $('#cgst' + row_id).val();
         var igst = $('#igst' + row_id).val();
-        var sgst_amnt = parseFloat(p_rate * (sgst / 100)).toFixed(2);
-        var cgst_amnt = parseFloat(p_rate * (cgst / 100)).toFixed(2);
-        var igst_amnt = parseFloat(p_rate * (igst / 100)).toFixed(2);
-        var amount = parseFloat(p_rate) + (parseFloat(sgst_amnt) + parseFloat(cgst_amnt) + parseFloat(igst_amnt));
+        var sgst_amnt = (parseFloat((p_rate * qty) * (sgst / 100)).toFixed(2));
+        var cgst_amnt = (parseFloat((p_rate * qty) * (cgst / 100)).toFixed(2));
+        var igst_amnt = (parseFloat((p_rate * qty) * (igst / 100)).toFixed(2));
+        var amount = (parseFloat(p_rate) * qty) + (parseFloat(sgst_amnt) + parseFloat(cgst_amnt) + parseFloat(igst_amnt));
         $('#amount' + row_id).val(amount);
         $('#igst_value' + row_id).val(igst_amnt);
         $('#cgst_value' + row_id).val(cgst_amnt);
-         $('#sgst_value' + row_id).val(sgst_amnt);
+        $('#sgst_value' + row_id).val(sgst_amnt);
         gettotal();
     }
 

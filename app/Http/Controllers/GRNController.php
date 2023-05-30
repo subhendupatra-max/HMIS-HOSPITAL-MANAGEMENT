@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\GRN;
+use App\Models\MedicineStock;
 use App\Models\MedicineStoreRoom;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderDetails;
@@ -63,7 +64,8 @@ class GRNController extends Controller
 
     public function save_grn(Request $req)
     {
-dd($req->all());
+        try {
+            DB::beginTransaction();
         $po_id = $req->po_no;
 
         $validator = $req->validate([
@@ -71,28 +73,16 @@ dd($req->all());
         ]);
 
         $grn_prefix = DB::table('prefixes')->where('name', '=', 'grn')->first();
-        $challan_copy = '';
-        $invoice_copy = '';
-        // if ($req->hasfile('challan_copy')) {
-        //     $file = $req->file('challan_copy');
-        //     $challan_copy = rand() . '.' . $file->getClientOriginalExtension();
-        //     $file->move("challan_copy/", $challan_copy);
-        // }
-        // if ($req->hasfile('invoice_copy')) {
-        //     $file = $req->file('invoice_copy');
-        //     $invoice_copy = rand() . '.' . $file->getClientOriginalExtension();
-        //     $file->move("invoice_copy/", $invoice_copy);
-        // }
 
         $item_id = $req->post('medicine');
         $unit_id = $req->post('unit');
         $catagory_id = $req->post('catagory');
         $qty = $req->post('qty');
         $req_id = $req->post('req');
-        $gst = $req->post('gst');
-        $rate = $req->post('rate');
         $amount = $req->post('amount');
         $po_details_id = $req->post('po_details_id');
+
+
 
         $grn = new GRN();
         $grn->grn_prefix            =   $grn_prefix->prefix;
@@ -103,15 +93,16 @@ dd($req->all());
         $grn->medicine_rec_date     =   $req->medicine_rec_date;
         $grn->bill_rec_date         =   $req->bill_rec_date;
         $grn->challan_no            =   $req->challan_no;
-        $grn->challan_copy          =   $challan_copy;
-        $grn->invoice_copy          =   $invoice_copy;
         $grn->challan_date          =   $req->challan_date;
         $grn->invoice_no            =   $req->invoice_no;
         $grn->invoice_date          =   $req->invoice_date;
         $grn->invoice_value         =   $req->invoice_value;
-        $grn->po_value              =   $req->po_value;
         $grn->note                  =   $req->note;
-        $grn->purpose               =   $req->purpose;
+        $grn->invoice_no            =   $req->invoice_no;
+        $grn->total_cgst_amount     =   $req->total_cgst_amount;
+        $grn->total_sgst_amount     =   $req->total_sgst_amount;
+        $grn->total_igst_amount     =   $req->total_igst_amount;
+        $grn->total_value           =   $req->total_value;
         $grn->generated_by          =   Auth::id();
         $grn->stock_update_status   =   0;
         $grn->status                =   1;
@@ -129,13 +120,24 @@ dd($req->all());
 
             $grn_details = array(
                 'grn_id'        => $grn_id,
+                'po_details_id' => $po_details_id[$i],
                 'req_id'        => $req_id[$i],
                 'medicine_id'   => $item_id[$i],
                 'catagory_id'   => $catagory_id[$i],
-                'unit_id'       => $unit_id[$i],
-                'quantity'      => $qty[$i],
-                'gst'           => $gst[$i],
-                'rate'          => $rate[$i],
+                'batch_no'      => $req->batch_no[$i],
+                'exp_date'      => $req->expire_date[$i],
+                'qty'           => $qty[$i],
+                'unit'           => $req->unit[$i],
+                'mrp'           => $req->mrp[$i],
+                'discount'      => $req->discount[$i],
+                'p_rate'        => $req->p_rate[$i],
+                's_rate'        => $req->s_rate[$i],
+                'cgst'          => $req->cgst[$i],
+                'cgst_value'    => $req->cgst_value[$i],
+                'sgst'          => $req->sgst[$i],
+                'sgst_value'    => $req->sgst_value[$i],
+                'igst'          => $req->igst[$i],
+                'igst_value'    => $req->igst_value[$i],
                 'amount'        => $amount[$i],
             );
 
@@ -164,6 +166,10 @@ dd($req->all());
         } else {
             return redirect()->route('medicine-grn-list')->with('error', "Something Went Wrong");
         }
+        DB::commit();
+    } catch (\Throwable $th) {
+        return redirect()->route('medicine-grn-list')->with('error', "Something Went Wrong");
+    }
     }
 
     public function grn_details($id)
@@ -182,8 +188,8 @@ dd($req->all());
 
     public function stock_update_after_grn($id)
     {
-        try {
-            DB::beginTransaction();
+        // try {
+        //     DB::beginTransaction();
 
             $grn_id = base64_decode($id);
 
@@ -193,39 +199,48 @@ dd($req->all());
                 ->where('g_r_n_s.id', $grn_id)
                 ->first();
 
-            $grn_item = GRNDetail::join('medicines', 'medicines.id', '=', 'g_r_n_details.medicine_id')
-                ->join('medicine_units', 'medicine_units.id', '=', 'g_r_n_details.unit_id')
-                ->join('medicine_catagories', 'medicine_catagories.id', '=', 'g_r_n_details.catagory_id')
-                ->select('g_r_n_details.gst', 'g_r_n_details.quantity', 'g_r_n_details.rate', 'g_r_n_details.amount', 'g_r_n_details.req_id', 'medicine_units.medicine_unit_name', 'g_r_n_details.unit_id', 'medicines.medicine_name', 'medicine_catagories.id', 'g_r_n_details.medicine_id', 'g_r_n_details.catagory_id')
-                ->where('g_r_n_details.grn_id', $grn_id)
-                ->get();
+            $grn_item = GRNDetail::where('g_r_n_details.grn_id', $grn_id)->get();
+            // dd( $grn_item);
 
-            foreach ($grn_item as $item) {
+            foreach($grn_item as $item)
+            {
+                $medine_stock = new MedicineStock();
+                $medine_stock->grm_id         =  $item->grn_id;
+                $medine_stock->po_details_id  =  $item->po_details_id;
+                $medine_stock->emg_challan_id =  '';
+                $medine_stock->stored_room =  $grn_main->storeroom_id;
+                $medine_stock->stock_status =  'stock_update_via_grn';
+                $medine_stock->catagory =  $item->catagory_id;
+                $medine_stock->unit =  $item->unit;
+                $medine_stock->medicine =  $item->medicine_id;
+                $medine_stock->batch_no =  $item->batch_no;
+                $medine_stock->exp_date      = $item->exp_date;
+                $medine_stock->qty =  $item->qty;
+                $medine_stock->mrp =  $item->mrp;
+                $medine_stock->discount =  $item->discount;
+                $medine_stock->p_rate =  $item->p_rate;
+                $medine_stock->s_rate =  $item->s_rate;
+                $medine_stock->cgst =  $item->cgst;
+                $medine_stock->cgst_value =  $item->cgst_value;
+                $medine_stock->sgst =  $item->sgst;
+                $medine_stock->sgst_value =  $item->sgst_value;
+                $medine_stock->igst =  $item->igst;
+                $medine_stock->igst_value =  $item->igst_value;
+                $medine_stock->amount =  $item->amount;
+                $medine_stock->save();
 
-                $itemstock = new ItemStock();
-                $itemstock->grn_id                  = $grn_id;
-                $itemstock->storeroom_id            = $grn_main->storeroom_id;
-                $itemstock->medicine_id             = $item->medicine_id;
-                $itemstock->medicine_unit_id        = $item->unit_id;
-                $itemstock->medicine_catagory_id    = $item->catagory_id;
-                $itemstock->quantity                = $item->quantity;
-                $itemstock->gst                     = $item->gst;
-                $itemstock->rate                    = $item->rate;
-                $itemstock->amount                  = $item->amount;
-                $itemstock->status                  = 'new_stock';
-                $itemstock->save();
             }
             $de = GRN::where('id', $grn_id)->update(['stock_update_status' => '1']);
 
-            DB::commit();
+            // DB::commit();
             if ($de != null) {
                 return redirect()->route('medicine-grn-list')->with('success', "Stock Updated Sucessfully");
             } else {
                 return redirect()->route('medicine-grn-list')->with('error', "Something Went Wrong");
             }
-        } catch (\Throwable $th) {
-            return redirect()->route('medicine-grn-list')->with('error', "Something Went Wrong");
-        }
+        // } catch (\Throwable $th) {
+        //     return redirect()->route('medicine-grn-list')->with('error', "Something Went Wrong");
+        // }
     }
 
     public function grn_delete($id)

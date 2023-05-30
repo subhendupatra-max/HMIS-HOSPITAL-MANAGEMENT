@@ -35,6 +35,7 @@ class CreateDischargedPatientsTable extends Migration
             $table->longText('dischage_advice');
             $table->string('refferal_hospital_name');
             $table->string('doctor_name');
+            $table->string('nest_appointment_date');
             $table->timestamps();
         });
     }

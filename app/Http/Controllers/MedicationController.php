@@ -58,6 +58,13 @@ class MedicationController extends Controller
 
         return response()->json($medicine_name);
     }
+    public function find_medicine_name_by_medicine_catagory_dose(Request $request)
+    {
+        $medicine_name  =  Medicine::where('medicine_catagory', $request->medicine_catagory_id)->get();
+        $dose  =  Dosage::select('dosages.dose','medicine_units.medicine_unit_name')->leftjoin('medicine_units','dosages.medicine_unit_id','=','medicine_units.id')->where('medicine_catagory_id', $request->medicine_catagory_id)->get();
+
+        return response()->json(['medicine_name'=>$medicine_name,'dose'=>$dose]);
+    }
 
     public function find_dosage_by_medicine_catagory(Request $request)
     {

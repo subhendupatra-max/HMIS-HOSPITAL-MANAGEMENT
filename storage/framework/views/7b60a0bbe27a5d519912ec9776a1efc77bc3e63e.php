@@ -64,25 +64,28 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                                 </span>
                             </div>
                             <div class="col-md-6">
-                                <span class="requisition_header">PO. Value : </span><span class="requisition_text"><?php echo @$grn_list->po_value; ?></span>
+                                <span class="requisition_header">Total CGST Value : </span><span class="requisition_text"><span class="requisition_text"><?php echo @$grn_list->total_cgst_amount; ?></span>
+                                </span>
                             </div>
+                            <div class="col-md-6">
+                                <span class="requisition_header">Total SGST Value : </span><span class="requisition_text"><span class="requisition_text"><?php echo @$grn_list->total_sgst_amount; ?></span>
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="requisition_header">Total IGST Value : </span><span class="requisition_text"><span class="requisition_text"><?php echo @$grn_list->total_igst_amount; ?></span>
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="requisition_header">Total Value : </span><span class="requisition_text"><span class="requisition_text"><?php echo @$grn_list->total_value; ?></span>
+                                </span>
+                            </div>
+                    
                             <?php if(isset($grn_list->note)): ?>
                             <div class="col-md-12">
                                 <span class="requisition_header">Note : </span><span class="requisition_text"><?php echo e(@$grn_list->note); ?></span>
                             </div>
                             <?php endif; ?>
-                            <?php if(isset($grn_list->challan_copy) && $grn_list->challan_copy != '' && $grn_list->challan_copy != null): ?>
-                            <div class="col-md-6">
-                                <a href="<?php echo e(asset('Challan_copy/')); ?>/<?php echo e(@$grn_list->challan_copy); ?>" target="_blank" style="color: blue;font-size: 15px;"><i class="fa fa-eye"><b>
-                                            View Challan</b></i></a>
-                            </div>
-                            <?php endif; ?>
-                            <?php if(isset($grn_list->invoice_copy) && $grn_list->invoice_copy != '' && $grn_list->invoice_copy != null): ?>
-                            <div class="col-md-6">
-                                <a href="<?php echo e(asset('invoice_copy/')); ?>/<?php echo e(@$grn_list->invoice_copy); ?>" target="_blank" style="color: blue;font-size: 15px;"><i class="fa fa-eye"><b>
-                                            View Invoice</b></i></a>
-                            </div>
-                            <?php endif; ?>
+                
                         </div>
 
                     </div>
@@ -98,10 +101,19 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <th>Req. No.</th>
                             <th>Medicine Name</th>
                             <th>Catagory</th>
+                            <th>Batch No.</th>
                             <th>Unit</th>
                             <th>Quantity</th>
-                            <th>GST</th>
-                            <th>Rate</th>
+                            <th>Discount</th>
+                            <th>MRP</th>
+                            <th>Purchase Rate</th>
+                            <th>Sale Rate</th>
+                            <th>CGST</th>
+                            <th>CGST Value</th>
+                            <th>SGST</th>
+                            <th>SGST Value</th>
+                            <th>IGST</th>
+                            <th>IGST Value</th>
                             <th>Amount</th>
                         </tr>
                     </thead>
@@ -113,10 +125,19 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <td><?php echo e(@$item->req_id); ?></td>
                             <td><?php echo e(@$item->fetch_medicine_name->medicine_name); ?></td>
                             <td><?php echo e(@$item->fetch_medicine_catagory->medicine_catagory_name); ?></td>
+                            <td><?php echo e(@$item->batch_no); ?></td>
                             <td><?php echo e(@$item->fetch_medicine_unit->medicine_unit_name); ?></td>
-                            <td><?php echo e(@$item->quantity); ?></td>
-                            <td><?php echo e(@$item->gst); ?></td>
-                            <td><?php echo e(@$item->rate); ?></td>
+                            <td><?php echo e(@$item->qty); ?></td>
+                            <td><?php echo e(@$item->discount); ?></td>
+                            <td><?php echo e(@$item->mrp); ?></td>
+                            <td><?php echo e(@$item->p_rate); ?></td>
+                            <td><?php echo e(@$item->s_rate); ?></td>
+                            <td><?php echo e(@$item->cgst); ?></td>
+                            <td><?php echo e(@$item->cgst_value); ?></td>
+                            <td><?php echo e(@$item->sgst); ?></td>
+                            <td><?php echo e(@$item->sgst_value); ?></td>
+                            <td><?php echo e(@$item->igst); ?></td>
+                            <td><?php echo e(@$item->igst_value); ?></td>
                             <td><?php echo e(@$item->amount); ?></td>
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

@@ -2511,6 +2511,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::post('find-medication-details', [MedicationController::class, 'find_medication_details'])->name('find-medication-details');
         Route::post('find-dosage-and-name-by-medicine-catagory', [MedicationController::class, 'find_medication_name_dose_details'])->name('find-dosage-and-name-by-medicine-catagory');
     });
+    Route::post('find-medicine-name-by-medicine-catagory-dose', [MedicationController::class, 'find_medicine_name_by_medicine_catagory_dose'])->name('find-medicine-name-by-medicine-catagory-dose');
     // =============================== Medication ==================================================
 
     // =============================== OxygenMonitoring ==================================================

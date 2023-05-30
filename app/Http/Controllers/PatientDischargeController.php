@@ -13,7 +13,15 @@ use App\Models\DeathReport;
 use App\Models\PatientBedHistory;
 use App\Models\User;
 use App\Models\AllHeader;
+use App\Models\RadiologyTest;
+use App\Models\PathologyTest;
+use App\Models\DoseDuration;
+use App\Models\DoseInterval;
+use App\Models\MedicineCatagory;
 use Illuminate\Support\Facades\DB;
+use App\Models\DischargedMedicine;
+use App\Models\DischargedPathologyTest;
+use App\Models\DischargedRadiologyTest;
 
 class PatientDischargeController extends Controller
 {
@@ -25,10 +33,15 @@ class PatientDischargeController extends Controller
         $ipd_patient_details = IpdDetails::where('id', $ipdId)->first();
         $patient_details = Patient::where('id', $ipd_details->patient_id)->first();
         // dd($ipd_patient_details);
+        $medicine_catagory = MedicineCatagory::all();
+        $pathology_test = PathologyTest::all();
+        $radiology_test = RadiologyTest::all();
+        $DoseInterval = DoseInterval::all();
+        $DoseDuration = DoseDuration::all();
         $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipdId)->get();
         $icd_code = Diagonasis::all();
         $doctor = User::where('role', 'Doctor')->get();
-        return view('Ipd.discharge-patient.add-discharge-patient', compact('discharged_patient', 'ipdId', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code', 'patient_details', 'doctor'));
+        return view('Ipd.discharge-patient.add-discharge-patient', compact('DoseDuration','DoseInterval','radiology_test','pathology_test','medicine_catagory','discharged_patient', 'ipdId', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code', 'patient_details', 'doctor'));
     }
 
     public function add_patient_discharge($ipd_id)
@@ -57,7 +70,7 @@ class PatientDischargeController extends Controller
         //     'icd_code' => 'required',
         // ]);
         // try {
-            // DB::beginTransaction();
+        //     DB::beginTransaction();
 
             $p_bed_update = PatientBedHistory::where('ipd_id', $request->ipd_id)->where('to_date', '=', null)->orderBy('id', 'DESC')->first();
             $p_bed_update->is_present = 'no';
@@ -83,8 +96,48 @@ class PatientDischargeController extends Controller
             $ipd_details->dischage_advice                               = $request->dischage_advice;
             $ipd_details->refferal_hospital_name                        = $request->refferal_hospital_name;
             $ipd_details->doctor_name                                   = $request->doctor_name;
+            $ipd_details->next_appointment_date                         = $request->next_appointment_date;
             $status      =  $ipd_details->save();
             //SAVE in ipd details
+
+            if($request->medicine_catagory_id[0]!= null){
+                foreach($request->medicine_catagory_id as $key=>$value){
+                    $medicine_discharged = new DischargedMedicine();
+                    $medicine_discharged->ipd_id =  $request->ipd_id;
+                    $medicine_discharged->patient_id = $request->patient_id;
+                    $medicine_discharged->case_id = $request->case_id;
+                    $medicine_discharged->discharged_id  =  $ipd_details->id;
+                    $medicine_discharged->medicine_category_id =  $request->medicine_catagory_id[$key];
+                    $medicine_discharged->medicine_id = $request->medicine_name[$key];
+                    $medicine_discharged->dose = $request->dose[$key];
+                    $medicine_discharged->interval = $request->dose_interval[$key];
+                    $medicine_discharged->duration = $request->dose_duration[$key];
+                    $medicine_discharged->status = '';
+                    $medicine_discharged->save();
+                }
+            }
+            if($request->pathology_test_id[0]!= null){
+                foreach($request->pathology_test_id as $key=>$value){
+                    $pathology_discharged = new DischargedPathologyTest();
+                    $pathology_discharged->ipd_id =  $request->ipd_id;
+                    $pathology_discharged->patient_id = $request->patient_id;
+                    $pathology_discharged->case_id = $request->case_id;
+                    $pathology_discharged->discharged_id  =  $ipd_details->id;
+                    $pathology_discharged->test_id =  $request->pathology_test_id[$key];
+                    $pathology_discharged->save();
+                }
+            }
+            if($request->radiology_test_id[0]!= null){
+                foreach($request->radiology_test_id as $key=>$value){
+                    $radiolo_discharged = new DischargedRadiologyTest();
+                    $radiolo_discharged->ipd_id =  $request->ipd_id;
+                    $radiolo_discharged->patient_id = $request->patient_id;
+                    $radiolo_discharged->case_id = $request->case_id;
+                    $radiolo_discharged->discharged_id  =  $ipd_details->id;
+                    $radiolo_discharged->test_id =  $request->radiology_test_id[$key];
+                    $radiolo_discharged->save();
+                }
+            }
 
             if ($request->discharge_status ==  'Death') {
                 $death_patient = new DeathReport();
@@ -95,7 +148,7 @@ class PatientDischargeController extends Controller
             }
             IpdDetails::where('id', $request->ipd_id)->update(['status' => 'Discharged', 'discharged' => 'yes', 'discharged_date' => \Carbon\Carbon::parse($request->discharge_date)->format('Y-m-d h:m:s')]);
             Bed::where('id', $ipd_details->bed)->update(['is_used' => 'Under Maintenance']);
-            DB::commit();
+            // DB::commit();
             if ($status) {
                 return redirect()->route('all-discharged-patient-in-ipd')->with('success', 'Ipd Patient Discharged Successfully');
             } else {
@@ -110,7 +163,7 @@ class PatientDischargeController extends Controller
     public function all_discharged_patient_in_ipd()
     {
 
-        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'yes')->where('ins_by', 'ori')->get();
+        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'yes')->where('ins_by', 'ori')->orderBy('discharged_date','DESC')->get();
 
         // $discharged_patient = DischargedPatient::select('patients.id as patient_id', 'patients.first_name as patient_first_name', 'patients.middle_name as patient_middle_name', 'patients.last_name as patient_last_name', 'discharged_patients.patient_id', 'discharged_patients.case_id', 'patients.gender', 'patients.phone', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'ipd_details.appointment_date', 'ipd_details.discharged_date')->join('ipd_details', 'ipd_details.id', '=', 'discharged_patients.ipd_id')->join('patients', 'patients.id', '=', 'discharged_patients.patient_id')->join('users', 'users.id', '=', 'ipd_details.cons_doctor')->get();
 
@@ -126,21 +179,31 @@ class PatientDischargeController extends Controller
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
         $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
         $patient_discharge_details =  DischargedPatient::where('ipd_id', $ipd_details->id)->where('id', $discharge_id)->first();
+        $medicine_catagory = MedicineCatagory::all();
+        $pathology_test = PathologyTest::all();
+        $radiology_test = RadiologyTest::all();
+        $DoseInterval = DoseInterval::all();
+        $DoseDuration = DoseDuration::all();
         $patient_details = Patient::where('id', $ipd_details->patient_id)->first();
         $icd_code = Diagonasis::all();
         $doctor = User::where('role', 'Doctor')->get();
-        return view('Ipd.discharge-patient.edit-discharge-patient', compact('discharged_patient', 'ipd_id', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code', 'ipdId', 'patient_details', 'doctor'));
+        $medicine_discharge_details =  DischargedMedicine::where('ipd_id', $ipd_details->id)->get();
+        $radiology_discharge_details =  DischargedRadiologyTest::where('ipd_id', $ipd_details->id)->get();
+        $pathology_discharge_details =  DischargedPathologyTest::where('ipd_id', $ipd_details->id)->get();
+
+
+        return view('Ipd.discharge-patient.edit-discharge-patient', compact('medicine_catagory','pathology_test','radiology_test','DoseInterval','DoseDuration','discharged_patient', 'ipd_id', 'patient_discharge_details', 'ipd_details', 'ipd_patient_details', 'icd_code', 'ipdId', 'patient_details', 'doctor','radiology_discharge_details','pathology_discharge_details','medicine_discharge_details'));
     }
 
     public function update_patient_discharge(Request $request)
     {
         // dd($request->all());
-        $validate = $request->validate([
-            'patient_id' => 'required',
-            'discharge_date' => 'required',
-            'discharge_status' => 'required',
-            'icd_code' => 'required',
-        ]);
+        // $validate = $request->validate([
+        //     'patient_id' => 'required',
+        //     'discharge_date' => 'required',
+        //     'discharge_status' => 'required',
+        //     'icd_code' => 'required',
+        // ]);
         try {
             DB::beginTransaction();
 
@@ -168,8 +231,52 @@ class PatientDischargeController extends Controller
             $ipd_details->dischage_advice                               = $request->dischage_advice;
             $ipd_details->refferal_hospital_name                        = $request->refferal_hospital_name;
             $ipd_details->doctor_name                                   = $request->doctor_name;
+            $ipd_details->next_appointment_date                         = $request->next_appointment_date;
             $status      =  $ipd_details->save();
             //SAVE in ipd details
+
+            DischargedMedicine::where('ipd_id',$request->ipd_id)->delete();
+            DischargedPathologyTest::where('ipd_id',$request->ipd_id)->delete();
+            DischargedRadiologyTest::where('ipd_id',$request->ipd_id)->delete();
+
+            if($request->medicine_catagory_id[0]!= null){
+                foreach($request->medicine_catagory_id as $key=>$value){
+                    $medicine_discharged = new DischargedMedicine();
+                    $medicine_discharged->ipd_id =  $request->ipd_id;
+                    $medicine_discharged->patient_id = $request->patient_id;
+                    $medicine_discharged->case_id = $request->case_id;
+                    $medicine_discharged->discharged_id  =  $ipd_details->id;
+                    $medicine_discharged->medicine_category_id =  $request->medicine_catagory_id[$key];
+                    $medicine_discharged->medicine_id = $request->medicine_name[$key];
+                    $medicine_discharged->dose = $request->dose[$key];
+                    $medicine_discharged->interval = $request->dose_interval[$key];
+                    $medicine_discharged->duration = $request->dose_duration[$key];
+                    $medicine_discharged->status = '';
+                    $medicine_discharged->save();
+                }
+            }
+            if($request->pathology_test_id[0]!= null){
+                foreach($request->pathology_test_id as $key=>$value){
+                    $pathology_discharged = new DischargedPathologyTest();
+                    $pathology_discharged->ipd_id =  $request->ipd_id;
+                    $pathology_discharged->patient_id = $request->patient_id;
+                    $pathology_discharged->case_id = $request->case_id;
+                    $pathology_discharged->discharged_id  =  $ipd_details->id;
+                    $pathology_discharged->test_id =  $request->pathology_test_id[$key];
+                    $pathology_discharged->save();
+                }
+            }
+            if($request->radiology_test_id[0]!= null){
+                foreach($request->radiology_test_id as $key=>$value){
+                    $radiolo_discharged = new DischargedRadiologyTest();
+                    $radiolo_discharged->ipd_id =  $request->ipd_id;
+                    $radiolo_discharged->patient_id = $request->patient_id;
+                    $radiolo_discharged->case_id = $request->case_id;
+                    $radiolo_discharged->discharged_id  =  $ipd_details->id;
+                    $radiolo_discharged->test_id =  $request->radiology_test_id[$key];
+                    $radiolo_discharged->save();
+                }
+            }
 
             DeathReport::where('ipd_id', $request->ipd_id)->delete();
 

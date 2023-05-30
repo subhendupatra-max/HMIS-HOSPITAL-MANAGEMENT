@@ -129,14 +129,7 @@
                                             {!!$medicine_bill->all_patient_details->address!!},{!!$medicine_bill->all_patient_details->pin_no!!},{!!@$medicine_bill->all_patient_details->local_district->name!!},{!!@$medicine_bill->all_patient_details->local_state->name!!},{!!@$medicine_bill->all_patient_details->local_country->country_name!!}
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="py-2 px-5">
-                                            <span class="font-weight-semibold w-50">Identification details </span>
-                                        </td>
-                                        <td class="py-2 px-5">{{ @$medicine_bill->all_patient_details->identification_name }} : {{
-                                            @$medicine_bill->all_patient_details->identification_number }}
-                                        </td>
-                                    </tr>
+                           
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Case Id </span>
@@ -179,23 +172,26 @@
                         <thead>
                             <tr>
                                 <th scope="col">Medicine Name</th>
-                                <th scope="col">Medicine category</th>
                                 <th scope="col">Batch No</th>
+                                <th scope="col">Price</th>
                                 <th scope="col">Qty</th>
                                 <th scope="col">CGST</th>
                                 <th scope="col">SGST</th>
+                                <th scope="col">IGST</th>
                                 <th scope="col">Amount</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($medicine_bill_details as $value)
                             <tr>
-                                <td>{{ @$value->med_nam }}</td>
-                                <td>{!! @$value->medicine_catagory_name !!}</td>
+                                <td>{{ @$value->med_nam }}({!! @$value->medicine_catagory_name !!})</td>
+                              
                                 <td>{{ @$value->medicine_batch }}</td>
-                                <td>{!! @$value->qty !!} {!! @$value->unit !!}</td>
+                                <td>{{ @$value->sale_price }}</td>
+                                <td>{!! @$value->qty !!} {!! @$value->medicine_unit_name !!}</td>
                                 <td>{{ @$value->cgst }}</td>
                                 <td>{{ @$value->sgst }}</td>
+                                <td>{{ @$value->igst }}</td>
                                 <td>{!! @$value->amount !!} Rs</td>
                             </tr>
                         @endforeach

@@ -15,18 +15,26 @@ class CreateMedicineStocksTable extends Migration
     {
         Schema::create('medicine_stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('grn_id')->nullable();
+            $table->string('grm_id')->nullable();
+            $table->string('po_details_id')->nullable();
             $table->string('emg_challan_id')->nullable();
             $table->string('stored_room')->nullable();
             $table->string('stock_status')->nullable();
-            $table->string('medicine_category')->nullable();
-            $table->string('medicine_name')->nullable();
+            $table->string('catagory')->nullable();
+            $table->string('unit')->nullable();
+            $table->string('medicine')->nullable();
             $table->string('batch_no')->nullable();
-            $table->string('expiry_date')->nullable();
-            $table->string('quantity')->nullable();
+            $table->string('qty')->nullable();
             $table->string('mrp')->nullable();
-            $table->string('sale_price')->nullable();
-            $table->string('purchase_price')->nullable();
+            $table->string('discount')->nullable();
+            $table->string('p_rate')->nullable();
+            $table->string('s_rate')->nullable();
+            $table->string('cgst')->nullable();
+            $table->string('cgst_value')->nullable();
+            $table->string('sgst')->nullable();
+            $table->string('sgst_value')->nullable();
+            $table->string('igst')->nullable();
+            $table->string('igst_value')->nullable();
             $table->string('amount')->nullable();
             $table->timestamps();
         });

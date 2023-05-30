@@ -6,7 +6,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    <h4 class="card-title">IPD Discharged Patient List </h4>
+                    <h4 class="card-title"> Discharged Patient List </h4>
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
@@ -33,21 +33,26 @@
                 <table class="table table-bordered text-nowrap" id="example">
                     <thead>
                         <tr>
+                            <th scope="col">SL No.</th>
                             <th scope="col">IPD Id</th>
                             <th scope="col">Case Id</th>
                             <th scope="col">Patient Information</th>
                             <th scope="col">Mobile No.</th>
                             <th scope="col">Admission Information</th>
                             <th scope="col">Admission Date</th>
+                            <th scope="col">Discharged Date</th>
+                            <th scope="col">Discharged Status</th>
                             <th scope="col">Admitted By</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Action</th>
+                    
                         </tr>
                     </thead>
                     <tbody>
                         @if (isset($ipd_patient_list))
                         @foreach ($ipd_patient_list as $value)
+                        <?php $discharged_status = DB::table('discharged_patients')->where('ipd_id',$value->id)->first(); ?>
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{ @$value->id }}</a></td>
                             <td>{{ @$value->case_id }}</td>
                             <td>
@@ -83,6 +88,13 @@
                                 {{ date('d-m-Y h:i A',strtotime($value->appointment_date)) }}
                             </td>
                             <td>
+                                {{ date('d-m-Y h:i A',strtotime($value->discharged_date)) }}
+                            </td>
+                            <td>
+                                {{ $discharged_status->discharge_status }}
+                            </td>
+                        
+                            <td>
                                 {{ @$value->admitted_by }}<br>
                                 {{ @$value->admitted_by_contact_no }}
                             </td>
@@ -95,31 +107,7 @@
                                 <span class="badge badge-secondary">Discharged</span>
                                 @endif
                             </td>
-                            <td>
-                                <div class="card-options">
-                                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
-                                    <div class="dropdown-menu dropdown-menu-right" style="">
-                                        <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
-                                        @can('')
-                                        <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission
-                                            Form</a>
-                                        @endcan
-                                        @can('ipd status change')
-                                        <a class="dropdown-item" href="#" onclick="statusButton(<?php echo $value->id; ?>)">
-                                            <i class="fa fa-file"></i> Status Change</a>
-                                        @endcan
-                                        @can('')
-
-                                        <a class="dropdown-item" href="{{ route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])}}">
-                                            <i class="fa fa-edit"></i> Edit</a>
-                                        @endcan
-                                        @can('ipd delete')
-                                        <a class="dropdown-item" href="{{ route('ipd-patient-delete',['ipd_id'=>base64_encode($value->id) ])}}"><i class="fa fa-trash"></i> Delete</a>
-                                        @endcan
-
-                                    </div>
-                                </div>
-                            </td>
+                         
                         </tr>
                         @endforeach
                         @endif

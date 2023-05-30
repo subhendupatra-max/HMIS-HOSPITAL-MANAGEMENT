@@ -133,14 +133,7 @@
 
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td class="py-2 px-5">
-                                            <span class="font-weight-semibold w-50">Identification details </span>
-                                        </td>
-                                        <td class="py-2 px-5"><?php echo e(@$medicine_bill->all_patient_details->identification_name); ?> : <?php echo e(@$medicine_bill->all_patient_details->identification_number); ?>
-
-                                        </td>
-                                    </tr>
+                           
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Case Id </span>
@@ -186,23 +179,26 @@
                         <thead>
                             <tr>
                                 <th scope="col">Medicine Name</th>
-                                <th scope="col">Medicine category</th>
                                 <th scope="col">Batch No</th>
+                                <th scope="col">Price</th>
                                 <th scope="col">Qty</th>
                                 <th scope="col">CGST</th>
                                 <th scope="col">SGST</th>
+                                <th scope="col">IGST</th>
                                 <th scope="col">Amount</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $__currentLoopData = $medicine_bill_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><?php echo e(@$value->med_nam); ?></td>
-                                <td><?php echo @$value->medicine_catagory_name; ?></td>
+                                <td><?php echo e(@$value->med_nam); ?>(<?php echo @$value->medicine_catagory_name; ?>)</td>
+                              
                                 <td><?php echo e(@$value->medicine_batch); ?></td>
-                                <td><?php echo @$value->qty; ?> <?php echo @$value->unit; ?></td>
+                                <td><?php echo e(@$value->sale_price); ?></td>
+                                <td><?php echo @$value->qty; ?> <?php echo @$value->medicine_unit_name; ?></td>
                                 <td><?php echo e(@$value->cgst); ?></td>
                                 <td><?php echo e(@$value->sgst); ?></td>
+                                <td><?php echo e(@$value->igst); ?></td>
                                 <td><?php echo @$value->amount; ?> Rs</td>
                             </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

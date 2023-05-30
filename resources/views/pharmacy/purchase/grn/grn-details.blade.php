@@ -63,25 +63,28 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                                 </span>
                             </div>
                             <div class="col-md-6">
-                                <span class="requisition_header">PO. Value : </span><span class="requisition_text"><?php echo @$grn_list->po_value; ?></span>
+                                <span class="requisition_header">Total CGST Value : </span><span class="requisition_text"><span class="requisition_text"><?php echo @$grn_list->total_cgst_amount; ?></span>
+                                </span>
                             </div>
+                            <div class="col-md-6">
+                                <span class="requisition_header">Total SGST Value : </span><span class="requisition_text"><span class="requisition_text"><?php echo @$grn_list->total_sgst_amount; ?></span>
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="requisition_header">Total IGST Value : </span><span class="requisition_text"><span class="requisition_text"><?php echo @$grn_list->total_igst_amount; ?></span>
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="requisition_header">Total Value : </span><span class="requisition_text"><span class="requisition_text"><?php echo @$grn_list->total_value; ?></span>
+                                </span>
+                            </div>
+                    
                             @isset($grn_list->note)
                             <div class="col-md-12">
                                 <span class="requisition_header">Note : </span><span class="requisition_text">{{ @$grn_list->note }}</span>
                             </div>
                             @endisset
-                            @if (isset($grn_list->challan_copy) && $grn_list->challan_copy != '' && $grn_list->challan_copy != null)
-                            <div class="col-md-6">
-                                <a href="{{ asset('Challan_copy/') }}/{{ @$grn_list->challan_copy }}" target="_blank" style="color: blue;font-size: 15px;"><i class="fa fa-eye"><b>
-                                            View Challan</b></i></a>
-                            </div>
-                            @endif
-                            @if (isset($grn_list->invoice_copy) && $grn_list->invoice_copy != '' && $grn_list->invoice_copy != null)
-                            <div class="col-md-6">
-                                <a href="{{ asset('invoice_copy/') }}/{{ @$grn_list->invoice_copy }}" target="_blank" style="color: blue;font-size: 15px;"><i class="fa fa-eye"><b>
-                                            View Invoice</b></i></a>
-                            </div>
-                            @endif
+                
                         </div>
 
                     </div>
@@ -97,10 +100,19 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <th>Req. No.</th>
                             <th>Medicine Name</th>
                             <th>Catagory</th>
+                            <th>Batch No.</th>
                             <th>Unit</th>
                             <th>Quantity</th>
-                            <th>GST</th>
-                            <th>Rate</th>
+                            <th>Discount</th>
+                            <th>MRP</th>
+                            <th>Purchase Rate</th>
+                            <th>Sale Rate</th>
+                            <th>CGST</th>
+                            <th>CGST Value</th>
+                            <th>SGST</th>
+                            <th>SGST Value</th>
+                            <th>IGST</th>
+                            <th>IGST Value</th>
                             <th>Amount</th>
                         </tr>
                     </thead>
@@ -112,10 +124,19 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <td>{{ @$item->req_id }}</td>
                             <td>{{ @$item->fetch_medicine_name->medicine_name }}</td>
                             <td>{{ @$item->fetch_medicine_catagory->medicine_catagory_name }}</td>
+                            <td>{{ @$item->batch_no }}</td>
                             <td>{{ @$item->fetch_medicine_unit->medicine_unit_name }}</td>
-                            <td>{{ @$item->quantity }}</td>
-                            <td>{{ @$item->gst }}</td>
-                            <td>{{ @$item->rate }}</td>
+                            <td>{{ @$item->qty }}</td>
+                            <td>{{ @$item->discount }}</td>
+                            <td>{{ @$item->mrp }}</td>
+                            <td>{{ @$item->p_rate }}</td>
+                            <td>{{ @$item->s_rate }}</td>
+                            <td>{{ @$item->cgst }}</td>
+                            <td>{{ @$item->cgst_value }}</td>
+                            <td>{{ @$item->sgst }}</td>
+                            <td>{{ @$item->sgst_value }}</td>
+                            <td>{{ @$item->igst }}</td>
+                            <td>{{ @$item->igst_value }}</td>
                             <td>{{ @$item->amount }}</td>
                         </tr>
                         @endforeach

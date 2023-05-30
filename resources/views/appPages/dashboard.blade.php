@@ -328,11 +328,8 @@
 {{-- --}}
 {{--  --}}
 <script>
-<<<<<<< HEAD
  
 
-=======
->>>>>>> tithi
   var ctx = document.getElementById("myChart").getContext('2d');
 
   var myChart = new Chart(ctx, {
@@ -366,6 +363,9 @@
         "25-05-2023",
         "26-05-2023",
         "27-05-2023",
+        "28-05-2023",
+        "29-05-2023",
+        "30-05-2023",
         ],
         datasets: [{
                 label: "Billing Amount",
