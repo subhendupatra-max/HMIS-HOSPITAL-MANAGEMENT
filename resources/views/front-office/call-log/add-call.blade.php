@@ -50,10 +50,10 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="next_fllow_up_date" class="form-label">Next Follow Up Date<span class="text-danger">*</span></label> -->
-                        <h6>Next Follow Up Date</h6>
+                    <div class="form-group col-md-4 newaddcalltext" >
+                      
                         <input type="date" class="form-control" id="next_fllow_up_date" name="next_fllow_up_date">
+                        <label for="next_fllow_up_date">Next Follow Up Date</label>
                         @error('next_fllow_up_date')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -69,7 +69,8 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4" style="
+                    margin: 28px 0px 0px 0px;">
                         <label for="call_type" class="form-label">Call Type</label>
                         <input type="radio" name="call_type" value="incoming" class="from-control"><span class="font-weight-bold;">Incoming</span>
                         <input type="radio" name="call_type" value="outgoing" class="from-control" checked><span class="fw-bold;">Outgoing</span>
@@ -78,7 +79,8 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4" style="
+                    margin: 28px 0px 0px 0px;">
                         <!-- <label for="note" class="form-label">Note</label>
                         <textarea class="form-control" id="note" name="note"> </textarea> -->
                         <input type="text" id="note" name="note">
@@ -90,10 +92,11 @@
 
                 </div>
 
-                <div class="text-center m-auto">
+            
+        </div>  
+          <div class="text-center m-auto">
                     <button type="submit" class="btn btn-primary">Save Call </button>
                 </div>
-        </div>
         </form>
     </div>
 

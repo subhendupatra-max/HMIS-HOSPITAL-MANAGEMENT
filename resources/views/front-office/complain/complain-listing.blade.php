@@ -11,7 +11,7 @@
                     <div class="d-block">
 
                         @can('add complain')
-                        <a href="{{ route('add-complain-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Complain </a>
+                        <a href="{{ route('add-complain-details') }}" class="btn btn-primary btn-sm"> Add Complain </a>
                         @endcan
                     </div>
                 </div>
@@ -67,6 +67,6 @@
                 </div>
             </div>
         </div>
-      
+    </div>
     </div>
     @endsection

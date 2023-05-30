@@ -11,13 +11,13 @@
                     <div class="d-block">
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add ambulance')): ?>
-                        <a href="<?php echo e(route('add-ambulance-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Ambulance </a>
+                        <a href="<?php echo e(route('add-ambulance-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-ambulance"></i> Add Ambulance </a>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
-
+<?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -26,6 +26,7 @@
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Vehicle Number</th>
+                                <th class="border-bottom-0">Status</th>
                                 <th class="border-bottom-0">Vehicle Model</th>
                                 <th class="border-bottom-0">Year Made</th>
                                 <th class="border-bottom-0">Driver Name</th>
@@ -42,6 +43,7 @@
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
                                 <td><?php echo e(@$item->vehicle_number); ?> </td>
+                                <td><?php echo $item->status == 'Unavailable' ? '<span class="badge badge-danger">Unavailable</span>' : '<span class="badge badge-success">Available</span>'; ?> </td>
                                 <td><?php echo e(@$item->vehicle_model); ?> </td>
                                 <td><?php echo e(@$item->year_made); ?> </td>
                                 <td><?php echo e(@$item->driver_name); ?> </td>
@@ -71,5 +73,6 @@
             </div>
         </div>
     </div>
-    <?php $__env->stopSection(); ?>
+</div>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/ambulance/ambulance/ambulance-lisitng.blade.php ENDPATH**/ ?>

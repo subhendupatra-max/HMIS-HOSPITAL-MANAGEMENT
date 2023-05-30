@@ -52,9 +52,10 @@
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Purpose</th>
                                 <th class="border-bottom-0">Name</th>
-                                <th class="border-bottom-0">Year Made</th>
-                                <th class="border-bottom-0">Driver Name</th>
-                                <th class="border-bottom-0">Driver License</th>
+                                <th class="border-bottom-0">Phone No </th>
+                                <th class="border-bottom-0">Date</th>
+                                <th class="border-bottom-0">In Time</th>
+                                <th class="border-bottom-0">Out Time Time</th>
                                 @can('edit visit ','delete visit ')
                                 <th>Action</th>
                                 @endcan
@@ -67,6 +68,7 @@
                                 <td>{{ @$item->purpose}} </td>
                                 <td>{{ @$item->name}} </td>
                                 <td>{{ @$item->phone}} </td>
+                                <td>{{ date('d-m-Y',strtotime($item->date)) }} </td>
                                 <td>{{ @$item->in_time}} </td>
                                 <td>{{ @$item->out_time}} </td>
 
@@ -92,6 +94,6 @@
                 </div>
             </div>
         </div>
-
+    </div>
     </div>
     @endsection

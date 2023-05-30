@@ -85,7 +85,7 @@ unset($__errorArgs, $__bag); ?>
                                     <?php endif; ?>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit role')): ?>
                                       <td>
-                                        <a href="<?php echo e(route('editRole',['id'=>base64_encode($item->id)])); ?>" class="btn btn-warning"  data-toggle="tooltip-primary" data-placement="top" title="Edit Role"><i class="fa fa-pencil"></i></a>
+                                        <a href="<?php echo e(route('editRole',['id'=>base64_encode($item->id)])); ?>" class="btn btn-warning"  data-toggle="tooltip-primary" data-placement="top" title="Edit Role"><i class="fa fa-edit"></i></a>
                                       </td>
                                     <?php endif; ?>
                                 </tr>

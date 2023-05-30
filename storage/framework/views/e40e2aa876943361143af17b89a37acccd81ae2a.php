@@ -12,10 +12,11 @@
                 <div class="row">
                     <input type="hidden" name="id" value="<?php echo e($ambulance->id); ?>">
                     <div class="form-group col-md-4">
-                        <!-- <label for="vehicle_number" class="form-label">Vehicle Number <span class="text-danger">*</span></label>
+                        <!-- <label for="vehicle_number" class="form-label">Vehicle Number </label>
                         <input type="text" class="form-control" id="vehicle_number" name="vehicle_number"  value="<?php echo e($ambulance->vehicle_number); ?>"> -->
                         <input type="text" id="vehicle_number" name="vehicle_number"  value="<?php echo e($ambulance->vehicle_number); ?>"  required="">
-                        <label for="vehicle_number">Vehicle Number<span class="text-danger">*</span></label>
+                        <label for="vehicle_number">Vehicle Number 
+                            <span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['vehicle_number'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -29,10 +30,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="vehicle_model" class="form-label">Vehicle Model <span class="text-danger">*</span></label>
+                        <!-- <label for="vehicle_model" class="form-label">Vehicle Model </label>
                         <input type="text" class="form-control" id="vehicle_model" name="vehicle_model"  value="<?php echo e($ambulance->vehicle_model); ?>"> -->
-                        <input type="text" id="vehicle_model" name="vehicle_model"  value="<?php echo e($ambulance->vehicle_model); ?>"required="">
-                        <label for="vehicle_model">Vehicle Model <span class="text-danger">*</span></label>
+                        <input type="text" id="vehicle_model" name="vehicle_model"  value="<?php echo e($ambulance->vehicle_model); ?>">
+                        <label for="vehicle_model">Vehicle Model </label>
                         <?php $__errorArgs = ['vehicle_model'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -46,10 +47,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="year_made" class="form-label">Year Made<span class="text-danger">*</span></label>
+                        <!-- <label for="year_made" class="form-label">Year Made</label>
                         <input type="text" class="form-control" id="year_made" name="year_made"  value="<?php echo e($ambulance->year_made); ?>"> -->
-                        <input type="text" id="year_made" name="year_made"  value="<?php echo e($ambulance->year_made); ?>"required="">
-                        <label for="year_made">Year Made <span class="text-danger">*</span></label>
+                        <input type="text" id="year_made" name="year_made"  value="<?php echo e($ambulance->year_made); ?>">
+                        <label for="year_made">Year Made </label>
                         <?php $__errorArgs = ['year_made'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -63,10 +64,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="driver_name" class="form-label">Driver Name <span class="text-danger">*</span></label>
+                        <!-- <label for="driver_name" class="form-label">Driver Name </label>
                         <input type="text" class="form-control" id="driver_name" name="driver_name"  value="<?php echo e($ambulance->driver_name); ?>"> -->
-                        <input type="text" id="driver_name" name="driver_name"  value="<?php echo e($ambulance->driver_name); ?>"required="">
-                        <label for="driver_name">Driver Name<span class="text-danger">*</span></label>
+                        <input type="text" id="driver_name" name="driver_name"  value="<?php echo e($ambulance->driver_name); ?>">
+                        <label for="driver_name">Driver Name</label>
                         <?php $__errorArgs = ['driver_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -80,10 +81,10 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="driver_license" class="form-label">Driver License <span class="text-danger">*</span></label>
+                        <!-- <label for="driver_license" class="form-label">Driver License </label>
                         <input type="text" class="form-control" id="driver_license" name="driver_license"  value="<?php echo e($ambulance->driver_license); ?>"> -->
-                        <input type="text" id="driver_licensee" name="driver_license" value="<?php echo e($ambulance->driver_license); ?>"required="">
-                        <label for="driver_license">Driver License<span class="text-danger">*</span></label>
+                        <input type="text" id="driver_licensee" name="driver_license" value="<?php echo e($ambulance->driver_license); ?>">
+                        <label for="driver_license">Driver License</label>
                         <?php $__errorArgs = ['driver_license'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -97,7 +98,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>   
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="vehicle_type" class="form-label"> Vehicle Type <span class="text-danger">*</span></label> -->
+                        <!-- <label for="vehicle_type" class="form-label"> Vehicle Type </label> -->
                         <select id="vehicle_type" class="form-control" name="vehicle_type">
                             <option value=""> Vehicle Type </option>
                             <?php $__currentLoopData = Config::get('static.vehicle_type_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -118,10 +119,10 @@ unset($__errorArgs, $__bag); ?>
 
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="note" class="form-label"> Note <span class="text-danger">*</span></label>
+                        <!-- <label for="note" class="form-label"> Note </label>
                         <textarea name="note" class="form-control"> <?php echo e($ambulance->note); ?> </textarea> -->
-                        <input type="text" id="note" name="note"  <?php echo e($ambulance->note); ?> required="">
-                        <label for="note">Note<span class="text-danger">*</span></label>
+                        <input type="text" id="note" name="note"  <?php echo e($ambulance->note); ?> >
+                        <label for="note">Note</label>
                         <?php $__errorArgs = ['note'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :

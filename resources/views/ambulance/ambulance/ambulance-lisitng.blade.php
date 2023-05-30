@@ -11,13 +11,13 @@
                     <div class="d-block">
 
                         @can('add ambulance')
-                        <a href="{{ route('add-ambulance-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Ambulance </a>
+                        <a href="{{ route('add-ambulance-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-ambulance"></i> Add Ambulance </a>
                         @endcan
                     </div>
                 </div>
             </div>
         </div>
-
+@include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -26,6 +26,7 @@
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Vehicle Number</th>
+                                <th class="border-bottom-0">Status</th>
                                 <th class="border-bottom-0">Vehicle Model</th>
                                 <th class="border-bottom-0">Year Made</th>
                                 <th class="border-bottom-0">Driver Name</th>
@@ -42,6 +43,7 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{ @$item->vehicle_number}} </td>
+                                <td>{!! $item->status == 'Unavailable' ? '<span class="badge badge-danger">Unavailable</span>' : '<span class="badge badge-success">Available</span>'  !!} </td>
                                 <td>{{ @$item->vehicle_model}} </td>
                                 <td>{{ @$item->year_made}} </td>
                                 <td>{{ @$item->driver_name}} </td>

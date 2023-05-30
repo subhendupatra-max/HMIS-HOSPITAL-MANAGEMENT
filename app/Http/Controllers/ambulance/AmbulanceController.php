@@ -27,11 +27,6 @@ class AmbulanceController extends Controller
     {
         $validate = $request->validate([
             'vehicle_number'                => 'required',
-            'Driver Name'                   => 'required',
-            'year_made'                     => 'required',
-            'driver_name'                   => 'required',
-            'driver_license'                => 'required',
-            'vehicle_type'                  => 'required',
         ]);
 
         $status = Ambulance::insert([
@@ -62,11 +57,7 @@ class AmbulanceController extends Controller
     {
         $validate = $request->validate([
             'vehicle_number'                => 'required',
-            'vehicle_model'                 => 'required',
-            'year_made'                     => 'required',
-            'driver_name'                   => 'required',
-            'driver_license'                => 'required',
-            'vehicle_type'                  => 'required',
+
         ]);
 
         $slots = Ambulance::find($request->id);
@@ -91,7 +82,7 @@ class AmbulanceController extends Controller
     public function delete_ambulance_details($id)
     {
          Ambulance::find($id)->delete();
-        return view('ambulance.ambulance.ambulance-listing');
+        return redirect()->route('ambulance-details')->with('success', 'Ambulance Deleted Sucessfully');
     }
 
     //ambulance call
@@ -104,8 +95,7 @@ class AmbulanceController extends Controller
     public function add_ambulance_call_details()
     {
         $ambulance = Ambulance::all();
-        $catagory  = ChargesCatagory::all();
-        return view('ambulance.ambulance-call.add-ambulance-call', compact('ambulance', 'catagory'));
+        return view('ambulance.ambulance-call.add-ambulance-call', compact('ambulance'));
     }
 
     public function find_driver_name_by_vehical_model(Request $request)
@@ -120,43 +110,65 @@ class AmbulanceController extends Controller
         $validate = $request->validate([
             'vehicle_model'                => 'required',
             'driver_name'                  => 'required',
-            'charge_category'              => 'required',
-            'charge_sub_category'          => 'required',
-            'charge_name'                  => 'required',
-            'standard_charges'             => 'required',
-            'tax'                          => 'required',
-            'total_amount'                 => 'required',
-            'net_amount'                   => 'required',
-            'payment_mode'                 => 'required',
-            'payment_amount'               => 'required',
+            'start_date_and_time'              => 'required',
+            'place'                  => 'required',
+            'purpose'                  => 'required', 
         ]);
-        $filename = '';
-        if ($request->hasfile('cheque_document')) {
-            $file = $request->file('cheque_document');
-            $filename = rand() . '.' . $file->getClientOriginalExtension();
-            $fileSave =  $file->move("public/assets/images/visitor/", $filename);
-        }
 
         $ambulance = new AmbulanceCall();
         $ambulance->vehicle_model           = $request->vehicle_model;
         $ambulance->driver_name             = $request->driver_name;
-        $ambulance->date                    = \Carbon\Carbon::parse($request->date)->format('Y-m-d');
-        $ambulance->charge_category         = $request->charge_category;
-        $ambulance->charge_sub_category     = $request->charge_sub_category;
-        $ambulance->charge_name             = $request->charge_name;
-        $ambulance->standard_charges        = $request->standard_charges;
-        $ambulance->tax                     = $request->tax;
-        $ambulance->total_amount            = $request->total_amount;
-        $ambulance->net_amount              = $request->net_amount;
-        $ambulance->payment_mode            = $request->payment_mode;
-        $ambulance->payment_amount          = $request->payment_amount;
-        $ambulance->cheque_date             = \Carbon\Carbon::parse($request->cheque_date)->format('Y-m-d');
-        $ambulance->note                    = $request->note;
-        $ambulance->cheque_document         = $filename;
+        $ambulance->start_date_and_time             = $request->start_date_and_time;
+        $ambulance->return_date_and_time             = $request->return_date_and_time;
+        $ambulance->place             = $request->place;
+        $ambulance->purpose             = $request->purpose;
+        $ambulance->note             = $request->note;
         $status =  $ambulance->save();
+
+        if($request->return_date_and_time == '' || $request->return_date_and_time == null){
+            Ambulance::where('id', '=', $request->vehicle_model)->update(['status'=>'Unavailable']);
+        }
+        else{
+            Ambulance::where('id', '=', $request->vehicle_model)->update(['status'=>'Available']); 
+        }
+
 
         if ($status) {
             return redirect()->route('ambulance-call-details')->with('success', 'Ambulance Call Added Sucessfully');
+        } else {
+            return redirect()->route('ambulance-call-details')->with('error', "Something Went Wrong");
+        }
+    }
+    public function update_ambulance_call_details(Request $request)
+    {
+        $validate = $request->validate([
+            'vehicle_model'                => 'required',
+            'driver_name'                  => 'required',
+            'start_date_and_time'              => 'required',
+            'place'                  => 'required',
+            'purpose'                  => 'required', 
+        ]);
+
+        $ambulance =  AmbulanceCall::find($id);
+        $ambulance->vehicle_model           = $request->vehicle_model;
+        $ambulance->driver_name             = $request->driver_name;
+        $ambulance->start_date_and_time             = $request->start_date_and_time;
+        $ambulance->return_date_and_time             = $request->return_date_and_time;
+        $ambulance->place             = $request->place;
+        $ambulance->purpose             = $request->purpose;
+        $ambulance->note             = $request->note;
+        $status =  $ambulance->save();
+
+        if($request->return_date_and_time == '' || $request->return_date_and_time == null){
+            Ambulance::where('id', '=', $request->vehicle_model)->update(['status'=>'Unavailable']);
+        }
+        else{
+            Ambulance::where('id', '=', $request->vehicle_model)->update(['status'=>'Available']); 
+        }
+
+
+        if ($status) {
+            return redirect()->route('ambulance-call-details')->with('success', 'Ambulance Call Update Sucessfully');
         } else {
             return redirect()->route('ambulance-call-details')->with('error', "Something Went Wrong");
         }

@@ -10,11 +10,11 @@
                 <div class="col-md-6 text-right">
                     <div class="d-block">
                         @can('')
-                        <a href="{{ route('add-ambulance-call-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Ambulance Call </a>
+                        <a href="{{ route('add-ambulance-call-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-phone-square"></i> Add Ambulance Call </a>
                         @endcan
 
                         @can('')
-                        <a href="{{ route('ambulance-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Ambulance List </a>
+                        <a href="{{ route('ambulance-details') }}" class="btn btn-primary btn-sm"><i  class="fa fa-ambulance"></i> Ambulance List </a>
                         @endcan
                     </div>
                 </div>
@@ -32,10 +32,11 @@
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Vehicle Model</th>
                                 <th class="border-bottom-0">Driver Name</th>
-                                <th class="border-bottom-0">Charges Catagory </th>
-                                <th class="border-bottom-0">Charges Sub Catagory</th>
-
-                                <th class="border-bottom-0">Total Amount</th>
+                                <th class="border-bottom-0">Start Date & Time </th>
+                                <th class="border-bottom-0">Return Date & Time</th>
+                                <th class="border-bottom-0">Purpose</th>
+                                <th class="border-bottom-0">Place</th>
+                                <th class="border-bottom-0">Note</th>
 
                                 @can('edit ambulance call','delete ambulance call')
                                 <th>Action</th>
@@ -47,11 +48,14 @@
                             @foreach ($ambulanceCall as $item)
                             <tr>
                                 <td>{{$loop->iteration}}</td>
-                                <td>{{ @$item->vehicle_model}} </td>
+                                <td>{{ @$item->ambulance_details->vehicle_number}} </td>
                                 <td>{{ @$item->driver_name}} </td>
-                                <td>{{ @$item->catagory->charges_catagories_name}} </td>
-                                <td>{{ @$item->subCatagory->charges_sub_catagories_name}} </td>
-                                <td>{{ @$item->total_amount}} </td>
+                                <td>{{ @$item->start_date_and_time != null ? date('Y-m-d H:i A',strtotime($item->start_date_and_time)):''}} </td>
+                                <td>{{ @$item->return_date_and_time != null ? date('Y-m-d H:i A',strtotime($item->return_date_and_time)):''}} </td>
+                                <td>{{ @$item->place}} </td>
+                                <td>{{ @$item->purpose}} </td>
+                                <td>{{ @$item->note}} </td>
+                          
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>

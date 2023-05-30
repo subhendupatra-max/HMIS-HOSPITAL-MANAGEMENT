@@ -11,7 +11,7 @@
                     <div class="d-block">
 
                         @can('add call log')
-                        <a href="{{ route('add-call-log-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Call Log </a>
+                        <a href="{{ route('add-call-log-details') }}" class="btn btn-primary btn-sm"> Add Call Log </a>
                         @endcan
                     </div>
                 </div>
@@ -66,6 +66,7 @@
                 </div>
             </div>
         </div>
-
+z
     </div>
+</div>
     @endsection

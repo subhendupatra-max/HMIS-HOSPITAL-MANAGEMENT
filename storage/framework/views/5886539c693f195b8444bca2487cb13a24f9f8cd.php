@@ -14,17 +14,17 @@
                         <a href="<?php echo e(route('add-visit-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Visitor </a>
                         <?php endif; ?>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('call log')): ?>
-                        <a href="<?php echo e(route('all-phone-call-log-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Call Log </a>
+                        <a href="<?php echo e(route('all-phone-call-log-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-phone"></i> Call Log </a>
                         <?php endif; ?>
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('complain')): ?>
-                        <a href="<?php echo e(route('all-complain-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Complain </a>
+                        <a href="<?php echo e(route('all-complain-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-pen"></i></i> Complain </a>
                         <?php endif; ?>
 
                         <div class="card-options carddrpdwn_area">
                             <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-ellipsis-v"></i>
-                                 Postal
+                                <i class="fa fa-ellipsis-v"></i>
+                                Postal
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" style="">
 
@@ -41,6 +41,7 @@
                 </div>
             </div>
         </div>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
         <div class="card-body">
             <div class="">
@@ -51,9 +52,10 @@
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Purpose</th>
                                 <th class="border-bottom-0">Name</th>
-                                <th class="border-bottom-0">Year Made</th>
-                                <th class="border-bottom-0">Driver Name</th>
-                                <th class="border-bottom-0">Driver License</th>
+                                <th class="border-bottom-0">Phone No </th>
+                                <th class="border-bottom-0">Date</th>
+                                <th class="border-bottom-0">In Time</th>
+                                <th class="border-bottom-0">Out Time Time</th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit visit ','delete visit ')): ?>
                                 <th>Action</th>
                                 <?php endif; ?>
@@ -66,6 +68,7 @@
                                 <td><?php echo e(@$item->purpose); ?> </td>
                                 <td><?php echo e(@$item->name); ?> </td>
                                 <td><?php echo e(@$item->phone); ?> </td>
+                                <td><?php echo e(date('d-m-Y',strtotime($item->date))); ?> </td>
                                 <td><?php echo e(@$item->in_time); ?> </td>
                                 <td><?php echo e(@$item->out_time); ?> </td>
 
@@ -91,7 +94,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
     </div>
     <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/front-office/visit/visit-details-listing.blade.php ENDPATH**/ ?>

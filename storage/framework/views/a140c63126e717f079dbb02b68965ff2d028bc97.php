@@ -13,7 +13,7 @@
 
                     <div class="form-group col-md-4">
                         <label for="from_title" class="form-label">From Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="from_title" name="from_title"  required>
+                        <input type="text" class="form-control" id="from_title" name="from_title" required>
                         <?php $__errorArgs = ['from_title'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -27,8 +27,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="reference_no" class="form-label">Reference No <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="reference_no" name="reference_no"  >
+                        <label for="reference_no" class="form-label">Reference No </label>
+                        <input type="text" class="form-control" id="reference_no" name="reference_no">
                         <?php $__errorArgs = ['reference_no'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -72,8 +72,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="to_title" class="form-label">To Title <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="to_title" name="to_title"  required>
+                        <label for="to_title" class="form-label">To Title </label>
+                        <input type="text" class="form-control" id="to_title" name="to_title" required>
                         <?php $__errorArgs = ['to_title'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -87,7 +87,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                        <label for="date" class="form-label">Date</label>
                         <input type="date" class="form-control" id="date" name="date">
                         <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -115,7 +115,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
-                
+
                 </div>
 
                 <div class="text-center m-auto">

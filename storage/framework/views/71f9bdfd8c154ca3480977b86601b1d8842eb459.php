@@ -11,13 +11,13 @@
                     <div class="d-block">
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add call log')): ?>
-                        <a href="<?php echo e(route('add-call-log-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Call Log </a>
+                        <a href="<?php echo e(route('add-call-log-details')); ?>" class="btn btn-primary btn-sm"> Add Call Log </a>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
-
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -66,7 +66,8 @@
                 </div>
             </div>
         </div>
-
+z
     </div>
+</div>
     <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/front-office/call-log/call-listing.blade.php ENDPATH**/ ?>

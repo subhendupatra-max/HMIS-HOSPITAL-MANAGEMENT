@@ -62,7 +62,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="id_card" class="form-label">ID Card<span class="text-danger">*</span></label>
+                        <label for="id_card" class="form-label">ID Card</label>
                         <input type="text" class="form-control" id="id_card" name="id_card" placeholder="Enter ID Card"value="<?php echo e($editVisit->id_card); ?>" >
                         <?php $__errorArgs = ['id_card'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -77,7 +77,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="visit_to" class="form-label">Visit To<span class="text-danger">*</span></label>
+                        <label for="visit_to" class="form-label">Visit To</label>
                         <select id="visit_to" class="form-control" name="visit_to" onchange="visitWith(this.value)">
                             <option value="">Select...</option>
                             <?php $__currentLoopData = Config::get('static.visit_to'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -97,7 +97,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="visit_to_name" class="form-label">IPD/OPD/Staff<span class="text-danger">*</span></label>
+                        <label for="visit_to_name" class="form-label">IPD/OPD/Staff</label>
                         <select name="visit_to_name" class="form-control select2-show-search" id="visit_to_name" >
                             <option value="">Select...</option>
                         </select>
@@ -105,7 +105,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="number_of_person" class="form-label"> Number Of Person<span class="text-danger">*</span></label>
+                        <label for="number_of_person" class="form-label"> Number Of Person</label>
                         <input type="text" class="form-control" id="number_of_person" name="number_of_person" value="<?php echo e($editVisit->number_of_person); ?>">
                         <?php $__errorArgs = ['number_of_person'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -120,7 +120,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date<span class="text-danger">*</span></label>
+                        <label for="date" class="form-label">Date</label>
                         <input type="date" class="form-control" id="date" name="date" <?php if(isset($editVisit->date)): ?> value="<?php echo e(date('Y-m-d',strtotime($editVisit->date))); ?>" <?php endif; ?>>
                         <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -135,7 +135,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="in_time" class="form-label">In Time<span class="text-danger">*</span></label>
+                        <label for="in_time" class="form-label">In Time</label>
                         <input type="time"  class="form-control" id="in_time" name="in_time" <?php if(isset($editVisit->in_time)): ?> value="<?php echo e($editVisit->in_time); ?>" <?php endif; ?>>
                         <?php $__errorArgs = ['in_time'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -150,7 +150,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="out_time" class="form-label">Out Time<span class="text-danger">*</span></label>
+                        <label for="out_time" class="form-label">Out Time</label>
                         <input type="time"  class="form-control" id="out_time" name="out_time" <?php if(isset($editVisit->out_time)): ?> value="<?php echo e($editVisit->out_time); ?>" <?php endif; ?>>
                         <?php $__errorArgs = ['out_time'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

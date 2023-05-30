@@ -11,7 +11,7 @@
                 <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{session('error')}}</div>
             @endif
         <div class="card-header">
-            <h4 class="card-title">Add Role</h4>
+            <h4 class="card-title">Edit Role</h4>
         </div>
         <div class="card-body">
             <form method="POST"  action="{{ route('editRoleAction') }}">
@@ -78,7 +78,7 @@
                                     @endcan
                                     @can('edit role')
                                       <td>
-                                        <a href="{{ route('editRole',['id'=>base64_encode($item->id)]) }}" class="btn btn-warning"  data-toggle="tooltip-primary" data-placement="top" title="Edit Role"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('editRole',['id'=>base64_encode($item->id)]) }}" class="btn btn-warning"  data-toggle="tooltip-primary" data-placement="top" title="Edit Role"><i class="fa fa-edit"></i></a>
                                       </td>
                                     @endcan
                                 </tr>

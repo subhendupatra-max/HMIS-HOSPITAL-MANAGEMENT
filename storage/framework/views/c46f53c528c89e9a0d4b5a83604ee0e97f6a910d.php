@@ -14,7 +14,7 @@
                     <div class="form-group col-md-4 newaddcalltext">
                         <!-- <label for="name" class="form-label">Name<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required> -->
-                        <input type="text"  id="name" name="name" required="">
+                        <input type="text" id="name" name="name" required="">
                         <label for="name">Enter Name<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -31,7 +31,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group col-md-4 newaddcalltext">
                         <!-- <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter Phone" required> -->
-                        <input type="text"  id="phone" name="phone" required="">
+                        <input type="text" id="phone" name="phone" required="">
                         <label for="phone">Enter Phone<span class="text-danger">*</span></label>
                         <?php $__errorArgs = ['phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -48,7 +48,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group col-md-4">
                         <!-- <label for="date" class="form-label">Date<span class="text-danger">*</span></label> -->
                         <h6>Date<span class="text-danger">*</span></h6>
-                        <input type="date" class="form-control" id="date" name="date">
+                        <input type="date" class="form-control" id="date" name="date" required>
                         <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -64,7 +64,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group col-md-4 newaddcalltext">
                         <!-- <label for="description" class="form-label">Description</label>
                         <textarea class="form-control" id="description" name="description"> </textarea> -->
-                        <input type="text"  id="description" name="description" required="">
+                        <input type="text" id="description" name="description">
                         <label for="description">Description</label>
                         <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -78,10 +78,10 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <!-- <label for="next_fllow_up_date" class="form-label">Next Follow Up Date<span class="text-danger">*</span></label> -->
-                        <h6>Next Follow Up Date<span class="text-danger">*</span></h6>
+                    <div class="form-group col-md-4 newaddcalltext" >
+                      
                         <input type="date" class="form-control" id="next_fllow_up_date" name="next_fllow_up_date">
+                        <label for="next_fllow_up_date">Next Follow Up Date</label>
                         <?php $__errorArgs = ['next_fllow_up_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -94,12 +94,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-
                     <div class="form-group col-md-4 newaddcalltext ">
                         <!-- <label for="call_duraiton" class="form-label">Call Duraiton<span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="call_duraiton" name="call_duraiton" placeholder="Enter Call Duraiton"> -->
-                        <input type="text"  id="call_duraiton" name="call_duraiton" required="">
-                        <label for="call_duraiton">Call Duraiton<span class="text-danger">*</span></label>
+                        <input type="text" id="call_duraiton" name="call_duraiton">
+                        <label for="call_duraiton">Call Duraiton</label>
                         <?php $__errorArgs = ['call_duraiton'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -112,8 +111,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
-                        <label for="call_type" class="form-label">Call Type<span class="text-danger">*</span></label>
+                    <div class="form-group col-md-4" style="
+                    margin: 28px 0px 0px 0px;">
+                        <label for="call_type" class="form-label">Call Type</label>
                         <input type="radio" name="call_type" value="incoming" class="from-control"><span class="font-weight-bold;">Incoming</span>
                         <input type="radio" name="call_type" value="outgoing" class="from-control" checked><span class="fw-bold;">Outgoing</span>
                         <?php $__errorArgs = ['call_type'];
@@ -128,11 +128,12 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-4" style="
+                    margin: 28px 0px 0px 0px;">
                         <!-- <label for="note" class="form-label">Note</label>
                         <textarea class="form-control" id="note" name="note"> </textarea> -->
-                        <input type="text"  id="note" name="note" required="">
-                        <label for="note">Note<span class="text-danger">*</span></label>
+                        <input type="text" id="note" name="note">
+                        <label for="note">Note</label>
                         <?php $__errorArgs = ['note'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -147,10 +148,11 @@ unset($__errorArgs, $__bag); ?>
 
                 </div>
 
-                <div class="text-center m-auto">
+            
+        </div>  
+          <div class="text-center m-auto">
                     <button type="submit" class="btn btn-primary">Save Call </button>
                 </div>
-        </div>
         </form>
     </div>
 

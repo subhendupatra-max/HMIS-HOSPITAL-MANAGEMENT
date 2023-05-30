@@ -11,14 +11,9 @@ class AmbulanceCall extends Model
 {
     use HasFactory;
 
-    public function catagory()
+    public function ambulance_details()
     {
-        return $this->belongsTo(ChargesCatagory::class, 'charge_category' ,'id');
-    }
-
-    public function subCatagory()
-    {
-        return $this->belongsTo(ChargesSubCatagory::class , 'charge_sub_category' , 'id');
+        return $this->belongsTo(Ambulance::class,'vehicle_model','id');
     }
     
 }

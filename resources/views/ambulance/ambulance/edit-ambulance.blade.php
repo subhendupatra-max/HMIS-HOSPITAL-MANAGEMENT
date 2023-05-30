@@ -12,57 +12,58 @@
                 <div class="row">
                     <input type="hidden" name="id" value="{{ $ambulance->id }}">
                     <div class="form-group col-md-4">
-                        <!-- <label for="vehicle_number" class="form-label">Vehicle Number <span class="text-danger">*</span></label>
+                        <!-- <label for="vehicle_number" class="form-label">Vehicle Number </label>
                         <input type="text" class="form-control" id="vehicle_number" name="vehicle_number"  value="{{ $ambulance->vehicle_number }}"> -->
                         <input type="text" id="vehicle_number" name="vehicle_number"  value="{{ $ambulance->vehicle_number }}"  required="">
-                        <label for="vehicle_number">Vehicle Number<span class="text-danger">*</span></label>
+                        <label for="vehicle_number">Vehicle Number 
+                            <span class="text-danger">*</span></label>
                         @error('vehicle_number')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="vehicle_model" class="form-label">Vehicle Model <span class="text-danger">*</span></label>
+                        <!-- <label for="vehicle_model" class="form-label">Vehicle Model </label>
                         <input type="text" class="form-control" id="vehicle_model" name="vehicle_model"  value="{{ $ambulance->vehicle_model }}"> -->
-                        <input type="text" id="vehicle_model" name="vehicle_model"  value="{{ $ambulance->vehicle_model }}"required="">
-                        <label for="vehicle_model">Vehicle Model <span class="text-danger">*</span></label>
+                        <input type="text" id="vehicle_model" name="vehicle_model"  value="{{ $ambulance->vehicle_model }}">
+                        <label for="vehicle_model">Vehicle Model </label>
                         @error('vehicle_model')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="year_made" class="form-label">Year Made<span class="text-danger">*</span></label>
+                        <!-- <label for="year_made" class="form-label">Year Made</label>
                         <input type="text" class="form-control" id="year_made" name="year_made"  value="{{ $ambulance->year_made }}"> -->
-                        <input type="text" id="year_made" name="year_made"  value="{{ $ambulance->year_made }}"required="">
-                        <label for="year_made">Year Made <span class="text-danger">*</span></label>
+                        <input type="text" id="year_made" name="year_made"  value="{{ $ambulance->year_made }}">
+                        <label for="year_made">Year Made </label>
                         @error('year_made')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="driver_name" class="form-label">Driver Name <span class="text-danger">*</span></label>
+                        <!-- <label for="driver_name" class="form-label">Driver Name </label>
                         <input type="text" class="form-control" id="driver_name" name="driver_name"  value="{{ $ambulance->driver_name }}"> -->
-                        <input type="text" id="driver_name" name="driver_name"  value="{{ $ambulance->driver_name }}"required="">
-                        <label for="driver_name">Driver Name<span class="text-danger">*</span></label>
+                        <input type="text" id="driver_name" name="driver_name"  value="{{ $ambulance->driver_name }}">
+                        <label for="driver_name">Driver Name</label>
                         @error('driver_name')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="driver_license" class="form-label">Driver License <span class="text-danger">*</span></label>
+                        <!-- <label for="driver_license" class="form-label">Driver License </label>
                         <input type="text" class="form-control" id="driver_license" name="driver_license"  value="{{ $ambulance->driver_license }}"> -->
-                        <input type="text" id="driver_licensee" name="driver_license" value="{{ $ambulance->driver_license }}"required="">
-                        <label for="driver_license">Driver License<span class="text-danger">*</span></label>
+                        <input type="text" id="driver_licensee" name="driver_license" value="{{ $ambulance->driver_license }}">
+                        <label for="driver_license">Driver License</label>
                         @error('driver_license')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>   
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="vehicle_type" class="form-label"> Vehicle Type <span class="text-danger">*</span></label> -->
+                        <!-- <label for="vehicle_type" class="form-label"> Vehicle Type </label> -->
                         <select id="vehicle_type" class="form-control" name="vehicle_type">
                             <option value=""> Vehicle Type </option>
                             @foreach (Config::get('static.vehicle_type_name') as $lang => $item)
@@ -76,10 +77,10 @@
 
 
                     <div class="form-group col-md-4">
-                        <!-- <label for="note" class="form-label"> Note <span class="text-danger">*</span></label>
+                        <!-- <label for="note" class="form-label"> Note </label>
                         <textarea name="note" class="form-control"> {{ $ambulance->note}} </textarea> -->
-                        <input type="text" id="note" name="note"  {{ $ambulance->note}} required="">
-                        <label for="note">Note<span class="text-danger">*</span></label>
+                        <input type="text" id="note" name="note"  {{ $ambulance->note}} >
+                        <label for="note">Note</label>
                         @error('note')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror

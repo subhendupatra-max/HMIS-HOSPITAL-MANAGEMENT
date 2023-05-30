@@ -307,7 +307,7 @@ function addNewrow() {
                                     onclick="rowRemove(${i})"><i class="fa fa-times"></i></button>
                         </td>
                     </tr>
-                    </tr>`;
+                    `;
     $('#chargeTable').append(html);
     i = i + 1;
 

@@ -78,7 +78,7 @@
                                     @endcan
                                     @can('edit role')
                                       <td>
-                                        <a href="{{ route('editRole',['id'=>base64_encode($item->id)]) }}" class="btn btn-warning"  data-toggle="tooltip-primary" data-placement="top" title="Edit Role"><i class="fa fa-pencil"></i></a>
+                                        <a href="{{ route('editRole',['id'=>base64_encode($item->id)]) }}" class="btn btn-warning"  data-toggle="tooltip-primary" data-placement="top" title="Edit Role"><i class="fa fa-edit"></i></a>
                                       </td>
                                     @endcan
                                 </tr>

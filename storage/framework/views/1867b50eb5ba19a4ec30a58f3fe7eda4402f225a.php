@@ -543,7 +543,7 @@ $login_details = DB::table('users')
                             <ul class="dropdown-menu">
 
                                 <li><a href="<?php echo e(route('roleList')); ?>">Role</a></li>
-                                <li><a href="#"></a></li>
+                                <li><a href="<?php echo e(route('PermissionList')); ?>"> Permission</a></li>
 
                             </ul>
                         </li>
