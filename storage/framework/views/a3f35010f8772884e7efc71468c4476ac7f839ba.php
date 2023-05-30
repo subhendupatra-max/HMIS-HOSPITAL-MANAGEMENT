@@ -229,20 +229,7 @@ unset($__errorArgs, $__bag); ?>
 
                     </div>
                 </div>
-                <div class="row" style="margin-top:30px ;">
-                    <div class="form-group col-md-4">
-                        <label for="date" class="form-label">Date </label>
-                        <input type="date" class="form-control" id="date" name="date" />
-                    </div>
-
-                    <div class="form-group col-md-6">
-                        <label for="note" class="form-label">Note </label>
-                        <textarea class="form-control" id="note" name="note"></textarea>
-                    </div>
-                </div>
-
-
-
+              
                 <hr>
                 <div class="text-center m-auto">
                     <button type="submit" class="btn btn-primary">Save Discharged Patient</button>
