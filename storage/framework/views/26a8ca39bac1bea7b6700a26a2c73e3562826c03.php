@@ -48,9 +48,7 @@ unset($__errorArgs, $__bag); ?>
                         <table class="table card-table table-vcenter text-nowrap">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
-                                    </th>
+                                    
                                     <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
@@ -67,19 +65,99 @@ unset($__errorArgs, $__bag); ?>
                                 </tr>
                             </thead>
                             <tbody id="chargeTable">
+                                <?php $i = 0; ?>
+                                <?php if(@$pathology_charge[0]->id != null): ?>
+                                <?php $__currentLoopData = $pathology_charge; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php    //405
+                                
+                                $st_charges = DB::table('charges_with_charges_types')->where('charge_type_id',$patient_type_id->id)->where('charge_id',$value->test_details->charges->id)->first();
+                                ?>
+                                    <tr id="row<?php echo e($i); ?>">
+                                        <td>
+                                            <select class="form-control select2-show-search" name="charge_category[]" id="charge_category<?php echo e($i); ?>">
+                                                <option value="1">Pathology</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category<?php echo e($i); ?>"  >
+                                                <option value="<?php echo e($value->test_details->charges_sub_catagory->id); ?>"><?php echo e($value->test_details->charges_sub_catagory->charges_sub_catagories_name); ?></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2-show-search"  name="charge_name[]" id="charge_name<?php echo e($i); ?>">
+                                                <option value="<?php echo e($value->test_details->charges->id); ?>"><?php echo e($value->test_details->charges->charges_name); ?></option>
+                                            </select>
+                                        </td>
 
+                                        <td>
+                                            <input class="form-control" name="standard_charges[]" onkeyup="getamountwithtax(<?php echo e($i); ?>)" id="standard_charges<?php echo e($i); ?>" value="<?php echo e($st_charges->standard_charges); ?>" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" value="1" readonly   name="qty[]" id="qty<?php echo e($i); ?>" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" value="0" readonly  name="tax[]" id="tax<?php echo e($i); ?>" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" name="amount[]" readonly id="amount<?php echo e($i); ?>" value="<?php echo e($st_charges->standard_charges); ?>" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm"  type="button"
+                                                    onclick="rowRemove(<?php echo e($i); ?>)"><i class="fa fa-times"></i></button>
+                                        </td>
+                                    </tr>
+                                    <?php $i++; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
+                                
+                                <?php if($radiology_charge[0]->id != null): ?>
+                                <?php $__currentLoopData = $radiology_charge; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php    //405
+                                $st_charges_r = DB::table('charges_with_charges_types')->where('charge_type_id',$patient_type_id->id)->where('charge_id',$value->test_details->charges->id)->first();
+                                ?>
+                                    <tr id="row<?php echo e($i); ?>">
+                                      
+                                        <td>
+                                            <select class="form-control select2-show-search"  name="charge_category[]" id="charge_category<?php echo e($i); ?>">
+                                                <option value="2">Radiology</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category<?php echo e($i); ?>"  >
+                                                <option value="<?php echo e($value->test_details->charges_sub_catagory->id); ?>"><?php echo e($value->test_details->charges_sub_catagory->charges_sub_catagories_name); ?></option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2-show-search"  name="charge_name[]" id="charge_name<?php echo e($i); ?>">
+                                                <option value="<?php echo e($value->test_details->charges->id); ?>"><?php echo e($value->test_details->charges->charges_name); ?></option>
+                                            </select>
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control" name="standard_charges[]" value="<?php echo e($st_charges_r->standard_charges); ?>" onkeyup="getamountwithtax(<?php echo e($i); ?>)"  id="standard_charges<?php echo e($i); ?>" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" value="1" readonly  name="qty[]" id="qty<?php echo e($i); ?>" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" value="0" readonly  name="tax[]" id="tax<?php echo e($i); ?>" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" name="amount[]" value="<?php echo e($st_charges_r->standard_charges); ?>" readonly id="amount<?php echo e($i); ?>" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm"  type="button"
+                                                    onclick="rowRemove(<?php echo e($i); ?>)"><i class="fa fa-times"></i></button>
+                                        </td>
+                                    </tr>
+                                    <?php $i++; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                
-
-
-
-
-
-
-
+       
 <div class="btn-list p-3">
     <button class="btn btn-primary btn-sm float-right mr-2" type="button" onclick="gettotal()"><i class="fa fa-file-invoice"></i> Billing</button>
     
@@ -107,30 +185,18 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <script type="text/javascript">
-    var i = 1;
-
+    var i = $('#chargeTable tr').length;
     function addNewrow() {
         var html = `<tr id="row${i}">
-                            <td>
-                                <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
-                                    <option value="" disable >Select One..</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Package">Package</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type${i}" onchange="getchargetype_details(${i})">
-                                    <option value=" " selected disable >Select One... </option>
-                                    <?php $__currentLoopData = Config::get('static.charges_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $charges_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($charges_type); ?>" > <?php echo e($charges_type); ?>
-
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </td>
+                            
                             <td>
                                 <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(${i})" name="charge_category[]" id="charge_category${i}">
                                     <option value="">Select One..</option>
+                                    <?php if($charge_category[0]->id != null): ?>
+                                    <?php $__currentLoopData = $charge_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($value->id); ?>"><?php echo e($value->charges_catagories_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
                                 </select>
                             </td>
                             <td>
@@ -222,20 +288,18 @@ unset($__errorArgs, $__bag); ?>
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
         $('#total_tax' + row_id).val('');
-        $('#charge_name' + row_id).empty();
         $('#amount' + row_id).val('');
         $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
-        $('#charge_sub_category' + row_id).empty();
+        $('#charge_sub_category' + row_id).html('<option value="">Select One..</option>');
+        $('#charge_name' + row_id).html('<option value="">Select One..</option>');
         let category_id = $('#charge_category' + row_id).val();
-        let charge_set = $('#charge_set' + row_id).val();
-        var div_data = '<option value="">Select One..</option>';
+        var div_data = '';
         $.ajax({
             url: "<?php echo e(route('get-subcategory-by-category')); ?>",
             type: "post",
             data: {
                 categoryId: category_id,
-                chargeSet: charge_set,
                 _token: '<?php echo e(csrf_token()); ?>',
             },
             dataType: 'json',
@@ -257,18 +321,14 @@ unset($__errorArgs, $__bag); ?>
         $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
         $('#amount' + row_id).val('');
-        let charge_set = $('#charge_set' + row_id).val();
-        let charge_type = $('#charge_type' + row_id).val();
         let charge_category = $('#charge_category' + row_id).val();
         let charge_sub_category = $('#charge_sub_category' + row_id).val();
-        $('#charge_name' + row_id).empty();
-        var div_data = '<option value="">Select One..</option>';
+        $('#charge_name' + row_id).html('<option value="">Select One..</option>');
+        var div_data = '';
         $.ajax({
             url: "<?php echo e(route('get-charge-name')); ?>",
             type: "post",
             data: {
-                chargeSet: charge_set,
-                chargeType: charge_type,
                 chargeCategory: charge_category,
                 chargeSubCategory: charge_sub_category,
                 _token: '<?php echo e(csrf_token()); ?>',
@@ -302,7 +362,7 @@ unset($__errorArgs, $__bag); ?>
             type: "post",
             data: {
                 chargeName: charge_name,
-                chargeSet: charge_set,
+                ipd_id: <?php echo e($ipd_details->id); ?>,
                 _token: '<?php echo e(csrf_token()); ?>',
             },
             dataType: 'json',

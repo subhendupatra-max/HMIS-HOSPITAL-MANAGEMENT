@@ -19,13 +19,16 @@
                 </div>
             </div>
         </div>
+        <div class="card-header">
+            <?php echo $__env->make('emg.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
         <div class="card-body p-0">
             <div class="row no-gutters">
                 
                 <div class="col-lg-4 col-xl-4 border-right">
 
                     
-                    <div class="options px-5 pt-2  border-bottom pb-1">
+                    <!-- <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
                                 <span class="profileHeding"><?php echo e(@$emg_patient_details->patient_details->first_name); ?>
@@ -35,7 +38,7 @@
                                     <?php echo e(@$emg_patient_details->patient_details->last_name); ?>(<?php echo e(@$emg_patient_details->patient_details->patient_prefix); ?><?php echo e(@$emg_patient_details->patient_details->id); ?>)</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     
 
                     
@@ -141,7 +144,7 @@
                                         <span class="font-weight-semibold w-50"> Patient Type :- </span>
                                     </td>
                                     <td class="py-2 px-0">
-                                    <?php echo e($emg_patient_details->all_emg_visit_details->patient_type); ?>
+                                        <?php echo e($emg_patient_details->all_emg_visit_details->patient_type); ?>
 
                                     </td>
                                 </tr>
@@ -153,7 +156,7 @@
                                         <span class="font-weight-semibold w-50"> Case Id :- </span>
                                     </td>
                                     <td class="py-2 px-0">
-                                    <?php echo e($emg_patient_details->case_id); ?>
+                                        <?php echo e($emg_patient_details->case_id); ?>
 
                                     </td>
                                 </tr>

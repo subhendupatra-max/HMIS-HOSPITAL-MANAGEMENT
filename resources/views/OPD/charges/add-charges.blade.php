@@ -29,7 +29,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="form-label"> Date <span class="text-danger">*</span></label>
-                                <input type="datetime-local" required class="form-control" name="date" value="{{ date('Y-m-d H:i') }}" />
+                                <input type="datetime-local" required class="form-control" name="date"  />
                                 @error('date')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -42,18 +42,15 @@
                             <table class="table card-table table-vcenter text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
-                                        <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
-                                        </th>
                                         <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
                                         </th>
                                         <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
                                         </th>
-                                        <th scope="col" style="width: 15%">Charge Name <span class="text-danger">*</span>
+                                        <th scope="col" style="width: 25%">Charge Name <span class="text-danger">*</span>
                                         </th>
-                                        <th scope="col" style="width: 10%">Charge <span class="text-danger">*</span>
+                                        <th scope="col" style="width: 15%">Charge <span class="text-danger">*</span>
                                         </th>
-                                        <th scope="col" style="width: 10%">Qty <span class="text-danger">*</span></th>
+                                        <th scope="col" style="width: 15%">Qty <span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 10%">Tax <span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 10%">Amount <span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm"
@@ -206,10 +203,10 @@
     </div>
     <script>
         function takeDiscount() {
-           // alert('ok');
+            // alert('ok');
             if (document.getElementById("take_discount").checked) {
                 $('#discount_section').removeAttr('style', true);
-
+    
             } else {
                 $('#discount_section').attr('style', 'display:none !important', true);
                 $('#total_discount').val(0);
@@ -217,65 +214,54 @@
             }
         }
     </script>
-
+    
     <script type="text/javascript">
-        var i = 1;
-
+        var i = $('#chargeTable tr').length;
         function addNewrow() {
             var html = `<tr id="row${i}">
-                            <td>
-                                <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
-                                    <option value="" disable >Select One..</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Package">Package</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type${i}" onchange="getchargetype_details(${i})">
-                                    <option value=" " selected disable >Select One... </option>
-                                    @foreach (Config::get('static.charges_type') as $lang => $charges_type)
-                                        <option value="{{ $charges_type }}" > {{ $charges_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(${i})" name="charge_category[]" id="charge_category${i}">
-                                    <option value="">Select One..</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category${i}" onchange="get_charges_name(${i})" >
-                                    <option value="">Select One..</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control select2-show-search" onchange="getcharges(${i})" name="charge_name[]" id="charge_name${i}">
-                                    <option value="">Select One..</option>
-                                </select>
-                            </td>
-
-                            <td>
-                                <input class="form-control" onkeyup="getamountwithtax(${i})" name="standard_charges[]" id="standard_charges${i}" />
-                            </td>
-                            <td>
-                                <input class="form-control" value="1" onkeyup="getamountwithtax(${i})"  name="qty[]" id="qty${i}" />
-                            </td>
-                            <td>
-                                <input class="form-control" value="0" onkeyup="getamountwithtax(${i})"  name="tax[]" id="tax${i}" />
-                            </td>
-                            <td>
-                                <input class="form-control" name="amount[]" id="amount${i}" />
-                            </td>
-                            <td>
-                                <button class="btn btn-danger btn-sm"  type="button"
-                                        onclick="rowRemove(${i})"><i class="fa fa-times"></i></button>
-                            </td>
-                        </tr>`;
+                                
+                                <td>
+                                    <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(${i})" name="charge_category[]" id="charge_category${i}">
+                                        <option value="">Select One..</option>
+                                        @if($charge_category[0]->id != null)
+                                        @foreach($charge_category as $value)
+                                            <option value="{{ $value->id }}">{{ $value->charges_catagories_name }}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category${i}" onchange="get_charges_name(${i})" >
+                                        <option value="">Select One..</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="form-control select2-show-search" onchange="getcharges(${i})" name="charge_name[]" id="charge_name${i}">
+                                        <option value="">Select One..</option>
+                                    </select>
+                                </td>
+    
+                                <td>
+                                    <input class="form-control" onkeyup="getamountwithtax(${i})" name="standard_charges[]" id="standard_charges${i}" />
+                                </td>
+                                <td>
+                                    <input class="form-control" value="1" onkeyup="getamountwithtax(${i})"  name="qty[]" id="qty${i}" />
+                                </td>
+                                <td>
+                                    <input class="form-control" value="0" onkeyup="getamountwithtax(${i})"  name="tax[]" id="tax${i}" />
+                                </td>
+                                <td>
+                                    <input class="form-control" name="amount[]" id="amount${i}" />
+                                </td>
+                                <td>
+                                    <button class="btn btn-danger btn-sm"  type="button"
+                                            onclick="rowRemove(${i})"><i class="fa fa-times"></i></button>
+                                </td>
+                            </tr>`;
             $('#chargeTable').append(html);
             i = i + 1;
         }
-
+    
         function rowRemove(row_id) {
             $('#total_discount' + row_id).val('0');
             $('#total_am' + row_id).val('0');
@@ -283,7 +269,7 @@
             $('#total_tax' + row_id).val('0');
             $(`#row${row_id}`).remove();
         }
-
+    
         function getchargetype_details(row_id) {
             $('#total_discount' + row_id).val('');
             $('#total_am' + row_id).val('');
@@ -296,7 +282,7 @@
             $('#standard_charges' + row_id).val('');
             $('#charge_category' + row_id).val('');
         }
-
+    
         function getChargeCategory(row_id) {
             $('#total_discount' + row_id).val('');
             $('#total_am' + row_id).val('');
@@ -327,26 +313,24 @@
                 }
             });
         }
-
+    
         function getSub_cate_by_cate(row_id) {
             $('#total_discount' + row_id).val('');
             $('#total_am' + row_id).val('');
             $('#grnd_total' + row_id).val('');
             $('#total_tax' + row_id).val('');
-            $('#charge_name' + row_id).empty();
             $('#amount' + row_id).val('');
             $('#tax' + row_id).val('');
             $('#standard_charges' + row_id).val('');
-            $('#charge_sub_category' + row_id).empty();
+            $('#charge_sub_category' + row_id).html('<option value="">Select One..</option>');
+            $('#charge_name' + row_id).html('<option value="">Select One..</option>');
             let category_id = $('#charge_category' + row_id).val();
-            let charge_set = $('#charge_set' + row_id).val();
-            var div_data = '<option value="">Select One..</option>';
+            var div_data = '';
             $.ajax({
                 url: "{{ route('get-subcategory-by-category') }}",
                 type: "post",
                 data: {
                     categoryId: category_id,
-                    chargeSet: charge_set,
                     _token: '{{ csrf_token() }}',
                 },
                 dataType: 'json',
@@ -359,7 +343,7 @@
                 }
             });
         }
-
+    
         function get_charges_name(row_id) {
             $('#total_discount' + row_id).val('');
             $('#total_am' + row_id).val('');
@@ -368,18 +352,14 @@
             $('#tax' + row_id).val('');
             $('#standard_charges' + row_id).val('');
             $('#amount' + row_id).val('');
-            let charge_set = $('#charge_set' + row_id).val();
-            let charge_type = $('#charge_type' + row_id).val();
             let charge_category = $('#charge_category' + row_id).val();
             let charge_sub_category = $('#charge_sub_category' + row_id).val();
-            $('#charge_name' + row_id).empty();
-            var div_data = '<option value="">Select One..</option>';
+            $('#charge_name' + row_id).html('<option value="">Select One..</option>');
+            var div_data = '';
             $.ajax({
                 url: "{{ route('get-charge-name') }}",
                 type: "post",
                 data: {
-                    chargeSet: charge_set,
-                    chargeType: charge_type,
                     chargeCategory: charge_category,
                     chargeSubCategory: charge_sub_category,
                     _token: '{{ csrf_token() }}',
@@ -392,28 +372,28 @@
                     $('#charge_name' + row_id).append(div_data);
                 }
             });
-            
+    
         }
-
+    
         function getcharges(row_id) {
             $('#total_discount' + row_id).val('');
             $('#total_am' + row_id).val('');
             $('#grnd_total' + row_id).val('');
             $('#total_tax' + row_id).val('');
-
+    
             $('#amount' + row_id).val('');
             $('#tax' + row_id).val('');
             $('#amount' + row_id).val('');
             let charge_name = $('#charge_name' + row_id).val();
             let charge_set = $('#charge_set' + row_id).val();
             $('#standard_charges' + row_id).empty();
-
+    
             $.ajax({
-                url: "{{ route('get-charge-amount') }}",
+                url: "{{ route('get-charge-amount-opd') }}",
                 type: "post",
                 data: {
                     chargeName: charge_name,
-                    chargeSet: charge_set,
+                    opd_id: {{ $opd_patient_details->id }},
                     _token: '{{ csrf_token() }}',
                 },
                 dataType: 'json',
@@ -422,9 +402,9 @@
                 }
             });
         }
-
+    
         function getamountwithtax(row_id) {
-
+    
             let standard_chargesss = $('#standard_charges' + row_id).val();
             let tax = $('#tax' + row_id).val();
             let qty = $('#qty' + row_id).val();
@@ -439,13 +419,13 @@
         function gettotal() {
             var no_of_row = $('#chargeTable tr').length;
             console.log('aaa=>', no_of_row);
-
+    
             var t = 0;
             $("input[name='amount[]']").map(function() {
                 t = t + parseFloat($(this).val());
             }).get();
             $('#total_am').val(t);
-
+    
             // var total_discount = $('#total_discount').val();
             // if ($('#discount_type').val() == 'percentage') {
             //     var r = parseFloat(t) - ((parseFloat(t)) * (parseFloat(total_discount) / 100));
@@ -458,8 +438,8 @@
             // } else {
             //     var grnd_total = parseFloat(r);
             // }
-
+    
             // $('#grnd_total').val(grnd_total);
         }
     </script>
-@endsection
+    @endsection

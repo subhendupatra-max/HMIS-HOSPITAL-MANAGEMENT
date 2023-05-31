@@ -74,9 +74,9 @@ unset($__errorArgs, $__bag); ?>
                                             onchange="getChargeCategory(<?php echo e($patient_charge_details->charge_category); ?>)"
                                             name="charge_set[]" id="charge_set">
                                             <option value="" disable>Select One..</option>
-                                            <option value="Normal" <?php echo e($patient_charge_details->charge_set == 'Normal' ?
+                                            <option value="Normal" <?php echo e(@$patient_charge_details->charge_set == 'Normal' ?
                                                 'selected':''); ?> >Normal</option>
-                                            <option value="Package" <?php echo e($patient_charge_details->charge_set == 'Package'
+                                            <option value="Package" <?php echo e(@$patient_charge_details->charge_set == 'Package'
                                                 ? 'selected':''); ?>>Package</option>
                                         </select>
                                     </td>

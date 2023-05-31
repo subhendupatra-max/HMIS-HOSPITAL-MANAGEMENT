@@ -68,8 +68,8 @@
                                                 <i class="fa fa-eye"></i> View
                                             </a>
 
-                                            @can('edit emg billing')
-                                            <a class="dropdown-item" href="{{route('edit_emg_bill',['bill_id'=>$value->id])}}">
+                                            {{-- @can('edit emg billing')
+                                            <a class="dropdown-item" href="">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
                                             @endcan
@@ -77,7 +77,7 @@
                                             <a class="dropdown-item" href="{{route('delete-emg-bill',['bill_id'=>$value->id])}}">
                                                 <i class="fa fa-trash"></i> Delete
                                             </a>
-                                            @endcan
+                                            @endcan --}}
 
                                         </div>
                                     </div>
@@ -92,4 +92,5 @@
             </div>
         </div>
     </div>
+</div>
     @endsection

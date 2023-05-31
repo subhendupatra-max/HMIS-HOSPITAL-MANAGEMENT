@@ -42,9 +42,9 @@
                             <table class="table card-table table-vcenter text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
+                                        {{-- <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
                                         <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
-                                        </th>
+                                        </th> --}}
                                         <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
                                         </th>
                                         <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
@@ -67,7 +67,7 @@
                                         <tr id="row{{ $key }}" style="background-color:#e6f5ed">
                                             <input type="hidden" name="old_or_new[]" value="old" />
                                             <input type="hidden" name="charge_id_old[]" value="{{ $value->id }}" />
-                                            <td>
+                                            {{-- <td>
                                                 <select class="form-control select2-show-search" name="charge_set[]" id="charge_set{{ $key }}">
                                                     <option value="{{ @$value->charge_set}} " >{{ @$value->charge_set}} </option>
                                                 </select>
@@ -77,7 +77,7 @@
                                                         <option value="{{ $value->charge_type }}" > {{ $value->charge_type }}
                                                         </option>
                                                 </select>
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 <select class="form-control select2-show-search"  name="charge_category[]" id="charge_category{{ $key }}">
                                                     <option value="{{ $value->charge_category }}">{{ @$value->charges_category_details->charges_catagories_name }}</option>
@@ -267,25 +267,15 @@
             var html = `<tr id="row${i}">
                         <input type="hidden" name="old_or_new[]" value="new" />
                         <input type="hidden" name="charge_id_old[]" value="" />
-                            <td>
-                                <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
-                                    <option value="" disable >Select One..</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Package">Package</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type${i}" onchange="getchargetype_details(${i})">
-                                    <option value=" " selected disable >Select One... </option>
-                                    @foreach (Config::get('static.charges_type') as $lang => $charges_type)
-                                        <option value="{{ $charges_type }}" > {{ $charges_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </td>
+                    
                             <td>
                                 <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(${i})" name="charge_category[]" id="charge_category${i}">
                                     <option value="">Select One..</option>
+                                    @if($charge_category[0]->id != null)
+                                    @foreach($charge_category as $value)
+                                        <option value="{{ $value->id }}">{{ $value->charges_catagories_name }}</option>
+                                    @endforeach
+                                    @endif
                                 </select>
                             </td>
                             <td>
@@ -350,36 +340,36 @@
             $('#charge_category' + row_id).val('');
         }
 
-        function getChargeCategory(row_id) {
-            $('#total_discount' + row_id).val('');
-            $('#total_am' + row_id).val('');
-            $('#grnd_total' + row_id).val('');
-            $('#total_tax' + row_id).val('');
-            let charge_set = $('#charge_set' + row_id).val();
-            $('#charge_sub_category' + row_id).empty();
-            $('#charge_name' + row_id).empty();
-            $('#amount' + row_id).val('');
-            $('#tax' + row_id).val('');
-            $('#standard_charges' + row_id).val('');
-            $('#charge_type' + row_id).val('');
-            $('#charge_category' + row_id).empty();
-            var div_data = '<option value="" >Select One..</option>';
-            $.ajax({
-                url: "{{ route('get-category') }}",
-                type: "post",
-                data: {
-                    chargeSet: charge_set,
-                    _token: '{{ csrf_token() }}',
-                },
-                dataType: 'json',
-                success: function(res) {
-                    $.each(res, function(i, obj) {
-                        div_data += `<option value="${obj.category_id}">${obj.category_name}</option>`;
-                    });
-                    $('#charge_category' + row_id).append(div_data);
-                }
-            });
-        }
+        // function getChargeCategory(row_id) {
+        //     $('#total_discount' + row_id).val('');
+        //     $('#total_am' + row_id).val('');
+        //     $('#grnd_total' + row_id).val('');
+        //     $('#total_tax' + row_id).val('');
+        //     let charge_set = $('#charge_set' + row_id).val();
+        //     $('#charge_sub_category' + row_id).empty();
+        //     $('#charge_name' + row_id).empty();
+        //     $('#amount' + row_id).val('');
+        //     $('#tax' + row_id).val('');
+        //     $('#standard_charges' + row_id).val('');
+        //     $('#charge_type' + row_id).val('');
+        //     $('#charge_category' + row_id).empty();
+        //     var div_data = '<option value="" >Select One..</option>';
+        //     $.ajax({
+        //         url: "{{ route('get-category') }}",
+        //         type: "post",
+        //         data: {
+        //             chargeSet: charge_set,
+        //             _token: '{{ csrf_token() }}',
+        //         },
+        //         dataType: 'json',
+        //         success: function(res) {
+        //             $.each(res, function(i, obj) {
+        //                 div_data += `<option value="${obj.category_id}">${obj.category_name}</option>`;
+        //             });
+        //             $('#charge_category' + row_id).append(div_data);
+        //         }
+        //     });
+        // }
 
         function getSub_cate_by_cate(row_id) {
             $('#total_discount' + row_id).val('');
@@ -399,7 +389,6 @@
                 type: "post",
                 data: {
                     categoryId: category_id,
-                    chargeSet: charge_set,
                     _token: '{{ csrf_token() }}',
                 },
                 dataType: 'json',
@@ -431,8 +420,6 @@
                 url: "{{ route('get-charge-name') }}",
                 type: "post",
                 data: {
-                    chargeSet: charge_set,
-                    chargeType: charge_type,
                     chargeCategory: charge_category,
                     chargeSubCategory: charge_sub_category,
                     _token: '{{ csrf_token() }}',
@@ -462,11 +449,11 @@
             $('#standard_charges' + row_id).empty();
 
             $.ajax({
-                url: "{{ route('get-charge-amount') }}",
+                url: "{{ route('get-charge-amount-opd') }}",
                 type: "post",
                 data: {
                     chargeName: charge_name,
-                    chargeSet: charge_set,
+                    opd_id: {{ $opd_patient_details->id }},
                     _token: '{{ csrf_token() }}',
                 },
                 dataType: 'json',

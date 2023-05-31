@@ -49,9 +49,7 @@ unset($__errorArgs, $__bag); ?>
                             <table class="table card-table table-vcenter text-nowrap">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
-                                        <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
-                                        </th>
+                                        
                                         <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
                                         </th>
                                         <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
@@ -74,18 +72,7 @@ unset($__errorArgs, $__bag); ?>
                                         <tr id="row<?php echo e($key); ?>" style="background-color:#e6f5ed">
                                             <input type="hidden" name="old_or_new[]" value="old" />
                                             <input type="hidden" name="charge_id_old[]" value="<?php echo e($value->id); ?>" />
-                                            <td>
-                                                <select class="form-control select2-show-search" name="charge_set[]" id="charge_set<?php echo e($key); ?>">
-                                                    <option value="<?php echo e(@$value->charge_set); ?> " ><?php echo e(@$value->charge_set); ?> </option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type<?php echo e($key); ?>" >
-                                                        <option value="<?php echo e($value->charge_type); ?>" > <?php echo e($value->charge_type); ?>
-
-                                                        </option>
-                                                </select>
-                                            </td>
+                                            
                                             <td>
                                                 <select class="form-control select2-show-search"  name="charge_category[]" id="charge_category<?php echo e($key); ?>">
                                                     <option value="<?php echo e($value->charge_category); ?>"><?php echo e(@$value->charges_category_details->charges_catagories_name); ?></option>
@@ -283,26 +270,15 @@ unset($__errorArgs, $__bag); ?>
             var html = `<tr id="row${i}">
                         <input type="hidden" name="old_or_new[]" value="new" />
                         <input type="hidden" name="charge_id_old[]" value="" />
-                            <td>
-                                <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
-                                    <option value="" disable >Select One..</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Package">Package</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type${i}" onchange="getchargetype_details(${i})">
-                                    <option value=" " selected disable >Select One... </option>
-                                    <?php $__currentLoopData = Config::get('static.charges_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $charges_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($charges_type); ?>" > <?php echo e($charges_type); ?>
-
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </td>
+                    
                             <td>
                                 <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(${i})" name="charge_category[]" id="charge_category${i}">
                                     <option value="">Select One..</option>
+                                    <?php if($charge_category[0]->id != null): ?>
+                                    <?php $__currentLoopData = $charge_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($value->id); ?>"><?php echo e($value->charges_catagories_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
                                 </select>
                             </td>
                             <td>
@@ -367,36 +343,36 @@ unset($__errorArgs, $__bag); ?>
             $('#charge_category' + row_id).val('');
         }
 
-        function getChargeCategory(row_id) {
-            $('#total_discount' + row_id).val('');
-            $('#total_am' + row_id).val('');
-            $('#grnd_total' + row_id).val('');
-            $('#total_tax' + row_id).val('');
-            let charge_set = $('#charge_set' + row_id).val();
-            $('#charge_sub_category' + row_id).empty();
-            $('#charge_name' + row_id).empty();
-            $('#amount' + row_id).val('');
-            $('#tax' + row_id).val('');
-            $('#standard_charges' + row_id).val('');
-            $('#charge_type' + row_id).val('');
-            $('#charge_category' + row_id).empty();
-            var div_data = '<option value="" >Select One..</option>';
-            $.ajax({
-                url: "<?php echo e(route('get-category')); ?>",
-                type: "post",
-                data: {
-                    chargeSet: charge_set,
-                    _token: '<?php echo e(csrf_token()); ?>',
-                },
-                dataType: 'json',
-                success: function(res) {
-                    $.each(res, function(i, obj) {
-                        div_data += `<option value="${obj.category_id}">${obj.category_name}</option>`;
-                    });
-                    $('#charge_category' + row_id).append(div_data);
-                }
-            });
-        }
+        // function getChargeCategory(row_id) {
+        //     $('#total_discount' + row_id).val('');
+        //     $('#total_am' + row_id).val('');
+        //     $('#grnd_total' + row_id).val('');
+        //     $('#total_tax' + row_id).val('');
+        //     let charge_set = $('#charge_set' + row_id).val();
+        //     $('#charge_sub_category' + row_id).empty();
+        //     $('#charge_name' + row_id).empty();
+        //     $('#amount' + row_id).val('');
+        //     $('#tax' + row_id).val('');
+        //     $('#standard_charges' + row_id).val('');
+        //     $('#charge_type' + row_id).val('');
+        //     $('#charge_category' + row_id).empty();
+        //     var div_data = '<option value="" >Select One..</option>';
+        //     $.ajax({
+        //         url: "<?php echo e(route('get-category')); ?>",
+        //         type: "post",
+        //         data: {
+        //             chargeSet: charge_set,
+        //             _token: '<?php echo e(csrf_token()); ?>',
+        //         },
+        //         dataType: 'json',
+        //         success: function(res) {
+        //             $.each(res, function(i, obj) {
+        //                 div_data += `<option value="${obj.category_id}">${obj.category_name}</option>`;
+        //             });
+        //             $('#charge_category' + row_id).append(div_data);
+        //         }
+        //     });
+        // }
 
         function getSub_cate_by_cate(row_id) {
             $('#total_discount' + row_id).val('');
@@ -416,7 +392,6 @@ unset($__errorArgs, $__bag); ?>
                 type: "post",
                 data: {
                     categoryId: category_id,
-                    chargeSet: charge_set,
                     _token: '<?php echo e(csrf_token()); ?>',
                 },
                 dataType: 'json',
@@ -448,8 +423,6 @@ unset($__errorArgs, $__bag); ?>
                 url: "<?php echo e(route('get-charge-name')); ?>",
                 type: "post",
                 data: {
-                    chargeSet: charge_set,
-                    chargeType: charge_type,
                     chargeCategory: charge_category,
                     chargeSubCategory: charge_sub_category,
                     _token: '<?php echo e(csrf_token()); ?>',
@@ -479,11 +452,11 @@ unset($__errorArgs, $__bag); ?>
             $('#standard_charges' + row_id).empty();
 
             $.ajax({
-                url: "<?php echo e(route('get-charge-amount')); ?>",
+                url: "<?php echo e(route('get-charge-amount-opd')); ?>",
                 type: "post",
                 data: {
                     chargeName: charge_name,
-                    chargeSet: charge_set,
+                    opd_id: <?php echo e($opd_patient_details->id); ?>,
                     _token: '<?php echo e(csrf_token()); ?>',
                 },
                 dataType: 'json',

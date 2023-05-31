@@ -267,8 +267,6 @@ class EmgController extends Controller
                 $patient_charge->charges_date = $request->date;
                 $patient_charge->emg_id = $request->emg_id;
                 $patient_charge->patient_id = $request->patient_id;
-                $patient_charge->charge_set = $request->charge_set[$key];
-                $patient_charge->charge_type = $request->charge_type[$key];
                 $patient_charge->charge_category = $request->charge_category[$key];
                 $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
                 $patient_charge->charge_name = $request->charge_name[$key];
@@ -280,50 +278,50 @@ class EmgController extends Controller
                 $patient_charge->billing_status = '0';
                 $patient_charge->save();
 
-                if ($request->charge_category[$key] == '1') {
-                    $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
-                    // dd($charge_detp);
-                    $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
+                // if ($request->charge_category[$key] == '1') {
+                //     $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
+                //     // dd($charge_detp);
+                //     $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
 
-                    if ($chargedetailstestp == null) {
-                        $pathology_patient_test = new PathologyPatientTest();
-                        $pathology_patient_test->case_id = $request->case_id;
-                        $pathology_patient_test->date = $request->date;
-                        $pathology_patient_test->section = 'EMG';
-                        $pathology_patient_test->patient_id = $request->patient_id;
-                        $pathology_patient_test->test_id =  $charge_detp->id;
-                        $pathology_patient_test->emg_id = $request->emg_id;
-                        $pathology_patient_test->generated_by = Auth::user()->id;
-                        $pathology_patient_test->billing_status = '2';
-                        $pathology_patient_test->test_status = '0';
-                        $pathology_patient_test->save();
-                    } else {
-                        $chargedetailstestp->billing_status = '2';
-                        $chargedetailstestp->save();
-                    }
-                }
-                if ($request->charge_category[$key] == '2') {
-                    $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
-                    // dd( $charge_detr);
-                    $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
+                //     if ($chargedetailstestp == null) {
+                //         $pathology_patient_test = new PathologyPatientTest();
+                //         $pathology_patient_test->case_id = $request->case_id;
+                //         $pathology_patient_test->date = $request->date;
+                //         $pathology_patient_test->section = 'EMG';
+                //         $pathology_patient_test->patient_id = $request->patient_id;
+                //         $pathology_patient_test->test_id =  $charge_detp->id;
+                //         $pathology_patient_test->emg_id = $request->emg_id;
+                //         $pathology_patient_test->generated_by = Auth::user()->id;
+                //         $pathology_patient_test->billing_status = '2';
+                //         $pathology_patient_test->test_status = '0';
+                //         $pathology_patient_test->save();
+                //     } else {
+                //         $chargedetailstestp->billing_status = '2';
+                //         $chargedetailstestp->save();
+                //     }
+                // }
+                // if ($request->charge_category[$key] == '2') {
+                //     $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
+                //     // dd( $charge_detr);
+                //     $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
 
-                    if ($chargedetailstestr == null) {
-                        $radiology_patient_test = new RadiologyPatientTest();
-                        $radiology_patient_test->case_id = $request->case_id;
-                        $radiology_patient_test->date = $request->date;
-                        $radiology_patient_test->section = 'EMG';
-                        $radiology_patient_test->patient_id = $request->patient_id;
-                        $radiology_patient_test->test_id = $charge_detr->id;
-                        $radiology_patient_test->emg_id = $request->emg_id;
-                        $radiology_patient_test->generated_by = Auth::user()->id;
-                        $radiology_patient_test->billing_status = '2';
-                        $radiology_patient_test->test_status = '0';
-                        $radiology_patient_test->save();
-                    } else {
-                        $chargedetailstestr->billing_status = '2';
-                        $chargedetailstestr->save();
-                    }
-                }
+                //     if ($chargedetailstestr == null) {
+                //         $radiology_patient_test = new RadiologyPatientTest();
+                //         $radiology_patient_test->case_id = $request->case_id;
+                //         $radiology_patient_test->date = $request->date;
+                //         $radiology_patient_test->section = 'EMG';
+                //         $radiology_patient_test->patient_id = $request->patient_id;
+                //         $radiology_patient_test->test_id = $charge_detr->id;
+                //         $radiology_patient_test->emg_id = $request->emg_id;
+                //         $radiology_patient_test->generated_by = Auth::user()->id;
+                //         $radiology_patient_test->billing_status = '2';
+                //         $radiology_patient_test->test_status = '0';
+                //         $radiology_patient_test->save();
+                //     } else {
+                //         $chargedetailstestr->billing_status = '2';
+                //         $chargedetailstestr->save();
+                //     }
+                // }
             }
             DB::commit();
             return redirect()->route('charges-list-emg', ['id' => base64_encode($request->emg_id)])->with('success', "Charges Added Successfully");

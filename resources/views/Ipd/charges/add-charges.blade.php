@@ -41,9 +41,7 @@
                         <table class="table card-table table-vcenter text-nowrap">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
-                                    </th>
+                                    
                                     <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
@@ -60,133 +58,102 @@
                                 </tr>
                             </thead>
                             <tbody id="chargeTable">
+                                {{-- 
+                                    <?php //$i = 0; ?>
+                                @if(@$pathology_charge[0]->id != null)
+                                @foreach($pathology_charge as $value)
+                                <?php    //405
+                                
+                               // $st_charges = DB::table('charges_with_charges_types')->where('charge_type_id',$patient_type_id->id)->where('charge_id',$value->test_details->charges->id)->first();
+                                ?>
+                                    <tr id="row{{ $i }}">
+                                        <td>
+                                            <select class="form-control select2-show-search" name="charge_category[]" id="charge_category{{ $i }}">
+                                                <option value="1">Pathology</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category{{ $i }}"  >
+                                                <option value="{{ $value->test_details->charges_sub_catagory->id }}">{{ $value->test_details->charges_sub_catagory->charges_sub_catagories_name }}</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2-show-search"  name="charge_name[]" id="charge_name{{ $i }}">
+                                                <option value="{{ $value->test_details->charges->id }}">{{ $value->test_details->charges->charges_name }}</option>
+                                            </select>
+                                        </td>
 
+                                        <td>
+                                            <input class="form-control" name="standard_charges[]" onkeyup="getamountwithtax({{ $i }})" id="standard_charges{{ $i }}" value="{{ $st_charges->standard_charges }}" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" value="1" readonly   name="qty[]" id="qty{{ $i }}" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" value="0" readonly  name="tax[]" id="tax{{ $i }}" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" name="amount[]" readonly id="amount{{ $i }}" value="{{ $st_charges->standard_charges }}" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm"  type="button"
+                                                    onclick="rowRemove({{ $i }})"><i class="fa fa-times"></i></button>
+                                        </td>
+                                    </tr>
+                                    <?php // $i++; ?>
+                                @endforeach
+                                @endif
+                                
+                                @if($radiology_charge[0]->id != null)
+                                @foreach($radiology_charge as $value)
+                                <?php    //405
+                               // $st_charges_r = DB::table('charges_with_charges_types')->where('charge_type_id',$patient_type_id->id)->where('charge_id',$value->test_details->charges->id)->first();
+                                ?>
+                                    <tr id="row{{ $i }}">
+                                      
+                                        <td>
+                                            <select class="form-control select2-show-search"  name="charge_category[]" id="charge_category{{ $i }}">
+                                                <option value="2">Radiology</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category{{ $i }}"  >
+                                                <option value="{{ $value->test_details->charges_sub_catagory->id }}">{{ $value->test_details->charges_sub_catagory->charges_sub_catagories_name }}</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2-show-search"  name="charge_name[]" id="charge_name{{ $i }}">
+                                                <option value="{{ $value->test_details->charges->id }}">{{ $value->test_details->charges->charges_name }}</option>
+                                            </select>
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control" name="standard_charges[]" value="{{ $st_charges_r->standard_charges }}" onkeyup="getamountwithtax({{ $i }})"  id="standard_charges{{ $i }}" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" value="1" readonly  name="qty[]" id="qty{{ $i }}" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" value="0" readonly  name="tax[]" id="tax{{ $i }}" />
+                                        </td>
+                                        <td>
+                                            <input class="form-control" name="amount[]" value="{{ $st_charges_r->standard_charges }}" readonly id="amount{{ $i }}" />
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm"  type="button"
+                                                    onclick="rowRemove({{ $i }})"><i class="fa fa-times"></i></button>
+                                        </td>
+                                    </tr>
+                                    <?php// $i++; ?>
+                                @endforeach
+                                @endif --}}
                             </tbody>
                         </table>
                     </div>
                 </div>
-                {{-- <div class="row border-bottom">
-                        <div class="col-md-6">
-                            <div class="options px-5 pt-5 pb-3">
-                                <div class="container mt-5">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <label class="form-label">Note </label>
-                                            <textarea class="form-control" name="note"></textarea>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label">Payment Amount </label>
-                                            <input type="text" name="payment_amount" class="form-control" />
-                                            @error('payment_amount')
-                                                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Payment Mode</label>
-                <select class="form-control" name="payment_mode">
-                    <option value="">Select One...</option>
-                    @foreach (Config::get('static.payment_mode_name') as $lang => $payment_mode_name)
-                    <option value="{{ $payment_mode_name }}"> {{ $payment_mode_name }}
-                    </option>
-                    @endforeach
-                </select>
-                @error('payment_mode')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-    </div>
-</div>
-</div>
-</div> --}}
-{{-- <div class="col-md-6">
-                            <div class="options px-5 pt-5 pb-3">
-                                <div class="container mt-5">
-                                    <div class="d-flex justify-content-end">
-                                        <span class="biltext">Total</span>
-                                        <input type="text" name="total" readonly id="total_am"
-                                            class="form-control myfld">
-                                    </div> --}}
-{{-- <span class="d-flex justify-content-end" style="color:blue;padding: 10px 0px 0px 0px;">Are are want to apply discount?&nbsp; <input type="checkbox" id="take_discount" name="take_discount" onchange="takeDiscount()" value="yes" /></span>
-                                    <div class="d-flex justify-content-end mt-2" id="discount_section" style="display:none !important;">
-                                        <span class="biltext">Discount (% / flat)</span>
-                                        <input type="text" name="total_discount" onkeyup="gettotal()" value="0"
-                                            id="total_discount" class="form-control myfld">
-                                        <select name="discount_type" onchange="gettotal()" id="discount_type"
-                                            class="form-control myfld" style="width: 75px">
-                                            <option value="percentage" selected>%</option>
-                                            <option value="flat">Flat</option>
-                                        </select>
-                                    </div> --}}
-{{-- <div class="d-flex justify-content-end mt-2">
-                                        <span class="biltext">Tax</span>
-                                        <input type="text" name="total_tax" onkeyup="gettotal()" value="0"
-                                            id="total_tax" class="form-control myfld">
-                                    </div>
-                                    <div class="d-flex justify-content-end thrdarea">
-                                        <span class="biltext">Grand Total</span>
-                                        <input type="text" name="grand_total" readonly id="grnd_total" value="00"
-                                            class="form-control myfld">
-                                        @error('grand_total')
-                                            <br>
-                                            <span class="text-danger">{{ $message }}</span>
-@enderror
-</div> --}}
-{{-- </div>
-                            </div>
-                        </div>
-                    </div> --}}
-{{-- <div class="row">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="row">
-                                        <div class="col-md-8 add-medicinedesignn">
-                                            <label >Note </label>
-                                           
-                                            <input type="text" name="note" id="note" >
-                                        </div>
-                                        <div class="col-md-4 add-medicinedesignin">
-                                            <label>Payment Amount </label>
-                                            <input type="text" name="payment_amount"  />
-                                            @error('payment_amount')
-                                                <span class="text-danger">{{ $message }}</span>
-@enderror
-</div>
-<div class="col-md-4 add-medicinedesign">
-    <label>Payment Mode</label>
-    <select class="form-control" name="payment_mode">
-        <option value="">Select One...</option>
-        @foreach (Config::get('static.payment_mode_name') as $lang => $payment_mode_name)
-        <option value="{{ $payment_mode_name }}"> {{ $payment_mode_name }}
-        </option>
-        @endforeach
-    </select>
-    @error('payment_mode')
-    <span class="text-danger">{{ $message }}</span>
-    @enderror
-</div>
-</div>
-</div>
-<div class="col-md-6">
-    <div class="options px-5 pt-5  border-bottom pb-3">
-        <div class="container mt-5">
-            <div class="d-flex justify-content-end">
-                <span class="biltext">Total</span>
-                <input type="text" name="total" readonly id="total_am" class="form-control myfld">
-            </div>
-            @error('total')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
-    </div>
-</div>
-</div>
-</div>
-</div> --}}
-
-
+       
 <div class="btn-list p-3">
-    <button class="btn btn-primary btn-sm float-right mr-2" type="button" onclick="gettotal()"><i class="fa fa-file-invoice"></i> Billing</button>
+    {{-- <button class="btn btn-primary btn-sm float-right mr-2" type="button" onclick="gettotal()"><i class="fa fa-file-invoice"></i> Billing</button> --}}
     {{-- <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
                                 class="fa fa-calculator"></i> Calculate</button> --}}
     <button class="btn btn-primary btn-sm float-right mr-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
@@ -214,29 +181,18 @@
 </script>
 
 <script type="text/javascript">
-    var i = 1;
-
+    var i = $('#chargeTable tr').length;
     function addNewrow() {
         var html = `<tr id="row${i}">
-                            <td>
-                                <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
-                                    <option value="" disable >Select One..</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Package">Package</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type${i}" onchange="getchargetype_details(${i})">
-                                    <option value=" " selected disable >Select One... </option>
-                                    @foreach (Config::get('static.charges_type') as $lang => $charges_type)
-                                        <option value="{{ $charges_type }}" > {{ $charges_type }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </td>
+                            
                             <td>
                                 <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(${i})" name="charge_category[]" id="charge_category${i}">
                                     <option value="">Select One..</option>
+                                    @if($charge_category[0]->id != null)
+                                    @foreach($charge_category as $value)
+                                        <option value="{{ $value->id }}">{{ $value->charges_catagories_name }}</option>
+                                    @endforeach
+                                    @endif
                                 </select>
                             </td>
                             <td>
@@ -328,20 +284,18 @@
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
         $('#total_tax' + row_id).val('');
-        $('#charge_name' + row_id).empty();
         $('#amount' + row_id).val('');
         $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
-        $('#charge_sub_category' + row_id).empty();
+        $('#charge_sub_category' + row_id).html('<option value="">Select One..</option>');
+        $('#charge_name' + row_id).html('<option value="">Select One..</option>');
         let category_id = $('#charge_category' + row_id).val();
-        let charge_set = $('#charge_set' + row_id).val();
-        var div_data = '<option value="">Select One..</option>';
+        var div_data = '';
         $.ajax({
             url: "{{ route('get-subcategory-by-category') }}",
             type: "post",
             data: {
                 categoryId: category_id,
-                chargeSet: charge_set,
                 _token: '{{ csrf_token() }}',
             },
             dataType: 'json',
@@ -363,18 +317,14 @@
         $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
         $('#amount' + row_id).val('');
-        let charge_set = $('#charge_set' + row_id).val();
-        let charge_type = $('#charge_type' + row_id).val();
         let charge_category = $('#charge_category' + row_id).val();
         let charge_sub_category = $('#charge_sub_category' + row_id).val();
-        $('#charge_name' + row_id).empty();
-        var div_data = '<option value="">Select One..</option>';
+        $('#charge_name' + row_id).html('<option value="">Select One..</option>');
+        var div_data = '';
         $.ajax({
             url: "{{ route('get-charge-name') }}",
             type: "post",
             data: {
-                chargeSet: charge_set,
-                chargeType: charge_type,
                 chargeCategory: charge_category,
                 chargeSubCategory: charge_sub_category,
                 _token: '{{ csrf_token() }}',
@@ -408,7 +358,7 @@
             type: "post",
             data: {
                 chargeName: charge_name,
-                chargeSet: charge_set,
+                ipd_id: {{ $ipd_details->id }},
                 _token: '{{ csrf_token() }}',
             },
             dataType: 'json',

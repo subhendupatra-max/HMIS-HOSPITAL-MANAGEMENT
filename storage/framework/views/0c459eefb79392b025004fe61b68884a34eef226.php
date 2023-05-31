@@ -11,25 +11,25 @@
                     <div class="d-block">
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            <?php echo $__env->make('Ipd.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            <?php echo $__env->make('emg.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <form method="post" action="<?php echo e(route('add-new-ipd-billing')); ?>">
+        <form method="post" action="<?php echo e(route('add-new-emg-billing')); ?>">
             <?php echo csrf_field(); ?>
 
-            <input type="hidden" name="case_id" value="<?php echo e($ipd_details->case_id); ?>" />
-            <input type="hidden" name="section" value="IPD" />
-            <input type="hidden" name="ipd_id" value="<?php echo e($ipd_details->id); ?>" />
-            <input type="hidden" name="patient_id" value="<?php echo e($ipd_details->patient_id); ?>" />
+            <input type="hidden" name="case_id" value="<?php echo e($emg_patient_details->case_id); ?>" />
+            <input type="hidden" name="section" value="EMG" />
+            <input type="hidden" name="emg_id" value="<?php echo e($emg_patient_details->id); ?>" />
+            <input type="hidden" name="patient_id" value="<?php echo e($emg_patient_details->patient_id); ?>" />
             <div class="card-body">
                 <div class="col-md-12 mb-2">
                     <div class="row">
                         <div class="col-md-4">
                             <label class="form-label">Billing Date <span class="text-danger">*</span></label>
-                            <input type="datetime-local" required class="form-control" name="bill_date" value="<?php echo e(date('Y-m-d H:i')); ?>" />
+                            <input type="datetime-local" required class="form-control" name="bill_date" />
                             <?php $__errorArgs = ['bill_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -43,6 +43,7 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                 </div>
+
                 <div class="border-bottom border-top">
                     <div class="table-responsive">
                         <table class="table card-table table-vcenter text-nowrap">
@@ -53,15 +54,14 @@ unset($__errorArgs, $__bag); ?>
                                     </th>
                                     <th scope="col" style="width: 15%">Subcategory <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 25%">Charge Name <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 30%">Charge Name <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 15%">Charge <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 10%">Charges <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 10%">Qty <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Tax <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Amount <span class="text-danger">*</span></th>
                                     
-                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="chargeTable">
@@ -110,7 +110,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
                 </div>
                 <div class="border-bottom border-top">
-                    <span style="color: #ff6014;font-size: 14px;"> Are You want to add Medicine Bill ?<input type="checkbox" id="add_medicine_bill" name="add_medicine_bill" onchange="addMedicineBill(<?php echo e($ipd_details->case_id); ?>)" value="yes" /></span>
+                    <span style="color: #ff6014;font-size: 14px;"> Are You want to add Medicine Bill ?<input type="checkbox" id="add_medicine_bill" name="add_medicine_bill" onchange="addMedicineBill(<?php echo e($emg_patient_details->case_id); ?>)" value="yes" /></span>
                     <div class="table-responsive" id="fjafiao" style="display: none">
                         <?php if(@$medicine_charges[0]->id != null || @$medicine_charges[0]->id != '' ): ?>
                         <table class="table card-table table-vcenter text-nowrap">
@@ -150,10 +150,10 @@ unset($__errorArgs, $__bag); ?>
                             <div class="container mt-5">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <label>Note </label>
+                                        <label class="form-label">Note </label>
                                         <input class="form-control" name="note" />
                                     </div>
-                                    <div class="col-md-6" style="margin: 44px 0px 0px 0px">
+                                    <div class="col-md-6" style="margin: 33px 0px 0px 0px;">
                                         <label class="form-label">Payment Amount </label>
                                         <input type="text" name="payment_amount" class="form-control" />
                                         <?php $__errorArgs = ['payment_amount'];
@@ -167,7 +167,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                     </div>
-                                    <div class="col-md-6" style="margin: 35px 0px 0px 0px">
+                                    <div class="col-md-6" style="margin: 25px 0px 0px 0px;">
                                         <label class="form-label">Payment Mode</label>
                                         <select class="form-control" name="payment_mode">
                                             <option value="">Select One...</option>
@@ -232,7 +232,6 @@ unset($__errorArgs, $__bag); ?>
                     </div>
                 </div>
 
-
                 <div class="btn-list p-3">
                     <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button>
                     <button class="btn btn-primary btn-sm float-right " type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
@@ -270,13 +269,10 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <script type="text/javascript">
-    var i = $('#chargeTable tr').length;
-    i = i + 1;
+    var i = 1;
 
     function addNewrow() {
         var html = `<tr id="row${i}">
-                        <input type="hidden" name="old_or_new[]" value="new" />
-                        <input type="hidden" name="charge_id[]" value="" />
                             <td>
                                 <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
                                     <option value="" disable >Select One..</option>
@@ -314,10 +310,7 @@ unset($__errorArgs, $__bag); ?>
                                 <input class="form-control" onkeyup="getamountwithtax(${i})" name="standard_charges[]" id="standard_charges${i}" />
                             </td>
                             <td>
-                                <input class="form-control" value="1" onkeyup="getamountwithtax(${i})"  name="qty[]" id="qty${i}" />
-                            </td>
-                            <td>
-                                <input class="form-control" value="0" onkeyup="getamountwithtax(${i})"  name="tax[]" id="tax${i}" />
+                                <input class="form-control"  onkeyup="getamountwithtax(${i})"  name="tax[]" id="tax${i}" />
                             </td>
                             <td>
                                 <input class="form-control" name="amount[]" id="amount${i}" />
@@ -536,4 +529,4 @@ unset($__errorArgs, $__bag); ?>
     }
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/Ipd/billing/create-billing.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/emg/billing/create-emg-billing.blade.php ENDPATH**/ ?>

@@ -10,8 +10,7 @@
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
-                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
                             <?php echo $__env->make('ipd.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
@@ -37,8 +36,7 @@
 
 
                     <div class="form-group col-md-4">
-                        <label for="doctor_name" class="form-label">Treating Consultant's Name<span
-                                class="text-danger">*</span></label>
+                        <label for="doctor_name" class="form-label">Treating Consultant's Name<span class="text-danger">*</span></label>
                         <select name="doctor_name" class="form-control" id="doctor_name">
                             <option value="">Select...</option>
                             <?php $__currentLoopData = $doctor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -60,10 +58,8 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="discharge_date" class="form-label">Discharge Date <span
-                                class="text-danger">*</span></label>
-                        <input type="datetime-local" required style="    margin: 0px 0px 0px 0px;" class="form-control"
-                            id="discharge_date" name="discharge_date" value="<?php echo e(old('discharge_date')); ?>" />
+                        <label for="discharge_date" class="form-label">Discharge Date <span class="text-danger">*</span></label>
+                        <input type="datetime-local" required style="    margin: 0px 0px 0px 0px;" class="form-control" id="discharge_date" name="discharge_date" value="<?php echo e(old('discharge_date')); ?>" />
                         <?php $__errorArgs = ['discharge_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -100,49 +96,40 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group col-md-4">
                         <label for="complaiints_duraiton" class="form-label">Presenting Complaints with Duration and
                             Reason for Admission </label>
-                        <textarea class="form-control" id="complaiints_duraiton" name="complaiints_duraiton"
-                            value="<?php echo e(old('complaiints_duraiton')); ?> "></textarea>
+                        <textarea class="form-control" id="complaiints_duraiton" name="complaiints_duraiton" value="<?php echo e(old('complaiints_duraiton')); ?> "></textarea>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="presenting_illness" class="form-label">Summary of Presenting Illness</label>
-                        <textarea class="form-control" id="presenting_illness" name="presenting_illness"
-                            value="<?php echo e(old('presenting_illness')); ?> "></textarea>
+                        <textarea class="form-control" id="presenting_illness" name="presenting_illness" value="<?php echo e(old('presenting_illness')); ?> "></textarea>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="physical_examinaiton_at_admission" class="form-label">Key findings, on physical
                             examination at the time of admission</label>
-                        <textarea class="form-control" id="physical_examinaiton_at_admission"
-                            name="physical_examinaiton_at_admission"
-                            value="<?php echo e(old('physical_examinaiton_at_admission')); ?> "></textarea>
+                        <textarea class="form-control" id="physical_examinaiton_at_admission" name="physical_examinaiton_at_admission" value="<?php echo e(old('physical_examinaiton_at_admission')); ?> "></textarea>
                     </div>
 
 
                     <div class="form-group col-md-4">
                         <label for="summary_inves_during_hos" class="form-label"> Summary of key invesigations during
                             Hospitalization<span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="summary_inves_during_hos" name="summary_inves_during_hos"
-                            value="<?php echo e(old('summary_inves_during_hos')); ?> "></textarea>
+                        <textarea class="form-control" id="summary_inves_during_hos" name="summary_inves_during_hos" value="<?php echo e(old('summary_inves_during_hos')); ?> "></textarea>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="course_complications" class="form-label"> Course in the Hospital including
                             complicaiotns if any</label>
-                        <textarea class="form-control" id="course_complications" name="course_complications"
-                            value="<?php echo e(old('course_complications')); ?> "></textarea>
+                        <textarea class="form-control" id="course_complications" name="course_complications" value="<?php echo e(old('course_complications')); ?> "></textarea>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="dischage_advice" class="form-label">Advice on Discharge</label>
-                        <textarea class="form-control" id="dischage_advice" name="dischage_advice"
-                            value="<?php echo e(old('dischage_advice')); ?> "></textarea>
+                        <textarea class="form-control" id="dischage_advice" name="dischage_advice" value="<?php echo e(old('dischage_advice')); ?> "></textarea>
                     </div>
 
                     <div class="form-group col-md-4">
-                        <label for="discharge_status" class="form-label">Discharge Status <span
-                                class="text-danger">*</span></label>
-                        <select name="discharge_status" class="form-control" id="discharge_status" required
-                            onchange="hide(this.value)">
+                        <label for="discharge_status" class="form-label">Discharge Status <span class="text-danger">*</span></label>
+                        <select name="discharge_status" class="form-control" id="discharge_status" required onchange="hide(this.value)">
                             <option value="">Select...</option>
                             <?php $__currentLoopData = Config::get('static.discharge_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $dischargeType): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($dischargeType); ?>"> <?php echo e($dischargeType); ?>
@@ -163,15 +150,12 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-4" style="display:none" id="referral_hospital">
-                        <label for="refferal_hospital_name" class="form-label">Refferal Hospital Name<span
-                                class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="refferal_hospital_name"
-                            name="refferal_hospital_name" value="<?php echo e(old('refferal_hospital_name')); ?>" />
+                        <label for="refferal_hospital_name" class="form-label">Refferal Hospital Name<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="refferal_hospital_name" name="refferal_hospital_name" value="<?php echo e(old('refferal_hospital_name')); ?>" />
                     </div>
                     <div class="form-group col-md-4" id="referral_hospital">
                         <label for="next_appointment_date" class="form-label">Next Appointment Date </label>
-                        <input style="    margin: 0px 0px 0px 0px;" type="date" class="form-control"
-                            id="next_appointment_date" name="next_appointment_date" />
+                        <input style="    margin: 0px 0px 0px 0px;" type="date" class="form-control" id="next_appointment_date" name="next_appointment_date" />
                     </div>
                 </div>
                 <div class="border-bottom border-top mt-2">
@@ -190,8 +174,7 @@ unset($__errorArgs, $__bag); ?>
                                     </th>
                                     <th scope="col" style="width: 20%">Dose Duration
                                     </th>
-                                    <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm"
-                                            onclick="addNewrow()" type="button"><i class="fa fa-plus"></i></button>
+                                    <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm" onclick="addNewrow()" type="button"><i class="fa fa-plus"></i></button>
                                     </th>
                                 </tr>
                             </thead>
@@ -212,9 +195,7 @@ unset($__errorArgs, $__bag); ?>
                                             <tr>
                                                 <th scope="col" style="width: 98%">Test Name
                                                 </th>
-                                                <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm"
-                                                        onclick="addNewrowPathology()" type="button"><i
-                                                            class="fa fa-plus"></i></button>
+                                                <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm" onclick="addNewrowPathology()" type="button"><i class="fa fa-plus"></i></button>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -234,9 +215,7 @@ unset($__errorArgs, $__bag); ?>
                                             <tr>
                                                 <th scope="col" style="width: 98%">Test Name
                                                 </th>
-                                                <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm"
-                                                        onclick="addNewrowradiology()" type="button"><i
-                                                            class="fa fa-plus"></i></button>
+                                                <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm" onclick="addNewrowradiology()" type="button"><i class="fa fa-plus"></i></button>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -247,9 +226,9 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
-
 
                 <hr>
                 <div class="text-center m-auto">
@@ -266,8 +245,8 @@ unset($__errorArgs, $__bag); ?>
     var j = 1;
     var k = 1;
 
-function addNewrow() {
-    var html = `<tr id="row${i}">
+    function addNewrow() {
+        var html = `<tr id="row${i}">
                         <td>
                             <select class="form-control select2-show-search" onchange="getMedicine_name(this.value,${i})"  name="medicine_catagory_id[]" id="medicine_catagory_id${i}" required>
                                     <option value=" ">Select Medicine Category</option>
@@ -308,16 +287,17 @@ function addNewrow() {
                         </td>
                     </tr>
                     `;
-    $('#chargeTable').append(html);
-    i = i + 1;
+        $('#chargeTable').append(html);
+        i = i + 1;
 
-}
-function rowRemove(row_id) {
+    }
+
+    function rowRemove(row_id) {
         $(`#row${row_id}`).remove();
-}
+    }
 
-function addNewrowPathology() {
-    var html = `<tr id="rowpathology${j}">
+    function addNewrowPathology() {
+        var html = `<tr id="rowpathology${j}">
                         <td>
                             <select class="form-control select2-show-search" name="pathology_test_id[]" id="pathology_test_id${j}" required>
                                     <option value=" ">Select test</option>
@@ -332,14 +312,16 @@ function addNewrowPathology() {
                         </td>
                     </tr>
                     `;
-    $('#addPathologyTable').append(html);
-    j = j + 1;
-}
-function rowRemovepathology(row_id) {
+        $('#addPathologyTable').append(html);
+        j = j + 1;
+    }
+
+    function rowRemovepathology(row_id) {
         $(`#rowpathology${row_id}`).remove();
-}
-function addNewrowradiology() {
-    var html = `<tr id="rowradiology${k}">
+    }
+
+    function addNewrowradiology() {
+        var html = `<tr id="rowradiology${k}">
                         <td>
                             <select class="form-control select2-show-search" name="radiology_test_id[]" id="radiology_test_id${k}" required>
                                     <option value=" ">Select test</option>
@@ -353,12 +335,13 @@ function addNewrowradiology() {
                                     onclick="rowRemoveradiology(${k})"><i class="fa fa-times"></i></button>
                         </td>
                     </tr>`;
-    $('#addRadiologyTable').append(html);
-    j = j + 1;
-}
-function rowRemoveradiology(row_id) {
+        $('#addRadiologyTable').append(html);
+        j = j + 1;
+    }
+
+    function rowRemoveradiology(row_id) {
         $(`#rowradiology${row_id}`).remove();
-}
+    }
 </script>
 
 <script>
@@ -372,37 +355,35 @@ function rowRemoveradiology(row_id) {
     }
 </script>
 <script>
-    function getMedicine_name(cat_id,row_no)
-    {
+    function getMedicine_name(cat_id, row_no) {
         $("#medicine_name").html('<option value=" ">Select Medicine Name...</option>');
         $("#dose").html('<option value=" ">Select dose...</option>');
         var div_data = '';
         var div_dataa = '';
         $.ajax({
-                url: "<?php echo e(route('find-medicine-name-by-medicine-catagory-dose')); ?>",
-                type: "POST",
-                data: {
-                    _token: '<?php echo e(csrf_token()); ?>',
-                    medicine_catagory_id: cat_id,
-                },
+            url: "<?php echo e(route('find-medicine-name-by-medicine-catagory-dose')); ?>",
+            type: "POST",
+            data: {
+                _token: '<?php echo e(csrf_token()); ?>',
+                medicine_catagory_id: cat_id,
+            },
 
-                success: function(response) {
-                    $.each(response.medicine_name, function(key, value) {
-                      div_data += `<option value="${value.id}">${value.medicine_name}</option>`;
-                    });
-                    $('#medicine_name'+row_no).append(div_data);
+            success: function(response) {
+                $.each(response.medicine_name, function(key, value) {
+                    div_data += `<option value="${value.id}">${value.medicine_name}</option>`;
+                });
+                $('#medicine_name' + row_no).append(div_data);
 
-                    $.each(response.dose, function(key, value) {
-                      div_dataa += `<option value="${value.dose} ${value.medicine_unit_name}">${value.dose} ${value.medicine_unit_name}</option>`;
-                    });
-                    $('#dose'+row_no).append(div_dataa);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
+                $.each(response.dose, function(key, value) {
+                    div_dataa += `<option value="${value.dose} ${value.medicine_unit_name}">${value.dose} ${value.medicine_unit_name}</option>`;
+                });
+                $('#dose' + row_no).append(div_dataa);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
     }
-
 </script>
 
 <script>

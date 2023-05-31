@@ -472,14 +472,14 @@ class PathologyController extends Controller
 
     public function pathology_test_charge()
     {
-        $pathology_patient_test = PathologyPatientTest::where('ins_by', 'ori')->get();
+        $pathology_patient_test = PathologyPatientTest::where('ins_by', 'ori')->orderBy('date','DESC')->get();
         return view('pathology.patient-test.patient-test-list', compact('pathology_patient_test'));
     }
     public function change_sample_status(Request $request)
     {
         $pathology_patient_test = PathologyPatientTest::where('id', $request->id)->update(['test_status' => $request->sample_status]);
         if (true) {
-            return redirect()->route('pathology-test-charge')->with('success', 'Sample Collected Sucessfully');
+            return redirect()->route('pathology-test-charge')->with('success', 'Sample Collected Successfully');
         } else {
             return redirect()->back()->with('error', "Something Went Wrong");
         }
@@ -523,23 +523,24 @@ class PathologyController extends Controller
                 $section_details = IpdDetails::where('case_id', $request->case_id)->first();
                 $pathology_patient_test->ipd_id = $section_details->id;
             }
-            $path_details = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $request->test_id)->where('test_status', '=', '0')->first();
-            if ($path_details == null) {
+            // $path_details = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $request->test_id)->where('test_status', '=', '0')->first();
+            // if ($path_details == null) {
                 $pathology_patient_test->case_id = $request->case_id;
                 $pathology_patient_test->date = $request->date;
                 $pathology_patient_test->section = $case_details->section;
                 $pathology_patient_test->patient_id = $request->patientId;
                 $pathology_patient_test->test_id = $request->test_id;
                 $pathology_patient_test->generated_by = Auth::user()->id;
-                $pathology_patient_test->billing_status = '0';
+                $pathology_patient_test->billing_status = $request->billing_status;
                 $pathology_patient_test->test_status = '0';
                 $pathology_patient_test->save();
 
                 DB::commit();
                 return redirect()->route('pathology-test-charge')->with('success', "Test added successfully for this patient");
-            } else {
-                return redirect()->route('pathology-test-charge')->with('success', "Test already added For this patient");
-            }
+            // }
+            //  else {
+            //     return redirect()->route('pathology-test-charge')->with('success', "Test already added For this patient");
+            // }
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route('pathology-test-charge')->withErrors(['error' => $th->getMessage()]);

@@ -48,9 +48,7 @@ unset($__errorArgs, $__bag); ?>
                         <table class="table card-table table-vcenter text-nowrap">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
-                                    </th>
+                                    
                                     <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
@@ -81,7 +79,7 @@ unset($__errorArgs, $__bag); ?>
 
 
 <div class="btn-list p-3">
-    <button class="btn btn-primary btn-sm float-right mr-2" type="button" onclick="gettotal()"><i class="fa fa-file-invoice"></i> Billing</button>
+    
     
     <button class="btn btn-primary btn-sm float-right mr-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
     
@@ -111,26 +109,15 @@ unset($__errorArgs, $__bag); ?>
 
     function addNewrow() {
         var html = `<tr id="row${i}">
-                            <td>
-                                <select class="form-control select2-show-search" onchange="getChargeCategory(${i})" name="charge_set[]" id="charge_set${i}">
-                                    <option value="" disable >Select One..</option>
-                                    <option value="Normal">Normal</option>
-                                    <option value="Package">Package</option>
-                                </select>
-                            </td>
-                            <td>
-                                <select class="form-control select2-show-search" name="charge_type[]" id="charge_type${i}" onchange="getchargetype_details(${i})">
-                                    <option value=" " selected disable >Select One... </option>
-                                    <?php $__currentLoopData = Config::get('static.charges_type'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $charges_type): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($charges_type); ?>" > <?php echo e($charges_type); ?>
-
-                                        </option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                </select>
-                            </td>
+                        
                             <td>
                                 <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(${i})" name="charge_category[]" id="charge_category${i}">
                                     <option value="">Select One..</option>
+                                    <?php if($charge_category[0]->id != null): ?>
+                                    <?php $__currentLoopData = $charge_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($value->id); ?>"><?php echo e($value->charges_catagories_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    <?php endif; ?>
                                 </select>
                             </td>
                             <td>
@@ -222,20 +209,18 @@ unset($__errorArgs, $__bag); ?>
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
         $('#total_tax' + row_id).val('');
-        $('#charge_name' + row_id).empty();
         $('#amount' + row_id).val('');
         $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
-        $('#charge_sub_category' + row_id).empty();
+        $('#charge_sub_category' + row_id).html('<option value="">Select One..</option>');
+        $('#charge_name' + row_id).html('<option value="">Select One..</option>');
         let category_id = $('#charge_category' + row_id).val();
-        let charge_set = $('#charge_set' + row_id).val();
-        var div_data = '<option value="">Select One..</option>';
+        var div_data = '';
         $.ajax({
             url: "<?php echo e(route('get-subcategory-by-category')); ?>",
             type: "post",
             data: {
                 categoryId: category_id,
-                chargeSet: charge_set,
                 _token: '<?php echo e(csrf_token()); ?>',
             },
             dataType: 'json',
@@ -257,18 +242,14 @@ unset($__errorArgs, $__bag); ?>
         $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
         $('#amount' + row_id).val('');
-        let charge_set = $('#charge_set' + row_id).val();
-        let charge_type = $('#charge_type' + row_id).val();
         let charge_category = $('#charge_category' + row_id).val();
         let charge_sub_category = $('#charge_sub_category' + row_id).val();
-        $('#charge_name' + row_id).empty();
-        var div_data = '<option value="">Select One..</option>';
+        $('#charge_name' + row_id).html('<option value="">Select One..</option>');
+        var div_data = '';
         $.ajax({
             url: "<?php echo e(route('get-charge-name')); ?>",
             type: "post",
             data: {
-                chargeSet: charge_set,
-                chargeType: charge_type,
                 chargeCategory: charge_category,
                 chargeSubCategory: charge_sub_category,
                 _token: '<?php echo e(csrf_token()); ?>',
@@ -285,6 +266,7 @@ unset($__errorArgs, $__bag); ?>
     }
 
     function getcharges(row_id) {
+        // alert(<?php echo e($emg_patient_details->id); ?>);
         $('#total_discount' + row_id).val('');
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
@@ -298,11 +280,11 @@ unset($__errorArgs, $__bag); ?>
         $('#standard_charges' + row_id).empty();
 
         $.ajax({
-            url: "<?php echo e(route('get-charge-amount')); ?>",
+            url: "<?php echo e(route('get-charge-amount-emg')); ?>",
             type: "post",
             data: {
                 chargeName: charge_name,
-                chargeSet: charge_set,
+                emg_id: <?php echo e($emg_patient_details->id); ?>,
                 _token: '<?php echo e(csrf_token()); ?>',
             },
             dataType: 'json',

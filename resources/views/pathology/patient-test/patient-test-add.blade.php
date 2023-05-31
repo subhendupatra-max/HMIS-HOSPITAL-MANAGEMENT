@@ -144,6 +144,18 @@
                                     <small class="text-danger">{{ $message }}</small>
                                     @enderror
                                 </div>
+                                <div class="form-group col-md-6 adchargee ">
+                                    <label class="date-format">Billing Status <span class="text-danger">*</span></label>
+                                    <select required class="form-control select2-show-search" name="billing_status"
+                                        id="billing_status">
+                                        <option value="0">Billing Pending</option>
+                                        <option value="1">Billing Complete</option>
+                                    </select>
+
+                                    @error('billing_status')
+                                    <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
                                 {{-- <div class="form-group col-md-4 adcharged">
                                     <label class="date-format">Charge<span class="text-danger">*</span></label>
                                     <input type="text" name="charge" id="charge" required />

@@ -87,7 +87,7 @@
                                             <span class="font-weight-semibold w-50">Case Id </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            <?php echo $patient_details->address; ?>,<?php echo $patient_details->pin_no; ?>,<?php echo @$patient_details->local_district->name; ?>,<?php echo @$patient_details->local_state->name; ?>,<?php echo @$patient_details->local_country->country_name; ?>
+                                            <?php echo $patient_details->case_id; ?>
 
                                         </td>
                                     </tr>

@@ -618,8 +618,8 @@ class OpdController extends Controller
         $validate = $request->validate([
             'date'   => 'required',
         ]);
-        // try {
-        //     DB::beginTransaction();
+        try {
+            DB::beginTransaction();
         foreach ($request->charge_name as $key => $value) {
             $patient_charge = new PatientCharge();
             $patient_charge->case_id = $request->case_id;
@@ -627,8 +627,6 @@ class OpdController extends Controller
             $patient_charge->charges_date = $request->date;
             $patient_charge->opd_id = $request->opd_id;
             $patient_charge->patient_id = $request->patient_id;
-            $patient_charge->charge_set = $request->charge_set[$key];
-            $patient_charge->charge_type = $request->charge_type[$key];
             $patient_charge->charge_category = $request->charge_category[$key];
             $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
             $patient_charge->charge_name = $request->charge_name[$key];
@@ -692,10 +690,10 @@ class OpdController extends Controller
         }
         DB::commit();
         return redirect()->route('charges-list', ['id' => base64_encode($request->opd_id)])->with('success', "Charges Added Successfully");
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return back()->withErrors(['error' => $th->getMessage()]);
-        // }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
     }
 
     public function opd_pathology_investigation($id)

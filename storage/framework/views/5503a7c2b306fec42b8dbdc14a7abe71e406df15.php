@@ -128,7 +128,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
 
-                        <div class="col-md-3 useradddtwo">
+                        <div class="col-md-3 useradddtwo ">
                             <input type="text" name="last_name" value="<?php echo e(old('last_name')); ?>" id="last_name" required="">
                             <label for="last_name"> Last Name <span class="text-danger">*</span></label>
                             <?php $__errorArgs = ['last_name'];

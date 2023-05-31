@@ -42,27 +42,115 @@
                         <table class="table card-table table-vcenter text-nowrap">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
+                                    {{-- <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
-                                    </th>
+                                    </th> --}}
                                     <th scope="col" style="width: 15%">Category <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 15%">Subcategory <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 20%">Charge Name <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 30%">Charge Name <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 10%">Charges <span class="text-danger">*</span>
                                     </th>
+                                    <th scope="col" style="width: 10%">Qty <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Tax <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Amount <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm" onclick="addNewrow()" type="button"><i class="fa fa-plus"></i></button>
-                                    </th>
+                                    {{-- <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm" onclick="addNewrow()" type="button"><i class="fa fa-plus"></i></button>
+                                    </th> --}}
                                 </tr>
                             </thead>
                             <tbody id="chargeTable">
+                                @if(@$old_applied_charges)
+                                @foreach ($old_applied_charges as $key=>$value)
+                                <tr id="row{{ $key }}" style="background-color:#e6f5ed">
+                                    <input type="hidden" name="old_or_new[]" value="old" />
+                                    <input type="hidden" name="charge_id_old[]" value="{{ $value->id }}" />
+                                    {{-- <td>
 
+                                        <select class="form-control select2-show-search" name="charge_set[]" id="charge_set{{ $key }}">
+                                            <option value="{{ @$value->charge_set}} ">{{ @$value->charge_set}} </option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control select2-show-search" name="charge_type[]" id="charge_type{{ $key }}">
+
+                                            <option value="{{ $value->charge_type }}"> {{ $value->charge_type }}
+                                            </option>
+
+                                        </select>
+                                    </td> --}}
+                                    <td>
+                                        <select class="form-control select2-show-search" name="charge_category[]" id="charge_category{{ $key }}">
+                                            <option value="{{ $value->charge_category }}">{{ $value->charges_category_details->charges_catagories_name }}</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category{{ $key }}">
+                                            <option value="{{ $value->charge_sub_category }}">{{ $value->charges_sub_category_details->charges_sub_catagories_name }}</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="form-control select2-show-search" name="charge_name[]" id="charge_name{{ $key }}">
+                                            <option value={{ $value->charge_name }}>{{ $value->charges_name_details->charges_name }}</option>
+                                        </select>
+                                    </td>
+
+                                    <td>
+                                        <input class="form-control" name="standard_charges[]" id="standard_charges{{ $key }}" value="{{ $value->standard_charges }}" readonly />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" value="{{ $value->qty }}" readonly name="qty[]" id="qty{{ $key }}" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" value="{{ $value->tax }}" readonly name="tax[]" id="tax{{ $key }}" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" value="{{ $value->amount }}" readonly name="amount[]" id="amount{{ $key }}" />
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" type="button" onclick="rowRemove({{ $key }})"><i class="fa fa-times"></i></button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                @endif
                             </tbody>
                         </table>
+                    </div>
+                </div>
+                <div class="border-bottom border-top">
+                    <span style="color: #ff6014;font-size: 14px;"> Are You want to add Medicine Bill ?<input type="checkbox" id="add_medicine_bill" name="add_medicine_bill" onchange="addMedicineBill({{ $emg_patient_details->case_id }})" value="yes" /></span>
+                    <div class="table-responsive" id="fjafiao" style="display: none">
+                        @if(@$medicine_charges[0]->id != null || @$medicine_charges[0]->id != '' )
+                        <table class="table card-table table-vcenter text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 30%">Medicine Bill No. <span class="text-danger">*</span>
+                                    </th>
+                                    <th scope="col" style="width: 30%">Date <span class="text-danger">*</span>
+                                    </th>
+                                    <th scope="col" style="width: 20%">Amount <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 10%"></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($medicine_charges as $key=>$value)
+                                <tr id="medicineRow{{ $key }}">
+                                    <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id{{ $key }}" value="{{ $value->id }}" />
+                                    <td>{{$loop->iteration}}</td>
+                                    <td>{{ $value->bill_prefix }}{{ $value->id }}</td>
+                                    <td>{{ date('d-m-Y h:i a',strtotime($value->bill_date))}}</td>
+                                    <td><input text="text" readonly class="form-control" name="medicine_amount[]" id="medicine_amount{{ $key }}" value="{{ $value->total_amount }}" /></td>
+                                    <td><button class="btn btn-danger btn-sm" type="button" onclick="medicinerowRemove({{ $key }})"><i class="fa fa-times"></i></button></td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        @else
+                        <span style="color:blue">Don't Have any bill !!</span>
+                        @endif
                     </div>
                 </div>
                 <div class="row border-bottom">
@@ -72,16 +160,16 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label class="form-label">Note </label>
-                                        <textarea class="form-control" name="note"></textarea>
+                                        <input class="form-control" name="note" />
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin: 33px 0px 0px 0px;">
                                         <label class="form-label">Payment Amount </label>
                                         <input type="text" name="payment_amount" class="form-control" />
                                         @error('payment_amount')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin: 25px 0px 0px 0px;">
                                         <label class="form-label">Payment Mode</label>
                                         <select class="form-control" name="payment_mode">
                                             <option value="">Select One...</option>
@@ -134,7 +222,7 @@
                 <div class="btn-list p-3">
                     <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button>
                     <button class="btn btn-primary btn-sm float-right " type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
-                    <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit" value="save_and_print"><i class="fa fa-paste"></i> Save & Print</button>
+                    {{-- <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit" value="save_and_print"><i class="fa fa-paste"></i> Save & Print</button> --}}
                 </div>
             </div>
         </form>
@@ -144,13 +232,24 @@
 </div>
 <script>
     function takeDiscount() {
-        // alert('ok');
         if (document.getElementById("take_discount").checked) {
             $('#discount_section').removeAttr('style', true);
 
         } else {
             $('#discount_section').attr('style', 'display:none !important', true);
             $('#total_discount').val(0);
+            gettotal();
+        }
+    }
+</script>
+<script>
+    function addMedicineBill(case_id) {
+        // alert('ok');
+        if (document.getElementById("add_medicine_bill").checked) {
+            $('#fjafiao').removeAttr('style', true);
+            gettotal();
+        } else {
+            $('#fjafiao').attr('style', 'display:none', true);
             gettotal();
         }
     }
@@ -217,6 +316,16 @@
         $('#grnd_total' + row_id).val('0');
         $('#total_tax' + row_id).val('0');
         $(`#row${row_id}`).remove();
+        gettotal();
+    }
+
+    function medicinerowRemove(row_id) {
+        $('#total_discount' + row_id).val('0');
+        $('#total_am' + row_id).val('0');
+        $('#grnd_total' + row_id).val('0');
+        $('#total_tax' + row_id).val('0');
+        $(`#medicineRow${row_id}`).remove();
+        gettotal();
     }
 
     function getchargetype_details(row_id) {
@@ -327,6 +436,7 @@
                 $('#charge_name' + row_id).append(div_data);
             }
         });
+
     }
 
     function getcharges(row_id) {
@@ -359,11 +469,14 @@
 
     function getamountwithtax(row_id) {
 
-        let standard_charges = $('#standard_charges' + row_id).val();
+        let standard_chargesss = $('#standard_charges' + row_id).val();
         let tax = $('#tax' + row_id).val();
+        let qty = $('#qty' + row_id).val();
+        var standard_charges = parseFloat(standard_chargesss) * qty;
         let amount = parseFloat(standard_charges) + (parseFloat(standard_charges) * (parseFloat(tax) / 100));
         let amount_ = parseFloat(amount).toFixed(2);
         $('#amount' + row_id).val(amount_);
+        gettotal(row_id);
     }
 </script>
 <script type="text/javascript">
@@ -372,16 +485,24 @@
         console.log('aaa=>', no_of_row);
 
         var t = 0;
+        var m = 0;
         $("input[name='amount[]']").map(function() {
             t = t + parseFloat($(this).val());
         }).get();
-        $('#total_am').val(t);
+        if (document.getElementById("add_medicine_bill").checked) {
+            $("input[name='medicine_amount[]']").map(function() {
+                m = m + parseFloat($(this).val());
+            }).get();
+        }
+
+        var t_m = parseFloat(t) + parseFloat(m)
+        $('#total_am').val(t_m.toFixed(2));
 
         var total_discount = $('#total_discount').val();
         if ($('#discount_type').val() == 'percentage') {
-            var r = parseFloat(t) - ((parseFloat(t)) * (parseFloat(total_discount) / 100));
+            var r = parseFloat(t_m) - ((parseFloat(t_m)) * (parseFloat(total_discount) / 100));
         } else {
-            var r = parseFloat(t) - parseFloat(total_discount);
+            var r = parseFloat(t_m) - parseFloat(total_discount);
         }
         var total_tax = $('#total_tax').val();
         if (total_tax != 0) {

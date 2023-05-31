@@ -41,21 +41,21 @@
                         <table class="table card-table table-vcenter text-nowrap">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
+                                    {{-- <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
+                                    </th> --}}
+                                    <th scope="col" style="width: 15%">Category <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 15%">Subcategory <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 25%">Charge Name <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 15%">Charge Name <span class="text-danger">*</span>
-                                    </th>
-                                    <th scope="col" style="width: 10%">Charge <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 15%">Charge <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 10%">Qty <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Tax <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Amount <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm" onclick="addNewrow()" type="button"><i class="fa fa-plus"></i></button>
+                                    {{-- <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm" onclick="addNewrow()" type="button"><i class="fa fa-plus"></i></button> --}}
                                     </th>
                                 </tr>
                             </thead>
@@ -65,7 +65,7 @@
                                 <tr id="row{{ $key }}" style="background-color:#e6f5ed">
                                     <input type="hidden" name="old_or_new[]" value="old" />
                                     <input type="hidden" name="charge_id_old[]" value="{{ $value->id }}" />
-                                    <td>
+                                    {{-- <td>
 
                                         <select class="form-control select2-show-search" name="charge_set[]" id="charge_set{{ $key }}">
                                             <option value="{{ @$value->charge_set}} ">{{ @$value->charge_set}} </option>
@@ -78,7 +78,7 @@
                                             </option>
 
                                         </select>
-                                    </td>
+                                    </td> --}}
                                     <td>
                                         <select class="form-control select2-show-search" name="charge_category[]" id="charge_category{{ $key }}">
                                             <option value="{{ $value->charge_category }}">{{ $value->charges_category_details->charges_catagories_name }}</option>
@@ -159,16 +159,16 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label>Note </label>
-                                        <textarea class="form-control" name="note"></textarea>
+                                        <input class="form-control" name="note" />
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin: 44px 0px 0px 0px">
                                         <label class="form-label">Payment Amount </label>
                                         <input type="text" name="payment_amount" class="form-control" />
                                         @error('payment_amount')
                                         <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6" style="margin: 35px 0px 0px 0px">
                                         <label class="form-label">Payment Mode</label>
                                         <select class="form-control" name="payment_mode">
                                             <option value="">Select One...</option>
@@ -222,7 +222,7 @@
                 <div class="btn-list p-3">
                     <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button>
                     <button class="btn btn-primary btn-sm float-right " type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
-                    <button class="btn btn-primary btn-sm float-right mr-2" name="save_and_print" type="submit" value="save_and_print"><i class="fa fa-paste"></i> Save & Print</button>
+                  
                 </div>
             </div>
         </form>

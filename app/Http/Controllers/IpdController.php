@@ -19,6 +19,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Bed;
 use App\Models\BedUnit;
+use App\Models\ChargeType;
 use App\Models\RadiologyTest;
 use App\Models\PathologyTest;
 use App\Models\IpdPayment;
@@ -364,7 +365,17 @@ class IpdController extends Controller
         $charge_category =  ChargesCatagory::all();
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
         $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
-        return view('Ipd.charges.add-charges', compact('ipd_id', 'charge_category', 'ipd_details', 'ipd_patient_details'));
+        $pathology_charge = PathologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status','0')->get();
+        $radiology_charge = RadiologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status','0')->get();
+        $pathology_charge_count = PathologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status','0')->count();
+        $radiology_charge_count = RadiologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status','0')->count();
+        if ($ipd_patient_details->patient_type == 'TPA') {
+            $p_type = $ipd_patient_details->TpaManagement->TPA_name;
+        } else {
+            $p_type = $ipd_patient_details->patient_type;
+        }
+        $patient_type_id = ChargeType::where('charge_type_name',$p_type)->first();
+        return view('Ipd.charges.add-charges', compact('pathology_charge_count','radiology_charge_count','pathology_charge','patient_type_id','radiology_charge','ipd_id', 'charge_category', 'ipd_details', 'ipd_patient_details'));
     }
     public function edit_charges_ipd($id, $charge_id)
     {
@@ -391,8 +402,6 @@ class IpdController extends Controller
                 $patient_charge->charges_date = $request->date;
                 $patient_charge->ipd_id = $request->ipd_id;
                 $patient_charge->patient_id = $request->patient_id;
-                $patient_charge->charge_set = $request->charge_set[$key];
-                $patient_charge->charge_type = $request->charge_type[$key];
                 $patient_charge->charge_category = $request->charge_category[$key];
                 $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
                 $patient_charge->charge_name = $request->charge_name[$key];
@@ -404,48 +413,48 @@ class IpdController extends Controller
                 $patient_charge->billing_status = '0';
                 $patient_charge->save();
 
-                if ($request->charge_category[$key] == '1') {
-                    $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
-                    $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
+                // if ($request->charge_category[$key] == '1') {
+                //     $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
+                //     $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
 
-                    if ($chargedetailstestp == null) {
-                        $pathology_patient_test = new PathologyPatientTest();
-                        $pathology_patient_test->case_id = $request->case_id;
-                        $pathology_patient_test->date = $request->date;
-                        $pathology_patient_test->section = 'IPD';
-                        $pathology_patient_test->patient_id = $request->patient_id;
-                        $pathology_patient_test->test_id =  $charge_detp->id;
-                        $pathology_patient_test->ipd_id = $request->ipd_id;
-                        $pathology_patient_test->generated_by = Auth::user()->id;
-                        $pathology_patient_test->billing_status = '2';
-                        $pathology_patient_test->test_status = '0';
-                        $pathology_patient_test->save();
-                    } else {
-                        $chargedetailstestp->billing_status = '2';
-                        $chargedetailstestp->save();
-                    }
-                }
-                if ($request->charge_category[$key] == '2') {
-                    $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
-                    $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
+                //     if ($chargedetailstestp == null) {
+                //         $pathology_patient_test = new PathologyPatientTest();
+                //         $pathology_patient_test->case_id = $request->case_id;
+                //         $pathology_patient_test->date = $request->date;
+                //         $pathology_patient_test->section = 'IPD';
+                //         $pathology_patient_test->patient_id = $request->patient_id;
+                //         $pathology_patient_test->test_id =  $charge_detp->id;
+                //         $pathology_patient_test->ipd_id = $request->ipd_id;
+                //         $pathology_patient_test->generated_by = Auth::user()->id;
+                //         $pathology_patient_test->billing_status = '2';
+                //         $pathology_patient_test->test_status = '0';
+                //         $pathology_patient_test->save();
+                //     } else {
+                //         $chargedetailstestp->billing_status = '2';
+                //         $chargedetailstestp->save();
+                //     }
+                // }
+                // if ($request->charge_category[$key] == '2') {
+                //     $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
+                //     $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
 
-                    if ($chargedetailstestr == null) {
-                        $radiology_patient_test = new RadiologyPatientTest();
-                        $radiology_patient_test->case_id = $request->case_id;
-                        $radiology_patient_test->date = $request->date;
-                        $radiology_patient_test->section = 'IPD';
-                        $radiology_patient_test->patient_id = $request->patient_id;
-                        $radiology_patient_test->test_id = $charge_detr->id;
-                        $radiology_patient_test->ipd_id = $request->ipd_id;
-                        $radiology_patient_test->generated_by = Auth::user()->id;
-                        $radiology_patient_test->billing_status = '2';
-                        $radiology_patient_test->test_status = '0';
-                        $radiology_patient_test->save();
-                    } else {
-                        $chargedetailstestr->billing_status = '2';
-                        $chargedetailstestr->save();
-                    }
-                }
+                //     if ($chargedetailstestr == null) {
+                //         $radiology_patient_test = new RadiologyPatientTest();
+                //         $radiology_patient_test->case_id = $request->case_id;
+                //         $radiology_patient_test->date = $request->date;
+                //         $radiology_patient_test->section = 'IPD';
+                //         $radiology_patient_test->patient_id = $request->patient_id;
+                //         $radiology_patient_test->test_id = $charge_detr->id;
+                //         $radiology_patient_test->ipd_id = $request->ipd_id;
+                //         $radiology_patient_test->generated_by = Auth::user()->id;
+                //         $radiology_patient_test->billing_status = '2';
+                //         $radiology_patient_test->test_status = '0';
+                //         $radiology_patient_test->save();
+                //     } else {
+                //         $chargedetailstestr->billing_status = '2';
+                //         $chargedetailstestr->save();
+                //     }
+                // }
             }
             DB::commit();
             return redirect()->route('charges-list-ipd', ['id' => base64_encode($request->ipd_id)])->with('success', "Charges Added Successfully");

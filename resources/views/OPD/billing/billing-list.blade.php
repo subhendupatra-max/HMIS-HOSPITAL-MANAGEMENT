@@ -71,15 +71,15 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
-                                            <a class="dropdown-item" href="{{ route('opd-bill-details', ['bill_id' => base64_encode($value->id)]) }}">
+                                            {{-- <a class="dropdown-item" href="{{ route('opd-bill-details', ['bill_id' => base64_encode($value->id)]) }}">
                                                 <i class="fa fa-eye"></i> View
-                                            </a>
-
-                                            <a class="dropdown-item" href="">
+                                            </a> --}}
+                                            @can('print opd billing')
+                                            <a class="dropdown-item" href="{{route('print-opd-bill',['bill_id'=>base64_encode($value->id),'id'=>base64_encode($opd_id)])}}">
                                                 <i class="fa fa-print"></i> Print
                                             </a>
-
-                                            @can('edit opd billing')
+                                            @endcan
+                                            {{-- @can('edit opd billing')
                                             <a class="dropdown-item" href="{{route('edit-opd-bill',['bill_id'=>base64_encode($value->id),'id'=>base64_encode($opd_id)])}}">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
@@ -88,7 +88,7 @@
                                             <a class="dropdown-item" href="{{route('delete-opd-bill',['bill_id'=>base64_encode($value->id)])}}">
                                                 <i class="fa fa-trash"></i> Delete
                                             </a>
-                                            @endcan
+                                            @endcan --}}
 
                                         </div>
                                     </div>

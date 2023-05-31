@@ -1922,6 +1922,8 @@ Route::post('get-subcategory-by-category', [BillingController::class, 'get_subca
 Route::post('get-charge-name', [BillingController::class, 'get_charge_name'])->name('get-charge-name');
 Route::post('get-category', [BillingController::class, 'get_category'])->name('get-category');
 Route::post('get-charge-amount', [BillingController::class, 'get_charge_amount'])->name('get-charge-amount');
+Route::post('get-charge-amount-emg', [BillingController::class, 'get_charge_amount_emg'])->name('get-charge-amount-emg');
+Route::post('get-charge-amount-opd', [BillingController::class, 'get_charge_amount_opd'])->name('get-charge-amount-opd');
 // ===========================================================================
 
 // ===================================================================s==========
@@ -1963,6 +1965,9 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         Route::post('update-new-opd-billing', [BillingController::class, 'update_new_opd_billing'])->name('update-new-opd-billing');
         Route::group(['middleware' => ['permission:delete opd billing']], function () {
             Route::get('delete-opd-bill/{bill_id}', [BillingController::class, 'delete_opd_bill'])->name('delete-opd-bill');
+        });
+        Route::group(['middleware' => ['permission:print opd billing']], function () {
+            Route::get('print-opd-bill/{bill_id}/{id}', [BillingController::class, 'print_opd_bill'])->name('print-opd-bill');
         });
     });
     //================================= OPD billing ====================================
@@ -2044,7 +2049,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
         });
         Route::group(['middleware' => ['permission:edit opd charges']], function () {
             Route::get('edit-opd-charges/{id?}/{charge_id?}', [OpdController::class, 'edit_charges'])->name('edit-opd-charges');
-            Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
+            // Route::post('add-new-charges', [OpdController::class, 'save_charges'])->name('add-new-charges');
         });
         Route::group(['middleware' => ['permission:delete opd charges']], function () {
             Route::get('delete-opd-charges/{id?}/{charge_id?}', [OpdController::class, 'delete_charges'])->name('delete-opd-charges');
@@ -2055,7 +2060,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     //================================= OPD prescription ====================================
     Route::group(['middleware' => ['permission:Create Prescription for OPD'], 'prefix' => 'create-prescription-opd'], function () {
         Route::get('opd-prescription-list/{id?}', [OpdController::class, 'opd_prescription_list'])->name('opd-prescription-list');
-        Route::post('add-new-charges1', [OpdController::class, 'save_charges'])->name('add-new-charges');
+        // Route::post('add-new-charges1', [OpdController::class, 'save_charges'])->name('add-new-charges');
     });
     //================================= OPD prescription ====================================
 
