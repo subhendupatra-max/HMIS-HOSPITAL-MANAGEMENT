@@ -124,7 +124,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\false\IpdFalseController;
 
 use App\Http\Controllers\MainOperationController;
-
+use App\Http\Controllers\OpdPrescriptionController;
+use App\Http\Controllers\IpdPrescriptionController;
+use App\Http\Controllers\EmgPrescriptionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -2022,6 +2024,37 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     });
     //================================= OPD payment ====================================
 
+
+
+    //================================= OPD E Prescirption ====================================
+    Route::group(['middleware' => ['permission:opd prescription'], 'prefix' => 'opd-prescription'], function () {
+        Route::get('prescription-lisitng-in-opd/{id}', [OpdPrescriptionController::class, 'prescription_listing_in_opd'])->name('prescription-lisitng-in-opd');
+
+        Route::get('prescription-view-in-opd/{id}/{opd_id?}', [OpdPrescriptionController::class, 'prescription_view_in_opd'])->name('prescription-view-in-opd');
+
+        Route::group(['middleware' => ['permission:add opd prescription']], function () {
+            Route::get('add-prescription-in-opd/{id?}', [OpdPrescriptionController::class, 'add_prescription_in_opd'])->name('add-prescription-in-opd');
+            Route::post('save-prescription-in-opd', [OpdPrescriptionController::class, 'save_prescription_in_opd'])->name('save-prescription-in-opd');
+        });
+
+        Route::group(['middleware' => ['permission:edit opd prescription']], function () {
+            Route::get('edit-prescription-in-opd/{id}/{opd_id}', [OpdPrescriptionController::class, 'edit_prescription_in_opd'])->name('edit-prescription-in-opd');
+            Route::post('update-prescription-in-opd', [OpdPrescriptionController::class, 'update_prescription_in_opd'])->name('update-prescription-in-opd');
+        });
+
+        Route::get('print-prescription-in-opd/{id}', [OpdPrescriptionController::class, 'prescription_print_in_opd'])->name('print-prescription-in-opd');
+
+
+        Route::group(['middleware' => ['permission:delete opd payment']], function () {
+            Route::get('delete-prescription-in-opd/{id}', [OpdPrescriptionController::class, 'delete_prescription_in_opd'])->name('delete-prescription-in-opd');
+        });
+    });
+    //================================= OPD E Prescirption ====================================
+
+
+
+
+
     //================================= OPD Physical Condition ====================================
     Route::group(['middleware' => ['permission:opd physical condition'], 'prefix' => 'opd-physical-condition'], function () {
         Route::get('physical-condition-in-opd/{id}', [PhysicalConditionController::class, 'physical_condition_listing_in_opd'])->name('physical-condition-in-opd');
@@ -2158,6 +2191,32 @@ Route::group(['middleware' => ['permission:emg physical condition'], 'prefix' =>
     });
 });
 //================================= emg Physical Condition ==========================
+
+
+//================================= Emg E Prescirption ====================================
+Route::group(['middleware' => ['permission:Emg prescription'], 'prefix' => 'emg-prescription'], function () {
+    Route::get('prescription-lisitng-in-emg/{id}', [EmgPrescriptionController::class, 'prescription_listing_in_emg'])->name('prescription-lisitng-in-emg');
+
+    Route::get('prescription-view-in-emg/{id}/{emg_id?}', [EmgPrescriptionController::class, 'prescription_view_in_emg'])->name('prescription-view-in-emg');
+
+    Route::group(['middleware' => ['permission:add emg prescription']], function () {
+        Route::get('add-prescription-in-emg/{id?}', [EmgPrescriptionController::class, 'add_prescription_in_emg'])->name('add-prescription-in-emg');
+        Route::post('save-prescription-in-emg', [EmgPrescriptionController::class, 'save_prescription_in_emg'])->name('save-prescription-in-emg');
+    });
+
+    Route::group(['middleware' => ['permission:edit emg prescription']], function () {
+        Route::get('edit-prescription-in-emg/{id}/{emg_id}', [EmgPrescriptionController::class, 'edit_prescription_in_emg'])->name('edit-prescription-in-emg');
+        Route::post('update-prescription-in-emg', [EmgPrescriptionController::class, 'update_prescription_in_emg'])->name('update-prescription-in-emg');
+    });
+
+    Route::get('print-prescription-in-emg/{id}', [EmgPrescriptionController::class, 'prescription_print_in_emg'])->name('print-prescription-in-emg');
+
+
+    Route::group(['middleware' => ['permission:delete emg payment']], function () {
+        Route::get('delete-prescription-in-emg/{id}', [EmgPrescriptionController::class, 'delete_prescription_in_emg'])->name('delete-prescription-in-emg');
+    });
+});
+//================================= Emg E Prescirption ====================================
 
 //================================= emg timeline ====================================
 Route::group(['middleware' => ['permission:timeline list emg'], 'prefix' => 'emg-timeline'], function () {
@@ -2410,6 +2469,10 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::group(['middleware' => ['permission:ipd discharged patient print']], function () {
             Route::get('print-discharged-patient-in-ipd/{ipd_id}', [PatientDischargeController::class, 'print_discharged_patient_in_ipd'])->name('print-discharged-patient-in-ipd');
         });
+
+        Route::group(['middleware' => ['permission:ipd discharged patient print']], function () {
+            Route::get('details-discharged-patient-in-ipd/{ipd_id}', [PatientDischargeController::class, 'details_discharged_patient_in_ipd'])->name('details-discharged-patient-in-ipd');
+        });
     });
     // ================================= Discharged Patient ==================================================
 
@@ -2516,6 +2579,32 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         });
     });
     // =============================== Nurse Note ==================================================
+
+
+    //================================= IPD E Prescirption ====================================
+    Route::group(['middleware' => ['permission:ipd prescription'], 'prefix' => 'ipd-prescription'], function () {
+        Route::get('prescription-lisitng-in-ipd/{id}', [IpdPrescriptionController::class, 'prescription_listing_in_ipd'])->name('prescription-lisitng-in-ipd');
+
+
+        Route::get('prescription-view-in-ipd/{id}/{ipd_id?}', [IpdPrescriptionController::class, 'prescription_view_in_ipd'])->name('prescription-view-in-ipd');
+
+        Route::group(['middleware' => ['permission:add ipd prescription']], function () {
+            Route::get('add-prescription-in-ipd/{id?}', [IpdPrescriptionController::class, 'add_prescription_in_ipd'])->name('add-prescription-in-ipd');
+            Route::post('save-prescription-in-ipd', [IpdPrescriptionController::class, 'save_prescription_in_ipd'])->name('save-prescription-in-ipd');
+        });
+
+        Route::group(['middleware' => ['permission:edit ipd prescription']], function () {
+            Route::get('edit-prescription-in-ipd/{id}/{ipd_id}', [IpdPrescriptionController::class, 'edit_prescription_in_ipd'])->name('edit-prescription-in-ipd');
+            Route::post('update-prescription-in-ipd', [IpdPrescriptionController::class, 'update_prescription_in_ipd'])->name('update-prescription-in-ipd');
+        });
+
+        Route::get('print-prescription-in-ipd/{id}/{ipd_id}', [IpdPrescriptionController::class, 'prescription_print_in_ipd'])->name('print-prescription-in-ipd');
+
+        Route::group(['middleware' => ['permission:delete ipd payment']], function () {
+            Route::get('delete-prescription-in-ipd/{id}', [IpdPrescriptionController::class, 'delete_prescription_in_ipd'])->name('delete-prescription-in-ipd');
+        });
+    });
+    //================================= IPD E Prescirption ====================================
 
     //================================= ipd Pathology ====================================
     Route::group(['middleware' => ['permission:IPD Pathology Investigation'], 'prefix' => 'ipd-pathology-investigation'], function () {

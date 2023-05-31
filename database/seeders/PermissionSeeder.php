@@ -844,7 +844,9 @@ class PermissionSeeder extends Seeder
         //referral
         Permission::create(['name' => 'referral']);
 
+        // opd prescription
+        Permission::create(['name' => 'opd prescription']);
 
-
+        
     }
 }

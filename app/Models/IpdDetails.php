@@ -58,4 +58,5 @@ class IpdDetails extends Model
         return $this->belongsTo(TpaManagement::class, 'tpa_organization', 'id');
     }
    
+    
 }

@@ -9,7 +9,7 @@
             <form action="<?php echo e(route('save-medicine-details')); ?>" method="POST" enctype="multipart/form-data">
                 <?php echo csrf_field(); ?>
                 <div class="row">
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmediadd">
                         
                         <input type="text" id="medicine_name" name="medicine_name" value="<?php echo e(old('medicine_name')); ?>" required />
                         <label for="medicine_name">Medicine Name<span class="text-danger">*</span> </label>
@@ -25,16 +25,16 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-3">
-                        
-                        <select class="form-control select2-show-search select2-hidden-accessible" value="<?php echo e(old('medicine_catagory')); ?>" name="medicine_catagory" id="medicine_catagory" required>
-                            <optgroup>
+                    <div class="form-group col-md-3 editmediaddtwo">
+                         <label for="medicine_catagory">Medicine Category <span class="text-danger">*</span></label>
+                        <select class="form-control select2-show-search " value="<?php echo e(old('medicine_catagory')); ?>" name="medicine_catagory" id="medicine_catagory" required>
+
                                 <option value=" ">Select Medicine Catagory<span class="text-danger">*</span>
                                 </option>
                                 <?php $__currentLoopData = $medicine_catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <option value="<?php echo e($item->id); ?>"><?php echo e($item->medicine_catagory_name); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            </optgroup>
+
                         </select>
                         <?php $__errorArgs = ['medicine_catagory'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -48,7 +48,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmediadd">
                         
                         <input type="text" id="medicine_company" name="medicine_company" value="<?php echo e(old('medicine_company')); ?>" required />
                         <label for="medicine_company">Medicine Company </label>
@@ -64,7 +64,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmediadd">
                         
                         <input type="text" id="medicine_composition" name="medicine_composition" value="<?php echo e(old('medicine_composition')); ?>" required />
                         <label for="medicine_company">Medicine Composition </label>
@@ -80,7 +80,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmedicineadd">
                         
                         <input type="text" id="medicine_group" name="medicine_group" value="<?php echo e(old('medicine_group')); ?>" required />
                         <label for="medicine_company">Medicine Group</label>
@@ -96,7 +96,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmedicineadd">
                         
                         <input type="text" id="unit" name="unit" value="<?php echo e(old('unit')); ?>" required />
                         <label for="medicine_company">Unit<span class="text-danger">*</span></label>
@@ -112,7 +112,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-3 editmedicineadd">
                         
                         <input type="text" id="min_level" name="min_level" value="<?php echo e(old('min_level')); ?>" required />
                         <label for="min_level">Enter Min Level<span class="text-danger">*</span></label>
@@ -130,7 +130,7 @@ unset($__errorArgs, $__bag); ?>
 
                     
 
-                <div class="form-group col-md-3">
+                <div class="form-group col-md-3 editmedicineadd">
                     
                     <input type="text" id="tax" name="tax" value="<?php echo e(old('tax')); ?>" required />
                     <label for="tax">Tax</label>
@@ -147,7 +147,7 @@ unset($__errorArgs, $__bag); ?>
                 </div>
 
 
-                <div class="form-group col-md-3 newuserrchange ">
+                <div class="form-group col-md-3 editmedicineadd ">
                     
                     <input type="text" id="note" name="note" required />
                     <label for="note">Note</label>
@@ -163,10 +163,11 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 </div>
 
-                <div class="form-group col-md-6">
-                    
-                    <h6 class="Heading">Medicine Photo</h6>
-                    <input type="file" id="medicine_photo" name="medicine_photo" value="<?php echo e(old('medicine_photo')); ?>" required />
+                <div class="form-group col-md-6 editmedi ">
+                     <label for="medicine_photo">Medicine Photo </label>
+                        <input type="file" id="medicine_photo" name="medicine_photo" value="<?php echo e(old('medicine_photo')); ?>">
+
+
                     
                     <?php $__errorArgs = ['medicine_photo'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -341,4 +342,5 @@ unset($__errorArgs, $__bag); ?>
     }
 </script>
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/pharmacy/medicine/add-medicine.blade.php ENDPATH**/ ?>
