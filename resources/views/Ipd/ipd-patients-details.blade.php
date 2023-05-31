@@ -33,11 +33,12 @@
                 <table class="table table-bordered text-nowrap" id="example">
                     <thead>
                         <tr>
+                            <th scope="col">#</th>
                             <th scope="col">IPD Id</th>
                             <th scope="col">Case Id</th>
-                            <th scope="col">Patient Information</th>
+                            <th scope="col">Patient Details</th>
                             <th scope="col">Mobile No.</th>
-                            <th scope="col">Admission Information</th>
+                            <th scope="col">Admission Details</th>
                             <th scope="col">Admission Date</th>
                             <th scope="col">Admitted By</th>
                             <th scope="col">Status</th>
@@ -48,6 +49,7 @@
                         @if (isset($ipd_patient_list))
                         @foreach ($ipd_patient_list as $value)
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{ @$value->id }}</a></td>
                             <td>{{ @$value->case_id }}</td>
                             <td>
@@ -100,14 +102,14 @@
                                     <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right" style="">
                                         <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
-                                        @can('')
+                                        {{-- @can('')
                                         <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission
                                             Form</a>
-                                        @endcan
-                                        @can('ipd status change')
+                                        @endcan --}}
+                                        {{-- @can('ipd status change')
                                         <a class="dropdown-item" href="#" onclick="statusButton(<?php echo $value->id; ?>)">
                                             <i class="fa fa-file"></i> Status Change</a>
-                                        @endcan
+                                        @endcan --}}
                                         @can('')
 
                                         <a class="dropdown-item" href="{{ route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])}}">

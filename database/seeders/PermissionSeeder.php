@@ -499,6 +499,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'edit ipd charges']);
         Permission::create(['name' => 'delete ipd charges']);
 
+
         // charges package
         Permission::create(['name' => 'charges package']);
 
@@ -747,6 +748,7 @@ class PermissionSeeder extends Seeder
 
         //discount
         Permission::create(['name' => 'discount']);
+        Permission::create(['name' => 'Draft Bill']);
 
 
         //opd physical condition

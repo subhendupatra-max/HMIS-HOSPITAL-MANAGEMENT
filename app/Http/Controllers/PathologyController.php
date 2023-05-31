@@ -443,12 +443,9 @@ class PathologyController extends Controller
         $p_id = base64_decode($id);
         $pathology_patient_test_details = PathologyPatientTest::where('id', $p_id)->first();
         $patient_details = Patient::where('id', $pathology_patient_test_details->patient_id)->first();
-        $pathologyParameterResult = PathologyReport::select('pathology_reports.id', 'pathology_parameters.parameter_name', 'pathology_parameters.reference_range', 'pathology_units.unit_name', 'pathology_reports.report_value', 'pathology_reports.parameter_description')->leftjoin('pathology_parameters', 'pathology_parameters.id', '=', 'pathology_reports.parameter_id')->leftjoin('pathology_units', 'pathology_units.id', '=', 'pathology_reports.unit')->where('pathology_reports.pathology_patient_test_id', $p_id)->get();
-        // dd($pathologyParameterResult);
+        $pathologyParameterResult = PathologyReport::select('pathology_reports.id', 'pathology_parameters.parameter_name', 'pathology_parameters.reference_range', 'pathology_units.unit_name', 'pathology_reports.report_value', 'pathology_reports.parameter_description','pathology_reports.unit')->leftjoin('pathology_parameters', 'pathology_parameters.id', '=', 'pathology_reports.parameter_id')->leftjoin('pathology_units', 'pathology_units.id', '=', 'pathology_reports.unit')->where('pathology_reports.pathology_patient_test_id', $p_id)->get();
 
         $patho_test = PathologyTest::find($pathology_patient_test_details->test_id);
-
-        // dd($patho_test);
 
         return view('pathology.add-pathology-test-result-details', compact('pathology_patient_test_details', 'patient_details', 'pathologyParameterResult', 'patho_test', 'p_id'));
     }
@@ -456,6 +453,10 @@ class PathologyController extends Controller
     public function update_pathology_report(Request $request)
     {
         // dd($request->all());
+        $PathologyPatientTest = PathologyPatientTest::where('id', $request->p_test_id)->first();
+        $PathologyPatientTest->description = $request->description;
+        $PathologyPatientTest->save();
+        
         foreach ($request->id as $key => $value) {
             $oathology_report_details = PathologyReport::where('id', $request->id[$key])->first();
             $oathology_report_details->report_value = $request->report_value[$key];
@@ -477,7 +478,17 @@ class PathologyController extends Controller
     }
     public function change_sample_status(Request $request)
     {
-        $pathology_patient_test = PathologyPatientTest::where('id', $request->id)->update(['test_status' => $request->sample_status]);
+        $pathology_patient_test = PathologyPatientTest::where('id', $request->id)->first();
+        $pathology_patient_test->test_status = $request->sample_status;
+        if($request->sample_status == 3){
+            $pathology_patient_test->report_date = date('Y-m-d');
+        }
+       
+        if($request->sample_status == 2 || $request->sample_status == 1 ){
+            $pathology_patient_test->sample_collected_date = date('Y-m-d');
+        }
+        
+        $pathology_patient_test->save();
         if (true) {
             return redirect()->route('pathology-test-charge')->with('success', 'Sample Collected Successfully');
         } else {
@@ -523,8 +534,7 @@ class PathologyController extends Controller
                 $section_details = IpdDetails::where('case_id', $request->case_id)->first();
                 $pathology_patient_test->ipd_id = $section_details->id;
             }
-            // $path_details = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $request->test_id)->where('test_status', '=', '0')->first();
-            // if ($path_details == null) {
+    
                 $pathology_patient_test->case_id = $request->case_id;
                 $pathology_patient_test->date = $request->date;
                 $pathology_patient_test->section = $case_details->section;
@@ -534,13 +544,20 @@ class PathologyController extends Controller
                 $pathology_patient_test->billing_status = $request->billing_status;
                 $pathology_patient_test->test_status = '0';
                 $pathology_patient_test->save();
-
+                
+                $pthology_parameter = PathologyParameterWithTest::where('pathology_test_id', $request->test_id)->get();
+                
+                foreach($pthology_parameter as $value){
+                    $pathology_report = new pathologyReport();
+                    $pathology_report->pathology_patient_test_id = $pathology_patient_test->id;
+                    $pathology_report->parameter_id = $value->pathology_parameter_id;
+                    $pathology_report->reference_range = $value->test_parameter_name->reference_range;
+                    $pathology_report->unit = $value->test_parameter_name->unitName->unit_name;
+                    $pathology_report->save();
+                }
                 DB::commit();
                 return redirect()->route('pathology-test-charge')->with('success', "Test added successfully for this patient");
-            // }
-            //  else {
-            //     return redirect()->route('pathology-test-charge')->with('success', "Test already added For this patient");
-            // }
+        
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->route('pathology-test-charge')->withErrors(['error' => $th->getMessage()]);
@@ -608,12 +625,12 @@ class PathologyController extends Controller
         $p_id = base64_decode($id);
         $pathology_patient_test_details = PathologyPatientTest::where('id', $p_id)->first();
         $patient_details = Patient::where('id', $pathology_patient_test_details->patient_id)->first();
-        $pathologyParameterResult = PathologyReport::select('pathology_reports.id', 'pathology_parameters.parameter_name', 'pathology_parameters.reference_range', 'pathology_units.unit_name', 'pathology_reports.report_value', 'pathology_reports.parameter_description')->leftjoin('pathology_parameters', 'pathology_parameters.id', '=', 'pathology_reports.parameter_id')->leftjoin('pathology_units', 'pathology_units.id', '=', 'pathology_reports.unit')->where('pathology_reports.pathology_patient_test_id', $p_id)->get();
+        $pathologyParameterResult = PathologyReport::select('pathology_reports.id', 'pathology_parameters.parameter_name', 'pathology_parameters.reference_range', 'pathology_units.unit_name', 'pathology_reports.report_value', 'pathology_reports.parameter_description','pathology_reports.unit')->leftjoin('pathology_parameters', 'pathology_parameters.id', '=', 'pathology_reports.parameter_id')->leftjoin('pathology_units', 'pathology_units.id', '=', 'pathology_reports.unit')->where('pathology_reports.pathology_patient_test_id', $p_id)->get();
 
         $patho_test = PathologyTest::find($pathology_patient_test_details->test_id);
         $header_image = AllHeader::where('header_name', 'pathology_report')->first();
-        $pdf = PDF::loadView('pathology.printReport', compact('header_image', 'pathology_patient_test_details', 'patient_details', 'pathologyParameterResult', 'patho_test'));
-        return $pdf->stream('pathology-report.pdf');
+        return view('pathology.printReport', compact('header_image', 'pathology_patient_test_details', 'patient_details', 'pathologyParameterResult', 'patho_test'));
+        // return $pdf->stream('pathology-report.pdf');
     }
 
     // =====================pathology test============================

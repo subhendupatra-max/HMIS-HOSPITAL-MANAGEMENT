@@ -99,15 +99,21 @@
                                     @if($value->test_status == '0')
                                     
                                     <span class="badge badge-warning" onclick="sample_collection({{ $value->id }})" >Sample Not Collected</span>
+                                    @elseif($value->test_status == '1')
+                                    <span class="badge badge-success" onclick="sample_collection({{ $value->id }})">Sample Collected</span>
+                                    @elseif($value->test_status == '2')
+                                    <span class="badge badge-success" onclick="sample_collection({{ $value->id }})">Sample Collection inconplete</span>
                                     @else
-                                    <span class="badge badge-success">Sample Collected</span>
+                                    <span class="badge badge-success" onclick="sample_collection({{ $value->id }})">Report Done</span>
                                     @endif
                                 </td>
                                 <td>
                                     @can('add pathology test result details')
+                                    @if($value->test_status == '1' || $value->test_status == '2' || $value->test_status == '3')
                                           <a class="btn btn-primary btn-sm" href="{{ route('add-pathology-test-result-details', ['id' => base64_encode($value->id)]) }}">
                                         <i class="fa fa-eye"></i> Add Result
                                     </a>
+                                    @endif
                                     @endcan
                                   
                                     {{-- <div class="card-options">
@@ -134,9 +140,11 @@
                                     </div> --}}
                                 </td>
                                 <td>
+                                    @if($value->test_status == '3')
                                     @can('print pathology result')
                                     <a class="btn btn-primary btn-sm" href="{{ route('print-pathology-result', ['id' => base64_encode($value->id)]) }}">
-                                  <i class="fa fa-print"></i> Print Report
+                                    <i class="fa fa-print"></i> Print Report
+                                    @endif
                               </a>
                               @endcan
                                 </td>
@@ -168,7 +176,7 @@
                                 <option value="0">Sample Not Collected</option>
                                 <option value="1">Sample Collected</option>
                                 <option value="2">Sample Collection incomplete</option>
-                                <option value="2">Report Done</option>
+                                <option value="3">Report Done</option>
                             </select>
                         </div>
                     </div>

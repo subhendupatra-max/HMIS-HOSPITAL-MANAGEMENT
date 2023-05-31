@@ -25,6 +25,9 @@
             </div>
 
         </div>
+        <div class="card-header">
+            <?php echo $__env->make('ipd.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body ">
             <div class="row no-gutters">
@@ -61,6 +64,11 @@
                                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete ipd payment')): ?>
                                                 <a class="dropdown-item" href="<?php echo e(route('delete-ipd-payment-details',['id' => base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                                 <?php endif; ?>
+
+                                                
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-payment-in-ipd')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-payment-in-ipd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Print</a>
+                                            <?php endif; ?>
 
                                             </div>
                                         </div>

@@ -1,6 +1,5 @@
 
-@extends('layouts.layout')
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -13,7 +12,7 @@
                     <div class="d-block">
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            @include('Ipd.include.menu')
+                            <?php echo $__env->make('Ipd.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
                     </div>
                 </div>
@@ -21,14 +20,14 @@
         </div>
 
         <div class="card-body">
-            <form action="{{ route('save-prescription-in-ipd') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+            <form action="<?php echo e(route('save-prescription-in-ipd')); ?>" method="POST" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
                 <div class="row">
 
-                    <input type="hidden" name="ipd_id" value="{{ $ipd_id }}" />
+                    <input type="hidden" name="ipd_id" value="<?php echo e($ipd_id); ?>" />
                     <input type="hidden" name="section" value="IPD" />
-                    <input type="hidden" name="patient_id" value="{{ $ipd_details->patient_id }}" />
-                    <input type="hidden" name="case_id" value="{{ $ipd_details->case_id }}" />
+                    <input type="hidden" name="patient_id" value="<?php echo e($ipd_details->patient_id); ?>" />
+                    <input type="hidden" name="case_id" value="<?php echo e($ipd_details->case_id); ?>" />
                     <!-- <div class="border-bottom border-top mt-2"> -->
                     <!-- <h6>Medicine :</h6> -->
                     <div class="table-responsive">
@@ -106,17 +105,31 @@
                         <div class="form-group col-md-6">
                             <label for="date" class="form-label">Date <span class="text-danger">*</span></label>
                             <input type="datetime-local" class="form-control" id="date" name="date" required>
-                            @error('date')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="note" class="form-label">Note </label>
                             <input name="note" id="note" class="form-control" />
-                            @error('note')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <?php $__errorArgs = ['note'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
 
@@ -143,9 +156,9 @@
                         <td>
                             <select class="form-control select2-show-search" onchange="getMedicine_name(this.value,${i})"  name="medicine_catagory_id[]" id="medicine_catagory_id${i}" required>
                                     <option value=" ">Select Medicine Category</option>
-                                    @foreach ($medicine_catagory as $item)
-                                    <option value="{{$item->id}}">{{$item->medicine_catagory_name}}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $medicine_catagory; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($item->id); ?>"><?php echo e($item->medicine_catagory_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </td>
                         <td>
@@ -161,17 +174,17 @@
                         <td>
                             <select name="dose_interval[]" id="dose_interval${i}" class="form-control select2-show-search">
                                 <option value="">Select Dose Interval</option>
-                                @foreach ($DoseInterval as $item)
-                                    <option value="{{$item->dose_interval}}">{{$item->dose_interval}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $DoseInterval; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($item->dose_interval); ?>"><?php echo e($item->dose_interval); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </td>
                         <td>
                             <select name="dose_duration[]" id="dose_duration${i}" class="form-control select2-show-search">
                                 <option value="">Select Dose Duration</option>
-                                @foreach ($DoseDuration as $item)
-                                    <option value="{{$item->dose_duration}}">{{$item->dose_duration}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $DoseDuration; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($item->dose_duration); ?>"><?php echo e($item->dose_duration); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </td>
                         <td>
@@ -194,9 +207,9 @@
                         <td>
                             <select class="form-control select2-show-search" name="pathology_test_id[]" id="pathology_test_id${j}" required>
                                     <option value=" ">Select test</option>
-                                    @foreach ($pathology_test as $item)
-                                    <option value="{{$item->id}}">{{$item->test_name}}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $pathology_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($item->id); ?>"><?php echo e($item->test_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </td>
                         <td>
@@ -218,9 +231,9 @@
                         <td>
                             <select class="form-control select2-show-search" name="radiology_test_id[]" id="radiology_test_id${k}" required>
                                     <option value=" ">Select test</option>
-                                    @foreach ($radiology_test as $item)
-                                    <option value="{{$item->id}}">{{$item->test_name}}</option>
-                                    @endforeach
+                                    <?php $__currentLoopData = $radiology_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($item->id); ?>"><?php echo e($item->test_name); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                         </td>
                         <td>
@@ -254,10 +267,10 @@
         var div_data = '';
         var div_dataa = '';
         $.ajax({
-            url: "{{ route('find-medicine-name-by-medicine-catagory-dose') }}",
+            url: "<?php echo e(route('find-medicine-name-by-medicine-catagory-dose')); ?>",
             type: "POST",
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '<?php echo e(csrf_token()); ?>',
                 medicine_catagory_id: cat_id,
             },
 
@@ -287,10 +300,10 @@
 
             $("#dosage").html('<option value=" ">Select Dose...</option>');
             $.ajax({
-                url: "{{ route('find-dosage-by-medicine-catagory') }}",
+                url: "<?php echo e(route('find-dosage-by-medicine-catagory')); ?>",
                 type: "POST",
                 data: {
-                    _token: '{{ csrf_token() }}',
+                    _token: '<?php echo e(csrf_token()); ?>',
                     medicine_catagory_id_for_dose: medicine_catagory_id,
                 },
 
@@ -307,4 +320,5 @@
     });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/IPD/prescription/add-prescription.blade.php ENDPATH**/ ?>

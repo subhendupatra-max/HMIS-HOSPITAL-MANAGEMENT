@@ -169,7 +169,7 @@
                                             <td>{{ @$value->parameter_name }}</td>
                                             <td>{!! @$value->reference_range !!}
                                             </td>
-                                            <td>{!! @$value->unit_name !!}</td>
+                                            <td>{!! @$value->unit !!}</td>
                                             <td><input type="text" name="report_value[]" value="{{ @$value->report_value }}" required="" /></td>
                                             <td><textarea class="form-control" name="parameter_description[]">{{ @$value->parameter_description }}</textarea></td>
                                         </tr>

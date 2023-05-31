@@ -38,7 +38,7 @@
                                             <th>SL No.</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
-                                            <th>Duration (In Seconds)</th>
+                                            <th>Duration (In Min)</th>
 
                                         </tr>
                                     </thead>
@@ -81,14 +81,14 @@
                                                 @endif
                                                 @endif
                                             </td>
-                                            <td>{{ @$value->duration }}</td>
+                                            <td>{{ @($value->duration/60) }}</td>
 
                                         </tr>
                                         @endforeach
                                         @endif
                                         @if(@$oxygen_monitering_last->end_time != null ||
                                         !isset($oxygen_monitering_last))
-                                        <tr>
+                                        <tr style="background-color: #d3f9ea">
                                             <td>New Start</td>
                                             <td>
                                                 <form action="{{ route('start-oxygen-in-ipd') }}" method="POST">

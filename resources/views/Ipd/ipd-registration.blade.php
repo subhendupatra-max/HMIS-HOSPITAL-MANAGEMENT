@@ -278,8 +278,8 @@
                             <hr class="hr_line">
                             <div class="row">
                                 <div class="col-md-6 ipd-registrationproadd">
-                                    <label for="icd_code" class="form-label">Final Diagnosis at the time of Admission </label>
-                                    <select name="icd_code_at_the_time_of_admission" class="form-control" id="icd_code_at_the_time_of_admission" required>
+                                    <label for="icd_code" class="form-label"> Diagnosis at the time of Admission </label>
+                                    <select name="icd_code_at_the_time_of_admission" class="form-control select2-show-search" id="icd_code_at_the_time_of_admission" required>
                                         <option value="">Select...</option>
                                         @foreach ($icd_code as $icd_codes)
                                         <option value="{{ $icd_codes->id }}"> {{ $icd_codes->diagonasis_name }}({{ $icd_codes->icd_code }})

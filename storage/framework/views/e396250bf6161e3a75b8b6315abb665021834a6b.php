@@ -170,7 +170,7 @@
                                             <td><?php echo @$value->reference_range; ?>
 
                                             </td>
-                                            <td><?php echo @$value->unit_name; ?></td>
+                                            <td><?php echo @$value->unit; ?></td>
                                             <td><input type="text" name="report_value[]" value="<?php echo e(@$value->report_value); ?>" required="" /></td>
                                             <td><textarea class="form-control" name="parameter_description[]"><?php echo e(@$value->parameter_description); ?></textarea></td>
                                         </tr>

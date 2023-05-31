@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\District;
 use App\Models\Patient;
@@ -10,6 +10,7 @@ use App\Models\TpaManagement;
 use App\Models\Referral;
 use App\Models\Department;
 use App\Models\IpdDetails;
+use App\Models\MedicineBilling;
 use App\Models\CaseReference;
 use App\Models\OpdDetails;
 use App\Models\OpdVisitDetails;
@@ -56,7 +57,7 @@ class IpdController extends Controller
 {
     public function index()
     {
-        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'no')->where('ins_by', 'ori')->get();
+        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'no')->where('ins_by', 'ori')->orderBy('appointment_date','DESC')->get();
         return view('Ipd.ipd-patients-details', compact('ipd_patient_list'));
     }
 
@@ -101,9 +102,23 @@ class IpdController extends Controller
         $PathologyTestDetails = PathologyPatientTest::where('case_id', $ipd_details->case_id)->get();
         //  dd($patient_discharge_details);
         $RadiologyTestDetails = RadiologyPatientTest::where('case_id', $ipd_details->case_id)->get();
-        // dd($RadiologyTestDetails);
 
-        return view('Ipd.ipd-profile', compact('paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'PhysicalDetails', 'patient_discharge_details'));
+        $chargeCategoriesamount = DB::table('patient_charges')
+                                ->select('charges_catagories.charges_catagories_name', DB::raw('SUM(patient_charges.amount) as total_amount'))
+                                ->join('charges_catagories','patient_charges.charge_category','=','charges_catagories.id')
+                                ->groupBy('charges_catagories.charges_catagories_name')
+                                 ->where('case_id',$ipd_details->case_id)
+                                ->get();
+        $p_chart_name = '';
+        $p_chart_value = '';
+        foreach($chargeCategoriesamount as $value){
+            $p_chart_name .= '"'.$value->charges_catagories_name.'",';
+            $p_chart_value .= '"'.$value->total_amount.'",';
+        }
+
+        $total_charge_amount = PatientCharge::where('case_id',$ipd_details->case_id)->sum('amount');
+
+        return view('Ipd.ipd-profile', compact('p_chart_value','p_chart_name','paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'PhysicalDetails', 'patient_discharge_details','total_charge_amount'));
     }
 
     public function find_doctor_and_ward_by_department_in_opd(Request $request)
@@ -350,11 +365,8 @@ class IpdController extends Controller
     public function charge_list_in_ipd($id = null)
     {
         $ipd_id = base64_decode($id);
-
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
-
-        $ipd_charges_details = PatientCharge::where('ins_by', 'ori')->where('case_id', $ipd_details->case_id)->get();
-
+        $ipd_charges_details = PatientCharge::where('ins_by', 'ori')->where('case_id', $ipd_details->case_id)->orderBy('charges_date','DESC')->get();
         $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
         // dd($ipd_details);
         return view('Ipd.charges.charges-list', compact('ipd_id', 'ipd_details', 'ipd_charges_details', 'ipd_patient_details'));
@@ -458,6 +470,21 @@ class IpdController extends Controller
             }
             DB::commit();
             return redirect()->route('charges-list-ipd', ['id' => base64_encode($request->ipd_id)])->with('success', "Charges Added Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
+    }
+    public function delete_ipd_charges($charge_id,$id)
+    {
+        try {
+            DB::beginTransaction();
+            $charge_id = base64_decode($charge_id);
+            $ipd_id = base64_decode($id);
+            $patient_charge = PatientCharge::find($charge_id);
+            $patient_charge->delete();
+            DB::commit();
+            return redirect()->route('charges-list-ipd', ['id' => base64_encode($ipd_id)])->with('success', "Charges delete Successfully");
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);
@@ -640,5 +667,15 @@ class IpdController extends Controller
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
         return view('Ipd._print.ipd-admission-form', compact('ipd_details', 'header_image')) . redirect('ipd/ipd-profile/ipd-profile/' . base64_encode($ipd_id));
+    }
+
+    public function ipd_draft_bill($ipd_id)
+    {
+        $ipd_id = base64_decode($ipd_id);
+        $ipd_details = IpdDetails::where('id', $ipd_id)->first();
+        $patient_charges = PatientCharge::where('case_id',$ipd_details->case_id)->get();
+        $medicine = MedicineBilling::where('case_id',$ipd_details->case_id)->get();
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+        return view('Ipd._print.draft-bill', compact('ipd_details', 'header_image','patient_charges','medicine'));
     }
 }

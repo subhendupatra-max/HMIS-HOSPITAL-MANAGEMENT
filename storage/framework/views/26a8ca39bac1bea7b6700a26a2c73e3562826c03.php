@@ -65,101 +65,14 @@ unset($__errorArgs, $__bag); ?>
                                 </tr>
                             </thead>
                             <tbody id="chargeTable">
-                                <?php $i = 0; ?>
-                                <?php if(@$pathology_charge[0]->id != null): ?>
-                                <?php $__currentLoopData = $pathology_charge; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <?php    //405
                                 
-                                $st_charges = DB::table('charges_with_charges_types')->where('charge_type_id',$patient_type_id->id)->where('charge_id',$value->test_details->charges->id)->first();
-                                ?>
-                                    <tr id="row<?php echo e($i); ?>">
-                                        <td>
-                                            <select class="form-control select2-show-search" name="charge_category[]" id="charge_category<?php echo e($i); ?>">
-                                                <option value="1">Pathology</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category<?php echo e($i); ?>"  >
-                                                <option value="<?php echo e($value->test_details->charges_sub_catagory->id); ?>"><?php echo e($value->test_details->charges_sub_catagory->charges_sub_catagories_name); ?></option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control select2-show-search"  name="charge_name[]" id="charge_name<?php echo e($i); ?>">
-                                                <option value="<?php echo e($value->test_details->charges->id); ?>"><?php echo e($value->test_details->charges->charges_name); ?></option>
-                                            </select>
-                                        </td>
-
-                                        <td>
-                                            <input class="form-control" name="standard_charges[]" onkeyup="getamountwithtax(<?php echo e($i); ?>)" id="standard_charges<?php echo e($i); ?>" value="<?php echo e($st_charges->standard_charges); ?>" />
-                                        </td>
-                                        <td>
-                                            <input class="form-control" value="1" readonly   name="qty[]" id="qty<?php echo e($i); ?>" />
-                                        </td>
-                                        <td>
-                                            <input class="form-control" value="0" readonly  name="tax[]" id="tax<?php echo e($i); ?>" />
-                                        </td>
-                                        <td>
-                                            <input class="form-control" name="amount[]" readonly id="amount<?php echo e($i); ?>" value="<?php echo e($st_charges->standard_charges); ?>" />
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm"  type="button"
-                                                    onclick="rowRemove(<?php echo e($i); ?>)"><i class="fa fa-times"></i></button>
-                                        </td>
-                                    </tr>
-                                    <?php $i++; ?>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php endif; ?>
-                                
-                                <?php if($radiology_charge[0]->id != null): ?>
-                                <?php $__currentLoopData = $radiology_charge; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <?php    //405
-                                $st_charges_r = DB::table('charges_with_charges_types')->where('charge_type_id',$patient_type_id->id)->where('charge_id',$value->test_details->charges->id)->first();
-                                ?>
-                                    <tr id="row<?php echo e($i); ?>">
-                                      
-                                        <td>
-                                            <select class="form-control select2-show-search"  name="charge_category[]" id="charge_category<?php echo e($i); ?>">
-                                                <option value="2">Radiology</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control select2-show-search" name="charge_sub_category[]" id="charge_sub_category<?php echo e($i); ?>"  >
-                                                <option value="<?php echo e($value->test_details->charges_sub_catagory->id); ?>"><?php echo e($value->test_details->charges_sub_catagory->charges_sub_catagories_name); ?></option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select class="form-control select2-show-search"  name="charge_name[]" id="charge_name<?php echo e($i); ?>">
-                                                <option value="<?php echo e($value->test_details->charges->id); ?>"><?php echo e($value->test_details->charges->charges_name); ?></option>
-                                            </select>
-                                        </td>
-
-                                        <td>
-                                            <input class="form-control" name="standard_charges[]" value="<?php echo e($st_charges_r->standard_charges); ?>" onkeyup="getamountwithtax(<?php echo e($i); ?>)"  id="standard_charges<?php echo e($i); ?>" />
-                                        </td>
-                                        <td>
-                                            <input class="form-control" value="1" readonly  name="qty[]" id="qty<?php echo e($i); ?>" />
-                                        </td>
-                                        <td>
-                                            <input class="form-control" value="0" readonly  name="tax[]" id="tax<?php echo e($i); ?>" />
-                                        </td>
-                                        <td>
-                                            <input class="form-control" name="amount[]" value="<?php echo e($st_charges_r->standard_charges); ?>" readonly id="amount<?php echo e($i); ?>" />
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm"  type="button"
-                                                    onclick="rowRemove(<?php echo e($i); ?>)"><i class="fa fa-times"></i></button>
-                                        </td>
-                                    </tr>
-                                    <?php $i++; ?>
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
                 </div>
        
 <div class="btn-list p-3">
-    <button class="btn btn-primary btn-sm float-right mr-2" type="button" onclick="gettotal()"><i class="fa fa-file-invoice"></i> Billing</button>
+    
     
     <button class="btn btn-primary btn-sm float-right mr-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
     

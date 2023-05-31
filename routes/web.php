@@ -2504,10 +2504,17 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
             Route::get('add-ipd-charges/{id?}', [IpdController::class, 'add_charges_ipd'])->name('add-ipd-charges');
             Route::post('add-new-charges-ipd', [IpdController::class, 'save_charges_ipd'])->name('add-new-charges-ipd');
         });
+        Route::group(['middleware' => ['permission:delete ipd charges']], function () {
+            Route::get('delete-ipd-charges/{charge_id?}/{id?}', [IpdController::class, 'delete_ipd_charges'])->name('delete-ipd-charges');
+        });
         Route::group(['middleware' => ['permission:edit ipd charges']], function () {
             Route::get('edit-ipd-charges/{id?}/{charge_id?}', [IpdController::class, 'edit_charges_ipd'])->name('edit-ipd-charges');
             Route::post('add-new-charges-ipd', [IpdController::class, 'save_charges_ipd'])->name('add-new-charges-ipd');
         });
+        Route::group(['middleware' => ['permission:Draft Bill']], function () {
+            Route::get('ipd-draft-bill/{id?}', [IpdController::class, 'ipd_draft_bill'])->name('ipd-draft-bill');
+        });
+
     });
     //================================= Ipd charges ====================================
 

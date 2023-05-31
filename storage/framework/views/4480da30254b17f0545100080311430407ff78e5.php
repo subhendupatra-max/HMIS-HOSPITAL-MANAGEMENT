@@ -89,15 +89,21 @@
                                     <?php if($value->test_status == '0'): ?>
                                     
                                     <span class="badge badge-warning" onclick="sample_collection(<?php echo e($value->id); ?>)" >Sample Not Collected</span>
+                                    <?php elseif($value->test_status == '1'): ?>
+                                    <span class="badge badge-success" onclick="sample_collection(<?php echo e($value->id); ?>)">Sample Collected</span>
+                                    <?php elseif($value->test_status == '2'): ?>
+                                    <span class="badge badge-success" onclick="sample_collection(<?php echo e($value->id); ?>)">Sample Collection inconplete</span>
                                     <?php else: ?>
-                                    <span class="badge badge-success">Sample Collected</span>
+                                    <span class="badge badge-success" onclick="sample_collection(<?php echo e($value->id); ?>)">Report Done</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add pathology test result details')): ?>
+                                    <?php if($value->test_status == '1' || $value->test_status == '2' || $value->test_status == '3'): ?>
                                           <a class="btn btn-primary btn-sm" href="<?php echo e(route('add-pathology-test-result-details', ['id' => base64_encode($value->id)])); ?>">
                                         <i class="fa fa-eye"></i> Add Result
                                     </a>
+                                    <?php endif; ?>
                                     <?php endif; ?>
                                   
                                     
@@ -107,9 +113,11 @@
                                         
                                 </td>
                                 <td>
+                                    <?php if($value->test_status == '3'): ?>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print pathology result')): ?>
                                     <a class="btn btn-primary btn-sm" href="<?php echo e(route('print-pathology-result', ['id' => base64_encode($value->id)])); ?>">
-                                  <i class="fa fa-print"></i> Print Report
+                                    <i class="fa fa-print"></i> Print Report
+                                    <?php endif; ?>
                               </a>
                               <?php endif; ?>
                                 </td>
@@ -141,7 +149,7 @@
                                 <option value="0">Sample Not Collected</option>
                                 <option value="1">Sample Collected</option>
                                 <option value="2">Sample Collection incomplete</option>
-                                <option value="2">Report Done</option>
+                                <option value="3">Report Done</option>
                             </select>
                         </div>
                     </div>

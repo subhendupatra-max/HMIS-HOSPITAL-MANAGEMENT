@@ -1,5 +1,5 @@
-@extends('layouts.layout')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header d-block">
@@ -11,27 +11,34 @@
                     <div class="d-block">
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            @include('ipd.include.menu')
+                            <?php echo $__env->make('ipd.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <form method="post" action="{{ route('add-new-charges-ipd') }}">
-            @csrf
-            <input type="hidden" name="case_id" value="{{ $ipd_details->case_id }}" />
+        <form method="post" action="<?php echo e(route('add-new-charges-ipd')); ?>">
+            <?php echo csrf_field(); ?>
+            <input type="hidden" name="case_id" value="<?php echo e($ipd_details->case_id); ?>" />
             <input type="hidden" name="section" value="IPD" />
-            <input type="hidden" name="ipd_id" value="{{ $ipd_details->id }}" />
-            <input type="hidden" name="patient_id" value="{{ $ipd_details->patient_id }}" />
+            <input type="hidden" name="ipd_id" value="<?php echo e($ipd_details->id); ?>" />
+            <input type="hidden" name="patient_id" value="<?php echo e($ipd_details->patient_id); ?>" />
             <div class="card-body">
                 <div class="col-md-12 mb-2">
                     <div class="row">
                         <div class="col-md-4">
                             <label class="form-label"> Date <span class="text-danger">*</span></label>
-                            <input type="datetime-local" required class="form-control" name="date" value="{{ date('Y-m-d H:i',strtotime($patient_charge_details->charges_date)) }}" />
-                            @error('date')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                            <input type="datetime-local" required class="form-control" name="date" value="<?php echo e(date('Y-m-d H:i',strtotime($patient_charge_details->charges_date))); ?>" />
+                            <?php $__errorArgs = ['date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                            <span class="text-danger"><?php echo e($message); ?></span>
+                            <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
                 </div>
@@ -41,11 +48,11 @@
                         var div_data = '';
                         var sel = '';
                         $.ajax({
-                            url: "{{ route('get-subcategory-by-category') }}",
+                            url: "<?php echo e(route('get-subcategory-by-category')); ?>",
                             type: "post",
                             data: {
                                 categoryId: charge_catagory,
-                                _token: '{{ csrf_token() }}',
+                                _token: '<?php echo e(csrf_token()); ?>',
                             },
                             dataType: 'json',
                             success: function(res) {
@@ -106,12 +113,12 @@
                         var div_data = '';
                         sel = ''
                         $.ajax({
-                            url: "{{ route('get-charge-name') }}",
+                            url: "<?php echo e(route('get-charge-name')); ?>",
                             type: "post",
                             data: {
                                 chargeCategory: charge_category,
                                 chargeSubCategory: charge_sub_category,
-                                _token: '{{ csrf_token() }}',
+                                _token: '<?php echo e(csrf_token()); ?>',
                             },
                             dataType: 'json',
                             success: function(res) {
@@ -130,8 +137,8 @@
                      
                 
                     }
-                                getSub_cate_by_cate({{ $patient_charge_details->charge_category }},{{ $patient_charge_details->charge_sub_category }});
-                                get_charges_name({{ $patient_charge_details->charge_sub_category }},{{ $patient_charge_details->charge_category }},{{ $patient_charge_details->charge_name }});
+                                getSub_cate_by_cate(<?php echo e($patient_charge_details->charge_category); ?>,<?php echo e($patient_charge_details->charge_sub_category); ?>);
+                                get_charges_name(<?php echo e($patient_charge_details->charge_sub_category); ?>,<?php echo e($patient_charge_details->charge_category); ?>,<?php echo e($patient_charge_details->charge_name); ?>);
                               
                             </script>
                             <tbody id="chargeTable">
@@ -140,13 +147,13 @@
                                     <td>
                                 <select class="form-control select2-show-search" onchange="getSub_cate_by_cate(this.value)" name="charge_category" id="charge_category">
                                             <option value="">Select One..</option>
-                                            @foreach ($charge_category as $value)
-                                            <option value="{{ $value->id }}" {{ $value->id == $patient_charge_details->charge_category ? 'selected':'' }}>{{ $value->charges_catagories_name }}</option>
-                                            @endforeach
+                                            <?php $__currentLoopData = $charge_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($value->id); ?>" <?php echo e($value->id == $patient_charge_details->charge_category ? 'selected':''); ?>><?php echo e($value->charges_catagories_name); ?></option>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control select2-show-search" name="charge_sub_category" id="charge_sub_category" onchange="get_charges_name(this.value,{{ $patient_charge_details->charge_category }},{{ $patient_charge_details->charge_name }})">
+                                        <select class="form-control select2-show-search" name="charge_sub_category" id="charge_sub_category" onchange="get_charges_name(this.value,<?php echo e($patient_charge_details->charge_category); ?>,<?php echo e($patient_charge_details->charge_name); ?>)">
                                             <option value="">Select One..</option>
                                         </select>
                                     </td>
@@ -168,10 +175,7 @@
                                     <td>
                                         <input class="form-control" name="amount" id="amount" />
                                     </td>
-                                    {{-- <td>
-                                            <button class="btn btn-danger btn-sm"  type="button"
-                                                    onclick="rowRemove()"><i class="fa fa-times"></i></button>
-                                        </td> --}}
+                                    
                                 </tr>
 
                             </tbody>
@@ -209,12 +213,12 @@
                         $('#standard_charges').empty();
                 alert(charge_name);
                         $.ajax({
-                            url: "{{ route('get-charge-amount') }}",
+                            url: "<?php echo e(route('get-charge-amount')); ?>",
                             type: "post",
                             data: {
                                 chargeName: charge_name,
-                                ipd_id: {{ $ipd_details->id }},
-                                _token: '{{ csrf_token() }}',
+                                ipd_id: <?php echo e($ipd_details->id); ?>,
+                                _token: '<?php echo e(csrf_token()); ?>',
                             },
                             dataType: 'json',
                             success: function(res) {
@@ -223,4 +227,5 @@
                         });
                     }
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/Ipd/charges/edit-charges.blade.php ENDPATH**/ ?>

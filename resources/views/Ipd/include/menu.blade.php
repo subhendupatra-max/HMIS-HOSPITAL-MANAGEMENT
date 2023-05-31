@@ -24,11 +24,11 @@
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-radiology-investigation' ? 'active' : '' }}" href="{{ route('ipd-radiology-investigation', ['id' => base64_encode($ipd_details->id)]) }}"> <i class="fa fa-x-ray"></i> Radiology Investigation</a>
     @endcan
     <a class="dropdown-item {{ Request::segment(2) == 'ipd-timeline' ? 'active' : '' }}" href="{{ route('timeline-lisitng-in-ipd', ['ipd_id' => base64_encode($ipd_details->id)]) }}"><i class="far fa-calendar-check"></i> Timeline</a>
-    <a class="dropdown-item {{ Request::segment(2) == 'ipd-operation' ? 'active' : '' }}" href="{{ route('ipd-operation-in-ipd', ['id' => base64_encode($ipd_details->id)]) }}"><i class="far fa-calendar-check"></i> Operation</a>
+    <a class="dropdown-item {{ Request::segment(2) == 'ipd-operation' ? 'active' : '' }}" href="{{ route('ipd-operation-in-ipd', ['id' => base64_encode($ipd_details->id)]) }}"><i class="far fa-calendar-check"></i>  Operation</a>
 
-    <a class="dropdown-item {{ Request::segment(2) == 'ipd-blood-details' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-ipd', ['id' => base64_encode($ipd_details->id)]) }}"><i class="fas fa-tint"></i>Blood Details</a>
+    <a class="dropdown-item {{ Request::segment(2) == 'ipd-blood-details' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-ipd', ['id' => base64_encode($ipd_details->id)]) }}"><i class="fas fa-tint"></i> Blood Details</a>
  
-    <a class="dropdown-item {{ Request::segment(2) == 'ipd-blood-details' ? 'active' : '' }}" href="{{ route('prescription-lisitng-in-ipd', ['id' => base64_encode($ipd_details->id)]) }}"><i class="fas fa-tint"></i>Prescription</a>
+    <a class="dropdown-item {{ Request::segment(2) == 'ipd-blood-details' ? 'active' : '' }}" href="{{ route('prescription-lisitng-in-ipd', ['id' => base64_encode($ipd_details->id)]) }}"><i class="fa fa-prescription"></i> Prescription</a>
  
 
 

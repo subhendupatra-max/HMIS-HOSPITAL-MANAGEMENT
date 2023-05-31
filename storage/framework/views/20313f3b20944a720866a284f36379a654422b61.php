@@ -29,4 +29,5 @@
 
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-blood-issue' ? 'active' : ''); ?>" href="<?php echo e(route('blood-bank-detials-in-opd', ['id' => base64_encode($opd_patient_details->id)])); ?>"><i class="fas fa-tint"></i> Blood Details</a>
 
+<a class="dropdown-item <?php echo e(Request::segment(2) == 'opd-blood-issue' ? 'active' : ''); ?>" href="<?php echo e(route('prescription-lisitng-in-opd', ['id' => base64_encode($opd_patient_details->id)])); ?>"><i class="fas fa-tint"></i> Prescription</a>
 <?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/OPD/include/menu.blade.php ENDPATH**/ ?>

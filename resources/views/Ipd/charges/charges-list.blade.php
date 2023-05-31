@@ -9,6 +9,9 @@
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
+                        @can('Draft Bill')
+                        <a href="{{ route('ipd-draft-bill', ['id' => base64_encode($ipd_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-file-invoice"></i> Draft Bill </a>
+                        @endcan
                         @can('add ipd charges')
                         <a href="{{ route('add-ipd-charges', ['id' => base64_encode($ipd_id)]) }}" class="btn btn-primary btn-sm"><i class="fa fa-money-bill"></i> Add Charges </a>
                         @endcan
@@ -61,26 +64,18 @@
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
-
-                                            <a class="dropdown-item" href="{{ route('opd-bill-details', ['bill_id' => base64_encode($value->id)]) }}">
-                                                <i class="fa fa-eye"></i> View
-                                            </a>
-
-                                            <a class="dropdown-item" href="">
-                                                <i class="fa fa-print"></i> Print
-                                            </a>
-
-                                            @can('edit opd charges')
-                                            <a class="dropdown-item" href="{{route('edit-opd-charges',['id'=>base64_encode($ipd_id),'charge_id'=>base64_encode($value->id)])}}">
+                                            @if($value->billing_status == '0')
+                                            {{-- @can('edit ipd charges')
+                                            <a class="dropdown-item" href="{{route('edit-ipd-charges',['id'=>base64_encode($ipd_id),'charge_id'=>base64_encode($value->id)])}}">
                                                 <i class="fa fa-edit"></i> Edit
                                             </a>
-                                            @endcan
-                                            @can('delete opd billing')
-                                            <a class="dropdown-item" href="{{route('delete-opd-bill',['bill_id'=>$value->id])}}">
+                                            @endcan --}}
+                                            @can('delete ipd charges')
+                                            <a class="dropdown-item" href="{{route('delete-ipd-charges',['charge_id'=>base64_encode($value->id),'id'=>base64_encode($ipd_id)])}}">
                                                 <i class="fa fa-trash"></i> Delete
                                             </a>
                                             @endcan
-
+                                            @endif
                                         </div>
                                     </div>
                                 </td>
