@@ -57,6 +57,9 @@ class IpdDetails extends Model
     public function TpaManagement(){
         return $this->belongsTo(TpaManagement::class, 'tpa_organization', 'id');
     }
+    public function admissionTimeDiagnosis(){
+        return $this->belongsTo(Diagonasis::class, 'icd_code_at_the_time_of_admission', 'id');
+    }
    
     
 }

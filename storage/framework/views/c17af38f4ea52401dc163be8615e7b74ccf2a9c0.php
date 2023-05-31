@@ -28,4 +28,4 @@
 
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('blood-bank-detials-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fas fa-tint"></i> Blood Details</a>
 
-<a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('prescription-lisitng-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fas fa-tint"></i> Prescription</a><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/emg/include/menu.blade.php ENDPATH**/ ?>
+<a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('prescription-lisitng-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa  fa-file-prescription "></i> Prescription</a><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/emg/include/menu.blade.php ENDPATH**/ ?>

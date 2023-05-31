@@ -320,9 +320,13 @@ class OpdController extends Controller
         $RadiologyTestDetails = RadiologyPatientTest::where('case_id', $opd_patient_details->case_id)->get();
         // $opd_visit_details = OpdVisitDetails::where('opd_details_id',$opd_id)->get();
 
+        $blood_details = BloodIssue::where('patient_id', $opd_patient_details->patient_id)->get();
+        $components_details = BloodComponentIssue::where('patient_id', $opd_patient_details->patient_id)->get();
+        // dd( $components_details);
+
         //dd($PathologyTestDetails);
         $opd_visit_details = OpdVisitDetails::where('opd_details_id', $opd_id)->first();
-        return view('OPD.opd-patient-profile', compact('billing_amount', 'opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount', 'PathologyTestDetails', 'RadiologyTestDetails'));
+        return view('OPD.opd-patient-profile', compact('billing_amount', 'opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'blood_details', 'components_details'));
     }
     public function prescription_print($id)
     {

@@ -66,8 +66,12 @@
                                             <a class="dropdown-item" href="{{ route('delete-prescription-in-emg',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
                                             @endcan
 
-                                            @can('print-payment-in-emg')
+                                            <!-- @can('print-payment-in-emg')
                                             <a class="dropdown-item" href="{{ route('print-payment-in-emg',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Print</a>
+                                            @endcan -->
+
+                                            @can('print-prescription-in-emg')
+                                            <a class="dropdown-item" href="{{ route('print-prescription-in-emg',['id'=> base64_encode($item->id), 'emg_id'=> base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-trash"></i> Print</a>
                                             @endcan
 
                                         </div>

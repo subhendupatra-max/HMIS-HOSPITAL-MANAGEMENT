@@ -530,12 +530,15 @@ $login_details = DB::table('users')
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">Inventory</a></li>
+                        @if (auth()->user()->can('appointment main'))
+                        <li><a href="{{ route('all-appointments-details') }}">Appointment</a></li>
+                        @endif
                         <li class="dropdown-submenu">
                             <a tabindex="-1" href="#">Birth and Death record<i class="fa fa-chevron-right"></i></a>
                             <ul class="dropdown-menu">
 
                                 <li><a href="#">Birth Record</a></li>
-                                <li><a href="#">Death Record</a></li>
+                                <li><a href="{{ route('death-record') }}">Death Record</a></li>
 
                             </ul>
                         </li>

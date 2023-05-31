@@ -112,4 +112,45 @@ class ComponentsController extends Controller
 
         return view('Blood_Bank.blood-components.blood-components-issue', compact('issed_by', 'blood_groups', 'getBag', 'blood_details', 'blood_groups_id', 'components_id', 'all_patient', 'patient_details_information'));
     }
+
+    // listing_blood_components_details
+    public function listing_blood_components_details()
+    {
+        $blood_component_issue_details = BloodComponentIssue::all();
+
+        return view('Blood_Bank.listing-blood-components-issue', compact('blood_component_issue_details'));
+    }
+
+    public function update_blood_components_issue_details(Request $request)
+    {
+        // dd('hii');
+        // dd($request->all());
+
+        $blood_components_issue = BloodComponentIssue::where('id', $request->blood_components_id);
+        $blood_components_issue->patient_id         = $request->patient_id;
+        $blood_components_issue->components_id      = $request->components_id;
+        $blood_components_issue->blood_group_id     = $request->blood_group_id;
+        $blood_components_issue->issue_date         = $request->issue_date;
+        $blood_components_issue->issed_by           = $request->issed_by;
+        $blood_components_issue->reference_name     = $request->reference_name;
+        $blood_components_issue->technician         = $request->technician;
+        $blood_components_issue->blood_group        = $request->blood_group;
+        $blood_components_issue->bag                = $request->bag;
+        $blood_components_issue->components_qty      = $request->components_qty;
+        $blood_components_issue->note               = $request->note;
+        $status = $blood_components_issue->save();
+
+        if ($status) {
+            return redirect()->route('listing-blood-components-details', ['id' => base64_encode($request->blood_group_id)])->with('success', 'Blood Components Issued Updated Successfully.');
+        } else {
+            return back()->withErrors(['error' => 'Unable to added, Try Again Later.']);
+        }
+    }
+
+    public function delete_components_issue_details($id)
+    {
+        $id = base64_decode($id);
+        BloodComponentIssue::where('id', $id)->first()->delete();
+        return redirect()->back()->with('success', 'Blood Components Issued Deleted Successfully.');
+    }
 }
