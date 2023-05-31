@@ -92,7 +92,7 @@
             </tr>
             <tr>
                 <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b> IPD no. : {{ $patient_discharge_details->ipd_prefix }}/{{ $patient_discharge_details->ipd_id }}</b></td>
-                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Discharge Date:{{ $patient_discharge_details->patient_source }} Source Id:{{ $patient_discharge_details->patient_source_id}}</b></td>
+                <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Discharge Date:{{ $patient_discharge_details-> }} Source Id:{{ $patient_discharge_details->patient_source_id}}</b></td>
 
             </tr>
         </table>
