@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class OpdPrescription extends Model
 {
     use HasFactory;
+
+
+    
+
 }
