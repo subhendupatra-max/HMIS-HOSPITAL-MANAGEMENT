@@ -168,7 +168,7 @@
                 </tr>
                 <tr>
                     <td height="00px" valign="top" style="border-right-style: dotted;border-width: 1px;">
-                        <b></b>
+                       
                         <div style="background:#FFF;margin-left:6px">
                             Medicine:
                             @if (isset($EPrescriptionMedicine[0]->medicine_id))

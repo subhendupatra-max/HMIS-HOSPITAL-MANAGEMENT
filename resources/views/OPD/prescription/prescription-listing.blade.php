@@ -65,11 +65,14 @@
                                             @can('delete-payment-in-opd')
                                             <a class="dropdown-item" href="{{ route('delete-payment-in-opd',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
                                             @endcan
-
+<!-- 
                                             @can('print-payment-in-opd')
                                             <a class="dropdown-item" href="{{ route('print-payment-in-opd',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Print</a>
-                                            @endcan
+                                            @endcan -->
 
+                                            @can('print-prescription-in-opd')
+                                            <a class="dropdown-item" href="{{ route('print-prescription-in-opd',['id'=> base64_encode($item->id), 'opd_id'=> base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-trash"></i> Print</a>
+                                            @endcan
                                         </div>
                                     </div>
                                 </td>

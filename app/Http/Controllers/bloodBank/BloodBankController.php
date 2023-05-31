@@ -16,6 +16,7 @@ use App\Models\bloodBank\Components;
 use App\Models\bloodBank\ComponentsDetail;
 use App\Models\Patient;
 
+
 class BloodBankController extends Controller
 {
     public function all_blood_details()
@@ -45,6 +46,13 @@ class BloodBankController extends Controller
         $catagory = ChargesCatagory::all();
         $unit_type = UnitType::all();
         return view('Blood_Bank.add-blood', compact('bloodDonorDetails', 'catagory', 'unit_type', 'blood_groups_id'));
+    }
+
+    public function blood_issue_listing()
+    {
+        $blood_issue_details = BloodIssue::all();
+
+        return view('Blood_Bank.listing-blood-issue', compact('blood_issue_details'));
     }
 
     public function save_blood(Request $request)
@@ -106,6 +114,21 @@ class BloodBankController extends Controller
         return view('Blood_Bank.add-blood-issue-details', compact('issed_by', 'catagory', 'blood_groups', 'getBag', 'blood_details', 'blood_groups_id', 'blood_id', 'all_patient'));
     }
 
+    public function edit_blood_issue_listing($id)
+    {
+        $blood_id = base64_decode($id);
+
+        $blood_details = Blood::where('id', $blood_id)->first();
+        $issed_by = User::all();
+        $catagory = ChargesCatagory::all();
+        $blood_groups = BloodGroup::all();
+        $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
+        $getBag = Blood::where('blood_group_id', $blood_group_id)->get();
+
+
+        return view('Blood_Bank.edit-blood-issue', compact('blood_details', ''));
+    }
+
     public function save_blood_issue_details(Request $request)
     {
         $blood_issue = new BloodIssue();
@@ -146,6 +169,35 @@ class BloodBankController extends Controller
         $getBag = Blood::where('blood_group_id', $blood_group_id)->get();
 
 
-        return view('Blood_Bank.add-blood-issue-details', compact('issed_by','catagory', 'blood_groups', 'getBag', 'blood_details', 'blood_groups_id', 'blood_id', 'all_patient', 'patient_details_information'));
+        return view('Blood_Bank.add-blood-issue-details', compact('issed_by', 'catagory', 'blood_groups', 'getBag', 'blood_details', 'blood_groups_id', 'blood_id', 'all_patient', 'patient_details_information'));
+    }
+
+    public function update_blood_issue_details(Request $request)
+    {
+        $blood_issue = BloodIssue::where('id', $request->blood_issue_id);
+        $blood_issue->patient_id         = $request->patient_id;
+        $blood_issue->blood_id           = $request->blood_id;
+        $blood_issue->blood_group_id     = $request->blood_group_id;
+        $blood_issue->issue_date         = $request->issue_date;
+        $blood_issue->issed_by           = $request->issed_by;
+        $blood_issue->reference_name     = $request->reference_name;
+        $blood_issue->technician         = $request->technician;
+        $blood_issue->blood_group        = $request->blood_group;
+        $blood_issue->bag                = $request->bag;
+        $blood_issue->blood_qty          = $request->blood_qty;
+        $blood_issue->note               = $request->note;
+        $status = $blood_issue->save();
+
+        if ($status) {
+            return redirect()->route('blood-issue-listing', ['id' => base64_encode($request->blood_group_id)])->with('success', 'Blood Issue Updated Successfully.');
+        } else {
+            return back()->withErrors(['error' => 'Unable to added, Try Again Later.']);
+        }
+    }
+    public function delete_blood_issue_details($id)
+    {
+        $id = base64_decode($id);
+        BloodIssue::where('id', $id)->first()->delete();
+        return redirect()->back()->with('success', 'Blood Issued Deleted Successfully.');
     }
 }

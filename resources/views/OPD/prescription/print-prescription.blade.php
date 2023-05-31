@@ -10,13 +10,13 @@
 <body>
 
     <style>
-        @page  {
+        @page {
             size: A4 portrait;
             margin: 0;
             / change the margins as you want them to be. /
         }
 
-        @media  print {
+        @media print {
 
             html,
             body {
@@ -56,42 +56,42 @@
         <table style="width: 100%;border-collapse: collapse">
             <tr style="text-align: center;">
                 <td>
-                    <!-- <img src="<?php echo e(asset('public/hospital_details/header.png')); ?>" alt="" style="width: 80%;"> -->
-                    <img src="<?php echo e(asset('public/assets/images/header')); ?>/<?php echo e($header_image->logo); ?>" alt="" style="width: 80%;">
+                    <!-- <img src="{{ asset('public/hospital_details/header.png') }}" alt="" style="width: 80%;"> -->
+                    <img src="{{ asset('public/assets/images/header') }}/{{$header_image->logo}}" alt="" style="width: 80%;">
                 </td>
             </tr>
             <table>
                 <tr>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-                        <b>UHID No: <?php echo e(@$ipd_details->all_patient_details->patient_prefix); ?><?php echo e(@$ipd_details->all_patient_details->id); ?></b>
+                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:250px">
+                        <b>UHID No: {{ @$opd_patient_details->all_patient_details->patient_prefix}}{{ @$opd_patient_details->all_patient_details->id}}</b>
                     </td>
-                    <td rowspan="2" style="text-align: center;border: 1px solid #899499;width:250px">
-                        <!-- <img src="<?php echo e(asset('public/hospital_details/barcode.png')); ?>" style="width: 80px;"> -->
-                        <?php
+                    <td rowspan="2" style="text-align: center;border: 1px solid #899499;width:285px">
+                        <!-- <img src="{{ asset('public/hospital_details/barcode.png') }}" style="width: 80px;"> -->
+                        @php
                         $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
-                        ?>
+                        @endphp
 
-                        <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$ipd_details->ipd_prefix @$ipd_details->ipd_id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 150px;height:50px">
+                        <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$opd_patient_details->opd_prefix @$opd_patient_details->id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 160px;height:50px">
                     </td>
-                    <td rowspan="2" style="text-align: center;border: 1px solid #899499;width:75px">
-                        <!-- <img src="<?php echo e(asset('public/hospital_details/qr.png')); ?>" style="width: 80px;"> -->
+                    <td rowspan="2" style="text-align: center;border: 1px solid #899499;width:105px">
+                        <!-- <img src="{{ asset('public/hospital_details/qr.png') }}" style="width: 80px;"> -->
                         <?php
-                        $ipd_de = $ipd_details->ipd_prefix . '' . $ipd_details->ipd_id;
+                        $opd_de = $opd_patient_details->opd_prefix . '' . $opd_patient_details->id;
                         ?>
-                        <span style="width: 60px;height:60px"><?php echo QrCode::size(60)->generate($ipd_de); ?> </span>
+                        <span style="width: 60px;height:60px">{!! QrCode::size(60)->generate($opd_de); !!} </span>
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
 
-                        <b>Date: <?php echo e(@$ipd_details->appointment_date); ?></b>
+                        <b>Date: {{ @$opd_patient_details->latest_opd_visit_details_for_patient->appointment_date}}</b>
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-                        <b>Cons. Doctor: <?php echo e(@$ipd_details->doctor_details->first_name); ?> <?php echo e(@$ipd_details->doctor_details->last_name); ?></b>
+                        <b>Cons. Doctor: {{ @$opd_patient_details->doctor_details->first_name}} {{ @$opd_patient_details->doctor_details->last_name}}</b>
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>IPD No : <?php echo e(@$ipd_details->ipd_prefix); ?><?php echo e(@$ipd_details->id); ?> </b></td>
-                    <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Patient Source:<?php echo e($ipd_details->patient_source); ?> Source Id:<?php echo e($ipd_details->patient_source_id); ?></b></td>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>Department: <?php echo e(@$ipd_details->department_details->department_name); ?></b></td>
+                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>OPD No : {{ @$opd_patient_details->ipd_prefix}}{{ @$opd_patient_details->id}} </b></td>
+                    <!-- <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Patient Source: Source Id:</b></td> -->
+                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>Department: {{ @$opd_patient_details->latest_opd_visit_details_for_patient->department_details->department_name}}</b></td>
                 </tr>
             </table>
             <table style="width: 100%; ;margin: 10px 0px 0px 0px;border: 1px solid #899499;border-collapse: collapse;">
@@ -100,23 +100,20 @@
                         Patient Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e(@$ipd_details->all_patient_details->first_name); ?> <?php echo e(@$ipd_details->all_patient_details->middle_name); ?> <?php echo e(@$ipd_details->all_patient_details->last_name); ?>
-
+                        {{ @$opd_patient_details->all_patient_details->first_name}} {{ @$opd_patient_details->all_patient_details->middle_name}} {{ @$opd_patient_details->all_patient_details->last_name}}
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Guardian Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e(@$ipd_details->all_patient_details->guardian_name); ?>
-
+                        {{ @$opd_patient_details->all_patient_details->guardian_name}}
                     </td>
 
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Mobile No.
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e(@$ipd_details->all_patient_details->phone); ?>
-
+                        {{ @$opd_patient_details->all_patient_details->phone}}
                     </td>
                 </tr>
                 <tr>
@@ -124,21 +121,19 @@
                         Age
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e(@$ipd_details->all_patient_details->year); ?>Y <?php echo e(@$ipd_details->all_patient_details->first_name); ?>M <?php echo e(@$ipd_details->all_patient_details->first_name); ?>D
+                        {{ @$opd_patient_details->all_patient_details->year}}Y {{ @$opd_patient_details->all_patient_details->first_name}}M {{ @$opd_patient_details->all_patient_details->first_name}}D
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Gender
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e(@$ipd_details->all_patient_details->gender); ?>
-
+                        {{ @$opd_patient_details->all_patient_details->gender}}
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Patient Type
                     </th>
                     <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e(@$ipd_details->patient_type); ?>
-
+                        {{ @$opd_patient_details->latest_opd_visit_details_for_patient->patient_type}}
                     </td>
                 </tr>
                 <tr>
@@ -146,15 +141,13 @@
                         Address
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e(@$ipd_details->all_patient_details->address); ?>, <?php echo e(@$ipd_details->all_patient_details->_state->name); ?>, <?php echo e(@$ipd_details->all_patient_details->_district->name); ?>
-
+                        {{ @$opd_patient_details->all_patient_details->address}}, {{ @$opd_patient_details->all_patient_details->_state->name}}, {{ @$opd_patient_details->all_patient_details->_district->name}}
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Blood Group
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e(@$ipd_details->all_patient_details->blood_group); ?>
-
+                        {{ @$opd_patient_details->all_patient_details->blood_group}}
                     </td>
 
                 </tr>
@@ -175,39 +168,39 @@
                 </tr>
                 <tr>
                     <td height="00px" valign="top" style="border-right-style: dotted;border-width: 1px;">
-                       
+
                         <div style="background:#FFF;margin-left:6px">
                             Medicine:
-                            <?php if(isset($EPrescriptionMedicine[0]->medicine_id)): ?>
-                            <?php $__currentLoopData = $EPrescriptionMedicine; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            @if (isset($EPrescriptionMedicine[0]->medicine_id))
+                            @foreach ($EPrescriptionMedicine as $value)
 
                             <h5>
-                                <li> <?php echo e($value->medicine_details->medicine_name); ?> <?php echo e($value->dose); ?> <?php echo e($value->interval); ?> <?php echo e($value->duration); ?></li>
+                                <li> {{$value->medicine_details->medicine_name}} {{$value->dose}} {{$value->interval}} {{$value->duration}}</li>
                             </h5>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?>
+                            @endforeach
+                            @endif
                         </div>
                         <div style="background:#FFF;margin-left:6px">
                             Pathology:
-                            <?php if(isset($EPresPathologyTest[0]->test_id)): ?>
-                            <?php $__currentLoopData = $EPresPathologyTest; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            @if (isset($EPresPathologyTest[0]->test_id))
+                            @foreach ($EPresPathologyTest as $value)
 
                             <h5>
-                                <li> <?php echo e($value->test_details->test_name); ?> </li>
+                                <li> {{$value->test_details->test_name}} </li>
                             </h5>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?>
+                            @endforeach
+                            @endif
                         </div>
                         <div style="background:#FFF;margin-left:6px">
                             Radiology:
-                            <?php if(isset($EPresRadiologyTest[0]->test_id)): ?>
-                            <?php $__currentLoopData = $EPresRadiologyTest; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            @if (isset($EPresRadiologyTest[0]->test_id))
+                            @foreach ($EPresRadiologyTest as $value)
 
                             <h5>
-                                <li> <?php echo e($value->test_details_radiology->test_name); ?></li>
+                                <li> {{$value->test_details_radiology->test_name}}</li>
                             </h5>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                            <?php endif; ?>
+                            @endforeach
+                            @endif
                         </div>
                         <p style="border-top: 1px solid #899499;padding: 10px 0px 7px 10px;margin: 0px;font-size: 13px;">
                             <b>Height -</b>
@@ -230,25 +223,24 @@
                         <!-- <hr style="height: 1px; clear: both;margin: 10px 0px 10px 0px;">  -->
                     </td>
                     </td>
-                  
+
                     <td height="00px" valign="top">
-                        <img src="<?php echo e(asset('public/hospital_details/rx.png')); ?>" style="width: 80px;">
+                        <img src="{{ asset('public/hospital_details/rx.png') }}" style="width: 80px;">
                     </td>
                 </tr>
             </table>
         </table>
-       <table style="width: 100%;">
-        
-       <tr>
-       <td style="position: fixed; right: 20px; bottom: 15px;">
-        <b>Date:</b> <?php echo e($ipdPrescription->prescription_date); ?>
+        <table style="width: 100%;">
 
-        </td>
-       </tr>
-       </table>
+            <tr>
+                <td style="position: fixed; right: 20px; bottom: 15px;">
+                    <b>Date:</b> {{$opdPrescription->prescription_date}}
+                </td>
+            </tr>
+        </table>
         <!-- =================================================================================================== -->
     </div>
-   
+
 </body>
 
-</html><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/Ipd/prescription/print-prescription.blade.php ENDPATH**/ ?>
+</html>

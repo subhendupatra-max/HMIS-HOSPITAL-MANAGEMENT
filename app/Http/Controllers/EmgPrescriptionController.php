@@ -14,6 +14,7 @@ use App\Models\DoseDuration;
 use App\Models\EPrescriptionMedicine;
 use App\Models\EPresPathologyTest;
 use App\Models\EPresRadiologyTest;
+use App\Models\AllHeader;
 
 
 class EmgPrescriptionController extends Controller
@@ -245,5 +246,20 @@ class EmgPrescriptionController extends Controller
         $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
 
         return view('emg.prescription.prescription-view', compact('emg_id', 'emgPrescription', 'emg_patient_details','EPrescriptionMedicine','EPresPathologyTest','EPresRadiologyTest'));
+    }
+    public function prescription_print_in_emg($id,  $emg_id)
+    {
+        $id = base64_decode($id);
+        $emg_id = base64_decode($emg_id);
+        $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
+        // dd($emg_patient_details);
+        $emgPrescription =  EPrescription::where('id', $id)->where('section', 'EMG')->first();
+        $EPresPathologyTest = EPresPathologyTest::where('e_prescriptions_id', $id)->get();
+
+        $EPresRadiologyTest = EPresRadiologyTest::where('e_prescriptions_id', $id)->get();
+        $EPrescriptionMedicine = EPrescriptionMedicine::where('e_prescriptions_id', $id)->get();
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+
+        return view('emg.prescription.print-prescription', compact('emg_id', 'emg_patient_details', 'emgPrescription', 'EPresPathologyTest', 'EPresRadiologyTest', 'EPrescriptionMedicine', 'header_image'));
     }
 }

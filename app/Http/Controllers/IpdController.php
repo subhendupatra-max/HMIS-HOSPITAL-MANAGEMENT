@@ -117,8 +117,13 @@ class IpdController extends Controller
         }
 
         $total_charge_amount = PatientCharge::where('case_id',$ipd_details->case_id)->sum('amount');
+        $blood_details = BloodIssue::where('patient_id', $ipd_details->patient_id)->get();
+        $components_details = BloodComponentIssue::where('patient_id', $ipd_details->patient_id)->get();
 
-        return view('Ipd.ipd-profile', compact('p_chart_value','p_chart_name','paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'PhysicalDetails', 'patient_discharge_details','total_charge_amount'));
+        return view('Ipd.ipd-profile', compact('p_chart_value','p_chart_name','paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'PhysicalDetails', 'patient_discharge_details','total_charge_amount','blood_details','components_details'));
+       
+
+       
     }
 
     public function find_doctor_and_ward_by_department_in_opd(Request $request)

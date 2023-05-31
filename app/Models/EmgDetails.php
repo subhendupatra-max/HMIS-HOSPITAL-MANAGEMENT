@@ -36,4 +36,6 @@ class EmgDetails extends Model
     {
         return $this->belongsTo(Diagonasis::class, 'tpa_organization', 'id');
     }
+
+   
 }

@@ -28,4 +28,4 @@
 
 <a class="dropdown-item {{ Request::segment(2) == 'emg-pathology-investigation' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fas fa-tint"></i> Blood Details</a>
 
-<a class="dropdown-item {{ Request::segment(2) == 'emg-pathology-investigation' ? 'active' : '' }}" href="{{ route('prescription-lisitng-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fas fa-tint"></i> Prescription</a>
+<a class="dropdown-item {{ Request::segment(2) == 'emg-pathology-investigation' ? 'active' : '' }}" href="{{ route('prescription-lisitng-in-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa  fa-file-prescription "></i> Prescription</a>

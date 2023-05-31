@@ -28,7 +28,7 @@
 
     <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-blood-details' ? 'active' : ''); ?>" href="<?php echo e(route('blood-bank-detials-in-ipd', ['id' => base64_encode($ipd_details->id)])); ?>"><i class="fas fa-tint"></i>Blood Details</a>
  
-    <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-blood-details' ? 'active' : ''); ?>" href="<?php echo e(route('prescription-lisitng-in-ipd', ['id' => base64_encode($ipd_details->id)])); ?>"><i class="fas fa-tint"></i>Prescription</a>
+    <a class="dropdown-item <?php echo e(Request::segment(2) == 'ipd-blood-details' ? 'active' : ''); ?>" href="<?php echo e(route('prescription-lisitng-in-ipd', ['id' => base64_encode($ipd_details->id)])); ?>"><i class="fa  fa-file-prescription "></i> Prescription</a>
  
 
 
