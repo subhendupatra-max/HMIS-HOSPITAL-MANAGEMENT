@@ -20,6 +20,11 @@ class Billing extends Model
 
     public function discount_details()
     {
-        return $this->belongsTo(Discount::class,'discount_id','id');
+        return $this->belongsTo(Discount::class, 'discount_id', 'id');
+    }
+
+    public function opd_details()
+    {
+        return $this->belongsTo(OpdDetails::class, 'opd_id', 'id');
     }
 }
