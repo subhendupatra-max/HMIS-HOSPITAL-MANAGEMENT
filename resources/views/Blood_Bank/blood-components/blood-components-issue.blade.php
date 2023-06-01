@@ -4,7 +4,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <div class="card-title">Add Blood Issue</div>
+            <div class="card-title">Add Blood Components Issue</div>
         </div>
         <div class="card-body p-0">
             <div class="row no-gutters">

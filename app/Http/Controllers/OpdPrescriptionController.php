@@ -14,6 +14,7 @@ use App\Models\DoseDuration;
 use App\Models\EPrescriptionMedicine;
 use App\Models\EPresPathologyTest;
 use App\Models\EPresRadiologyTest;
+use App\Models\AllHeader;
 
 class OpdPrescriptionController extends Controller
 {
@@ -242,5 +243,20 @@ class OpdPrescriptionController extends Controller
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
 
         return view('OPD.prescription.prescription-view', compact('opd_id', 'opdPrescription', 'opd_patient_details', 'EPrescriptionMedicine', 'EPresPathologyTest', 'EPresRadiologyTest'));
+    }
+
+    public function prescription_print_in_opd($id,  $opd_id)
+    {
+        $id = base64_decode($id);
+        $opd_id = base64_decode($opd_id);
+        $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+        $opdPrescription =  EPrescription::where('id', $id)->where('section', 'OPD')->first();
+        $EPresPathologyTest = EPresPathologyTest::where('e_prescriptions_id', $id)->get();
+
+        $EPresRadiologyTest = EPresRadiologyTest::where('e_prescriptions_id', $id)->get();
+        $EPrescriptionMedicine = EPrescriptionMedicine::where('e_prescriptions_id', $id)->get();
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+
+        return view('opd.prescription.print-prescription', compact('opd_id', 'opd_patient_details', 'opdPrescription', 'EPresPathologyTest', 'EPresRadiologyTest', 'EPrescriptionMedicine', 'header_image'));
     }
 }

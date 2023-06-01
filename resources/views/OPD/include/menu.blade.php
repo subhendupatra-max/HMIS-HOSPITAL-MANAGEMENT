@@ -29,4 +29,4 @@
 
 <a class="dropdown-item {{ Request::segment(2) == 'opd-blood-issue' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fas fa-tint"></i> Blood Details</a>
 
-<a class="dropdown-item {{ Request::segment(2) == 'opd-blood-issue' ? 'active' : '' }}" href="{{ route('prescription-lisitng-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fas fa-tint"></i> Prescription</a>
+<a class="dropdown-item {{ Request::segment(2) == 'opd-blood-issue' ? 'active' : '' }}" href="{{ route('prescription-lisitng-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa  fa-file-prescription "></i> Prescription</a>

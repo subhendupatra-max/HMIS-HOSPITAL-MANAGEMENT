@@ -65,11 +65,14 @@
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-payment-in-opd')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('delete-payment-in-opd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                             <?php endif; ?>
-
+<!-- 
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-payment-in-opd')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('print-payment-in-opd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Print</a>
-                                            <?php endif; ?>
+                                            <?php endif; ?> -->
 
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-prescription-in-opd')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-prescription-in-opd',['id'=> base64_encode($item->id), 'opd_id'=> base64_encode($opd_patient_details->id)])); ?>"><i class="fa fa-trash"></i> Print</a>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </td>

@@ -210,7 +210,11 @@ class EmgController extends Controller
         $billing_amount = Billing::where('emg_id', $emg_id)->sum('grand_total');
         $PathologyTestDetails = PathologyPatientTest::where('case_id', $emg_patient_details->case_id)->get();
         $RadiologyTestDetails = RadiologyPatientTest::where('case_id', $emg_patient_details->case_id)->get();
-        return view('emg.emg-patient-profile', compact('emg_patient_details', 'emg_visit_details', 'PhysicalDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails'));
+
+        $blood_details = BloodIssue::where('patient_id', $emg_patient_details->patient_id)->get();
+        $components_details = BloodComponentIssue::where('patient_id', $emg_patient_details->patient_id)->get();
+
+        return view('emg.emg-patient-profile', compact('emg_patient_details', 'emg_visit_details', 'PhysicalDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'blood_details', 'components_details'));
     }
 
     public function admission_from_emg($id)

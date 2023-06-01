@@ -288,7 +288,7 @@
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <span style="font-weight: bold; font-size: 15px;">Total Billing Amount : ₹<?php echo e($billing_amount); ?></span>
+                                <span style="font-weight: bold; font-size: 15px;">Apply Charges Amount : ₹<?php echo e($billing_amount); ?></span>
                             </div>
                         </div>
                     </div>
@@ -488,6 +488,80 @@
                                 </div>
                                 <?php else: ?>
                                 <span style="color:brown">** No Blood or Blood Component used **</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="options px-5 pt-2  border-bottom pb-1">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <h5>Blood Issue Details</h5>
+                                <?php if(@$blood_details[0]->id != null): ?>
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap table-success">
+                                        <thead class="bg-success text-white">
+                                            <tr>
+                                                <th class="text-white">Blood Group</th>
+                                                <th class="text-white">Date</th>
+                                                <th class="text-white">Bag</th>
+                                                <th class="text-white">Blood Quentity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <?php $__currentLoopData = $blood_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <tr>
+                                                <td><?php echo e(@$item->blood_group_details->blood_group_name); ?></td>
+                                                <td> <?php echo e(@$item->issue_date); ?></td>
+                                                <td> <?php echo e(@$item->bag); ?></td>
+                                                <td> <?php echo e(@$item->blood_qty); ?></td>
+
+                                            </tr>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <?php else: ?>
+                                <span style="color:brown">** No Blood Issued **</span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="options px-5 pt-2  border-bottom pb-1">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <h5>Blood Components Issue Details</h5>
+                                <?php if(@$blood_details[0]->id != null): ?>
+                                <div class="table-responsive">
+                                    <table class="table card-table table-vcenter text-nowrap table-success">
+                                        <thead class="bg-success text-white">
+                                            <tr>
+                                                <th class="text-white">Blood Group</th>
+                                                <th class="text-white">Date</th>
+                                                <th class="text-white">Bag</th>
+                                                <th class="text-white">Blood Components Quentity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <?php $__currentLoopData = $components_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <tr>
+                                                <td><?php echo e(@$item->blood_group_details->blood_group_name); ?></td>
+                                                <td> <?php echo e(@$item->issue_date); ?></td>
+                                                <td> <?php echo e(@$item->bag); ?></td>
+                                                <td> <?php echo e(@$item->components_qty); ?></td>
+
+                                            </tr>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <?php else: ?>
+                                <span style="color:brown">** No Blood Components Issued **</span>
                                 <?php endif; ?>
                             </div>
                         </div>

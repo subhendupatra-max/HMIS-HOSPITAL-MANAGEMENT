@@ -33,6 +33,7 @@ use App\Http\Controllers\shift\ShiftController;
 use App\Http\Controllers\SlotController;
 use App\Http\Controllers\OPD\OpdController;
 use App\Http\Controllers\FindingController;
+use App\Http\Controllers\RecordController;
 
 use App\Http\Controllers\PathologyController;
 use App\Http\Controllers\pathology\PathologyCatagoryController;
@@ -1622,6 +1623,12 @@ Route::group(['middleware' => ['permission:Blood Bank'], 'prefix' => 'blood-bank
             Route::get('all-blood-details', [BloodBankController::class, 'all_blood_details'])->name('all-blood-details');
             Route::get('blood-details/{id?}', [BloodBankController::class, 'blood_details'])->name('blood-details');
 
+
+            Route::get('blood-issue-listing/{id?}', [BloodBankController::class, 'blood_issue_listing'])->name('blood-issue-listing');
+            Route::get('edit-blood-issue-details/{id?}', [BloodBankController::class, 'edit_blood_issue_listing'])->name('edit-blood-issue-details');
+            Route::get('delete-blood-issue-details/{id?}', [BloodBankController::class, 'delete_blood_issue_listing'])->name('delete-blood-issue-details');
+
+
             Route::get('add-blood-issue-details/{blood_group_id?}/{id?}', [BloodBankController::class, 'add_blood_issue_details'])->name('add-blood-issue-details');
             Route::post('save-blood-issue-details', [BloodBankController::class, 'save_blood_issue_details'])->name('save-blood-issue-details');
             Route::post('add-blood-issue-belling-for-a-patient/{blood_group_id?}/{id?}', [BloodBankController::class, 'add_blood_issue_belling_for_a_patient'])->name('add-blood-issue-belling-for-a-patient');
@@ -1637,8 +1644,11 @@ Route::group(['middleware' => ['permission:Blood Bank'], 'prefix' => 'blood-bank
     //=================== Components ======================
     Route::group(['middleware' => ['permission:blood components']], function () {
 
-        Route::group(['middleware' => ['permission:View blood details']], function () {
+        Route::group(['middleware' => ['permission:View components details']], function () {
             Route::get('add-blood-components-details/{id?}', [ComponentsController::class, 'add_blood_components_details'])->name('add-blood-components-details');
+
+            Route::get('listing-blood-components-details/{id?}', [ComponentsController::class, 'listing_blood_components_details'])->name('listing-blood-components-details');
+
             Route::post('save-blood-components-details', [ComponentsController::class, 'save_blood_components_details'])->name('save-blood-components-details');
 
             Route::get('add-blood-components-issue-details/{blood_group_id?}/{id?}', [ComponentsController::class, 'add_blood_components_issue_details'])->name('add-blood-components-issue-details');
@@ -2042,8 +2052,9 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
             Route::post('update-prescription-in-opd', [OpdPrescriptionController::class, 'update_prescription_in_opd'])->name('update-prescription-in-opd');
         });
 
-        Route::get('print-prescription-in-opd/{id}', [OpdPrescriptionController::class, 'prescription_print_in_opd'])->name('print-prescription-in-opd');
+        Route::get('print-prescription-in-opd/{id}/{opd_id}', [OpdPrescriptionController::class, 'prescription_print_in_opd'])->name('print-prescription-in-opd');
 
+      
 
         Route::group(['middleware' => ['permission:delete opd payment']], function () {
             Route::get('delete-prescription-in-opd/{id}', [OpdPrescriptionController::class, 'delete_prescription_in_opd'])->name('delete-prescription-in-opd');
@@ -2209,8 +2220,9 @@ Route::group(['middleware' => ['permission:Emg prescription'], 'prefix' => 'emg-
         Route::post('update-prescription-in-emg', [EmgPrescriptionController::class, 'update_prescription_in_emg'])->name('update-prescription-in-emg');
     });
 
-    Route::get('print-prescription-in-emg/{id}', [EmgPrescriptionController::class, 'prescription_print_in_emg'])->name('print-prescription-in-emg');
+    Route::get('print-prescription-in-emg/{id}/{emg_id}', [EmgPrescriptionController::class, 'prescription_print_in_emg'])->name('print-prescription-in-emg');
 
+    // Route::get('print-prescription-in-opd/{id}/{opd_id}', [OpdPrescriptionController::class, 'prescription_print_in_opd'])->name('print-prescription-in-opd');
 
     Route::group(['middleware' => ['permission:delete emg payment']], function () {
         Route::get('delete-prescription-in-emg/{id}', [EmgPrescriptionController::class, 'delete_prescription_in_emg'])->name('delete-prescription-in-emg');
@@ -2950,3 +2962,15 @@ Route::group(['middleware' => ['permission:Emg Blood Bank Details']], function (
     Route::get('print-ipd-addmission-form/{ipd_id?}', [IpdController::class, 'print_ipd_addmission_form'])->name('print-ipd-addmission-form');
 });
 //================================= Ipd Admission Form ===================================
+
+
+//================================= Death Record  ====================================
+Route::group(['middleware' => ['permission:death record']], function () {
+    Route::get('death-record', [RecordController::class, 'death_record'])->name('death-record');
+});
+//================================= Death Record ===================================
+
+
+
+
+
