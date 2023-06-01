@@ -236,7 +236,7 @@ unset($__errorArgs, $__bag); ?>
                 <div class="btn-list p-3">
                     <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button>
                     <button class="btn btn-primary btn-sm float-right " type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
-                    
+                  
                 </div>
             </div>
         </form>
