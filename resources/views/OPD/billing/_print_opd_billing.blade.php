@@ -55,15 +55,6 @@
   }
 </style>
 <div style="padding: 0px 7px 0px 7px;">
-  <!-- ==============================draft copy============================================ -->
-  <!-- <div
-  style="position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
-  <h2
-    style="font-size: 70px; letter-spacing: 2px; text-transform: uppercase; transform: rotate(322deg); color: #9191912b;">
-    Draft Copy
-  </h2>
-</div> -->
-  <!-- ==============================draft copy============================================ -->
   <!-- ==========================================code here================================== -->
   <table style="width: 100%; border:1px soild black;border-collapse: collapse">
     <tr style="text-align: center;">
@@ -73,8 +64,7 @@
     </tr>
     <tr style="width:100%">
       <td style="width:100%">
-        <h1 style="text-align:center;font-size: 20px;margin: 10px 0px 10px 0px; color: #000;padding: 5px 0px 5px 0px;  width: 100%;">
-          Bill Summary</h1>
+        <h1 style="text-align:center;font-size: 20px;margin: 10px 0px 10px 0px; color: #000;padding: 5px 0px 5px 0px;  width: 100%;"> Bill Summary</h1>
       </td>
     </tr>
     <table style="width: 100%;">
@@ -86,7 +76,7 @@
         <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
           <!-- <img src="./image/qr.png" style="width: 80px;"> -->
           <?php
-          $ipd_de = $opd_details->ipd_prefix . '' . $opd_details->ipd_id;
+          $ipd_de = $opd_details->opd_prefix . '' . $opd_details->id;
           ?>
 
           <span style="width: 80px;height:60px">{!! QrCode::size(90)->generate($ipd_de); !!} </span>
@@ -97,20 +87,19 @@
           $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
           @endphp
 
-          <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$opd_details->ipd_prefix @$opd_details->ipd_id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 190px;height:60px">
+          <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$opd_details->opd_prefix @$opd_details->id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 190px;height:60px">
         </td>
         <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-          <b>Admission Date : {{$opd_details->appointment_date}}</b>
+          <b>Admission Date : {{$opd_details->latest_opd_visit_details_for_patient->appointment_date}}</b>
         </td>
 
       </tr>
       <tr>
         <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>
-            IPD no.
-            : {{$opd_details->ipd_prefix}}/{{$opd_details->id}}</b></td>
+            OPD no.
+            : {{$opd_details->opd_prefix}}/{{$opd_details->id}}</b></td>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;">
-          <b>Patient
-            Source:{{$opd_details->patient_source}} Source Id:{{$opd_details->patient_source_id}};</b>
+          <b> Department:  {{$opd_details->latest_opd_visit_details_for_patient->department_details->department_name}}</b>
         </td>
 
       </tr>
@@ -121,7 +110,7 @@
           Patient Name
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->all_patient_details->first_name}}
+          {{$opd_details->all_patient_details->first_name}} {{$opd_details->all_patient_details->middle_name}} {{$opd_details->all_patient_details->last_name}}
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Guardian Name
@@ -154,7 +143,7 @@
           Patient Type
         </th>
         <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->patient_type}}
+          {{$opd_details->latest_opd_visit_details_for_patient->patient_type}}
         </td>
       </tr>
       <tr>
@@ -162,29 +151,29 @@
           Dr. In Charge
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->doctor_details->first_name}} {{$opd_details->doctor_details->last_name}}
-        </td>
-        <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          Ward
-        </th>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->ward_details->ward_name}}
+          {{$opd_details->latest_opd_visit_details_for_patient->doctor->first_name}} {{$opd_details->latest_opd_visit_details_for_patient->doctor->last_name}}
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Unit
         </th>
-        <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->unit_details->bedUnit_name}}
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+          {{$opd_details->latest_opd_visit_details_for_patient->unit}}
         </td>
+        <!-- <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+          Unit
+        </th> -->
+        <!-- <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+        
+        </td> -->
       </tr>
-      <tr>
+      <!-- <tr>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Department:
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->department_details->department_name}}
-        </td>
-        <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+          {{$opd_details->latest_opd_visit_details_for_patient->department_details->department_name}}
+        </td> -->
+        <!-- <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Floor
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
@@ -194,9 +183,9 @@
           Bed
         </th>
         <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->bed_details->bed_name}}
-        </td>
-      </tr>
+    
+        </td> -->
+      <!-- </tr> -->
 
     </table>
     <table style="width: 100%; border-collapse: collapse;">
@@ -209,18 +198,18 @@
         </td>
 
       </tr>
-      @if($opd_details->patient_type == 'Swasthya Sathi' || $opd_details->patient_type == 'TPA' )
+      @if($opd_details->latest_opd_visit_details_for_patient->patient_type == 'Swasthya Sathi' || $opd_details->latest_opd_visit_details_for_patient->patient_type == 'TPA' )
       <tr>
         <th colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          @if($opd_details->patient_type == 'Swasthya Sathi')
+          @if($opd_details->latest_opd_visit_details_for_patient->patient_type == 'Swasthya Sathi')
           Swasthya Sathi No.
-          @elseif($opd_details->patient_type == 'TPA')
-          TPA {{$opd_details->tpa_details->TPA_name}}
+          @elseif($opd_details->latest_opd_visit_details_for_patient->patient_type == 'TPA')
+          TPA {{$opd_details->latest_opd_visit_details_for_patient->tpa_details->TPA_name}}
           @endif
 
         </th>
         <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->type_no}}
+          {{$opd_details->latest_opd_visit_details_for_patient->tpa_details->type_no}}
         </td>
 
       </tr>
@@ -240,8 +229,8 @@
           Amount(Rs)</td>
       </tr>
       <?php $total = 0; ?>
-      @if (@$patient_charges)
-      @foreach ($patient_charges as $value)
+      @if (@$patientCharges)
+      @foreach ($patientCharges as $value)
       <?php $total += $value->amount; ?>
       <tr>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{$loop->iteration}}
@@ -257,7 +246,7 @@
       @endforeach
       @endif
     </table>
-
+    @if (@$medicine_billings[0]->id != null)
     <table>
       <h1 style="font-size: 15px;">Medicine</h1>
     </table>
@@ -271,8 +260,8 @@
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Amount(Rs)</td>
       </tr>
-      @if (@$medicine)
-      @foreach ($medicine as $value)
+
+      @foreach ($medicine_billings as $value)
       <?php $total += $value->amount; ?>
       <tr>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{$loop->iteration}}
@@ -283,8 +272,9 @@
 
       </tr>
       @endforeach
-      @endif
+
     </table>
+    @endif
     <table>
       <h1 style="font-size: 20px;"> Total : {{ @$total.' Rs' }} </h1>
     </table>

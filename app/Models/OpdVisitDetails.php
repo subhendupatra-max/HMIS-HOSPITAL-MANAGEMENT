@@ -39,5 +39,8 @@ class OpdVisitDetails extends Model
     {
         return $this->belongsTo(PatientPhysicalDetails::class, 'opd_visit_details_id', 'id');
     }
-
+    public function tpa_details()
+    {
+        return $this->belongsTo(Diagonasis::class,'tpa_organization','id');
+    }
 }

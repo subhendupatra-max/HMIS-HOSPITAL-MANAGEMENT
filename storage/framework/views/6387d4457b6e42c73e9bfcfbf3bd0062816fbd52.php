@@ -3,10 +3,10 @@
 
 <div class="col-md-12">
     <div class="card">
-        <div class="card-header d-block">
+    <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    <h4 class="pro-user-username mb-3 font-weight-bold"> <?php echo e(@$operation_details->first_name); ?> <?php echo e(@$operation_details->middle_name); ?> <?php echo e(@$operation_details->last_name); ?> (<?php echo e(@$operation_details->patient_prefix); ?>)<i class="fa fa-check-circle text-success"></i></h4>
+                    <h4 class="pro-user-username mb-3 font-weight-bold"> Operation Booking Details<i class="fa fa-check-circle text-success"></i></h4>
                 </div>
 
                 <div class="col-md-6 text-right">
@@ -168,7 +168,7 @@
                                         <td class="py-2 px-5">
                                             <?php echo @$operation_details->section; ?>
 
-                                            <a class="textlink" href="<?php echo e(route('opd-profile', ['id' => base64_encode($section_name)])); ?>">(<?php echo e(@$section_name); ?>)</a>
+                                            <a class="textlink" href="<?php echo e(route('opd-profile', ['id' => base64_encode($operation_details->opd_id)])); ?>">(<?php echo e(@$operation_details->opd_id); ?>) </a>
 
                                         </td>
                                     </tr>

@@ -1979,7 +1979,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
             Route::get('delete-opd-bill/{bill_id}', [BillingController::class, 'delete_opd_bill'])->name('delete-opd-bill');
         });
         Route::group(['middleware' => ['permission:print opd billing']], function () {
-            Route::get('print-opd-bill/{bill_id}/{id}', [BillingController::class, 'print_opd_bill'])->name('print-opd-bill');
+            Route::get('print-opd-bill/{bill_id}', [BillingController::class, 'print_opd_bill'])->name('print-opd-bill');
         });
     });
     //================================= OPD billing ====================================
@@ -2054,7 +2054,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
 
         Route::get('print-prescription-in-opd/{id}/{opd_id}', [OpdPrescriptionController::class, 'prescription_print_in_opd'])->name('print-prescription-in-opd');
 
-      
+
 
         Route::group(['middleware' => ['permission:delete opd payment']], function () {
             Route::get('delete-prescription-in-opd/{id}', [OpdPrescriptionController::class, 'delete_prescription_in_opd'])->name('delete-prescription-in-opd');
@@ -2263,6 +2263,9 @@ Route::group(['middleware' => ['permission:emg billing'], 'prefix' => 'emg-billi
     Route::group(['middleware' => ['permission:delete emg billing']], function () {
         Route::get('delete-emg-bill/{bill_id}', [EmgBillingController::class, 'delete_emg_bill'])->name('delete-emg-bill');
     });
+    Route::group(['middleware' => ['permission:print emg billing']], function () {
+        Route::get('print-emg-bill/{bill_id}', [EmgBillingController::class, 'print_emg_bill'])->name('print-emg-bill');
+    });
 });
 //================================= Emg billing ====================================
 
@@ -2324,11 +2327,17 @@ Route::group(['middleware' => ['permission:Finding']], function () {
 
 //================================= Appointment ===================================================
 Route::group(['middleware' => ['permission:appointment main']], function () {
+
     Route::get('all-appointments-details', [AppointmentController::class, 'appointments_details'])->name('all-appointments-details');
+
+    // Route::any('opd-registration/{id?}', [OpdController::class, 'opd_registation'])->name('opd-registration');
+
     Route::post('find-fees-by-doctor', [AppointmentController::class, 'find_doctor_fees_by_doctor'])->name('find-fees-by-doctor');
 
     Route::group(['middleware' => ['permission:add appointment']], function () {
-        Route::get('add-appointments-details', [AppointmentController::class, 'add_appointments_details'])->name('add-appointments-details');
+
+        Route::any('add-appointments-details/{id?}', [AppointmentController::class, 'add_appointments_details'])->name('add-appointments-details');
+
         Route::post('save-appointments-details', [AppointmentController::class, 'save_appointments_details'])->name('save-appointments-details');
     });
     Route::group(['middleware' => ['permission:edit appointment']], function () {
@@ -2338,7 +2347,14 @@ Route::group(['middleware' => ['permission:appointment main']], function () {
     Route::group(['middleware' => ['permission:delete appointment']], function () {
         Route::get('delete-appointments-details/{id}', [AppointmentController::class, 'delete_appointments_details'])->name('delete-appointments-details');
     });
+
+    Route::group(['middleware' => ['permission:dotor wise appointment main']], function () {
+        Route::get('doctor-wise-appointments-details', [AppointmentController::class, 'dr_wise_appointments_details'])->name('doctor-wise-appointments-details');
+
+        Route::post('fetch-appointments-details-dr-wise', [AppointmentController::class, 'fetch_appointments_details_by_doctor_wise'])->name('fetch-appointments-details-dr-wise');
+    });
 });
+
 //================================= Appointment ===================================================
 
 
@@ -2526,7 +2542,6 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::group(['middleware' => ['permission:Draft Bill']], function () {
             Route::get('ipd-draft-bill/{id?}', [IpdController::class, 'ipd_draft_bill'])->name('ipd-draft-bill');
         });
-
     });
     //================================= Ipd charges ====================================
 
@@ -2913,7 +2928,8 @@ Route::group(['middleware' => ['permission:main operation'], 'prefix' => 'operat
 //================================= OPD Operation Deratils ====================================
 Route::group(['middleware' => ['permission:OPD Operation']], function () {
     Route::get('opd-operation-in-opd/{id}', [OpdController::class, 'opd_operation'])->name('opd-operation-in-opd');
-    Route::get('edit-opd-operation-in-opd/{id}', [OpdController::class, 'edit_opd_operation'])->name('edit-opd-operation-in-opd');
+    Route::get('opd-operation-details/{opd_id}', [OpdController::class, 'opd_operation_details'])->name('opd-operation-details');
+    Route::get('edit-opd-operation-in-opd/{ot_id?}', [OpdController::class, 'edit_opd_operation'])->name('edit-opd-operation-in-opd');
     Route::post('update-operation-booking-details-in-opd', [OpdController::class, 'update_opd_operation'])->name('update-operation-booking-details-in-opd');
 });
 //================================= OPD Operation Deratils===================================
@@ -2970,8 +2986,3 @@ Route::group(['middleware' => ['permission:death record']], function () {
     Route::get('death-record', [RecordController::class, 'death_record'])->name('death-record');
 });
 //================================= Death Record ===================================
-
-
-
-
-

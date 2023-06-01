@@ -72,16 +72,16 @@
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
                                             {{-- <a class="dropdown-item" href="{{ route('opd-bill-details', ['bill_id' => base64_encode($value->id)]) }}">
-                                                <i class="fa fa-eye"></i> View
+                                            <i class="fa fa-eye"></i> View
                                             </a> --}}
                                             @can('print opd billing')
-                                            <a class="dropdown-item" href="{{route('print-opd-bill',['bill_id'=>base64_encode($value->id),'id'=>base64_encode($opd_id)])}}">
+                                            <a class="dropdown-item" href="{{route('print-opd-bill',['bill_id'=>base64_encode($value->id)])}}">
                                                 <i class="fa fa-print"></i> Print
                                             </a>
                                             @endcan
                                             {{-- @can('edit opd billing')
                                             <a class="dropdown-item" href="{{route('edit-opd-bill',['bill_id'=>base64_encode($value->id),'id'=>base64_encode($opd_id)])}}">
-                                                <i class="fa fa-edit"></i> Edit
+                                            <i class="fa fa-edit"></i> Edit
                                             </a>
                                             @endcan
                                             @can('delete opd billing')

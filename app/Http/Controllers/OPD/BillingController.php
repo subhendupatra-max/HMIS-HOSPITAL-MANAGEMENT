@@ -53,6 +53,10 @@ class BillingController extends Controller
         $old_applied_charges = PatientCharge::where('billing_status', '0')->where('ins_by', 'ori')->where('case_id', $opd_patient_details->case_id)->get();
         $medicine_charges = MedicineBilling::where('status', '0')->where('ins_by', 'ori')->where('case_id', $opd_patient_details->case_id)->get();
         return view('OPD.billing.create-billing', compact('opd_patient_details', 'opd_id', 'charge_category', 'old_applied_charges', 'medicine_charges'));
+
+
+
+        
     }
     public function get_category(Request $request)
     {
@@ -518,22 +522,23 @@ class BillingController extends Controller
         return view('Ipd.billing.billing-list', compact('ipd_details', 'ipd_id', 'ipd_billing_details'));
     }
 
-    public function ipd_bill_print($bill_id){
+    public function ipd_bill_print($bill_id)
+    {
         $billId = base64_decode($bill_id);
-        $bill = Billing::where('id',$billId)->first();
-        $ipd_details = IpdDetails::where('case_id',$bill->case_id)->first();
-        $bill_details_for_charges = BillDetails::where('bill_id',$billId)->where('purpose_for','charges')->get();
+        $bill = Billing::where('id', $billId)->first();
+        $ipd_details = IpdDetails::where('case_id', $bill->case_id)->first();
+        $bill_details_for_charges = BillDetails::where('bill_id', $billId)->where('purpose_for', 'charges')->get();
         $ids = $bill_details_for_charges->pluck('id');
         $patientCharges = PatientCharge::whereIn('id', $ids)->get();
-// dd($patientCharges);
-        $bill_details_for_medicine = BillDetails::where('bill_id',$billId)->where('purpose_for','medicine')->get();
+        // dd($patientCharges);
+        $bill_details_for_medicine = BillDetails::where('bill_id', $billId)->where('purpose_for', 'medicine')->get();
         $ids_medicine = $bill_details_for_medicine->pluck('id');
         $medicine_billings = MedicineBilling::whereIn('id', $ids_medicine)->get();
-    
+
 
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
         $patient_charges = PatientCharge::get();
-        return view('Ipd.billing.bill-print', compact('medicine_billings','patientCharges', 'bill','ipd_details','header_image'));
+        return view('Ipd.billing.bill-print', compact('medicine_billings', 'patientCharges', 'bill', 'ipd_details', 'header_image'));
     }
 
     public function create_billing_in_ipd($id)
@@ -777,13 +782,22 @@ class BillingController extends Controller
     //     return $pdf->stream('opd-bill.pdf');
     // }
 
-    public function print_opd_bill($opd_id,$bill_id)
+    public function print_opd_bill($bill_id)
     {
-        $opd_id = base64_decode($opd_id);
-        $opd_details = OpdDetails::where('id', $opd_id)->first();
-        $patient_charges = PatientCharge::where('case_id',$opd_details->case_id)->get();
-        $medicine = MedicineBilling::where('case_id',$opd_details->case_id)->get();
+
+        $billId = base64_decode($bill_id);
+        $bill = Billing::where('id', $billId)->first();
+        $opd_details = OpdDetails::where('case_id', $bill->case_id)->first();
+        $bill_details_for_charges = BillDetails::where('bill_id', $billId)->where('purpose_for', 'charges')->get();
+        $ids = $bill_details_for_charges->pluck('id');
+        $patientCharges = PatientCharge::whereIn('id', $ids)->get();
+        $bill_details_for_medicine = BillDetails::where('bill_id', $billId)->where('purpose_for', 'medicine')->get();
+        $ids_medicine = $bill_details_for_medicine->pluck('id');
+        $medicine_billings = MedicineBilling::whereIn('id', $ids_medicine)->get();
+
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
-        return view('OPD.billing._print_opd_billing', compact('opd_details', 'header_image','patient_charges','medicine'));
+        $patient_charges = PatientCharge::get();
+
+        return view('OPD.billing._print_opd_billing', compact('medicine_billings', 'patientCharges', 'bill', 'opd_details', 'header_image'));
     }
 }

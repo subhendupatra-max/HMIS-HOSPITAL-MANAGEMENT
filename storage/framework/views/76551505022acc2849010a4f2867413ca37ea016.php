@@ -339,8 +339,8 @@ unset($__errorArgs, $__bag); ?>
                             <hr class="hr_line">
                             <div class="row">
                                 <div class="col-md-6 ipd-registrationproadd">
-                                    <label for="icd_code" class="form-label">Final Diagnosis at the time of Admission </label>
-                                    <select name="icd_code_at_the_time_of_admission" class="form-control" id="icd_code_at_the_time_of_admission" required>
+                                    <label for="icd_code" class="form-label"> Diagnosis at the time of Admission </label>
+                                    <select name="icd_code_at_the_time_of_admission" class="form-control select2-show-search" id="icd_code_at_the_time_of_admission" required>
                                         <option value="">Select...</option>
                                         <?php $__currentLoopData = $icd_code; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $icd_codes): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($icd_codes->id); ?>"> <?php echo e($icd_codes->diagonasis_name); ?>(<?php echo e($icd_codes->icd_code); ?>)

@@ -66,20 +66,13 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
-                                            <a class="dropdown-item" href="">
-                                                <i class="fa fa-eye"></i> View
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print emg billing')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-emg-bill',['bill_id'=>base64_encode($value->id)])); ?>">
+                                                <i class="fa fa-print"></i> Print
                                             </a>
+                                            <?php endif; ?>
 
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit emg billing')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('edit_emg_bill',['bill_id'=>$value->id])); ?>">
-                                                <i class="fa fa-edit"></i> Edit
-                                            </a>
-                                            <?php endif; ?>
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete emg billing')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('delete-emg-bill',['bill_id'=>$value->id])); ?>">
-                                                <i class="fa fa-trash"></i> Delete
-                                            </a>
-                                            <?php endif; ?>
+                                            
 
                                         </div>
                                     </div>
@@ -94,5 +87,6 @@
             </div>
         </div>
     </div>
-    <?php $__env->stopSection(); ?>
+</div>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/emg/billing/emg-billing-listing.blade.php ENDPATH**/ ?>
