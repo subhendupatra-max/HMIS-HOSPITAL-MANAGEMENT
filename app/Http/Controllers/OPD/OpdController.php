@@ -324,9 +324,39 @@ class OpdController extends Controller
         $components_details = BloodComponentIssue::where('patient_id', $opd_patient_details->patient_id)->get();
         // dd( $components_details);
 
+
+        $operation_booking_id = '';
+        $operation_details = '';
+
+        // dd($opd_id);
+
+        // dd($opd_patient_details);
+        $patient_details_information = Patient::where('id', '=', $opd_patient_details->patient_id)->first();
+        // dd($patient_details_information);
+        $operation_theathers  = OperationTheather::where('patient_id', $opd_patient_details->patient_id)->first();
+        // dd( $operation_theathers);
+        // dd($operation_theathers);
+        // dd($patient_details_information);
+        if ($operation_theathers != null) {
+            $operation_booking = OperationBooking::where('id', $operation_theathers->operation_booking_id)->first();
+            // dd($operation_booking);
+            $operation_booking_id = $operation_booking->id;
+            $operation_details = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark')
+                ->leftjoin('operation_theathers', 'operation_theathers.operation_booking_id', '=', 'operation_bookings.id')
+                ->leftjoin('patients', 'patients.id', '=', 'operation_theathers.patient_id')
+                ->leftjoin('departments', 'departments.id', '=', 'operation_theathers.operation_department')
+                ->leftjoin('users', 'users.id', '=', 'operation_bookings.consultant_doctor')
+                ->leftjoin('operations', 'operations.id', '=', 'operation_theathers.operation_id')
+                ->leftjoin('operation_types', 'operation_types.id', '=', 'operation_theathers.operation_type')
+                ->leftjoin('operation_catagories', 'operation_catagories.id', '=', 'operation_theathers.operation_category_id')
+                ->where('operation_bookings.id', $operation_booking->id)
+                ->where('operation_theathers.operation_booking_id', $operation_booking->id)
+                ->get();
+        }
+
         //dd($PathologyTestDetails);
         $opd_visit_details = OpdVisitDetails::where('opd_details_id', $opd_id)->first();
-        return view('OPD.opd-patient-profile', compact('billing_amount', 'opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'blood_details', 'components_details'));
+        return view('OPD.opd-patient-profile', compact('billing_amount', 'opd_patient_details', 'opd_visit_details', 'timelineDetails', 'PhysicalDetails', 'payment_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'blood_details', 'components_details','operation_details'));
     }
     public function prescription_print($id)
     {
@@ -624,76 +654,76 @@ class OpdController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        foreach ($request->charge_name as $key => $value) {
-            $patient_charge = new PatientCharge();
-            $patient_charge->case_id = $request->case_id;
-            $patient_charge->section = $request->section;
-            $patient_charge->charges_date = $request->date;
-            $patient_charge->opd_id = $request->opd_id;
-            $patient_charge->patient_id = $request->patient_id;
-            $patient_charge->charge_category = $request->charge_category[$key];
-            $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
-            $patient_charge->charge_name = $request->charge_name[$key];
-            $patient_charge->standard_charges = $request->standard_charges[$key];
-            $patient_charge->tax = $request->tax[$key];
-            $patient_charge->qty = $request->qty[$key];
-            $patient_charge->amount = $request->amount[$key];
-            $patient_charge->generated_by = Auth::user()->id;
-            $patient_charge->billing_status = '0';
-            $patient_charge->save();
+            foreach ($request->charge_name as $key => $value) {
+                $patient_charge = new PatientCharge();
+                $patient_charge->case_id = $request->case_id;
+                $patient_charge->section = $request->section;
+                $patient_charge->charges_date = $request->date;
+                $patient_charge->opd_id = $request->opd_id;
+                $patient_charge->patient_id = $request->patient_id;
+                $patient_charge->charge_category = $request->charge_category[$key];
+                $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
+                $patient_charge->charge_name = $request->charge_name[$key];
+                $patient_charge->standard_charges = $request->standard_charges[$key];
+                $patient_charge->tax = $request->tax[$key];
+                $patient_charge->qty = $request->qty[$key];
+                $patient_charge->amount = $request->amount[$key];
+                $patient_charge->generated_by = Auth::user()->id;
+                $patient_charge->billing_status = '0';
+                $patient_charge->save();
 
-            $patient_details = Patient::where('id', $request->patient_id)->first();
+                $patient_details = Patient::where('id', $request->patient_id)->first();
 
-            $notofication = new Notification();
-            $notofication->message = 'A charge added for ' . $patient_details->prefix . ' ' . $patient_details->first_name . ' ' . $patient_details->middle_name . ' ' . $patient_details->last_name . '(' . $patient_details->id . '' . $patient_details->patient_prefix . ')';
-            $notofication->date = $request->date;
-            $notofication->created_by = Auth::user()->id;
-            $notofication->save();
-            // if ($request->charge_category[$key] == '1') {
-            //     $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
-            //     $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
+                $notofication = new Notification();
+                $notofication->message = 'A charge added for ' . $patient_details->prefix . ' ' . $patient_details->first_name . ' ' . $patient_details->middle_name . ' ' . $patient_details->last_name . '(' . $patient_details->id . '' . $patient_details->patient_prefix . ')';
+                $notofication->date = $request->date;
+                $notofication->created_by = Auth::user()->id;
+                $notofication->save();
+                // if ($request->charge_category[$key] == '1') {
+                //     $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
+                //     $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
 
-            //     if ($chargedetailstestp == null) {
-            //         $pathology_patient_test = new PathologyPatientTest();
-            //         $pathology_patient_test->case_id = $request->case_id;
-            //         $pathology_patient_test->date = $request->date;
-            //         $pathology_patient_test->section = 'OPD';
-            //         $pathology_patient_test->patient_id = $request->patient_id;
-            //         $pathology_patient_test->test_id =  $charge_detp->id;
-            //         $pathology_patient_test->opd_id = $request->opd_id;
-            //         $pathology_patient_test->generated_by = Auth::user()->id;
-            //         $pathology_patient_test->billing_status = '2';
-            //         $pathology_patient_test->test_status = '0';
-            //         $pathology_patient_test->save();
-            //     } else {
-            //         $chargedetailstestp->billing_status = '2';
-            //         $chargedetailstestp->save();
-            //     }
-            // }
-            // if ($request->charge_category[$key] == '2') {
-            //     $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
-            //     $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
+                //     if ($chargedetailstestp == null) {
+                //         $pathology_patient_test = new PathologyPatientTest();
+                //         $pathology_patient_test->case_id = $request->case_id;
+                //         $pathology_patient_test->date = $request->date;
+                //         $pathology_patient_test->section = 'OPD';
+                //         $pathology_patient_test->patient_id = $request->patient_id;
+                //         $pathology_patient_test->test_id =  $charge_detp->id;
+                //         $pathology_patient_test->opd_id = $request->opd_id;
+                //         $pathology_patient_test->generated_by = Auth::user()->id;
+                //         $pathology_patient_test->billing_status = '2';
+                //         $pathology_patient_test->test_status = '0';
+                //         $pathology_patient_test->save();
+                //     } else {
+                //         $chargedetailstestp->billing_status = '2';
+                //         $chargedetailstestp->save();
+                //     }
+                // }
+                // if ($request->charge_category[$key] == '2') {
+                //     $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
+                //     $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
 
-            //     if ($chargedetailstestr == null) {
-            //         $radiology_patient_test = new RadiologyPatientTest();
-            //         $radiology_patient_test->case_id = $request->case_id;
-            //         $radiology_patient_test->date = $request->date;
-            //         $radiology_patient_test->section = 'OPD';
-            //         $radiology_patient_test->patient_id = $request->patient_id;
-            //         $radiology_patient_test->test_id = $charge_detr->id;
-            //         $radiology_patient_test->opd_id = $request->opd_id;
-            //         $radiology_patient_test->generated_by = Auth::user()->id;
-            //         $radiology_patient_test->billing_status = '2';
-            //         $radiology_patient_test->test_status = '0';
-            //         $radiology_patient_test->save();
-            //     } else {
-            //         $chargedetailstestr->billing_status = '2';
-            //         $chargedetailstestr->save();
-            //     }
-            // }
-        }
-        DB::commit();
-        return redirect()->route('charges-list', ['id' => base64_encode($request->opd_id)])->with('success', "Charges Added Successfully");
+                //     if ($chargedetailstestr == null) {
+                //         $radiology_patient_test = new RadiologyPatientTest();
+                //         $radiology_patient_test->case_id = $request->case_id;
+                //         $radiology_patient_test->date = $request->date;
+                //         $radiology_patient_test->section = 'OPD';
+                //         $radiology_patient_test->patient_id = $request->patient_id;
+                //         $radiology_patient_test->test_id = $charge_detr->id;
+                //         $radiology_patient_test->opd_id = $request->opd_id;
+                //         $radiology_patient_test->generated_by = Auth::user()->id;
+                //         $radiology_patient_test->billing_status = '2';
+                //         $radiology_patient_test->test_status = '0';
+                //         $radiology_patient_test->save();
+                //     } else {
+                //         $chargedetailstestr->billing_status = '2';
+                //         $chargedetailstestr->save();
+                //     }
+                // }
+            }
+            DB::commit();
+            return redirect()->route('charges-list', ['id' => base64_encode($request->opd_id)])->with('success', "Charges Added Successfully");
         } catch (\Throwable $th) {
             DB::rollback();
             return back()->withErrors(['error' => $th->getMessage()]);

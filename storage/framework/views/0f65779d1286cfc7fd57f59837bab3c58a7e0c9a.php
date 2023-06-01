@@ -6,7 +6,7 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    <h4 class="pro-user-username mb-3 font-weight-bold"> <?php echo e(@$operation_details->first_name); ?> <?php echo e(@$operation_details->middle_name); ?> <?php echo e(@$operation_details->last_name); ?> (<?php echo e(@$operation_details->patient_prefix); ?>)<i class="fa fa-check-circle text-success"></i></h4>
+                    <h4 class="pro-user-username mb-3 font-weight-bold"> Operation Booking Details<i class="fa fa-check-circle text-success"></i></h4>
                 </div>
 
                 <div class="col-md-6 text-right">
@@ -21,6 +21,9 @@
                 </div>
 
             </div>
+        </div>
+        <div class="card-header">
+            <?php echo $__env->make('emg.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         <div class="card-body p-0">
             <div class="card-body border-top">
