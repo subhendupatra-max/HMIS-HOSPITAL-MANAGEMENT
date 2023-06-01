@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class RadiologyParameterWithTest extends Model
 {
     use HasFactory;
+    public function test_parameter_name()
+    {
+        return $this->belongsTo(RadiologyParameter::class, 'radiology_parameter_id','id');
+    }
 }

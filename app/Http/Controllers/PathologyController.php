@@ -548,7 +548,7 @@ class PathologyController extends Controller
                 $pthology_parameter = PathologyParameterWithTest::where('pathology_test_id', $request->test_id)->get();
                 
                 foreach($pthology_parameter as $value){
-                    $pathology_report = new pathologyReport();
+                    $pathology_report = new PathologyReport();
                     $pathology_report->pathology_patient_test_id = $pathology_patient_test->id;
                     $pathology_report->parameter_id = $value->pathology_parameter_id;
                     $pathology_report->reference_range = $value->test_parameter_name->reference_range;

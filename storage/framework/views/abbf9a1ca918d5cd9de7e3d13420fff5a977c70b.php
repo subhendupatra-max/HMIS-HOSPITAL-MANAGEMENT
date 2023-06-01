@@ -1,14 +1,12 @@
-@extends('layouts.layout')
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 <div class="col-md-12">
     <div class="card">
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-6 card-title">
-                    <h4 class="pro-user-username mb-3 font-weight-bold">{{ @$patient_details->prefix }} {{
-                        @$patient_details->first_name }} {{ @$patient_details->middle_name }} {{ @$patient_details->last_name }} ( {{
-                        @$patient_details->patient_prefix }}{{ @$patient_details->id }} ) <i class="fa fa-check-circle text-success"></i></h4>
+                    <h4 class="pro-user-username mb-3 font-weight-bold"><?php echo e(@$patient_details->prefix); ?> <?php echo e(@$patient_details->first_name); ?> <?php echo e(@$patient_details->middle_name); ?> <?php echo e(@$patient_details->last_name); ?> ( <?php echo e(@$patient_details->patient_prefix); ?><?php echo e(@$patient_details->id); ?> ) <i class="fa fa-check-circle text-success"></i></h4>
                 </div>
 
                 <div class="col-md-6 text-right">
@@ -30,22 +28,22 @@
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Gender </span>
                                         </td>
-                                        <td class="py-2 px-5">{!!$patient_details->gender!!}</td>
+                                        <td class="py-2 px-5"><?php echo $patient_details->gender; ?></td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Age </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            @if ($patient_details->year != 0)
-                                            {{ @$patient_details->year }}y
-                                            @endif
-                                            @if ($patient_details->month != 0)
-                                            {{ @$patient_details->month }}m
-                                            @endif
-                                            @if ($patient_details->day != 0)
-                                            {{ @$patient_details->day }}d
-                                            @endif
+                                            <?php if($patient_details->year != 0): ?>
+                                            <?php echo e(@$patient_details->year); ?>y
+                                            <?php endif; ?>
+                                            <?php if($patient_details->month != 0): ?>
+                                            <?php echo e(@$patient_details->month); ?>m
+                                            <?php endif; ?>
+                                            <?php if($patient_details->day != 0): ?>
+                                            <?php echo e(@$patient_details->day); ?>d
+                                            <?php endif; ?>
 
                                         </td>
                                     </tr>
@@ -53,7 +51,8 @@
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Phone no </span>
                                         </td>
-                                        <td class="py-2 px-5">{{ @$patient_details->phone }}
+                                        <td class="py-2 px-5"><?php echo e(@$patient_details->phone); ?>
+
                                         </td>
                                     </tr>
                            
@@ -61,22 +60,20 @@
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Blood Group </span>
                                         </td>
-                                        <td class="py-2 px-5">{{ @$patient_details->blood_group }}</td>
+                                        <td class="py-2 px-5"><?php echo e(@$patient_details->blood_group); ?></td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Phone </span>
                                         </td>
-                                        <td class="py-2 px-5">{{@$patient_details->phone }}</td>
+                                        <td class="py-2 px-5"><?php echo e(@$patient_details->phone); ?></td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Address </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$patient_details->address!!},{!!$patient_details->pin_no!!},{!!@$patient_details->_district->name!!},{!!
-                                            @$patient_details->_state->name!!},{!!
-                                            @$patient_details->_country->country_name!!}</td>
+                                            <?php echo $patient_details->address; ?>,<?php echo $patient_details->pin_no; ?>,<?php echo @$patient_details->_district->name; ?>,<?php echo @$patient_details->_state->name; ?>,<?php echo @$patient_details->_country->country_name; ?></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -90,21 +87,24 @@
                                             <span class="font-weight-semibold w-50">Case Id </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            {!!$patient_details->case_id!!}
+                                            <?php echo $patient_details->case_id; ?>
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Section </span>
                                         </td>
-                                        <td class="py-2 px-5">{{ @$radiology_patient_test_details->section }}
+                                        <td class="py-2 px-5"><?php echo e(@$radiology_patient_test_details->section); ?>
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="py-2 px-5">
                                             <span class="font-weight-semibold w-50">Date </span>
                                         </td>
-                                        <td class="py-2 px-5">{{ @date('d-m-Y h:i A', strtotime($radiology_patient_test_details->date)) }}
+                                        <td class="py-2 px-5"><?php echo e(@date('d-m-Y h:i A', strtotime($radiology_patient_test_details->date))); ?>
+
                                         </td>
                                     </tr>
                                     <tr>
@@ -112,11 +112,11 @@
                                             <span class="font-weight-semibold w-50">Test Staus </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            @if($radiology_patient_test_details->test_status == '0')
+                                            <?php if($radiology_patient_test_details->test_status == '0'): ?>
                                             <span class="badge badge-warning">Sample Not Collected</span>
-                                            @else
+                                            <?php else: ?>
                                             <span class="badge badge-success">Sample Collected</span>
-                                            @endif
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -124,13 +124,13 @@
                                             <span class="font-weight-semibold w-50">Bill Status </span>
                                         </td>
                                         <td class="py-2 px-5">
-                                            @if($radiology_patient_test_details->billing_status == '0')
+                                            <?php if($radiology_patient_test_details->billing_status == '0'): ?>
                                             <span class="badge badge-warning">Billing Not Done</span>
-                                            @elseif ($radiology_patient_test_details->billing_status == '1')
+                                            <?php elseif($radiology_patient_test_details->billing_status == '1'): ?>
                                             <span class="badge badge-warning">Billing Done</span>
-                                            @else
+                                            <?php else: ?>
                                             <span class="badge badge-warning">Charge Added</span>
-                                            @endif
+                                            <?php endif; ?>
                                         </td>
                                     </tr>
 
@@ -140,14 +140,14 @@
                     </div>
                 </div>
                 <hr style="margin: 0px 0px 22px 0px !important;">
-                <h5 class="font-weight-bold text-center">       {{ @$radiology_patient_test_details->test_details->test_name }}({{ @$radiology_patient_test_details->test_details->short_name }}) </h5>
-            <form action="{{ route('update-radiology-report') }}" method="POST">
-                @csrf
+                <h5 class="font-weight-bold text-center">       <?php echo e(@$radiology_patient_test_details->test_details->test_name); ?>(<?php echo e(@$radiology_patient_test_details->test_details->short_name); ?>) </h5>
+            <form action="<?php echo e(route('update-radiology-report')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="col-md-12">
                     <label>Description</label>
-                    <textarea name="description" class="content" >{{ @$radiology_patient_test_details->description != null ? $radiology_patient_test_details->description : $radio_test->description  }}</textarea>
+                    <textarea name="description" class="content" ><?php echo e(@$radiology_patient_test_details->description != null ? $radiology_patient_test_details->description : $radio_test->description); ?></textarea>
                 </div>
-                <input name="p_test_id" value="{{ $p_id }}" type="hidden" />
+                <input name="p_test_id" value="<?php echo e($p_id); ?>" type="hidden" />
 
                 <div class="col-md-12">
                     <div class="row">
@@ -163,17 +163,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($radiologyParameterResult as $key=>$value)
-                                    <input type="hidden" name="id[]" value="{{ $value->id }}" />
+                                    <?php $__currentLoopData = $radiologyParameterResult; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <input type="hidden" name="id[]" value="<?php echo e($value->id); ?>" />
                                         <tr>
-                                            <td>{{ @$value->parameter_name }}</td>
-                                            <td>{!! @$value->reference_range !!}
+                                            <td><?php echo e(@$value->parameter_name); ?></td>
+                                            <td><?php echo @$value->reference_range; ?>
+
                                             </td>
-                                            <td>{!! @$value->unit !!}</td>
-                                            <td><input type="text" name="report_value[]" value="{{ @$value->report_value }}" required="" /></td>
-                                            <td><textarea class="form-control" name="parameter_description[]">{{ @$value->parameter_description }}</textarea></td>
+                                            <td><?php echo @$value->unit; ?></td>
+                                            <td><input type="text" name="report_value[]" value="<?php echo e(@$value->report_value); ?>" required="" /></td>
+                                            <td><textarea class="form-control" name="parameter_description[]"><?php echo e(@$value->parameter_description); ?></textarea></td>
                                         </tr>
-                                    @endforeach
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </tbody>
                             </table>
                         </div>
@@ -195,4 +196,5 @@
     }
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/radiology/add-radiology-test-result-details.blade.php ENDPATH**/ ?>

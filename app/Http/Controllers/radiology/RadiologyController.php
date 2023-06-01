@@ -223,7 +223,7 @@ class RadiologyController extends Controller
         $p_id = base64_decode($id);
         $radiology_patient_test_details = RadiologyPatientTest::where('id', $p_id)->first();
         $patient_details = Patient::where('id', $radiology_patient_test_details->patient_id)->first();
-        $radiologyParameterResult = RadiologyReport::select('radiology_reports.id', 'radiology_parameters.parameter_name', 'radiology_parameters.reference_range', 'radiology_units.unit_name', 'radiology_reports.report_value', 'radiology_reports.parameter_description')->leftjoin('radiology_parameters', 'radiology_parameters.id', '=', 'radiology_reports.parameter_id')->leftjoin('radiology_units', 'radiology_units.id', '=', 'radiology_reports.unit')->where('radiology_reports.radiology_patient_test_id', $p_id)->get();
+        $radiologyParameterResult = RadiologyReport::select('radiology_reports.id', 'radiology_parameters.parameter_name', 'radiology_parameters.reference_range', 'radiology_units.unit_name', 'radiology_reports.report_value', 'radiology_reports.parameter_description','radiology_reports.unit')->leftjoin('radiology_parameters', 'radiology_parameters.id', '=', 'radiology_reports.parameter_id')->leftjoin('radiology_units', 'radiology_units.id', '=', 'radiology_reports.unit')->where('radiology_reports.radiology_patient_test_id', $p_id)->get();
         // dd( $radiologyParameterResult);
         // dd($radiologyParameterResult);
 
@@ -239,16 +239,19 @@ class RadiologyController extends Controller
         $p_id = base64_decode($id);
         $radiology_patient_test_details = RadiologyPatientTest::where('id', $p_id)->first();
         $patient_details = Patient::where('id', $radiology_patient_test_details->patient_id)->first();
-        $radiologyParameterResult = RadiologyReport::select('radiology_reports.id', 'radiology_parameters.parameter_name', 'radiology_parameters.reference_range', 'radiology_units.unit_name', 'radiology_reports.report_value', 'radiology_reports.parameter_description')->leftjoin('radiology_parameters', 'radiology_parameters.id', '=', 'radiology_reports.parameter_id')->leftjoin('radiology_units', 'radiology_units.id', '=', 'radiology_reports.unit')->where('radiology_reports.radiology_patient_test_id', $p_id)->get();
+        $radiologyParameterResult = RadiologyReport::select('radiology_reports.id', 'radiology_parameters.parameter_name', 'radiology_parameters.reference_range', 'radiology_units.unit_name', 'radiology_reports.report_value', 'radiology_reports.parameter_description','radiology_reports.unit')->leftjoin('radiology_parameters', 'radiology_parameters.id', '=', 'radiology_reports.parameter_id')->leftjoin('radiology_units', 'radiology_units.id', '=', 'radiology_reports.unit')->where('radiology_reports.radiology_patient_test_id', $p_id)->get();
 
         $radio_test = RadiologyTest::find($radiology_patient_test_details->test_id);
         $header_image = AllHeader::where('header_name', 'pathology_report')->first();
-        $pdf = PDF::loadView('radiology.printReport', compact('header_image', 'radiology_patient_test_details', 'patient_details', 'radiologyParameterResult', 'radio_test'));
-        return $pdf->stream('radiology-report.pdf');
+        return view('radiology.printReport', compact('header_image', 'radiology_patient_test_details', 'patient_details', 'radiologyParameterResult', 'radio_test'));
     }
 
     public function update_radiology_report(Request $request)
     {
+        $radiologyPatientTest = RadiologyPatientTest::where('id', $request->p_test_id)->first();
+        $radiologyPatientTest->description = $request->description;
+        $radiologyPatientTest->save();
+        
         // dd($request->all());
         foreach ($request->id as $key => $value) {
             $radiology_report_details = RadiologyReport::where('id', $request->id[$key])->first();
@@ -368,8 +371,8 @@ class RadiologyController extends Controller
             'test_id'   => 'required',
             'patientId'   => 'required',
         ]);
-        try {
-            DB::beginTransaction();
+        // try {
+        //     DB::beginTransaction();
             $radiology_patient_test = new RadiologyPatientTest();
             // dd($request->case_id);
             $case_details = caseReference::where('id', $request->case_id)->first();
@@ -383,26 +386,37 @@ class RadiologyController extends Controller
                 $section_details = IpdDetails::where('case_id', $request->case_id)->first();
                 $radiology_patient_test->ipd_id = $section_details->id;
             }
-            $radio_details = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $request->test_id)->where('test_status', '=', '0')->first();
-            if ($radio_details == null) {
+            // $radio_details = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $request->test_id)->where('test_status', '=', '0')->first();
+            // if ($radio_details == null) {
                 $radiology_patient_test->case_id = $request->case_id;
                 $radiology_patient_test->date = $request->date;
                 $radiology_patient_test->section = $case_details->section;
                 $radiology_patient_test->patient_id = $request->patientId;
                 $radiology_patient_test->test_id = $request->test_id;
                 $radiology_patient_test->generated_by = Auth::user()->id;
-                $radiology_patient_test->billing_status = '0';
+                $radiology_patient_test->billing_status = $request->billing_status;
                 $radiology_patient_test->test_status = '0';
                 $radiology_patient_test->save();
-                DB::commit();
+
+                $radiology_parameter = RadiologyParameterWithTest::where('radiology_test_id', $request->test_id)->get();
+
+                foreach($radiology_parameter as $value){
+                    $radio_report = new RadiologyReport();
+                    $radio_report->radiology_patient_test_id = $radiology_patient_test->id;
+                    $radio_report->parameter_id = $value->radiology_parameter_id;
+                    $radio_report->reference_range = $value->test_parameter_name->reference_range;
+                    $radio_report->unit = $value->test_parameter_name->unitName->unit_name;
+                    $radio_report->save();
+                }
+//DB::commit();
                 return redirect()->route('radiology-test-charge')->with('success', "Test Added Successfully for this patient");
-            } else {
-                return redirect()->route('radiology-test-charge')->with('success', "Test already added for this patient");
-            }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->route('radiology-test-charge')->withErrors(['error' => $th->getMessage()]);
-        }
+            // } else {
+            //     return redirect()->route('radiology-test-charge')->with('success', "Test already added for this patient");
+            // }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->route('radiology-test-charge')->withErrors(['error' => $th->getMessage()]);
+        // }
     }
 
 
@@ -659,4 +673,24 @@ class RadiologyController extends Controller
     //         return redirect()->route('radiology-test-details')->with('error', "Something Went Wrong");
     //     }
     // }
+
+    public function change_sample_status(Request $request)
+    {
+        $radiology_patient_test = RadiologyPatientTest::where('id', $request->id)->first();
+        $radiology_patient_test->test_status = $request->sample_status;
+        if($request->sample_status == 3){
+            $radiology_patient_test->report_date = date('Y-m-d');
+        }
+       
+        if($request->sample_status == 2 || $request->sample_status == 1 ){
+            $radiology_patient_test->sample_collected_date = date('Y-m-d');
+        }
+        
+        $radiology_patient_test->save();
+        if (true) {
+            return redirect()->route('radiology-test-charge')->with('success', 'Sample Collected Successfully');
+        } else {
+            return redirect()->back()->with('error', "Something Went Wrong");
+        }
+    }
 }

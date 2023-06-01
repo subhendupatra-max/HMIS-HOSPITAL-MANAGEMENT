@@ -1819,7 +1819,7 @@ Route::group(['middleware' => ['permission:radiology main'], 'prefix' => 'radiol
     });
 
     // -- *
-
+    Route::post('change-sample-status-radiology', [RadiologyController::class, 'change_sample_status'])->name('change-sample-status-radiology');
 
     Route::group(['middleware' => ['permission:delete radiology test']], function () {
         Route::get('delete-radiology-test-details/{id}', [RadiologyController::class, 'delete_radiology_test_details'])->name('delete-radiology-test-details');

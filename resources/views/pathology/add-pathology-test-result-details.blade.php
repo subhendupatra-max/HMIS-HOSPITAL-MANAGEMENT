@@ -145,7 +145,9 @@
                 @csrf
                 <div class="col-md-12">
                     <label>Description</label>
-                    <textarea name="description" class="content" >{{ $patho_test->description }}</textarea>
+                    <textarea name="description" class="content" >
+                        {{ @$pathology_patient_test_details->description != null ? $pathology_patient_test_details->description : $patho_test->description  }}
+                    </textarea>
                 </div>
                 <input name="p_test_id" value="{{ $p_id }}" type="hidden" />
 
