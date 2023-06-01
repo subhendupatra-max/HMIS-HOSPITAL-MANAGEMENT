@@ -2,10 +2,12 @@
 <html lang="en">
 
 <head>
-  <title>BillingSummary</title>
+  <title> Bill Summary</title>
 
 </head>
-
+<script>
+  window.print();
+</script>
 <style>
   @page {
     size: A4 portrait;
@@ -23,6 +25,13 @@
       padding: 5px !important;
       overflow: hidden;
     }
+
+    .pagebreak {
+      page-break-before: always;
+    }
+
+    / page-break-after works,
+    as well /
   }
 
 
@@ -46,31 +55,41 @@
   }
 </style>
 <div style="padding: 0px 7px 0px 7px;">
+  <!-- ==============================draft copy============================================ -->
+  <!-- <div
+  style="position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+  <h2
+    style="font-size: 70px; letter-spacing: 2px; text-transform: uppercase; transform: rotate(322deg); color: #9191912b;">
+    Draft Copy
+  </h2>
+</div> -->
+  <!-- ==============================draft copy============================================ -->
   <!-- ==========================================code here================================== -->
   <table style="width: 100%; border:1px soild black;border-collapse: collapse">
     <tr style="text-align: center;">
       <td>
-        {{-- <img src="./image/1571895010.png" style="width: 100%;"> --}}
+        <img src="{{ asset('public/assets/images/header') }}/{{$header_image->logo}}" alt="" style="width: 100%;">
       </td>
     </tr>
     <tr style="width:100%">
       <td style="width:100%">
-        <h1 style="text-align:center;font-size: 20px;margin: 40px 0px 20px 0px; color: #000;padding: 15px 0px 15px 0px;  width: 100%;">Billing Summary</h1>
+        <h1 style="text-align:center;font-size: 20px;margin: 10px 0px 10px 0px; color: #000;padding: 5px 0px 5px 0px;  width: 100%;">
+          Bill Summary</h1>
       </td>
     </tr>
     <table style="width: 100%;">
       <tr>
         <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-          <b>UHID No. : {{@$opd_patient_details->all_patient_details->patient_prefix}} {{@$opd_patient_details->all_patient_details->id}}</b>
+          <b>UHID No. :
+            {{$opd_details->all_patient_details->patient_prefix}}/{{$opd_details->all_patient_details->id}}</b>
         </td>
         <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
           <!-- <img src="./image/qr.png" style="width: 80px;"> -->
           <?php
-          $opd_de = $opd_patient_details->opd_prefix . '' . $opd_patient_details->id;
+          $ipd_de = $opd_details->ipd_prefix . '' . $opd_details->ipd_id;
           ?>
 
-          <span style="width: 80px;height:60px">{!! QrCode::size(50)->generate($opd_de); !!} </span>
-
+          <span style="width: 80px;height:60px">{!! QrCode::size(90)->generate($ipd_de); !!} </span>
         </td>
         <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
           <!-- <img src="./image/barcodee.png" style="width: 80px;"> -->
@@ -78,16 +97,21 @@
           $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
           @endphp
 
-          <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$opd_patient_details->opd_prefix @$opd_patient_details->id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 190px;height:60px">
+          <img src="data:image/png;base64,{{ base64_encode($generatorPNG->getBarcode('@$opd_details->ipd_prefix @$opd_details->ipd_id', $generatorPNG::TYPE_CODE_128)) }}" style="width: 190px;height:60px">
         </td>
         <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-          <b>Admission Date : {{@$opd_patient_details->latest_opd_visit_details_for_patient->appointment_date}}</b>
+          <b>Admission Date : {{$opd_details->appointment_date}}</b>
         </td>
 
       </tr>
       <tr>
-        <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b> OPD no. : {{@$opd_patient_details->opd_prefix}} {{@$opd_patient_details->id}} </b></td>
-        <!-- <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;"><b>Patient Source:OPD Source Id:OPD/IIMSAR-DR.BCRHH/230407418418;</b></td> -->
+        <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>
+            IPD no.
+            : {{$opd_details->ipd_prefix}}/{{$opd_details->id}}</b></td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;">
+          <b>Patient
+            Source:{{$opd_details->patient_source}} Source Id:{{$opd_details->patient_source_id}};</b>
+        </td>
 
       </tr>
     </table>
@@ -97,19 +121,19 @@
           Patient Name
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->all_patient_details->first_name}} {{@$opd_patient_details->all_patient_details->middle_name}} {{@$opd_patient_details->all_patient_details->last_prefix}}
+          {{$opd_details->all_patient_details->first_name}}
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Guardian Name
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->all_patient_details->guardian_name}}
+          {{$opd_details->all_patient_details->guardian_name}}
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Mobile No.
         </th>
         <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->all_patient_details->phone}}
+          {{$opd_details->all_patient_details->phone}}
         </td>
       </tr>
       <tr>
@@ -117,19 +141,20 @@
           Age
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->all_patient_details->year}}Y {{@$opd_patient_details->all_patient_details->month}}M {{@$opd_patient_details->all_patient_details->day}}D
+          {{$opd_details->all_patient_details->year}}Y {{$opd_details->all_patient_details->month}}M
+          {{$opd_details->all_patient_details->day}}D
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Gender
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->all_patient_details->gender}}
+          {{$opd_details->all_patient_details->gender}}
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Patient Type
         </th>
         <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->latest_opd_visit_details_for_patient->patient_type}}
+          {{$opd_details->patient_type}}
         </td>
       </tr>
       <tr>
@@ -137,19 +162,19 @@
           Dr. In Charge
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->latest_opd_visit_details_for_patient->doctor->first_name}} {{@$opd_patient_details->latest_opd_visit_details_for_patient->doctor->last_name}}
+          {{$opd_details->doctor_details->first_name}} {{$opd_details->doctor_details->last_name}}
         </td>
-        <!-- <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+        <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Ward
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          ENT Male
-        </td> -->
+          {{$opd_details->ward_details->ward_name}}
+        </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Unit
         </th>
         <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->latest_opd_visit_details_for_patient->unit}}
+          {{$opd_details->unit_details->bedUnit_name}}
         </td>
       </tr>
       <tr>
@@ -157,199 +182,114 @@
           Department:
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->latest_opd_visit_details_for_patient->department_details->department_name}}
+          {{$opd_details->department_details->department_name}}
         </td>
-        <!-- <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+        <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Floor
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           3rd Floor
-        </td> -->
-        <!-- <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+        </td>
+        <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Bed
         </th>
         <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          ENT-M-01-0006
-        </td> -->
+          {{$opd_details->bed_details->bed_name}}
+        </td>
       </tr>
 
     </table>
-    <table style="width: 100%; border-collapse: collapse; ">
+    <table style="width: 100%; border-collapse: collapse;">
       <tr>
         <th colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Address
         </th>
         <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{@$opd_patient_details->all_patient_details->address}}, {{@$opd_patient_details->all_patient_details->_state->name}}, {{@$opd_patient_details->all_patient_details->_district->name}}, {{@$opd_patient_details->all_patient_details->pin_no}}
+          {{$opd_details->all_patient_details->address}},{{$opd_details->all_patient_details->_state->name}},{{$opd_details->all_patient_details->_district->name}},{{$opd_details->all_patient_details->pin_no}}
         </td>
 
       </tr>
-      @if(@$opd_patient_details->latest_opd_visit_details_for_patient->patient_type == 'Swasthya Sathi' || @$opd_patient_details->latest_opd_visit_details_for_patient->patient_type == 'TPA' )
+      @if($opd_details->patient_type == 'Swasthya Sathi' || $opd_details->patient_type == 'TPA' )
       <tr>
         <th colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          @if($opd_patient_details->latest_opd_visit_details_for_patient->patient_type == 'Swasthya Sathi')
+          @if($opd_details->patient_type == 'Swasthya Sathi')
           Swasthya Sathi No.
-          @elseif($opd_patient_details->latest_opd_visit_details_for_patient->patient_type == 'TPA')
-          TPA {{$opd_patient_details->tpa_details->TPA_name}}
+          @elseif($opd_details->patient_type == 'TPA')
+          TPA {{$opd_details->tpa_details->TPA_name}}
           @endif
+
         </th>
         <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_patient_details->tpa_details->type_no}}
+          {{$opd_details->type_no}}
         </td>
 
       </tr>
       @endif
-    </table>
-    <table style="width: 100%; margin: 0px 0px 0px 0px; border-collapse: collapse; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
-      <tr>
-        <th style="text-align: right;font-size: 13px; padding: 5px 0px 5px 0px;">Total :</th>
-        <td style="text-align: right;font-size: 13px; width:90px;padding: 0px 10px 0px 0px; ">{{@$opd_billing->total_amount }}</td>
-      </tr>
-      <tr>
-        <th style="text-align: right;font-size: 13px;padding: 5px 0px 5px 0px; ">Tax :</th>
-        <td style="text-align: right;font-size: 13px;padding: 0px 10px 0px 0px; ">{{@$opd_billing->tax }}</td>
-      </tr>
-      <tr>
-        <th style="text-align: right;font-size: 13px;padding: 5px 0px 5px 0px; ">Discount :</th>
-        <td style="text-align: right;font-size: 13px;padding: 0px 10px 0px 0px; ">50</td>
-      </tr>
-      <tr>
-        <th style="text-align: right;font-size: 13px; padding: 5px 0px 5px 0px;">Grand Total :</th>
-        <td style="text-align: right;font-size: 13px; padding: 0px 10px 0px 0px;">{{@$opd_billing->grand_total }}</td>
-      </tr>
-    </table>
-    <table style="width: 100%;
 
-margin: 0px 0px 0px 0px;
-border-collapse: collapse;
-border-left: 1px solid black;
-border-right: 1px solid black;
-border-bottom: 1px solid black;">
+    </table>
+    <table style="width: 100%;margin:10px 0px 0px 0px">
       <tr>
-        <th style="text-align: left;font-size: 13px; padding: 10px 10px 10px 10px;">
-          Date:
-        </th>
-        <td style="text-align: left;font-size: 13px;">
-          {{@$opd_billing->bill_date }}
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">SL.NO
         </td>
-
-
-        <th style="text-align: left;font-size: 13px; ">
-          Payment Amount:
-        </th>
-        <td style="text-align: right;font-size: 13px; padding: 0px 10px 0px 0px;">
-          {{@$opd_billing->grand_total }}
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+          Date</td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Category</td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Charge Name
+        </td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+          Amount(Rs)</td>
+      </tr>
+      <?php $total = 0; ?>
+      @if (@$patient_charges)
+      @foreach ($patient_charges as $value)
+      <?php $total += $value->amount; ?>
+      <tr>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{$loop->iteration}}
+        </td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @date('d-m-Y h:i A', strtotime($value->charges_date)) }} </td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->charges_category_details->charges_catagories_name }}
+        </td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->charge_details->charges_name }}
+        </td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->amount }}
         </td>
       </tr>
-
-
-      <tr>
-        <th style="text-align: left;font-size: 13px;padding: 10px 10px 10px 10px;">
-          Payment Status:
-        </th>
-        <td style="text-align: left;font-size: 13px;">
-          {{@$opd_billing->payment_status }}
-        </td>
-        <!-- <th style="text-align: left;font-size: 13px;">
-          Due:
-        </th>
-        <td style="text-align: right;font-size: 13px; padding: 0px 10px 0px 0px;">
-          9050
-        </td> -->
-
-      </tr>
-      <tr>
-        <!-- <th colspan="2" style="text-align: left;font-size: 13px; padding: 10px 10px 10px 10px;">
-          Paymnet Mode:
-        </th>
-        <td colspan="2" style="text-align: right;font-size: 13px;padding: 0px 10px 0px 0px; ">
-          Cash
-        </td> -->
-
-      </tr>
+      @endforeach
+      @endif
     </table>
-    <table>
-      <h1 style="font-size: 15px;">Pathology</h1>
-    </table>
-    <table style="width: 100%;">
 
-      <tr>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">SL.NO</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Charge-Name</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Base Price</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Gst</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Amount</td>
-      </tr>
-
-      <tr>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">1</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"> BCRHH/23040754010 </td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">100</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">10000</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">100</td>
-      </tr>
-    </table>
-    <table>
-      <h1 style="font-size: 15px;">Radiology</h1>
-    </table>
-    <table style="width: 100%;">
-
-      <tr>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">SL.NO</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Charge-Name</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Base Price</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Gst</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Amount</td>
-      </tr>
-
-      <tr>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">1</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"> BCRHH/23040754010 </td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">100</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">10000</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">100</td>
-      </tr>
-    </table>
     <table>
       <h1 style="font-size: 15px;">Medicine</h1>
     </table>
     <table style="width: 100%;">
-
       <tr>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">SL.NO</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Medicine Bill Id</td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">SL.NO
+        </td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+          Medicine Bill Id</td>
 
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Amount</td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+          Amount(Rs)</td>
       </tr>
-
+      @if (@$medicine)
+      @foreach ($medicine as $value)
+      <?php $total += $value->amount; ?>
       <tr>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">1</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"> BCRHH/23040754010 </td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">100</td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{$loop->iteration}}
+        </td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->bill_prefix }}{{ @$value->id }} </td>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">{{ @$value->total_amount }}
+        </td>
 
       </tr>
+      @endforeach
+      @endif
     </table>
     <table>
-      <h1 style="font-size: 15px;">Others</h1>
+      <h1 style="font-size: 20px;"> Total : {{ @$total.' Rs' }} </h1>
     </table>
-    <table style="width: 100%;">
 
-      <tr>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">SL.NO</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Charge-Name</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Base Price</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Gst</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">Amount</td>
-      </tr>
 
-      <tr>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">1</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"> BCRHH/23040754010 </td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">100</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">10000</td>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">100</td>
-      </tr>
-    </table>
     <!-- =================================================================================================== -->
 </div>
 </body>

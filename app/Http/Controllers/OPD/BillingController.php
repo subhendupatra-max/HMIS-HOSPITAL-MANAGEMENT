@@ -279,7 +279,7 @@ class BillingController extends Controller
             return redirect()->route('opd-billing', ['id' => base64_encode($request->opd_id)])->with('success', "Biliing Successfully");
         } else {
 
-            return redirect()->route('opd-billing', ['id' => base64_encode($request->opd_id)])->with('error', "Something Went Worng");
+            return redirect()->route('opd-billing', ['id' => base64_encode($request->opd_id)])->with('error', "Biliing Successfully");
         }
         // } catch (\Throwable $th) {
         //     DB::rollback();
@@ -743,15 +743,29 @@ class BillingController extends Controller
         }
     }
 
-    public function print_opd_bill($bill_id, $id)
-    {
-        $BillId = base64_decode($bill_id);
-        $OpdId = base64_decode($id);
-        $opd_patient_details = OpdDetails::where('id',$OpdId)->first();
-        $opd_billing = Billing::where('opd_id', $OpdId)->first();
-        $billing_details = BillDetails::where('bill_id', $BillId)->first();
+    // public function print_opd_bill($bill_id, $opd_id)
+    // {
+    //     $bill_id = base64_decode($bill_id);
+    //     $opd_id = base64_decode($opd_id);
+    //     // dd($opd_id);
+    //     $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
+    //     // dd($opd_patient_details);
+    //     $bill_details = Billing::where('case_id', $opd_patient_details->case_id)->first();
+    //     $billing_details = BillDetails::where('bill_id', $bill_id)->get();
+    //     $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
 
-        $pdf = PDF::loadView('OPD.billing._print_opd_billing', compact('OpdId', 'opd_billing', 'billing_details','opd_patient_details'));
-        return $pdf->stream('opd-bill.pdf');
+    //     // dd($billing_details);
+    //     $pdf = PDF::loadView('OPD.billing._print_opd_billing', compact('opd_id', 'bill_details', 'billing_details', 'opd_patient_details', 'header_image'));
+    //     return $pdf->stream('opd-bill.pdf');
+    // }
+
+    public function print_opd_bill($opd_id,$bill_id)
+    {
+        $opd_id = base64_decode($opd_id);
+        $opd_details = OpdDetails::where('id', $opd_id)->first();
+        $patient_charges = PatientCharge::where('case_id',$opd_details->case_id)->get();
+        $medicine = MedicineBilling::where('case_id',$opd_details->case_id)->get();
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+        return view('OPD.billing._print_opd_billing', compact('opd_details', 'header_image','patient_charges','medicine'));
     }
 }
