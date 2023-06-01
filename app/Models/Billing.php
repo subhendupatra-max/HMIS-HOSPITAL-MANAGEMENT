@@ -27,4 +27,9 @@ class Billing extends Model
     {
         return $this->belongsTo(OpdDetails::class, 'opd_id', 'id');
     }
+
+    public function bill_details()
+    {
+        return $this->belongsTo(BillDetails::class,'id','bill_id');
+    }
 }
