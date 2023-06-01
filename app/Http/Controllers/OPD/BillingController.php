@@ -66,18 +66,18 @@ class BillingController extends Controller
     }
     public function get_subcategory_by_category(Request $request)
     {
-        
+
         $subCategory = ChargesSubCatagory::select('charges_sub_catagories.charges_sub_catagories_name as sub_category_name', 'charges_sub_catagories.id as sub_category_id')->where('charges_catagories_id', $request->categoryId)->get();
-        
+
         return response()->json($subCategory);
     }
 
 
     public function get_charge_name(Request $request)
     {
-      
-            $charge_details = Charge::select('charges.charges_name as charges_name', 'charges.id as charge_id')->where('charges_catagory_id', $request->chargeCategory)->where('charges_sub_catagory_id', $request->chargeSubCategory)->get();
-        
+
+        $charge_details = Charge::select('charges.charges_name as charges_name', 'charges.id as charge_id')->where('charges_catagory_id', $request->chargeCategory)->where('charges_sub_catagory_id', $request->chargeSubCategory)->get();
+
 
         return response()->json($charge_details);
     }
@@ -89,10 +89,10 @@ class BillingController extends Controller
         } else {
             $p_type = $ipd_details->patient_type;
         }
-        $patient_type_id = ChargeType::where('charge_type_name',$p_type)->first();
+        $patient_type_id = ChargeType::where('charge_type_name', $p_type)->first();
 
-        $charge_amount = Charge::select('charges_with_charges_types.standard_charges as charge_amount')->join('charges_with_charges_types','charges.id','=','charges_with_charges_types.charge_id')->where('charges.id', $request->chargeName)->where('charges_with_charges_types.charge_type_id', $patient_type_id->id)->first();
-        
+        $charge_amount = Charge::select('charges_with_charges_types.standard_charges as charge_amount')->join('charges_with_charges_types', 'charges.id', '=', 'charges_with_charges_types.charge_id')->where('charges.id', $request->chargeName)->where('charges_with_charges_types.charge_type_id', $patient_type_id->id)->first();
+
         return response()->json($charge_amount);
     }
     public function get_charge_amount_emg(Request $request)
@@ -103,10 +103,10 @@ class BillingController extends Controller
         } else {
             $p_type = $emg_details->patient_type;
         }
-        $patient_type_id = ChargeType::where('charge_type_name',$p_type)->first();
+        $patient_type_id = ChargeType::where('charge_type_name', $p_type)->first();
 
-        $charge_amount = Charge::select('charges_with_charges_types.standard_charges as charge_amount')->join('charges_with_charges_types','charges.id','=','charges_with_charges_types.charge_id')->where('charges.id', $request->chargeName)->where('charges_with_charges_types.charge_type_id', $patient_type_id->id)->first();
-        
+        $charge_amount = Charge::select('charges_with_charges_types.standard_charges as charge_amount')->join('charges_with_charges_types', 'charges.id', '=', 'charges_with_charges_types.charge_id')->where('charges.id', $request->chargeName)->where('charges_with_charges_types.charge_type_id', $patient_type_id->id)->first();
+
         return response()->json($charge_amount);
     }
     public function get_charge_amount_opd(Request $request)
@@ -117,10 +117,10 @@ class BillingController extends Controller
         } else {
             $p_type = $opd_details->patient_type;
         }
-        $patient_type_id = ChargeType::where('charge_type_name',$p_type)->first();
+        $patient_type_id = ChargeType::where('charge_type_name', $p_type)->first();
 
-        $charge_amount = Charge::select('charges_with_charges_types.standard_charges as charge_amount')->join('charges_with_charges_types','charges.id','=','charges_with_charges_types.charge_id')->where('charges.id', $request->chargeName)->where('charges_with_charges_types.charge_type_id', $patient_type_id->id)->first();
-        
+        $charge_amount = Charge::select('charges_with_charges_types.standard_charges as charge_amount')->join('charges_with_charges_types', 'charges.id', '=', 'charges_with_charges_types.charge_id')->where('charges.id', $request->chargeName)->where('charges_with_charges_types.charge_type_id', $patient_type_id->id)->first();
+
         return response()->json($charge_amount);
     }
 
@@ -538,202 +538,202 @@ class BillingController extends Controller
         ]);
         try {
             DB::beginTransaction();
-        if ($request->take_discount == 'yes') {
-            $status = 'Done';
-            $tax = $request->total_tax;
-            $tax_total = $request->total + (($request->total) * ($tax / 100));
-            $grand_total = number_format((float)($tax_total), 2, '.', '');
-            $discount_status = 'Requested';
-        } else {
-            $discount_status = 'Not applied';
-            $tax = $request->total_tax;
-            $tax_total = $request->total + (($request->total) * ($tax / 100));
-            $grand_total = number_format((float)($tax_total), 2, '.', '');
-            $status = 'Done';
-        }
-
-        if ($request->payment_amount != null) {
-            if ($request->payment_amount == $request->grand_total) {
-                $payment_status = 'Done';
+            if ($request->take_discount == 'yes') {
+                $status = 'Done';
+                $tax = $request->total_tax;
+                $tax_total = $request->total + (($request->total) * ($tax / 100));
+                $grand_total = number_format((float)($tax_total), 2, '.', '');
+                $discount_status = 'Requested';
             } else {
-                $payment_status = 'Due';
-            }
-        }
-
-        // ====================== Billing ===========================================
-        $billing_prefix = Prefix::where('name', 'bill')->first();
-        $bill = new Billing;
-        $bill->bill_prefix = $billing_prefix->prefix;
-        $bill->bill_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
-        $bill->patient_id = $request->patient_id;
-        $bill->section = $request->section;
-        $bill->case_id = $request->case_id;
-        // $bill->opd_id = $request->opd_id;
-        $bill->total_amount = $request->total;
-        $bill->payment_status = $payment_status;
-        $bill->discount_status =  $discount_status;
-        $bill->status =  'done';
-        $bill->created_by = Auth::user()->id;
-        $bill->note = $request->note;
-        $bill->grand_total = $grand_total;
-        $bill->tax =  $request->total_tax;
-        $bill->save();
-        // ====================== Billing ===========================================
-
-        foreach ($request->charge_category as $key => $value) {
-
-            // if ($value->old_or_new == 'new') {
-            //     $patient_charge = new PatientCharge();
-            //     $patient_charge->case_id = $request->case_id;
-            //     $patient_charge->section = $request->section;
-            //     $patient_charge->charges_date = $request->date;
-            //     $patient_charge->ipd_id = $request->ipd_id;
-            //     $patient_charge->patient_id = $request->patient_id;
-            //     $patient_charge->charge_set = $request->charge_set[$key];
-            //     $patient_charge->charge_type = $request->charge_type[$key];
-            //     $patient_charge->charge_category = $request->charge_category[$key];
-            //     $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
-            //     $patient_charge->charge_name = $request->charge_name[$key];
-            //     $patient_charge->standard_charges = $request->standard_charges[$key];
-            //     $patient_charge->tax = $request->tax[$key];
-            //     $patient_charge->qty = $request->qty[$key];
-            //     $patient_charge->amount = $request->amount[$key];
-            //     $patient_charge->generated_by = Auth::user()->id;
-            //     $patient_charge->billing_status = '1';
-            //     $patient_charge->save();
-            //     $charge_id = $patient_charge->id;
-            // }
-            if ($request->old_or_new[$key] == 'old') {
-                $charge_id = $request->charge_id_old[$key];
-                $p_charg = PatientCharge::find( $charge_id);
-                $p_charg->billing_status = '1';
-                $p_charg->save();
+                $discount_status = 'Not applied';
+                $tax = $request->total_tax;
+                $tax_total = $request->total + (($request->total) * ($tax / 100));
+                $grand_total = number_format((float)($tax_total), 2, '.', '');
+                $status = 'Done';
             }
 
+            if ($request->payment_amount != null) {
+                if ($request->payment_amount == $request->grand_total) {
+                    $payment_status = 'Done';
+                } else {
+                    $payment_status = 'Due';
+                }
+            }
 
-            // for pathology billing 
-            // if ($request->charge_category[$key] == '1') {
-            //     $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
-            //     $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
+            // ====================== Billing ===========================================
+            $billing_prefix = Prefix::where('name', 'bill')->first();
+            $bill = new Billing;
+            $bill->bill_prefix = $billing_prefix->prefix;
+            $bill->bill_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+            $bill->patient_id = $request->patient_id;
+            $bill->section = $request->section;
+            $bill->case_id = $request->case_id;
+            // $bill->opd_id = $request->opd_id;
+            $bill->total_amount = $request->total;
+            $bill->payment_status = $payment_status;
+            $bill->discount_status =  $discount_status;
+            $bill->status =  'done';
+            $bill->created_by = Auth::user()->id;
+            $bill->note = $request->note;
+            $bill->grand_total = $grand_total;
+            $bill->tax =  $request->total_tax;
+            $bill->save();
+            // ====================== Billing ===========================================
 
-            //     if ($chargedetailstestp == null) {
-            //         $pathology_patient_test = new PathologyPatientTest();
-            //         $pathology_patient_test->bill_id = $bill->id;
-            //         $pathology_patient_test->case_id = $request->case_id;
-            //         $pathology_patient_test->date = $request->date;
-            //         $pathology_patient_test->section = 'IPD';
-            //         $pathology_patient_test->patient_id = $request->patient_id;
-            //         $pathology_patient_test->test_id =  $charge_detp->id;
-            //         $pathology_patient_test->ipd_id = $request->ipd_id;
-            //         $pathology_patient_test->generated_by = Auth::user()->id;
-            //         $pathology_patient_test->billing_status = '1';
-            //         $pathology_patient_test->test_status = '0';
-            //         $pathology_patient_test->save();
-            //     } else {
-            //         $chargedetailstestp->billing_status = '1';
-            //         $chargedetailstestp->save();
-            //     }
-            // }
+            foreach ($request->charge_category as $key => $value) {
 
-            // for pathology billing
-            // for Radiology billing
+                // if ($value->old_or_new == 'new') {
+                //     $patient_charge = new PatientCharge();
+                //     $patient_charge->case_id = $request->case_id;
+                //     $patient_charge->section = $request->section;
+                //     $patient_charge->charges_date = $request->date;
+                //     $patient_charge->ipd_id = $request->ipd_id;
+                //     $patient_charge->patient_id = $request->patient_id;
+                //     $patient_charge->charge_set = $request->charge_set[$key];
+                //     $patient_charge->charge_type = $request->charge_type[$key];
+                //     $patient_charge->charge_category = $request->charge_category[$key];
+                //     $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
+                //     $patient_charge->charge_name = $request->charge_name[$key];
+                //     $patient_charge->standard_charges = $request->standard_charges[$key];
+                //     $patient_charge->tax = $request->tax[$key];
+                //     $patient_charge->qty = $request->qty[$key];
+                //     $patient_charge->amount = $request->amount[$key];
+                //     $patient_charge->generated_by = Auth::user()->id;
+                //     $patient_charge->billing_status = '1';
+                //     $patient_charge->save();
+                //     $charge_id = $patient_charge->id;
+                // }
+                if ($request->old_or_new[$key] == 'old') {
+                    $charge_id = $request->charge_id_old[$key];
+                    $p_charg = PatientCharge::find($charge_id);
+                    $p_charg->billing_status = '1';
+                    $p_charg->save();
+                }
 
-            // if ($request->charge_category[$key] == '2') {
-            //     $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
-            //     $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
 
-            //     if ($chargedetailstestr == null) {
-            //         $radiology_patient_test = new RadiologyPatientTest();
-            //         $radiology_patient_test->bill_id = $bill->id;
-            //         $radiology_patient_test->case_id = $request->case_id;
-            //         $radiology_patient_test->date = $request->date;
-            //         $radiology_patient_test->section = 'IPD';
-            //         $radiology_patient_test->patient_id = $request->patient_id;
-            //         $radiology_patient_test->test_id = $charge_detr->id;
-            //         $radiology_patient_test->ipd_id = $request->ipd_id;
-            //         $radiology_patient_test->generated_by = Auth::user()->id;
-            //         $radiology_patient_test->billing_status = '2';
-            //         $radiology_patient_test->test_status = '0';
-            //         $radiology_patient_test->save();
-            //     } else {
-            //         $chargedetailstestr->billing_status = '2';
-            //         $chargedetailstestr->save();
-            //     }
-            // }
-            // for Radiology billing
+                // for pathology billing 
+                // if ($request->charge_category[$key] == '1') {
+                //     $charge_detp = PathologyTest::where('charge', $request->charge_name[$key])->first();
+                //     $chargedetailstestp = PathologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detp->id)->where('test_status', '=', '0')->first();
 
-            // for Blood Bank billing 
-            // for Blood Bank billing
+                //     if ($chargedetailstestp == null) {
+                //         $pathology_patient_test = new PathologyPatientTest();
+                //         $pathology_patient_test->bill_id = $bill->id;
+                //         $pathology_patient_test->case_id = $request->case_id;
+                //         $pathology_patient_test->date = $request->date;
+                //         $pathology_patient_test->section = 'IPD';
+                //         $pathology_patient_test->patient_id = $request->patient_id;
+                //         $pathology_patient_test->test_id =  $charge_detp->id;
+                //         $pathology_patient_test->ipd_id = $request->ipd_id;
+                //         $pathology_patient_test->generated_by = Auth::user()->id;
+                //         $pathology_patient_test->billing_status = '1';
+                //         $pathology_patient_test->test_status = '0';
+                //         $pathology_patient_test->save();
+                //     } else {
+                //         $chargedetailstestp->billing_status = '1';
+                //         $chargedetailstestp->save();
+                //     }
+                // }
 
-            // for Ambulance billing 
-            // for Ambulance billing
+                // for pathology billing
+                // for Radiology billing
 
-            // ====================== Billing Details ===========================================
-            $bill_details_charges = new BillDetails();
-            $bill_details_charges->bill_id = $bill->id;
-            $bill_details_charges->purpose_for = 'charges';
-            $bill_details_charges->purpose_for_id = $charge_id;
-            $bill_details_charges->save();
-            // ====================== Billing Details ===========================================
-        }
-        if (@$request->medicine_bill_id[0]->medicine_bill_id != null) {
-            foreach ($request->medicine_bill_id as $value) {
+                // if ($request->charge_category[$key] == '2') {
+                //     $charge_detr = RadiologyTest::where('charge', $request->charge_name[$key])->first();
+                //     $chargedetailstestr = RadiologyPatientTest::where('case_id', $request->case_id)->where('test_id', $charge_detr->id)->where('test_status', '=', '0')->where('test_id', $charge_detr->charge)->first();
+
+                //     if ($chargedetailstestr == null) {
+                //         $radiology_patient_test = new RadiologyPatientTest();
+                //         $radiology_patient_test->bill_id = $bill->id;
+                //         $radiology_patient_test->case_id = $request->case_id;
+                //         $radiology_patient_test->date = $request->date;
+                //         $radiology_patient_test->section = 'IPD';
+                //         $radiology_patient_test->patient_id = $request->patient_id;
+                //         $radiology_patient_test->test_id = $charge_detr->id;
+                //         $radiology_patient_test->ipd_id = $request->ipd_id;
+                //         $radiology_patient_test->generated_by = Auth::user()->id;
+                //         $radiology_patient_test->billing_status = '2';
+                //         $radiology_patient_test->test_status = '0';
+                //         $radiology_patient_test->save();
+                //     } else {
+                //         $chargedetailstestr->billing_status = '2';
+                //         $chargedetailstestr->save();
+                //     }
+                // }
+                // for Radiology billing
+
+                // for Blood Bank billing 
+                // for Blood Bank billing
+
+                // for Ambulance billing 
+                // for Ambulance billing
+
                 // ====================== Billing Details ===========================================
-                $bill_details_medicine = new BillDetails();
-                $bill_details_medicine->bill_id = $bill->id;
-                $bill_details_medicine->purpose_for = 'medicine';
-                $bill_details_medicine->purpose_for_id = $value->medicine_bill_id;
-                $bill_details_medicine->save();
+                $bill_details_charges = new BillDetails();
+                $bill_details_charges->bill_id = $bill->id;
+                $bill_details_charges->purpose_for = 'charges';
+                $bill_details_charges->purpose_for_id = $charge_id;
+                $bill_details_charges->save();
                 // ====================== Billing Details ===========================================
             }
-        }
+            if (@$request->medicine_bill_id[0]->medicine_bill_id != null) {
+                foreach ($request->medicine_bill_id as $value) {
+                    // ====================== Billing Details ===========================================
+                    $bill_details_medicine = new BillDetails();
+                    $bill_details_medicine->bill_id = $bill->id;
+                    $bill_details_medicine->purpose_for = 'medicine';
+                    $bill_details_medicine->purpose_for_id = $value->medicine_bill_id;
+                    $bill_details_medicine->save();
+                    // ====================== Billing Details ===========================================
+                }
+            }
 
 
-        //payment
-        if ($request->payment_amount != null || $request->payment_amount != 0 || $request->payment_amount != '') {
-            // ====================== add payment =======================================
-            $payment_prefix = Prefix::where('name', 'payment')->first();
-            $payment = new Payment();
-            $payment->patient_id = $request->patient_id;
-            $payment->case_id = $request->case_id;
-            $payment->section = $request->section;
-            $payment->opd_id = $request->opd_id;
-            $payment->emg_id = $request->emg_id;
-            $payment->ipd_id = $request->ipd_id;
-            $payment->payment_prefix = $payment_prefix->prefix;
-            $payment->payment_amount = $request->payment_amount;
-            $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
-            $payment->payment_recived_by = Auth::user()->id;
-            $payment->payment_mode = $request->payment_mode;
-            $payment->note = $request->note;
-            $payment->save();
-            // ====================== add payment =======================================
-        }
-        //payment
+            //payment
+            if ($request->payment_amount != null || $request->payment_amount != 0 || $request->payment_amount != '') {
+                // ====================== add payment =======================================
+                $payment_prefix = Prefix::where('name', 'payment')->first();
+                $payment = new Payment();
+                $payment->patient_id = $request->patient_id;
+                $payment->case_id = $request->case_id;
+                $payment->section = $request->section;
+                $payment->opd_id = $request->opd_id;
+                $payment->emg_id = $request->emg_id;
+                $payment->ipd_id = $request->ipd_id;
+                $payment->payment_prefix = $payment_prefix->prefix;
+                $payment->payment_amount = $request->payment_amount;
+                $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+                $payment->payment_recived_by = Auth::user()->id;
+                $payment->payment_mode = $request->payment_mode;
+                $payment->note = $request->note;
+                $payment->save();
+                // ====================== add payment =======================================
+            }
+            //payment
 
-        if ($request->take_discount == 'yes') {
-            // ====================== Discount ===========================================
-            $discount = new Discount();
-            $discount->discount_type =  $request->discount_type;
-            $discount->patient_id =  $request->patient_id;
-            $discount->section =  $request->section;
-            $discount->asking_discount_amount =  $request->total_discount;
-            $discount->discount_status = 'Pending';
-            $discount->requested_by = Auth::user()->id;
-            $discount->asking_discount_time = date('Y-m-d h:m:s', strtotime($request->bill_date));
-            $discount->save();
-            // ====================== Discount ===========================================
-            // ====================== Discount Detaiils ==================================
-            $discount_details = new DiscountDetails();
-            $discount_details->bill_id = $bill->id;
-            $discount_details->discount_id = $discount->id;
-            $discount_details->bill_amount = $request->total;
-            $discount_details->save();
-            // ====================== Discount Detaiils ==================================
-            $bill_update = Billing::find($bill->id);
-            $bill_update->discount_id = $discount->id;
-            $bill_update->save();
-        }
+            if ($request->take_discount == 'yes') {
+                // ====================== Discount ===========================================
+                $discount = new Discount();
+                $discount->discount_type =  $request->discount_type;
+                $discount->patient_id =  $request->patient_id;
+                $discount->section =  $request->section;
+                $discount->asking_discount_amount =  $request->total_discount;
+                $discount->discount_status = 'Pending';
+                $discount->requested_by = Auth::user()->id;
+                $discount->asking_discount_time = date('Y-m-d h:m:s', strtotime($request->bill_date));
+                $discount->save();
+                // ====================== Discount ===========================================
+                // ====================== Discount Detaiils ==================================
+                $discount_details = new DiscountDetails();
+                $discount_details->bill_id = $bill->id;
+                $discount_details->discount_id = $discount->id;
+                $discount_details->bill_amount = $request->total;
+                $discount_details->save();
+                // ====================== Discount Detaiils ==================================
+                $bill_update = Billing::find($bill->id);
+                $bill_update->discount_id = $discount->id;
+                $bill_update->save();
+            }
 
             DB::commit();
             return redirect()->route('ipd-billing', ['id' => base64_encode($request->ipd_id)])->with('success', "Biliing Successfully");
@@ -743,12 +743,15 @@ class BillingController extends Controller
         }
     }
 
-    public function print_opd_bill($bill_id,$id)
+    public function print_opd_bill($bill_id, $id)
     {
         $BillId = base64_decode($bill_id);
         $OpdId = base64_decode($id);
+        $opd_patient_details = OpdDetails::where('id',$OpdId)->first();
+        $opd_billing = Billing::where('opd_id', $OpdId)->first();
+        $billing_details = BillDetails::where('bill_id', $BillId)->first();
 
-        $pdf = PDF::loadView('OPD.billing._print_opd_billing', compact('OpdId'));
+        $pdf = PDF::loadView('OPD.billing._print_opd_billing', compact('OpdId', 'opd_billing', 'billing_details','opd_patient_details'));
         return $pdf->stream('opd-bill.pdf');
     }
 }

@@ -29,11 +29,12 @@
                 <table class="table table-bordered text-nowrap" id="example">
                     <thead>
                         <tr>
+                            <th scope="col">#</th>
                             <th scope="col">IPD Id</th>
                             <th scope="col">Case Id</th>
-                            <th scope="col">Patient Information</th>
+                            <th scope="col">Patient Details</th>
                             <th scope="col">Mobile No.</th>
-                            <th scope="col">Admission Information</th>
+                            <th scope="col">Admission Details</th>
                             <th scope="col">Admission Date</th>
                             <th scope="col">Admitted By</th>
                             <th scope="col">Status</th>
@@ -44,6 +45,7 @@
                         <?php if(isset($ipd_patient_list)): ?>
                         <?php $__currentLoopData = $ipd_patient_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
+                            <td><?php echo e($loop->iteration); ?></td>
                             <td><a class="textlink" href="<?php echo e(route('ipd-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a></td>
                             <td><?php echo e(@$value->case_id); ?></td>
                             <td>
@@ -95,14 +97,8 @@
                                     <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right" style="">
                                         <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                                        <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission
-                                            Form</a>
-                                        <?php endif; ?>
-                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ipd status change')): ?>
-                                        <a class="dropdown-item" href="#" onclick="statusButton(<?php echo $value->id; ?>)">
-                                            <i class="fa fa-file"></i> Status Change</a>
-                                        <?php endif; ?>
+                                        
+                                        
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
 
                                         <a class="dropdown-item" href="<?php echo e(route('edit-ipd-registation',['ipd_id'=>base64_encode($value->id) ])); ?>">

@@ -304,7 +304,7 @@
 
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <canvas id="canvas"></canvas>
+                                        <canvas id="myChart1" style="width:100%;max-width:600px"></canvas>
                                     </div>
                                     <div class="col-md-6">
                                         <canvas id="myChart" style="width:70%;max-width:400px"></canvas>
@@ -326,7 +326,7 @@
                                             <tr>
                                                 <th class="text-white">Test Name</th>
                                                 <th class="text-white">Date</th>
-                                                <th class="text-white">Billing Status</th>
+                                                
                                                 <th class="text-white">Test Status</th>
                                             </tr>
                                         </thead>
@@ -335,15 +335,7 @@
                                             <tr>
                                                 <td><?php echo e(@$item->test_details->test_name); ?></td>
                                                 <td><?php echo e(@date('d-m-Y h:i A',strtotime($item->date))); ?></td>
-                                                <td>
-                                                    <?php if($item->billing_status == '0'): ?>
-                                                    <span class="badge badge-warning">Billing Not Done</span>
-                                                    <?php elseif($item->billing_status == '1'): ?>
-                                                    <span class="badge badge-warning">Billing Done</span>
-                                                    <?php else: ?>
-                                                    <span class="badge badge-warning">Charge Added</span>
-                                                    <?php endif; ?>
-                                                </td>
+                                                
                                                 <td>
                                                     <?php if($item->test_status == '0'): ?>
                                                     <span class="badge badge-warning">Sample Not Collected</span>
@@ -374,7 +366,7 @@
                                             <tr>
                                                 <th class="text-white">Test Name</th>
                                                 <th class="text-white">Date</th>
-                                                <th class="text-white">Billing Status</th>
+                                                
                                                 <th class="text-white">Test Status</th>
                                             </tr>
                                         </thead>
@@ -384,15 +376,7 @@
                                             <tr>
                                                 <td><?php echo e(@$item->test_details->test_name); ?></td>
                                                 <td><?php echo e(@date('d-m-Y h:i A',strtotime($item->date))); ?></td>
-                                                <td>
-                                                    <?php if($item->billing_status == '0'): ?>
-                                                    <span class="badge badge-warning">Billing Not Done</span>
-                                                    <?php elseif($item->billing_status == '1'): ?>
-                                                    <span class="badge badge-warning">Billing Done</span>
-                                                    <?php else: ?>
-                                                    <span class="badge badge-warning">Charge Added</span>
-                                                    <?php endif; ?>
-                                                </td>
+                                                
                                                 <td>
                                                     <?php if($item->test_status == '0'): ?>
                                                     <span class="badge badge-warning">Sample Not Collected</span>
@@ -414,45 +398,6 @@
                         </div>
                     </div>
 
-                    <div class="options px-5 pt-2  border-bottom pb-1">
-                        <div class="row">
-                            <div class="col-md-12 mb-2">
-                                <h5>Ambulance</h5>
-                                <?php if(@$PhysicalDetails[0]->height != null): ?>
-                                <div class="table-responsive">
-                                    <table class="table card-table table-vcenter text-nowrap table-danger">
-                                        <thead class="bg-danger text-white">
-                                            <tr>
-                                                <th class="text-white">Height</th>
-                                                <th class="text-white">Weight</th>
-                                                <th class="text-white">Pulse</th>
-                                                <th class="text-white">BP</th>
-                                                <th class="text-white">Temp</th>
-                                                <th class="text-white">Resp</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            <?php $__currentLoopData = @$PhysicalDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <tr>
-                                                <td><?php echo e(@$item->height == null ?'':$item->height.' cm'); ?></td>
-                                                <td><?php echo e(@$item->weight == null ?'':$item->weight.' kg'); ?></td>
-                                                <td><?php echo e(@$item->pulse == null ?'':$item->pulse.' bpm'); ?></td>
-                                                <td><?php echo e(@$item->bp == null ?'':$item->bp.' mmHg'); ?></td>
-                                                <td><?php echo e(@$item->temperature == null ?'':$item->temperature.' °C'); ?></td>
-                                                <td><?php echo e(@$item->respiration == null ?'':$item->respiration.' b/m'); ?></td>
-                                            </tr>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <?php else: ?>
-                                <span style="color:brown">** No Ambulance used **</span>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
@@ -574,8 +519,8 @@
     </div>
 </div>
 <script>
-    var xValues = ["Cradit Limit", "Billing"];
-    var yValues = [55, 15];
+    var xValues = ["credit Limit", "Billing"];
+    var yValues = ['<?php echo $ipd_details->credit_limit ?>','<?php echo $total_charge_amount ?>'];
     var barColors = [
         "#b91d47",
         "#1e7145"
@@ -593,67 +538,40 @@
         options: {
             title: {
                 display: true,
-                text: "Cradit Limit"
+                text: "Credit Limit"
             }
         }
     });
 </script>
 
 <script>
-    var barChartData = {
-        labels: [
-            "20-05-2023",
-            "21-05-2023",
-            "22-05-2023",
-            "23-05-2023",
-            "24-05-2023",
-
-
-        ],
+    var xValues = [<?php echo $p_chart_name ?>];
+    var yValues = [<?php echo $p_chart_value ?>];
+    var barColors = [
+      "#b91d47",
+      "#00aba9",
+      "#2b5797",
+      "#e8c3b9",
+      "#1e7145",
+      
+    ];
+    
+    new Chart("myChart1", {
+      type: "doughnut",
+      data: {
+        labels: xValues,
         datasets: [{
-                label: "Billing Amount",
-                backgroundColor: "red",
-                borderColor: "red",
-                borderWidth: 1,
-                data: [3000, 5000, 6000, 7000, 3500]
-            },
-            {
-                label: "Payment Amount",
-                backgroundColor: "blue",
-                borderColor: "blue",
-                borderWidth: 1,
-                data: [1000, 5000, 3000, 5000, 3000]
-            },
-
-        ]
-    };
-
-    var chartOptions = {
-        responsive: true,
-        legend: {
-            position: "top"
-        },
+          backgroundColor: barColors,
+          data: yValues
+        }]
+      },
+      options: {
         title: {
-            display: true,
-            text: "Daily Billing Payment"
-        },
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
+          display: true,
+          text: "Expance for different category"
         }
-    }
-
-    window.onload = function() {
-        var ctx = document.getElementById("canvas").getContext("2d");
-        window.myBar = new Chart(ctx, {
-            type: "bar",
-            data: barChartData,
-            options: chartOptions
-        });
-    };
-</script>
+      }
+    });
+    </script>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/Ipd/ipd-profile.blade.php ENDPATH**/ ?>

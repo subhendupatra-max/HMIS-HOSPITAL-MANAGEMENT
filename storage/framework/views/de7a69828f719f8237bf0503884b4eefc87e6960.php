@@ -9,6 +9,9 @@
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Draft Bill')): ?>
+                        <a href="<?php echo e(route('ipd-draft-bill', ['id' => base64_encode($ipd_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-file-invoice"></i> Draft Bill </a>
+                        <?php endif; ?>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add ipd charges')): ?>
                         <a href="<?php echo e(route('add-ipd-charges', ['id' => base64_encode($ipd_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-money-bill"></i> Add Charges </a>
                         <?php endif; ?>
@@ -61,26 +64,14 @@
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
-
-                                            <a class="dropdown-item" href="<?php echo e(route('opd-bill-details', ['bill_id' => base64_encode($value->id)])); ?>">
-                                                <i class="fa fa-eye"></i> View
-                                            </a>
-
-                                            <a class="dropdown-item" href="">
-                                                <i class="fa fa-print"></i> Print
-                                            </a>
-
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit opd charges')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('edit-opd-charges',['id'=>base64_encode($ipd_id),'charge_id'=>base64_encode($value->id)])); ?>">
-                                                <i class="fa fa-edit"></i> Edit
-                                            </a>
-                                            <?php endif; ?>
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete opd billing')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('delete-opd-bill',['bill_id'=>$value->id])); ?>">
+                                            <?php if($value->billing_status == '0'): ?>
+                                            
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete ipd charges')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('delete-ipd-charges',['charge_id'=>base64_encode($value->id),'id'=>base64_encode($ipd_id)])); ?>">
                                                 <i class="fa fa-trash"></i> Delete
                                             </a>
                                             <?php endif; ?>
-
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </td>
