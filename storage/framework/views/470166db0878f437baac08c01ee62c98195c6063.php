@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
-                        <a class="btn btn-primary btn-sm" href="" data-placement="top" data-toggle="tooltip" title="Edit Bill"><i class="fa fa-edit"></i> Edit</a>
+                        <a class="btn btn-primary btn-sm" href="<?php echo e(route('edit-opd-bill',['bill_id' => base64_encode($bill_details->id),'id' => base64_encode($bill_details->opd_id) ])); ?>"  data-placement="top" data-toggle="tooltip" title="Edit Bill"><i class="fa fa-edit"></i> Edit</a>
                         <a class="btn btn-primary btn-sm" href="" data-placement="top" data-toggle="tooltip" title="Print Bill Copy"><i class="fa fa-print"></i> Print</a>
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>

@@ -518,6 +518,24 @@ class BillingController extends Controller
         return view('Ipd.billing.billing-list', compact('ipd_details', 'ipd_id', 'ipd_billing_details'));
     }
 
+    public function ipd_bill_print($bill_id){
+        $billId = base64_decode($bill_id);
+        $bill = Billing::where('id',$billId)->first();
+        $ipd_details = IpdDetails::where('case_id',$bill->case_id)->first();
+        $bill_details_for_charges = BillDetails::where('bill_id',$billId)->where('purpose_for','charges')->get();
+        $ids = $bill_details_for_charges->pluck('id');
+        $patientCharges = PatientCharge::whereIn('id', $ids)->get();
+// dd($patientCharges);
+        $bill_details_for_medicine = BillDetails::where('bill_id',$billId)->where('purpose_for','medicine')->get();
+        $ids_medicine = $bill_details_for_medicine->pluck('id');
+        $medicine_billings = MedicineBilling::whereIn('id', $ids_medicine)->get();
+    
+
+        $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
+        $patient_charges = PatientCharge::get();
+        return view('Ipd.billing.bill-print', compact('medicine_billings','patientCharges', 'bill','ipd_details','header_image'));
+    }
+
     public function create_billing_in_ipd($id)
     {
         $ipd_id = base64_decode($id);

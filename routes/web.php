@@ -2643,6 +2643,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
             Route::get('add-ipd-billing/{id}', [BillingController::class, 'create_billing_in_ipd'])->name('add-ipd-billing');
             Route::post('add-new-ipd-billing', [BillingController::class, 'save_new_ipd_billing'])->name('add-new-ipd-billing');
         });
+        Route::get('ipd-bill-print/{bill_id}', [BillingController::class, 'ipd_bill_print'])->name('ipd-bill-print');
         Route::get('ipd-bill-details/{bill_id}', [BillingController::class, 'bill_details_for_ipd'])->name('ipd-bill-details');
         Route::group(['middleware' => ['permission:edit ipd billing']], function () {
             Route::get('edit-ipd-bill/{bill_id}', [BillingController::class, 'edit_ipd_bill'])->name('edit-ipd-bill');

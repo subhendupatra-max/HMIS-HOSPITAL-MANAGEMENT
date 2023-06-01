@@ -75,7 +75,7 @@
                                                 <i class="fa fa-eye"></i> View
                                             </a> --}}
 
-                                            <a class="dropdown-item" href="">
+                                            <a class="dropdown-item" href="{{ route('ipd-bill-print', ['bill_id' => base64_encode($value->id)]) }}">
                                                 <i class="fa fa-print"></i> Print
                                             </a>
 
