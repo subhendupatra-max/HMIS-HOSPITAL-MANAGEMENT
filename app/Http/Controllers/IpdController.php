@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\District;
@@ -57,7 +58,7 @@ class IpdController extends Controller
 {
     public function index()
     {
-        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'no')->where('ins_by', 'ori')->orderBy('appointment_date','DESC')->get();
+        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'no')->where('ins_by', 'ori')->orderBy('appointment_date', 'DESC')->get();
         return view('Ipd.ipd-patients-details', compact('ipd_patient_list'));
     }
 
@@ -104,26 +105,58 @@ class IpdController extends Controller
         $RadiologyTestDetails = RadiologyPatientTest::where('case_id', $ipd_details->case_id)->get();
 
         $chargeCategoriesamount = DB::table('patient_charges')
-                                ->select('charges_catagories.charges_catagories_name', DB::raw('SUM(patient_charges.amount) as total_amount'))
-                                ->join('charges_catagories','patient_charges.charge_category','=','charges_catagories.id')
-                                ->groupBy('charges_catagories.charges_catagories_name')
-                                 ->where('case_id',$ipd_details->case_id)
-                                ->get();
+            ->select('charges_catagories.charges_catagories_name', DB::raw('SUM(patient_charges.amount) as total_amount'))
+            ->join('charges_catagories', 'patient_charges.charge_category', '=', 'charges_catagories.id')
+            ->groupBy('charges_catagories.charges_catagories_name')
+            ->where('case_id', $ipd_details->case_id)
+            ->get();
         $p_chart_name = '';
         $p_chart_value = '';
-        foreach($chargeCategoriesamount as $value){
-            $p_chart_name .= '"'.$value->charges_catagories_name.'",';
-            $p_chart_value .= '"'.$value->total_amount.'",';
+        foreach ($chargeCategoriesamount as $value) {
+            $p_chart_name .= '"' . $value->charges_catagories_name . '",';
+            $p_chart_value .= '"' . $value->total_amount . '",';
         }
 
-        $total_charge_amount = PatientCharge::where('case_id',$ipd_details->case_id)->sum('amount');
+        $total_charge_amount = PatientCharge::where('case_id', $ipd_details->case_id)->sum('amount');
         $blood_details = BloodIssue::where('patient_id', $ipd_details->patient_id)->get();
         $components_details = BloodComponentIssue::where('patient_id', $ipd_details->patient_id)->get();
 
-        return view('Ipd.ipd-profile', compact('p_chart_value','p_chart_name','paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'PhysicalDetails', 'patient_discharge_details','total_charge_amount','blood_details','components_details'));
-       
 
-       
+        $operation_booking_id = '';
+        $operation_details_fetch = '';
+
+        // dd($opd_id);
+
+        // dd($ipd_details);
+        $patient_details_information = Patient::where('id', '=', $ipd_details->patient_id)->first();
+        // dd($patient_details_information);
+        $operation_theathers  = OperationTheather::where('patient_id', $ipd_details->patient_id)->first();
+        // dd( $operation_theathers);
+        // dd($operation_theathers);
+        // dd($patient_details_information);
+        if ($operation_theathers != null) {
+            $operation_booking = OperationBooking::where('id', $operation_theathers->operation_booking_id)->first();
+            // dd($operation_booking);
+            $operation_booking_id = $operation_booking->id;
+            $operation_details_fetch = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark')
+                ->leftjoin('operation_theathers', 'operation_theathers.operation_booking_id', '=', 'operation_bookings.id')
+                ->leftjoin('patients', 'patients.id', '=', 'operation_theathers.patient_id')
+                ->leftjoin('departments', 'departments.id', '=', 'operation_theathers.operation_department')
+                ->leftjoin('users', 'users.id', '=', 'operation_bookings.consultant_doctor')
+                ->leftjoin('operations', 'operations.id', '=', 'operation_theathers.operation_id')
+                ->leftjoin('operation_types', 'operation_types.id', '=', 'operation_theathers.operation_type')
+                ->leftjoin('operation_catagories', 'operation_catagories.id', '=', 'operation_theathers.operation_category_id')
+                ->where('operation_bookings.id', $operation_booking->id)
+                ->where('operation_theathers.operation_booking_id', $operation_booking->id)
+                ->get();
+        }
+
+
+
+
+
+
+        return view('Ipd.ipd-profile', compact('p_chart_value', 'p_chart_name', 'paymentDetails', 'operation_details', 'cons_doctor', 'medication_details', 'medicine_catagory', 'oxygen_monitering', 'ipd_details', 'bed_history_details', 'departments', 'units', 'bedHistory', 'edit_histry_details_id', 'nurseName', 'nurseNoteDetails', 'payment_amount', 'billing_amount', 'PathologyTestDetails', 'RadiologyTestDetails', 'PhysicalDetails', 'patient_discharge_details', 'total_charge_amount', 'blood_details', 'components_details', 'operation_details_fetch'));
     }
 
     public function find_doctor_and_ward_by_department_in_opd(Request $request)
@@ -371,7 +404,7 @@ class IpdController extends Controller
     {
         $ipd_id = base64_decode($id);
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
-        $ipd_charges_details = PatientCharge::where('ins_by', 'ori')->where('case_id', $ipd_details->case_id)->orderBy('charges_date','DESC')->get();
+        $ipd_charges_details = PatientCharge::where('ins_by', 'ori')->where('case_id', $ipd_details->case_id)->orderBy('charges_date', 'DESC')->get();
         $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
         // dd($ipd_details);
         return view('Ipd.charges.charges-list', compact('ipd_id', 'ipd_details', 'ipd_charges_details', 'ipd_patient_details'));
@@ -382,17 +415,17 @@ class IpdController extends Controller
         $charge_category =  ChargesCatagory::all();
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
         $ipd_patient_details = IpdDetails::where('id', $ipd_id)->first();
-        $pathology_charge = PathologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status','0')->get();
-        $radiology_charge = RadiologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status','0')->get();
-        $pathology_charge_count = PathologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status','0')->count();
-        $radiology_charge_count = RadiologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status','0')->count();
+        $pathology_charge = PathologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status', '0')->get();
+        $radiology_charge = RadiologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status', '0')->get();
+        $pathology_charge_count = PathologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status', '0')->count();
+        $radiology_charge_count = RadiologyPatientTest::where('ipd_id', $ipd_id)->where('billing_status', '0')->count();
         if ($ipd_patient_details->patient_type == 'TPA') {
             $p_type = $ipd_patient_details->TpaManagement->TPA_name;
         } else {
             $p_type = $ipd_patient_details->patient_type;
         }
-        $patient_type_id = ChargeType::where('charge_type_name',$p_type)->first();
-        return view('Ipd.charges.add-charges', compact('pathology_charge_count','radiology_charge_count','pathology_charge','patient_type_id','radiology_charge','ipd_id', 'charge_category', 'ipd_details', 'ipd_patient_details'));
+        $patient_type_id = ChargeType::where('charge_type_name', $p_type)->first();
+        return view('Ipd.charges.add-charges', compact('pathology_charge_count', 'radiology_charge_count', 'pathology_charge', 'patient_type_id', 'radiology_charge', 'ipd_id', 'charge_category', 'ipd_details', 'ipd_patient_details'));
     }
     public function edit_charges_ipd($id, $charge_id)
     {
@@ -480,7 +513,7 @@ class IpdController extends Controller
             return back()->withErrors(['error' => $th->getMessage()]);
         }
     }
-    public function delete_ipd_charges($charge_id,$id)
+    public function delete_ipd_charges($charge_id, $id)
     {
         try {
             DB::beginTransaction();
@@ -548,36 +581,36 @@ class IpdController extends Controller
 
     public function ipd_operation($id)
     {
+        $operation_booking_id = '';
+        $operation_details = '';
         $ipd_id = base64_decode($id);
         // dd($ipd_id);
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
-
-        $section_id =  OperationTheather::where('ipd_id', $ipd_id)->first();
-        // dd( $section_id);
-        $operation_booking  = OperationBooking::where('id', $section_id->operation_booking_id)->first();
-        // dd($operation_booking);
-        $operation_booking_id =  $operation_booking->id;
-
-        $case_id = CaseReference::where('id', $section_id->case_id)->first();
-        $section_name = $case_id->section_id;
-
-        $operation_details = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark')
-            ->leftjoin('operation_theathers', 'operation_theathers.operation_booking_id', '=', 'operation_bookings.id')
-            ->leftjoin('patients', 'patients.id', '=', 'operation_theathers.patient_id')
-            ->leftjoin('departments', 'departments.id', '=', 'operation_theathers.operation_department')
-            ->leftjoin('users', 'users.id', '=', 'operation_bookings.consultant_doctor')
-            ->leftjoin('operations', 'operations.id', '=', 'operation_theathers.operation_id')
-            ->leftjoin('operation_types', 'operation_types.id', '=', 'operation_theathers.operation_type')
-            ->leftjoin('operation_catagories', 'operation_catagories.id', '=', 'operation_theathers.operation_category_id')
-            ->where('operation_bookings.id', $operation_booking_id)
-            ->where('operation_theathers.operation_booking_id', $operation_booking_id)
-            ->first();
-
-
+        // dd($ipd_details);
+        $patient_details_information = Patient::where('id', '=', $ipd_details->patient_id)->first();
+        // dd($patient_details_information);
+        $operation_theathers  = OperationTheather::where('patient_id', $ipd_details->patient_id)->first();
+        // dd($operation_theathers);
+        // dd($patient_details_information);
+        if ($operation_theathers != null) {
+            $operation_booking = OperationBooking::where('id', $operation_theathers->operation_booking_id)->first();
+            $operation_booking_id = $operation_booking->id;
+            $operation_details = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark')
+                ->leftjoin('operation_theathers', 'operation_theathers.operation_booking_id', '=', 'operation_bookings.id')
+                ->leftjoin('patients', 'patients.id', '=', 'operation_theathers.patient_id')
+                ->leftjoin('departments', 'departments.id', '=', 'operation_theathers.operation_department')
+                ->leftjoin('users', 'users.id', '=', 'operation_bookings.consultant_doctor')
+                ->leftjoin('operations', 'operations.id', '=', 'operation_theathers.operation_id')
+                ->leftjoin('operation_types', 'operation_types.id', '=', 'operation_theathers.operation_type')
+                ->leftjoin('operation_catagories', 'operation_catagories.id', '=', 'operation_theathers.operation_category_id')
+                ->where('operation_bookings.id', $operation_booking->id)
+                ->where('operation_theathers.operation_booking_id', $operation_booking->id)
+                ->get();
+        }
 
         // dd($operation_details);
 
-        return view('IPD.operation-ipd.operation-details', compact('operation_details', 'ipd_details', 'ipd_id', 'section_name', 'operation_booking_id'));
+        return view('IPD.operation-ipd.operation-listing-in-ipd', compact('operation_details', 'ipd_details', 'ipd_id',  'operation_booking_id'));
     }
 
     public function edit_ipd_operation(Request $request, $id)
@@ -678,9 +711,9 @@ class IpdController extends Controller
     {
         $ipd_id = base64_decode($ipd_id);
         $ipd_details = IpdDetails::where('id', $ipd_id)->first();
-        $patient_charges = PatientCharge::where('case_id',$ipd_details->case_id)->get();
-        $medicine = MedicineBilling::where('case_id',$ipd_details->case_id)->get();
+        $patient_charges = PatientCharge::where('case_id', $ipd_details->case_id)->get();
+        $medicine = MedicineBilling::where('case_id', $ipd_details->case_id)->get();
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
-        return view('Ipd._print.draft-bill', compact('ipd_details', 'header_image','patient_charges','medicine'));
+        return view('Ipd._print.draft-bill', compact('ipd_details', 'header_image', 'patient_charges', 'medicine'));
     }
 }
