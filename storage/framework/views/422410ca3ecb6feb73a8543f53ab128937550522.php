@@ -11,7 +11,7 @@
 
                 <div class="col-md-8 text-right">
                     <div class="d-block">
-                        <a href="<?php echo e(route('add-bed-transfar-history-in-ipd',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Print Transfer Report</a>
+                        <a href="<?php echo e(route('bed-transfar-history-print-in-ipd',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Print Transfer Report</a>
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
                         <a href="<?php echo e(route('add-bed-transfar-history-in-ipd',['ipd_id' => base64_encode($ipd_details->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-arrow-alt-circle-left"></i> Bed Transfer</a>
                         <?php endif; ?>
@@ -24,6 +24,9 @@
                 </div>
             </div>
 
+        </div>
+        <div class="card-header">
+            <?php echo $__env->make('ipd.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body ">
@@ -40,9 +43,9 @@
                                     <th class="border-bottom-0">Duration</th>
                                     <th class="border-bottom-0">Status</th>
                                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit bed transfar history')): ?>
-                                        <th class="border-bottom-0">Action</th>
+                                    <th class="border-bottom-0">Action</th>
                                     <?php endif; ?>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,7 +58,7 @@
                                     <td class="border-bottom-0">
                                         <span>From Date</span> : <span><?php echo e($item->from_date); ?></span><br>
                                         <span>To Date</span> : <span><?php echo e($item->to_date); ?></span><br>
-                                      
+
                                     </td>
                                     <td>
                                         <?php echo $item->is_present == 'no' ? '<span class="badge badge-danger">Moved from here</span>':'<span class="badge badge-success">Present Here</span>'; ?>
