@@ -2892,6 +2892,49 @@ Route::group(['middleware' => ['permission:Report'], 'prefix' => 'report'], func
         Route::get('payment-report', [ReportController::class, 'payment_report_index'])->name('payment-report');
         Route::post('fetch-payment-report', [ReportController::class, 'fetch_payment_report'])->name('fetch-payment-report');
     });
+
+    //for discharge patient report
+    Route::group(['middleware' => ['permission:Discharge Patient Report']], function () {
+        Route::get('discharge-patient-report', [ReportController::class, 'discharge_patient_report_index'])->name('discharge-patient-report');
+        Route::post('fetch-discharge-patient-report', [ReportController::class, 'fetch_discharge_patient_report'])->name('fetch-discharge-patient-report');
+    });
+
+    //for pharmacy bill report
+    Route::group(['middleware' => ['permission:Pharmacy Bill Report']], function () {
+        Route::get('pharmacy-bill-report', [ReportController::class, 'pharmacy_bill_report_index'])->name('pharmacy-bill-report');
+        Route::post('fetch-pharmacy-bill-report', [ReportController::class, 'fetch_pharmacy_bill_report'])->name('fetch-pharmacy-bill-report');
+    });
+
+    //for operation report
+    Route::group(['middleware' => ['permission:Operaiton Report']], function () {
+        Route::get('operation-report', [ReportController::class, 'operation_report_index'])->name('operation-report');
+        Route::post('fetch-operation-report', [ReportController::class, 'fetch_operation_report'])->name('fetch-operation-report');
+    });
+
+    //for blood issue report
+    Route::group(['middleware' => ['permission:Blood Issue Report']], function () {
+        Route::get('blood-issue-report', [ReportController::class, 'blood_issue_report_index'])->name('blood-issue-report');
+        Route::post('fetch-blood-issue-report', [ReportController::class, 'fetch_blood_issue_report'])->name('fetch-blood-issue-report');
+    });
+
+
+    //for blood components issue report
+    Route::group(['middleware' => ['permission:Blood Components Issue Report']], function () {
+        Route::get('blood-components-issue-report', [ReportController::class, 'blood_components_issue_report_index'])->name('blood-components-issue-report');
+        Route::post('fetch-blood-components-issue-report', [ReportController::class, 'fetch_blood_components_issue_report'])->name('fetch-blood-components-issue-report');
+    });
+
+    //for blood donor report
+    Route::group(['middleware' => ['permission:Blood Donor Report']], function () {
+        Route::get('blood-donor-details', [ReportController::class, 'blood_donor_details'])->name('blood-donor-details');
+        Route::post('fetch-blood-donor-details', [ReportController::class, 'fetch_blood_donor_details'])->name('fetch-blood-donor-details');
+    });
+
+    //for death report
+    Route::group(['middleware' => ['permission:Death Report']], function () {
+        Route::get('patient-death-details', [ReportController::class, 'patient_death_details'])->name('patient-death-details');
+        Route::post('fetch-patient-death-details', [ReportController::class, 'fetch_patient_death_details'])->name('fetch-patient-death-details');
+    });
 });
 //================================= Reports ==============================
 
@@ -2929,7 +2972,7 @@ Route::group(['middleware' => ['permission:main operation'], 'prefix' => 'operat
 Route::group(['middleware' => ['permission:OPD Operation']], function () {
     Route::get('opd-operation-in-opd/{id}', [OpdController::class, 'opd_operation'])->name('opd-operation-in-opd');
     Route::get('opd-operation-details/{opd_id}', [OpdController::class, 'opd_operation_details'])->name('opd-operation-details');
-    Route::get('edit-opd-operation-in-opd/{ot_id?}', [OpdController::class, 'edit_opd_operation'])->name('edit-opd-operation-in-opd');
+    Route::get('edit-opd-operation-in-opd/{id?}', [OpdController::class, 'edit_opd_operation'])->name('edit-opd-operation-in-opd');
     Route::post('update-operation-booking-details-in-opd', [OpdController::class, 'update_opd_operation'])->name('update-operation-booking-details-in-opd');
 });
 //================================= OPD Operation Deratils===================================

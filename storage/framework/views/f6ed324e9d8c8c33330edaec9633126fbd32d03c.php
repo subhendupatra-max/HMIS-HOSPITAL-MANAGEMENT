@@ -586,6 +586,27 @@ $login_details = DB::table('users')
                     <?php if(auth()->user()->can('Payment Report')): ?>
                     <a class="dropdown-item" href="<?php echo e(route('payment-report')); ?>">Payment Report</a>
                     <?php endif; ?>
+                    <?php if(auth()->user()->can('Discharge Patient Report')): ?>
+                    <a class="dropdown-item" href="<?php echo e(route('discharge-patient-report')); ?>">Discharge Patient Report</a>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('Pharmacy Bill Report')): ?>
+                    <a class="dropdown-item" href="<?php echo e(route('pharmacy-bill-report')); ?>">Pharmacy Bill Report</a>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('Operaiton Report')): ?>
+                    <a class="dropdown-item" href="<?php echo e(route('operation-report')); ?>">Operaiton Report</a>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('Blood Issue Report')): ?>
+                    <a class="dropdown-item" href="<?php echo e(route('blood-issue-report')); ?>">Blood Issue Report</a>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('Blood Components Issue Report')): ?>
+                    <a class="dropdown-item" href="<?php echo e(route('blood-components-issue-report')); ?>">Blood Components Issue Report</a>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('Blood Donor Report')): ?>
+                    <a class="dropdown-item" href="<?php echo e(route('blood-donor-details')); ?>">Blood Donor Report</a>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('Death Report')): ?>
+                    <a class="dropdown-item" href="<?php echo e(route('patient-death-details')); ?>">Death Report</a>
+                    <?php endif; ?>
                 </div>
             </li>
             <?php endif; ?>

@@ -13,4 +13,6 @@ class OperationBooking extends Model
     {
         return $this->belongsTo(User::class, 'consultant_doctor', 'id');
     }
+  
+
 }

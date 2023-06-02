@@ -45,7 +45,7 @@
                             <?php $__currentLoopData = $operation_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
                                 <td>
-                                    <a href="<?php echo e(route('opd-operation-details',['opd_id' => base64_encode($item->opd_id )])); ?>" style="color:blue"><?php echo e($item->booking_id); ?></a>
+                                    <a href="<?php echo e(route('opd-operation-details',['opd_id' => base64_encode($item->opd_id)])); ?>" style="color:blue"><?php echo e($item->booking_id); ?></a>
                                 </td>
                                 <td><?php echo e($item->operation_name); ?></td>
                                 <td><?php echo e($item->operation_catagory_name); ?></td>

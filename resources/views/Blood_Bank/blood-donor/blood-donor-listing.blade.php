@@ -14,10 +14,6 @@
                 <div class="col-md-8 text-right">
                     <div class="d-block">
 
-                        
-
-
-
                         @can('Add Blood Donar')
                         <a href="{{route('add-blood-donor')}}" class="btn btn-primary"><i class="fa fa-plus"></i> Add Donor Details</a>
                         @endcan
