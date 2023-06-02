@@ -8,18 +8,23 @@ use App\Models\IpdDetails;
 use Illuminate\Http\Request;
 use App\Models\OpdVisitDetails;
 use App\Models\Billing;
+use App\Models\Payment;
 use App\Models\PathologyBilling;
 use App\Models\PathologyPatientTest;
 use can;
 use Carbon\Carbon;
 use App\Models\MedicineBilling;
 use date;
+use DateTime;
+use DateInterval;
+
 
 class DashboardController extends Controller
 {
     public function index()
     {
 
+     
         $opd_today_ticket_details =  OpdVisitDetails::where(function ($query) {
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
@@ -105,16 +110,33 @@ class DashboardController extends Controller
                 $query->where('ins_by', 'ori');
             }
         })->leftJoin('medicine_billing_details', 'medicine_billing_details.medicine_billing_id', '=', 'medicine_billings.id')->sum('total_amount');
-        $before_today_billing = Billing::where('bill_date','like','2023-05-27%')->sum('grand_total');
-        $before_two_billing = Billing::where('bill_date','like','2023-05-26%')->sum('grand_total');
-        $before_three_billing = Billing::where('bill_date','like','2023-05-25%')->sum('grand_total');
-        $before_four_billing = Billing::where('bill_date','like','2023-05-24%')->sum('grand_total');
-        $before_five_billing = Billing::where('bill_date','like','2023-05-23%')->sum('grand_total');
-        $before_six_billing = Billing::where('bill_date','like','2023-05-22%')->sum('grand_total');
-        $before_seven_billing = Billing::where('bill_date','like','2023-05-21%')->sum('grand_total');
-        $before_eight_billing = Billing::where('bill_date','like','2023-05-20%')->sum('grand_total');
-        $before_nine_billing = Billing::where('bill_date','like','2023-05-19%')->sum('grand_total');
-        $before_ten_billing = Billing::where('bill_date','like','2023-05-18%')->sum('grand_total');
+
+        $days = 5;
+        $currentDate = new DateTime();  
+        $currentDate->sub(new DateInterval("P{$days}D")); 
+        $beforeDate = $currentDate->format('Y-m-d'); 
+
+        for($i = 0;$i<10;$i++)
+        {
+            $days = $i;
+            $currentDate = new DateTime();  
+            $currentDate->sub(new DateInterval("P{$days}D")); 
+            $beforeDate = $currentDate->format('Y-m-d'); 
+            $days_ad[$beforeDate] = Billing::where('bill_date','like',$beforeDate.'%')->sum('grand_total');
+            $days_ad_amoun_payment[$beforeDate] = Payment::where('payment_date','like',$beforeDate.'%')->sum('payment_amount');
+        }
+        $tarik = '';
+        $value_total = '';
+        foreach($days_ad as $key=>$value){
+            $tarik .=   '"'.$key.'",';
+            $value_total .=   '"'.$value.'",';
+        }
+        $tarik_p = '';
+        $value_total_p = '';
+        foreach($days_ad_amoun_payment as $key=>$value){
+            $tarik_p .=   '"'.$key.'",';
+            $value_total_p .=   '"'.$value.'",';
+        }
 
         $opd_billing_details = Billing::where(function ($query) {
             if (!auth()->user()->can('False Generation')) {
@@ -139,6 +161,6 @@ class DashboardController extends Controller
 
 
 
-        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'pharmacy_income', 'opd_billing_details', 'ipd_billing_details', 'emg_billing_details','before_today_billing','before_two_billing','before_three_billing','before_four_billing','before_five_billing','before_six_billing','before_seven_billing','before_eight_billing','before_nine_billing','before_ten_billing'));
+        return view('appPages.dashboard', compact('opd_today_ticket_details', 'opd_today_new_patient', 'opd_today_revisit_patient', 'today_emg_patient', 'today_emg_income', 'total_ipd_patient', 'today_total_ipd_patient', 'today_ipd_from_opd_patient', 'today_ipd_from_emg_patient', 'today_discharged_patient', 'pharmacy_income', 'opd_billing_details', 'ipd_billing_details', 'emg_billing_details','tarik','value_total','value_total_p','tarik_p'));
     }
 }
