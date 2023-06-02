@@ -29,7 +29,8 @@
 
                                                     <?php echo e(@$patient->middle_name); ?>
 
-                                                    <?php echo e(@$patient->last_name); ?> (
+                                                    <?php echo e(@$patient->last_name); ?>(
+                                                        <?php echo e(@$patient->phone); ?> ) (
                                                     <?php echo e(@$patient->id); ?> ) </option>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                                 <?php endif; ?>
@@ -119,7 +120,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
                             
                             <?php endif; ?>
-
+           
                         </div>
                     </div>
                     <form method="post" action="<?php echo e(route('save-pharmacy-billing')); ?>">
@@ -128,12 +129,25 @@ unset($__errorArgs, $__bag); ?>
                         <div class="options px-5 pt-1  border-bottom pb-3">
                           
                             <div class="row">
+                                <div class="col-md-4 mt-2 grncreateadd">
+                                  
+                                    <input type="date" required name="bill_date" class="form-control">
+                                    <?php $__errorArgs = ['bill_date'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <span class="text-danger"><?php echo e($message); ?></span>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
                                 <div class="table-responsive">
                                     <table class="table card-table table-vcenter text-nowrap">
                                         <thead>
                                             <tr>
-                                                <th scope="col" style="width: 10%">Category <span
-                                                        class="text-danger">*</span></th>
+                                                
                                                 <th scope="col" style="width: 20%">Name <span
                                                         class="text-danger">*</span></th>
                                                 <th scope="col" style="width: 10%">Batch No <span
@@ -148,7 +162,10 @@ unset($__errorArgs, $__bag); ?>
                                                 </th>
                                                 <th scope="col" style="width: 8%">Unit <span
                                                         class="text-danger">*</span></th>
-                                                <th scope="col" style="width: 8%">Tax <span class="text-danger">*</span>
+                                                <th scope="col" style="width: 8%">CGST <span class="text-danger">*</span>
+                                                    <th scope="col" style="width: 8%">SGST <span class="text-danger">*</span>
+                                                </th>
+                                                <th scope="col" style="width: 8%">IGST <span class="text-danger">*</span>
                                                 </th>
                                                 <th scope="col" style="width: 8%">Amount <span
                                                         class="text-danger">*</span></th>
@@ -175,97 +192,44 @@ unset($__errorArgs, $__bag); ?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-8 add-medicinedesignn">
-                                                <label>Billing Date <span class="text-danger">*</span></label>
-                                                <input type="datetime-local" required class="form-control" name="bill_date" value="<?php echo e(date('Y-m-d H:i')); ?>" />
-                                                <?php $__errorArgs = ['bill_date'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                            <div class="col-md-8 add-medicinedesignn">
-                                                <label >Note </label>
+                                  
                                                 
-                                                <input type="text" name="note" id="note" >
+                                    <div class="col-md-12 mt-5 mb-3">
+                                        <div class="row">
+                                            <div class="col-md-6 ml-2">
+                                                <input type="text" style="width:520px;margin-left:10px" id="note" name="note">
+                                                <label for="note" style="margin-left:10px">Note </label>
                                             </div>
-                                            <div class="col-md-4 add-medicinedesignin">
-                                                <label>Payment Amount </label>
-                                                <input type="text" name="payment_amount"  />
-                                                <?php $__errorArgs = ['payment_amount'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                            <div class="col-md-4 add-medicinedesign">
-                                                <label>Payment Mode</label>
-                                                <select class="form-control" name="payment_mode">
-                                                    <option value="">Select One...</option>
-                                                    <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $payment_mode_name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                        <option value="<?php echo e($payment_mode_name); ?>"> <?php echo e($payment_mode_name); ?>
-
-                                                        </option>
-                                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                                </select>
-                                                <?php $__errorArgs = ['payment_mode'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                    <span class="text-danger"><?php echo e($message); ?></span>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="options px-5 pt-5  border-bottom pb-3">
-                                            <div class="container mt-5">
-                                                <div class="d-flex justify-content-end">
-                                                    <span class="biltext">Total</span>
-                                                    <input type="text" name="total" readonly id="total_am"
-                                                        class="form-control myfld">
-                                                </div>
-                                                <?php $__errorArgs = ['total'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="text-danger"><?php echo e($message); ?></span>
-                                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+                                            <div class="col-md-4">
+                                                <span class="biltext">Total </span>
+                                                <input type="text" style="    margin: -34px 0px 12px 212px;
+                                            width: 208px;" name="total_value" value="0" id="total_value" class="form-control" />
+                                                <span class="biltext">Total CGST Amount</span>
+                                                <input type="text" style="    margin: -34px 0px 12px 212px;
+                                                width: 208px;" name="total_cgst_amount" value="0" id="total_cgst_amount"
+                                                class="form-control" />
+                                                <span class="biltext">Total SGST Amount</span>
+                                                <input type="text" style="    margin: -34px 0px 12px 212px;
+                                                width: 208px;" name="total_sgst_amount" value="0" id="total_sgst_amount"
+                                                class="form-control" />
+                                                <span class="biltext">Total IGST Amount</span>
+                                                <input type="text" style="    margin: -34px 0px 12px 212px;
+                                                width: 208px;" name="total_igst_amount" value="0" id="total_igst_amount"
+                                                class="form-control" />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
 
 
                         <div class="btn-list p-3">
                             <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i
                                     class="fa fa-calculator"></i> Calculate</button>
-                            <button class="btn btn-primary btn-sm float-right " type="submit" value="save"
+                            <button class="btn btn-primary btn-sm float-right mr-2" type="submit" value="save"
                                 name="save"><i class="fa fa-file"></i> Save</button>
-                            <button class="btn btn-primary btn-sm float-right mr-2" value="save_and_print"
-                                name="save_and_print" type="submit"><i class="fa fa-paste"></i> Save & Print</button>
+                            
                         </div>
                     </form>
                 </div>
@@ -280,21 +244,16 @@ unset($__errorArgs, $__bag); ?>
 
         function addnewrow() {
             var html = `  <tr id="row${i}">
-                        <td>
-                            <select id="medicine_category${i}" onchange="getMedicineName(this.value,${i})"
-                                name="medicine_category[]"
-                                class="form-control select2-show-search">
-                                <option value="">Select One...</option>
-                                <?php if(isset($medicine_category)): ?>
-                                    <?php $__currentLoopData = $medicine_category; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($value->id); ?>">
-                                            <?php echo e($value->medicine_catagory_name); ?></option>
-                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                <?php endif; ?>
-                            </select></td>
+                      
                         <td><select onchange="getMedicineBatchDetails(this.value,${i})" name="medicine_name[]" id="medicine_name${i}"
                                 class="form-control select2-show-search">
                                 <option value="">Select One...</option>
+                                <?php if(isset($medicine_name)): ?>
+                                    <?php $__currentLoopData = $medicine_name; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($value->medicine_id); ?>">
+                                            <?php echo e($value->medicine_name); ?>(<?php echo e($value->medicine_catagory_name); ?>)</option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <?php endif; ?>
                             </select></td>
                         <td><select name="medicine_batch[]" onchange="getMedicineDetailsbyBatch(this.value,${i})" id="medicine_batch${i}"
                                 class="form-control select2-show-search">
@@ -310,8 +269,17 @@ unset($__errorArgs, $__bag); ?>
                         </td>
                         <td><input type="text" readonly name="unit[]" id="unit${i}" class="form-control" /><input type="hidden" name="unit_id[]" id="unit_id${i}" class="form-control" />
                                 </td>
-                                <td>
-                            <input class="form-control" value="0" id="tax${i}" onkeyup="getamount(${i})" name="tax[]" type="text"/>
+                        <td>
+                            <input class="form-control" value="0" id="cgst${i}" onkeyup="getamount(${i})" name="cgst[]" type="text"/>
+                            <input class="form-control" value="0" id="cgst_value${i}" name="cgst_value[]" type="hidden"/>
+                        </td>
+                        <td>
+                            <input class="form-control" value="0" id="sgst${i}" onkeyup="getamount(${i})" name="sgst[]" type="text"/>
+                            <input class="form-control" value="0" id="sgst_value${i}"  name="sgst_value[]" type="hidden"/>
+                        </td>
+                        <td>
+                            <input class="form-control" value="0" id="igst${i}" onkeyup="getamount(${i})" name="igst[]" type="text"/>
+                            <input class="form-control" value="0" id="igst_value${i}" name="igst_value[]" type="hidden"/>
                         </td>
                         <td>
                             <input class="form-control" readonly id="amount${i}" name="amount[]" type="text" />
@@ -327,16 +295,38 @@ unset($__errorArgs, $__bag); ?>
 
         function getamount(rowid) {
             var qty = $('#qty' + rowid).val();
-            var tax = $('#tax' + rowid).val();
+            console.log(qty);
+            var cgst = $('#cgst' + rowid).val();
+            console.log(cgst);
+            var igst = $('#igst' + rowid).val();
+            console.log(igst);
+            var sgst = $('#sgst' + rowid).val();
+            console.log(sgst);
             var price = $('#sale_price' + rowid).val();
+            console.log(price);
             var qty_p = parseFloat(qty) * parseFloat(price);
-            var tax_a = parseFloat(qty_p) * (parseFloat(tax) / 100);
-            var amount = parseFloat(qty_p) + parseFloat(tax_a);
+            console.log(qty_p);
+            var gst = parseFloat(cgst) + parseFloat(sgst) + parseFloat(igst);
+            var tax_a = parseFloat(qty_p) * (parseFloat(gst) / 100);
 
+
+            var igst_value = parseFloat(qty_p) * (parseFloat(igst) / 100);
+            var cgst_value = parseFloat(qty_p) * (parseFloat(cgst) / 100);
+            var sgst_value = parseFloat(qty_p) * (parseFloat(sgst) / 100);
+            $('#igst_value' + rowid).val(igst_value);
+            $('#cgst_value' + rowid).val(cgst_value);
+            $('#sgst_value' + rowid).val(sgst_value);
+
+            console.log(tax_a);
+            var amount = parseFloat(qty_p) + parseFloat(tax_a);
+            console.log(amount);
             $('#amount' + rowid).val(amount);
+            gettotal();
         }
 
         function getMedicineName(category_id, rowid) {
+            $('#medicine_name' + rowid).html('');
+            $('#medicine_name' + rowid).html('');
             $('#medicine_name' + rowid).html('<option value="">Select One...</option>');
             $('#medicine_batch' + rowid).html('<option value="">Select One...</option>');
             $('#medicine_expiry_date' + rowid).val('');
@@ -367,6 +357,9 @@ unset($__errorArgs, $__bag); ?>
         }
 
         function getMedicineBatchDetails(medicine_name, rowid) {
+            $('#medicine_batch' + rowid).html('');
+            $('#medicine_batch' + rowid).html('<option value="">Select One...</option>');
+            alert(medicine_name);
             $.ajax({
                 url: "<?php echo e(route('find-medicine-batch-by-medicine-name')); ?>",
                 type: "POST",
@@ -375,6 +368,7 @@ unset($__errorArgs, $__bag); ?>
                     medicine_name_id: medicine_name,
                 },
                 success: function(response) {
+                    console.log(response);
                     $.each(response, function(key, value) {
                         $('#medicine_batch' + rowid).append(
                             `<option value="${value.batch_no}">${value.batch_no}</option>`);
@@ -398,9 +392,12 @@ unset($__errorArgs, $__bag); ?>
                 },
                 success: function(response) {
                     console.log(response);
-                    $('#medicine_expiry_date' + rowid).val(response.medicine_details.expiry_date);
+                    $('#medicine_expiry_date' + rowid).val(response.medicine_details.exp_date);
                     $('#mrp' + rowid).val(response.medicine_details.mrp);
-                    $('#sale_price' + rowid).val(response.medicine_details.sale_price);
+                    $('#sale_price' + rowid).val(response.medicine_details.s_rate);
+                    $('#cgst' + rowid).val(response.medicine_details.cgst);
+                    $('#sgst' + rowid).val(response.medicine_details.sgst);
+                    $('#igst' + rowid).val(response.medicine_details.igst);
                     $('#unit' + rowid).val(response.medicine_details.medicine_unit_name);
                     $('#unit_id' + rowid).val(response.medicine_details.unit_id);
                     $('#avi_qty' + rowid).html('<h6 class="avlqty_text">Available Qty :' + response
@@ -423,13 +420,30 @@ unset($__errorArgs, $__bag); ?>
 <script type="text/javascript">
     function gettotal() {
             var no_of_row = $('#subhendu tr').length;
-            console.log('aaa=>', no_of_row);
 
             var t = 0;
             $("input[name='amount[]']").map(function() {
                 t = t + parseFloat($(this).val());
             }).get();
-            $('#total_am').val(t);
+            $('#total_value').val(t);
+
+            var cgst_value = 0;
+            $("input[name='cgst_value[]']").map(function() {
+                cgst_value = parseFloat(cgst_value + parseFloat($(this).val())).toFixed(2);
+            }).get();
+            $('#total_cgst_amount').val(cgst_value);
+
+            var sgst_value = 0;
+            $("input[name='sgst_value[]']").map(function() {
+                sgst_value = parseFloat(sgst_value + parseFloat($(this).val())).toFixed(2);
+            }).get();
+            $('#total_sgst_amount').val(sgst_value);
+
+            var igst_value = 0;
+            $("input[name='igst_value[]']").map(function() {
+                igst_value = parseFloat(igst_value + parseFloat($(this).val())).toFixed(2);
+            }).get();
+            $('#total_igst_amount').val(igst_value);
 
 
         }

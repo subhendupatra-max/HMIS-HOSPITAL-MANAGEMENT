@@ -826,6 +826,28 @@ class OpdController extends Controller
 
 
 
+    // public function edit_operation_booking_details(Request $request, $id)
+    // {
+    //     $operation_booking_id = base64_decode($id);
+    //     $operation_booking = OperationBooking::where('id', '=',  $operation_booking_id)->first();
+
+    //     // dd( $operation_booking );
+    //     $operation_theathers = OperationTheather::where('operation_booking_id', '=',  $operation_booking_id)->first();
+    //     //    dd( $operation_theathers );
+    //     $patient_id = $operation_theathers->patient_id;
+    //     $patient_details_information = Patient::where('id', '=', $patient_id)->first();
+    //     $departments = Department::where('is_active', '1')->get();
+    //     $doctor = User::where('role', '=', 'Doctor')->get();
+    //     $nurse = User::where('role', '=', 'Nurse')->get();
+    //     $staff = User::where('role', '=', 'staff')->get();
+    //     $operation_department = Operation::all();
+    //     $operation_catagory = OperationCatagory::all();
+    //     $operation_type = OperationType::all();
+    //     $all_patient = Patient::all();
+
+    //     return view('main-operation.edit-operation-booking', compact('operation_booking_id', 'departments', 'all_patient', 'doctor', 'nurse', 'staff', 'operation_catagory', 'operation_type', 'operation_department', 'operation_booking', 'operation_theathers', 'patient_details_information'));
+    // }
+
     public function edit_opd_operation(Request $request, $ot_id)
     {
         $operation_booking_id = base64_decode($ot_id);
@@ -888,7 +910,7 @@ class OpdController extends Controller
 
             DB::commit();
 
-            return redirect()->route('opd-operation-in-opd', ['id' => base64_encode($request->section_id)])->with('success', 'Operation Booking Updated Sucessfully');
+            return redirect()->route('opd-operation-details', ['opd_id' => base64_encode($request->section_id)])->with('success', 'Operation Booking Details Updated Sucessfully');
         } catch (\Throwable $th) {
             DB::rollback();
             return redirect()->back()->with('error', $th->getMessage());

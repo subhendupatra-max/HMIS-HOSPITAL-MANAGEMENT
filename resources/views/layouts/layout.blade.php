@@ -614,6 +614,27 @@ $login_details = DB::table('users')
                     @if (auth()->user()->can('Payment Report'))
                     <a class="dropdown-item" href="{{ route('payment-report') }}">Payment Report</a>
                     @endif
+                    @if (auth()->user()->can('Discharge Patient Report'))
+                    <a class="dropdown-item" href="{{ route('discharge-patient-report') }}">Discharge Patient Report</a>
+                    @endif
+                    @if (auth()->user()->can('Pharmacy Bill Report'))
+                    <a class="dropdown-item" href="{{ route('pharmacy-bill-report') }}">Pharmacy Bill Report</a>
+                    @endif
+                    @if (auth()->user()->can('Operaiton Report'))
+                    <a class="dropdown-item" href="{{ route('operation-report') }}">Operaiton Report</a>
+                    @endif
+                    @if (auth()->user()->can('Blood Issue Report'))
+                    <a class="dropdown-item" href="{{ route('blood-issue-report') }}">Blood Issue Report</a>
+                    @endif
+                    @if (auth()->user()->can('Blood Components Issue Report'))
+                    <a class="dropdown-item" href="{{ route('blood-components-issue-report') }}">Blood Components Issue Report</a>
+                    @endif
+                    @if (auth()->user()->can('Blood Donor Report'))
+                    <a class="dropdown-item" href="{{ route('blood-donor-details') }}">Blood Donor Report</a>
+                    @endif
+                    @if (auth()->user()->can('Death Report'))
+                    <a class="dropdown-item" href="{{ route('patient-death-details') }}">Death Report</a>
+                    @endif
                 </div>
             </li>
             @endif
