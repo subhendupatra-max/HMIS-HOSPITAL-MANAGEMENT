@@ -110,7 +110,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <div class="col-md-4 form-group">
 
-                                <input type="text" id="quantity"  name="quantity" onkeyup="getAmount(this.value)" value="<?php echo e(old('quantity')); ?>" required />
+                                <input type="text" id="quantity"  name="quantity" onkeyup="getAmount()" value="<?php echo e(old('quantity')); ?>" required />
                                 <label for="quantity">Quantity<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['quantity'];
@@ -126,9 +126,23 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="text" id="mrp" name="mrp" value="<?php echo e(old('mrp')); ?>" required />
+                                <input type="text" id="mrp" name="mrp" value="<?php echo e(old('mrp')); ?>"  onkeyup="getSaleRate()" required />
                                 <label for="mrp">MRP <span class="text-danger">*</span> </label>
                                 <?php $__errorArgs = ['mrp'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                <span class="text-danger"><?php echo e($message); ?></span>
+                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <input type="text" id="discount" name="discount" onkeyup="getSaleRate()" value="<?php echo e(old('discount')); ?>" required />
+                                <label for="discount">Discount(%) <span class="text-danger">*</span> </label>
+                                <?php $__errorArgs = ['discount'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -154,8 +168,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="purchase_price" onkeyup="getAmount(this.value)" name="purchase_price" value="<?php echo e(old('purchase_price')); ?>" required />
-                                <label for="purchase_price">Purchase Price<span class="text-danger">*</span> </label>
+                                <input type="text" id="purchase_price" onkeyup="getAmount()" name="purchase_price" value="<?php echo e(old('purchase_price')); ?>" required />
+                                <label for="purchase_price">Purchase Price/quantity<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['purchase_price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -169,7 +183,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="igst" name="igst" onkeyup="getAmount(this.value)" value="0" required />
+                                <input type="text" id="igst" name="igst" onkeyup="getAmount()" value="0" required />
                                 <label for="igst">IGST </label>
                                 <?php $__errorArgs = ['igst'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -183,7 +197,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="cgst" name="cgst" onkeyup="getAmount(this.value)" value="0" required />
+                                <input type="text" id="cgst" name="cgst" onkeyup="getAmount()" value="0" required />
                                 <label for="cgst">CGST  </label>
                                 <?php $__errorArgs = ['cgst'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -211,6 +225,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
+                                <input type="hidden" id="total_cgst" name="total_cgst"  value="0" required />
+                                <input type="hidden" id="total_sgst" name="total_sgst" value="0" required />
+                                <input type="hidden" id="total_igst" name="total_igst" value="0" required />
                                 <input type="text" id="amount" name="amount" value="<?php echo e(old('amount')); ?>" required />
                                 <label for="amount">Amount<span class="text-danger">*</span> </label>
 
@@ -239,17 +256,34 @@ unset($__errorArgs, $__bag); ?>
 <?php endif; ?>
 
 <script>
-        //  function getAmount()
-        //  {
-        //     var sgst = $('#sgst').val();
-        //     var cgst = $('#cgst').val();
-        //     var igst = $('#igst').val();
-        //     var purchase_price = $('#purchase_price').val();
-        //     var quantity = $('#quantity').val();
+    function getSaleRate()
+    {
+        var mrp = $('#mrp').val();
+        var discount = $('#discount').val();
+        var sale_rate = parseFloat(parseFloat(mrp)-(parseFloat(mrp)*(parseFloat(discount)/100))).toFixed(2);
+        $('#sale_price').val(sale_rate);
+    }
+    function getAmount()
+    {
+        var sgst = $('#sgst').val();
+        var cgst = $('#cgst').val();
+        var igst = $('#igst').val();
+        var purchase_price = $('#purchase_price').val();
+        var quantity = $('#quantity').val();
+        
+        var total_qty_pri = (purchase_price * quantity);
+        console.log(total_qty_pri);
+        var total_cgst = (total_qty_pri * ((parseFloat(cgst))/100));
+        var total_igst = (total_qty_pri * ((parseFloat(igst))/100));
+        var total_sgst = (total_qty_pri * ((parseFloat(sgst))/100));
+        var total_tax = parseFloat(total_sgst) + parseFloat(total_cgst) + parseFloat(total_igst);
+        var total_amount = total_qty_pri + total_tax;
 
-
-
-        //  }
+        $('#amount').val(total_amount);
+        $('#total_igst').val(total_igst);
+        $('#total_sgst').val(total_sgst);
+        $('#total_cgst').val(total_cgst);
+    }
 </script>
 
 <?php $__env->stopSection(); ?>

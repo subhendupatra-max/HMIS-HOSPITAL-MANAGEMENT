@@ -131,7 +131,7 @@
                    Quantity
                 </th>
                 <th style="padding: 7px 0px 7px 0px;border-right:2px solid #010c45;border-bottom:2px solid #010c45;width: 100px;">
-                    Medicine Unit
+                    Per
                 </th>
             </tr>
 

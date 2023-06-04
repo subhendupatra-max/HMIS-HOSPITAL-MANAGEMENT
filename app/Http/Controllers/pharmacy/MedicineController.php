@@ -209,54 +209,37 @@ class MedicineController extends Controller
             'mrp'                       => 'required',
             'sale_price'                => 'required',
             'purchase_price'            => 'required',
+            'amount'            => 'required',
         ]);
 
         try {
             DB::beginTransaction();
-
             $medine_stock = new MedicineStock();
-            $medine_stock->grm_id         =  $item->grn_id;
-            $medine_stock->po_details_id  =  $item->po_details_id;
+            $medine_stock->grm_id         =  '';
+            $medine_stock->po_details_id  =  '';
             $medine_stock->emg_challan_id =  '';
-            $medine_stock->stored_room =  $grn_main->storeroom_id;
-            $medine_stock->stock_status =  'stock_update_via_grn';
-            $medine_stock->catagory =  $item->catagory_id;
-            $medine_stock->unit =  $item->unit;
-            $medine_stock->medicine =  $item->medicine_id;
-            $medine_stock->batch_no =  $item->batch_no;
-            $medine_stock->exp_date      = $item->exp_date;
-            $medine_stock->qty =  $item->qty;
-            $medine_stock->mrp =  $item->mrp;
-            $medine_stock->discount =  $item->discount;
-            $medine_stock->p_rate =  $item->p_rate;
-            $medine_stock->s_rate =  $item->s_rate;
-            $medine_stock->cgst =  $item->cgst;
-            $medine_stock->cgst_value =  $item->cgst_value;
-            $medine_stock->sgst =  $item->sgst;
-            $medine_stock->sgst_value =  $item->sgst_value;
-            $medine_stock->igst =  $item->igst;
-            $medine_stock->igst_value =  $item->igst_value;
-            $medine_stock->amount =  $item->amount;
-            $medine_stock->save();
+            $medine_stock->stored_room =  $request->stored_room;
+            $medine_stock->stock_status =  'stock_update_direct';
+            $medine_stock->catagory =  $request->medicine_category;
+            $medine_stock->unit =  $request->unit;
+            $medine_stock->medicine =  $request->medicine_name;
+            $medine_stock->batch_no =  $request->batch_no;
+            $medine_stock->exp_date      = $request->expiry_date;
+            $medine_stock->qty =  $request->quantity;
+            $medine_stock->mrp =  $request->mrp;
+            $medine_stock->discount =  $request->discount;
+            $medine_stock->p_rate =  $request->purchase_price;
+            $medine_stock->s_rate =  $request->sale_price;
+            $medine_stock->cgst =  $request->cgst;
+            $medine_stock->cgst_value =  $request->cgst_value;
+            $medine_stock->sgst =  $request->sgst;
+            $medine_stock->sgst_value =  $request->sgst_value;
+            $medine_stock->igst =  $request->igst;
+            $medine_stock->igst_value =  $request->igst_value;
+            $medine_stock->amount =  $request->amount;
+            $status = $medine_stock->save();
 
-            
-            $medicine = new MedicineStock();
-            $medicine->stored_room              = $request->stored_room;
-            $medicine->medicine_category        = $request->medicine_category;
-            $medicine->medicine_name            = $request->medicine_name;
-            $medicine->batch_no                 = $request->batch_no;
-            $medicine->expiry_date              = $request->expiry_date;
-            $medicine->quantity                 = $request->quantity;
-            $medicine->mrp                      = $request->mrp;
-            $medicine->unit                     = $request->unit;
-            $medicine->sale_price               = $request->sale_price;
-            $medicine->cgst                     = $request->cgst;
-            $medicine->sgst                     = $request->sgst;
-            $medicine->igst                     = $request->igst;
-            $medicine->purchase_price           = $request->purchase_price;
-            $medicine->amount                   = $request->amount;
-            $status =  $medicine->save();
-            // DB::commit();
+            DB::commit();
             if ($status) {
                 return redirect()->route('all-medicine-stock')->with('success', 'Medicine Added Sucessfully');
             } else {
