@@ -44,7 +44,9 @@
                             <?php if(@$operation_details[0]->operation_name != null ): ?>
                             <?php $__currentLoopData = $operation_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><?php echo e($loop->iteration); ?></td>
+                                <td>
+                                    <a href="<?php echo e(route('emg-operation-details',['emg_id' => base64_encode($item->emg_id)])); ?>" style="color:blue"><?php echo e($item->booking_id); ?></a>
+                                </td>
                                 <td><?php echo e($item->operation_name); ?></td>
                                 <td><?php echo e($item->operation_catagory_name); ?></td>
                                 <td><?php echo e($item->doctor_first_name); ?> <?php echo e($item->doctor_last_name); ?></td>

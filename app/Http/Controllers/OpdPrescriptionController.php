@@ -132,7 +132,8 @@ class OpdPrescriptionController extends Controller
 
 
         // dd($opdPrescriptionMedicineDetails);
-        $medicine_catagory = MedicineCatagory::all();
+        $medicine_catagory = MedicineCatagory::all();;
+        // dd($medicine_catagory);
         $pathology_test = PathologyTest::all();
         $radiology_test = RadiologyTest::all();
         $DoseInterval = DoseInterval::all();

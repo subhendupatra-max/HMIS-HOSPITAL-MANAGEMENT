@@ -137,7 +137,8 @@ class ReportController extends Controller
 
     public function payment_report_index()
     {
-        return view('report.payment_report');
+        $user = User::all();
+        return view('report.payment_report', compact('user'));
     }
 
     public function fetch_payment_report(Request $request)
@@ -151,6 +152,9 @@ class ReportController extends Controller
             if ($request->section != '') {
                 $query->where('section', $request->section);
             }
+            if ($request->collected_by != '') {
+                $query->where('payment_recived_by', $request->collected_by);
+            }
             if ($request->payment_mode != '') {
                 $query->where('payment_mode', $request->payment_mode);
             }
@@ -161,7 +165,8 @@ class ReportController extends Controller
                 $query->where('payment_date', '<=', $request->to_date);
             }
         })->get();
-        return view('report.payment_report', compact('payment_report', 'all_search_data'));
+        $user = User::all();
+        return view('report.payment_report', compact('payment_report', 'all_search_data', 'user'));
     }
 
     public function opd_billing_report_index()

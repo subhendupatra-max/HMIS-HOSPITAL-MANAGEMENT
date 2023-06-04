@@ -170,7 +170,7 @@
                                         <td class="py-2 px-5">
                                             <?php echo $operation_details->section; ?>
 
-                                            <a class="textlink" href="<?php echo e(route('emg-patient-profile', ['id' => base64_encode($section_name)])); ?>">(<?php echo e(@$section_name); ?>)</a>
+                                            <a class="textlink" href="<?php echo e(route('emg-patient-profile', ['id' => base64_encode($operation_details->booking_id)])); ?>">(<?php echo e(@$operation_details->emg_id); ?>)</a>
 
                                         </td>
                                     </tr>

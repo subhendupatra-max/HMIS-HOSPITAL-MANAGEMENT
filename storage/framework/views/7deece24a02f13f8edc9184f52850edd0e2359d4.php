@@ -5,12 +5,12 @@
         <div class="card-header d-block">
             <div class="row">
                 <div class="col-md-4 card-title">
-                    Prescirption
+                   E-Prescirption
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ipd prescription')): ?>
-                        <a href="<?php echo e(route('add-prescription-in-ipd',['id'=> base64_encode($ipd_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-report"></i> Add Prescription </a>
+                        <a href="<?php echo e(route('add-prescription-in-ipd',['id'=> base64_encode($ipd_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-prescription"></i> Create Prescription </a>
                         <?php endif; ?>
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                         <div class="dropdown-menu dropdown-menu-right" style="">

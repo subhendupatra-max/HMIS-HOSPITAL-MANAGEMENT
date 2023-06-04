@@ -47,7 +47,7 @@
                                 <td>
                                     <a href="{{ route('opd-operation-details',['opd_id' => base64_encode($item->opd_id)]) }}" style="color:blue">{{$item->booking_id}}</a>
                                 </td>
-                                <td>{{$item->operation_name}}</td>
+                                <td>{{$item->operation_name}}</td> 
                                 <td>{{$item->operation_catagory_name}}</td>
                                 <td>{{$item->doctor_first_name}} {{$item->doctor_last_name}}</td>
                                 <td>{{$item->operation_type_name}}</td>

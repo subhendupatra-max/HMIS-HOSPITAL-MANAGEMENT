@@ -352,35 +352,21 @@
 </script>
    <script>
     var barChartData = {
-        labels: [
-        "18-05-2023",
-        "19-05-2023",
-        "20-05-2023",
-        "21-05-2023",
-        "22-05-2023",
-        "23-05-2023",
-        "24-05-2023",
-        "25-05-2023",
-        "26-05-2023",
-        "27-05-2023",
-        "28-05-2023",
-        "29-05-2023",
-        "30-05-2023",
-        ],
+        labels: [<?php echo $tarik ?>],
         datasets: [{
                 label: "Billing Amount",
                 backgroundColor: "#2e4f4f",
                 borderColor: "#2e4f4f",
                 borderWidth: 1,
-                data: ['<?php echo $before_ten_billing  ?>','<?php echo $before_nine_billing  ?>','<?php echo $before_eight_billing  ?>','<?php echo $before_seven_billing  ?>','<?php echo $before_six_billing  ?>','<?php echo $before_five_billing  ?>','<?php echo $before_four_billing  ?>','<?php echo $before_three_billing  ?>','<?php echo $before_two_billing  ?>','<?php echo $before_today_billing  ?>']
+                data: [<?php echo $value_total ?>]
             },
-            // {
-            //     label: "Payment Amount",
-            //     backgroundColor: "#5798a3",
-            //     borderColor: "#5798a3",
-            //     borderWidth: 1,
-            //     data: [1000, 5000, 3000, 5000, 3000]
-            // },
+            {
+                label: "Payment Amount",
+                backgroundColor: "#5798a3",
+                borderColor: "#5798a3",
+                borderWidth: 1,
+                data: [<?php echo $value_total_p ?>]
+            },
 
         ]
     };
@@ -392,7 +378,7 @@
         },
         title: {
             display: true,
-            text: "Billing "
+            text: "Last 10 days Total Billing "
         },
         scales: {
             yAxes: [{

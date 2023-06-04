@@ -47,7 +47,7 @@
                                 <td>
                                     <a href="<?php echo e(route('opd-operation-details',['opd_id' => base64_encode($item->opd_id)])); ?>" style="color:blue"><?php echo e($item->booking_id); ?></a>
                                 </td>
-                                <td><?php echo e($item->operation_name); ?></td>
+                                <td><?php echo e($item->operation_name); ?></td> 
                                 <td><?php echo e($item->operation_catagory_name); ?></td>
                                 <td><?php echo e($item->doctor_first_name); ?> <?php echo e($item->doctor_last_name); ?></td>
                                 <td><?php echo e($item->operation_type_name); ?></td>

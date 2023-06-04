@@ -46,6 +46,20 @@
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <div class="form-group col-md-4 newaddappon">
+                                            <label for="collected_by">Collected By </label>
+                                            <select name="collected_by" class="form-control select2-show-search" id="collected_by">
+                                                <option value="">Select Collected By </option>
+                                                @foreach ($user as $key => $users)
+                                                <option value="{{$users->id}}" {{@$all_search_data['collected_by'] == $users->id ? 'selected':'' }}>{{$users->first_name}} {{$users->last_name}}
+                                                </option>
+
+                                                @endforeach
+                                            </select>
+                                            @error('collected_by')
+                                            <small class="text-danger">{{ $message }}</sma>
+                                                @enderror
+                                        </div>
                                
                                         <div class="form-group col-md-4 addopdd">
                                             <label>From Date <span class="text-danger">*</span></label>
@@ -88,6 +102,7 @@
                                 <th scope="col">Payment Amount(Rs)</th>
                                 <th scope="col">payment Date</th>
                                 <th scope="col">Payment Mode</th>
+                                <th scope="col">Payment Received By</th>
                                 <th scope="col">Section</th>
                             </tr>
                         </thead>
@@ -103,6 +118,7 @@
                                 <td>{{ date('d-m-Y h:i A',strtotime(@$value->payment_date)) }}</td>
                                
                                 <td>{{ @$value->payment_mode }}</td>
+                                <td>{{ @$value->generated_by->first_name }} {{ @$value->generated_by->last_name }}</td>
                                 <td>
                                     {{ @$value->section }}
                                 </td>
