@@ -158,7 +158,7 @@
                                         </td>
                                         <td class="py-2 px-5">
                                             {!!$operation_details->section!!}
-                                            <a class="textlink" href="{{ route('opd-profile', ['id' => base64_encode($section_name)]) }}">({{@$section_name}})</a>
+                                            <a class="textlink" href="{{ route('ipd-profile', ['id' => base64_encode($operation_details->ipd_id)]) }}">({{@$operation_details->ipd_id}})</a>
 
                                         </td>
                                     </tr>

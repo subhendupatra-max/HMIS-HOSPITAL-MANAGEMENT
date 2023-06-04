@@ -13,6 +13,7 @@ use App\Models\DeathReport;
 use App\Models\PatientBedHistory;
 use App\Models\User;
 use App\Models\AllHeader;
+use App\Models\Appointment;
 use App\Models\RadiologyTest;
 use App\Models\PathologyTest;
 use App\Models\DoseDuration;
@@ -146,7 +147,17 @@ class PatientDischargeController extends Controller
             $death_patient->case_id = $request->case_id;
             $death_patient->death_date =  \Carbon\Carbon::parse($request->discharge_date)->format('Y-m-d h:m:s');
             $death_patient->save();
+
+            $appointment = new Appointment();
+            $appointment->patient_id = $ipd_details->patient_id;
+            $appointment->doctor =  $ipd_details->doctor_name;
+            $appointment->appointment_date =  $ipd_details->next_appointment_date;
+            $appointment->appointment_priority = '';
+            $appointment->message = '';
+            $appointment->save();
         }
+
+
         IpdDetails::where('id', $request->ipd_id)->update(['status' => 'Discharged', 'discharged' => 'yes', 'discharged_date' => \Carbon\Carbon::parse($request->discharge_date)->format('Y-m-d h:m:s')]);
         Bed::where('id', $ipd_details->bed)->update(['is_used' => 'Under Maintenance']);
         // DB::commit();
@@ -316,7 +327,7 @@ class PatientDischargeController extends Controller
         $DischargedRadiologyTest = DischargedRadiologyTest::where('discharged_id', $dis_id)->get();
 
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
-        return view('ipd._print.discharged_patient', compact('patient_discharge_details', 'header_image', 'ipd_details','DischargedMedicine','DischargedPathologyTest','DischargedRadiologyTest'));
+        return view('ipd._print.discharged_patient', compact('patient_discharge_details', 'header_image', 'ipd_details', 'DischargedMedicine', 'DischargedPathologyTest', 'DischargedRadiologyTest'));
     }
 
     public function details_discharged_patient_in_ipd($ipd_id)

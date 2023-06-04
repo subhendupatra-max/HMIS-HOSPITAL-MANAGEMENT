@@ -22,6 +22,9 @@
 
             </div>
         </div>
+        <div class="card-header">
+            <?php echo $__env->make('ipd.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
         <div class="card-body p-0">
             <div class="card-body border-top">
                 <h5 class="font-weight-bold">Operation Booking Details </h5>
@@ -167,7 +170,7 @@
                                         <td class="py-2 px-5">
                                             <?php echo $operation_details->section; ?>
 
-                                            <a class="textlink" href="<?php echo e(route('opd-profile', ['id' => base64_encode($section_name)])); ?>">(<?php echo e(@$section_name); ?>)</a>
+                                            <a class="textlink" href="<?php echo e(route('ipd-profile', ['id' => base64_encode($operation_details->ipd_id)])); ?>">(<?php echo e(@$operation_details->ipd_id); ?>)</a>
 
                                         </td>
                                     </tr>

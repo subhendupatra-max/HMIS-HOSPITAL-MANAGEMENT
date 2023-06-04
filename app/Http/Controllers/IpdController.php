@@ -58,7 +58,17 @@ class IpdController extends Controller
 {
     public function index()
     {
-        $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'no')->where('ins_by', 'ori')->orderBy('appointment_date', 'DESC')->get();
+        $ipd_patient_list =  IpdDetails::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->orderBy('appointment_date', 'DESC')
+            ->where('is_active', '1')
+            ->where('discharged', 'no')
+            ->get();
+
+        // $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'no')->where('ins_by', 'ori')->orderBy('appointment_date', 'DESC')->get();
+
         return view('Ipd.ipd-patients-details', compact('ipd_patient_list'));
     }
 
@@ -580,6 +590,40 @@ class IpdController extends Controller
         }
     }
 
+    public function ipd_operation_details_for_a_patient($id)
+    {
+        $operation_booking_id = '';
+        $operation_details = '';
+        $ipd_id = base64_decode($id);
+        // dd($ipd_id);
+        $ipd_details = IpdDetails::where('id', $ipd_id)->first();
+        // dd($ipd_details);
+        $patient_details_information = Patient::where('id', '=', $ipd_details->patient_id)->first();
+        // dd($patient_details_information);
+        $operation_theathers  = OperationTheather::where('patient_id', $ipd_details->patient_id)->first();
+        // dd($operation_theathers);
+        // dd($patient_details_information);
+        if ($operation_theathers != null) {
+            $operation_booking = OperationBooking::where('id', $operation_theathers->operation_booking_id)->first();
+            $operation_booking_id = $operation_booking->id;
+            $operation_details = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark', 'operation_theathers.ipd_id')
+                ->leftjoin('operation_theathers', 'operation_theathers.operation_booking_id', '=', 'operation_bookings.id')
+                ->leftjoin('patients', 'patients.id', '=', 'operation_theathers.patient_id')
+                ->leftjoin('departments', 'departments.id', '=', 'operation_theathers.operation_department')
+                ->leftjoin('users', 'users.id', '=', 'operation_bookings.consultant_doctor')
+                ->leftjoin('operations', 'operations.id', '=', 'operation_theathers.operation_id')
+                ->leftjoin('operation_types', 'operation_types.id', '=', 'operation_theathers.operation_type')
+                ->leftjoin('operation_catagories', 'operation_catagories.id', '=', 'operation_theathers.operation_category_id')
+                ->where('operation_bookings.id', $operation_booking->id)
+                ->where('operation_theathers.operation_booking_id', $operation_booking->id)
+                ->first();
+        }
+
+        // dd($operation_details);
+
+        return view('IPD.operation-ipd.operation-details', compact('operation_details', 'ipd_details', 'operation_booking_id','ipd_id'));
+    }
+
 
     public function ipd_operation($id)
     {
@@ -597,7 +641,7 @@ class IpdController extends Controller
         if ($operation_theathers != null) {
             $operation_booking = OperationBooking::where('id', $operation_theathers->operation_booking_id)->first();
             $operation_booking_id = $operation_booking->id;
-            $operation_details = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark')
+            $operation_details = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark', 'operation_theathers.ipd_id')
                 ->leftjoin('operation_theathers', 'operation_theathers.operation_booking_id', '=', 'operation_bookings.id')
                 ->leftjoin('patients', 'patients.id', '=', 'operation_theathers.patient_id')
                 ->leftjoin('departments', 'departments.id', '=', 'operation_theathers.operation_department')
@@ -614,6 +658,7 @@ class IpdController extends Controller
 
         return view('IPD.operation-ipd.operation-listing-in-ipd', compact('operation_details', 'ipd_details', 'ipd_id',  'operation_booking_id'));
     }
+
 
     public function edit_ipd_operation(Request $request, $id)
     {

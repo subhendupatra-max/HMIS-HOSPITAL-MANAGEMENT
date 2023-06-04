@@ -47,6 +47,7 @@
                                     </th>
                                 </tr>
                             </thead>
+                            
                             <tbody id="chargeTable">
 
                             </tbody>
