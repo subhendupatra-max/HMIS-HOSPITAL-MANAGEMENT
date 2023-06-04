@@ -61,6 +61,28 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                         </div>
+                                        <div class="form-group col-md-4 newaddappon">
+                                            <label for="collected_by">Collected By </label>
+                                            <select name="collected_by" class="form-control select2-show-search" id="collected_by">
+                                                <option value="">Select Collected By </option>
+                                                <?php $__currentLoopData = $user; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $users): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <option value="<?php echo e($users->id); ?>" <?php echo e(@$all_search_data['collected_by'] == $users->id ? 'selected':''); ?>><?php echo e($users->first_name); ?> <?php echo e($users->last_name); ?>
+
+                                                </option>
+
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </select>
+                                            <?php $__errorArgs = ['collected_by'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                            <small class="text-danger"><?php echo e($message); ?></sma>
+                                                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                        </div>
                                
                                         <div class="form-group col-md-4 addopdd">
                                             <label>From Date <span class="text-danger">*</span></label>
@@ -117,6 +139,7 @@ unset($__errorArgs, $__bag); ?>
                                 <th scope="col">Payment Amount(Rs)</th>
                                 <th scope="col">payment Date</th>
                                 <th scope="col">Payment Mode</th>
+                                <th scope="col">Payment Received By</th>
                                 <th scope="col">Section</th>
                             </tr>
                         </thead>
@@ -132,6 +155,7 @@ unset($__errorArgs, $__bag); ?>
                                 <td><?php echo e(date('d-m-Y h:i A',strtotime(@$value->payment_date))); ?></td>
                                
                                 <td><?php echo e(@$value->payment_mode); ?></td>
+                                <td><?php echo e(@$value->generated_by->first_name); ?> <?php echo e(@$value->generated_by->last_name); ?></td>
                                 <td>
                                     <?php echo e(@$value->section); ?>
 

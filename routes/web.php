@@ -2018,7 +2018,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
     Route::group(['middleware' => ['permission:opd payment'], 'prefix' => 'opd-payment'], function () {
         Route::get('payment-listing-in-opd/{id}', [OpdPaymentController::class, 'payment_listing_in_opd'])->name('payment-listing-in-opd');
 
-        Route::get('print-payment-in-opd/{id}', [OpdPaymentController::class, 'payment_print_in_opd'])->name('print-payment-in-opd');
+        Route::get('print-payment-in-opd/{id}/{opd_id?}', [OpdPaymentController::class, 'payment_print_in_opd'])->name('print-payment-in-opd');
 
         Route::group(['middleware' => ['permission:add opd payment']], function () {
             Route::get('add-payment-in-opd/{id}', [OpdPaymentController::class, 'add_payment_in_opd'])->name('add-payment-in-opd');
@@ -2981,6 +2981,7 @@ Route::group(['middleware' => ['permission:OPD Operation']], function () {
 //================================= IPD Operation Deratils ====================================
 Route::group(['middleware' => ['permission:OPD Operation']], function () {
     Route::get('ipd-operation-in-ipd/{id?}', [IpdController::class, 'ipd_operation'])->name('ipd-operation-in-ipd');
+    Route::get('ipd-operation-details/{ipd_id?}', [IpdController::class, 'ipd_operation_details_for_a_patient'])->name('ipd-operation-details');
     Route::get('edit-ipd-operation-in-ipd/{id}', [IpdController::class, 'edit_ipd_operation'])->name('edit-ipd-operation-in-ipd');
     Route::post('update-operation-booking-details-in-ipd', [IpdController::class, 'update_ipd_operation'])->name('update-operation-booking-details-in-ipd');
 });
@@ -2990,6 +2991,8 @@ Route::group(['middleware' => ['permission:OPD Operation']], function () {
 //================================= Emg Operation Deratils ====================================
 Route::group(['middleware' => ['permission:EMG Operation']], function () {
     Route::get('emg-operation-in-emg/{id?}', [EmgController::class, 'emg_operation'])->name('emg-operation-in-emg');
+
+    Route::get('emg-operation-details/{emg_id?}', [EmgController::class, 'emg_operation_details'])->name('emg-operation-details');
     Route::get('edit-emg-operation-in-emg/{id}', [EmgController::class, 'edit_emg_operation'])->name('edit-emg-operation-in-emg');
     Route::post('update-operation-booking-details-in-emg', [EmgController::class, 'update_emg_operation'])->name('update-operation-booking-details-in-emg');
 });

@@ -157,7 +157,7 @@
                                         </td>
                                         <td class="py-2 px-5">
                                             {!!$operation_details->section!!}
-                                            <a class="textlink" href="{{ route('emg-patient-profile', ['id' => base64_encode($section_name)]) }}">({{@$section_name}})</a>
+                                            <a class="textlink" href="{{ route('emg-patient-profile', ['id' => base64_encode($operation_details->emg_id)]) }}">({{@$operation_details->emg_id}})</a>
 
                                         </td>
                                     </tr>

@@ -82,14 +82,14 @@
                                                 <?php endif; ?>
                                                 <?php endif; ?>
                                             </td>
-                                            <td><?php echo e(@$value->duration); ?></td>
+                                            <td><?php echo e(@($value->duration/60)); ?></td>
 
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         <?php endif; ?>
                                         <?php if(@$oxygen_monitering_last->end_time != null ||
                                         !isset($oxygen_monitering_last)): ?>
-                                        <tr>
+                                        <tr style="background-color: #d3f9ea">
                                             <td>New Start</td>
                                             <td>
                                                 <form action="<?php echo e(route('start-oxygen-in-ipd')); ?>" method="POST">

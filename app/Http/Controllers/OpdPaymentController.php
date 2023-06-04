@@ -108,9 +108,10 @@ class OpdPaymentController extends Controller
         return back()->with('success', "Payment Deleted Successfully");
     }
 
-    public function payment_print_in_opd($id)
+    public function payment_print_in_opd($id, $opd_id)
     {
-        $opd_id = base64_decode($id);
+        $id = base64_decode($id);
+        $opd_id = base64_decode($opd_id);
         // dd($opd_id);
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
 

@@ -44,7 +44,7 @@
                             @if(@$operation_details[0]->operation_name != null )
                             @foreach ($operation_details as $item)
                             <tr>
-                                <td>{{$loop->iteration}}</td>
+                                <td> <a href="{{ route('ipd-operation-details',['ipd_id' => base64_encode($item->ipd_id)]) }}" style="color:blue">{{$item->booking_id}}</a></td>
                                 <td>{{$item->operation_name}}</td>
                                 <td>{{$item->operation_catagory_name}}</td>
                                 <td>{{$item->doctor_first_name}} {{$item->doctor_last_name}}</td>

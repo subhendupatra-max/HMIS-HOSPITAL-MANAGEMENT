@@ -127,7 +127,7 @@ unset($__errorArgs, $__bag); ?>
                                 <input type="hidden" name="section_id" value="<?php echo e(@$operation_theathers->ipd_id); ?>" />
 
                                 <div class="form-group col-md-4 opd-bladedesign ">
-                                    <label class="date-format">Operation Date From <?php echo e(@$operation_theathers->ipd_id); ?> <span class="text-danger">*</span></label>
+                                    <label class="date-format">Operation Date From  <span class="text-danger">*</span></label>
 
                                     <input type="datetime-local" name="operation_date_from" value="<?php echo e(old('operation_date_from')); ?>" <?php if(isset($operation_booking->operation_date_from)): ?> value="<?php echo e(date('Y-m-d H:i', strtotime($operation_booking->operation_date_from))); ?>" <?php endif; ?> required />
 

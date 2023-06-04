@@ -25,10 +25,18 @@ class PatientController extends Controller
 {
     public function patient_details()
     {
-        $all_patient = Patient::where('is_active', 1)
-            ->where('ins_by', 'ori')
-            ->orderBy('id', 'DESC')
+        $all_patient =  Patient::where(function ($query) {
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
+        })->where('is_active', 1)
+          ->orderBy('id', 'DESC')
             ->get();
+    
+        // $all_patient = Patient::where('is_active', 1)
+        //     ->where('ins_by', 'ori')
+        //     ->orderBy('id', 'DESC')
+        //     ->get();
 
         return view('setup.patient.patient_list', compact('all_patient'));
     }
