@@ -85,7 +85,7 @@
                                 {{ date('d-m-Y h:i A',strtotime($value->appointment_date)) }}
                             </td>
                             <td>
-                                {{ @$value->admitted_by }}<br>
+                                {{ @$value->admitted_by}}<br>
                                 {{ @$value->admitted_by_contact_no }}
                             </td>
                             <td>
