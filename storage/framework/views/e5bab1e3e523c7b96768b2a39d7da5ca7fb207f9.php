@@ -75,7 +75,7 @@
 
                                             
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print opd billing')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-bill',['bill_id'=>base64_encode($value->id),'id'=>base64_encode($opd_id)])); ?>">
+                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-bill',['bill_id'=>base64_encode($value->id)])); ?>">
                                                 <i class="fa fa-print"></i> Print
                                             </a>
                                             <?php endif; ?>

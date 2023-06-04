@@ -13,7 +13,7 @@ class EmgPatientDetails extends Model
 
     public function patient_department_details()
     {
-        return $this->belongsTo(Department::class,'department_id','id');
+        return $this->belongsTo(Department::class, 'department_id', 'id');
     }
 
     public function emg_details_data()
@@ -25,9 +25,9 @@ class EmgPatientDetails extends Model
     {
         return $this->belongsTo(User::class, 'cons_doctor', 'id');
     }
-    public function TpaManagement(){
+
+    public function TpaManagement()
+    {
         return $this->belongsTo(TpaManagement::class, 'tpa_organization', 'id');
     }
-
-
 }

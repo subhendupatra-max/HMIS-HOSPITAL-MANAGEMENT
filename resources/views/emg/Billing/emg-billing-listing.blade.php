@@ -64,9 +64,11 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
-                                            <a class="dropdown-item" href="">
-                                                <i class="fa fa-eye"></i> View
+                                            @can('print emg billing')
+                                            <a class="dropdown-item" href="{{route('print-emg-bill',['bill_id'=>base64_encode($value->id)])}}">
+                                                <i class="fa fa-print"></i> Print
                                             </a>
+                                            @endcan
 
                                             {{-- @can('edit emg billing')
                                             <a class="dropdown-item" href="">
@@ -75,7 +77,7 @@
                                             @endcan
                                             @can('delete emg billing')
                                             <a class="dropdown-item" href="{{route('delete-emg-bill',['bill_id'=>$value->id])}}">
-                                                <i class="fa fa-trash"></i> Delete
+                                            <i class="fa fa-trash"></i> Delete
                                             </a>
                                             @endcan --}}
 
@@ -93,4 +95,4 @@
         </div>
     </div>
 </div>
-    @endsection
+@endsection

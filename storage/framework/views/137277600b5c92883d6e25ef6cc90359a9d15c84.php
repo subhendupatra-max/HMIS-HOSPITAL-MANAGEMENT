@@ -75,7 +75,7 @@
 
                                             
 
-                                            <a class="dropdown-item" href="">
+                                            <a class="dropdown-item" href="<?php echo e(route('ipd-bill-print', ['bill_id' => base64_encode($value->id)])); ?>">
                                                 <i class="fa fa-print"></i> Print
                                             </a>
 

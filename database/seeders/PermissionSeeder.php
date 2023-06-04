@@ -849,6 +849,13 @@ class PermissionSeeder extends Seeder
         // opd prescription
         Permission::create(['name' => 'opd prescription']);
 
-        
+        //reports 
+        Permission::create(['name' => 'Discharge Patient Report']);
+        Permission::create(['name' => 'Pharmacy Bill Report']);
+        Permission::create(['name' => 'Operaiton Report']);
+        Permission::create(['name' => 'Blood Issue Report']);
+        Permission::create(['name' => 'Blood Components Issue Report']);
+        Permission::create(['name' => 'Blood Donor Report']);
+        Permission::create(['name' => 'Death Report']);
     }
 }

@@ -13,10 +13,13 @@
 
                 <div class="col-md-8 text-right">
                     <div class="d-block">
+
+                        
+
+
+
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Add Blood Donar')): ?>
-
                         <a href="<?php echo e(route('add-blood-donor')); ?>" class="btn btn-primary"><i class="fa fa-plus"></i> Add Donor Details</a>
-
                         <?php endif; ?>
                     </div>
                 </div>

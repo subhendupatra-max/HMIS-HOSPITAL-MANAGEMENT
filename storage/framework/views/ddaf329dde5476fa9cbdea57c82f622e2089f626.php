@@ -52,9 +52,10 @@
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Purpose</th>
                                 <th class="border-bottom-0">Name</th>
-                                <th class="border-bottom-0">Year Made</th>
-                                <th class="border-bottom-0">Driver Name</th>
-                                <th class="border-bottom-0">Driver License</th>
+                                <th class="border-bottom-0">Phone No </th>
+                                <th class="border-bottom-0">Date</th>
+                                <th class="border-bottom-0">In Time</th>
+                                <th class="border-bottom-0">Out Time Time</th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit visit ','delete visit ')): ?>
                                 <th>Action</th>
                                 <?php endif; ?>
@@ -67,6 +68,7 @@
                                 <td><?php echo e(@$item->purpose); ?> </td>
                                 <td><?php echo e(@$item->name); ?> </td>
                                 <td><?php echo e(@$item->phone); ?> </td>
+                                <td><?php echo e(date('d-m-Y',strtotime($item->date))); ?> </td>
                                 <td><?php echo e(@$item->in_time); ?> </td>
                                 <td><?php echo e(@$item->out_time); ?> </td>
 
@@ -92,7 +94,7 @@
                 </div>
             </div>
         </div>
-
+    </div>
     </div>
     <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/front-office/visit/visit-details-listing.blade.php ENDPATH**/ ?>
