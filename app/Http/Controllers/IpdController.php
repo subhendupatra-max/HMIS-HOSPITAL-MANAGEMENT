@@ -67,6 +67,7 @@ class IpdController extends Controller
             ->where('discharged', 'no')
             ->get();
 
+            // dd($ipd_patient_list );
         // $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'no')->where('ins_by', 'ori')->orderBy('appointment_date', 'DESC')->get();
 
         return view('Ipd.ipd-patients-details', compact('ipd_patient_list'));
