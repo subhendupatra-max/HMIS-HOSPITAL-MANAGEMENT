@@ -58,7 +58,9 @@ unset($__errorArgs, $__bag); ?>
                                     <th scope="col" style="width: 10%">Charge <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 10%">Qty <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 10%">Tax <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">CGST <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">SGST <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">IGST <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 10%">Amount <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 2%"><button class="btn btn-success btn-sm" onclick="addNewrow()" type="button"><i class="fa fa-plus"></i></button>
                                     </th>
@@ -130,7 +132,13 @@ unset($__errorArgs, $__bag); ?>
                                 <input class="form-control" value="1" onkeyup="getamountwithtax(${i})"  name="qty[]" id="qty${i}" />
                             </td>
                             <td>
-                                <input class="form-control" value="0" onkeyup="getamountwithtax(${i})"  name="tax[]" id="tax${i}" />
+                                <input class="form-control" onkeyup="getamountwithtax(${i})"  name="cgst[]" id="cgst${i}" />
+                            </td>
+                            <td>
+                                <input class="form-control" onkeyup="getamountwithtax(${i})"  name="sgst[]" id="sgst${i}" />
+                            </td>
+                            <td>
+                                <input class="form-control" onkeyup="getamountwithtax(${i})"  name="igst[]" id="igst${i}" />
                             </td>
                             <td>
                                 <input class="form-control" name="amount[]" id="amount${i}" />
@@ -174,7 +182,6 @@ unset($__errorArgs, $__bag); ?>
         $('#charge_sub_category' + row_id).empty();
         $('#charge_name' + row_id).empty();
         $('#amount' + row_id).val('');
-        $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
         $('#charge_type' + row_id).val('');
         $('#charge_category' + row_id).empty();
@@ -202,7 +209,6 @@ unset($__errorArgs, $__bag); ?>
         $('#grnd_total' + row_id).val('');
         $('#total_tax' + row_id).val('');
         $('#amount' + row_id).val('');
-        $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
         $('#charge_sub_category' + row_id).html('<option value="">Select One..</option>');
         $('#charge_name' + row_id).html('<option value="">Select One..</option>');
@@ -231,7 +237,6 @@ unset($__errorArgs, $__bag); ?>
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
         $('#total_tax' + row_id).val('');
-        $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
         $('#amount' + row_id).val('');
         let charge_category = $('#charge_category' + row_id).val();
@@ -262,9 +267,6 @@ unset($__errorArgs, $__bag); ?>
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
         $('#total_tax' + row_id).val('');
-
-        $('#amount' + row_id).val('');
-        $('#tax' + row_id).val('');
         $('#amount' + row_id).val('');
         let charge_name = $('#charge_name' + row_id).val();
         let charge_set = $('#charge_set' + row_id).val();
@@ -288,10 +290,14 @@ unset($__errorArgs, $__bag); ?>
     function getamountwithtax(row_id) {
 
         let standard_chargesss = $('#standard_charges' + row_id).val();
-        let tax = $('#tax' + row_id).val();
+        let cgst = $('#cgst' + row_id).val();
+        let sgst = $('#sgst' + row_id).val();
+        let igst = $('#igst' + row_id).val();
         let qty = $('#qty' + row_id).val();
         var standard_charges = parseFloat(standard_chargesss) * qty;
-        let amount = parseFloat(standard_charges) + (parseFloat(standard_charges) * (parseFloat(tax) / 100));
+        
+        var tax = parseFloat(parseFloat(standard_charges) * (parseFloat(cgst)+parseFloat(sgst)+parseFloat(igst)) / 100);
+        let amount = parseFloat(standard_charges) + parseFloat(tax);
         let amount_ = parseFloat(amount).toFixed(2);
         $('#amount' + row_id).val(amount_);
         gettotal(row_id);

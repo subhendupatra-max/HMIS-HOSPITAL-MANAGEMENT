@@ -213,6 +213,33 @@ class MedicineController extends Controller
 
         try {
             DB::beginTransaction();
+
+            $medine_stock = new MedicineStock();
+            $medine_stock->grm_id         =  $item->grn_id;
+            $medine_stock->po_details_id  =  $item->po_details_id;
+            $medine_stock->emg_challan_id =  '';
+            $medine_stock->stored_room =  $grn_main->storeroom_id;
+            $medine_stock->stock_status =  'stock_update_via_grn';
+            $medine_stock->catagory =  $item->catagory_id;
+            $medine_stock->unit =  $item->unit;
+            $medine_stock->medicine =  $item->medicine_id;
+            $medine_stock->batch_no =  $item->batch_no;
+            $medine_stock->exp_date      = $item->exp_date;
+            $medine_stock->qty =  $item->qty;
+            $medine_stock->mrp =  $item->mrp;
+            $medine_stock->discount =  $item->discount;
+            $medine_stock->p_rate =  $item->p_rate;
+            $medine_stock->s_rate =  $item->s_rate;
+            $medine_stock->cgst =  $item->cgst;
+            $medine_stock->cgst_value =  $item->cgst_value;
+            $medine_stock->sgst =  $item->sgst;
+            $medine_stock->sgst_value =  $item->sgst_value;
+            $medine_stock->igst =  $item->igst;
+            $medine_stock->igst_value =  $item->igst_value;
+            $medine_stock->amount =  $item->amount;
+            $medine_stock->save();
+
+            
             $medicine = new MedicineStock();
             $medicine->stored_room              = $request->stored_room;
             $medicine->medicine_category        = $request->medicine_category;

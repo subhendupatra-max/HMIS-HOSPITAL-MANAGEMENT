@@ -456,7 +456,9 @@ class IpdController extends Controller
                 $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
                 $patient_charge->charge_name = $request->charge_name[$key];
                 $patient_charge->standard_charges = $request->standard_charges[$key];
-                $patient_charge->tax = $request->tax[$key];
+                $patient_charge->cgst = $request->cgst[$key];
+                $patient_charge->sgst = $request->sgst[$key];
+                $patient_charge->igst = $request->igst[$key];
                 $patient_charge->qty = $request->qty[$key];
                 $patient_charge->amount = $request->amount[$key];
                 $patient_charge->generated_by = Auth::user()->id;

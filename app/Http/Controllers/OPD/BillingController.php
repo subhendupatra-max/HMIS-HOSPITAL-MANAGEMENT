@@ -558,14 +558,22 @@ class BillingController extends Controller
             DB::beginTransaction();
             if ($request->take_discount == 'yes') {
                 $status = 'Done';
-                $tax = $request->total_tax;
-                $tax_total = $request->total + (($request->total) * ($tax / 100));
+                // $cgst = $request->total_cgst;
+                // $sgst = $request->total_sgst;
+                // $igst = $request->total_igst;
+                // $tax = ($cgst + $sgst + $igst);
+                // $tax_total = $request->total + (($request->total) * ($tax / 100));
+                $tax_total = $request->total;
                 $grand_total = number_format((float)($tax_total), 2, '.', '');
                 $discount_status = 'Requested';
             } else {
                 $discount_status = 'Not applied';
-                $tax = $request->total_tax;
-                $tax_total = $request->total + (($request->total) * ($tax / 100));
+                // $cgst = $request->total_cgst;
+                // $sgst = $request->total_sgst;
+                // $igst = $request->total_igst;
+                // $tax = ($cgst + $sgst + $igst);
+                // $tax_total = $request->total + (($request->total) * ($tax / 100));
+                $tax_total = $request->total;
                 $grand_total = number_format((float)($tax_total), 2, '.', '');
                 $status = 'Done';
             }
@@ -594,7 +602,9 @@ class BillingController extends Controller
             $bill->created_by = Auth::user()->id;
             $bill->note = $request->note;
             $bill->grand_total = $grand_total;
-            $bill->tax =  $request->total_tax;
+            // $bill->cgst =  $request->total_cgst;
+            // $bill->sgst =  $request->total_sgst;
+            // $bill->igst =  $request->total_igst;
             $bill->save();
             // ====================== Billing ===========================================
 

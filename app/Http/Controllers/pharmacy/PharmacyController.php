@@ -28,10 +28,10 @@ class PharmacyController extends Controller
 
     public function all_medicine_stock()
     {
-        $medicine_stock = Medicine::select('medicines.id', 'medicine_units.medicine_unit_name', 'medicines.min_level', 'medicines.medicine_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_composition', DB::raw('SUM(medicine_stocks.quantity) - COALESCE(SUM(issue_medicines.quantity), 0) as available_quantity'))
+        $medicine_stock = Medicine::select('medicines.id', 'medicine_units.medicine_unit_name', 'medicines.min_level', 'medicines.medicine_name', 'medicine_catagories.medicine_catagory_name', 'medicines.medicine_composition', DB::raw('SUM(medicine_stocks.qty) - COALESCE(SUM(issue_medicines.quantity), 0) as available_quantity'))
             ->leftJoin('medicine_units', 'medicines.unit', '=', 'medicine_units.id')
             ->leftJoin('medicine_catagories', 'medicines.medicine_catagory', '=', 'medicine_catagories.id')
-            ->leftJoin('medicine_stocks', 'medicines.id', '=', 'medicine_stocks.medicine_name')
+            ->leftJoin('medicine_stocks', 'medicines.id', '=', 'medicine_stocks.medicine')
             ->leftJoin('issue_medicines', 'medicines.id', '=', 'issue_medicines.medicine_name')
             ->groupBy('medicine_units.medicine_unit_name', 'medicines.id', 'medicines.medicine_name', 'medicines.medicine_composition', 'medicine_catagories.medicine_catagory_name', 'medicines.min_level')
             ->get();
