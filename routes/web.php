@@ -1442,6 +1442,14 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
             Route::get('medicine-details/{medicine_id?}', [PharmacyController::class, 'medicine_details'])->name('medicine-details');
         });
 
+        Route::group(['middleware' => ['permission:Bad Medicine Details']], function () {
+            Route::get('bad-medicine-details/{medicine_id?}', [PharmacyController::class, 'bad_medicine_details'])->name('bad-medicine-details');
+        });
+        Route::group(['middleware' => ['permission:Add Bad Medicine']], function () {
+            Route::get('add-bad-medicine/{medicine_id?}', [PharmacyController::class, 'add_bad_medicine'])->name('add-bad-medicine');
+            Route::post('save-bad-medicine', [PharmacyController::class, 'save_bad_medicine'])->name('save-bad-medicine');
+        });
+
         Route::group(['middleware' => ['permission:add medicine']], function () {
             Route::get('add-medicine-details', [MedicineController::class, 'add_medicine_details'])->name('add-medicine-details');
             Route::post('save-medicine-details', [MedicineController::class, 'save_medicine_details'])->name('save-medicine-details');

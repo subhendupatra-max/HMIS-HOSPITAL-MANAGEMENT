@@ -6,22 +6,21 @@
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title">Update Medicine Stock</h4>
+            <h4 class="card-title">Add Bad Medicine</h4>
         </div>
 
         <div class="card-body">
-            <form method="POST" action="<?php echo e(route('save-update-medicine-stock')); ?>">
+            <form method="POST" action="<?php echo e(route('save-bad-medicine')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 form-group">
-                               
                                 <select class="form-control select2-show-search" id="stored_room" name="stored_room" required>
                                     <option value="">Select Store Room</option>
                                     <?php if($store_room): ?>
                                     <?php $__currentLoopData = $store_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($value->id); ?>"><?php echo e($value->name); ?></option>
+                                    <option value="<?php echo e($value->id); ?>" <?php echo e($value->id == $medicine_stock->stored_room ? 'selected' : " "); ?>><?php echo e($value->name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php endif; ?>
                                 </select>
@@ -37,12 +36,12 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                            <input type="hidden" name="unit" value="<?php echo e($medicine_details->unit); ?>" />
-                            <div class="col-md-4 form-group">
-                             
 
+                            <input type="hidden" name="unit" value="<?php echo e($medicine_stock->unit); ?>" />
+
+                            <div class="col-md-4 form-group">
                                 <select class="form-control select2-show-search" name="medicine_category" id="medicine_category" required>
-                                        <option value="<?php echo e(@$medicine_details->id); ?>"><?php echo e(@$medicine_details->catagory_name->medicine_catagory_name); ?></option>
+                                    <option value="<?php echo e(@$medicine_stock->medicine); ?>"><?php echo e(@$medicine_stock->catagory_name->medicine_catagory_name); ?></option>
                                 </select>
                                 <label for="medicine_category">Medicine Catagory<span class="text-danger">*</span> </label>
                                 <?php $__errorArgs = ['medicine_category'];
@@ -58,11 +57,10 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <select name="medicine_name" required id="medicine_name"
-                                class="form-control select2-show-search">
-                                <option value="<?php echo e(@$medicine_details->id); ?>"><?php echo e(@$medicine_details->medicine_name); ?></option>
-                            </select>
-                            <label for="batch_no">Medicine Name<span class="text-danger">*</span> </label>
+                                <select name="medicine_name" required id="medicine_name" class="form-control select2-show-search">
+                                    <option value="<?php echo e(@$medicine_stock->medicine); ?>"><?php echo e(@$medicine_stock->medicine_name); ?></option>
+                                </select>
+                                <label for="batch_no">Medicine Name<span class="text-danger">*</span> </label>
                                 <?php $__errorArgs = ['medicine_name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -77,7 +75,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <div class="col-md-4 form-group">
 
-                                <input type="text" id="batch_no"  name="batch_no" value="<?php echo e(old('batch_no')); ?>" required />
+                                <input type="text" id="batch_no" name="batch_no" value="<?php echo e(@$medicine_stock->batch_no); ?>" required />
                                 <label for="batch_no">Batch No<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['batch_no'];
@@ -93,7 +91,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="date" id="expiry_date" name="expiry_date" value="<?php echo e(old('expiry_date')); ?>" required />
+                                <input type="date" id="expiry_date" name="expiry_date" value="<?php echo e(@$medicine_stock->exp_date); ?>" required />
                                 <label for="expiry_date">Expiry Date<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['expiry_date'];
@@ -110,7 +108,7 @@ unset($__errorArgs, $__bag); ?>
 
                             <div class="col-md-4 form-group">
 
-                                <input type="text" id="quantity"  name="quantity" onkeyup="getAmount()" value="<?php echo e(old('quantity')); ?>" required />
+                                <input type="text" id="quantity" name="quantity" onkeyup="getAmount()" value="<?php echo e(old('quantity')); ?>" required />
                                 <label for="quantity">Quantity<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['quantity'];
@@ -126,7 +124,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="text" id="mrp" name="mrp" value="<?php echo e(old('mrp')); ?>"  onkeyup="getSaleRate()" required />
+                                <input type="text" id="mrp" name="mrp" value="<?php echo e(old('mrp')); ?>" onkeyup="getSaleRate()" required />
                                 <label for="mrp">MRP <span class="text-danger">*</span> </label>
                                 <?php $__errorArgs = ['mrp'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -154,7 +152,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="sale_price"  name="sale_price" value="<?php echo e(old('sale_price')); ?>" required />
+                                <input type="text" id="sale_price" name="sale_price" value="<?php echo e(old('sale_price')); ?>" required />
                                 <label for="sale_price">Sale Price<span class="text-danger">*</span> </label>
                                 <?php $__errorArgs = ['sale_price'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -183,7 +181,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="igst" name="igst" onkeyup="getAmount()" value="0" required />
+                                <input type="text" id="igst" name="igst" onkeyup="getAmount()" value="<?php echo e(@$medicine_stock->igst); ?>" required />
                                 <label for="igst">IGST </label>
                                 <?php $__errorArgs = ['igst'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -197,8 +195,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="cgst" name="cgst" onkeyup="getAmount()" value="0" required />
-                                <label for="cgst">CGST  </label>
+                                <input type="text" id="cgst" name="cgst" onkeyup="getAmount()" value="<?php echo e(@$medicine_stock->cgst); ?>" required />
+                                <label for="cgst">CGST </label>
                                 <?php $__errorArgs = ['cgst'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -211,7 +209,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="sgst" name="sgst" onkeyup="getAmount()" value="0" required />
+                                <input type="text" id="sgst" name="sgst" onkeyup="getAmount()" value="<?php echo e(@$medicine_stock->sgst); ?>" required />
                                 <label for="sgst">SGST </label>
                                 <?php $__errorArgs = ['sgst'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -225,7 +223,7 @@ endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="hidden" id="total_cgst" name="total_cgst"  value="0" required />
+                                <input type="hidden" id="total_cgst" name="total_cgst" value="0" required />
                                 <input type="hidden" id="total_sgst" name="total_sgst" value="0" required />
                                 <input type="hidden" id="total_igst" name="total_igst" value="0" required />
                                 <input type="text" id="amount" name="amount" value="<?php echo e(old('amount')); ?>" required />
@@ -256,26 +254,25 @@ unset($__errorArgs, $__bag); ?>
 <?php endif; ?>
 
 <script>
-    function getSaleRate()
-    {
+    function getSaleRate() {
         var mrp = $('#mrp').val();
         var discount = $('#discount').val();
-        var sale_rate = parseFloat(parseFloat(mrp)-(parseFloat(mrp)*(parseFloat(discount)/100))).toFixed(2);
+        var sale_rate = parseFloat(parseFloat(mrp) - (parseFloat(mrp) * (parseFloat(discount) / 100))).toFixed(2);
         $('#sale_price').val(sale_rate);
     }
-    function getAmount()
-    {
+
+    function getAmount() {
         var sgst = $('#sgst').val();
         var cgst = $('#cgst').val();
         var igst = $('#igst').val();
         var purchase_price = $('#purchase_price').val();
         var quantity = $('#quantity').val();
-        
+
         var total_qty_pri = (purchase_price * quantity);
         console.log(total_qty_pri);
-        var total_cgst = (total_qty_pri * ((parseFloat(cgst))/100));
-        var total_igst = (total_qty_pri * ((parseFloat(igst))/100));
-        var total_sgst = (total_qty_pri * ((parseFloat(sgst))/100));
+        var total_cgst = (total_qty_pri * ((parseFloat(cgst)) / 100));
+        var total_igst = (total_qty_pri * ((parseFloat(igst)) / 100));
+        var total_sgst = (total_qty_pri * ((parseFloat(sgst)) / 100));
         var total_tax = parseFloat(total_sgst) + parseFloat(total_cgst) + parseFloat(total_igst);
         var total_amount = total_qty_pri + total_tax;
 
@@ -287,4 +284,4 @@ unset($__errorArgs, $__bag); ?>
 </script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/pharmacy/update-stock.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/pharmacy/medicine/add-bad-medicines.blade.php ENDPATH**/ ?>

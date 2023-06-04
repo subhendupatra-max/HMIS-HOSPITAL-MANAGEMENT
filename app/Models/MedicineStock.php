@@ -12,4 +12,9 @@ class MedicineStock extends Model
     {
         return $this->belongsTo(MedicineUnit::class, 'unit', 'id');
     }
+
+    public function catagory_name()
+    {
+        return $this->belongsTo(MedicineCatagory::class, 'medicine_catagory' , 'id');
+    }
 }
