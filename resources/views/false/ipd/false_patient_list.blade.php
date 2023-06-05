@@ -250,6 +250,16 @@
                                                 @$todays_total_for_this_department_sys
                                                 }}</span>
                                         </li>
+                                        <li class="list-group-item"><i class="fa fa-cog text-info"
+                                            aria-hidden="true"></i> Todays Discharged : {{
+                                        @$todays_discharged }}
+                                        <br>
+                                        <span class="badge badge-success badge-pill">Original : {{
+                                            @$todays_discharged_original }}</span> <span
+                                            class="badge badge-danger badge-pill">False : {{
+                                            @$todays_discharged_false
+                                            }}</span>
+                                    </li>
                                     </ul>
                                 </div>
                             </div>
@@ -308,7 +318,7 @@
                                 <th scope="col">Patient Details</th>
                                 <th scope="col">Admission Details</th>
                                 <th scope="col">Bed Details</th>
-                                <th scope="col">Operation</th>
+                      
                                 <th scope="col">Discharged</th>
                                 
                             </tr>
@@ -353,10 +363,7 @@
                                     {{$value->unit_details->bedUnit_name}} -
                                     {{$value->ward_details->ward_name}}
                                 </td>
-                                <td>
-                                    <a href="#" onclick="addOperation({{ $value->case_id }},{{ $value->id }},{{ $value->patient_id }})"
-                                        class="badge badge-secondary"><i class="fa fa-scissors"></i> Add Operation</a>
-                                </td>
+                             
                                 <td>
                                     <a href="#" onclick="dischargedPatient({{ $value->case_id }},{{ $value->id }},{{ $value->patient_id }},{{$value->bed_details->id}})"
                                         class="badge badge-info"><i class="fa fa-file"></i> Discharged</a>
@@ -426,7 +433,7 @@
                 <h6 class="modal-title">Discharged</h6><button aria-label="Close" class="close"
                     data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
             </div>
-            <form action="{{ route('add-discharged-false') }}" method="POST">
+            <form action="#" method="POST">
             @csrf
 
             <input type="hidden" name="patient_id" id="patient_id" />
@@ -438,14 +445,14 @@
                     <div class="row">
                         <div class="col-md-6">
                             <label class="form-label">Discharge Date <span class="required">*</span></label>
-                            <input type="datetime-local"  name="discharged_date" />
+                            <input type="datetime-local"  name="discharged_date" id="discharged_date" />
                         </div>
                         <div class="form-group col-md-6">
                             <label for="discharge_status" class="form-label">Discharge Status <span class="required">*</span></label>
                             <select name="discharge_status" class="form-control" id="discharge_status" required>
                                 <option value="">Select...</option>
                                 @foreach (Config::get('static.discharge_type') as $lang => $dischargeType)
-                                <option value="{{ $dischargeType }}"> {{ $dischargeType }}
+                                <option value="{{ $dischargeType }}" {{ $dischargeType == 'Normal'? 'selected': '' }}> {{ $dischargeType }}
                                 </option>
                                 @endforeach
                             </select>
@@ -471,7 +478,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary btn-sm" type="submit">Save</button>
+                <button class="btn btn-primary btn-sm" type="button" onclick="patientSave()">Save</button>
                 <button class="btn btn-secondary btn-sm" data-dismiss="modal" type="button">Close</button>
             </div>
         </form>
@@ -489,6 +496,37 @@
         else{
             $('#hcedeyvb').attr('style','display:none',true);  
         }
+    }
+    function patientSave()
+    {
+        
+        var icd_code_ = $('#icd_code').val();
+        var discharge_status_ = $('#discharge_status').val();
+        var discharged_date_ = $('#discharged_date').val();
+        var case_id_ = $('#case_id').val();
+        var ipd_id_ = $('#ipd_id').val();
+        var patient_id_ = $('#patient_id').val();
+
+        $.ajax({
+            url: "{{ route('add-discharged-false') }}",
+            type: "POST",
+            data: {
+                _token: '{{ csrf_token() }}',
+                icd_code: icd_code_,
+                discharge_status: discharge_status_,
+                discharged_date: discharged_date_,
+                case_id: case_id_,
+                ipd_id: ipd_id_,
+                patient_id: patient_id_,
+            },
+            success: function(response) {
+                alert(response.message);
+                location.reload();
+            },
+            error: function(error) {
+                alert(response.message);
+            }
+        });
     }
     function showAllTest(case_id) {
         var div_pathology_radiology = '';

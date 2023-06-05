@@ -16,15 +16,15 @@
             <div class="col-md-12">
                 <div class="btn-list p-3">
                     <a class="btn btn-success btn-sm"><i class="fa fa-capsules"></i> Medicine Stock</a>
-                    <a class="btn btn-danger btn-sm"><i class="fa fa-certificate"></i> Medicine Bad Stock</a>
+                    <a class="btn btn-danger btn-sm" href= "<?php echo e(route('bad-medicine-details',['medicine_id'=>$medicine_details->id])); ?>"><i class="fa fa-certificate"></i> Medicine Bad Stock</a>
                 </div>
             </div>
         </div>
         <?php if(true): ?>
-             <?php echo $__env->make('pharmacy.medicine.medicine-bad-stock', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php echo $__env->make('pharmacy.medicine.medicine-bad-stock', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php endif; ?>
         <?php if(true): ?>
-            <?php echo $__env->make('pharmacy.medicine.medicine-good-stock', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        <?php echo $__env->make('pharmacy.medicine.medicine-good-stock', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php endif; ?>
     </div>
 </div>

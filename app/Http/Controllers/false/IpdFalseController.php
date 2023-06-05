@@ -67,10 +67,16 @@ class IpdFalseController extends Controller
         $todays_total_ipd_sys = IpdDetails::where('appointment_date', 'like', $date . '%')->where('ins_by', '=', 'sys')->count();
         $todays_total_ipd_ori = IpdDetails::where('appointment_date', 'like', $date . '%')->where('ins_by', '=', 'ori')->count();
 
+        $todays_discharged = DischargedPatient::where('discharge_date', 'like', $date . '%')->count();
+
+        $todays_discharged_original = DischargedPatient::where('discharge_date', 'like', $date . '%')->where('ins_by', '=', 'ori')->count();
+
+        $todays_discharged_false = DischargedPatient::where('discharge_date', 'like', $date . '%')->where('ins_by', '=', 'sys')->count();
+
         $doctor = User::where('role', '=', 'Doctor')->get();
         $icd_code = Diagonasis::all();
         if (@$department_details) {
-            return view('false.ipd.false_patient_list', compact('todays_ipd_from_emg_sys','todays_ipd_from_emg_ori','todays_ipd_from_opd_ori','todays_ipd_from_opd_sys','department_id', 'ipd_registaion_list', 'date', 'department_details', 'pathology_category', 'radiology_category', 'todays_total_ipd', 'todays_ipd_from_opd', 'todays_ipd_from_emg', 'todays_total_for_this_department', 'todays_total_ipd_sys','todays_total_ipd_ori','doctor','todays_total_for_this_department_sys','todays_total_for_this_department_ori','icd_code'));
+            return view('false.ipd.false_patient_list', compact('todays_ipd_from_emg_sys','todays_ipd_from_emg_ori','todays_ipd_from_opd_ori','todays_ipd_from_opd_sys','department_id', 'ipd_registaion_list', 'date', 'department_details', 'pathology_category', 'radiology_category', 'todays_total_ipd', 'todays_ipd_from_opd', 'todays_ipd_from_emg', 'todays_total_for_this_department', 'todays_total_ipd_sys','todays_total_ipd_ori','doctor','todays_total_for_this_department_sys','todays_total_for_this_department_ori','icd_code','todays_discharged_false','todays_discharged_original','todays_discharged'));
         } else {
             return redirect()->back()->with('success', 'Search Again !!!!');
         }
@@ -275,24 +281,19 @@ class IpdFalseController extends Controller
     }
     public function add_discharged_false(Request $request)
     {
+        // dd($request->all());
         try {
             DB::beginTransaction();
-
             //SAVE in ipd details
             $ipd_details = new DischargedPatient();
-            $ipd_details->ipd_id                      = $request->ipd_id;
-            $ipd_details->case_id                     = $request->case_id;
-            $ipd_details->patient_id                  = $request->patient_id;
-            $ipd_details->discharge_date              = $request->discharged_date;
-            $ipd_details->discharge_status            = $request->discharge_status;
-            $ipd_details->icd_code                    = $request->icd_code;
-            $ipd_details->note                        = '...';
-            $ipd_details->operation                   = '';
-            $ipd_details->diagnosis                   = '';
-            $ipd_details->investigation               = '';
-            $ipd_details->treatment_home              = '';
+            $ipd_details->ipd_id                                        = $request->ipd_id;
+            $ipd_details->case_id                                       = $request->case_id;
+            $ipd_details->patient_id                                    = $request->patient_id;
+            $ipd_details->discharge_date                                = \Carbon\Carbon::parse($request->discharge_date)->format('Y-m-d h:m:s');
+            $ipd_details->discharge_status                              = $request->discharge_status;
+            $ipd_details->icd_code                                      = $request->icd_code;
             $ipd_details->ins_by                      = 'sys';
-            $status =  $ipd_details->save();
+            $status      =  $ipd_details->save();
             //SAVE in ipd details
 
             IpdDetails::where('id', $request->ipd_id)->update(['discharged' => 'yes', 'discharged_date' => $request->discharge_date]);

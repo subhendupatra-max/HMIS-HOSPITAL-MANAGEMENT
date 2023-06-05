@@ -71,8 +71,8 @@ class OpdFalseController extends Controller
 
     public function registation_false_opd(Request $request)
     {
-        try {
-            DB::beginTransaction();
+        // try {
+        //     DB::beginTransaction();
             $opd_prefix = Prefix::where('name', 'opd')->first();
             if ($request->visit_type == 'New Visit') {
                 $patient_details = FalsePatient::whereBetween('year', [$request->from_age, $request->to_age])->where('last_update', '<=', now()->subDays(15))->limit($request->no_of_patient)->get();
@@ -175,10 +175,10 @@ class OpdFalseController extends Controller
             }
             DB::commit();
             return response()->json(['message' => 'Registation SuccessFully']);
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return response()->json(['message' => 'Error!! Do it Again']);
-        }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return response()->json(['message' => 'Error!! Do it Again']);
+        // }
     }
 
     public function false_pathology_test_add_opd(Request $request)

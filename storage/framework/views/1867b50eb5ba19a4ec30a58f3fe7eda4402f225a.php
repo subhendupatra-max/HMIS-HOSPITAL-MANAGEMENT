@@ -511,18 +511,23 @@ $login_details = DB::table('users')
 
                                 <li><a href="#">Birth Record</a></li>
                                 <li><a href="<?php echo e(route('death-record')); ?>">Death Record</a></li>
-
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
+                            <a tabindex="-1" href="#">MRD<i class="fa fa-chevron-right"></i></a>
                             <ul class="dropdown-menu">
 
-
-                                <li><a href="#">Opd</a></li>
-                                <li><a href="#">Ipd</a></li>
-
+                                <?php if(auth()->user()->can('OPD False')): ?>
+                                <li><a href="<?php echo e(route('opd-false-generation')); ?>">Opd</a></li>
+                                <?php endif; ?>
+                                <?php if(auth()->user()->can('EMG False')): ?>
+                                <li><a href="<?php echo e(route('emg-false-generation')); ?>">EMG</a></li>
+                                <?php endif; ?>
+                                <?php if(auth()->user()->can('IPD False')): ?>
+                                <li><a href="<?php echo e(route('ipd-false-generation')); ?>">Ipd</a></li>
+                                <?php endif; ?>
                             </ul>
+
                         </li>
                         <?php if(auth()->user()->can('referral')): ?>
                         <li><a href="<?php echo e(route('referral')); ?>">Refferal</a></li>

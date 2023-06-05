@@ -159,7 +159,7 @@ class PatientDischargeController extends Controller
 
 
         IpdDetails::where('id', $request->ipd_id)->update(['status' => 'Discharged', 'discharged' => 'yes', 'discharged_date' => \Carbon\Carbon::parse($request->discharge_date)->format('Y-m-d h:m:s')]);
-        Bed::where('id', $ipd_details->bed)->update(['is_used' => 'Under Maintenance']);
+        Bed::where('id', $ipd_details->bed)->update(['is_used' => 'yes']);
         // DB::commit();
         if ($status) {
             return redirect()->route('all-discharged-patient-in-ipd')->with('success', 'Ipd Patient Discharged Successfully');
