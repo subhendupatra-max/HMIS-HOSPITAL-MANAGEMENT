@@ -546,11 +546,17 @@ $login_details = DB::table('users')
                             <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
                             <ul class="dropdown-menu">
 
-
-                                <li><a href="#">Opd</a></li>
-                                <li><a href="#">Ipd</a></li>
-
+                                @if (auth()->user()->can('OPD False'))
+                                <li><a href="{{ route('opd-false-generation') }}">Opd</a></li>
+                                @endif
+                                @if (auth()->user()->can('EMG False'))
+                                <li><a href="{{ route('emg-false-generation') }}">EMG</a></li>
+                                @endif
+                                @if (auth()->user()->can('IPD False'))
+                                <li><a href="{{ route('ipd-false-generation') }}">Ipd</a></li>
+                                @endif
                             </ul>
+
                         </li>
                         @if (auth()->user()->can('referral'))
                         <li><a href="{{ route('referral') }}">Refferal</a></li>

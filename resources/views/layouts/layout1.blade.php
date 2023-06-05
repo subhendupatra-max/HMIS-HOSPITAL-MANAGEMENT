@@ -353,9 +353,6 @@ $login_details = DB::table('users')
                                 @if (auth()->user()->can('IPD False'))
                                 <li><a href="{{ route('ipd-false-generation') }}" class="slide-item {{ Request::segment(2) == 'ipd-false' ? 'active' : '' }}"> IPD</a></li>
                                 @endif
-
-
-
                             </ul>
                         </li>
                         @endif

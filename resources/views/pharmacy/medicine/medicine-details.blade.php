@@ -16,15 +16,15 @@
             <div class="col-md-12">
                 <div class="btn-list p-3">
                     <a class="btn btn-success btn-sm"><i class="fa fa-capsules"></i> Medicine Stock</a>
-                    <a class="btn btn-danger btn-sm"><i class="fa fa-certificate"></i> Medicine Bad Stock</a>
+                    <a class="btn btn-danger btn-sm" href= "{{ route('bad-medicine-details',['medicine_id'=>$medicine_details->id]) }}"><i class="fa fa-certificate"></i> Medicine Bad Stock</a>
                 </div>
             </div>
         </div>
         @if(true)
-             @include('pharmacy.medicine.medicine-bad-stock')
+        @include('pharmacy.medicine.medicine-bad-stock')
         @endif
         @if(true)
-            @include('pharmacy.medicine.medicine-good-stock')
+        @include('pharmacy.medicine.medicine-good-stock')
         @endif
     </div>
 </div>
