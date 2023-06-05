@@ -171,7 +171,9 @@ class PharmacyController extends Controller
     public function find_expiry_date_by_batch_no(Request $request)
     {
         // dd( $request->batch_id);
-        $batch_no_all = MedicineStock::where('id', $request->batch_id)->first();
+        $batch_no_all = MedicineStock::where('medicine_stocks.id', $request->batch_id)
+            ->leftjoin('medicine_units', 'medicine_units.id', '=', 'medicine_stocks.unit')
+            ->first();
         // dd($batch_no_all);
         return response()->json($batch_no_all);
     }

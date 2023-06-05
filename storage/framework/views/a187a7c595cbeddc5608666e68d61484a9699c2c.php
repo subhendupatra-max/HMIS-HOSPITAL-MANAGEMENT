@@ -142,7 +142,7 @@ unset($__errorArgs, $__bag); ?>
                 console.log(response);
 
                 $('#expiry_date').val(response.exp_date);
-                $('#unit').val(response.unit);
+                $('#unit').val(response.medicine_unit_name);
                 $('#qty').val(response.qty);
             },
             error: function(error) {
