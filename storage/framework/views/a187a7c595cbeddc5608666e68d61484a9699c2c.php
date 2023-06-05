@@ -15,6 +15,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
+                            <input name="id" value="<?php echo e($medicine_details->id); ?>" type="hidden" />
                             <div class="col-md-4 form-group">
                                 <select class="form-control select2-show-search" onchange="getDetails(this.value)" id="batch_no" name="batch_no" required>
                                     <option value="">Select Batch No</option>
