@@ -15,6 +15,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
+                            <input name="id" value="<?php echo e($medicine_details->id); ?>" type="hidden" />
                             <div class="col-md-4 form-group">
                                 <select class="form-control select2-show-search" onchange="getDetails(this.value)" id="batch_no" name="batch_no" required>
                                     <option value="">Select Batch No</option>
@@ -141,7 +142,7 @@ unset($__errorArgs, $__bag); ?>
                 console.log(response);
 
                 $('#expiry_date').val(response.exp_date);
-                $('#unit').val(response.unit);
+                $('#unit').val(response.medicine_unit_name);
                 $('#qty').val(response.qty);
             },
             error: function(error) {

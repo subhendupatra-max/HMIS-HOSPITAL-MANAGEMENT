@@ -4,7 +4,7 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <div class="card-title">Medicine Details</div>
+            <div class="card-title">Medicine Stock Details</div>
         </div>
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body p-0">
@@ -18,7 +18,7 @@
                                         <span class="font-weight-semibold w-50"> Medicine Name</span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php echo e(@$medicine_details->medicine_name); ?>
+                                        <?php echo e(@$medicine_details->medicine_names->medicine_name); ?>
 
                                     </td>
                                 </tr>
@@ -27,34 +27,34 @@
                                         <span class="font-weight-semibold w-50">Medicine Catagory </span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php echo e(@$medicine_details->catagory_name->medicine_catagory_name); ?>
+                                        <?php echo e(@$medicine_details->medicine_names->catagory_name->medicine_catagory_name); ?>
 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="py-2 px-5">
-                                        <span class="font-weight-semibold w-50"> Medicine Company</span>
+                                        <span class="font-weight-semibold w-50"> Medicine Store Room</span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php echo e(@$medicine_details->medicine_company); ?>
+                                        <?php echo e(@$medicine_details->medicine_store_room->name); ?>
 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="py-2 px-5">
-                                        <span class="font-weight-semibold w-50"> Tax</span>
+                                        <span class="font-weight-semibold w-50"> Medicine Unit</span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php echo e(@$medicine_details->tax); ?>
+                                        <?php echo e(@$medicine_details->medicine_unit->medicine_unit_name); ?>
 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="py-2 px-5">
-                                        <span class="font-weight-semibold w-50"> Note</span>
+                                        <span class="font-weight-semibold w-50"> Batch No</span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php echo e(@$medicine_details->note); ?>
+                                        <?php echo e(@$medicine_details->batch_no); ?>
 
                                     </td>
                                 </tr>
@@ -66,37 +66,37 @@
                             <tbody>
                                 <tr>
                                     <td class="py-2 px-5">
-                                        <span class="font-weight-semibold w-50">Medicine Composition</span>
+                                        <span class="font-weight-semibold w-50">Medicine Expiry Date</span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php echo e(@$medicine_details->medicine_composition); ?>
+                                        <?php echo e(@$medicine_details->exp_date); ?>
 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="py-2 px-5">
-                                        <span class="font-weight-semibold w-50"> Medicine Group</span>
+                                        <span class="font-weight-semibold w-50"> Quantity</span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php echo e(@$medicine_details->medicine_group); ?>
+                                        <?php echo e(@$medicine_details->qty); ?>
 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="py-2 px-5">
-                                        <span class="font-weight-semibold w-50">Min Level</span>
+                                        <span class="font-weight-semibold w-50">Mrp</span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php echo e(@$medicine_details->min_level); ?>
+                                        <?php echo e(@$medicine_details->mrp); ?>
 
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="py-2 px-5">
-                                        <span class="font-weight-semibold w-50">Unit</span>
+                                        <span class="font-weight-semibold w-50">Discount</span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php echo e(@$medicine_details->unit_name->medicine_unit_name); ?>
+                                        <?php echo e(@$medicine_details->discount); ?>
 
 
                                     </td>
@@ -104,12 +104,11 @@
 
                                 <tr>
                                     <td class="py-2 px-5">
-                                        <span class="font-weight-semibold w-50">Medicine Photo</span>
+                                        <span class="font-weight-semibold w-50">Amount</span>
                                     </td>
                                     <td class="py-2 px-5">
-                                        <?php if(@$medicine_details->medicine_photo != null): ?>
-                                        <img src="<?php echo e(asset('public/assets/images/medicine')); ?>/<?php echo e(@$medicine_details->medicine_photo); ?>" style="width: 50px;  height: 40px;">
-                                        <?php endif; ?>
+                                        <?php echo e(@$medicine_details->amount); ?>
+
                                     </td>
                                 </tr>
 
@@ -122,23 +121,10 @@
 
             </div>
         </div>
-        <div class="card-body p-0 border-top">
-            <div class="col-md-12">
-                <div class="btn-list p-3">
-                    <a class="btn btn-success btn-sm" href="<?php echo e(route('medicine-stock-details',['medicine_id'=>$medicine_details->id])); ?>"><i class="fa fa-capsules"></i> Medicine Stock</a>
-                    <a class="btn btn-danger btn-sm" href="<?php echo e(route('bad-medicine-details',['medicine_id'=>$medicine_details->id])); ?>"><i class="fa fa-certificate"></i> Medicine Bad Stock</a>
-                </div>
-            </div>
-        </div>
-        <?php if(true): ?>
-        <?php echo $__env->make('pharmacy.medicine.medicine-bad-stock', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        <?php endif; ?>
-        <?php if(true): ?>
-        <?php echo $__env->make('pharmacy.medicine.medicine-good-stock', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-        <?php endif; ?>
+
     </div>
 </div>
 
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/pharmacy/medicine/medicine-details.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/pharmacy/medicine/medicine-stock-details.blade.php ENDPATH**/ ?>

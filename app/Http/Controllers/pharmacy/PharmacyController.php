@@ -152,6 +152,12 @@ class PharmacyController extends Controller
 
         return view('pharmacy.medicine.bad-medicine-details', compact('medicine_details'));
     }
+    public function medicine_stock_details($medicine_id)
+    {
+        $medicine_details = MedicineStock::where('medicine', $medicine_id)->first();
+        // dd($medicine_details );
+        return view('pharmacy.medicine.medicine-stock-details', compact('medicine_details'));
+    }
     public function add_bad_medicine($medicine_id)
     {
         $medicine_details = Medicine::find($medicine_id);
@@ -171,7 +177,9 @@ class PharmacyController extends Controller
     public function find_expiry_date_by_batch_no(Request $request)
     {
         // dd( $request->batch_id);
-        $batch_no_all = MedicineStock::where('id', $request->batch_id)->first();
+        $batch_no_all = MedicineStock::where('medicine_stocks.id', $request->batch_id)
+            ->leftjoin('medicine_units', 'medicine_units.id', '=', 'medicine_stocks.unit')
+            ->first();
         // dd($batch_no_all);
         return response()->json($batch_no_all);
     }
@@ -190,7 +198,7 @@ class PharmacyController extends Controller
             $bad_medicine->unit =  $request->unit;
             $bad_medicine->medicine =  $request->medicine_name;
             $bad_medicine->batch_no =  $request->batch_no;
-            $bad_medicine->qty =  $request->quantity;
+            $bad_medicine->qty =  $request->qty;
             $bad_medicine->mrp =  $request->mrp;
             $bad_medicine->discount =  $request->discount;
             $bad_medicine->p_rate =  $request->purchase_price;
@@ -206,13 +214,13 @@ class PharmacyController extends Controller
 
             DB::commit();
             if ($status) {
-                return redirect()->route('bad-medicine-details')->with('success', 'Medicine Added Sucessfully');
+                return redirect()->route('bad-medicine-details', ['medicine_id' => $request->id])->with('success', 'Medicine Added Sucessfully');
             } else {
-                return redirect()->route('bad-medicine-details')->with('error', "Something Went Wrong");
+                return redirect()->route('bad-medicine-details', ['medicine_id' => $request->id])->with('error', "Something Went Wrong");
             }
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('bad-medicine-details')->with('error', "Something Went Wrong");
+            return redirect()->route('bad-medicine-details', ['medicine_id' => $request->id])->with('error', "Something Went Wrong");
         }
     }
 
