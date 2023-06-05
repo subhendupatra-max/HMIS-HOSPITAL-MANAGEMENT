@@ -16,68 +16,15 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-4 form-group">
-                                <select class="form-control select2-show-search" id="stored_room" name="stored_room" required>
-                                    <option value="">Select Store Room</option>
-                                    <?php if($store_room): ?>
-                                    <?php $__currentLoopData = $store_room; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($value->id); ?>" <?php echo e($value->id == $medicine_stock->stored_room ? 'selected' : " "); ?>><?php echo e($value->name); ?></option>
+                                <select class="form-control select2-show-search" onchange="getDetails(this.value)" id="batch_no" name="batch_no" required>
+                                    <option value="">Select Batch No</option>
+                                    <?php if($medicine_stock): ?>
+                                    <?php $__currentLoopData = $medicine_stock; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($value->id); ?>"><?php echo e($value->batch_no); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php endif; ?>
                                 </select>
-                                <label for="stored_room">Store Room <span class="text-danger">*</span></label>
-                                <?php $__errorArgs = ['stored_room'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-
-                            <input type="hidden" name="unit" value="<?php echo e($medicine_stock->unit); ?>" />
-
-                            <div class="col-md-4 form-group">
-                                <select class="form-control select2-show-search" name="medicine_category" id="medicine_category" required>
-                                    <option value="<?php echo e(@$medicine_stock->medicine); ?>"><?php echo e(@$medicine_stock->catagory_name->medicine_catagory_name); ?></option>
-                                </select>
-                                <label for="medicine_category">Medicine Catagory<span class="text-danger">*</span> </label>
-                                <?php $__errorArgs = ['medicine_category'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-
-                            <div class="col-md-4 form-group">
-                                <select name="medicine_name" required id="medicine_name" class="form-control select2-show-search">
-                                    <option value="<?php echo e(@$medicine_stock->medicine); ?>"><?php echo e(@$medicine_stock->medicine_name); ?></option>
-                                </select>
-                                <label for="batch_no">Medicine Name<span class="text-danger">*</span> </label>
-                                <?php $__errorArgs = ['medicine_name'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-
-                            <div class="col-md-4 form-group">
-
-                                <input type="text" id="batch_no" name="batch_no" value="<?php echo e(@$medicine_stock->batch_no); ?>" required />
-                                <label for="batch_no">Batch No<span class="text-danger">*</span> </label>
-
+                                <label for="batch_no">Batch No<span class="text-danger">*</span></label>
                                 <?php $__errorArgs = ['batch_no'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -91,7 +38,7 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="date" id="expiry_date" name="expiry_date" value="<?php echo e(@$medicine_stock->exp_date); ?>" required />
+                                <input type="date" id="expiry_date" name="expiry_date" required />
                                 <label for="expiry_date">Expiry Date<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['expiry_date'];
@@ -107,11 +54,10 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
+                                <input type="text" id="unit" name="unit" />
+                                <label for="unit">Unit<span class="text-danger">*</span> </label>
 
-                                <input type="text" id="quantity" name="quantity" onkeyup="getAmount()" value="<?php echo e(old('quantity')); ?>" required />
-                                <label for="quantity">Quantity<span class="text-danger">*</span> </label>
-
-                                <?php $__errorArgs = ['quantity'];
+                                <?php $__errorArgs = ['unit'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -124,52 +70,10 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="text" id="mrp" name="mrp" value="<?php echo e(old('mrp')); ?>" onkeyup="getSaleRate()" required />
-                                <label for="mrp">MRP <span class="text-danger">*</span> </label>
-                                <?php $__errorArgs = ['mrp'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <input type="text" id="discount" name="discount" onkeyup="getSaleRate()" value="<?php echo e(old('discount')); ?>" required />
-                                <label for="discount">Discount(%) <span class="text-danger">*</span> </label>
-                                <?php $__errorArgs = ['discount'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <input type="text" id="sale_price" name="sale_price" value="<?php echo e(old('sale_price')); ?>" required />
-                                <label for="sale_price">Sale Price<span class="text-danger">*</span> </label>
-                                <?php $__errorArgs = ['sale_price'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <input type="text" id="purchase_price" onkeyup="getAmount()" name="purchase_price" value="<?php echo e(old('purchase_price')); ?>" required />
-                                <label for="purchase_price">Purchase Price/quantity<span class="text-danger">*</span> </label>
+                                <input type="text" id="qty" name="qty" />
+                                <label for="qty">Quantity<span class="text-danger">*</span> </label>
 
-                                <?php $__errorArgs = ['purchase_price'];
+                                <?php $__errorArgs = ['qty'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -180,66 +84,8 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-                            <div class="col-md-4 form-group">
-                                <input type="text" id="igst" name="igst" onkeyup="getAmount()" value="<?php echo e(@$medicine_stock->igst); ?>" required />
-                                <label for="igst">IGST </label>
-                                <?php $__errorArgs = ['igst'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <input type="text" id="cgst" name="cgst" onkeyup="getAmount()" value="<?php echo e(@$medicine_stock->cgst); ?>" required />
-                                <label for="cgst">CGST </label>
-                                <?php $__errorArgs = ['cgst'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <input type="text" id="sgst" name="sgst" onkeyup="getAmount()" value="<?php echo e(@$medicine_stock->sgst); ?>" required />
-                                <label for="sgst">SGST </label>
-                                <?php $__errorArgs = ['sgst'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <input type="hidden" id="total_cgst" name="total_cgst" value="0" required />
-                                <input type="hidden" id="total_sgst" name="total_sgst" value="0" required />
-                                <input type="hidden" id="total_igst" name="total_igst" value="0" required />
-                                <input type="text" id="amount" name="amount" value="<?php echo e(old('amount')); ?>" required />
-                                <label for="amount">Amount<span class="text-danger">*</span> </label>
 
-                                <?php $__errorArgs = ['amount'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -280,6 +126,28 @@ unset($__errorArgs, $__bag); ?>
         $('#total_igst').val(total_igst);
         $('#total_sgst').val(total_sgst);
         $('#total_cgst').val(total_cgst);
+    }
+
+    function getDetails(batch_no) {
+        // alert(batch_no);
+        $.ajax({
+            url: "<?php echo e(route('find-expiry-date-by-batch-no')); ?>",
+            type: "POST",
+            data: {
+                _token: '<?php echo e(csrf_token()); ?>',
+                batch_id: batch_no,
+            },
+            success: function(response) {
+                console.log(response);
+
+                $('#expiry_date').val(response.exp_date);
+                $('#unit').val(response.unit);
+                $('#qty').val(response.qty);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
     }
 </script>
 

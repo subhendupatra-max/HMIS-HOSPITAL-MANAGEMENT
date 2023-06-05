@@ -1448,6 +1448,7 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
         Route::group(['middleware' => ['permission:Add Bad Medicine']], function () {
             Route::get('add-bad-medicine/{medicine_id?}', [PharmacyController::class, 'add_bad_medicine'])->name('add-bad-medicine');
             Route::post('save-bad-medicine', [PharmacyController::class, 'save_bad_medicine'])->name('save-bad-medicine');
+            Route::post('find-expiry-date-by-batch-no', [PharmacyController::class, 'find_expiry_date_by_batch_no'])->name('find-expiry-date-by-batch-no');
         });
 
         Route::group(['middleware' => ['permission:add medicine']], function () {

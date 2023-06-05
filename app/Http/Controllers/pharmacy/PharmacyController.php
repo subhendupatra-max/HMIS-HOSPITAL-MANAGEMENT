@@ -155,13 +155,25 @@ class PharmacyController extends Controller
     public function add_bad_medicine($medicine_id)
     {
         $medicine_details = Medicine::find($medicine_id);
-        $medicine_stock = MedicineStock::where('medicine', $medicine_details->id)->first();
+        // dd($medicine_details);
+        $medicine_stock = MedicineStock::where('medicine', $medicine_id)->get();
+        // dd($medicine_stock->batch_no);
+        // $batchNO = $medicine_stock->batch_no;
+        // dd($batchNO);
         // dd($medicine_stock);
         $medicine = Medicine::all();
         $store_room = MedicineStoreRoom::all();
         $medicine_catagory = MedicineCatagory::all();
 
         return view('pharmacy.medicine.add-bad-medicines', compact('medicine_details', 'medicine', 'store_room', 'medicine_catagory', 'medicine_stock'));
+    }
+
+    public function find_expiry_date_by_batch_no(Request $request)
+    {
+        // dd( $request->batch_id);
+        $batch_no_all = MedicineStock::where('id', $request->batch_id)->first();
+        // dd($batch_no_all);
+        return response()->json($batch_no_all);
     }
 
     public function save_bad_medicine(Request $request)
