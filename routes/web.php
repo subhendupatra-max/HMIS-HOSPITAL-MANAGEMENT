@@ -1441,6 +1441,9 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
         Route::group(['middleware' => ['permission:Medicine Details']], function () {
             Route::get('medicine-details/{medicine_id?}', [PharmacyController::class, 'medicine_details'])->name('medicine-details');
         });
+        Route::group(['middleware' => ['permission:Medicine Stock Details']], function () {
+            Route::get('medicine-stock-details/{medicine_id?}', [PharmacyController::class, 'medicine_stock_details'])->name('medicine-stock-details');
+        });
 
         Route::group(['middleware' => ['permission:Bad Medicine Details']], function () {
             Route::get('bad-medicine-details/{medicine_id?}', [PharmacyController::class, 'bad_medicine_details'])->name('bad-medicine-details');

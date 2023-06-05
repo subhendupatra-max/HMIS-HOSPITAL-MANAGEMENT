@@ -304,7 +304,7 @@ class ReportController extends Controller
                 $query->where('ins_by', 'ori');
             }
             if ($request->medicine_id != '') {
-                $query->where('medicine_billing_details.medicine_', $request->medicine_id);
+                $query->where('medicine_billing_details.medicine_name', $request->medicine_id);
             }
             if ($request->from_date != '') {
                 $query->where('medicine_billing_details.created_at', '>=', $request->from_date);

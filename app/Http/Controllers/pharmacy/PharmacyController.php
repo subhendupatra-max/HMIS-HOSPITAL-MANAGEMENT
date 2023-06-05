@@ -152,6 +152,12 @@ class PharmacyController extends Controller
 
         return view('pharmacy.medicine.bad-medicine-details', compact('medicine_details'));
     }
+    public function medicine_stock_details($medicine_id)
+    {
+        $medicine_details = MedicineStock::where('medicine', $medicine_id)->first();
+        // dd($medicine_details );
+        return view('pharmacy.medicine.medicine-stock-details', compact('medicine_details'));
+    }
     public function add_bad_medicine($medicine_id)
     {
         $medicine_details = Medicine::find($medicine_id);
