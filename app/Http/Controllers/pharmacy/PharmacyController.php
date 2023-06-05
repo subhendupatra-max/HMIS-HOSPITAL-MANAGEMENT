@@ -190,7 +190,7 @@ class PharmacyController extends Controller
             $bad_medicine->unit =  $request->unit;
             $bad_medicine->medicine =  $request->medicine_name;
             $bad_medicine->batch_no =  $request->batch_no;
-            $bad_medicine->qty =  $request->quantity;
+            $bad_medicine->qty =  $request->qty;
             $bad_medicine->mrp =  $request->mrp;
             $bad_medicine->discount =  $request->discount;
             $bad_medicine->p_rate =  $request->purchase_price;
@@ -206,13 +206,13 @@ class PharmacyController extends Controller
 
             DB::commit();
             if ($status) {
-                return redirect()->route('bad-medicine-details')->with('success', 'Medicine Added Sucessfully');
+                return redirect()->route('bad-medicine-details', ['medicine_id' => $request->id])->with('success', 'Medicine Added Sucessfully');
             } else {
-                return redirect()->route('bad-medicine-details')->with('error', "Something Went Wrong");
+                return redirect()->route('bad-medicine-details', ['medicine_id' => $request->id])->with('error', "Something Went Wrong");
             }
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('bad-medicine-details')->with('error', "Something Went Wrong");
+            return redirect()->route('bad-medicine-details', ['medicine_id' => $request->id])->with('error', "Something Went Wrong");
         }
     }
 
