@@ -11,36 +11,9 @@
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
                     
-                    <div class="options px-5 pt-2  border-bottom pb-1">
-                        <div class="row">
-                            <div class="col-md-12 mb-2">
-                                <a class="btn btn-primary btn-sm" href="<?php echo e(route('add_new_patient')); ?>"><i class="fa fa-plus"></i> Add New Patient</a>
-                            </div>
-                        </div>
-                    </div>
+                    
                     
 
-                    <div class="options px-5 pt-5  border-bottom pb-3">
-                        <form method="post" action="<?php echo e(route('opd-registration')); ?>">
-                            <?php echo csrf_field(); ?>
-                            <div class="row">
-                                <div class="col-md-12 mb-2">
-                                    <select class="form-control  select2-show-search" name="patient_id">
-                                        <option value="">Select One Patient</option>
-                                        <?php if(isset($all_patient)): ?>
-                                        <?php $__currentLoopData = $all_patient; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e(@$patient->id); ?>" <?php echo e(@$patient_details_information->id == $patient->id ? 'Selected' : ''); ?>> <?php echo e(@$patient->prefix); ?> <?php echo e(@$patient->first_name); ?> <?php echo e(@$patient->middle_name); ?> <?php echo e(@$patient->last_name); ?> ( <?php echo e(@$patient->id); ?> ) </option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <?php endif; ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-12 mb-2">
-                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Search</button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
 
                     <?php if(isset($patient_details_information)): ?>
                     
@@ -241,7 +214,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
-
+                            <?php if($opdSetup->registration_type == 'By-Doctor'): ?>
                             <div class="form-group col-md-4 newaddappon">
                                 <label for="cons_doctor">Consultant Doctor <span class="text-danger">*</span></label>
                                 <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor" data-unit_id="<?php echo e($opd_visit_details->unit); ?>">
@@ -258,6 +231,7 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                             </div>
+                            <?php endif; ?>
                             <div class="form-group col-md-4 newaddappon ">
                                 <label for="unit">Unit <span class="text-danger">*</span></label>
                                 <select name="unit" class="form-control select2-show-search" id="unit">
@@ -364,17 +338,14 @@ unset($__errorArgs, $__bag); ?>
                                 <label for="any_known_allergies">Any Known Allergies</label>
                             </div>
                         </div>
-                        <hr class="hr_line">
-                        <input type="checkbox" id="opd_belling" value="opd_belling_from_opd" />
-                        <span style="font-weight: 500;color:blue"> Are You Want To do <b> Billing</b>
-                            ?</span>
+                        
 
                     </div>
                 </div>
                 <div class="btn-list p-3">
                     <button class="btn btn-primary btn-sm float-right ml-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
 
-                    <button class="btn btn-primary btn-sm float-right" type="submit" name="save" value="save_and_print"><i class="fa fa-file"></i> Save & Print</button>
+                    
 
                 </div>
                 </form>

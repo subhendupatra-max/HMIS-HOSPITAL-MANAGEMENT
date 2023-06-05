@@ -11,15 +11,15 @@
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
                     {{-- ================== add new patient ====================== --}}
-                    <div class="options px-5 pt-2  border-bottom pb-1">
+                    {{-- <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
                                 <a class="btn btn-primary btn-sm" href="{{route('add_new_patient')}}"><i class="fa fa-plus"></i> Add New Patient</a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     {{-- ================== add new patient ====================== --}}
-
+{{-- 
                     <div class="options px-5 pt-5  border-bottom pb-3">
                         <form method="post" action="{{route('opd-registration') }}">
                             @csrf
@@ -40,7 +40,7 @@
                             </div>
                         </form>
 
-                    </div>
+                    </div> --}}
 
                     @if(isset($patient_details_information))
                     {{-- ================== patient Details ====================== --}}
@@ -198,7 +198,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
+                            @if($opdSetup->registration_type == 'By-Doctor')
                             <div class="form-group col-md-4 newaddappon">
                                 <label for="cons_doctor">Consultant Doctor <span class="text-danger">*</span></label>
                                 <select name="cons_doctor" class="form-control select2-show-search" id="cons_doctor" data-unit_id="{{$opd_visit_details->unit}}">
@@ -208,6 +208,7 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            @endif
                             <div class="form-group col-md-4 newaddappon ">
                                 <label for="unit">Unit <span class="text-danger">*</span></label>
                                 <select name="unit" class="form-control select2-show-search" id="unit">
@@ -310,17 +311,17 @@
                                 <label for="any_known_allergies">Any Known Allergies</label>
                             </div>
                         </div>
-                        <hr class="hr_line">
+                        {{-- <hr class="hr_line">
                         <input type="checkbox" id="opd_belling" value="opd_belling_from_opd" />
                         <span style="font-weight: 500;color:blue"> Are You Want To do <b> Billing</b>
-                            ?</span>
+                            ?</span> --}}
 
                     </div>
                 </div>
                 <div class="btn-list p-3">
                     <button class="btn btn-primary btn-sm float-right ml-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
 
-                    <button class="btn btn-primary btn-sm float-right" type="submit" name="save" value="save_and_print"><i class="fa fa-file"></i> Save & Print</button>
+                    {{-- <button class="btn btn-primary btn-sm float-right" type="submit" name="save" value="save_and_print"><i class="fa fa-file"></i> Save & Print</button> --}}
 
                 </div>
                 </form>

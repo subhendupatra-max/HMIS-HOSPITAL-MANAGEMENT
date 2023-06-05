@@ -380,10 +380,7 @@ unset($__errorArgs, $__bag); ?>
                                 <label for="any_known_allergies">Any Known Allergies</label>
                             </div>
                         </div>
-                        <hr class="hr_line">
-                        <input type="checkbox" id="opd_belling" value="opd_belling_from_opd" />
-                        <span style="font-weight: 500;color:blue"> Are You Want To do <b> Billing</b>
-                            ?</span>
+                        
 
                     </div>
                 </div>

@@ -55,15 +55,6 @@
   }
 </style>
 <div style="padding: 0px 7px 0px 7px;">
-  <!-- ==============================draft copy============================================ -->
-  <!-- <div
-  style="position: absolute; left: 50%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
-  <h2
-    style="font-size: 70px; letter-spacing: 2px; text-transform: uppercase; transform: rotate(322deg); color: #9191912b;">
-    Draft Copy
-  </h2>
-</div> -->
-  <!-- ==============================draft copy============================================ -->
   <!-- ==========================================code here================================== -->
   <table style="width: 100%; border:1px soild black;border-collapse: collapse">
     <tr style="text-align: center;">
@@ -73,8 +64,7 @@
     </tr>
     <tr style="width:100%">
       <td style="width:100%">
-        <h1 style="text-align:center;font-size: 20px;margin: 10px 0px 10px 0px; color: #000;padding: 5px 0px 5px 0px;  width: 100%;">
-          Bill Summary</h1>
+        <h1 style="text-align:center;font-size: 20px;margin: 10px 0px 10px 0px; color: #000;padding: 5px 0px 5px 0px;  width: 100%;"> Bill Summary</h1>
       </td>
     </tr>
     <table style="width: 100%;">
@@ -86,7 +76,7 @@
         <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
           <!-- <img src="./image/qr.png" style="width: 80px;"> -->
           <?php
-          $ipd_de = $opd_details->ipd_prefix . '' . $opd_details->ipd_id;
+          $ipd_de = $opd_details->opd_prefix . '' . $opd_details->id;
           ?>
 
           <span style="width: 80px;height:60px"><?php echo QrCode::size(90)->generate($ipd_de); ?> </span>
@@ -97,20 +87,19 @@
           $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
           ?>
 
-          <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$opd_details->ipd_prefix @$opd_details->ipd_id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 190px;height:60px">
+          <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$opd_details->opd_prefix @$opd_details->id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 190px;height:60px">
         </td>
         <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
-          <b>Admission Date : <?php echo e($opd_details->appointment_date); ?></b>
+          <b>Admission Date : <?php echo e($opd_details->latest_opd_visit_details_for_patient->appointment_date); ?></b>
         </td>
 
       </tr>
       <tr>
         <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;"><b>
-            IPD no.
-            : <?php echo e($opd_details->ipd_prefix); ?>/<?php echo e($opd_details->id); ?></b></td>
+            OPD no.
+            : <?php echo e($opd_details->opd_prefix); ?>/<?php echo e($opd_details->id); ?></b></td>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #899499;">
-          <b>Patient
-            Source:<?php echo e($opd_details->patient_source); ?> Source Id:<?php echo e($opd_details->patient_source_id); ?>;</b>
+          <b> Department:  <?php echo e($opd_details->latest_opd_visit_details_for_patient->department_details->department_name); ?></b>
         </td>
 
       </tr>
@@ -121,7 +110,7 @@
           Patient Name
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->all_patient_details->first_name); ?>
+          <?php echo e($opd_details->all_patient_details->first_name); ?> <?php echo e($opd_details->all_patient_details->middle_name); ?> <?php echo e($opd_details->all_patient_details->last_name); ?>
 
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
@@ -158,7 +147,7 @@
           Patient Type
         </th>
         <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->patient_type); ?>
+          <?php echo e($opd_details->latest_opd_visit_details_for_patient->patient_type); ?>
 
         </td>
       </tr>
@@ -167,33 +156,32 @@
           Dr. In Charge
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->doctor_details->first_name); ?> <?php echo e($opd_details->doctor_details->last_name); ?>
-
-        </td>
-        <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          Ward
-        </th>
-        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->ward_details->ward_name); ?>
+          <?php echo e($opd_details->latest_opd_visit_details_for_patient->doctor->first_name); ?> <?php echo e($opd_details->latest_opd_visit_details_for_patient->doctor->last_name); ?>
 
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Unit
         </th>
-        <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->unit_details->bedUnit_name); ?>
+        <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+          <?php echo e($opd_details->latest_opd_visit_details_for_patient->unit); ?>
 
         </td>
+        <!-- <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+          Unit
+        </th> -->
+        <!-- <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+        
+        </td> -->
       </tr>
-      <tr>
+      <!-- <tr>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Department:
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->department_details->department_name); ?>
+          <?php echo e($opd_details->latest_opd_visit_details_for_patient->department_details->department_name); ?>
 
-        </td>
-        <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
+        </td> -->
+        <!-- <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Floor
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
@@ -203,10 +191,9 @@
           Bed
         </th>
         <td colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->bed_details->bed_name); ?>
-
-        </td>
-      </tr>
+    
+        </td> -->
+      <!-- </tr> -->
 
     </table>
     <table style="width: 100%; border-collapse: collapse;">
@@ -220,19 +207,19 @@
         </td>
 
       </tr>
-      <?php if($opd_details->patient_type == 'Swasthya Sathi' || $opd_details->patient_type == 'TPA' ): ?>
+      <?php if($opd_details->latest_opd_visit_details_for_patient->patient_type == 'Swasthya Sathi' || $opd_details->latest_opd_visit_details_for_patient->patient_type == 'TPA' ): ?>
       <tr>
         <th colspan="3" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php if($opd_details->patient_type == 'Swasthya Sathi'): ?>
+          <?php if($opd_details->latest_opd_visit_details_for_patient->patient_type == 'Swasthya Sathi'): ?>
           Swasthya Sathi No.
-          <?php elseif($opd_details->patient_type == 'TPA'): ?>
-          TPA <?php echo e($opd_details->tpa_details->TPA_name); ?>
+          <?php elseif($opd_details->latest_opd_visit_details_for_patient->patient_type == 'TPA'): ?>
+          TPA <?php echo e($opd_details->latest_opd_visit_details_for_patient->tpa_details->TPA_name); ?>
 
           <?php endif; ?>
 
         </th>
         <td colspan="7" style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->type_no); ?>
+          <?php echo e($opd_details->latest_opd_visit_details_for_patient->tpa_details->type_no); ?>
 
         </td>
 
@@ -253,8 +240,8 @@
           Amount(Rs)</td>
       </tr>
       <?php $total = 0; ?>
-      <?php if(@$patient_charges): ?>
-      <?php $__currentLoopData = $patient_charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+      <?php if(@$patientCharges): ?>
+      <?php $__currentLoopData = $patientCharges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
       <?php $total += $value->amount; ?>
       <tr>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"><?php echo e($loop->iteration); ?>
@@ -274,7 +261,7 @@
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       <?php endif; ?>
     </table>
-
+    <?php if(@$medicine_billings[0]->id != null): ?>
     <table>
       <h1 style="font-size: 15px;">Medicine</h1>
     </table>
@@ -288,8 +275,8 @@
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Amount(Rs)</td>
       </tr>
-      <?php if(@$medicine): ?>
-      <?php $__currentLoopData = $medicine; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+      <?php $__currentLoopData = $medicine_billings; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
       <?php $total += $value->amount; ?>
       <tr>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;"><?php echo e($loop->iteration); ?>
@@ -302,11 +289,70 @@
 
       </tr>
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-      <?php endif; ?>
+
     </table>
-    <table>
-      <h1 style="font-size: 20px;"> Total : <?php echo e(@$total.' Rs'); ?> </h1>
-    </table>
+    <?php endif; ?>
+    <table style="width: 100%;
+
+    margin: 10px 0px 0px 0px;
+    border-collapse: collapse;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;border-top: 1px solid black;">
+          <tr>
+            <th style="text-align: left;font-size: 13px; padding: 10px 10px 10px 10px;">
+              Bill Date:
+            </th>
+            <td style="text-align: left;font-size: 13px;">
+              <?php echo e(@date('d-m-Y h:i A', strtotime($bill->bill_date))); ?> 
+            </td>
+    
+    
+            <th style="text-align: left;font-size: 13px; ">
+              Total Amount:
+            </th>
+            <td style="text-align: right;font-size: 13px; padding: 0px 10px 0px 0px;">
+             <?php echo e(@$bill->total_amount); ?>
+
+            </td>
+            
+          </tr>
+    
+    
+          <tr>
+            <th style="text-align: left;font-size: 13px;padding: 10px 10px 10px 10px;">
+              
+            </th>
+            <td style="text-align: left;font-size: 13px;">
+           
+            </td>
+            <?php if(@$discount_details): ?>
+            <th style="text-align: left;font-size: 13px;">
+              Discount:
+            </th>
+            <td style="text-align: right;font-size: 13px; padding: 0px 10px 0px 0px;">
+              <?php echo e(@$discount_details->given_discount_amount); ?> <?php echo e($discount_details->given_discount_type == 'Flat'?'Rs':'%'); ?>
+
+            </td>
+            <?php endif; ?>
+          </tr>
+          <tr>
+            <th  style="text-align: left;font-size: 13px; padding: 10px 10px 10px 10px;">
+              
+            </th>
+            <td  style="text-align: right;font-size: 13px;padding: 0px 10px 0px 0px; ">
+              
+            </td>
+            <th  style="text-align: left;font-size: 13px;">
+              Grand Total
+            </th>
+            <td  style="text-align: right;font-size: 13px;padding: 0px 10px 0px 0px; ">
+              <?php echo e(@$bill->grand_total); ?>
+
+            </td>
+          </tr>
+        </table>
+
 
 
     <!-- =================================================================================================== -->

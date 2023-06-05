@@ -5,9 +5,9 @@
     Billing</a>
 @endcan
 
-@can('patient charges')
+{{-- @can('patient charges')
 <a class="dropdown-item {{ Request::segment(2) == 'opd-patient-charge' ? 'active' : '' }}" href="{{ route('charges-list', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-file-invoice-dollar"></i> Add Charges</a>
-@endcan
+@endcan --}}
 
 <a class="dropdown-item {{ Request::segment(2) == 'opd-payment' ? 'active' : '' }}" href="{{ route('payment-listing-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-rupee-sign"></i> Payment</a>
 

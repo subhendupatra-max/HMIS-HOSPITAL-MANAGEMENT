@@ -26,6 +26,7 @@
             <table class="table table-bordered text-nowrap" id="example">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">OPD Id</th>
                         <th scope="col">Patient Name</th>
                         <th scope="col">Gurdian Name</th>
@@ -40,6 +41,7 @@
                     @if (isset($opd_registaion_list))
                     @foreach ($opd_registaion_list as $value)
                     <tr>
+                        <td>{{ $loop->iteration }}</td>
                         <td><a class="textlink"
                                 href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}">{{ @$value->id }}</a>
                         </td>
@@ -102,16 +104,16 @@
                                     <a class="dropdown-item" href="{{ route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id)) }}"><i class="fa fa-print"></i>
                                          Print</a>
 
-                                    @can('opd billing')
+                                    {{-- @can('opd billing')
                                     <a class="dropdown-item"
                                         href="{{ route('add-opd-billing',['id'=> base64_encode($value->id)]) }}"><i
                                             class="fa fa-money-bill"></i>
                                          Add Billing</a>
-                                    @endcan
-                                    <a class="dropdown-item"
+                                    @endcan --}}
+                                    {{-- <a class="dropdown-item"
                                         href="{{ route('payment-listing-in-opd', ['id' => base64_encode($value->id)]) }}"><i
                                             class="fa fa-rupee-sign"></i> Take Payment</a>
-                                    <a class="dropdown-item"  href="{{ route('ipd-registation-from-opd', ['id' => base64_encode($value->id), 'patient_source' => 'opd', 'source_id' => $value->id]) }}"><i class="fa fa-bed"></i> Admission</a>
+                                    <a class="dropdown-item"  href="{{ route('ipd-registation-from-opd', ['id' => base64_encode($value->id), 'patient_source' => 'opd', 'source_id' => $value->id]) }}"><i class="fa fa-bed"></i> Admission</a> --}}
 
                                 </div>
                             </div>

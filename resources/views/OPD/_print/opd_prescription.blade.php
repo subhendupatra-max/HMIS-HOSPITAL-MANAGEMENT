@@ -2,7 +2,9 @@
 <html>
 <title>IIMSAR & DR.BCRHH, HALDIA</title>
 <meta charset="utf-8">
-
+<script>
+    window.print();
+    </script>
 <body>
 
     <style>
@@ -58,15 +60,15 @@
             </table>
             <table>
                 <tr>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:180px">
+                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:240px">
                         <b>UHID No: {{ @$opd_patient_details->patient_prefix }}{{ @$opd_patient_details->patient_id
                             }}</b>
                     </td>
-                    <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:160px">
+                    <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:200px">
 
                         <b>Date: {{ @date('d-m-Y h:i A',strtotime($opd_patient_details->appointment_date)) }}</b>
                     </td>
-                    <td rowspan="2" style="text-align: center;border: 1px solid #899499;">
+                    <td rowspan="2" style="text-align: center;border: 1px solid #899499;width: 160px;height: 45px;">
                         @php
                         $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                         @endphp
@@ -80,9 +82,7 @@
 
 
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:100px" rowspan="2">
-                        <b> Consultant Doctor :
-                        <?php $doctor = DB::table('users')->where('id',$opd_patient_details->cons_doctor )->first(); ?>
-                        {{ $doctor->first_name }} {{ $doctor->last_name }}</b>
+                        <span style="color:#fff "></span>
                     </td>
                 </tr>
                 <tr>
@@ -90,10 +90,10 @@
                         <b>OPD No : {{ @$opd_patient_details->opd_prefix }}{{ @$opd_patient_details->opd_id
                             }} </b>
                     </td>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
+                    <td style="width:150px;text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
                         <b>Department: {{ @$opd_patient_details->department_name }}</b>
                     </td>
-                    <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
+                    <td style="width:150px;text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;">
                         <b>Case Id: {{ @$opd_patient_details->case_id }}</b>
                     </td>
 
@@ -179,9 +179,9 @@
                     </td>
                 </tr>
                 <tr>
-                    <td height="00px" valign="top" style="border-right-style: dotted;border-width: 1px;">
+                    <td height="00px" valign="top" style="border-right-style: dotted;border-width: 1px">
                         <b></b>
-                        <div style="height:560px;background:#FFF;"></div>
+                        <div style="height:730px;background:#FFF;"></div>
                         <p style="padding: 10px 0px 7px 10px;margin: 0px;font-size: 13px;">
                             <b>Height -</b>
                         </p>

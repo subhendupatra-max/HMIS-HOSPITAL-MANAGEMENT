@@ -43,9 +43,7 @@
                         <table class="table card-table table-vcenter text-nowrap">
                             <thead>
                                 <tr>
-                                    <th scope="col" style="width: 10%"> # <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 10%">Charge Type <span class="text-danger">*</span>
-                                    </th>
+                                 
                                     <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 13%">Subcategory <span class="text-danger">*</span>
@@ -62,28 +60,7 @@
                             </thead>
                             <tbody id="chargeTable">
                                 <tr id="row">
-                                    <td>
-                                        <select class="form-control select2-show-search"
-                                            onchange="getChargeCategory({{ $patient_charge_details->charge_category }})"
-                                            name="charge_set[]" id="charge_set">
-                                            <option value="" disable>Select One..</option>
-                                            <option value="Normal" {{ @$patient_charge_details->charge_set == 'Normal' ?
-                                                'selected':'' }} >Normal</option>
-                                            <option value="Package" {{ @$patient_charge_details->charge_set == 'Package'
-                                                ? 'selected':'' }}>Package</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="form-control select2-show-search" name="charge_type[]"
-                                            id="charge_type" onchange="getchargetype_details()">
-                                            <option value=" " selected disable>Select One... </option>
-                                            @foreach (Config::get('static.charges_type') as $lang => $charges_type)
-                                            <option value="{{ $charges_type }}" {{ $patient_charge_details->charge_type
-                                                == $charges_type ? 'selected':'' }}> {{ $charges_type }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                    </td>
+                          
                                     <td>
                                         <select class="form-control select2-show-search"
                                             onchange="getSub_cate_by_cate(this.value,{{ $patient_charge_details->charge_category }},{{ $patient_charge_details->charge_sub_category }})"

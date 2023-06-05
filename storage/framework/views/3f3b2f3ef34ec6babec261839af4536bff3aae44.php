@@ -111,7 +111,7 @@
             
         }
     </script>
-            <form method="post" action="<?php echo e(route('add-new-opd-billing')); ?>">
+            <form method="post" action="<?php echo e(route('update-new-opd-billing')); ?>">
                 <?php echo csrf_field(); ?>
                 <input type="hidden" name="bill_id" value="<?php echo e($billId); ?>" />
                 <input type="hidden" name="case_id" value="<?php echo e($opd_patient_details->case_id); ?>" />
@@ -377,7 +377,7 @@ unset($__errorArgs, $__bag); ?>
     </script>
     <script>
         function addMedicineBill(case_id) {
-           // alert('ok');
+          
             if (document.getElementById("add_medicine_bill").checked) {
                 $('#fjafiao').removeAttr('style',true);
                 gettotal();
@@ -548,7 +548,7 @@ unset($__errorArgs, $__bag); ?>
 
 
         function getcharges(row_id) {
-            alert('ok');
+            // alert('ok');
             let charge_name = $('#charge_name' + row_id).val();
             let charge_set = $('#charge_set' + row_id).val();
             $('#standard_charges' + row_id).empty();

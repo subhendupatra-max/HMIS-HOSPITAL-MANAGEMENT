@@ -796,18 +796,25 @@ class BillingController extends Controller
     {
 
         $billId = base64_decode($bill_id);
+
         $bill = Billing::where('id', $billId)->first();
+        
         $opd_details = OpdDetails::where('case_id', $bill->case_id)->first();
         $bill_details_for_charges = BillDetails::where('bill_id', $billId)->where('purpose_for', 'charges')->get();
-        $ids = $bill_details_for_charges->pluck('id');
+        
+      //  dd($bill_details_for_charges);
+        $ids = $bill_details_for_charges->pluck('purpose_for_id');
         $patientCharges = PatientCharge::whereIn('id', $ids)->get();
         $bill_details_for_medicine = BillDetails::where('bill_id', $billId)->where('purpose_for', 'medicine')->get();
+       // dd($patientCharges );
         $ids_medicine = $bill_details_for_medicine->pluck('id');
         $medicine_billings = MedicineBilling::whereIn('id', $ids_medicine)->get();
 
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
         $patient_charges = PatientCharge::get();
 
-        return view('OPD.billing._print_opd_billing', compact('medicine_billings', 'patientCharges', 'bill', 'opd_details', 'header_image'));
+        $discount_details = DiscountDetails::join('discounts','discount_details.discount_id','=','discounts.id')->where('discount_details.bill_id',$billId)->first();
+
+        return view('OPD.billing._print_opd_billing', compact('medicine_billings', 'patientCharges', 'bill', 'opd_details', 'header_image','discount_details'));
     }
 }

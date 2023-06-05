@@ -275,9 +275,64 @@
 
     </table>
     @endif
-    <table>
-      <h1 style="font-size: 20px;"> Total : {{ @$total.' Rs' }} </h1>
-    </table>
+    <table style="width: 100%;
+
+    margin: 10px 0px 0px 0px;
+    border-collapse: collapse;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;border-top: 1px solid black;">
+          <tr>
+            <th style="text-align: left;font-size: 13px; padding: 10px 10px 10px 10px;">
+              Bill Date:
+            </th>
+            <td style="text-align: left;font-size: 13px;">
+              {{ @date('d-m-Y h:i A', strtotime($bill->bill_date)) }} 
+            </td>
+    
+    
+            <th style="text-align: left;font-size: 13px; ">
+              Total Amount:
+            </th>
+            <td style="text-align: right;font-size: 13px; padding: 0px 10px 0px 0px;">
+             {{ @$bill->total_amount }}
+            </td>
+            
+          </tr>
+    
+    
+          <tr>
+            <th style="text-align: left;font-size: 13px;padding: 10px 10px 10px 10px;">
+              
+            </th>
+            <td style="text-align: left;font-size: 13px;">
+           
+            </td>
+            @if(@$discount_details)
+            <th style="text-align: left;font-size: 13px;">
+              Discount:
+            </th>
+            <td style="text-align: right;font-size: 13px; padding: 0px 10px 0px 0px;">
+              {{ @$discount_details->given_discount_amount }} {{ $discount_details->given_discount_type == 'Flat'?'Rs':'%' }}
+            </td>
+            @endif
+          </tr>
+          <tr>
+            <th  style="text-align: left;font-size: 13px; padding: 10px 10px 10px 10px;">
+              
+            </th>
+            <td  style="text-align: right;font-size: 13px;padding: 0px 10px 0px 0px; ">
+              
+            </td>
+            <th  style="text-align: left;font-size: 13px;">
+              Grand Total
+            </th>
+            <td  style="text-align: right;font-size: 13px;padding: 0px 10px 0px 0px; ">
+              {{ @$bill->grand_total }}
+            </td>
+          </tr>
+        </table>
+
 
 
     <!-- =================================================================================================== -->

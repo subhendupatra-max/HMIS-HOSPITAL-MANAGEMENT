@@ -2,7 +2,9 @@
 <html>
 <title>IIMSAR & DR.BCRHH, HALDIA</title>
 <meta charset="utf-8">
-
+<script>
+    window.print();
+</script>
 <body>
 
     <style>
@@ -80,7 +82,9 @@
 
 
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:100px" rowspan="2">
-                        <span style="color:#fff "></span>
+                        <b> Consultant Doctor :
+                        <?php $doctor = DB::table('users')->where('id',$opd_patient_details->cons_doctor )->first(); ?>
+                        {{ $doctor->first_name }} {{ $doctor->last_name }}</b>
                     </td>
                 </tr>
                 <tr>
