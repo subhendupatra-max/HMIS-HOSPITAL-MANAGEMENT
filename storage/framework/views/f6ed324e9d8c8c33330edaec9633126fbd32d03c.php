@@ -511,11 +511,10 @@ $login_details = DB::table('users')
 
                                 <li><a href="#">Birth Record</a></li>
                                 <li><a href="<?php echo e(route('death-record')); ?>">Death Record</a></li>
-
                             </ul>
                         </li>
                         <li class="dropdown-submenu">
-                            <a tabindex="-1" href="#">False Generation<i class="fa fa-chevron-right"></i></a>
+                            <a tabindex="-1" href="#">MRD<i class="fa fa-chevron-right"></i></a>
                             <ul class="dropdown-menu">
 
                                 <?php if(auth()->user()->can('OPD False')): ?>
