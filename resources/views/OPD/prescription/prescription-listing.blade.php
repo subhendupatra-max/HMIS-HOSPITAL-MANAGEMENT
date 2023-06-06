@@ -47,7 +47,7 @@
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{date('d-m-Y h:i a',strtotime(@$item->prescription_date))}}</td>
                                 <td>{{@$item->eprescription_details->medicine_details->medicine_name}}</td>
-                                <td>{{@$item->eprescription_details->medicine_details->catagory_name->medicine_catagory_name}}</td>
+                                <td>{{@$item->eprescription_details->catagory_name->medicine_catagory_name}}</td>
                                 <td>{{@$item->eprescription_details->dose}}</td>
                                 <td>{{@$item->eprescription_details->interval}}</td>
                                 <td>
@@ -63,7 +63,7 @@
                                             @endcan
 
                                             @can('delete-payment-in-opd')
-                                            <a class="dropdown-item" href="{{ route('delete-payment-in-opd',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
+                                            <a class="dropdown-item" href="{{ route('delete-prescription-in-opd',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
                                             @endcan
 <!-- 
                                             @can('print-payment-in-opd')

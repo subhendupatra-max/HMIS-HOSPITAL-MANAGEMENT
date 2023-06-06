@@ -9,9 +9,7 @@
 
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-billing' ? 'active' : ''); ?>" href="<?php echo e(route('emg-billing', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa fa-money-bill"></i>
     Billing</a>
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('patient charges')): ?>
-<a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-patient-charge' ? 'active' : ''); ?>" href="<?php echo e(route('charges-list-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa fa-file-invoice-dollar"></i> Add Charges</a>
-<?php endif; ?>
+
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Emg Pathology Investigation')): ?>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('emg-pathology-investigation', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa fa-microscope"></i> Pathology Investigation</a>

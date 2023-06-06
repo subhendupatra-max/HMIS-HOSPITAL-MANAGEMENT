@@ -15,7 +15,7 @@
                             aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                             
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            @include('OPD.include.menu')
+                            @include('Ipd.include.menu')
                         </div>
                     </div>
                 </div>
@@ -41,10 +41,10 @@
                                 {{ @$bill_details->created_details->last_name }}</span>
                         </div>
 
-                        <div class="col-md-12 mt-3 mb-3">
+                        <!-- <div class="col-md-12 mt-3 mb-3">
                             <span class="requisition_header">Payment Status </span><span class="badge badge-success">{{
                                 $bill_details->payment_status }}</span>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-12 mt-3 mb-3">
                             <span class="requisition_header">Discount Status </span><span class="badge badge-success">{{
@@ -162,12 +162,12 @@
                                             {{ @$bill_details->total_amount }} Rs</span>
                                     </div>
                                     @if($bill_details->discount_status == 'Approved' )
-                                    <div class="d-flex justify-content-end">
+                                    <!-- <div class="d-flex justify-content-end">
                                         <span class="bilpo_name">Discount </span><span class="bilpo_value"> :
                                             {{ @$discount_details->discount->given_discount_amount }} {{
                                             @$discount_details->discount->given_discount_type == 'flat' ? 'Rs': '%'
                                             }}</span>
-                                    </div>
+                                    </div> -->
                                     @endif
                                     <div class="d-flex justify-content-end">
                                         <span class="bilpo_name">Tax </span><span class="bilpo_value"> :
