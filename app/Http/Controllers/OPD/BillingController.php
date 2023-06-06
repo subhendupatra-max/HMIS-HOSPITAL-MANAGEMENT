@@ -223,6 +223,7 @@ class BillingController extends Controller
                 $bill_details_medicine->purpose_for_id = $value->medicine_bill_id;
                 $bill_details_medicine->save();
                 // ====================== Billing Details ===========================================
+                MedicineBilling::where('id',$value->medicine_bill_id)->update(['status'=>'1']);
             }
         }
         //payment
@@ -500,6 +501,9 @@ class BillingController extends Controller
 
                 if ($bill_details_charges_[$key]->purpose_for == 'charges') {
                     $patient_charge_update = PatientCharge::where('id', $bill_details_charges_[$key]->purpose_for_id)->update(['billing_status' => '0']);
+                }
+                if ($bill_details_charges_[$key]->purpose_for == 'medicine') {
+                    $patient_charge_update = MedicineBilling::where('id', $bill_details_charges_[$key]->purpose_for_id)->update(['status' => '0']);
                 }
             }
             BillDetails::where('bill_id', $billId)->delete();

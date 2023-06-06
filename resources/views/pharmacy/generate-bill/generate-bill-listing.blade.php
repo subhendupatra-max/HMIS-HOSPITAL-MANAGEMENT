@@ -32,6 +32,7 @@
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
                         <thead>
                             <tr>
+                                <th class="border-bottom-0">#</th>
                                 <th class="border-bottom-0">Bill No</th>
                                 <th class="border-bottom-0">Case Id </th>
                                 <th class="border-bottom-0">Date</th>
@@ -45,6 +46,7 @@
                             @if(@$medicine_bill)
                             @foreach ($medicine_bill as $value)
                             <tr>
+                                <td>{{ $loop->iteration }}</td>
                                 <td><a class="dropdown-item text-info" href="{{ route('medicine-bill-details', ['bill_id' => base64_encode($value->id)]) }}">
                                      {{ @$value->id }}
                                 </a></td>
@@ -69,14 +71,18 @@
                                             @endcan
 
 
-
-                                            <a class="dropdown-item" href="{{route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])}}">
+                                            @if($value->status != '1')
+                                            @can('edit medicine bill')
+                                            {{-- <a class="dropdown-item" href="{{route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])}}">
                                                 <i class="fa fa-edit"></i> Edit
-                                            </a>
-
+                                            </a> --}}
+                                            @endcan
+                                            @can('delete medicine bill')
                                             <a class="dropdown-item" href="{{route('delete-medicine-bill',['bill_id'=>base64_encode($value->id)])}}">
                                                 <i class="fa fa-trash"></i> Delete
                                             </a>
+                                            @endcan
+                                            @endif
 
                                         </div>
                                     </div>

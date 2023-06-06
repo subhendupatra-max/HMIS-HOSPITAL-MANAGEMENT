@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <script>
     window.print();
-    </script>
+</script>
 <body>
 
     <style>

@@ -9,9 +9,9 @@
 
 <a class="dropdown-item {{ Request::segment(2) == 'emg-billing' ? 'active' : '' }}" href="{{ route('emg-billing', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-money-bill"></i>
     Billing</a>
-@can('patient charges')
+{{-- @can('patient charges')
 <a class="dropdown-item {{ Request::segment(2) == 'emg-patient-charge' ? 'active' : '' }}" href="{{ route('charges-list-emg', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-file-invoice-dollar"></i> Add Charges</a>
-@endcan
+@endcan --}}
 
 @can('Emg Pathology Investigation')
 <a class="dropdown-item {{ Request::segment(2) == 'emg-pathology-investigation' ? 'active' : '' }}" href="{{ route('emg-pathology-investigation', ['id' => base64_encode($emg_patient_details->id)]) }}"><i class="fa fa-microscope"></i> Pathology Investigation</a>

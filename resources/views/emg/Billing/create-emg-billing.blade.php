@@ -30,7 +30,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <label class="form-label">Billing Date <span class="text-danger">*</span></label>
-                                <input type="datetime-local" required class="form-control" name="bill_date" value="{{ date('Y-m-d H:i') }}" />
+                                <input type="datetime-local" required class="form-control" name="bill_date"  />
                                 @error('bill_date')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -162,12 +162,12 @@
                                             <label>Note </label>
                                             <textarea class="form-control" name="note"></textarea>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" style="margin:33px 0px 0px 0px">
                                             <label class="form-label">Payment Amount </label>
                                             <input type="text" name="payment_amount" class="form-control" />
                                  
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6" style="margin:25px 0px 0px 0px">
                                             <label class="form-label">Payment Mode</label>
                                             <select class="form-control" name="payment_mode">
                                                 <option value="">Select One...</option>
@@ -226,8 +226,8 @@
                                 class="fa fa-calculator"></i> Calculate</button>
                         <button class="btn btn-primary btn-sm float-right " type="submit" name="save" value="save"><i
                                 class="fa fa-file"></i> Save</button>
-                        <button class="btn btn-primary btn-sm float-right mr-2" name="save" type="submit"  value="save_and_print"><i
-                                class="fa fa-paste"></i> Save & Print</button>
+                        {{-- <button class="btn btn-primary btn-sm float-right mr-2" name="save" type="submit"  value="save_and_print"><i
+                                class="fa fa-paste"></i> Save & Print</button> --}}
                     </div>
                 </div>
             </form>

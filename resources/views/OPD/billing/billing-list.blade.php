@@ -79,11 +79,11 @@
                                                 <i class="fa fa-print"></i> Print
                                             </a>
                                             @endcan
-                                            @can('edit opd billing')
+                                            {{-- @can('edit opd billing')
                                             <a class="dropdown-item" href="{{route('edit-opd-bill',['bill_id'=>base64_encode($value->id),'id'=>base64_encode($opd_id)])}}">
                                             <i class="fa fa-edit"></i> Edit
                                             </a>
-                                            @endcan
+                                            @endcan --}}
                                             @can('delete opd billing')
                                             <a class="dropdown-item" href="{{route('delete-opd-bill',['bill_id'=>base64_encode($value->id)])}}">
                                                 <i class="fa fa-trash"></i> Delete

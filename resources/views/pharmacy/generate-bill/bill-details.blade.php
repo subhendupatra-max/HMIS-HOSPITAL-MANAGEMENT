@@ -11,12 +11,12 @@
                 </div>
 
                 <div class="col-md-6 text-right">
+                    @if($medicine_bill->status != '1')
                     @can('delete medicine bill')
                     <a href="{{route('delete-medicine-bill',['bill_id'=>base64_encode($medicine_bill->id)])}}" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i> Delete</a>
                     @endcan
-                    @can('edit patient')
-                    <a href="{{ route('edit-patient-details', base64_encode($medicine_bill->all_patient_details->id)) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
-                    @endcan
+                    @endif
+          
                     @can('print medicine bill')
                     <a href="{{route('print-medicine-bill',['bill_id'=>base64_encode($medicine_bill->id)])}}" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Print</a>
                     @endcan

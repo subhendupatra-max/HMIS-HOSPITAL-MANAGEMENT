@@ -151,13 +151,13 @@
           Dr. In Charge
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->latest_opd_visit_details_for_patient->doctor->first_name}} {{$opd_details->latest_opd_visit_details_for_patient->doctor->last_name}}
+          {{@$opd_details->latest_opd_visit_details_for_patient->doctor->first_name}} {{@$opd_details->latest_opd_visit_details_for_patient->doctor->last_name}}
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Unit
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          {{$opd_details->latest_opd_visit_details_for_patient->unit}}
+          {{@$opd_details->latest_opd_visit_details_for_patient->unit}}
         </td>
         <!-- <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Unit
@@ -308,7 +308,7 @@
             <td style="text-align: left;font-size: 13px;">
            
             </td>
-            @if(@$discount_details)
+            @if(@$discount_details->given_discount_amount != null)
             <th style="text-align: left;font-size: 13px;">
               Discount:
             </th>

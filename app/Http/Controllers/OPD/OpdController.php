@@ -382,7 +382,7 @@ class OpdController extends Controller
             ->where('opd_visit_details.id', $opd_visit_id)
             ->first();
 
-            return view('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image')). redirect('/opd/OPD-Patient-list');
+            return view('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image'));
     }
 
     //opd setup

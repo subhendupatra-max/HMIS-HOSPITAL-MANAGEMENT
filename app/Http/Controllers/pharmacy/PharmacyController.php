@@ -10,6 +10,7 @@ use App\Models\Patient;
 use App\Models\Payment;
 use App\Models\Prefix;
 use App\Models\AllHeader;
+use App\Models\IssueMedicine;
 use App\Models\MedicineBilling;
 use App\Models\MedicineBillingDetails;
 use App\Models\caseReference;
@@ -51,7 +52,7 @@ class PharmacyController extends Controller
         $all_patient = Patient::where('is_active', '1')->where('ins_by', 'ori')->get();
         $patient_details_information = Patient::where('id', $request->patient_id)->where('is_active', '1')->where('ins_by', 'ori')->first();
         $patient_reg_details = caseReference::where('patient_id', $request->patient_id)->orderBy('id', 'desc')->first();
-        $medicine_name = Medicine::select('medicine_catagories.medicine_catagory_name', 'medicines.medicine_name', 'medicine_catagories.id as medicine_cat_id', 'medicines.id as medicine_id')->join('medicine_catagories', 'medicine_catagories.id', '=', 'medicines.medicine_catagory')->get();
+        $medicine_name = Medicine::select('medicine_catagories.medicine_catagory_name', 'medicines.medicine_name', 'medicine_catagories.id as medicine_cat_id', 'medicines.id as medicine_id')->join('medicine_catagories', 'medicine_catagories.id', '=', 'medicines.medicine_catagory')->orderBy('medicines.medicine_name','asc')->get();
         // dd( $medicine_name);
         return view('pharmacy.generate-bill.add-medicine-bill', compact('all_patient', 'patient_details_information', 'medicine_name', 'patient_reg_details'));
     }
@@ -72,17 +73,20 @@ class PharmacyController extends Controller
     {
         $medicine_details = MedicineStock::select('medicine_units.id as unit_id', 'medicine_stocks.exp_date', 'medicine_stocks.mrp', 'medicine_stocks.s_rate', 'medicine_stocks.p_rate', 'medicine_units.medicine_unit_name', 'medicine_stocks.igst', 'medicine_stocks.sgst', 'medicine_stocks.cgst')->join('medicine_units', 'medicine_units.id', '=', 'medicine_stocks.unit')->where('medicine', $request->medicineId)->where('batch_no', $request->medicine_batch_no)->groupBy('medicine_stocks.exp_date', 'medicine_stocks.mrp', 'medicine_stocks.s_rate', 'medicine_stocks.p_rate', 'medicine_units.medicine_unit_name', 'medicine_units.id', 'medicine_stocks.igst', 'medicine_stocks.sgst', 'medicine_stocks.cgst')->first();
 
-        $medicine_stock = Medicine::select(DB::raw('SUM(medicine_stocks.qty) - COALESCE(SUM(issue_medicines.quantity), 0) as available_quantity'))
+        $medicine_stock = Medicine::select(DB::raw('SUM(medicine_stocks.qty) as available_quantity'))
             ->leftJoin('medicine_units', 'medicines.unit', '=', 'medicine_units.id')
             ->leftJoin('medicine_catagories', 'medicines.medicine_catagory', '=', 'medicine_catagories.id')
             ->leftJoin('medicine_stocks', 'medicines.id', '=', 'medicine_stocks.medicine')
-            ->leftJoin('issue_medicines', 'medicines.id', '=', 'issue_medicines.medicine_name')
             ->where('medicine_stocks.medicine', $request->medicineId)
             ->where('medicine_stocks.batch_no', $request->medicine_batch_no)
             ->groupBy('medicines.id')
             ->first();
+           
+        $expire_medi = ExpiredMedicine::where('expired_medicines.medicine', $request->medicineId)->where('expired_medicines.batch_no', $request->medicine_batch_no)->sum('qty');
 
-        return response()->json(['medicine_details' => $medicine_details, 'medicine_stock' => $medicine_stock]);
+        $issue_medi = MedicineBillingDetails::where('medicine_billing_details.medicine_name', $request->medicineId)->where('medicine_billing_details.medicine_batch', $request->medicine_batch_no)->sum('qty');
+
+        return response()->json(['medicine_details' => $medicine_details, 'medicine_stock' => $medicine_stock,'exp_medi'=>$expire_medi,'issue_medi'=>$issue_medi]);
     }
     public function save_pharmacy_billing(Request $request)
     {
@@ -142,86 +146,73 @@ class PharmacyController extends Controller
     public function medicine_details($medicine_id)
     {
         $medicine_details = Medicine::where('id', $medicine_id)->first();
+        $stock = MedicineStock::where('medicine', $medicine_id)->sum('qty');
+        $Issue = IssueMedicine::where('medicine_name', $medicine_id)->sum('quantity');
+        $Expired = ExpiredMedicine::where('medicine', $medicine_id)->sum('qty');
+        $avilable_stock = $stock - ($Issue + $Expired);
+        // dd( $medicine_details_stock);
         // dd( $medicine_details);
-        return view('pharmacy.medicine.medicine-details', compact('medicine_details'));
+        return view('pharmacy.medicine.medicine-details', compact('medicine_details','avilable_stock'));
     }
 
     public function bad_medicine_details($medicine_id)
     {
-        $medicine_details = Medicine::where('id', $medicine_id)->first();
 
-        return view('pharmacy.medicine.bad-medicine-details', compact('medicine_details'));
+        $medicine_details = Medicine::where('id', $medicine_id)->first();
+        // dd( $medicine_details_stock);
+        $medicine_bad_stock = ExpiredMedicine::where('medicine', $medicine_id)->get();
+        $status = 'bad_medicine';
+        $stock = MedicineStock::where('medicine', $medicine_id)->sum('qty');
+        $Issue = IssueMedicine::where('medicine_name', $medicine_id)->sum('quantity');
+        $Expired = ExpiredMedicine::where('medicine', $medicine_id)->sum('qty');
+        $avilable_stock = $stock - ($Issue + $Expired);
+        // dd( $medicine_details_stock);
+        return view('pharmacy.medicine.medicine-details', compact('medicine_details','medicine_bad_stock','status','avilable_stock'));
     }
     public function medicine_stock_details($medicine_id)
     {
-        $medicine_details = MedicineStock::where('medicine', $medicine_id)->first();
-        // dd($medicine_details );
-        return view('pharmacy.medicine.medicine-stock-details', compact('medicine_details'));
+        $medicine_details_stock = MedicineStock::where('medicine', $medicine_id)->get();
+        $medicine_details = Medicine::where('id', $medicine_id)->first();
+        $status = 'good_medicine';
+        $stock = MedicineStock::where('medicine', $medicine_id)->sum('qty');
+        $Issue = IssueMedicine::where('medicine_name', $medicine_id)->sum('quantity');
+        $Expired = ExpiredMedicine::where('medicine', $medicine_id)->sum('qty');
+        $avilable_stock = $stock - ($Issue + $Expired);
+         dd( $avilable_stock);
+        return view('pharmacy.medicine.medicine-details', compact('medicine_details','medicine_details_stock','status','avilable_stock'));
     }
     public function add_bad_medicine($medicine_id)
     {
-        $medicine_details = Medicine::find($medicine_id);
-        // dd($medicine_details);
-        $medicine_stock = MedicineStock::where('medicine', $medicine_id)->get();
-        // dd($medicine_stock->batch_no);
-        // $batchNO = $medicine_stock->batch_no;
-        // dd($batchNO);
-        // dd($medicine_stock);
-        $medicine = Medicine::all();
-        $store_room = MedicineStoreRoom::all();
-        $medicine_catagory = MedicineCatagory::all();
-
-        return view('pharmacy.medicine.add-bad-medicines', compact('medicine_details', 'medicine', 'store_room', 'medicine_catagory', 'medicine_stock'));
+        $medicine__batchno_stock = MedicineStock::select('batch_no')->where('medicine', $medicine_id)->groupBy('batch_no')->get();
+        // dd($medicine__batchno_stock);
+        return view('pharmacy.medicine.add-bad-medicines', compact('medicine__batchno_stock','medicine_id'));
     }
 
     public function find_expiry_date_by_batch_no(Request $request)
     {
         // dd( $request->batch_id);
-        $batch_no_all = MedicineStock::where('medicine_stocks.id', $request->batch_id)
-            ->leftjoin('medicine_units', 'medicine_units.id', '=', 'medicine_stocks.unit')
+        $batch_details = MedicineStock::where('medicine_stocks.batch_no', $request->batch_no)
             ->first();
-        // dd($batch_no_all);
-        return response()->json($batch_no_all);
+        return response()->json($batch_details);
     }
 
     public function save_bad_medicine(Request $request)
     {
-        try {
-            DB::beginTransaction();
+      
             $bad_medicine = new ExpiredMedicine();
-            $bad_medicine->grm_id         =  '';
-            $bad_medicine->po_details_id  =  '';
-            $bad_medicine->emg_challan_id =  '';
-            $bad_medicine->stored_room =  $request->stored_room;
-            $bad_medicine->status =  'bad medicine updated';
-            $bad_medicine->catagory =  $request->medicine_category;
-            $bad_medicine->unit =  $request->unit;
-            $bad_medicine->medicine =  $request->medicine_name;
+            $bad_medicine->status =  'expire_medicine_updated';
+            $bad_medicine->medicine =  $request->med_id;
             $bad_medicine->batch_no =  $request->batch_no;
             $bad_medicine->qty =  $request->qty;
-            $bad_medicine->mrp =  $request->mrp;
-            $bad_medicine->discount =  $request->discount;
-            $bad_medicine->p_rate =  $request->purchase_price;
-            $bad_medicine->s_rate =  $request->sale_price;
-            $bad_medicine->cgst =  $request->cgst;
-            $bad_medicine->cgst_value =  $request->cgst_value;
-            $bad_medicine->sgst =  $request->sgst;
-            $bad_medicine->sgst_value =  $request->sgst_value;
-            $bad_medicine->igst =  $request->igst;
-            $bad_medicine->igst_value =  $request->igst_value;
-            $bad_medicine->amount =  $request->amount;
             $status = $bad_medicine->save();
 
-            DB::commit();
+     
             if ($status) {
-                return redirect()->route('bad-medicine-details', ['medicine_id' => $request->id])->with('success', 'Medicine Added Sucessfully');
+                return redirect()->route('bad-medicine-details', ['medicine_id' => $request->med_id])->with('success', 'Medicine Added Sucessfully');
             } else {
-                return redirect()->route('bad-medicine-details', ['medicine_id' => $request->id])->with('error', "Something Went Wrong");
+                return redirect()->route('bad-medicine-details', ['medicine_id' => $request->med_id])->with('error', "Something Went Wrong");
             }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->route('bad-medicine-details', ['medicine_id' => $request->id])->with('error', "Something Went Wrong");
-        }
+   
     }
 
     public function delete_medicine_bill($bill_id)

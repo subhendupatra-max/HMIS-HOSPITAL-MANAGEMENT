@@ -359,7 +359,6 @@ unset($__errorArgs, $__bag); ?>
         function getMedicineBatchDetails(medicine_name, rowid) {
             $('#medicine_batch' + rowid).html('');
             $('#medicine_batch' + rowid).html('<option value="">Select One...</option>');
-            alert(medicine_name);
             $.ajax({
                 url: "<?php echo e(route('find-medicine-batch-by-medicine-name')); ?>",
                 type: "POST",
@@ -392,6 +391,8 @@ unset($__errorArgs, $__bag); ?>
                 },
                 success: function(response) {
                     console.log(response);
+                    var avi_q = response
+                        .medicine_stock.available_quantity -  ( response.exp_medi + response.issue_medi);
                     $('#medicine_expiry_date' + rowid).val(response.medicine_details.exp_date);
                     $('#mrp' + rowid).val(response.medicine_details.mrp);
                     $('#sale_price' + rowid).val(response.medicine_details.s_rate);
@@ -400,8 +401,7 @@ unset($__errorArgs, $__bag); ?>
                     $('#igst' + rowid).val(response.medicine_details.igst);
                     $('#unit' + rowid).val(response.medicine_details.medicine_unit_name);
                     $('#unit_id' + rowid).val(response.medicine_details.unit_id);
-                    $('#avi_qty' + rowid).html('<h6 class="avlqty_text">Available Qty :' + response
-                        .medicine_stock.available_quantity + ' ' + response.medicine_details
+                    $('#avi_qty' + rowid).html('<h6 class="avlqty_text">Available Qty :' + avi_q + ' ' + response.medicine_details
                         .medicine_unit_name + ' </h6>')
                 },
                 error: function(error) {

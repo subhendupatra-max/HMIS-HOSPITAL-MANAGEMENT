@@ -9,9 +9,7 @@
 
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-billing' ? 'active' : ''); ?>" href="<?php echo e(route('emg-billing', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa fa-money-bill"></i>
     Billing</a>
-<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('patient charges')): ?>
-<a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-patient-charge' ? 'active' : ''); ?>" href="<?php echo e(route('charges-list-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa fa-file-invoice-dollar"></i> Add Charges</a>
-<?php endif; ?>
+
 
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Emg Pathology Investigation')): ?>
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('emg-pathology-investigation', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa fa-microscope"></i> Pathology Investigation</a>
@@ -27,4 +25,5 @@
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-operation' ? 'active' : ''); ?>" href="<?php echo e(route('emg-operation-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="far fa-calendar-check"></i> Operation</a>
 
 <a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('blood-bank-detials-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fas fa-tint"></i> Blood Details</a>
-<?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/emg/include/menu.blade.php ENDPATH**/ ?>
+
+<a class="dropdown-item <?php echo e(Request::segment(2) == 'emg-pathology-investigation' ? 'active' : ''); ?>" href="<?php echo e(route('prescription-lisitng-in-emg', ['id' => base64_encode($emg_patient_details->id)])); ?>"><i class="fa  fa-file-prescription "></i> Prescription</a><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/emg/include/menu.blade.php ENDPATH**/ ?>

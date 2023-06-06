@@ -15,12 +15,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
+                            <input name="med_id" value="<?php echo e($medicine_id); ?>" type="hidden" />
                             <div class="col-md-4 form-group">
                                 <select class="form-control select2-show-search" onchange="getDetails(this.value)" id="batch_no" name="batch_no" required>
                                     <option value="">Select Batch No</option>
-                                    <?php if($medicine_stock): ?>
-                                    <?php $__currentLoopData = $medicine_stock; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <option value="<?php echo e($value->id); ?>"><?php echo e($value->batch_no); ?></option>
+                                    <?php if($medicine__batchno_stock): ?>
+                                    <?php $__currentLoopData = $medicine__batchno_stock; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($value->batch_no); ?>"><?php echo e($value->batch_no); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     <?php endif; ?>
                                 </select>
@@ -38,39 +39,14 @@ unset($__errorArgs, $__bag); ?>
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="date" id="expiry_date" name="expiry_date" required />
+                                <span id="expiry_date"></span>
                                 <label for="expiry_date">Expiry Date<span class="text-danger">*</span> </label>
-
-                                <?php $__errorArgs = ['expiry_date'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
                             </div>
 
-                            <div class="col-md-4 form-group">
-                                <input type="text" id="unit" name="unit" />
-                                <label for="unit">Unit<span class="text-danger">*</span> </label>
-
-                                <?php $__errorArgs = ['unit'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                <span class="text-danger"><?php echo e($message); ?></span>
-                                <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                            </div>
+                         
 
                             <div class="col-md-4 form-group">
-                                <input type="text" id="qty" name="qty" />
+                                <input type="text" id="qty" name="qty" required />
                                 <label for="qty">Quantity<span class="text-danger">*</span> </label>
 
                                 <?php $__errorArgs = ['qty'];
@@ -128,21 +104,19 @@ unset($__errorArgs, $__bag); ?>
         $('#total_cgst').val(total_cgst);
     }
 
-    function getDetails(batch_no) {
-        // alert(batch_no);
+    function getDetails(batch_no_) {
+        //  alert(batch_no);
         $.ajax({
             url: "<?php echo e(route('find-expiry-date-by-batch-no')); ?>",
             type: "POST",
             data: {
                 _token: '<?php echo e(csrf_token()); ?>',
-                batch_id: batch_no,
+                batch_no: batch_no_,
             },
             success: function(response) {
                 console.log(response);
 
-                $('#expiry_date').val(response.exp_date);
-                $('#unit').val(response.unit);
-                $('#qty').val(response.qty);
+                $('#expiry_date').text(response.exp_date);
             },
             error: function(error) {
                 console.log(error);

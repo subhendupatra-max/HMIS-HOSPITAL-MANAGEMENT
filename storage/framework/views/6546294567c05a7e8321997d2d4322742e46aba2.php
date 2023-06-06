@@ -32,6 +32,7 @@
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
                         <thead>
                             <tr>
+                                <th class="border-bottom-0">#</th>
                                 <th class="border-bottom-0">Bill No</th>
                                 <th class="border-bottom-0">Case Id </th>
                                 <th class="border-bottom-0">Date</th>
@@ -45,6 +46,7 @@
                             <?php if(@$medicine_bill): ?>
                             <?php $__currentLoopData = $medicine_bill; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
+                                <td><?php echo e($loop->iteration); ?></td>
                                 <td><a class="dropdown-item text-info" href="<?php echo e(route('medicine-bill-details', ['bill_id' => base64_encode($value->id)])); ?>">
                                      <?php echo e(@$value->id); ?>
 
@@ -71,14 +73,16 @@
                                             <?php endif; ?>
 
 
-
-                                            <a class="dropdown-item" href="<?php echo e(route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
-                                                <i class="fa fa-edit"></i> Edit
-                                            </a>
-
+                                            <?php if($value->status != '1'): ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine bill')): ?>
+                                            
+                                            <?php endif; ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine bill')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('delete-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
                                                 <i class="fa fa-trash"></i> Delete
                                             </a>
+                                            <?php endif; ?>
+                                            <?php endif; ?>
 
                                         </div>
                                     </div>

@@ -135,6 +135,7 @@ class EmgBillingController extends Controller
                 $bill_details_medicine->purpose_for_id = $value->medicine_bill_id;
                 $bill_details_medicine->save();
                 // ====================== Billing Details ===========================================
+                MedicineBilling::where('id',$value->medicine_bill_id)->update(['status'=>'1']);
             }
         }
         //payment
@@ -187,16 +188,8 @@ class EmgBillingController extends Controller
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
 
         $emg_details = EmgDetails::where('id', $request->emg_id)->first();
-
-        if ($request->save == 'save_and_print') {
-            // $pdf = PDF::loadView('OPD._print.opd-biling-charges');
-            // return view('emg._print.opd-biling-charges', compact('header_image', 'emg_details'));
-
-            return redirect()->route('emg-billing', ['id' => base64_encode($request->emg_id)])->with('success', "Billing Successfully");
-        } else {
-
-            return redirect()->route('emg-billing', ['id' => base64_encode($request->emg_id)])->with('success', "Billing Successfully");
-        }
+        return redirect()->route('emg-billing', ['id' => base64_encode($request->emg_id)])->with('success', "Billing Successfully");
+        
         // } catch (\Throwable $th) {
         //     DB::rollback();
         //     return back()->withErrors(['error' => $th->getMessage()]);

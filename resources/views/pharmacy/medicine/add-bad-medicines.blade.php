@@ -15,13 +15,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            <input name="id" value="{{ $medicine_details->id }}" type="hidden" />
+                            <input name="med_id" value="{{ $medicine_id }}" type="hidden" />
                             <div class="col-md-4 form-group">
                                 <select class="form-control select2-show-search" onchange="getDetails(this.value)" id="batch_no" name="batch_no" required>
                                     <option value="">Select Batch No</option>
-                                    @if ($medicine_stock)
-                                    @foreach ($medicine_stock as $value)
-                                    <option value="{{ $value->id }}">{{ $value->batch_no }}</option>
+                                    @if ($medicine__batchno_stock)
+                                    @foreach ($medicine__batchno_stock as $value)
+                                    <option value="{{ $value->batch_no }}">{{ $value->batch_no }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -32,25 +32,14 @@
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="date" id="expiry_date" name="expiry_date" required />
+                                <span id="expiry_date"></span>
                                 <label for="expiry_date">Expiry Date<span class="text-danger">*</span> </label>
-
-                                @error('expiry_date')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
 
-                            <div class="col-md-4 form-group">
-                                <input type="text" id="unit" name="unit" />
-                                <label for="unit">Unit<span class="text-danger">*</span> </label>
-
-                                @error('unit')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                         
 
                             <div class="col-md-4 form-group">
-                                <input type="text" id="qty" name="qty" />
+                                <input type="text" id="qty" name="qty" required />
                                 <label for="qty">Quantity<span class="text-danger">*</span> </label>
 
                                 @error('qty')
@@ -101,21 +90,19 @@
         $('#total_cgst').val(total_cgst);
     }
 
-    function getDetails(batch_no) {
-        // alert(batch_no);
+    function getDetails(batch_no_) {
+        //  alert(batch_no);
         $.ajax({
             url: "{{ route('find-expiry-date-by-batch-no') }}",
             type: "POST",
             data: {
                 _token: '{{ csrf_token() }}',
-                batch_id: batch_no,
+                batch_no: batch_no_,
             },
             success: function(response) {
                 console.log(response);
 
-                $('#expiry_date').val(response.exp_date);
-                $('#unit').val(response.medicine_unit_name);
-                $('#qty').val(response.qty);
+                $('#expiry_date').text(response.exp_date);
             },
             error: function(error) {
                 console.log(error);
