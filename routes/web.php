@@ -285,7 +285,7 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
 
         // ==================================charges sub menu =================
         Route::group(['middleware' => ['permission:charges']], function () {
-            Route::get('charges-details', [ChargeController::class, 'charges_details'])->name('charges-details');
+            Route::any('charges-details', [ChargeController::class, 'charges_details'])->name('charges-details');
             Route::group(['middleware' => ['permission:add charges']], function () {
                 Route::get('charges-add', [ChargeController::class, 'charges_add'])->name('charges-add');
                 Route::post('save-charges-details', [ChargeController::class, 'save_charges_details'])->name('save-charges-details');

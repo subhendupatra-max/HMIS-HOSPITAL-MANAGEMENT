@@ -19,22 +19,37 @@
                 @endcan
             </div>
         </div>
+        <div class="card-header d-block">
+            <form action="{{ route('charges-details') }}" method="POST">
+                @csrf
+            <div class="row">
+               
+                <div class="col-md-4">
+                    <input type="text" name="charge_name" placeholder="Enter Charge Name" />
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-search"></i> Search</button>
+                </div>
+            
+            </div>
+        </form>
+        </div>
       @include('message.notification')
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
-                    <table id="example" class="table table-borderless text-nowrap key-buttons">
+                    <table class="table card-table table-vcenter text-nowrap">
                         <thead>
                             <tr>
-                                <th class="border-bottom-0">Sl. No</th>
-                                <th class="border-bottom-0">Charges name</th>
-                                <th class="border-bottom-0">Catagory Name</th>
-                                <th class="border-bottom-0">Sub Catagory Name</th>
-                                <th class="border-bottom-0">Standard Charges </th>
-                                <th class="border-bottom-0">Date</th>
-                                <th class="border-bottom-0">Description</th>
+                                <th class="border-bottom-1">Sl. No</th>
+                                <th class="border-bottom-1">Charges name</th>
+                                <th class="border-bottom-1">Catagory Name</th>
+                                <th class="border-bottom-1">Sub Catagory Name</th>
+                                <th class="border-bottom-1">Standard Charges </th>
+                                <th class="border-bottom-1">Date</th>
+                                <th class="border-bottom-1">Description</th>
                                 @can('delete charges','edit charges')
-                                <th>Action</th>
+                                <th class="border-bottom-1">Action</th>
                                 @endcan
                             </tr>
                         </thead>
@@ -75,12 +90,20 @@
                                     </div>
                                 </td>
                             </tr>
+                            
                             @endforeach
                         </tbody>
                     </table>
+                    
                 </div>
+               
             </div>
+            
         </div>
+        <div class="ml-3">
+           {!! $charges->links() !!} 
+        </div>
+        
     </div>
     <!--/div    route('editRole',['id'=>base64_encode($item->id)]) -->
 </div>

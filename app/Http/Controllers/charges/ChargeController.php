@@ -17,9 +17,16 @@ use function Ramsey\Uuid\v1;
 class ChargeController extends Controller
 {
 
-    public function charges_details()
+    public function charges_details(Request $request)
     {
-        $charges = Charge::orderBy('charges_name','ASC')->get();
+        if(empty($request->all()))
+        {
+            $charges = Charge::orderBy('charges_name','ASC')->paginate(10); 
+        }
+        else{
+            $charges = Charge::where('charges_name','like','%'.$request->charge_name.'%')->orderBy('charges_name','ASC')->paginate(10);
+        }
+       
         $charges_catagory_id = ChargesCatagory::all();
         $charges_sub_catagory_id = ChargesSubCatagory::all();
         $charges_units_id = ChargesUnit::all();
