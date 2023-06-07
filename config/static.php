@@ -23,7 +23,7 @@ return [
     'complain_source' => ['Online Advertising', 'From visitors', 'Front Office'],
     'operation_status' => ['Pending', 'Approved'],
     'permission_type' => ['Parallal'],
-    'charges_type' => ['General', 'Sastha-Swathi', 'ESI', 'Star Health', 'IOCL'],
+    'charges_type' => ['General', 'Sastha-Swathi', 'ESI', 'Star Health', 'IOCL','Corporate'],
     'discharge_type' => ['Death', 'Refferal', 'Normal', 'LAMA', 'DORB', 'DMA'],
     'patient_from' => ['Opd', 'Emg'],
     'main_operation_status' => ['Pending', 'Complete', 'Cancel'],
