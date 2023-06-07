@@ -26,6 +26,7 @@
             <table class="table table-bordered text-nowrap" id="example">
                 <thead>
                     <tr>
+                        <th scope="col">#</th>
                         <th scope="col">OPD Id</th>
                         <th scope="col">Patient Name</th>
                         <th scope="col">Gurdian Name</th>
@@ -40,6 +41,7 @@
                     <?php if(isset($opd_registaion_list)): ?>
                     <?php $__currentLoopData = $opd_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
+                        <td><?php echo e($loop->iteration); ?></td>
                         <td><a class="textlink"
                                 href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a>
                         </td>
@@ -107,16 +109,8 @@
                                     <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->latest_opd_visit_details_for_patient->id))); ?>"><i class="fa fa-print"></i>
                                          Print</a>
 
-                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd billing')): ?>
-                                    <a class="dropdown-item"
-                                        href="<?php echo e(route('add-opd-billing',['id'=> base64_encode($value->id)])); ?>"><i
-                                            class="fa fa-money-bill"></i>
-                                         Add Billing</a>
-                                    <?php endif; ?>
-                                    <a class="dropdown-item"
-                                        href="<?php echo e(route('payment-listing-in-opd', ['id' => base64_encode($value->id)])); ?>"><i
-                                            class="fa fa-rupee-sign"></i> Take Payment</a>
-                                    <a class="dropdown-item"  href="<?php echo e(route('ipd-registation-from-opd', ['id' => base64_encode($value->id), 'patient_source' => 'opd', 'source_id' => $value->id])); ?>"><i class="fa fa-bed"></i> Admission</a>
+                                    
+                                    
 
                                 </div>
                             </div>

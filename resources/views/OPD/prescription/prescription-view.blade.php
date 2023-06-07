@@ -4,17 +4,17 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-md-10">
-
+                <div class="col-md-10 card-title">
+                    Prescription Details
                 </div>
                 <div class="col-md-2">
                     <div class="row">
-                        @can('edit pathology test')
-                        <a class="btn btn-primary btn-sm mb-2" href="{{ route('edit-pathology-test-details',['id'=> base64_encode($opd_id)]) }}"><i class="fa fa-edit"></i> Edit</a>
+                        @can('edit prescription opd')
+                        <a class="btn btn-primary btn-sm mb-2" href="{{ route('edit-prescription-in-opd',['id'=> base64_encode($opdPrescription->id),'opd_id' => base64_encode($opd_id) ]) }}"><i class="fa fa-edit"></i> Edit</a>
                         @endcan
 
-                        @can('delete pathology test')
-                        <a class="btn btn-primary btn-sm ml-2 mb-2" href="{{ route('delete-pathology-test-details',['id'=> base64_encode($opd_id)]) }}"><i class="fa fa-trash"></i> Delete</a>
+                        @can('delete prescription opd')
+                        <a class="btn btn-primary btn-sm ml-2 mb-2" href="{{ route('delete-prescription-in-opd',['id'=> base64_encode($opdPrescription->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
                         @endcan
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                         @foreach ($EPrescriptionMedicine as $value)
 
                         <tr>
-                            <td>{{ @$value->medicine_details->catagory_name->medicine_catagory_name }}</td>
+                            <td>{{ @$value->catagory_name->medicine_catagory_name }}</td>
                             <td>{!! @$value->medicine_details->medicine_name !!}</td>
                             <td>{!! @$value->dose !!}</td>
                             <td>{!! @$value->interval !!}</td>

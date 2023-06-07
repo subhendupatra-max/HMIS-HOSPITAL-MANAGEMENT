@@ -1434,6 +1434,19 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
         Route::get('all-medicine-stock', [PharmacyController::class, 'all_medicine_stock'])->name('all-medicine-stock');
     });
 
+    //================================= summery bill ===================================================
+    Route::group(['middleware' => ['permission:Summery Bill']], function () {
+        Route::any('summery-bill-pharmacy/{case_id?}', [PharmacyController::class, 'summery_bill_pharmacy'])->name('summery-bill-pharmacy');
+
+        // Route::group(['middleware' => ['permission:Search Summery Bill']], function () {
+        //     Route::post('search-summery-bill-pharmacy/{case_id?}', [PharmacyController::class, 'search_summery_bill'])->name('search-summery-bill-pharmacy');
+        // });
+    });
+    //================================= summery bill ===================================================
+
+
+
+
     //================================= medicine ===================================================
     Route::group(['middleware' => ['permission:medicine']], function () {
         Route::get('all-medicine-listing', [MedicineController::class, 'medicine_details'])->name('all-medicine-listing');
@@ -2068,7 +2081,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
 
 
 
-        Route::group(['middleware' => ['permission:delete opd payment']], function () {
+        Route::group(['middleware' => ['permission:delete opd prescription']], function () {
             Route::get('delete-prescription-in-opd/{id}', [OpdPrescriptionController::class, 'delete_prescription_in_opd'])->name('delete-prescription-in-opd');
         });
     });
@@ -2671,6 +2684,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
             Route::post('add-new-ipd-billing', [BillingController::class, 'save_new_ipd_billing'])->name('add-new-ipd-billing');
         });
         Route::get('ipd-bill-print/{bill_id}', [BillingController::class, 'ipd_bill_print'])->name('ipd-bill-print');
+
         Route::get('ipd-bill-details/{bill_id}', [BillingController::class, 'bill_details_for_ipd'])->name('ipd-bill-details');
         Route::group(['middleware' => ['permission:edit ipd billing']], function () {
             Route::get('edit-ipd-bill/{bill_id}', [BillingController::class, 'edit_ipd_bill'])->name('edit-ipd-bill');

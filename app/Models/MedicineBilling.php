@@ -17,4 +17,9 @@ class MedicineBilling extends Model
     {
         return $this->belongsTo(User::class,'created_by','id');
     }
+
+    public function medicine_billing_details()
+    {
+        return $this->belongsTo(MedicineBillingDetails::class,'id','medicine_billing_id');
+    }
 }

@@ -9,13 +9,13 @@
                 </div>
                 <div class="col-md-8 text-right">
                     <div class="d-block">
-                        
-                        <a class="btn btn-primary btn-sm" href="<?php echo e(route('print-opd-bill',['bill_id'=>base64_encode($bill_details->id)])); ?>" data-placement="top" data-toggle="tooltip" title="Print Bill Copy"><i class="fa fa-print"></i> Print</a>
+                        <a class="btn btn-primary btn-sm" href="" data-placement="top" data-toggle="tooltip" title="Edit Bill"><i class="fa fa-edit"></i> Edit</a>
+                        <a class="btn btn-primary btn-sm" href="" data-placement="top" data-toggle="tooltip" title="Print Bill Copy"><i class="fa fa-print"></i> Print</a>
                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
                             
                         <div class="dropdown-menu dropdown-menu-right" style="">
-                            <?php echo $__env->make('OPD.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                            <?php echo $__env->make('Ipd.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         </div>
                     </div>
                 </div>
@@ -40,9 +40,9 @@
                                 <?php echo e(@$bill_details->created_details->last_name); ?></span>
                         </div>
 
-                        <div class="col-md-12 mt-3 mb-3">
+                        <!-- <div class="col-md-12 mt-3 mb-3">
                             <span class="requisition_header">Payment Status </span><span class="badge badge-success"><?php echo e($bill_details->payment_status); ?></span>
-                        </div>
+                        </div> -->
 
                         <div class="col-md-12 mt-3 mb-3">
                             <span class="requisition_header">Discount Status </span><span class="badge badge-success"><?php echo e($bill_details->discount_status); ?></span>
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-md-12 mt-3 mb-3">
                             <span class="requisition_header">Appoved Discount By </span><span class="requisition_text">
-                                : <?php echo e(@$discount_details->discount->given_by_details->first_name); ?> <?php echo e(@$discount_details->discount->given_by_details->last_name); ?> </span>
+                                : <?php echo e($discount_details->discount->given_by_details->first_name); ?> <?php echo e($discount_details->discount->given_by_details->last_name); ?> </span>
                         </div>
                         <?php endif; ?>
 
@@ -100,7 +100,6 @@
                                             <th>#</th>
                                             <th>Charge Name</th>
                                             <th>Charge Amount</th>
-                                            <th>Qty</th>
                                             <th>Tax</th>
                                             <th>Total</th>
                                         </tr>
@@ -112,7 +111,6 @@
                                             <th scope="row"><?php echo e($loop->iteration); ?></th>
                                             <td><?php echo e(@$charge->charges_name); ?></td>
                                             <td><?php echo e(@$charge->standard_charges); ?></td>
-                                            <td><?php echo e(@$charge->qty); ?></td>
                                             <td><?php echo e(@$charge->tax); ?></td>
                                             <td><?php echo e(@$charge->amount); ?></td>
                                         </tr>
@@ -156,10 +154,10 @@
                                             <?php echo e(@$bill_details->total_amount); ?> Rs</span>
                                     </div>
                                     <?php if($bill_details->discount_status == 'Approved' ): ?>
-                                    <div class="d-flex justify-content-end">
+                                    <!-- <div class="d-flex justify-content-end">
                                         <span class="bilpo_name">Discount </span><span class="bilpo_value"> :
                                             <?php echo e(@$discount_details->discount->given_discount_amount); ?> <?php echo e(@$discount_details->discount->given_discount_type == 'flat' ? 'Rs': '%'); ?></span>
-                                    </div>
+                                    </div> -->
                                     <?php endif; ?>
                                     <div class="d-flex justify-content-end">
                                         <span class="bilpo_name">Tax </span><span class="bilpo_value"> :
@@ -184,4 +182,4 @@
     </div>
 </div>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/OPD/billing/billing-details.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/Ipd/billing/billing-details.blade.php ENDPATH**/ ?>

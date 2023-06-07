@@ -4,17 +4,17 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-md-10">
-
+                <div class="col-md-10 card-title">
+                    Prescription Details
                 </div>
                 <div class="col-md-2">
                     <div class="row">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit pathology test')): ?>
-                        <a class="btn btn-primary btn-sm mb-2" href="<?php echo e(route('edit-pathology-test-details',['id'=> base64_encode($opd_id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit prescription opd')): ?>
+                        <a class="btn btn-primary btn-sm mb-2" href="<?php echo e(route('edit-prescription-in-opd',['id'=> base64_encode($opdPrescription->id),'opd_id' => base64_encode($opd_id) ])); ?>"><i class="fa fa-edit"></i> Edit</a>
                         <?php endif; ?>
 
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete pathology test')): ?>
-                        <a class="btn btn-primary btn-sm ml-2 mb-2" href="<?php echo e(route('delete-pathology-test-details',['id'=> base64_encode($opd_id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete prescription opd')): ?>
+                        <a class="btn btn-primary btn-sm ml-2 mb-2" href="<?php echo e(route('delete-prescription-in-opd',['id'=> base64_encode($opdPrescription->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                         <?php $__currentLoopData = $EPrescriptionMedicine; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                         <tr>
-                            <td><?php echo e(@$value->medicine_details->catagory_name->medicine_catagory_name); ?></td>
+                            <td><?php echo e(@$value->catagory_name->medicine_catagory_name); ?></td>
                             <td><?php echo @$value->medicine_details->medicine_name; ?></td>
                             <td><?php echo @$value->dose; ?></td>
                             <td><?php echo @$value->interval; ?></td>

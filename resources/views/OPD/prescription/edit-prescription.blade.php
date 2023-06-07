@@ -134,7 +134,7 @@
                                                 @foreach ($opdPrescriptionPathologyDetails as $key=>$value)
                                                 <tr id="rowpathology{{ $key }}">
                                                     <td>
-                                                        <select class="form-control select2-show-search" name="pathology_test_id[]" id="pathology_test_id{{ $key }}" required>
+                                                        <select class="form-control select2-show-search" name="pathology_test_id[]" id="pathology_test_id{{ $key }}" >
                                                             <option value=" ">Select test</option>
                                                             @foreach ($pathology_test as $item)
                                                             <option value="{{$item->id}}" {{ $item->id == @$value->test_id ? 'selected' : " "}}>{{$item->test_name}}</option>
@@ -170,7 +170,7 @@
                                                 @foreach ($opdPrescriptionRadiologyDetails as $key=>$value)
                                                 <tr id="rowradiology{{ $key }}">
                                                     <td>
-                                                        <select class="form-control select2-show-search" name="radiology_test_id[]" id="radiology_test_id{{ $key }}" required>
+                                                        <select class="form-control select2-show-search" name="radiology_test_id[]" id="radiology_test_id{{ $key }}" >
                                                             <option value=" ">Select test</option>
                                                             @foreach ($radiology_test as $item)
                                                             <option value="{{$item->id}}" {{ $item->id == @$value->test_id ? 'selected' : " "}}>{{$item->test_name}}</option>

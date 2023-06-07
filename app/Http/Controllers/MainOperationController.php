@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\CaseReference;
+use App\Models\caseReference;
 use Illuminate\Http\Request;
 use App\Models\Patient;
 use App\Models\Department;
@@ -39,7 +39,7 @@ class MainOperationController extends Controller
     {
         $operation_booking_id = base64_decode($id);
         $section_id =  OperationTheather::where('operation_booking_id', $operation_booking_id)->first();
-        $case_id = CaseReference::where('id', $section_id->case_id)->first();
+        $case_id = caseReference::where('id', $section_id->case_id)->first();
         $section_name = $case_id->section_id;
 
         $operation_details = OperationBooking::select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'patients.patient_prefix', 'operations.operation_name', 'departments.department_name', 'operation_catagories.operation_catagory_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'operation_bookings.operation_date_from', 'operation_bookings.operation_date_to', 'operation_bookings.id as booking_id', 'operation_bookings.ass_consultant_1', 'operation_bookings.ass_consultant_2', 'operation_bookings.anesthetist', 'operation_bookings.ot_assistant', 'operation_bookings.ot_technician', 'operation_bookings.anaethesia_type', 'operation_types.operation_type_name', 'operation_bookings.operation_date_to', 'operation_bookings.operation_date_from', 'operation_theathers.case_id', 'operation_theathers.section', 'operation_bookings.status', 'operation_bookings.remark')
@@ -96,7 +96,7 @@ class MainOperationController extends Controller
         $patient_details_information = Patient::where('id', '=', $request->patient_id)->first();
         // dd($patient_details_information);
         $patient = Patient::all();
-        $case_details = CaseReference::where('patient_id', '=', $patient_details_information->id)->orderBy('patient_id', 'DESC')->first();
+        $case_details = caseReference::where('patient_id', '=', $patient_details_information->id)->orderBy('patient_id', 'DESC')->first();
 
         // dd($case_details);
         // dd($case_details);

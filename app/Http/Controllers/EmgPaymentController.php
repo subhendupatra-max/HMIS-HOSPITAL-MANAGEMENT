@@ -102,7 +102,7 @@ class EmgPaymentController extends Controller
         // dd($emg_id);
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
 
-        $emg_patient_details = EMGDetails::where('id', $emg_id)->first();
+        $emg_patient_details = EmgDetails::where('id', $emg_id)->first();
         // dd($emg_patient_details);
         $emgPaymentDetails =  Payment::where('emg_id', $emg_id)->where('section', 'EMG')->first();
         // dd($opdPaymentDetails);

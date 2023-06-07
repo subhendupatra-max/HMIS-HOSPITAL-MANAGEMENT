@@ -907,6 +907,6 @@ class OpdController extends Controller
         // dd($blood_details);/
         $components_details = BloodComponentIssue::where('patient_id', $opd_patient_details->patient_id)->get();
 
-        return view('opd.blood-bank.blood-details', compact('opd_id', 'opd_patient_details', 'blood_details', 'components_details', 'patient_details_information'));
+        return view('OPD.blood-bank.blood-details', compact('opd_id', 'opd_patient_details', 'blood_details', 'components_details', 'patient_details_information'));
     }
 }

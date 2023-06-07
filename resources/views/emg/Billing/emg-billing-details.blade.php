@@ -35,9 +35,52 @@
                         <div class="col-md-12 mt-3 mb-3">
                             <span class="requisition_header">Billing </span><span class="requisition_text"><span class="badge badge-success">{{ $bill_details->status }}</span>
                         </div>
-                        <div class="col-md-12 mt-3 mb-3">
+                        <!-- <div class="col-md-12 mt-3 mb-3">
                             <span class="requisition_header">Payment Status </span><span class="badge badge-success">{{ $bill_details->payment_status }}</span>
+                        </div> -->
+                        <div class="col-md-12 mt-3 mb-3">
+                            <span class="requisition_header">Discount Status </span><span class="badge badge-success">{{
+                                $bill_details->discount_status }}</span>
                         </div>
+
+                        @if($bill_details->discount_status != 'Not applied')
+                        <div class="col-md-12 mt-3 mb-3">
+                            <span class="requisition_header">Requested Discount Amount : </span><span style="color:red">
+                                {{ $discount_details->discount->asking_discount_amount }} {{
+                                $discount_details->discount->discount_type == 'flat' ? 'Rs' : '%' }}</span>
+                        </div>
+                        <div class="col-md-12 mt-3 mb-3">
+                            <span class="requisition_header">Requested Discount Date </span><span
+                                class="requisition_text"> :
+                                <?= date('d-m-Y h:i', strtotime($discount_details->discount->asking_discount_time)) ?>
+                            </span>
+                        </div>
+                        <div class="col-md-12 mt-3 mb-3">
+                            <span class="requisition_header">Requested Discount By </span><span
+                                class="requisition_text"> : {{
+                                $discount_details->discount->request_by_details->first_name }} {{
+                                $discount_details->discount->request_by_details->last_name }} </span>
+                        </div>
+                        @endif
+                        @if($bill_details->discount_status == 'Approved')
+                        <div class="col-md-12 mt-3 mb-3">
+                            <span class="requisition_header">Appoved Discount Amount </span><span
+                                class=requisition_text"> : {{ $discount_details->discount->given_discount_amount }} {{
+                                $discount_details->discount->given_discount_type == 'flat' ? 'Rs' : '%' }}</span>
+                        </div>
+                        <div class="col-md-12 mt-3 mb-3">
+                            <span class="requisition_header">Appoved Discount Date </span><span
+                                class="requisition_text"> :
+                                <?= date('d-m-Y h:i', strtotime($discount_details->discount->given_discount_time)) ?>
+                            </span>
+                        </div>
+                        <div class="col-md-12 mt-3 mb-3">
+                            <span class="requisition_header">Appoved Discount By </span><span class="requisition_text">
+                                : {{ @$discount_details->discount->given_by_details->first_name }} {{
+                                @$discount_details->discount->given_by_details->last_name }} </span>
+                        </div>
+                        @endif
+
                     </div>
                 </div>
                 {{-- ========================================================================== --}}
@@ -64,7 +107,7 @@
                                         @foreach ($patient_charge_details as $charge)
                                         <tr>
                                             <th scope="row">{{ $loop->iteration }}</th>
-                                            <td>{{ @$charge->charge_details->charges_name }}</td>
+                                            <td>{{ @$charge->charges_name }}</td>
                                             <td>{{ @$charge->standard_charges }}</td>
                                             <td>{{ @$charge->tax }}</td>
                                             <td>{{ @$charge->amount }}</td>
@@ -79,13 +122,13 @@
                                         <span class="bilpo_name">Total </span><span class="bilpo_value"> :
                                             {{ @$bill_details->total_amount }}</span>
                                     </div>
-                                    <div class="d-flex justify-content-end">
+                                    <!-- <div class="d-flex justify-content-end">
                                         <span class="bilpo_name">Discount </span><span class="bilpo_value"> :
                                             00</span>
-                                    </div>
+                                    </div> -->
                                     <div class="d-flex justify-content-end">
                                         <span class="bilpo_name">Tax </span><span class="bilpo_value"> :
-                                            {{ @$bill_details->tax }}</span>
+                                            {{ @$bill_details->tax }}  %</span>
                                     </div>
                                     <div class="d-flex justify-content-end">
                                         <span class="bilpo_name">Grand Total </span><span class="bilpo_value"> :
