@@ -106,6 +106,7 @@ use App\Http\Controllers\bloodBank\BloodDonorController;
 use App\Http\Controllers\bloodBank\BloodBPosetiveController;
 use App\Http\Controllers\bloodBank\UnitTypeController;
 use App\Http\Controllers\bloodBank\ComponentsController;
+
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\front_office\PurposeController;
 use App\Http\Controllers\front_office\ComplainTypeController;
@@ -128,6 +129,8 @@ use App\Http\Controllers\MainOperationController;
 use App\Http\Controllers\OpdPrescriptionController;
 use App\Http\Controllers\IpdPrescriptionController;
 use App\Http\Controllers\EmgPrescriptionController;
+use App\Http\Controllers\ChargesTypeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -333,6 +336,23 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
             });
         });
         // ==================================charges sub catagory =================
+
+        // ==================================charges Type =================
+        Route::group(['middleware' => ['permission:charges Type']], function () {
+
+            Route::group(['middleware' => ['permission:add charges type']], function () {
+                Route::get('charges-type-details', [ChargesTypeController::class, 'charges_type_details'])->name('charges-type-details');
+                Route::post('save-charges-type-details', [ChargesTypeController::class, 'save_charges_type_details'])->name('save-charges-type-details');
+            });
+            Route::group(['middleware' => ['permission:delete charges type']], function () {
+                Route::get('delete-charges-type-details/{id}', [ChargesTypeController::class, 'delete_charges_type_details'])->name('delete-charges-type-details');
+            });
+            Route::group(['middleware' => ['permission:edit charges type']], function () {
+                Route::get('edit-charges-type-details/{id}', [ChargesTypeController::class, 'edit_charges_type_details'])->name('edit-charges-type-details');
+                Route::post('update-charges-type-details', [ChargesTypeController::class, 'update_charges_type_details'])->name('update-charges-type-details');
+            });
+        });
+        // ==================================charges Type =================
 
 
         // ==================================charges unit =================

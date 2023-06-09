@@ -267,11 +267,12 @@ class PharmacyController extends Controller
             $case_id = $request->case_id;
         }
 
-        $case_details = caseReference::where('id', $request->case_id)->get();
+        // $case_details = caseReference::where('id', $request->case_id)->get();
+        $medicine_billing = MedicineBilling::where('case_id', $request->case_id)->get();
 
-
+        // dd($case_details);
         $case_id = caseReference::all();
-        return view('pharmacy.summery-bill.listing-summery-bill', compact('case_id', 'case_details'));
+        return view('pharmacy.summery-bill.listing-summery-bill', compact('case_id', 'medicine_billing'));
     }
 
     // public function opd_registation(Request $request, $patientid = null)

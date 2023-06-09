@@ -92,31 +92,29 @@ unset($__errorArgs, $__bag); ?>
                                     </thead>
                                     <tbody>
 
-                                        <?php if(@$case_details[0]->id != null): ?>
-                                        <?php $__currentLoopData = $case_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <?php if(@$medicine_billing[0]->id != null): ?>
+                                        <?php $__currentLoopData = $medicine_billing; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                                         <tr>
 
-                                            <td> <?php echo e(@$value->medicine_billings->all_patient_details->first_name); ?> <?php echo e(@$value->medicine_billings->all_patient_details->middle_name); ?> <?php echo e(@$value->medicine_billings->all_patient_details->last_name); ?> </td>
+                                            <td> <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?> </td>
 
-                                            <td> <?php echo e(@$value->medicine_billings->section); ?> </td>
+                                            <td> <?php echo e(@$value->section); ?> </td>
 
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->medicine_batch); ?> </td>
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->medicine_expiry_date); ?> </td>
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->mrp); ?> </td>
+                                            <td> <?php echo e(@$value->medicine_billing_details->medicine_batch); ?> </td>
+                                            <td> <?php echo e(@$value->medicine_billing_details->medicine_expiry_date); ?> </td>
+                                            <td> <?php echo e(@$value->medicine_billing_details->mrp); ?> </td>
 
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->sale_price); ?> </td>
+                                            <td> <?php echo e(@$value->medicine_billing_details->sale_price); ?> </td>
 
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->qty); ?> </td>
+                                            <td> <?php echo e(@$value->medicine_billing_details->qty); ?> </td>
 
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->unit_name->medicine_unit_name); ?> </td>
+                                            <td> <?php echo e(@$value->medicine_billing_details->unit_name->medicine_unit_name); ?> </td>
 
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->cgst); ?> </td>
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->sgst); ?> </td>
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->igst); ?> </td>
-                                            <td> <?php echo e(@$value->medicine_billings->medicine_billing_details->amount); ?> </td>
-
-
+                                            <td> <?php echo e(@$value->medicine_billing_details->cgst); ?> </td>
+                                            <td> <?php echo e(@$value->medicine_billing_details->sgst); ?> </td>
+                                            <td> <?php echo e(@$value->medicine_billing_details->igst); ?> </td>
+                                            <td> <?php echo e(@$value->medicine_billing_details->amount); ?> </td>
 
                                         </tr>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
