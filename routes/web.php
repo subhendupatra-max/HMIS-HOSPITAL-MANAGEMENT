@@ -368,6 +368,7 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
     });
     Route::group(['middleware' => ['permission:add patient']], function () {
         Route::get('add-new-patient', [PatientController::class, 'add_new_patient'])->name('add_new_patient');
+        Route::get('add_new_patient-in-ipd', [PatientController::class, 'add_new_patient_in_ipd'])->name('add_new_patient-in-ipd');
         Route::post('submit_new_patient_details', [PatientController::class, 'submit_new_patient_details'])->name('submit_new_patient_details');
     });
     Route::group(['middleware' => ['permission:import patient']], function () {
@@ -1406,6 +1407,18 @@ Route::group(['middleware' => ['permission:referral']], function () {
     });
 });
 // ================================ referral ==============================================
+
+// ================================ referral payment ==============================================
+Route::group(['middleware' => ['permission:Referral Payment List']], function () {
+    Route::get('referral-payment-list', [ReferralController::class, 'referral_payment_list'])->name('referral-payment-list');
+    Route::get('add-referral-payment', [ReferralController::class, 'add_referral_payment'])->name('add-referral-payment');
+    Route::post('get-patient-by-referral', [ReferralController::class, 'get_patient_by_referral'])->name('get-patient-by-referral');
+    Route::post('get-bill-by-patient-id', [ReferralController::class, 'get_bill_by_patient_id'])->name('get-bill-by-patient-id');
+    Route::post('get-bill-amount-by-bill-id', [ReferralController::class, 'get_bill_amount_by_bill_id'])->name('get-bill-amount-by-bill-id');
+    Route::post('referral-commission-save', [ReferralController::class, 'referral_commission_save'])->name('referral-commission-save');
+    
+});
+// ================================ referral payment ==============================================
 
 
 // ================================== Pharmacy Main =================
@@ -2466,6 +2479,11 @@ Route::group(['middleware' => ['permission:front office']], function () {
 
 //================================= Ipd ===================================================
 Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'], function () {
+
+    Route::group(['middleware' => ['permission:Ipd Admission']], function () {
+        Route::any('direct-ipd-admission/{id?}', [IpdController::class, 'direct_ipd_admission'])->name('direct-ipd-admission');
+    });
+
     Route::get('ipd-patient-listing', [IpdController::class, 'index'])->name('ipd-patient-listing');
 
     Route::group(['middleware' => ['permission:IPD registation']], function () {
@@ -2947,6 +2965,12 @@ Route::group(['middleware' => ['permission:Report'], 'prefix' => 'report'], func
         Route::get('patient-death-details', [ReportController::class, 'patient_death_details'])->name('patient-death-details');
         Route::post('fetch-patient-death-details', [ReportController::class, 'fetch_patient_death_details'])->name('fetch-patient-death-details');
     });
+    
+    //for death report
+    Route::group(['middleware' => ['permission:Referral Report']], function () {
+        Route::get('referral-details-report', [ReportController::class, 'referral_details_report'])->name('referral-details-report');
+        Route::post('fetch-referral-payment-report', [ReportController::class, 'fetch_referral_payment_report'])->name('fetch-referral-payment-report');
+    });
 });
 //================================= Reports ==============================
 
@@ -3042,5 +3066,11 @@ Route::group(['middleware' => ['permission:Emg Blood Bank Details']], function (
 //================================= Death Record  ====================================
 Route::group(['middleware' => ['permission:death record']], function () {
     Route::get('death-record', [RecordController::class, 'death_record'])->name('death-record');
+});
+//================================= Death Record ===================================
+
+//================================= Death Record ===================================
+Route::group(['middleware' => ['permission:Apply Commission']], function () {
+    Route::get('apply-opd-commission/{case_id?}/{ref_id?}', [ReferralController::class, 'apply_opd_commission'])->name('apply-opd-commission');
 });
 //================================= Death Record ===================================

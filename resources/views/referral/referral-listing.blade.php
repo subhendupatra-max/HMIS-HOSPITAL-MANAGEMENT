@@ -9,6 +9,10 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="d-block">
+                            @can('Referral Payment List')
+                            <a href="{{ route('referral-payment-list') }}" class="btn btn-primary btn-sm"><i
+                                    class="fa fa-plus"></i> Referral Payment</a>
+                            @endcan
                             @can('')
                                 <a href="{{ route('add-referral') }}" class="btn btn-primary btn-sm"><i
                                         class="fa fa-user"></i> Add Referral Person</a>

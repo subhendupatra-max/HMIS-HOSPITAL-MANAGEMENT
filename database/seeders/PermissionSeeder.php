@@ -857,5 +857,16 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Blood Components Issue Report']);
         Permission::create(['name' => 'Blood Donor Report']);
         Permission::create(['name' => 'Death Report']);
+
+
+        Permission::create(['name' => 'Apply Commission']);
+        Permission::create(['name' => 'Referral Payment List']);
+        Permission::create(['name' => 'Add Referral Payment']);
+        Permission::create(['name' => 'Referral Report']);
+
+        //discharged aptient
+        Permission::create(['name' => 'Discharged Patient List']);
+        Permission::create(['name' => 'Ipd Admission']);
+
     }
 }

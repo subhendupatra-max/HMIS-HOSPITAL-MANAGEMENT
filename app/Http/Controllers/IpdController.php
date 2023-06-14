@@ -764,4 +764,21 @@ class IpdController extends Controller
         $header_image = AllHeader::where('header_name', 'opd_prescription')->first();
         return view('Ipd._print.draft-bill', compact('ipd_details', 'header_image', 'patient_charges', 'medicine'));
     }
+    public function direct_ipd_admission(Request $request, $id = null)
+    {
+        $all_patient = Patient::all();
+        $tpa_management = TpaManagement::get();
+        $referer = Referral::get();
+        $departments = Department::where('is_active', '1')->get();
+        $symptoms_types = SymptomsType::get();
+        $icd_code  = Diagonasis::all();
+        $units = BedUnit::all();
+        if( $request->all() != null && $id == null){
+             $patient_details_information = Patient::where('id',$request->patient_id)->first();
+        }
+        if( $request->all() == null && $id != null){
+            $patient_details_information = Patient::where('id',$id)->first();
+       }
+        return view('Ipd.admission',compact('all_patient','tpa_management','referer','departments','symptoms_types','icd_code','units','patient_details_information'));
+    }
 }

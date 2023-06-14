@@ -589,7 +589,7 @@ $login_details = DB::table('users')
                     <a class="dropdown-item" href="<?php echo e(route('ipd-billing-report')); ?>">IPD Billing Report</a>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('Payment Report')): ?>
-                    <a class="dropdown-item" href="<?php echo e(route('payment-report')); ?>">Payment Report</a>
+                    <a class="dropdown-item" href="<?php echo e(route('payment-report')); ?>">Income Report</a>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('Discharge Patient Report')): ?>
                     <a class="dropdown-item" href="<?php echo e(route('discharge-patient-report')); ?>">Discharge Patient Report</a>
@@ -611,6 +611,9 @@ $login_details = DB::table('users')
                     <?php endif; ?>
                     <?php if(auth()->user()->can('Death Report')): ?>
                     <a class="dropdown-item" href="<?php echo e(route('patient-death-details')); ?>">Death Report</a>
+                    <?php endif; ?>
+                    <?php if(auth()->user()->can('Referral Report')): ?>
+                    <a class="dropdown-item" href="<?php echo e(route('referral-details-report')); ?>">Referral Report</a>
                     <?php endif; ?>
                 </div>
             </li>

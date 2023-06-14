@@ -145,7 +145,10 @@
                 <?php echo csrf_field(); ?>
                 <div class="col-md-12">
                     <label>Description</label>
-                    <textarea name="description" class="content" ><?php echo e($patho_test->description); ?></textarea>
+                    <textarea name="description" class="content" >
+                        <?php echo e(@$pathology_patient_test_details->description != null ? $pathology_patient_test_details->description : $patho_test->description); ?>
+
+                    </textarea>
                 </div>
                 <input name="p_test_id" value="<?php echo e($p_id); ?>" type="hidden" />
 

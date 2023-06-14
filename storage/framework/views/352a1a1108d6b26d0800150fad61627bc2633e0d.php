@@ -11,16 +11,7 @@
 
                 <div class="col-md-6 text-right">
 
-                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
-                    <a href="" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
-                    <?php endif; ?>
-
-                    <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
-                    <div class="dropdown-menu dropdown-menu-right" style="">
-
-                        <a class="dropdown-item" href=""><i class="fa fa-plus"></i> OPD Registation</a>
-                        <a class="dropdown-item" href="><i class="fa fa-stethoscope"></i> EMG Registation</a>
-                    </div>
+                    
 
                 </div>
 
@@ -83,15 +74,43 @@
 
                                         </td>
                                     </tr>
-                                  
                                 </tbody>
                             </table>
                         </div>
                         <div class="col-md-6">
                             <table class="table">
                                 <tbody>
-                                  
+                                    <tr>
+                                        <td class="py-2 px-5">
+                                            <span class="font-weight-semibold w-50">Pathology Commission(%) </span>
+                                        </td>
+                                        <td class="py-2 px-5"><?php echo $referral->pathology_commission; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-5">
+                                            <spddress class="font-weight-semibold w-50">Radiology Commission(%) </span>
+                                        </td>
+                                        <td class="py-2 px-5">
+                                            <?php echo e(@$referral->radiology_commission); ?>
 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-5">
+                                            <span class="font-weight-semibold w-50">Ambulance Commission(%) </span>
+                                        </td>
+                                        <td class="py-2 px-5"><?php echo e(@$referral->ambulance_commission); ?>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-2 px-5">
+                                            <span class="font-weight-semibold w-50"> Blood Bank Commission(%) </span>
+                                        </td>
+                                        <td class="py-2 px-5"><?php echo e(@$referral->blood_bank_commission); ?>
+
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -120,13 +139,13 @@
                             <?php $__currentLoopData = $opd_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
                             $appoint_date = $value->appointment_date;
-                            $last_activity = DB::table('billings')->where('section','OPD')->where('case_id',$value->opd_details_data->case_id)->orderBy('id','DESC')->first();
+                            $last_activity = DB::table('patient_charges')->where('section','OPD')->where('case_id',$value->opd_details_data->case_id)->orderBy('id','DESC')->first();
 
-                            $total_billing = DB::table('billings')->where('section','OPD')->where('case_id',$value->opd_details_data->case_id)->sum('grand_total');
+                            $total_billing = DB::table('patient_charges')->where('section','OPD')->where('case_id',$value->opd_details_data->case_id)->sum('amount');
 
 
                             if($last_activity != null){
-                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->bill_date));
+                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->charges_date));
                             $startDate_ = new DateTime($appoint_date);
                             $endDate_ = new DateTime($end_date);
                             $interval = $startDate_->diff($endDate_);
@@ -189,12 +208,10 @@
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
-                                            <a class="dropdown-item" href="<?php echo e(route('opd-profile', ['id' => base64_encode($value->opd_details_data->id)])); ?>"><i class="fa fa-eye"></i> View</a>
-
-                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->id))); ?>"><i class="fa fa-print"></i>
-                                                Print</a>
-                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->id))); ?>"><i class="fa fa-cube"></i>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Apply Commission')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('apply-opd-commission',['case_id'=>base64_encode(@$value->opd_details_data->case_id),'ref_id' => base64_encode( @$referral->radiology_commission )] )); ?>"><i class="fa fa-cube"></i>
                                                 Apply Commission</a>
+                                        <?php endif; ?>
                                         </div>
                                     </div>
                                 </td>
@@ -228,12 +245,12 @@
                             <?php $__currentLoopData = $emg_registaion_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
                             $appoint_date = $value->appointment_date;
-                            $last_activity = DB::table('billings')->where('section','EMG')->where('case_id',$value->emg_details_data->case_id)->orderBy('id','DESC')->first();
+                            $last_activity = DB::table('patient_charges')->where('section','EMG')->where('case_id',$value->emg_details_data->case_id)->orderBy('id','DESC')->first();
 
-                            $total_billing = DB::table('billings')->where('section','EMG')->where('case_id',$value->emg_details_data->case_id)->sum('grand_total');
+                            $total_billing = DB::table('patient_charges')->where('section','EMG')->where('case_id',$value->emg_details_data->case_id)->sum('amount');
 
                             if($last_activity != null){
-                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->bill_date));
+                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->charges_date));
                             $startDate_ = new DateTime($appoint_date);
                             $endDate_ = new DateTime($end_date);
                             $interval = $startDate_->diff($endDate_);
@@ -241,11 +258,10 @@
                             }else{
                                 $tat = 'Only registation done';
                             }
-
-                             ?>
+                            ?>
                             <tr>
 
-                                <td><a class="textlink" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->emg_details_data->id)])); ?>"><?php echo e(@$value->emg_details_data->emg_prefix); ?><?php echo e(@$value->emg_details_data->id); ?></a></td>
+                                <td><a class="textlink" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->emg_details_data->id)])); ?>"><?php echo e(@$value->emg_details_data->id); ?></a></td>
                                 <td>
                                     <?php echo e(@$value->emg_details_data->all_patient_details->prefix); ?> <?php echo e(@$value->emg_details_data->all_patient_details->first_name); ?> <?php echo e(@$value->emg_details_data->all_patient_details->middle_name); ?> <?php echo e(@$value->emg_details_data->all_patient_details->last_name); ?> (<?php echo e(@$value->emg_details_data->all_patient_details->id); ?>)<br>
                                     <i class="fa fa-venus-mars text-primary"></i> <?php echo e(@$value->emg_details_data->all_patient_details->gender); ?> <i class="fa fa-calendar-plus-o text-primary"></i> <?php echo e(@$value->emg_details_data->all_patient_details->year); ?>Y <?php echo e(@$value->emg_details_data->all_patient_details->month); ?>M <?php echo e(@$value->emg_details_data->all_patient_details->day); ?>D
@@ -270,8 +286,8 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
 
-                                            <a class="dropdown-item" href="<?php echo e(route('emg-patient-profile',['id'=>base64_encode($value->emg_details_data->id)])); ?>"><i class="fa fa-eye"></i> View</a>
-                                            <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->id))); ?>"><i class="fa fa-cube"></i>
+                                     
+                                            <a class="dropdown-item" href=""><i class="fa fa-cube"></i>
                                                 Apply Commission</a>
 
                                         </div>
@@ -288,6 +304,7 @@
             <div class="card-body border-top">
                 <h5 class="font-weight-bold">IPD Registation Details </h5>
                 <div class="col-md-12">
+                    <div class="table-responsive">
                     <table class="table card-table table-vcenter text-nowrap table-default">
                         <thead>
                             <tr>
@@ -307,14 +324,14 @@
                             <?php $__currentLoopData = $ipd_patient_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
                             $appoint_date = $value->appointment_date;
-                            $last_activity = DB::table('billings')->where('section','IPD')->where('case_id',$value->case_id)->orderBy('id','DESC')->first();
+                            $last_activity = DB::table('patient_charges')->where('section','IPD')->where('case_id',$value->case_id)->orderBy('id','DESC')->first();
 
                             
-                            $total_billing = DB::table('billings')->where('section','IPD')->where('case_id',$value->case_id)->sum('grand_total');
+                            $total_billing = DB::table('patient_charges')->where('section','IPD')->where('case_id',$value->case_id)->sum('amount');
 
 
                             if($last_activity != null){
-                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->bill_date));
+                            $end_date = date('Y-m-d h:m:s',strtotime($last_activity->charges_date));
                             $startDate_ = new DateTime($appoint_date);
                             $endDate_ = new DateTime($end_date);
                             $interval = $startDate_->diff($endDate_);
@@ -322,10 +339,9 @@
                             }else{
                                 $tat = 'Only registation done';
                             }
-
-                             ?>
+                            ?>
                             <tr>
-                                <td><a class="textlink" href="<?php echo e(route('ipd-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->ipd_prefix); ?><?php echo e(@$value->id); ?></a></td>
+                                <td><a class="textlink" href="<?php echo e(route('ipd-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a></td>
                                 <td>
                                     <i class="fa fa-user text-primary"></i> <?php echo e(@$value->all_patient_details->prefix); ?>
 
@@ -373,13 +389,10 @@
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
-                                            <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                                            <a class="dropdown-item" href=""><i class="fa fa-print"></i> Print Admission
-                                                Form</a>
+                                           
                                             <a class="dropdown-item" href="<?php echo e(route('print-opd-patient', base64_encode(@$value->id))); ?>"><i class="fa fa-cube"></i>
                                                     Apply Commission</a>
-                                            <?php endif; ?>
+                                           
                                         </div>
                                     </div>
                                 </td>
@@ -388,6 +401,7 @@
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

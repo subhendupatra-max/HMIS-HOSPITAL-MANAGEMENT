@@ -49,6 +49,15 @@ class PatientController extends Controller
         $country = Country::all();
         return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts', 'country'));
     }
+    public function add_new_patient_in_ipd()
+    {
+        $blood_group = BloodGroup::all();
+        $state = State::all();
+        $districts = District::all();
+        $country = Country::all();
+        $type = 'IPD';
+        return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts', 'country','type'));
+    }
 
     public function submit_new_patient_details(Request $request)
     {
@@ -120,6 +129,9 @@ class PatientController extends Controller
                 return redirect()->route('opd-registration', base64_encode($patient->id))->with('success', 'Patient Created Sucessfully');
             } elseif ($request->type == "emg") {
                 return redirect()->route('emg-registation', base64_encode($patient->id))->with('success', 'Patient Created Sucessfully');
+            }
+            elseif ($request->type == "ipd") {
+                return redirect()->route('direct-ipd-admission',$patient->id)->with('success', 'Patient Created Successfully');
             } else {
                 return redirect()->route('patient_details')->with('success', 'Patient Created Sucessfully');
             }

@@ -23,6 +23,8 @@ use App\Models\bloodbank\BloodDonor;
 use App\Models\BloodComponentIssue;
 use App\Models\OperationCatagory;
 use App\Models\DeathReport;
+use App\Models\Referral;
+use App\Models\ReferralCommissionPayment;
 
 class ReportController extends Controller
 {
@@ -137,15 +139,16 @@ class ReportController extends Controller
 
     public function payment_report_index()
     {
-        $user = User::all();
+        $user = User::where('role','Receptionist')->get();
         return view('report.payment_report', compact('user'));
     }
 
     public function fetch_payment_report(Request $request)
     {
         $all_search_data = $request->all();
-
-        $payment_report = Payment::where(function ($query) use ($request) {
+        $from_date = date('Y-m-d h:m:s',strtotime($request->from_date));
+        $to_date = date('Y-m-d h:m:s',strtotime($request->to_date));
+        $payment_report = Payment::where(function ($query) use ($request,$to_date,$from_date) {
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
             }
@@ -159,13 +162,13 @@ class ReportController extends Controller
                 $query->where('payment_mode', $request->payment_mode);
             }
             if ($request->from_date != '') {
-                $query->where('payment_date', '>=', $request->from_date);
+                $query->where('payment_date', '>=', $from_date);
             }
             if ($request->to_date != '') {
-                $query->where('payment_date', '<=', $request->to_date);
+                $query->where('payment_date', '<=', $to_date);
             }
         })->get();
-        $user = User::all();
+        $user = User::where('role','Receptionist')->get();
         return view('report.payment_report', compact('payment_report', 'all_search_data', 'user'));
     }
 
@@ -493,5 +496,29 @@ class ReportController extends Controller
         // dd($blood_donor_details);
 
         return view('report.patient-death-report', compact('all_search_data', 'death_details'));
+    }
+
+    public function referral_details_report()
+    {
+        $referer  = Referral::get();
+        return view('report.referral-report',compact('referer'));
+    }
+    public function fetch_referral_payment_report(Request $request)
+    {
+        $all_search_data = $request->all();
+        $referral_payment_details = ReferralCommissionPayment::where(function ($query) use ($request) {
+            if ($request->referrar_name != '') {
+                $query->where('reference_id', '<=', $request->referrar_name);
+            }
+            if ($request->from_date != '') {
+                $query->where('date', '>=', $request->from_date);
+            }
+            if ($request->to_date != '') {
+                $query->where('date', '<=', $request->to_date);
+            }
+        })
+        ->get();
+        $referer  = Referral::get();
+        return view('report.referral-report', compact('all_search_data', 'referral_payment_details','referer'));
     }
 }

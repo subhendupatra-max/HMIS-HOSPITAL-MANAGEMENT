@@ -10,17 +10,14 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        {{-- @can('')
-                        <a href="#" class="btn btn-primary btn-sm"><i
-                                class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
-                            Add Patient</a>
-                        @endcan --}}
-
-                        @can('')
-                        <a href="{{ route('all-discharged-patient-in-ipd') }}" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
+                        @can('Ipd Admission')
+                        <a href="{{ route('direct-ipd-admission') }}" class="btn btn-primary btn-sm"><i class="fa fa-bed"></i>
+                            Admission</a>
+                        @endcan
+                        @can('Discharged Patient List')
+                        <a href="{{ route('all-discharged-patient-in-ipd') }}" class="btn btn-primary btn-sm"><i class="fa fa-user"></i>
                             Discharged Patient</a>
                         @endcan
-
                     </div>
                 </div>
             </div>

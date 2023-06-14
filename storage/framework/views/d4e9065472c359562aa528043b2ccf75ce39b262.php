@@ -19,6 +19,7 @@
             </div>
 
         </div>
+        
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body ">
             <form action="<?php echo e(route('save-bed-transfar-history')); ?>" method="POST" enctype="multipart/form-data">

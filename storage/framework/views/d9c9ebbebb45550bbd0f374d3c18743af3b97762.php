@@ -38,7 +38,7 @@
                                             <th>SL No.</th>
                                             <th>Start Time</th>
                                             <th>End Time</th>
-                                            <th>Duration (In Min)</th>
+                                            <th>Duration (In Seconds)</th>
 
                                         </tr>
                                     </thead>

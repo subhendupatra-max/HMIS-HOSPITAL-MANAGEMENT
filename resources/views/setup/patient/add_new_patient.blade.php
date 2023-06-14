@@ -371,6 +371,9 @@
                                                 <option value="emg" @if (isset($type)) {{ $type=='emg' ? 'selected' : ''
                                                     }} @endif>
                                                     EMG Registation</option>
+                                                <option value="ipd" @if (isset($type)) {{ $type=='IPD' ? 'selected' : ''
+                                                    }} @endif>
+                                                    IPD Admission</option>
                                             </select>
 
                                         </div>

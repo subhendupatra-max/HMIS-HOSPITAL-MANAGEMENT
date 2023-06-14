@@ -10,13 +10,14 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        
-
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
-                        <a href="<?php echo e(route('all-discharged-patient-in-ipd')); ?>" class="btn btn-primary btn-sm"><i class="fa-sharp fa-light fa-cart-flatbed-suitcase"></i>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Ipd Admission')): ?>
+                        <a href="<?php echo e(route('direct-ipd-admission')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-bed"></i>
+                            Admission</a>
+                        <?php endif; ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Discharged Patient List')): ?>
+                        <a href="<?php echo e(route('all-discharged-patient-in-ipd')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i>
                             Discharged Patient</a>
                         <?php endif; ?>
-
                     </div>
                 </div>
             </div>

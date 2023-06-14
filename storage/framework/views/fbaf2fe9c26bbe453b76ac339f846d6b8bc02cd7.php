@@ -168,7 +168,7 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-8 addnewde" >
-                        <span id="charge_details"></span>
+                        <span id="charge_details" style="font-size: 16px;"></span>
                     </div>
 
 

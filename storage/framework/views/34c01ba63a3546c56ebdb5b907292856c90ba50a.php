@@ -9,6 +9,10 @@
                     </div>
                     <div class="col-md-6 text-right">
                         <div class="d-block">
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Referral Payment List')): ?>
+                            <a href="<?php echo e(route('referral-payment-list')); ?>" class="btn btn-primary btn-sm"><i
+                                    class="fa fa-plus"></i> Referral Payment</a>
+                            <?php endif; ?>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('')): ?>
                                 <a href="<?php echo e(route('add-referral')); ?>" class="btn btn-primary btn-sm"><i
                                         class="fa fa-user"></i> Add Referral Person</a>

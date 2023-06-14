@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('content'); ?>
 
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
@@ -184,7 +185,7 @@ unset($__errorArgs, $__bag); ?>
     {
         var div_data = '';
         $('#charge').val('');
-        $("#charge").html("<option value='l'>loading... </option>");
+        $("#charge").html("<option value=''>loading... </option>");
         var ijij =  $('#charge_Sub_category').val();
         $.ajax({
                 url: "<?php echo e(route('find-charge-by-sub-catagory')); ?>",
@@ -231,10 +232,6 @@ unset($__errorArgs, $__bag); ?>
             });
     }
 </script>
-
-
-
-
 
 <script>
     function totalAmount() {

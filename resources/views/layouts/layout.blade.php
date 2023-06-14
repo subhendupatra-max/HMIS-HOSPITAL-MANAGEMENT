@@ -617,7 +617,7 @@ $login_details = DB::table('users')
                     <a class="dropdown-item" href="{{ route('ipd-billing-report') }}">IPD Billing Report</a>
                     @endif
                     @if (auth()->user()->can('Payment Report'))
-                    <a class="dropdown-item" href="{{ route('payment-report') }}">Payment Report</a>
+                    <a class="dropdown-item" href="{{ route('payment-report') }}">Income Report</a>
                     @endif
                     @if (auth()->user()->can('Discharge Patient Report'))
                     <a class="dropdown-item" href="{{ route('discharge-patient-report') }}">Discharge Patient Report</a>
@@ -639,6 +639,9 @@ $login_details = DB::table('users')
                     @endif
                     @if (auth()->user()->can('Death Report'))
                     <a class="dropdown-item" href="{{ route('patient-death-details') }}">Death Report</a>
+                    @endif
+                    @if (auth()->user()->can('Referral Report'))
+                    <a class="dropdown-item" href="{{ route('referral-details-report') }}">Referral Report</a>
                     @endif
                 </div>
             </li>

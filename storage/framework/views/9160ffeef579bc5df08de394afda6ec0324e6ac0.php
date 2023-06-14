@@ -43,7 +43,7 @@ unset($__errorArgs, $__bag); ?>
 
                     <div class="form-group col-md-6">
                         <label for="amount" class="form-label">Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="amount" name="amount" value="<?php echo e($editOpdPaymentDetails->amount); ?>">
+                        <input type="text" class="form-control" id="amount" name="amount" value="<?php echo e($editOpdPaymentDetails->payment_amount); ?>">
                         <?php $__errorArgs = ['amount'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
