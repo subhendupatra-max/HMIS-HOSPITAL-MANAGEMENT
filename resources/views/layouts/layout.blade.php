@@ -224,6 +224,9 @@ $login_details = DB::table('users')
                                 <li><a href="{{ route('charges-sub-catagory-details') }}">Charges sub
                                         catagory</a></li>
                                 @endcan
+                                @can('charges Type')
+                                <li><a href="{{ route('charges-type-details') }}">Charges Type</a></li>
+                                @endcan
                                 {{-- @can('charges unit')
                                 <li><a href="{{ route('charges-unit-details') }}">Charges Unit</a>
                         </li>
@@ -529,7 +532,10 @@ $login_details = DB::table('users')
 
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Inventory</a></li>
+                        @if (auth()->user()->can('Inventory'))
+                        <li><a href="{{ route('item-stock-listing') }}">Inventory</a></li>
+                        @endif
+
                         @if (auth()->user()->can('appointment main'))
                         <li><a href="{{ route('all-appointments-details') }}">Appointment</a></li>
                         @endif

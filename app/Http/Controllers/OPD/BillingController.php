@@ -821,4 +821,21 @@ class BillingController extends Controller
 
         return view('OPD.billing._print_opd_billing', compact('medicine_billings', 'patientCharges', 'bill', 'opd_details', 'header_image','discount_details'));
     }
+
+    public function bill_details_for_ipd($bill_id)
+    {
+        $billId = base64_decode($bill_id);
+        // dd($billId); 
+        $bill_details = Billing::where('id', $billId)->first();
+        // dd($bill_details); 
+        $discount_details = DiscountDetails::where('bill_id', $billId)->first();
+
+        $patient_charge_details = BillDetails::select('charges.charges_name', 'patient_charges.amount', 'patient_charges.standard_charges', 'patient_charges.tax', 'patient_charges.qty')->where('bill_details.purpose_for', '=', 'charges')->leftjoin('patient_charges', 'patient_charges.id', '=', 'bill_details.purpose_for_id')->leftjoin('charges', 'patient_charges.charge_name', '=', 'charges.id')->where('bill_details.bill_id', $billId)->get();
+
+        $medicine_bill_details = BillDetails::select('medicine_billings.total_amount', 'medicine_billings.bill_prefix', 'medicine_billings.id', 'medicine_billings.bill_date')->where('bill_details.purpose_for', '=', 'medicine')->leftjoin('medicine_billings', 'medicine_billings.id', '=', 'bill_details.purpose_for_id')->get();
+
+        $ipd_details = IpdDetails::where('case_id', $bill_details->case_id)->first();
+
+        return view('Ipd.billing.billing-details', compact('bill_details', 'patient_charge_details', 'ipd_details', 'discount_details', 'medicine_bill_details'));
+    }
 }

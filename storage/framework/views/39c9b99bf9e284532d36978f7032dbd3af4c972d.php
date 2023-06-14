@@ -9,6 +9,10 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('search Summery Bill')): ?>
+                        <a href="<?php echo e(route('summery-bill-pharmacy')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-file-invoice-dollar"></i> Summery Bill</a>
+                        <?php endif; ?>
+
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add pharmacy bill')): ?>
                         <a href="<?php echo e(route('generate-medicine-bill')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-file-invoice-dollar"></i> Generate Bill</a>
                         <?php endif; ?>
@@ -32,6 +36,7 @@
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
                         <thead>
                             <tr>
+                                <th class="border-bottom-0">#</th>
                                 <th class="border-bottom-0">Bill No</th>
                                 <th class="border-bottom-0">Case Id </th>
                                 <th class="border-bottom-0">Date</th>
@@ -45,10 +50,11 @@
                             <?php if(@$medicine_bill): ?>
                             <?php $__currentLoopData = $medicine_bill; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
+                                <td><?php echo e($loop->iteration); ?></td>
                                 <td><a class="dropdown-item text-info" href="<?php echo e(route('medicine-bill-details', ['bill_id' => base64_encode($value->id)])); ?>">
-                                     <?php echo e(@$value->id); ?>
+                                        <?php echo e(@$value->id); ?>
 
-                                </a></td>
+                                    </a></td>
                                 <td><?php echo e(@$value->case_id); ?></td>
                                 <td><?php echo e(date('d-m-Y h:i a',strtotime($value->bill_date))); ?></td>
                                 <td><?php echo e(@$value->all_patient_details->prefix); ?> <?php echo e(@$value->all_patient_details->first_name); ?> <?php echo e(@$value->all_patient_details->middle_name); ?> <?php echo e(@$value->all_patient_details->last_name); ?><br>
@@ -71,14 +77,16 @@
                                             <?php endif; ?>
 
 
-
-                                            <a class="dropdown-item" href="<?php echo e(route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
-                                                <i class="fa fa-edit"></i> Edit
-                                            </a>
-
+                                            <?php if($value->status != '1'): ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine bill')): ?>
+                                            
+                                            <?php endif; ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine bill')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('delete-medicine-bill',['bill_id'=>base64_encode($value->id)])); ?>">
                                                 <i class="fa fa-trash"></i> Delete
                                             </a>
+                                            <?php endif; ?>
+                                            <?php endif; ?>
 
                                         </div>
                                     </div>

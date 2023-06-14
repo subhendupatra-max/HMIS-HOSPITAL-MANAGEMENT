@@ -15,6 +15,7 @@ use App\Models\EPrescriptionMedicine;
 use App\Models\EPresPathologyTest;
 use App\Models\EPresRadiologyTest;
 use App\Models\AllHeader;
+use DB;
 
 class OpdPrescriptionController extends Controller
 {
@@ -23,6 +24,7 @@ class OpdPrescriptionController extends Controller
         $opd_id = base64_decode($id);
         // dd($opd_id);
         $opdPrescription =  EPrescription::where('opd_id', $opd_id)->where('section', 'OPD')->paginate(10);
+        // dd($opdPrescription);
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
 
         return view('OPD.prescription.prescription-listing', compact('opd_id', 'opdPrescription', 'opd_patient_details'));
@@ -108,7 +110,7 @@ class OpdPrescriptionController extends Controller
         }
         // DB::commit();
         if ($status) {
-            return redirect()->route('prescription-lisitng-in-opd', ['id' => base64_encode($request->opd_id)])->with('success', 'Opd Prescription Added Successfully');
+            return redirect()->route('prescription-lisitng-in-opd', ['id' => base64_encode($request->opd_id)])->with('success', 'Prescription Added Successfully');
         } else {
             return redirect()->route('add-prescription-in-opd', ['id' => base64_encode($request->opd_id)])->with('success', 'Something went wrong');
         }
@@ -127,6 +129,7 @@ class OpdPrescriptionController extends Controller
         $opdPrescriptionDetails =  EPrescription::where('id',  $p_id)->where('section', 'OPD')->first();
 
         $opdPrescriptionMedicineDetails =  EPrescriptionMedicine::where('e_prescriptions_id',  $p_id)->get();
+        // dd();
         $opdPrescriptionPathologyDetails =  EPresPathologyTest::where('e_prescriptions_id',  $p_id)->get();
         $opdPrescriptionRadiologyDetails =  EPresRadiologyTest::where('e_prescriptions_id',  $p_id)->get();
 
@@ -210,7 +213,7 @@ class OpdPrescriptionController extends Controller
         }
         // DB::commit();
         if ($status) {
-            return redirect()->route('prescription-lisitng-in-opd', ['id' => base64_encode($request->opd_id)])->with('success', 'Opd Prescription Updated Successfully');
+            return redirect()->route('prescription-lisitng-in-opd', ['id' => base64_encode($request->opd_id)])->with('success', 'Prescription Updated Successfully');
         } else {
             return redirect()->route('add-prescription-in-opd', ['id' => base64_encode($request->opd_id)])->with('success', 'Something went wrong');
         }
@@ -222,10 +225,13 @@ class OpdPrescriptionController extends Controller
     public function delete_prescription_in_opd($id)
     {
         $p_id = base64_decode($id);
-        EPrescription::where('id', $p_id)->first()->delete();
+        // dd($p_id);
         EPresPathologyTest::where('e_prescriptions_id', $p_id)->get()->delete();
+        // dd($p_id);
         EPresRadiologyTest::where('e_prescriptions_id', $p_id)->get()->delete();
         EPrescriptionMedicine::where('e_prescriptions_id', $p_id)->get()->delete();
+        EPrescription::where('id', $p_id)->first()->delete();
+        //  dd($id);
 
         return redirect()->back()->with('success', 'Prescription Deleted Succesfully');
     }
@@ -235,12 +241,13 @@ class OpdPrescriptionController extends Controller
         $id = base64_decode($id);
         $opd_id = base64_decode($opd_id);
         // dd($opd_id);
-        $opdPrescription =  EPrescription::where('id', $id)->where('section', 'EMG')->first();
+        $opdPrescription =  EPrescription::where('id', $id)->where('section', 'OPD')->first();
+        // dd($opdPrescription);
         $EPresPathologyTest = EPresPathologyTest::where('e_prescriptions_id', $id)->get();
         // dd();
         $EPresRadiologyTest = EPresRadiologyTest::where('e_prescriptions_id', $id)->get();
         $EPrescriptionMedicine = EPrescriptionMedicine::where('e_prescriptions_id', $id)->get();
-
+        //   dd($EPrescriptionMedicine);
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
 
         return view('OPD.prescription.prescription-view', compact('opd_id', 'opdPrescription', 'opd_patient_details', 'EPrescriptionMedicine', 'EPresPathologyTest', 'EPresRadiologyTest'));
@@ -252,6 +259,7 @@ class OpdPrescriptionController extends Controller
         $opd_id = base64_decode($opd_id);
         $opd_patient_details = OpdDetails::where('id', $opd_id)->first();
         $opdPrescription =  EPrescription::where('id', $id)->where('section', 'OPD')->first();
+
         $EPresPathologyTest = EPresPathologyTest::where('e_prescriptions_id', $id)->get();
 
         $EPresRadiologyTest = EPresRadiologyTest::where('e_prescriptions_id', $id)->get();

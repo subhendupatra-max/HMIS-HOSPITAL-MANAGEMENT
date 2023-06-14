@@ -65,7 +65,7 @@
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:250px">
                         <b>UHID No: <?php echo e(@$opd_patient_details->all_patient_details->patient_prefix); ?><?php echo e(@$opd_patient_details->all_patient_details->id); ?></b>
                     </td>
-                    <td rowspan="2"  style="text-align: center;border: 1px solid #899499;width:285px">
+                    <td rowspan="2" style="text-align: center;border: 1px solid #899499;width:285px">
                         <!-- <img src="<?php echo e(asset('public/hospital_details/barcode.png')); ?>" style="width: 80px;"> -->
                         <?php
                         $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
@@ -73,7 +73,7 @@
 
                         <img src="data:image/png;base64,<?php echo e(base64_encode($generatorPNG->getBarcode('@$opd_patient_details->opd_prefix @$opd_patient_details->id', $generatorPNG::TYPE_CODE_128))); ?>" style="width: 160px;height:50px">
                     </td>
-                    <td rowspan="2"  style="text-align: center;border: 1px solid #899499;width:105px">
+                    <td rowspan="2" style="text-align: center;border: 1px solid #899499;width:105px">
                         <!-- <img src="<?php echo e(asset('public/hospital_details/qr.png')); ?>" style="width: 80px;"> -->
                         <?php
                         $opd_de = $opd_patient_details->opd_prefix . '' . $opd_patient_details->id;

@@ -47,7 +47,7 @@
                                 <td><?php echo e($loop->iteration); ?></td>
                                 <td><?php echo e(date('d-m-Y h:i a',strtotime(@$item->prescription_date))); ?></td>
                                 <td><?php echo e(@$item->eprescription_details->medicine_details->medicine_name); ?></td>
-                                <td><?php echo e(@$item->eprescription_details->medicine_details->catagory_name->medicine_catagory_name); ?></td>
+                                <td><?php echo e(@$item->eprescription_details->catagory_name->medicine_catagory_name); ?></td>
                                 <td><?php echo e(@$item->eprescription_details->dose); ?></td>
                                 <td><?php echo e(@$item->eprescription_details->interval); ?></td>
                                 <td>
@@ -63,7 +63,7 @@
                                             <?php endif; ?>
 
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-payment-in-opd')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('delete-payment-in-opd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('delete-prescription-in-opd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                             <?php endif; ?>
 <!-- 
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-payment-in-opd')): ?>

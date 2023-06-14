@@ -49,17 +49,20 @@ unset($__errorArgs, $__bag); ?>
                             <thead>
                                 <tr>
                                     
-                                    <th scope="col" style="width: 15%">Category <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 10%">Category <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 15%">Subcategory <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 17%">Subcategory <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 25%">Charge Name <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 25">Charge Name <span class="text-danger">*</span>
                                     </th>
-                                    <th scope="col" style="width: 15%">Charge <span class="text-danger">*</span>
+                                    <th scope="col" style="width: 10%">Charge <span class="text-danger">*</span>
                                     </th>
                                     <th scope="col" style="width: 10%">Qty <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 10%">Tax <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 10%">Amount <span class="text-danger">*</span></th>
+                          
+                                    <th scope="col" style="width: 10%">CGST <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">SGST <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 10%">IGST <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 8%">Amount <span class="text-danger">*</span></th>
                                     
                                     </th>
                                 </tr>
@@ -88,13 +91,19 @@ unset($__errorArgs, $__bag); ?>
                                     </td>
 
                                     <td>
-                                        <input class="form-control" name="standard_charges[]" id="standard_charges<?php echo e($key); ?>" value="<?php echo e($value->standard_charges); ?>" readonly />
-                                    </td>
-                                    <td>
                                         <input class="form-control" value="<?php echo e($value->qty); ?>" readonly name="qty[]" id="qty<?php echo e($key); ?>" />
                                     </td>
                                     <td>
-                                        <input class="form-control" value="<?php echo e($value->tax); ?>" readonly name="tax[]" id="tax<?php echo e($key); ?>" />
+                                        <input class="form-control" value="<?php echo e($value->standard_charges); ?>" readonly name="standard_charges[]" id="standard_charges<?php echo e($key); ?>" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" value="<?php echo e($value->cgst); ?>" readonly name="cgst[]" id="cgst<?php echo e($key); ?>" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" value="<?php echo e($value->sgst); ?>" readonly name="sgst[]" id="sgst<?php echo e($key); ?>" />
+                                    </td>
+                                    <td>
+                                        <input class="form-control" value="<?php echo e($value->igst); ?>" readonly name="igst[]" id="igst<?php echo e($key); ?>" />
                                     </td>
                                     <td>
                                         <input class="form-control" value="<?php echo e($value->amount); ?>" readonly name="amount[]" id="amount<?php echo e($key); ?>" />
@@ -128,8 +137,9 @@ unset($__errorArgs, $__bag); ?>
                             </thead>
                             <tbody>
                                 <?php $__currentLoopData = $medicine_charges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id<?php echo e($key); ?>" value="<?php echo e($value->id); ?>" />
                                 <tr id="medicineRow<?php echo e($key); ?>">
-                                    <input text="hidden" class="form-control" name="medicine_bill_id[]" id="medicine_bill_id<?php echo e($key); ?>" value="<?php echo e($value->id); ?>" />
+                                    
                                     <td><?php echo e($loop->iteration); ?></td>
                                     <td><?php echo e($value->bill_prefix); ?><?php echo e($value->id); ?></td>
                                     <td><?php echo e(date('d-m-Y h:i a',strtotime($value->bill_date))); ?></td>
@@ -208,10 +218,8 @@ unset($__errorArgs, $__bag); ?>
                                         <option value="flat">Flat</option>
                                     </select>
                                 </div>
-                                <div class="d-flex justify-content-end mt-2">
-                                    <span class="biltext">Tax</span>
-                                    <input type="text" name="total_tax" onkeyup="gettotal()" value="0" id="total_tax" class="form-control myfld">
-                                </div>
+                                
+
                                 <div class="d-flex justify-content-end thrdarea">
                                     <span class="biltext">Grand Total</span>
                                     <input type="text" name="grand_total" readonly id="grnd_total" value="00" class="form-control myfld">
@@ -235,7 +243,7 @@ unset($__errorArgs, $__bag); ?>
 
                 <div class="btn-list p-3">
                     <button class="btn btn-primary btn-sm float-right" type="button" onclick="gettotal()"><i class="fa fa-calculator"></i> Calculate</button>
-                    <button class="btn btn-primary btn-sm float-right " type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
+                    <button class="btn btn-primary btn-sm float-right mr-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
                   
                 </div>
             </div>
@@ -335,7 +343,9 @@ unset($__errorArgs, $__bag); ?>
         $('#total_discount' + row_id).val('0');
         $('#total_am' + row_id).val('0');
         $('#grnd_total' + row_id).val('0');
-        $('#total_tax' + row_id).val('0');
+        // $('#total_cgst' + row_id).val('0');
+        // $('#total_sgst' + row_id).val('0');
+        // $('#total_igst' + row_id).val('0');
         $(`#row${row_id}`).remove();
         gettotal();
     }
@@ -344,7 +354,9 @@ unset($__errorArgs, $__bag); ?>
         $('#total_discount' + row_id).val('0');
         $('#total_am' + row_id).val('0');
         $('#grnd_total' + row_id).val('0');
-        $('#total_tax' + row_id).val('0');
+        // $('#total_cgst' + row_id).val('0');
+        // $('#total_sgst' + row_id).val('0');
+        // $('#total_igst' + row_id).val('0');
         $(`#medicineRow${row_id}`).remove();
         gettotal();
     }
@@ -353,7 +365,9 @@ unset($__errorArgs, $__bag); ?>
         $('#total_discount' + row_id).val('');
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
-        $('#total_tax' + row_id).val('');
+        // $('#total_cgst' + row_id).val('');
+        // $('#total_sgst' + row_id).val('');
+        // $('#total_igst' + row_id).val('');
         $('#charge_sub_category' + row_id).empty();
         $('#charge_name' + row_id).empty();
         $('#amount' + row_id).val('');
@@ -366,7 +380,9 @@ unset($__errorArgs, $__bag); ?>
         $('#total_discount' + row_id).val('');
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
-        $('#total_tax' + row_id).val('');
+        // $('#total_cgst' + row_id).val('');
+        // $('#total_sgst' + row_id).val('');
+        // $('#total_igst' + row_id).val('');
         let charge_set = $('#charge_set' + row_id).val();
         $('#charge_sub_category' + row_id).empty();
         $('#charge_name' + row_id).empty();
@@ -397,7 +413,9 @@ unset($__errorArgs, $__bag); ?>
         $('#total_discount' + row_id).val('');
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
-        $('#total_tax' + row_id).val('');
+        // $('#total_cgst' + row_id).val('');
+        // $('#total_sgst' + row_id).val('');
+        // $('#total_igst' + row_id).val('');
         $('#charge_name' + row_id).empty();
         $('#amount' + row_id).val('');
         $('#tax' + row_id).val('');
@@ -429,7 +447,9 @@ unset($__errorArgs, $__bag); ?>
         $('#total_discount' + row_id).val('');
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
-        $('#total_tax' + row_id).val('');
+        // $('#total_cgst' + row_id).val('');
+        // $('#total_sgst' + row_id).val('');
+        // $('#total_igst' + row_id).val('');
         $('#tax' + row_id).val('');
         $('#standard_charges' + row_id).val('');
         $('#amount' + row_id).val('');
@@ -464,7 +484,9 @@ unset($__errorArgs, $__bag); ?>
         $('#total_discount' + row_id).val('');
         $('#total_am' + row_id).val('');
         $('#grnd_total' + row_id).val('');
-        $('#total_tax' + row_id).val('');
+        // $('#total_cgst' + row_id).val('');
+        // $('#total_sgst' + row_id).val('');
+        // $('#total_igst' + row_id).val('');
 
         $('#amount' + row_id).val('');
         $('#tax' + row_id).val('');
@@ -491,10 +513,14 @@ unset($__errorArgs, $__bag); ?>
     function getamountwithtax(row_id) {
 
         let standard_chargesss = $('#standard_charges' + row_id).val();
-        let tax = $('#tax' + row_id).val();
+        // let cgst = $('#cgst' + row_id).val();
+        // let igst = $('#igst' + row_id).val();
+        // let sgst = $('#sgst' + row_id).val();
         let qty = $('#qty' + row_id).val();
         var standard_charges = parseFloat(standard_chargesss) * qty;
-        let amount = parseFloat(standard_charges) + (parseFloat(standard_charges) * (parseFloat(tax) / 100));
+        var tax = 0 ;
+    //    var tax = parseFloat(standard_charges) * ((parseFloat(cgst) + parseFloat(sgst) + (parseFloat(igst)) / 100));
+        let amount = parseFloat(standard_charges) + parseFloat(tax);
         let amount_ = parseFloat(amount).toFixed(2);
         $('#amount' + row_id).val(amount_);
         gettotal(row_id);
@@ -525,14 +551,19 @@ unset($__errorArgs, $__bag); ?>
         } else {
             var r = parseFloat(t_m) - parseFloat(total_discount);
         }
-        var total_tax = $('#total_tax').val();
+        // var total_tax = $('#total_tax').val();
+        // let cgst = $('#total_cgst').val();
+        // let igst = $('#total_igst').val();
+        // let sgst = $('#total_sgst').val();
+        // var total_tax = parseFloat(cgst) + parseFloat(sgst) + (parseFloat(igst));
+        var total_tax = 0 ;
         if (total_tax != 0) {
             var grnd_total = parseFloat(r + (r * (total_tax / 100)));
         } else {
             var grnd_total = parseFloat(r);
         }
 
-        $('#grnd_total').val(grnd_total);
+        $('#grnd_total').val(grnd_total.toFixed(2));
     }
 </script>
 <?php $__env->stopSection(); ?>

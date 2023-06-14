@@ -9,6 +9,10 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
+                        @can('search Summery Bill')
+                        <a href="{{ route('summery-bill-pharmacy') }}" class="btn btn-primary btn-sm"><i class="fa fa-file-invoice-dollar"></i> Summery Bill</a>
+                        @endcan
+
                         @can('add pharmacy bill')
                         <a href="{{ route('generate-medicine-bill') }}" class="btn btn-primary btn-sm"><i class="fa fa-file-invoice-dollar"></i> Generate Bill</a>
                         @endcan
@@ -48,8 +52,8 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td><a class="dropdown-item text-info" href="{{ route('medicine-bill-details', ['bill_id' => base64_encode($value->id)]) }}">
-                                     {{ @$value->id }}
-                                </a></td>
+                                        {{ @$value->id }}
+                                    </a></td>
                                 <td>{{ @$value->case_id }}</td>
                                 <td>{{ date('d-m-Y h:i a',strtotime($value->bill_date)) }}</td>
                                 <td>{{ @$value->all_patient_details->prefix }} {{ @$value->all_patient_details->first_name }} {{ @$value->all_patient_details->middle_name }} {{ @$value->all_patient_details->last_name }}<br>
@@ -74,7 +78,7 @@
                                             @if($value->status != '1')
                                             @can('edit medicine bill')
                                             {{-- <a class="dropdown-item" href="{{route('edit-medicine-bill',['bill_id'=>base64_encode($value->id)])}}">
-                                                <i class="fa fa-edit"></i> Edit
+                                            <i class="fa fa-edit"></i> Edit
                                             </a> --}}
                                             @endcan
                                             @can('delete medicine bill')

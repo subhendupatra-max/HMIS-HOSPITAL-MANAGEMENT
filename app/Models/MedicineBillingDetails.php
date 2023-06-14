@@ -16,4 +16,14 @@ class MedicineBillingDetails extends Model
     {
         return $this->belongsTo(MedicineBilling::class, 'medicine_billing_id', 'id');
     }
+//
+    public function medicine_names()
+    {
+        return $this->belongsTo(Medicine::class, 'medicine_name', 'id');
+    }
+
+    public function unit_name()
+    {
+        return $this->belongsTo(Medicine::class, 'unit_id', 'id');
+    }
 }

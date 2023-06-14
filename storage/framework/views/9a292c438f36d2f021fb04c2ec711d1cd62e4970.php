@@ -24,7 +24,7 @@
             <div class="card-body">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 newaddappon">
                             <label class="form-label">Workshop <span class="text-danger">*</span></label>
                             <select class="form-control select2-show-search"  name="stockroom">
                                 <option value="">Select Workshop</option>
@@ -46,7 +46,8 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Date <span class="text-danger">*</span></label>
+                            <!-- <label class="form-label">Date <span class="text-danger">*</span></label> -->
+                            <h6 class="inventorydate">Date <span class="text-danger">*</span></h6>
                             <input type="date" required name="date" value="<?php echo e(date('Y-m-d')); ?>" class="form-control">
                             <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -170,10 +171,11 @@ unset($__errorArgs, $__bag); ?>
                 </div>
                 <hr style="margin: 15px !important">
                 <span class="text-danger">** Hold cursor point on this field and scan item barcode or enter item code **</span>
-                <div class="col-md-6">
-                    <label class="form-label">Search using Item code or bar code</label>
-                    <input type="text" id="item_code" onblur="addnew()" placeholder="Enter Item code" class="form-control">
-                </div>
+                <div class="col-md-6 newaddappon">
+                    <!-- <label class="form-label">Search using Item code or bar code</label>
+                    <input type="text" id="item_code" onblur="addnew()" placeholder="Enter Item code" class="form-control"> -->
+                    <input type="text"  id="item_code" onblur="addnew()"  name="alternate_addresss" required />
+                        <label for="item_code"> Search using Item code or bar code</div>
 
                 <div class="">
                     <div class="table-responsive">

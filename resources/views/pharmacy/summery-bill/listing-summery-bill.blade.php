@@ -84,31 +84,29 @@
                                     </thead>
                                     <tbody>
 
-                                        @if (@$case_details[0]->id != null)
-                                        @foreach ($case_details as $value)
+                                        @if (@$medicine_billing[0]->id != null)
+                                        @foreach ($medicine_billing as $value)
 
                                         <tr>
 
-                                            <td> {{ @$value->medicine_billings->all_patient_details->first_name}} {{ @$value->medicine_billings->all_patient_details->middle_name}} {{ @$value->medicine_billings->all_patient_details->last_name}} </td>
+                                            <td> {{ @$value->all_patient_details->first_name}} {{ @$value->all_patient_details->middle_name}} {{ @$value->all_patient_details->last_name}} </td>
 
-                                            <td> {{ @$value->medicine_billings->section}} </td>
+                                            <td> {{ @$value->section}} </td>
 
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->medicine_batch }} </td>
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->medicine_expiry_date }} </td>
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->mrp }} </td>
+                                            <td> {{ @$value->medicine_billing_details->medicine_batch }} </td>
+                                            <td> {{ @$value->medicine_billing_details->medicine_expiry_date }} </td>
+                                            <td> {{ @$value->medicine_billing_details->mrp }} </td>
 
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->sale_price }} </td>
+                                            <td> {{ @$value->medicine_billing_details->sale_price }} </td>
 
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->qty }} </td>
+                                            <td> {{ @$value->medicine_billing_details->qty }} </td>
 
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->unit_name->medicine_unit_name }} </td>
+                                            <td> {{ @$value->medicine_billing_details->unit_name->medicine_unit_name }} </td>
 
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->cgst }} </td>
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->sgst }} </td>
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->igst }} </td>
-                                            <td> {{ @$value->medicine_billings->medicine_billing_details->amount }} </td>
-
-
+                                            <td> {{ @$value->medicine_billing_details->cgst }} </td>
+                                            <td> {{ @$value->medicine_billing_details->sgst }} </td>
+                                            <td> {{ @$value->medicine_billing_details->igst }} </td>
+                                            <td> {{ @$value->medicine_billing_details->amount }} </td>
 
                                         </tr>
                                         @endforeach

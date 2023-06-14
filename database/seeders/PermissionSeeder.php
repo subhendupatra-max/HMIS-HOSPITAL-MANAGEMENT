@@ -868,5 +868,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Discharged Patient List']);
         Permission::create(['name' => 'Ipd Admission']);
 
+        //bill summery
+        Permission::create(['name' => 'Summery Bill']);
     }
 }

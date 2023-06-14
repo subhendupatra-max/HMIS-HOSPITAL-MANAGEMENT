@@ -199,6 +199,9 @@ $login_details = DB::table('users')
                                 <li><a href="<?php echo e(route('charges-sub-catagory-details')); ?>">Charges sub
                                         catagory</a></li>
                                 <?php endif; ?>
+                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('charges Type')): ?>
+                                <li><a href="<?php echo e(route('charges-type-details')); ?>">Charges Type</a></li>
+                                <?php endif; ?>
                                 
                     </ul>
                 </li>
@@ -501,7 +504,10 @@ $login_details = DB::table('users')
 
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> Others <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Inventory</a></li>
+                        <?php if(auth()->user()->can('Inventory')): ?>
+                        <li><a href="<?php echo e(route('item-stock-listing')); ?>">Inventory</a></li>
+                        <?php endif; ?>
+
                         <?php if(auth()->user()->can('appointment main')): ?>
                         <li><a href="<?php echo e(route('all-appointments-details')); ?>">Appointment</a></li>
                         <?php endif; ?>
