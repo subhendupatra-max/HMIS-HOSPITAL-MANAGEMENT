@@ -18,6 +18,7 @@ use App\Models\Inventory\InventoryItemStock;
 use App\Models\Inventory\InventoryItemIssueDetail;
 use App\Models\ItemCatagory;
 use Google\Service\CloudAsset\Inventory;
+use Google\Service\Dfareporting\InventoryItem;
 use Google\Service\Dfareporting\Resource\InventoryItems;
 
 class ItemStockController extends Controller
@@ -26,15 +27,8 @@ class ItemStockController extends Controller
     {
         $item_stock_list = Item::all();
 
-        // $inventory_item_stocks = InventoryItemStock::where('',)
-
-        //  join('inventory_item_stocks', 'inventory_item_stocks.item_id', '=', 'items.id')
-        //  join('inventory_item_issue_details', 'inventory_item_issue_details.item_id', '=', 'items.id')
-
         $workshops = ItemStoreRoom::all();
-        // $item_stock_list = Item::select('items.part_no', 'items.item_name', 'items.item_description', 'items.id')
-        // ->get();
-
+    
         return view('Inventory.item-stock-details', compact('workshops', 'item_stock_list'));
     }
 
@@ -230,55 +224,49 @@ class ItemStockController extends Controller
     public function save_update_inventory_stock(Request $request)
     {
 
-        $validate = $request->validate([
-            'medicine_name'             => 'required',
-            'medicine_category'         => 'required',
-            'stored_room'               => 'required',
-            'batch_no'                  => 'required',
-            'expiry_date'               => 'required',
-            'quantity'                  => 'required',
-            'mrp'                       => 'required',
-            'sale_price'                => 'required',
-            'purchase_price'            => 'required',
-            'amount'            => 'required',
-        ]);
+        // $validate = $request->validate([
+        //     'item_name'                 => 'required',
+        //     'item_category'             => 'required',
+        //     'stored_room'               => 'required',
+        //     'part_no'                   => 'required',
+        //     'quantity'                  => 'required',
+        //     'purchase_price'            => 'required',
+        //     'amount'                    => 'required',
 
-        try {
-            DB::beginTransaction();
-            $medine_stock = new MedicineStock();
-            $medine_stock->grm_id         =  '';
-            $medine_stock->po_details_id  =  '';
-            $medine_stock->emg_challan_id =  '';
-            $medine_stock->stored_room =  $request->stored_room;
-            $medine_stock->stock_status =  'stock_update_direct';
-            $medine_stock->catagory =  $request->medicine_category;
-            $medine_stock->unit =  $request->unit;
-            $medine_stock->medicine =  $request->medicine_name;
-            $medine_stock->batch_no =  $request->batch_no;
-            $medine_stock->exp_date      = $request->expiry_date;
-            $medine_stock->qty =  $request->quantity;
-            $medine_stock->mrp =  $request->mrp;
-            $medine_stock->discount =  $request->discount;
-            $medine_stock->p_rate =  $request->purchase_price;
-            $medine_stock->s_rate =  $request->sale_price;
-            $medine_stock->cgst =  $request->cgst;
-            $medine_stock->cgst_value =  $request->cgst_value;
-            $medine_stock->sgst =  $request->sgst;
-            $medine_stock->sgst_value =  $request->sgst_value;
-            $medine_stock->igst =  $request->igst;
-            $medine_stock->igst_value =  $request->igst_value;
-            $medine_stock->amount =  $request->amount;
-            $status = $medine_stock->save();
+        // ]);
+
+        // try {
+        //     DB::beginTransaction();
+            $inventory_stock = new InventoryItemStock();
+            $inventory_stock->grm_id         =  '';
+            $inventory_stock->workshop_id =  $request->stored_room;
+            $inventory_stock->catagory =  $request->item_catagory;
+            $inventory_stock->unit_id =  $request->unit;
+            $inventory_stock->item_id =  $request->item_name;
+            $inventory_stock->part_no =  $request->part_no;
+            $inventory_stock->quantity =  $request->quantity;
+            $inventory_stock->rate =  $request->rate;
+            $inventory_stock->discount =  $request->discount;
+            $inventory_stock->p_rate =  $request->purchase_price;
+            $inventory_stock->cgst =  $request->cgst;
+            $inventory_stock->cgst_value =  $request->cgst_value;
+            $inventory_stock->sgst =  $request->sgst;
+            $inventory_stock->sgst_value =  $request->sgst_value;
+            $inventory_stock->igst =  $request->igst;
+            $inventory_stock->igst_value =  $request->igst_value;
+            $inventory_stock->amount =  $request->amount;
+            $inventory_stock->status =  'stock_update_direct';
+            $status = $inventory_stock->save();
 
             DB::commit();
             if ($status) {
-                return redirect()->route('all-medicine-stock')->with('success', 'Medicine Added Sucessfully');
+                return redirect()->route('item-stock-listing')->with('success', 'Stock Updated Sucessfully');
             } else {
-                return redirect()->route('all-medicine-stock')->with('error', "Something Went Wrong");
+                return redirect()->route('item-stock-listing')->with('error', "Something Went Wrong");
             }
-        } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->route('all-medicine-stock')->with('error', "Something Went Wrong");
-        }
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return redirect()->route('item-stock-listing')->with('error', "Something Went Wrong");
+        // }
     }
 }

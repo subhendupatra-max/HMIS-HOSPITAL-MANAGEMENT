@@ -156,9 +156,8 @@
                                 <input type="text" style="    margin: -34px 0px 12px 212px;
                         width: 208px;" name="po_value" id="po_value" class="form-control" value="{{$grm_list->po_value}}" />
 
-
                                 <span class="biltext">Purpose</span>
-                                <textarea name="purpose" class="form-control"></textarea>
+                                <textarea name="purpose" class="form-control">{{$grm_list->purpose}}</textarea>
                             </div>
                         </div>
                     </div>

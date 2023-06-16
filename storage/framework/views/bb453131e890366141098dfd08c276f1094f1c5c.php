@@ -170,9 +170,8 @@ unset($__errorArgs, $__bag); ?>
                                 <input type="text" style="    margin: -34px 0px 12px 212px;
                         width: 208px;" name="po_value" id="po_value" class="form-control" value="<?php echo e($grm_list->po_value); ?>" />
 
-
                                 <span class="biltext">Purpose</span>
-                                <textarea name="purpose" class="form-control"></textarea>
+                                <textarea name="purpose" class="form-control"><?php echo e($grm_list->purpose); ?></textarea>
                             </div>
                         </div>
                     </div>

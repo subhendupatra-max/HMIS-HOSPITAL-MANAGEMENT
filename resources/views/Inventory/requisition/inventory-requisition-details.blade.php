@@ -73,12 +73,12 @@
                                         @csrf
                                         <input type="hidden" name="vender_name" value="{{$value->vendor_id}}">
                                         <input type="hidden" name="req_id" value="{{$requisition_details->id}}">
-                                        <input type="file" <?php if (@$value['status'] == 1) {
+                                        <input class="requis-edit" type="file" <?php if (@$value['status'] == 1) {
                                                                 echo "disabled";
                                                             } ?> name="vendor_quatation" required>
                                         <button class="btn btn-indigo btn-sm" <?php if (@$value['status'] == 1) {
                                                                                     echo "disabled";
-                                                                                } ?> type="submit"><i class="fa fa-file"></i> Save</button>
+                                                                                } ?> type="submit" style="margin-left: 20px;"><i class="fa fa-file"></i> Save</button>
                                     </form>
                                     @if($value->vendor_quatation != null)
                                     <a style="color:blue" href="{{ asset('public/inventory-quatation/') }}/{{@$value->vendor_quatation}}" target="_blank"><i class="fa fa-eye"></i> View Quatation</a>
@@ -196,8 +196,8 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             @endif
                         </select>
                     </div>
-                    <div class="col-md-12">
-                        <label class="form-label">Permission Type<span class="required"> *</span></label>
+                    <div class="col-md-12 itemrequisedit">
+                        <label>Permission Type<span class="required"> *</span></label>
                         <select name="permission_type" required class="select2-show-search">
                             <option value="" disabled>Select One</option>
                             <option value="Parallal" selected>Parallal</option>

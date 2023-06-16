@@ -26217,6 +26217,9 @@ margin: 29px 0px 0px 0px;
 .newuserchangeedesign{
     margin: 16px 0px 0px 0px;
 }
+.itemrequisedit{
+  margin: 28px 0px 0px 0px;
+}
 input[type=search]{
     margin-top: 11px;
 }
@@ -26246,7 +26249,15 @@ input[type=search]{
  }
  input[type=file]{
     margin: 6px 0px 0px 0px;
+
  }
+ .requis-edit{
+  
+    width: 49%;
+   
+    
+ }
+
 /* ------------------generalsettings-------------------------- */
 /* ------------------Add Charge------------------------------- */
 .addchargedesign{

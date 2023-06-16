@@ -31,11 +31,10 @@
                                 @enderror
                             </div>
                             <input type="hidden" name="unit" value="{{ $item_details->unit_id }}" />
-                            
-                            <div class="col-md-4 form-group">
 
+                            <div class="col-md-4 form-group">
                                 <select class="form-control select2-show-search" name="item_catagory" id="item_catagory" required>
-                                    <option value="{{ @$item_details->id }}">{{ @$item_details->fetch_catagory_name-> }}</option>
+                                    <option value="{{ @$item_details->id }}">{{ @$item_details->fetch_catagory_name->item_catagory_name }}</option>
                                 </select>
                                 <label for="item_catagory">Item Catagory<span class="text-danger">*</span> </label>
                                 @error('item_catagory')
@@ -44,25 +43,25 @@
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <select name="medicine_name" required id="medicine_name" class="form-control select2-show-search">
-                                    <option value="{{ @$item_details->id }}">{{ @$item_details->medicine_name }}</option>
+                                <select name="item_name" required id="item_name" class="form-control select2-show-search">
+                                    <option value="{{ @$item_details->id }}">{{ @$item_details->item_name }}</option>
                                 </select>
-                                <label for="batch_no">Medicine Name<span class="text-danger">*</span> </label>
-                                @error('medicine_name')
+                                <label for="batch_no">Item Name<span class="text-danger">*</span> </label>
+                                @error('item_name')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
 
                             <div class="col-md-4 form-group">
 
-                                <input type="text" id="batch_no" name="batch_no" value="{{ old('batch_no') }}" required />
-                                <label for="batch_no">Batch No<span class="text-danger">*</span> </label>
+                                <input type="text" id="part_no" name="part_no" value="{{ old('part_no') }}" required />
+                                <label for="part_no">Part No<span class="text-danger">*</span> </label>
 
-                                @error('batch_no')
+                                @error('part_no')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
+                            <!-- 
                             <div class="col-md-4 form-group">
                                 <input type="date" id="expiry_date" name="expiry_date" value="{{ old('expiry_date') }}" required />
                                 <label for="expiry_date">Expiry Date<span class="text-danger">*</span> </label>
@@ -70,7 +69,7 @@
                                 @error('expiry_date')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
 
                             <div class="col-md-4 form-group">
 
@@ -83,26 +82,26 @@
                             </div>
 
                             <div class="col-md-4 form-group">
-                                <input type="text" id="mrp" name="mrp" value="{{ old('mrp') }}" onkeyup="getSaleRate()" required />
-                                <label for="mrp">MRP <span class="text-danger">*</span> </label>
-                                @error('mrp')
+                                <input type="text" id="rate" name="rate" value="{{ old('rate') }}" required />
+                                <label for="rate">Rate <span class="text-danger">*</span> </label>
+                                @error('rate')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
                             <div class="col-md-4 form-group">
-                                <input type="text" id="discount" name="discount" onkeyup="getSaleRate()" value="{{ old('discount') }}" required />
+                                <input type="text" id="discount" name="discount" value="{{ old('discount') }}" required />
                                 <label for="discount">Discount(%) <span class="text-danger">*</span> </label>
                                 @error('discount')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            <div class="col-md-4 form-group">
+                            <!-- <div class="col-md-4 form-group">
                                 <input type="text" id="sale_price" name="sale_price" value="{{ old('sale_price') }}" required />
                                 <label for="sale_price">Sale Price<span class="text-danger">*</span> </label>
                                 @error('sale_price')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> -->
                             <div class="col-md-4 form-group">
                                 <input type="text" id="purchase_price" onkeyup="getAmount()" name="purchase_price" value="{{ old('purchase_price') }}" required />
                                 <label for="purchase_price">Purchase Price/quantity<span class="text-danger">*</span> </label>
@@ -148,7 +147,7 @@
                 </div>
 
                 <div class="text-center m-auto">
-                    <button type="submit" class="btn btn-primary">Update Medicine Stock </button>
+                    <button type="submit" class="btn btn-primary">Update Item Stock </button>
                 </div>
             </form>
         </div>
