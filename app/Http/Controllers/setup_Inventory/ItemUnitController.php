@@ -56,12 +56,18 @@ class ItemUnitController extends Controller
     public function update_item_unit(Request $request)
     {
 
+        // $validator = $request->validate([
+        //     'item_unit' => 'required',
+        //     'item_unit_id' => 'required',
+        //     'base_val' => 'required',
+        //     'operator' => 'required',
+        //     'operation_value' => 'required',
+        // ]);
+
+
         $validator = $request->validate([
             'item_unit' => 'required',
-            'item_unit_id' => 'required',
-            'base_val' => 'required',
-            'operator' => 'required',
-            'operation_value' => 'required',
+        
         ]);
 
         $unit = ItemUnit::where('id', $request->item_unit_id)->first();

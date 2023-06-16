@@ -92,6 +92,7 @@ class ItemController extends Controller
         $item->item_picture = $filename;
         $item->uses = $req->uses;
         $item->brand_id = $req->brand_id;
+        $item->unit_id = $req->unit;
         $item->manufacture = $req->manufacturer;
         $item->created_by = Auth::user()->id;
         $item->updated_by = 0;
@@ -111,13 +112,13 @@ class ItemController extends Controller
             }
         }
 
-        for ($i = 0; $i < count($req->unit); $i++) {
+        // for ($i = 0; $i < count($req->unit); $i++) {
 
-            $unit = new UnitOfItem();
-            $unit->item_id =  $item_id;
-            $unit->unit_id = $req->unit[$i];
-            $unit->save();
-        }
+        //     $unit = new UnitOfItem();
+        //     $unit->item_id =  $item_id;
+        //     $unit->unit_id = $req->unit[$i];
+        //     $unit->save();
+        // }
 
         DB::commit();
         $req->session()->flash('success', 'Added Successfully.');
@@ -198,7 +199,8 @@ class ItemController extends Controller
         $item->product_code     = $req->product_code;
         $item->item_description = $item_description;
         $item->brand_id         = $req->brand_id;
-        $item->manufacturer     = $req->manufacturer;
+        $item->unit_id          = $req->unit;
+        $item->manufacture     = $req->manufacturer;
 
         $item->save();
         $it_id = $item->id;

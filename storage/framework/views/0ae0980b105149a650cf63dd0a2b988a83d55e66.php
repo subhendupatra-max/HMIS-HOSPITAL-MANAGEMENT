@@ -54,8 +54,10 @@
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
                                 <td><a href="<?php echo e(route('all-inventory-requisition-details',['id'=> ($item->id)])); ?>" style="color: blue;"><?php echo e($item->requisition_prefix); ?><?php echo e(@$item->id); ?></a></td>
-                                <td><?php echo e(@$item->date); ?> </td>
+                                                              
                                 <td><?php echo e(@$item->generate_by_name->first_name); ?> <?php echo e(@$item->generate_by_name->last_name); ?> </td>
+                                <td><?php echo e(@$item->store_room->item_store_room); ?> </td>
+                                <td><?php echo e(@$item->date); ?> </td>
                                 <td><?php echo @$item->working_status->status; ?></td>
                                 <td>
                                     <div class="card-options">
@@ -67,11 +69,11 @@
                                             <?php endif; ?>
 
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine requisition')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('edit-medicine-requisition-details',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('edit-requisition-inven',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
                                             <?php endif; ?>
 
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine requisition')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('delete-medicine-requisition-details',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('delete-requisition-inven',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                             <?php endif; ?>
                                         </div>
                                     </div>

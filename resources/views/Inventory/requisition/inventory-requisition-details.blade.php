@@ -225,7 +225,7 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                     </div>
 
                     @can('print requisition')
-                    <a href="{{ route('print-requisition',['id'=>$requisition_details->id]) }}" class="btn btn-primary allbtndemo"><i class="fa fa-print"> Print</i></a>
+                    <a href="{{ route('print-inventory-req',['id'=>$requisition_details->id]) }}" class="btn btn-primary allbtndemo"><i class="fa fa-print"> Print</i></a>
                     @endcan
 
                     @if(!empty($requisition_details->status > 2))
@@ -347,8 +347,8 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             @foreach($permisison_users as $user)
                             <li class="mt-0">
                                 <div class="d-flex"><span class="time-data">{{@$user->permission_user_details->first_name}} {{@$user->permission_user_details->last_name}}</span><span class="ml-auto text-muted fs-11"><?php if ($user->date != '' && $user->date != null) {
-                                    echo  date('d-m-Y h:i', strtotime($user->date));
-                                       } ?></span></div>          
+                                                                                                                                                                                                                            echo  date('d-m-Y h:i', strtotime($user->date));
+                                                                                                                                                                                                                        } ?></span></div>
                                 <p class="text-muted fs-12">
                                     <span class="text-info">
                                         @if($user->user_id == Auth::id() && ( $user->permission_type == 'Parallal' || @$show_for_permission->user_id == Auth::id()) )
@@ -367,7 +367,7 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                         </ul>
                     </div>
                 </div>
-             
+
             </div>
             @endif
 

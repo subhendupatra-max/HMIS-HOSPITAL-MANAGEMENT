@@ -15,7 +15,7 @@
             <h4 class="card-title">Add Vendor</h4>
         </div>
         <div class="card-body">
-            <form method="POST" action="<?php echo e(route('save-medicine-vendor-details')); ?>">
+            <form method="POST" action="<?php echo e(route('save-Inventory-vendor')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="">
                     <div class="form-group">

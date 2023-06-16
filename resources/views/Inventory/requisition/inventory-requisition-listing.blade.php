@@ -54,8 +54,10 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td><a href="{{ route('all-inventory-requisition-details',['id'=> ($item->id)]) }}" style="color: blue;">{{$item->requisition_prefix }}{{ @$item->id }}</a></td>
-                                <td>{{ @$item->date}} </td>
+                                                              
                                 <td>{{ @$item->generate_by_name->first_name}} {{ @$item->generate_by_name->last_name}} </td>
+                                <td>{{ @$item->store_room->item_store_room}} </td>
+                                <td>{{ @$item->date}} </td>
                                 <td>{!!@$item->working_status->status!!}</td>
                                 <td>
                                     <div class="card-options">
@@ -67,11 +69,11 @@
                                             @endcan
 
                                             @can('edit medicine requisition')
-                                            <a class="dropdown-item" href="{{ route('edit-medicine-requisition-details',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-edit"></i> Edit</a>
+                                            <a class="dropdown-item" href="{{ route('edit-requisition-inven',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-edit"></i> Edit</a>
                                             @endcan
 
                                             @can('delete medicine requisition')
-                                            <a class="dropdown-item" href="{{ route('delete-medicine-requisition-details',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
+                                            <a class="dropdown-item" href="{{ route('delete-requisition-inven',['id'=> base64_encode($item->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
                                             @endcan
                                         </div>
                                     </div>
