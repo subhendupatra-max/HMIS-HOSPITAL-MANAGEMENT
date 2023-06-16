@@ -131,6 +131,10 @@ use App\Http\Controllers\IpdPrescriptionController;
 use App\Http\Controllers\EmgPrescriptionController;
 use App\Http\Controllers\ChargesTypeController;
 
+
+use App\Http\Controllers\Inventory\ItemPurchaseOrderController;
+use App\Http\Controllers\Inventory\ItemGRMController;
+use App\Http\Controllers\Inventory\ItemReturnController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -1641,6 +1645,7 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
 // ================================== Inventory  ==============================
 Route::group(['middleware' => ['permission:Inventory'], 'prefix' => 'inventory'], function () {
 
+
     Route::get('item-stock-listing', [ItemStockController::class, 'item_stock_details'])->name('item-stock-listing');
 
     // ================================== Inventory requisition  ==============================
@@ -1653,12 +1658,18 @@ Route::group(['middleware' => ['permission:Inventory'], 'prefix' => 'inventory']
             Route::get('add-inventory-requisition-details', [ItemRequisitionController::class, 'add_inventory_requisition_details'])->name('add-inventory-requisition-details');
             Route::post('save-inventory-requisition-details', [ItemRequisitionController::class, 'save_inventory_requisition_details'])->name('save-inventory-requisition-details');
             Route::post('/get-item-details', [ItemRequisitionController::class, 'get_item_details'])->name('get-item-details');
-            Route::post('/get-item-ajax', [ItemRequisitionController::class, 'get_item_ajax'])->name('get-item');
+            Route::post('/get-item-ajax', [ItemRequisitionController::class, 'get_item_ajax'])->name('get-item-inventoty');
             Route::post('/get-item-brand-all', [ItemRequisitionController::class, 'get_item_brand_all'])->name('get-item-brand-all');
+
+            Route::post('/get-item-details-using-part-no-inventory', [RequisitionController::class, 'get_item_details_part_no'])->name('get-item-details-using-part-no-inventory');
         });
 
         Route::group(['middleware' => ['permission:Add Inventory Reqiuisition']], function () {
             Route::get('all-inventory-requisition-details/{id}', [ItemRequisitionController::class, 'all_inventory_requisition_details'])->name('all-inventory-requisition-details');
+        });
+
+        Route::group(['middleware' => ['permission:print Inventory Reqiuisition']], function () {
+            Route::get('/print-inventory-req/{id?}', [ItemRequisitionController::class, '_printInventoryRequisition'])->name('print-inventory-req');
         });
 
         Route::post('/add-inventory-vender-for-quatation', [ItemRequisitionController::class, 'add_inventory_vender_for_quatation'])->name('add-inventory-vender-for-quatation');
@@ -1667,10 +1678,172 @@ Route::group(['middleware' => ['permission:Inventory'], 'prefix' => 'inventory']
         Route::post('/give-approval-vendor-in-inventory', [ItemRequisitionController::class, 'give_approval_vendor_in_inventory'])->name('give-approval-vendor-in-inventory');
         Route::post('/vendor-quatation-inventory', [ItemRequisitionController::class, 'vendor_quatation_in_inventory'])->name('add-vendor-quatation-in-inventory');
         Route::post('/vendor-select-for-po-in-inventory', [ItemRequisitionController::class, 'vendor_select_for_po_in_inventory'])->name('vendor-select-for-po-in-inventory');
+
+        Route::group(['middleware' => ['permission:delete requisition inventory']], function () {
+            Route::get('/delete-requisition-inven/{id?}', [ItemRequisitionController::class, 'requisition_delete'])->name('delete-requisition-inven');
+        });
+        Route::group(['middleware' => ['permission:edit requisition inventory']], function () {
+            Route::get('/edit-requisition-inven/{id?}', [ItemRequisitionController::class, 'edit_requisition'])->name('edit-requisition-inven');
+            Route::get('/get-requisition-item-inven/{id?}', [ItemRequisitionController::class, 'get_requisition_item'])->name('get-requisition-item-inven');
+            Route::post('/edit-requisition-inven', [ItemRequisitionController::class, 'update_requisition'])->name('edit-requisition')->name('edit-requisition-inven');
+        });
     });
     // ================================== Inventory requisition  ==============================
+
+    // ================================== Inventory Purchase Order  ==============================
+
+    Route::group(['middleware' => ['permission:Purchase Order']], function () {
+        Route::get('/Purchase-Order-list-inventory', [ItemPurchaseOrderController::class, 'index'])->name('Purchase-Order-list-inventory');
+
+        // Route::group(['middleware' => ['permission:All workshop']], function () {
+        //     Route::get('/Purchase-Order-list/{id?}', [ItemPurchaseOrderController::class, 'index_workshop']);
+        // });
+
+        Route::group(['middleware' => ['permission:Create Purchase Order']], function () {
+            Route::post('/save-purchase-order-in-inventory', [ItemPurchaseOrderController::class, 'save_purchase_order'])->name('save-purchase-order-in-inventory');
+            Route::get('/Purchase-Order-Create-inventory', [ItemPurchaseOrderController::class, 'create_po'])->name('create-po-inventory');
+
+            Route::get('/get-requisition-details-inventory/{vendor_id?}/{workshop?}', [ItemPurchaseOrderController::class, 'get_requisition_details'])->name('get-requisition-details-inventory');
+
+            Route::get('/get-requisition-item-details-inventory/{requisition_id?}', [ItemPurchaseOrderController::class, 'get_requisition_item_details'])->name('get-requisition-item-details-inventory');
+        });
+        Route::get('purchase-order-details-inventory/{id?}', [ItemPurchaseOrderController::class, 'purchase_order_details'])->name('purchase-order-details-inventory');
+
+        Route::group(['middleware' => ['permission:New Vendor Add in PO section']], function () {
+            Route::post('/vendor-select-change', [ItemPurchaseOrderController::class, 'vendor_select_change'])->name('vendor-select-change-afetr-po-inven');
+        });
+        Route::group(['middleware' => ['permission:Send PO with feedback form']], function () {
+            Route::get('send-po-feedback-inven/{po_id?}/{vendor_id?}', [ItemPurchaseOrderController::class, 'send_po_feedback'])->name('send-po-feedback-inven');
+        });
+        Route::group(['middleware' => ['permission:save feedback']], function () {
+            Route::post('feedback-save-inven', [ItemPurchaseOrderController::class, 'save_feedback'])->name('feedback-save-inven');
+        });
+        Route::post('expected-delivery-date-inven', [ItemPurchaseOrderController::class, 'save_expected_delivery_date'])->name('expected-delivery-date-inven');
+
+        Route::group(['middleware' => ['permission:permission on po section']], function () {
+            Route::post('po-status-change-inven', [ItemPurchaseOrderController::class, 'po_status_change'])->name('po-status-change-inven');
+        });
+
+        Route::group(['middleware' => ['permission:Delete Purchase Order']], function () {
+            Route::get('po-delete-inven/{po_id?}', [ItemPurchaseOrderController::class, 'delete_po'])->name('po-delete-inven');
+        });
+        Route::group(['middleware' => ['permission:Edit Purchase Order']], function () {
+            Route::get('po-edit/{po_id?}', [ItemPurchaseOrderController::class, 'edit_po']);
+            Route::post('/po-update', [ItemPurchaseOrderController::class, 'po_update'])->name('po-update');
+        });
+        Route::group(['middleware' => ['permission:Print Purchase Order']], function () {
+            Route::get('po-print-inven/{po_id?}', [ItemPurchaseOrderController::class, 'print_po'])->name('po-print-inven');
+        });
+    });
+    //==================== Inventory Purchase Order====================================================
+
+    //================================= GRM ================================================
+    Route::group(['middleware' => ['permission:GRN Inventory']], function () {
+        Route::get('grm-list-inven', [ItemGRMController::class, 'index'])->name('grm-list-inven');
+        // Route::group(['middleware' => ['permission:All workshop Inventory']], function () {
+        //     Route::get('grm-list/{id?}', [ItemGRMController::class, 'index_workshop']);
+        // });
+        Route::group(['middleware' => ['permission:GRN print Inventory']], function () {
+            Route::get('grm-print-inven/{id?}', [ItemGRMController::class, 'grm_print'])->name('grm-print-inven');
+        });
+
+        Route::group(['middleware' => ['permission:GRN Create Inventory']], function () {
+            Route::get('grm-create-inven', [ItemGRMController::class, 'create_grm'])->name('grm-create-inven');
+            Route::get('/get-po-item-details-inven/{id?}', [ItemGRMController::class, 'get_po_item_details'])->name('get-po-item-details-inven');
+            Route::post('save-grm-inven', [ItemGRMController::class, 'save_grm'])->name('save-grm-inven');
+        });
+
+        Route::get('grm-details-inven/{id?}', [ItemGRMController::class, 'grm_details'])->name('grm-details-inven');
+
+        Route::group(['middleware' => ['permission:GRN delete Inventory']], function () {
+            Route::get('grm-delete-inven/{id?}', [ItemGRMController::class, 'grm_delete'])->name('grm-delete-inven');
+        });
+
+        Route::group(['middleware' => ['permission:GRN edit Inventory']], function () {
+            Route::get('/grm-edit-inven/{id?}', [ItemGRMController::class, 'grm_edit'])->name('grm-edit-inven');
+            Route::post('/grm-update-inven', [ItemGRMController::class, 'update_grm'])->name('grm-update-inven');
+        });
+
+        Route::group(['middleware' => ['permission:GRN edit Inventory']], function () {
+            Route::get('/stock-update-after-grm-inven/{id?}', [ItemGRMController::class, 'stock_update_after_grm'])->name('stock-update-after-grm-inven');
+        });
+    });
+    //================================= GRM ================================================
+
+
+    //================================= Inventory Return =============================================
+    Route::group(['middleware' => ['permission:Return PO Item Inventory']], function () {
+        Route::get('return-list-inventory', [ItemReturnController::class, 'index'])->name('return-list-inventory');
+        // Route::group(['middleware' => ['permission:All workshop']], function () {
+        //     Route::get('return-list/{id?}', [ItemReturnController::class, 'index_workshop']);
+        // });
+        Route::group(['middleware' => ['permission:Create Return PO Item Inventory']], function () {
+            Route::get('return-create-inventory', [ItemReturnController::class, 'create_return'])->name('return-create-inventory');
+            Route::get('/get-po-item-details-inventory-return/{po_id?}', [ItemReturnController::class, 'get_po_item_details_return'])->name('get-po-item-details-inventory-return');
+            Route::post('save-return-inventory', [ItemReturnController::class, 'save_return'])->name('save-return-inventory');
+        });
+
+        Route::group(['middleware' => ['permission:delete Return PO Item Inventory']], function () {
+            Route::get('return-delete-inventory/{id?}', [ItemReturnController::class, 'return_delete'])->name('return-delete-inventory');
+        });
+
+        Route::group(['middleware' => ['permission:edit Return PO Item Inventory']], function () {
+            Route::get('/get-po-item-details-by-grm-inven/{po_id?}', [ItemReturnController::class, 'get_po_item_details'])->name('get-po-item-details-by-grm-inven');
+            Route::get('return-edit-inventory/{id?}', [ItemReturnController::class, 'edit_Return'])->name('return-edit-inventory');
+            Route::post('return-update-inventory', [ItemReturnController::class, 'update_return'])->name('return-update-inventory');
+        });
+
+        Route::get('return-details-inventory/{id?}', [ItemReturnController::class, 'return_details'])->name('return-details-inventory');
+    });
+    //================================= Inventory  Return =============================================
+
+
+    // ================================== Item Issue  ==============================
+
+    Route::group(['middleware' => ['permission:Item Issue Inventory']], function () {
+
+        Route::get('item-issue-listing-inventory', [ItemStockController::class, 'index'])->name('item-issue-listing-inventory');
+
+        Route::get('item-issue-details-inventory/{issue_id?}', [ItemStockController::class, 'item_issue_details'])->name('item-issue-details-inventory');
+
+
+        Route::group(['middleware' => ['permission:Create Item Issue Inventory']], function () {
+            Route::get('add-item-issue-inventory', [ItemStockController::class, 'add_item_issue'])->name('add-item-issue-inventory');
+            Route::post('save-item-issue-inventory', [ItemStockController::class, 'save_item_issue'])->name('save-item-issue-inventory');
+
+            Route::post('get-item-avi-qty', [ItemStockController::class, 'get_item_avi_qty'])->name('get-item-avi-qty');
+
+            Route::post('find-issue-to-by-department', [ItemStockController::class, 'get_issue_to_by_department'])->name('find-issue-to-by-department');
+        });
+
+        Route::group(['middleware' => ['permission:edit item issue inventory']], function () {
+            Route::get('edit-item-issue-inventory/{issue_id?}', [ItemStockController::class, 'edit_item_issue'])->name('edit-item-issue-inventory');
+
+            Route::post('update-item-issue-inventory', [ItemStockController::class, 'update_item_issue'])->name('update-item-issue-inventory');
+
+            Route::post('get-item-avi-qty', [ItemStockController::class, 'get_item_avi_qty'])->name('get-item-avi-qty');
+        });
+        Route::group(['middleware' => ['permission:delete item issue inventory']], function () {
+            Route::get('delete-item-issue-inventory/{issue_id?}', [ItemStockController::class, 'delete_item_issue'])->name('delete-item-issue-inventory');
+        });
+
+        Route::group(['middleware' => ['permission:delete item issue inventory']], function () {
+            Route::get('update-inventory-stock/{item_id?}', [ItemStockController::class, 'update_inventory_stock'])->name('update-inventory-stock');
+
+            Route::post('save-update-inventory-stock', [ItemStockController::class, 'save_update_inventory_stock'])->name('save-update-inventory-stock');
+        });
+    });
+    // ==================================  Item Issue ==============================
+
+
+
 });
 // ================================== Inventory  ==============================
+
+
+
+
+
 
 // ================================== Blood Bank =================
 Route::group(['middleware' => ['permission:Blood Bank'], 'prefix' => 'blood-bank'], function () {

@@ -15,7 +15,7 @@
             <h4 class="card-title">Add Vendor</h4>
         </div>
         <div class="card-body">
-            <form method="POST" action="{{ route('save-medicine-vendor-details')  }}">
+            <form method="POST" action="{{ route('save-Inventory-vendor')  }}">
                 @csrf
                 <div class="">
                     <div class="form-group">

@@ -870,5 +870,9 @@ class PermissionSeeder extends Seeder
 
         //bill summery
         Permission::create(['name' => 'Summery Bill']);
+
+        //inventory issue list
+        Permission::create(['name' => 'Item Issue Inventory']);
+        Permission::create(['name' => 'Create Item Issue Inventory']);
     }
 }

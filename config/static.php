@@ -27,4 +27,5 @@ return [
     'discharge_type' => ['Death', 'Refferal', 'Normal', 'LAMA', 'DORB', 'DMA'],
     'patient_from' => ['Opd', 'Emg'],
     'main_operation_status' => ['Pending', 'Complete', 'Cancel'],
+    'payment_terms' => ['Advance','After Billing'],
 ];

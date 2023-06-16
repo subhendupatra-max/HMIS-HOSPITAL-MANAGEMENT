@@ -5,9 +5,9 @@
         <div class="card-header">
             <div class="card-title">Create Requisition</div>
             <!-- ================================ Add Item===================================== -->
-            <div class="create_req">
+            <!-- <div class="create_req">
                 <a href="{{route('inventory-item-list')}}" class="btn btn-primary" data-placement="left" data-toggle="tooltip" title="Add New Item"><i class="fa fa-plus"></i></a>
-            </div>
+            </div> -->
             <!-- ================================ Add Item===================================== -->
             <!-- ================================ Alert Message===================================== -->
             @if (session('success'))
@@ -24,7 +24,7 @@
             <div class="card-body">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-6 newaddappon">
+                        <div class="col-md-3 newaddappon mt-2">
                             <label class="form-label">Workshop <span class="text-danger">*</span></label>
                             <select class="form-control select2-show-search"  name="stockroom">
                                 <option value="">Select Workshop</option>
@@ -38,15 +38,16 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-3 mt-3">
                             <!-- <label class="form-label">Date <span class="text-danger">*</span></label> -->
-                            <h6 class="inventorydate">Date <span class="text-danger">*</span></h6>
+                            <!-- <h6 class="inventorydate">Date <span class="text-danger">*</span></h6> -->
+                            <label class="form-label ">Date <span class="text-danger">*</span></label>
                             <input type="date" required name="date" value="{{date('Y-m-d')}}" class="form-control">
                             @error('date')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label">Requested By <span class="text-danger">*</span></label>
                             <select class="form-control select2-show-search" required name="requested_by">
                                 <option value="">Select One </option>
@@ -62,7 +63,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label">Checked By <span class="text-danger">*</span></label>
                             <select class="form-control select2-show-search" required name="checked_by">
                                 <option value="">Select One </option>
@@ -77,7 +78,7 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                             <label class="form-label">Need Permission ? <span class="text-danger">*</span></label>
                             <select name="need_permission" onchange="needPermission(this.value)"  class="multi-select select2-show-search">
                                 <option value="">Select One</option>
@@ -113,18 +114,18 @@
                             @error('permission_type')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
-                        </div>
+                        </div> -->
 
 
                     </div>
                 </div>
-                <hr style="margin: 15px !important">
+                <!-- <hr style="margin: 15px !important">
                 <span class="text-danger">** Hold cursor point on this field and scan item barcode or enter item code **</span>
-                <div class="col-md-6 newaddappon">
+                <div class="col-md-6 newaddappon"> -->
                     <!-- <label class="form-label">Search using Item code or bar code</label>
                     <input type="text" id="item_code" onblur="addnew()" placeholder="Enter Item code" class="form-control"> -->
-                    <input type="text"  id="item_code" onblur="addnew()"  name="alternate_addresss" required />
-                        <label for="item_code"> Search using Item code or bar code</div>
+                    <!-- <input type="text"  id="item_code" onblur="addnew()"  name="alternate_addresss"  />
+                        <label for="item_code"> Search using Item code or bar code</div> -->
 
                 <div class="">
                     <div class="table-responsive">
@@ -132,8 +133,9 @@
                             <thead>
                                 <tr>
                                     <th scope="col" style="width: 15%">Item Type <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 60%">Item <span class="text-danger">*</span></th>
-                                    <th scope="col" style="width: 23%">Quantity <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 53%">Item <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 15%">Quantity <span class="text-danger">*</span></th>
+                                    <th scope="col" style="width: 15%">Unit <span class="text-danger">*</span></th>
                                     <th scope="col" style="width: 2%">
                                         <button class="btn btn-success" onclick="addnewrow()"><i class="fa fa-plus"></i></button>
                                     </th>
@@ -166,15 +168,15 @@
 
 <!-- ===========================Add New Item Using item Code or part no=========================== -->
 <script type="text/javascript">
-    function needPermission(i) {
-        $('.permission').attr('style', 'display:none', true);
-        if (i == 'yes') {
-            $('.permission').removeAttr('style', true);
-        } else {
-            $('.permission').attr('style', 'display:none', true);
-        }
+    // function needPermission(i) {
+    //     $('.permission').attr('style', 'display:none', true);
+    //     if (i == 'yes') {
+    //         $('.permission').removeAttr('style', true);
+    //     } else {
+    //         $('.permission').attr('style', 'display:none', true);
+    //     }
 
-    }
+    // }
     var i = 1;
 
     function addnew() {
@@ -197,13 +199,11 @@
 
                     if (res.item_details.item_type_id != null && res.item_details.item_id != '') {
 
-                        var html = '<tr id="rowid' + i + '"><td><select class="form-control select2-show-search" name="item_type[]" required readonly ><option value="' + res.item_details.item_type_id + '">' + res.item_details.item_type + ' </option></select></td><td><select name="item[]" required class="form-control select2-show-search" readonly><option value="' + res.item_details.item_id + '">' + res.item_details.item_name + '(Brand : ' + res.item_details.brand_name + ')(Manufacturer : ' + res.item_details.manufacturar_name + ')(' + res.item_details.item_description + ')</option></select></td><td><input type="text" required name="qty[]" class="form-control" style="width: 60%; float: left;"><select name="unit[]" id="unit' + i + '" required class="form-control" style="width: 40%; float: left;"></select></td><td><button class="btn btn-danger" onclick="remove(' + i + ')"><i class="fa fa-trash"></i></button></td></tr>';
-
+                        var html = '<tr id="rowid' + i + '"><td><select class="form-control select2-show-search" name="item_type[]" required readonly ><option value="' + res.item_details.item_type_id + '">' + res.item_details.item_type + ' </option></select></td><td><select name="item[]" required class="form-control select2-show-search" readonly><option value="' + res.item_details.item_id + '">' + res.item_details.item_name + '(Brand : ' + res.item_details.item_brand_name + ')(Manufacturer : ' + res.item_details.manufacture_name + ')(' + res.item_details.item_description + ')</option></select></td><td><input type="text" required name="qty[]" class="form-control" style="width: 60%; float: left;"><select name="unit[]" id="unit' + i + '" required class="form-control" style="width: 40%; float: left;"></select></td><td><button class="btn btn-danger" onclick="remove(' + i + ')"><i class="fa fa-trash"></i></button></td></tr>';
 
                         $.each(res.item_unit, function(i, objjj) {
 
                             div_unit += "<option value='" + objjj.unit_id + "'>" + objjj.units + "</option>";
-
 
                         });
 
@@ -229,7 +229,7 @@
     function addnewrow()
 
     {
-        var html = '<tr id="rowid' + i + '"><td><select required  onchange="getitem(' + i + ')" class="form-control select2-show-search" name="item_type[]" id="item_type' + i + '"><option value="">Select Item type</option> @if(isset($item_type_list)) @foreach ($item_type_list as $key => $value)<option value="{{$value->id}}">{{$value->item_type_name}}</option> @endforeach @endif</select></td><td><select onchange="getbrandandall(' + i + ')" name="item[]" required class="form-control select2-show-search" id="item' + i + '"><option value="">Select item</option></select></td><td><input type="text" required name="qty[]" class="form-control" style="width: 60%; float: left;"><select name="unit[]" style="width: 40%; float: left;" required id="unit' + i + '" class="form-control select2-show-search"><option value="">Select Unit</option></select></td><td><button class="btn btn-danger" onclick="remove(' + i + ')"><i class="fa fa-trash"></i></button></td></tr>';
+        var html = '<tr id="rowid' + i + '"><td><select required  onchange="getitem(' + i + ')" class="form-control select2-show-search" name="item_type[]" id="item_type' + i + '"><option value="">Select Item type</option> @if(isset($item_type_list)) @foreach ($item_type_list as $key => $value)<option value="{{$value->id}}">{{$value->item_type_name}}</option> @endforeach @endif</select></td><td><select onchange="getbrandandall(' + i + ')" name="item[]" required class="form-control select2-show-search" id="item' + i + '"><option value="">Select item</option></select></td><td><input type="text" required name="qty[]" class="form-control" ></td><td><select name="unit[]" required id="unit' + i + '" class="form-control select2-show-search"><option value="">Select Unit</option></select></td><td><button class="btn btn-danger" onclick="remove(' + i + ')"><i class="fa fa-trash"></i></button></td></tr>';
 
         $('#subhendu').append(html);
         i = i + 1;
@@ -246,10 +246,9 @@
 
 <script type="text/javascript">
     function getbrandandall(rowno) {
-        $('#unit' + rowno).empty();
         var item = $('#item' + rowno).val();
-
-        var div_dataa = '<option value="">Select One</option>';
+        $('#unit' + rowno).html('<option value="">Select One</option>');
+        var div_dataa = '';
 
         $.ajax({
 
@@ -261,15 +260,8 @@
             },
             dataType: 'json',
             success: function(res) {
-                console.log(res);
-
-                $.each(res.item_unit, function(i, objj) {
-                    div_dataa += "<option value=" + objj.unit_id + ">" + objj.units + " </option>";
-                });
-
-                $('#unit' + rowno).append(div_dataa);
-
-
+                div_dataa = "<option value=" + res.unit_id + ">" + res.units + " </option>";
+                $('#unit' + rowno).html(div_dataa);
             }
         });
     }
@@ -286,7 +278,7 @@
         var unit = '';
         $.ajax({
 
-            url: "{{ route('get-item') }}",
+            url: "{{ route('get-item-inventoty') }}",
             type: "post",
             data: {
                 item_type_id: item_type,

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ItemType;
 
 class Item extends Model
 {
@@ -29,6 +30,11 @@ class Item extends Model
     public function fetch_itemTypes_details()
     {
         return $this->belongsTo(ItemType::class, 'item_type_id', 'id');
+    }
+
+    public function item_unit_name()
+    {
+        return $this->belongsTo(ItemUnit::class, 'unit_id', 'id');
     }
 
  

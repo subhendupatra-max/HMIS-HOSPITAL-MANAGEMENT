@@ -75,8 +75,6 @@ class VendorController extends Controller
 
 
         $data = Vendor::find($request->vendor_id);
-
-
         $data->vendor_name            = $request->name;
         $data->email                = $request->email;
         $data->vendor_ph_no            = $request->vendor_ph_no;
@@ -84,11 +82,9 @@ class VendorController extends Controller
         $data->vendor_gst            = $request->vendor_gst;
         $data->contact_name         = $request->contact_name;
         $data->vendor_address        = $request->vendor_address;
-
-
         $data->save();
 
-        return redirect()->route('medicine-vendor-details')->with('success', "Vendor Details edited successfully");
+        return redirect()->route('medicine-vendor-details')->with('success', "Vendor Details Updated successfully");
     }
 
     public function delete_medicine_vendor(Request $request)
