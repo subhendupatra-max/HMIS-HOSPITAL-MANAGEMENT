@@ -8,12 +8,7 @@
         <div class="card-header">
             <h4 class="card-title">Add Shift</h4>
         </div>
-        <?php if(session('success')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-        <?php if(session()->has('error')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
-        <?php endif; ?>
+         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <form method="POST" action="<?php echo e(route('save-shift-details')); ?>">
                 <?php echo csrf_field(); ?>
@@ -67,9 +62,6 @@ endif;
 unset($__errorArgs, $__bag); ?>
                         </div>
                     </div>
-
-
-
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 mb-0">Add Shift</button>
             </form>

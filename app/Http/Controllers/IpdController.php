@@ -56,21 +56,60 @@ use PDF;
 
 class IpdController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $ipd_patient_list =  IpdDetails::where(function ($query) {
-            if (!auth()->user()->can('False Generation')) {
-                $query->where('ins_by', 'ori');
+        $request_data = $request->all();
+        // dd($request_data);
+        $trimmedString = str_replace(' ', '', $request->patient_first_name);
+
+        if($request->case_id != null || $request->ipd_id != null || $request->patient_phone_no != null ||$request->patient_first_name != null ||$request->appointment_date != null || $request->patient_uhid != null){
+            // dd($request->opd_id);
+                $ipd_patient_list =  IpdDetails::where(function ($query)  use ($request,$trimmedString) {
+                    if (!auth()->user()->can('False Generation')) {
+                        $query->where('ipd_details.ins_by', 'ori');
+                    }
+                    if ($request->case_id != '') {
+                        $query->where('ipd_details.case_id', '=', $request->case_id);
+                    }
+                    if ($request->ipd_id != '') {
+                        $query->where('ipd_details.id', '=', $request->ipd_id);
+                    }
+                    if ($request->appointment_date != '') {
+                        $query->where('appointment_date', 'like', '%'.$request->appointment_date.'%');
+                    }
+                    })->whereHas('all_patient_details',function ($query)  use ($request,$trimmedString) {
+    
+                        if ($request->patient_phone_no != '') {
+                            $query->where('phone', '=', $request->patient_phone_no);
+                        }
+                        if ($request->patient_uhid != '') {
+                            $query->where('id', '=', $request->patient_uhid);
+                        }
+                        if ($request->patient_first_name != '') {
+                            $query->where(DB::raw("CONCAT(
+                                TRIM(CONCAT_WS('', prefix, ' ')),
+                                TRIM(CONCAT_WS('', first_name, ' ')),
+                                TRIM(CONCAT_WS('', middle_name, ' ')),
+                                TRIM(last_name)
+                              )"), 'like', '%'.$trimmedString.'%');
+                        }
+                    })
+                    ->orderBy('id', 'DESC')
+                    ->paginate(10);
             }
-        })->orderBy('appointment_date', 'DESC')
-            ->where('is_active', '1')
-            ->where('discharged', 'no')
-            ->get();
+            else{
+               
+                $ipd_patient_list =  IpdDetails::where(function ($query) {
+                    if (!auth()->user()->can('False Generation')) {
+                        $query->where('ins_by', 'ori');
+                    }
+                })->orderBy('appointment_date', 'DESC')
+                    ->where('is_active', '1')
+                    ->where('discharged', 'no')
+                    ->paginate(10);
+            }
 
-            // dd($ipd_patient_list );
-        // $ipd_patient_list = IpdDetails::where('is_active', '1')->where('discharged', 'no')->where('ins_by', 'ori')->orderBy('appointment_date', 'DESC')->get();
-
-        return view('Ipd.ipd-patients-details', compact('ipd_patient_list'));
+        return view('Ipd.ipd-patients-details', compact('ipd_patient_list','request_data'));
     }
 
     public  function ipd_registation_from_opd($patientid, $patient_source, $source_id)

@@ -36,32 +36,14 @@ class SlotController extends Controller
             'days'                      => 'required',
             'from_time'                 => 'required',
             'to_time'                   => 'required',
-            'charge_category'           => 'required',
-            'charge_sub_category'       => 'required',
-            'charge'                    => 'required',
-            'tax'                       => 'required',
-            'total_amount'              => 'required',
-            'standard_charges'          => 'required',
         ]);
 
         $status = Slot::insert([
             'doctor'                    => $request->doctor,
-            'day'                      => $request->days,
-            'from_time'                 => $request->from_time,
-            'to_time'                   => $request->to_time,
-            'charge_category'           => $request->charge_category,
-            'charge_sub_category'       => $request->charge_sub_category,
-            'charge'                    => $request->charge,
-            'tax'                       => $request->tax,
-            'total_amount'              => $request->total_amount,
-            'standard_charges'          => $request->standard_charges,
+            'days'                      => $request->days,
+            'from_time'                 =>  date('H:i A',strtotime($request->from_time)),
+            'to_time'                   =>  date('H:i A',strtotime($request->to_time)),
         ]);
-        $button1 = $request->button1;
-        $charge  = Charge::where('id', '=', $request->charge)->first();
-        $change_value = $charge->standard_charges;
-        if ($change_value != $request->standard_charges && isset($button1)) {
-            Charge::where('id', '=', $request->charge)->update(['standard_charges' => $request->standard_charges]);
-        }
 
         if ($status) {
             return redirect()->route('slots-details')->with('success', 'Slot Added Sucessfully');
@@ -88,33 +70,15 @@ class SlotController extends Controller
             'days'                      => 'required',
             'from_time'                 => 'required',
             'to_time'                   => 'required',
-            'charge_category'           => 'required',
-            'charge_sub_category'       => 'required',
-            'charge'                    => 'required',
-            'tax'                       => 'required',
-            'standard_charges'          => 'required',
-            'total_amount'              => 'required',
+
         ]);
 
         $slots = Slot::find($request->id);
         $slots->doctor                   = $request->doctor;
         $slots->days                     = $request->days;
-        $slots->from_time                = $request->from_time;
-        $slots->to_time                  = $request->to_time;
-        $slots->charge_category          = $request->charge_category;
-        $slots->charge_sub_category      = $request->charge_sub_category;
-        $slots->charge                   = $request->charge;
-        $slots->tax                      = $request->tax;
-        $slots->standard_charges         = $request->standard_charges;
-        $slots->total_amount             = $request->total_amount;
+        $slots->from_time                = date('H:i A',strtotime($request->from_time));
+        $slots->to_time                  = date('H:i A',strtotime($request->to_time));
         $status = $slots->save();
-
-        $button1 = $request->button1;
-        $charge  = Charge::where('id', '=', $request->charge)->first();
-        $change_value = $charge->standard_charges;
-        if ($change_value != $request->standard_charges && isset($button1)) {
-            Charge::where('id', '=', $request->charge)->update(['standard_charges' => $request->standard_charges]);
-        }
 
         if ($status) {
             return redirect()->route('slots-details')->with('success', 'Slot Updated Sucessfully');

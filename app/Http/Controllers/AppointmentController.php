@@ -9,6 +9,8 @@ use App\Models\Slot;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Patient;
+use App\Models\Notification;
+use Auth;
 
 
 class AppointmentController extends Controller
@@ -50,10 +52,20 @@ class AppointmentController extends Controller
             'doctor'                    => $request->doctor,
             // 'shift'                     => $request->shift,
             'appointment_date'          => $request->appointment_date,
-            // 'slot'                      => $request->slot,
+             'slot'                      => $request->slot,
             'appointment_priority'      => $request->appointment_priority,
             'message'                   => $request->message,
         ]);
+
+        $patient_details = Patient::where('id',$request->patient_id)->first();
+        //dd($patient_details);
+        $user_details = User::where('id',$request->doctor)->first();
+        $message = "<a href=".route('all-appointments-details').">".$patient_details->first_name." ".$patient_details->last_name." has booked a appointment with " .$user_details->first_name.' '.$user_details->last_name." for ".date('d-m-Y',strtotime($request->appointment_date))."</a>";
+        $notification = new Notification();
+        $notification->message = $message;
+        $notification->date = $request->appointment_date;
+        $notification->created_by = Auth::user()->id;
+        $notification->save();
 
         if ($status) {
             return redirect()->route('all-appointments-details')->with('success', "Appointment Added Successfully");
@@ -87,7 +99,7 @@ class AppointmentController extends Controller
         $appointment->doctor = $request->doctor;
         // $appointment->shift = $request->shift;
         $appointment->appointment_date = $request->appointment_date;
-        // $appointment->slot = $request->slot;
+        $appointment->slot = $request->slot;
         $appointment->appointment_priority = $request->appointment_priority;
         $appointment->message = $request->message;
         $status = $appointment->save();
@@ -135,17 +147,14 @@ class AppointmentController extends Controller
         $all_search_data = $request->all();
 
         $appointment = Appointment::where(function ($query) use ($request) {
-            if (!auth()->user()->can('False Generation')) {
-                $query->where('ins_by', 'ori');
-            }
             if ($request->doctor != '') {
                 $query->where('doctor', $request->doctor);
             }
-            if ($request->from_date != '') {
-                $query->where('appointment_date', '>=', $request->from_date);
+            if ($request->date != '') {
+                $query->where('appointment_date', '=', $request->date);
             }
-            if ($request->to_date != '') {
-                $query->where('appointment_date', '<=', $request->to_date);
+            if ($request->slot != '') {
+                $query->where('slot', '=', $request->slot);
             }
         })->get();
 
@@ -153,5 +162,14 @@ class AppointmentController extends Controller
         // dd($appointment);
 
         return view('appointment.dr-wise-appointment', compact('appointment', 'all_search_data','doctors'));
+    }
+
+    public function get_slot_details_using_doctor_id(Request $request)
+    {
+        $appointment_date = $request->appointmentDate;
+        $doctor_id = $request->doctorId;
+        $day = date('l',strtotime($appointment_date));
+        $doctor_slot_details = Slot::where('days',$day)->where('doctor',$doctor_id)->get();
+        return response()->json($doctor_slot_details);
     }
 }

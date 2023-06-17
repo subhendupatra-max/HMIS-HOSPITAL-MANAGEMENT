@@ -11,10 +11,12 @@ use App\Http\Controllers\Bed\BedController;
 use App\Http\Controllers\BedUnitController;
 use App\Http\Controllers\BedTypeController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Bed\FloorController;
 use App\Http\Controllers\Bed\WardController;
 use App\Http\Controllers\BedGroupController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\RosterController;
 use App\Http\Controllers\BillSummaryController;
 use App\Http\Controllers\charges\ChargeController;
 use App\Http\Controllers\ChargesCatagoryController;
@@ -244,7 +246,7 @@ Route::group(['middleware' => ['permission:edit permission']], function () {
 
 
 // ======================================== User ==================================================
-Route::group(['middleware' => ['permission:User']], function () {
+Route::group(['middleware' => ['permission:Human Resource']], function () {
     Route::group(['middleware' => ['permission:User Add']], function () {
         Route::get('/User-add', [UserController::class, 'UserCreate'])->name('UserCreate');
         Route::post('/UserCreateAction', [UserController::class, 'UserCreateAction'])->name('UserCreateAction');
@@ -269,6 +271,12 @@ Route::group(['middleware' => ['permission:User']], function () {
         Route::get('user-edit/{id?}', [UserController::class, 'user_edit'])->name('user-edit');
         Route::post('user-update', [UserController::class, 'user_update'])->name('user-update');
     });
+
+    Route::group(['middleware' => ['permission:Roster']], function () {
+        Route::get('roster', [RosterController::class, 'user_edit'])->name('roster');
+    });
+
+
 });
 // ======================================== User ==================================================
 
@@ -357,7 +365,6 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
 
         // ==================================charges unit =================
         Route::group(['middleware' => ['permission:charges unit']], function () {
-
             Route::group(['middleware' => ['permission:charges add unit']], function () {
                 Route::get('charges-unit-details', [ChargesUnitController::class, 'charges_unit_details'])->name('charges-unit-details');
                 Route::post('save-charges-unit-details', [ChargesUnitController::class, 'save_charges_unit_details'])->name('save-charges-unit-details');
@@ -384,11 +391,12 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
 
     // ====================== Patient Details  ==================
     Route::group(['middleware' => ['permission:Patient Master']], function () {
-        Route::get('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
+        Route::any('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
     });
     Route::group(['middleware' => ['permission:add patient']], function () {
         Route::get('add-new-patient', [PatientController::class, 'add_new_patient'])->name('add_new_patient');
         Route::get('add_new_patient-in-ipd', [PatientController::class, 'add_new_patient_in_ipd'])->name('add_new_patient-in-ipd');
+        Route::get('add-new-patient-in-appointment', [PatientController::class, 'add_new_patient_in_appointment'])->name('add_new_patient_in_appointment');
         Route::post('submit_new_patient_details', [PatientController::class, 'submit_new_patient_details'])->name('submit_new_patient_details');
     });
     Route::group(['middleware' => ['permission:import patient']], function () {
@@ -410,6 +418,7 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
         Route::post('update-new-patient-details-opd', [PatientController::class, 'update_new_patient_details_opd'])->name('update-new-patient-details-opd');
         Route::post('update-new-patient-details-emg', [PatientController::class, 'update_new_patient_details_emg'])->name('update-new-patient-details-emg');
     });
+
 
     Route::group(['middleware' => ['permission:delete patient']], function () {
         Route::get('delete-patient-details/{id}', [PatientController::class, 'delete'])->name('delete-patient-details');
@@ -2001,7 +2010,7 @@ Route::post('get-charge-amount-opd', [BillingController::class, 'get_charge_amou
 //================================= OPD ===================================================
 
 Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'], function () {
-    Route::get('OPD-Patient-list', [OpdController::class, 'index'])->name('OPD-Patient-list');
+    Route::any('OPD-Patient-list', [OpdController::class, 'index'])->name('OPD-Patient-list');
     Route::group(['middleware' => ['permission:OPD registation']], function () {
         Route::post('after-new-old', [OpdController::class, 'after_new_old'])->name('after-new-old');
         Route::post('add-opd-registration', [OpdController::class, 'add_opd_registation'])->name('add-opd-registration');
@@ -2186,7 +2195,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
 
 //================================= Emg ===================================================
 Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], function () {
-    Route::get('emg-patient-list', [EmgController::class, 'index'])->name('emg-patient-list');
+    Route::any('emg-patient-list', [EmgController::class, 'index'])->name('emg-patient-list');
     Route::group(['middleware' => ['permission:Emg registation']], function () {
         Route::post('emg-after-new-old', [EmgController::class, 'after_new_old'])->name('emg-after-new-old');
 
@@ -2411,6 +2420,7 @@ Route::group(['middleware' => ['permission:appointment main']], function () {
 
         Route::post('fetch-appointments-details-dr-wise', [AppointmentController::class, 'fetch_appointments_details_by_doctor_wise'])->name('fetch-appointments-details-dr-wise');
     });
+    Route::post('get-slot-details-using-doctor_id', [AppointmentController::class, 'get_slot_details_using_doctor_id'])->name('get-slot-details-using-doctor_id');
 });
 
 //================================= Appointment ===================================================
@@ -2517,7 +2527,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::any('direct-ipd-admission/{id?}', [IpdController::class, 'direct_ipd_admission'])->name('direct-ipd-admission');
     });
 
-    Route::get('ipd-patient-listing', [IpdController::class, 'index'])->name('ipd-patient-listing');
+    Route::any('ipd-patient-listing', [IpdController::class, 'index'])->name('ipd-patient-listing');
 
     Route::group(['middleware' => ['permission:IPD registation']], function () {
         Route::post('ipd-registation', [IpdController::class, 'ipd_registation'])->name('ipd-registation');
@@ -2912,7 +2922,7 @@ Route::group(['middleware' => ['permission:bed-status'], 'prefix' => 'bed-status
     Route::get('bed-status-list', [BedController::class, 'bed_status_list_in_header'])->name('bed-status-list');
     Route::post('update-status-bed', [BedController::class, 'update_status_bed'])->name('update-status-bed');
 });
-
+Route::post('search-by-bed-and-ward', [BedController::class, 'search_by_bed_and_ward'])->name('search-by-bed-and-ward');
 //================================= bed status ==============================
 
 //================================= Reports ==============================
@@ -3108,3 +3118,5 @@ Route::group(['middleware' => ['permission:Apply Commission']], function () {
     Route::get('apply-opd-commission/{case_id?}/{ref_id?}', [ReferralController::class, 'apply_opd_commission'])->name('apply-opd-commission');
 });
 //================================= Death Record ===================================
+Route::get('get-notification-all', [NotificationController::class, 'get_notification_all'])->name('get-notification-all');
+Route::get('view-all-notification', [NotificationController::class, 'view_all_notification'])->name('view-all-notification');

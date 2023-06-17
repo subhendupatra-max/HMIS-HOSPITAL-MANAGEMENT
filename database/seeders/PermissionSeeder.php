@@ -54,6 +54,7 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'user edit']);
         Permission::create(['name' => 'Change Password']);
         Permission::create(['name' => 'user delete']);
+        Permission::create(['name' => 'Roster']);
 
         //General Setting
         Permission::create(['name' => 'Set Up']);
@@ -870,5 +871,9 @@ class PermissionSeeder extends Seeder
 
         //bill summery
         Permission::create(['name' => 'Summery Bill']);
+
+        //HR
+
+
     }
 }

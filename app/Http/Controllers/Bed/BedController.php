@@ -107,8 +107,13 @@ class BedController extends Controller
 
     public function bed_status_list_in_header()
     {
-        $beds = Bed::where('is_active',1)->get();
-        return view('bed-status',compact('beds'));
+        $wards = Ward::select('wards.ward_name','wards.id')->get();
+        $bed_and_ward = [];
+        foreach($wards as $ward){
+            $bed_and_ward[$ward->ward_name] =  Bed::select('beds.bed_name','beds.id','beds.is_used')->where('bedWard_id',$ward->id)->where('is_active','1')->get();
+        }
+        // dd($bed_and_ward);
+        return view('bed-status',compact('bed_and_ward'));
     }
 
     public function update_status_bed(Request $request){
@@ -120,5 +125,30 @@ class BedController extends Controller
         } else {
             return redirect()->back()->with('error', "Something Went Wrong");
         }
+    }
+    public function search_by_bed_and_ward(Request $request)
+    {
+        $request_data =  $request->all();
+        if($request->bed_ward != null)
+        {
+            $wards = Ward::select('wards.ward_name','wards.id')->where('ward_name','like','%'.$request->bed_ward.'%')->get(); 
+            $bed_and_ward = [];
+            foreach($wards as $ward){
+                $bed_and_ward[$ward->ward_name] =  Bed::select('beds.bed_name','beds.id','beds.is_used')->where('bedWard_id',$ward->id)->where('is_active','1')->get();
+            }
+        }
+        elseif($request->bed != null)
+        {
+            $wards = Ward::select('wards.ward_name','wards.id')->get(); 
+            $bed_and_ward = [];
+            foreach($wards as $ward){
+                $bed_and_ward[$ward->ward_name] =  Bed::select('beds.bed_name','beds.id','beds.is_used')->where('bedWard_id',$ward->id)->where('bed_name','like','%'.$request->bed.'%')->where('is_active','1')->get();
+            }
+        }
+        else{
+            return redirect()->route('bed-status-list');
+        }
+        // dd($bed_and_ward);
+        return view('bed-status',compact('bed_and_ward','request_data'));
     }
 }

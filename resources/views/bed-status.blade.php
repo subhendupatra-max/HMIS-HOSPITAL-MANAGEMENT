@@ -8,68 +8,75 @@
                 <div class="col-md-6 card-title">
                     <h4 class="card-title">Bed Status </h4>
                 </div>
-            
+
             </div>
+        </div>
+        <div class="card-header d-block">
+            <form method="POST" action="{{ route('search-by-bed-and-ward') }}">
+                @csrf
+            <div class="row">
+                <div class="col-md-4 card-title">
+                    <input name="bed_ward" type="text" value="{{ @$request_data['bed_ward'] }}" placeholder="Search By Ward..." />
+        
+                </div>
+                <div class="col-md-4 card-title">
+                    <input name="bed" type="text" value="{{ @$request_data['bed'] }}" placeholder="Search By Bed No..." />
+                </div>
+                <div class="col-md-4 card-title">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Search</button>
+                </div>
+            </div>
+            </form>
         </div>
         <!-- ================================ Alert Message===================================== -->
 
         @include('message.notification')
-
-        <div class="card-body">
-            <table class="table table-bordered text-nowrap" id="example">
-                <thead>
-                    <tr>
-                        <th scope="col">Bed</th>
-                        <th scope="col">Ward</th>
-                        <th scope="col">Bed Status</th>
-                        <th scope="col">Patient Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (isset($beds))
-                    @foreach ($beds as $value)
-                    <?php
-                     if ($value->is_used == 'yes'){
-                        $ipd_patient_details = App\Models\IpdDetails::where('bed',$value->id)->where('discharged','no')->first();
-                     }
-                     ?>
-                    <tr>
-                        <td class="text-center">
-                            @if($value->is_used == 'no')
-                            <i class="fa fa-bed fa-2x text-success"></i>
-                            @elseif ($value->is_used == 'yes')
-                            <i class="fa fa-bed fa-2x text-danger"></i>
-                            @else
-                            <i class="fa fa-bed fa-2x text-warning"></i>
-                            @endif
-                             {{ @$value->bed_name }}
-                        </td>
-                        <td>{{@$value->bed_ward->ward_name }}</td>
-                        <td>
-                            @if($value->is_used == 'no')
-                            <span class="badge badge-success">Free Bed</span>
-                            @elseif ($value->is_used == 'yes')
-                            <span class="badge badge-danger">Patient Admitted</span>
-                            @else
-                            <span class="badge badge-warning" onclick="changeBedStatus({{ $value->id }})">Under Maintenance</span>
-                            @endif
-                        </td>
-                        <td>
-                            @if ($value->is_used == 'yes')
-                            <a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($ipd_patient_details->id)])}}"> {{ @$ipd_patient_details->all_patient_details->prefix }} {{
-                                @$ipd_patient_details->all_patient_details->first_name }} {{ @$ipd_patient_details->all_patient_details->middle_name
-                                }} {{ @$ipd_patient_details->all_patient_details->last_name }}({{ @$ipd_patient_details->all_patient_details->id }}) -- {{ @date('d-m-Y h:i A',strtotime(@$ipd_patient_details->appointment_date)) }} -- {{ @$ipd_patient_details->all_patient_details->phone }}</a>
-                             -- 
-                            {!! @$ipd_patient_details->ins_by == 'ori' ? '<span class="badge badge-info">Original</span>':'<span class="badge badge-secondary">False</span>' !!}
-                            @endif
-                        </td>
-                     
-                    </tr>
-                    @endforeach
-                    @endif
-                </tbody>
-            </table>
+        @foreach ($bed_and_ward as $key => $value)
+        @isset($value[0]->bed_name)
+        <div class="card-header" style="background-color: rgb(223, 223, 223)">
+            <h4 class="card-title" >{{ @$key }} </h4>
         </div>
+        <div class="card-body">
+            <div class="col-md-12">
+                <div class="row">
+                    @foreach ($value as $key1 => $item)
+                    <?php
+                    if ($item->is_used != 'no'){
+                       $ipd_patient_details = App\Models\IpdDetails::where('bed',$item->id)->where('discharged','no')->first();
+                    }
+                    ?>
+
+                        <div class="col-md-1">
+                            @isset($ipd_patient_details)
+                            <a href="{{route('ipd-profile',['id'=>base64_encode($ipd_patient_details->id)])}}"
+                                data-placement="top" data-toggle="tooltip" title="{!! 'P Name : '.@$ipd_patient_details->all_patient_details->prefix .' '.
+                                    @$ipd_patient_details->all_patient_details->first_name .' '. @$ipd_patient_details->all_patient_details->middle_name
+                                    .' '. @$ipd_patient_details->all_patient_details->last_name .' ( '. @$ipd_patient_details->all_patient_details->id .') // DOA : ' . @date('d-m-Y h:i A',strtotime(@$ipd_patient_details->appointment_date)).' // PH : '. @$ipd_patient_details->all_patient_details->phone !!}" >
+                            @endisset
+                                @if($item->is_used == 'no')
+                                    @if(@$ipd_patient_details->ins_by == 'sys')
+                                        <i class="fa fa-bed fa-3x text-info"></i>
+                                    @else
+                                        <i class="fa fa-bed fa-3x text-success"></i>
+                                    @endif
+                                @elseif ($item->is_used == 'yes')
+                                <i class="fa fa-bed fa-3x text-danger"></i>
+                                @else
+                                <i class="fa fa-bed fa-3x text-warning"></i>
+                                @endif
+                                <h3 class="appointment-heading"> {{ $item->bed_name }}</h3>
+                            @isset($ipd_patient_details)
+                            </a>
+                            @endisset
+                        </div>
+                
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        @endisset
+        @endforeach
+
     </div>
 </div>
 
@@ -93,13 +100,13 @@
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-control" id="status" name="status">
                                 <option value="">Select......</option>
-                                <option value="no">Ready For Use</option>
+                                <option value="no">Ready For Used</option>
                             </select>
                             @error('status')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                    <input type="hidden" id="bed_id" name="bed_id"/>
+                        <input type="hidden" id="bed_id" name="bed_id" />
                     </div>
                 </div>
                 <div class="modal-footer">

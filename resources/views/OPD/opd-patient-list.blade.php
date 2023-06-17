@@ -18,30 +18,58 @@
                 @endcan
             </div>
         </div>
+        <div class="card-header d-block">
+            <form action="{{ route('OPD-Patient-list') }}" method="POST">
+                @csrf
+                <div class="row">
+                    <div class="col-md-3 card-title">
+                        <input type="text" name="patient_first_name" value="{{ @$request_data['patient_first_name'] }}" placeholder="Search By Patient Name ....." />
+                    </div>
+                    <div class="col-md-2 card-title">
+                        <input type="text" name="patient_uhid"  value="{{ @$request_data['patient_uhid'] }}" placeholder="Search By Patient UHID ....." />
+                    </div>
+                    <div class="col-md-1 card-title">
+                        <input type="text" name="patient_phone_no"  value="{{ @$request_data['patient_phone_no'] }}" placeholder="Phone No ....." />
+                    </div>
+                    <div class="col-md-1 card-title">
+                        <input type="text" name="opd_id"  value="{{ @$request_data['opd_id'] }}" placeholder="OPD Id ....." />
+                    </div>
+                    <div class="col-md-1 card-title">
+                        <input type="text" name="case_id"  value="@if(@$request_data['case_id'] != null){{ $request_data['case_id'] }} @endif" placeholder="Case Id ....." />
+                    </div>
+                    <div class="col-md-2 card-title">
+                        <input type="date" style="margin: 6px 0px 0px 0px" name="appointment_date"  value="{{ @$request_data['appointment_date'] }}" />
+                    </div>
+                    <div class="col-md-2 card-title">
+                        <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-search"></i> Search</button>
+                        <a class="btn btn-primary btn-sm" href="{{ route('OPD-Patient-list') }}"><i class="fa fa-list"></i> All List</a>
+                    </div>
+                </div>
+            </form>
+        </div>
         <!-- ================================ Alert Message===================================== -->
 
         @include('message.notification')
 
         <div class="card-body">
-            <table class="table table-bordered text-nowrap" id="example">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">OPD Id</th>
-                        <th scope="col">Patient Name</th>
-                        <th scope="col">Gurdian Name</th>
-                        <th scope="col">Mobile No.</th>
-                        <th scope="col">Case Id</th>
-                        <th scope="col">Visit Details</th>
-                        <th scope="col">Appointment Date</th>
-                        <th scope="col">Action</th>
+            <table class="table table-hover card-table table-vcenter text-nowrap border-left border-right border-bottom">
+                <thead class="bg-primary text-white">
+                    <tr class="border-left">
+                        <th  class="text-white">OPD Id</th>
+                        <th  class="text-white">Patient Name</th>
+                        <th  class="text-white">Gurdian Name</th>
+                        <th  class="text-white">Mobile No.</th>
+                        <th  class="text-white">Case Id</th>
+                        <th class="text-white">Patient Type</th>
+                        <th  class="text-white">Visit Details</th>
+                        <th  class="text-white">Appointment Date</th>
+                        <th  class="text-white">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (isset($opd_registaion_list))
+                    @if(@$opd_registaion_list[0]->id != null)
                     @foreach ($opd_registaion_list as $value)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
                         <td><a class="textlink"
                                 href="{{ route('opd-profile', ['id' => base64_encode($value->id)]) }}">{{ @$value->id }}</a>
                         </td>
@@ -67,6 +95,19 @@
                         <td>{{ @$value->all_patient_details->guardian_name }}</td>
                         <td>{{ @$value->all_patient_details->phone }}</td>
                         <td>{{ @$value->case_id }}</td>
+                        <td>
+                            <i class="fa fa-adjust text-primary"></i> {{ @$value->latest_opd_visit_details_for_patient->patient_type }}
+
+                            @if(@$value->latest_opd_visit_details_for_patient->tpa_organization != null)
+                            <br>
+                            <i class="fa fa-adjust text-primary"></i> {{ @$value->latest_opd_visit_details_for_patient->tpa_details->TPA_name }}
+                            @endif
+                            
+                            @if(@$value->latest_opd_visit_details_for_patient->type_no != null)
+                            <br>
+                            <i class="fa fa-adjust text-primary"></i> {{ @$value->latest_opd_visit_details_for_patient->type_no }}
+                            @endif
+                        </td>
                         <td>
                             @if (isset($value->latest_opd_visit_details_for_patient->department_id))
                             <i class="fa fa-cubes text-primary"></i>
@@ -121,10 +162,23 @@
 
                     </tr>
                     @endforeach
+                    @else
+                    <tr>
+                        <td colspan="8" style="text-align: center;">
+                            <img src="{{ asset('public/no_found_data/no_data.png') }}" alt="loader" width="400px"
+                            height="160px">
+                        </td>
+                    </tr>
                     @endif
                 </tbody>
+
             </table>
-            {{-- {!! $opd_registaion_list->links() !!} --}}
+            @if(@$opd_registaion_list[0]->id != null)
+            
+            <div class="mt-2">
+                {!! $opd_registaion_list->links() !!}
+            </div> 
+            @endif 
         </div>
     </div>
 </div>

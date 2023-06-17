@@ -4,45 +4,17 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <div class="card-title"> Add Appointment</div>
+            <div class="card-title"> Edit Appointment</div>
         </div>
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body p-0">
             <div class="row no-gutters">
                 <div class="col-lg-4 col-xl-4 border-right">
                     
-                    <div class="options px-5 pt-2  border-bottom pb-1">
-                        <div class="row">
-                            <div class="col-md-12 mb-2">
-                                <a class="btn btn-primary btn-sm" href="<?php echo e(route('add_new_patient_in_appointment')); ?>"><i class="fa fa-plus"></i> Add New Patient</a>
-                            </div>
-                        </div>
-                    </div>
+
                     
 
-                    <div class="options px-5 pt-5  border-bottom pb-3">
 
-                        <form method="post" action="<?php echo e(route('add-appointments-details')); ?>">
-
-                            <?php echo csrf_field(); ?>
-                            <div class="row">
-                                <div class="col-md-12 mb-2">
-                                    <select class="form-control  select2-show-search" name="patient_id">
-                                        <option value="">Select One Patient</option>
-                                        <?php if(isset($all_patient)): ?>
-                                        <?php $__currentLoopData = $all_patient; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $patient): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e(@$patient->id); ?>" <?php echo e(@$patient_details_information->id == $patient->id ? 'Selected' : ''); ?>> <?php echo e(@$patient->prefix); ?> <?php echo e(@$patient->first_name); ?> <?php echo e(@$patient->middle_name); ?> <?php echo e(@$patient->last_name); ?> ( <?php echo e(@$patient->id); ?> ) </option>
-                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        <?php endif; ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-12 mb-2">
-                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Search</button>
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
 
                     <?php if(isset($patient_details_information)): ?>
                     
@@ -74,6 +46,7 @@ unset($__errorArgs, $__bag); ?>
 
                                     </h6>
 
+                                  
                                 </div>
                             </div>
 
@@ -132,28 +105,52 @@ unset($__errorArgs, $__bag); ?>
                     <?php endif; ?>
 
                 </div>
-
+                <script>
+                    function getSlot(doctor_id,slot=null)
+                    {
+                        var appointment_date = $('#appointment_date').val();
+                       // alert(patient_type);
+                        var div_data = '';
+                        var sel = '';
+                        $('#slot').html('<option value="">Select One....</option>');
+                        $.ajax({
+                            url: "<?php echo e(route('get-slot-details-using-doctor_id')); ?>",
+                            type: "POST",
+                            data: {
+                                _token : '<?php echo e(csrf_token()); ?>',
+                                appointmentDate : appointment_date,
+                                doctorId : doctor_id,
+                            },
+                            success: function(response) {
+                                $.each(response, function(key, value) {
+                                    if(slot == value.id)
+                                    {
+                                        sel = 'selected';
+                                    }
+                                    div_data += `<option value="${value.id}" ${sel}>${value.from_time} - ${value.to_time}</option>`;
+                                });
+                                $('#slot').append(div_data);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                       
+                    }
+                </script>
                 <div class="col-lg-8 col-xl-8">
-                    <form method="post" action="<?php echo e(route('save-appointments-details')); ?>">
+                    <form method="post" action="<?php echo e(route('update-appointments-details')); ?>">
                         <?php echo csrf_field(); ?>
                         <div class="options px-5 pt-1  border-bottom pb-3">
-                            <?php $__errorArgs = ['patient_id'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                            <small class="text-danger"><?php echo e($message); ?></small>
-                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
+
                             <div class="row">
-                                <input type="hidden" name="patient_id" value="<?php echo e(@$patient_details_information->id); ?>" />
+                                <input type="hidden" name="patient_id" value="<?php echo e(@$editAppointment->patient_id); ?>" />
+                                <input type="hidden" name="id" value="<?php echo e(@$editAppointment->id); ?>" />
 
                                 <div class="form-group col-md-4 opd-bladedesign ">
                                     <label class="date-format">Appointment Date <span class="text-danger">*</span></label>
 
-                                    <input type="date" name="appointment_date" id="appointment_date" value="<?php echo e(old('appointment_date')); ?>" required style="margin:9px 0px 0px 0px;" />
+                                    <input type="date" style="margin:9px 0px 0px 0px" name="appointment_date"  required value="<?php echo e(date('Y-m-d',strtotime($editAppointment->appointment_date))); ?>" />
 
                                     <?php $__errorArgs = ['appointment_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -169,10 +166,10 @@ unset($__errorArgs, $__bag); ?>
 
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="doctor">Doctor <span class="text-danger">*</span></label>
-                                    <select name="doctor" class="form-control select2-show-search" onchange="getSlot(this.value)" id="doctor" required>
-                                        <option value=" ">Select Doctor...</option>
+                                    <select name="doctor" onchange="getSlot(this.value,<?php echo e($editAppointment->slot); ?>)" class="form-control select2-show-search" id="doctor" required>
+                                        <option value=" ">Select Doctor</option>
                                         <?php $__currentLoopData = $doctor; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($item->id); ?>"><?php echo e($item->first_name); ?> <?php echo e($item->last_name); ?>
+                                        <option value="<?php echo e($item->id); ?>" <?php echo e($item->id == $editAppointment->doctor ? 'selected' : " "); ?>><?php echo e($item->first_name); ?> <?php echo e($item->last_name); ?>
 
                                         </option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -188,7 +185,6 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="slot">Slot <span class="text-danger">*</span></label>
                                     <select name="slot" class="form-control select2-show-search" id="slot" required>
@@ -205,13 +201,12 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="appointment_priority">Appointment Priority <span class="text-danger">*</span></label>
                                     <select name="appointment_priority" class="form-control select2-show-search" id="appointment_priority" required>
-                                        <option value="">Select Appointment Priority..</option>
+                                        <option value="">Select Appointment Priority</option>
                                         <?php $__currentLoopData = Config::get('static.appointment_priority'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
+                                        <option value="<?php echo e($item); ?>" <?php echo e($item == $editAppointment->appointment_priority ? 'selected' : " "); ?>> <?php echo e($item); ?></option>
                                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                     </select>
                                     <?php $__errorArgs = ['appointment_priority'];
@@ -226,10 +221,9 @@ endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
 
-
                                 <div class="form-group col-md-8 newaddappon">
                                     <label for="message">Message </label>
-                                    <input type="text" class="form-control" name="message" value="<?php echo e(old('message')); ?>" id="message" style="margin:0px 0px 0px 0px;" />
+                                    <input type="text" class="form-control" name="message" style="margin:0px 0px 0px 0px" value="<?php echo e($editAppointment->message); ?>" id="message" />
 
                                     <?php $__errorArgs = ['message'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -244,10 +238,13 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                             </div>
                         </div>
+
+
+
                 </div>
             </div>
-            <div class="btn-list p-3">
-                <button class="btn btn-primary btn-sm float-right ml-2" type="submit" name="save" value="save"><i class="fa fa-file"></i> Save</button>
+            <div class="" style="text-align: center;">
+                <button class="btn btn-primary btn-sm mb-3" type="submit" name="save" value="save"><i class="fa fa-file"></i> Update</button>
             </div>
             </form>
         </div>
@@ -256,35 +253,6 @@ unset($__errorArgs, $__bag); ?>
 </div>
 </div>
 
-<script>
-    function getSlot(doctor_id)
-    {
-        var appointment_date = $('#appointment_date').val();
-       // alert(patient_type);
-        var div_data = '';
-        $('#slot').html('<option value="">Select One....</option>');
-        $.ajax({
-            url: "<?php echo e(route('get-slot-details-using-doctor_id')); ?>",
-            type: "POST",
-            data: {
-                _token : '<?php echo e(csrf_token()); ?>',
-                appointmentDate : appointment_date,
-                doctorId : doctor_id,
-            },
-            success: function(response) {
-                $.each(response, function(key, value) {
-                    div_data += `<option value="${value.id}">${value.from_time} - ${value.to_time}</option>`;
-                });
-                $('#slot').append(div_data);
-            },
-            error: function(error) {
-                console.log(error);
-            }
-        });
-       
-    }
-</script>
-
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/appointment/add-appointment.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/appointment/edit-appointment.blade.php ENDPATH**/ ?>

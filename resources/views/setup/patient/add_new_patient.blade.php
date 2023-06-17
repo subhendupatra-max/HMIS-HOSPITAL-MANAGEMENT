@@ -374,6 +374,11 @@
                                                 <option value="ipd" @if (isset($type)) {{ $type=='IPD' ? 'selected' : ''
                                                     }} @endif>
                                                     IPD Admission</option>
+
+                                                <option value="Appointment" @if (isset($type)) {{ $type =='Appointment' ? 'selected' : ''
+                                                }} @endif>
+                                                Appointment</option>
+
                                             </select>
 
                                         </div>

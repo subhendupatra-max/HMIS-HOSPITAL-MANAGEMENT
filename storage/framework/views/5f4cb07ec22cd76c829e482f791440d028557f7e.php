@@ -11,12 +11,13 @@
                     <div class="d-block">
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add slots')): ?>
-                        <a href="<?php echo e(route('add-slots-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add New Slots </a>
+                        <a href="<?php echo e(route('add-slots-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-clock"></i> Add New Slots </a>
                         <?php endif; ?>
                     </div>
                 </div>
             </div>
         </div>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
         <div class="card-body">
             <div class="">
@@ -29,9 +30,6 @@
                                 <th class="border-bottom-0">Days</th>
                                 <th class="border-bottom-0">From Time</th>
                                 <th class="border-bottom-0">To Time</th>
-                                <th class="border-bottom-0">Catagory</th>
-                                <th class="border-bottom-0">Sub Catagory</th>
-                                <th class="border-bottom-0">charge</th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit slots','delete slots')): ?>
                                 <th>Action</th>
                                 <?php endif; ?>
@@ -43,11 +41,8 @@
                                 <td><?php echo e($loop->iteration); ?></td>
                                 <td><?php echo e(@$item->fetch_doctor_name->first_name); ?> <?php echo e(@$item->fetch_doctor_name->last_name); ?></td>
                                 <td><?php echo e($item->days); ?></td>
-                                <td><?php echo e($item->from_time); ?></td>
-                                <td><?php echo e($item->to_time); ?></td>
-                                <td><?php echo e($item->fetch_catagorys_name->charges_catagories_name); ?></td>
-                                <td><?php echo e($item->fetch_sub_catagorys_name->charges_sub_catagories_name); ?></td>
-                                <td><?php echo e($item->fetch_charges_name->charges_name); ?></td>
+                                <td><?php echo e(date('H:i A',strtotime($item->from_time))); ?></td>
+                                <td><?php echo e(date('H:i A',strtotime($item->to_time))); ?></td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
@@ -71,5 +66,6 @@
             </div>
         </div>
     </div>
+</div>
     <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/setup/appointment/slots/slots-listing.blade.php ENDPATH**/ ?>

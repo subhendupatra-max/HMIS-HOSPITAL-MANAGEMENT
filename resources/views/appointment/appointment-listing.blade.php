@@ -15,7 +15,7 @@
                         @endcan
 
                         @can('dotor wise appointment main')
-                        <a href="{{ route('doctor-wise-appointments-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-file"></i> Dr. Wise </a>
+                        <a href="{{ route('doctor-wise-appointments-details') }}" class="btn btn-primary btn-sm"><i class="fa fa-medkit"></i> Dr. Wise </a>
                         @endcan
                     </div>
                 </div>
@@ -33,6 +33,7 @@
                                 <th class="border-bottom-0">Patient Name</th>
                                 <th class="border-bottom-0">Doctor Name</th>
                                 <th class="border-bottom-0">Appointment Date</th>
+                                <th class="border-bottom-0">Slot</th>
                                 <th class="border-bottom-0">Appointment Priority</th>
                                 <th class="border-bottom-0">Message</th>
                                 @can('edit appointment','delete appointment')
@@ -42,12 +43,27 @@
                         </thead>
                         <tbody>
                             @foreach ($appointment as $item)
+                            <?php
+                             $slot_details = DB::table('slots')->where('id',$item->slot)->first();
+                             $slot_time =  date('H:i A',strtotime($slot_details->from_time))." - ".date('H:i A',strtotime($slot_details->to_time));
+                            ?>
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->patient_details->first_name}} {{$item->patient_details->middle_name}} {{$item->patient_details->last_name}}</td>
                                 <td>{{$item->doctor_details->first_name}} {{$item->doctor_details->last_name}}</td>
-                                <td>{{$item->appointment_date}}</td>
-                                <td>{{$item->appointment_priority }}</td>
+                                <td>{{ date('d-m-Y',strtotime($item->appointment_date)) }}</td>
+                                <td>{{$slot_time}}</td>
+                                <td>
+                                    @if($item->appointment_priority == 'Normal')
+                                        <span class="badge badge-success">Normal</span>
+                                    @elseif($item->appointment_priority == 'Urgent')
+                                        <span class="badge badge-warning">Urgent</span>
+                                    @elseif($item->appointment_priority == 'Very Urgent')
+                                        <span class="badge badge-danger">Very Urgent</span>
+                                    @else
+                                        <span class="badge badge-info">Low</span>
+                                    @endif
+                                </td>
                                 <td>{{$item->message}}</td>
                                 <td>
                                     <div class="card-options">

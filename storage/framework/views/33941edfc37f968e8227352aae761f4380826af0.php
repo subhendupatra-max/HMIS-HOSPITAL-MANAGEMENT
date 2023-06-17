@@ -404,6 +404,10 @@ unset($__errorArgs, $__bag); ?>
                                                     EMG Registation</option>
                                                 <option value="ipd" <?php if(isset($type)): ?> <?php echo e($type=='IPD' ? 'selected' : ''); ?> <?php endif; ?>>
                                                     IPD Admission</option>
+
+                                                <option value="Appointment" <?php if(isset($type)): ?> <?php echo e($type =='Appointment' ? 'selected' : ''); ?> <?php endif; ?>>
+                                                Appointment</option>
+
                                             </select>
 
                                         </div>

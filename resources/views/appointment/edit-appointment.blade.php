@@ -90,7 +90,39 @@
                     @endif
 
                 </div>
-
+                <script>
+                    function getSlot(doctor_id,slot=null)
+                    {
+                        var appointment_date = $('#appointment_date').val();
+                       // alert(patient_type);
+                        var div_data = '';
+                        var sel = '';
+                        $('#slot').html('<option value="">Select One....</option>');
+                        $.ajax({
+                            url: "{{ route('get-slot-details-using-doctor_id') }}",
+                            type: "POST",
+                            data: {
+                                _token : '{{ csrf_token() }}',
+                                appointmentDate : appointment_date,
+                                doctorId : doctor_id,
+                            },
+                            success: function(response) {
+                                $.each(response, function(key, value) {
+                                    if(slot == value.id)
+                                    {
+                                        sel = 'selected';
+                                    }
+                                    div_data += `<option value="${value.id}" ${sel}>${value.from_time} - ${value.to_time}</option>`;
+                                });
+                                $('#slot').append(div_data);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                       
+                    }
+                </script>
                 <div class="col-lg-8 col-xl-8">
                     <form method="post" action="{{route('update-appointments-details')}}">
                         @csrf
@@ -103,7 +135,7 @@
                                 <div class="form-group col-md-4 opd-bladedesign ">
                                     <label class="date-format">Appointment Date <span class="text-danger">*</span></label>
 
-                                    <input type="datetime-local" name="appointment_date" value="{{ old('appointment_date') }}" required @if(isset($editAppointment->appointment_date)) value="{{date('Y-m-d H:i',strtotime($editAppointment->appointment_date))}}" @endif/>
+                                    <input type="date" style="margin:9px 0px 0px 0px" name="appointment_date"  required value="{{date('Y-m-d',strtotime($editAppointment->appointment_date))}}" />
 
                                     @error('appointment_date')
                                     <small class="text-danger">{{ $message }}</small>
@@ -112,7 +144,7 @@
 
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="doctor">Doctor <span class="text-danger">*</span></label>
-                                    <select name="doctor" class="form-control select2-show-search" id="doctor" required>
+                                    <select name="doctor" onchange="getSlot(this.value,{{ $editAppointment->slot }})" class="form-control select2-show-search" id="doctor" required>
                                         <option value=" ">Select Doctor</option>
                                         @foreach ($doctor as $item)
                                         <option value="{{ $item->id }}" {{ $item->id == $editAppointment->doctor ? 'selected' : " " }}>{{ $item->first_name }} {{ $item->last_name }}
@@ -123,7 +155,15 @@
                                     <small class="text-danger">{{ $message }}</sma>
                                         @enderror
                                 </div>
-
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="slot">Slot <span class="text-danger">*</span></label>
+                                    <select name="slot" class="form-control select2-show-search" id="slot" required>
+                                        <option value=" ">Select slot...</option>
+                                    </select>
+                                    @error('slot')
+                                    <small class="text-danger">{{ $message }}</sma>
+                                    @enderror
+                                </div>
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="appointment_priority">Appointment Priority <span class="text-danger">*</span></label>
                                     <select name="appointment_priority" class="form-control select2-show-search" id="appointment_priority" required>
@@ -137,37 +177,9 @@
                                         @enderror
                                 </div>
 
-
-                                <!-- <div class="form-group col-md-4 newaddappon">
-                                    <label for="slot">Slot <span class="text-danger">*</span></label>
-                                    <select name="slot" class="form-control select2-show-search" id="slot" required>
-                                        <option value=" ">Select slot</option>
-                                        @foreach ($slot as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                    @error('slot')
-                                    <small class="text-danger">{{ $message }}</sma>
-                                        @enderror
-                                </div>
-
-                                <div class="form-group col-md-4 newaddappon">
-                                    <label for="shift">Shift <span class="text-danger">*</span></label>
-                                    <select name="shift" class="form-control select2-show-search" id="shift" required>
-                                        <option value=" ">Select shift</option>
-                                        @foreach ($shift as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('shift')
-                                    <small class="text-danger">{{ $message }}</sma>
-                                        @enderror
-                                </div> -->
-
-                                <div class="form-group col-md-4 newaddappon">
+                                <div class="form-group col-md-8 newaddappon">
                                     <label for="message">Message </label>
-                                    <input type="text" class="form-control" name="message" value="{{ $editAppointment->message }}" id="message" />
+                                    <input type="text" class="form-control" name="message" style="margin:0px 0px 0px 0px" value="{{ $editAppointment->message }}" id="message" />
 
                                     @error('message')
                                     <small class="text-danger">{{ $message }}</sma>
@@ -181,7 +193,7 @@
                 </div>
             </div>
             <div class="" style="text-align: center;">
-                <button class="btn btn-primary btn-sm " type="submit" name="save" value="save"><i class="fa fa-file"></i> Update</button>
+                <button class="btn btn-primary btn-sm mb-3" type="submit" name="save" value="save"><i class="fa fa-file"></i> Update</button>
             </div>
             </form>
         </div>

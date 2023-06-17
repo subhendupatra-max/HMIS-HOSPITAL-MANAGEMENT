@@ -21,32 +21,59 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="card-header d-block">
+            <form action="{{ route('ipd-patient-listing') }}" method="POST">
+                @csrf
+                <div class="row">
+                    <div class="col-md-3 card-title">
+                        <input type="text" name="patient_first_name" value="{{ @$request_data['patient_first_name'] }}" placeholder="Search By Patient Name ....." />
+                    </div>
+                    <div class="col-md-2 card-title">
+                        <input type="text" name="patient_uhid"  value="{{ @$request_data['patient_uhid'] }}" placeholder="Search By Patient UHID ....." />
+                    </div>
+                    <div class="col-md-1 card-title">
+                        <input type="text" name="patient_phone_no"  value="{{ @$request_data['patient_phone_no'] }}" placeholder="Phone No ....." />
+                    </div>
+                    <div class="col-md-1 card-title">
+                        <input type="text" name="ipd_id"  value="{{ @$request_data['ipd_id'] }}" placeholder="IPD Id ....." />
+                    </div>
+                    <div class="col-md-1 card-title">
+                        <input type="text" name="case_id"  value="@if(@$request_data['case_id'] != null){{ $request_data['case_id'] }} @endif" placeholder="Case Id ....." />
+                    </div>
+                    <div class="col-md-2 card-title">
+                        <input type="date" style="margin: 6px 0px 0px 0px" name="appointment_date"  value="{{ @$request_data['appointment_date'] }}" />
+                    </div>
+                    <div class="col-md-2 card-title">
+                        <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-search"></i> Search</button>
+                        <a class="btn btn-primary btn-sm" href="{{ route('ipd-patient-listing') }}"><i class="fa fa-list"></i> All List</a>
+                    </div>
+                </div>
+            </form>
         </div>
         @include('message.notification')
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered text-nowrap" id="example">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">IPD Id</th>
-                            <th scope="col">Case Id</th>
-                            <th scope="col">Patient Details</th>
-                            <th scope="col">Mobile No.</th>
-                            <th scope="col">Admission Details</th>
-                            <th scope="col">Admission Date</th>
-                            <th scope="col">Admitted By</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
+                <table class="table table-hover card-table table-vcenter text-nowrap border-left border-right border-bottom">
+                    <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                            <th class="text-white">IPD Id</th>
+                            <th class="text-white">Case Id</th>
+                            <th class="text-white">Patient Details</th>
+                            <th class="text-white">Mobile No.</th>
+                            <th class="text-white">Admission Details</th>
+                            <th class="text-white">Patient Type</th>
+                            <th class="text-white">Admission Date</th>
+                            <th class="text-white">Admitted By</th>
+                            <th class="text-white">Status</th>
+                            <th class="text-white">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @if (isset($ipd_patient_list))
+                        @if (@$ipd_patient_list[0]->id != null)
                         @foreach ($ipd_patient_list as $value)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
                             <td><a class="textlink" href="{{route('ipd-profile',['id'=>base64_encode($value->id)])}}">{{ @$value->id }}</a></td>
                             <td>{{ @$value->case_id }}</td>
                             <td>
@@ -76,6 +103,18 @@
                                 @if(isset($value->bed_ward_id))
                                 <i class="fa fa-bed text-primary"></i> {{ @$value->bed_details->bed_name }} - {{
                                 @$value->ward_details->ward_name }} - {{ @$value->unit_details->bedUnit_name }}
+                                @endif
+                            </td>
+                            <td>
+                                <i class="fa fa-adjust text-primary"></i> {{ @$value->patient_type }}
+                                @if(@$value->tpa_organization != null)
+                                <br>
+                                <i class="fa fa-adjust text-primary"></i> {{ @$value->tpa_details->TPA_name }}
+                                @endif
+                               
+                                @if(@$value->type_no != null)
+                                <br>
+                                <i class="fa fa-adjust text-primary"></i> {{ @$value->type_no }}
                                 @endif
                             </td>
                             <td>
@@ -121,9 +160,19 @@
                             </td>
                         </tr>
                         @endforeach
+                        @else
+                        <tr>
+                            <td colspan="8" style="text-align: center;">
+                                <img src="{{ asset('public/no_found_data/no_data.png') }}" alt="loader" width="400px"
+                                height="160px">
+                            </td>
+                        </tr>
                         @endif
                     </tbody>
                 </table>
+                <div class="mt-2">
+                    {!! $ipd_patient_list->links() !!}
+                </div> 
             </div>
         </div>
 

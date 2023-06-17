@@ -14,7 +14,7 @@
                     <div class="options px-5 pt-2  border-bottom pb-1">
                         <div class="row">
                             <div class="col-md-12 mb-2">
-                                <a class="btn btn-primary btn-sm" href="{{route('add_new_patient')}}"><i class="fa fa-plus"></i> Add New Patient</a>
+                                <a class="btn btn-primary btn-sm" href="{{route('add_new_patient_in_appointment')}}"><i class="fa fa-plus"></i> Add New Patient</a>
                             </div>
                         </div>
                     </div>
@@ -64,9 +64,6 @@
                                         {{ $patient_details_information->patient_prefix }}{{ $patient_details_information->id }}
                                     </h6>
 
-                                    @can('edit patient')
-                                    <a href="{{ route('edit-new-patient-opd', base64_encode($patient_details_information->id)) }}" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Patient Profile"><i class="fa fa-edit"></i></a>
-                                    @endcan
                                 </div>
                             </div>
 
@@ -134,7 +131,7 @@
                                 <div class="form-group col-md-4 opd-bladedesign ">
                                     <label class="date-format">Appointment Date <span class="text-danger">*</span></label>
 
-                                    <input type="datetime-local" name="appointment_date" value="{{ old('appointment_date') }}" required />
+                                    <input type="date" name="appointment_date" id="appointment_date" value="{{ old('appointment_date') }}" required style="margin:9px 0px 0px 0px;" />
 
                                     @error('appointment_date')
                                     <small class="text-danger">{{ $message }}</small>
@@ -143,8 +140,8 @@
 
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="doctor">Doctor <span class="text-danger">*</span></label>
-                                    <select name="doctor" class="form-control select2-show-search" id="doctor" required>
-                                        <option value=" ">Select Doctor</option>
+                                    <select name="doctor" class="form-control select2-show-search" onchange="getSlot(this.value)" id="doctor" required>
+                                        <option value=" ">Select Doctor...</option>
                                         @foreach ($doctor as $item)
                                         <option value="{{ $item->id }}">{{ $item->first_name }} {{ $item->last_name }}
                                         </option>
@@ -156,9 +153,19 @@
                                 </div>
 
                                 <div class="form-group col-md-4 newaddappon">
+                                    <label for="slot">Slot <span class="text-danger">*</span></label>
+                                    <select name="slot" class="form-control select2-show-search" id="slot" required>
+                                        <option value=" ">Select slot...</option>
+                                    </select>
+                                    @error('slot')
+                                    <small class="text-danger">{{ $message }}</sma>
+                                    @enderror
+                                </div>
+
+                                <div class="form-group col-md-4 newaddappon">
                                     <label for="appointment_priority">Appointment Priority <span class="text-danger">*</span></label>
                                     <select name="appointment_priority" class="form-control select2-show-search" id="appointment_priority" required>
-                                        <option value="">Select Appointment Priority</option>
+                                        <option value="">Select Appointment Priority..</option>
                                         @foreach (Config::get('static.appointment_priority') as $lang => $item)
                                         <option value="{{ $item }}"> {{ $item }}</option>
                                         @endforeach
@@ -168,37 +175,10 @@
                                         @enderror
                                 </div>
 
-                             
-                                <!-- <div class="form-group col-md-4 newaddappon">
-                                    <label for="slot">Slot <span class="text-danger">*</span></label>
-                                    <select name="slot" class="form-control select2-show-search" id="slot" required>
-                                        <option value=" ">Select slot</option>
-                                        @foreach ($slot as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                    @error('slot')
-                                    <small class="text-danger">{{ $message }}</sma>
-                                        @enderror
-                                </div>
 
-                                <div class="form-group col-md-4 newaddappon">
-                                    <label for="shift">Shift <span class="text-danger">*</span></label>
-                                    <select name="shift" class="form-control select2-show-search" id="shift" required>
-                                        <option value=" ">Select shift</option>
-                                        @foreach ($shift as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @error('shift')
-                                    <small class="text-danger">{{ $message }}</sma>
-                                        @enderror
-                                </div> -->
-
-                                <div class="form-group col-md-4 newaddappon">
+                                <div class="form-group col-md-8 newaddappon">
                                     <label for="message">Message </label>
-                                    <input type="text" class="form-control" name="message" value="{{ old('message') }}" id="message" />
+                                    <input type="text" class="form-control" name="message" value="{{ old('message') }}" id="message" style="margin:0px 0px 0px 0px;" />
 
                                     @error('message')
                                     <small class="text-danger">{{ $message }}</sma>
@@ -206,9 +186,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                 </div>
             </div>
             <div class="btn-list p-3">
@@ -220,6 +197,35 @@
 </div>
 </div>
 </div>
+
+<script>
+    function getSlot(doctor_id)
+    {
+        var appointment_date = $('#appointment_date').val();
+       // alert(patient_type);
+        var div_data = '';
+        $('#slot').html('<option value="">Select One....</option>');
+        $.ajax({
+            url: "{{ route('get-slot-details-using-doctor_id') }}",
+            type: "POST",
+            data: {
+                _token : '{{ csrf_token() }}',
+                appointmentDate : appointment_date,
+                doctorId : doctor_id,
+            },
+            success: function(response) {
+                $.each(response, function(key, value) {
+                    div_data += `<option value="${value.id}">${value.from_time} - ${value.to_time}</option>`;
+                });
+                $('#slot').append(div_data);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+       
+    }
+</script>
 
 
 @endsection

@@ -47,7 +47,7 @@ use App\Models\OperationType;
 use App\Models\OperationCatagory;
 use App\Models\Operation;
 use App\Models\Diagonasis;
-
+use DateTime;
 use PDF;
 use App\Models\BloodComponentIssue;
 
@@ -133,15 +133,66 @@ class OpdController extends Controller
     }
     public function index(Request $request)
     {
+        $opd_registaion_list ='';
+        $today = new DateTime();  // Get the current date and time
+        $today->modify('-30 days');  // Subtract 10 days
+        $dateBefore7Days = $today->format('Y-m-d');  // Format the date as desired (e.g., Y-m-d)
 
-        $opd_registaion_list =  OpdDetails::where(function ($query) {
-            if (!auth()->user()->can('False Generation')) {
-                $query->where('ins_by', 'ori');
-            }
-        })->orderBy('id', 'DESC')
-            ->get();
+        $request_data = $request->all();
+        // dd($request_data);
+        $trimmedString = str_replace(' ', '', $request->patient_first_name);
 
-        return view('OPD.opd-patient-list', compact('opd_registaion_list'));
+        if($request->case_id != null || $request->opd_id != null || $request->patient_phone_no != null ||$request->patient_first_name != null ||$request->appointment_date != null || $request->patient_uhid != null){
+        // dd($request->opd_id);
+            $opd_registaion_list =  OpdDetails::where(function ($query)  use ($request,$trimmedString) {
+                if (!auth()->user()->can('False Generation')) {
+                    $query->where('opd_details.ins_by', 'ori');
+                }
+                if ($request->case_id != '') {
+                    $query->where('opd_details.case_id', '=', $request->case_id);
+                }
+                if ($request->opd_id != '') {
+                    $query->where('opd_details.id', '=', $request->opd_id);
+                }
+                })->whereHas('all_patient_details',function ($query)  use ($request,$trimmedString) {
+
+                    if ($request->patient_phone_no != '') {
+                        $query->where('phone', '=', $request->patient_phone_no);
+                    }
+                    if ($request->patient_uhid != '') {
+                        $query->where('id', '=', $request->patient_uhid);
+                    }
+                    if ($request->patient_first_name != '') {
+                        $query->where(DB::raw("CONCAT(
+                            TRIM(CONCAT_WS('', prefix, ' ')),
+                            TRIM(CONCAT_WS('', first_name, ' ')),
+                            TRIM(CONCAT_WS('', middle_name, ' ')),
+                            TRIM(last_name)
+                          )"), 'like', '%'.$trimmedString.'%');
+                    }
+                })
+                ->whereHas('latest_opd_visit_details_for_patient',function ($query)  use ($request) {
+                    if ($request->appointment_date != '') {
+                        $query->where('appointment_date', 'like', '%'.$request->appointment_date.'%');
+                    }
+                })
+                ->orderBy('id', 'DESC')
+                ->paginate(10);
+        }
+        else{
+           
+            $opd_registaion_list =  OpdDetails::where(function ($query) {
+                if (!auth()->user()->can('False Generation')) {
+                    $query->where('ins_by', 'ori');
+                }
+                })->whereHas('latest_opd_visit_details_for_patient',function ($query)  use ($dateBefore7Days) {
+                    $query->where('appointment_date', '>=', $dateBefore7Days);   
+                })
+                ->orderBy('id', 'DESC')
+                ->paginate(10);
+        }
+        // dd($opd_registaion_list);
+        return view('OPD.opd-patient-list', compact('opd_registaion_list','request_data'));
     }
     public function after_new_old(Request $request)
     {

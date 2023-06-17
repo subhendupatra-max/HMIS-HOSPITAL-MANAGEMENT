@@ -11,7 +11,7 @@
                 @csrf
                 <div class="row">
                     <input type="hidden" name="id" value="{{$editSlots->id}}">
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-3">
                         <label for="doctor">Doctor <span class="text-danger">*</span></label>
                         <select id="doctor" class="form-control" name="doctor">
                             <option value=" ">Select Doctor</option>
@@ -24,7 +24,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4 appoinmentdays ">
+                    <div class="form-group col-md-3 appoinmentdays ">
                         <label for="days">Days <span class="text-danger">*</span></label>
                         <select id="days" class="form-control" name="days">
                             <option value="">Select</option>
@@ -37,7 +37,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4 appointtimeedit">
+                    <div class="form-group col-md-3 appointtimeedit">
                         <label for="from_time">From Time<span class="text-danger">*</span></label>
                         <input type="time" class="form-control" id="from_time" name="from_time" required @if(isset($editSlots->from_time)) value="{{$editSlots->from_time}}" @endif>
                         @error('from_time')
@@ -45,70 +45,17 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-4 appointtimeeditfrom">
+                    <div class="form-group col-md-3 appointtimeedit">
                         <label for="to_time">From To<span class="text-danger">*</span></label>
                         <input type="time" class="form-control" id="to_time" name="to_time" required @if(isset($editSlots->to_time)) value="{{$editSlots->to_time}}" @endif>
                         @error('to_time')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
-                    <div class="form-group col-md-4 appoinmentadd">
-                        <label for="charge_category">Charges Catagory <span class="text-danger">*</span></label>
-                        <select id="charge_category" onchange="getSubCategory(this.value,{{$editSlots->charge_sub_category}},{{$editSlots->charge}})" class="form-control select2-show-search" name="charge_category">
-                            <option value=" ">Select Catagory</option>
-                            @foreach ($catagory as $item)
-                            <option value="{{$item->id}}" {{ $item->id == $editSlots->charge_category ? 'selected':" "}}>{{$item->charges_catagories_name}}</option>
-                            @endforeach
-                        </select>
-                        @error('charge_category')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group col-md-4 appoinmentadd">
-                        <label for="charge_sub_category">Charges Sub Catagory <span class="text-danger">*</span></label>
-                        <select name="charge_sub_category" class="form-control select2-show-search" onchange="getChargeName(this.value,{{$editSlots->charge}})" id="charge_sub_category" required>
-                            <option value="">Select Sub Catagory...</option>
-                        </select>
-                        <small class="text-danger">{{ $errors->first('charge_sub_category') }}</small>
-                    </div>
-
-                    <div class="form-group col-md-4 appoinmentadd">
-                        <label for="charge">Charges <span class="text-danger">*</span></label>
-                        <select name="charge" onchange="getStandardCharges(this.value)" class="form-control select2-show-search" id="charge" required>
-                            <option value="">Select charge...</option>
-                        </select>
-                        <small class="text-danger">{{ $errors->first('charge') }}</small>
-                    </div>
-
-                    <div class="form-group col-md-4 appoinmentaddd">
-                        <label for="tax">Tax<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" value="{{$editSlots->tax}}" id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax">
-                        <small class="text-danger">{{ $errors->first('tax') }}</small>
-                    </div>
-
-                    <div class="form-group col-md-4 appoinmentaddd">
-                        <label for="standard_charges">Charge Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="standard_charges" onkeydown="fdsfds()" onkeyup="totalAmount()" name="standard_charges">
-
-                        <div class="mt-3" style="display:none;" id="pop">
-                            <input type="checkbox" value="on" id="button1" name="button1" style="margin-right: 5px;" /><label for="permission" class="textlink">Are You Want To Change This ? </label>
-                        </div>
-
-                        <small class="text-danger">{{ $errors->first('standard_charges') }}</small>
-                    </div>
-
-                    <div class="form-group col-md-4 appoinmentaddd">
-                        <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" value="{{$editSlots->total_amount}}" id="total_amount" name="total_amount" readonly>
-                        <small class="text-danger">{{ $errors->first('total_amount') }}</small>
-                    </div>
-
                 </div>
 
                 <div class="text-center m-auto">
-                    <button type="submit" class="btn btn-primary">Save Solts</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-file"></i> Edit</button>
                 </div>
         </div>
         </form>

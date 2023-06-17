@@ -23,22 +23,46 @@ use function PHPSTORM_META\type;
 
 class PatientController extends Controller
 {
-    public function patient_details()
+    public function patient_details(Request $request)
     {
-        $all_patient =  Patient::where(function ($query) {
+        $request_data = $request->all();
+        $trimmedString = str_replace(' ', '', $request->patient_first_name);
+        if($request_data != null){
+             $all_patient =  Patient::where(function ($query) use ($request,$trimmedString) {
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
             }
-        })->where('is_active', 1)
-          ->orderBy('id', 'DESC')
-            ->get();
-    
-        // $all_patient = Patient::where('is_active', 1)
-        //     ->where('ins_by', 'ori')
-        //     ->orderBy('id', 'DESC')
-        //     ->get();
-
-        return view('setup.patient.patient_list', compact('all_patient'));
+            if ($request->patient_phone_no != '') {
+                $query->where('phone', '=', $request->patient_phone_no);
+            }
+            if ($request->patient_uhid != '') {
+                $query->where('id', '=', $request->patient_uhid);
+            }
+            if ($request->patient_first_name != '') {
+                $query->where(DB::raw("CONCAT(
+                    TRIM(CONCAT_WS('', prefix, ' ')),
+                    TRIM(CONCAT_WS('', first_name, ' ')),
+                    TRIM(CONCAT_WS('', middle_name, ' ')),
+                    TRIM(last_name)
+                  )"), 'like', '%'.$trimmedString.'%');
+            }
+        })
+        ->where('is_active', 1)
+        ->orderBy('id', 'DESC')
+        ->paginate(10); 
+        }
+        else{
+            $all_patient =  Patient::where(function ($query) {
+                if (!auth()->user()->can('False Generation')) {
+                    $query->where('ins_by', 'ori');
+                }
+            })
+            ->where('is_active', 1)
+            ->orderBy('id', 'DESC')
+            ->paginate(10); 
+        }
+      
+        return view('setup.patient.patient_list', compact('all_patient','request_data'));
     }
 
     public function add_new_patient()
@@ -56,6 +80,15 @@ class PatientController extends Controller
         $districts = District::all();
         $country = Country::all();
         $type = 'IPD';
+        return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts', 'country','type'));
+    }
+    public function add_new_patient_in_appointment()
+    {
+        $blood_group = BloodGroup::all();
+        $state = State::all();
+        $districts = District::all();
+        $country = Country::all();
+        $type = 'Appointment';
         return view('setup.patient.add_new_patient', compact('blood_group', 'state', 'districts', 'country','type'));
     }
 
@@ -132,6 +165,9 @@ class PatientController extends Controller
             }
             elseif ($request->type == "ipd") {
                 return redirect()->route('direct-ipd-admission',$patient->id)->with('success', 'Patient Created Successfully');
+            }
+            elseif ($request->type == "Appointment") {
+                return redirect()->route('add-appointments-details',base64_encode($patient->id))->with('success', 'Patient Created Successfully');
             } else {
                 return redirect()->route('patient_details')->with('success', 'Patient Created Sucessfully');
             }

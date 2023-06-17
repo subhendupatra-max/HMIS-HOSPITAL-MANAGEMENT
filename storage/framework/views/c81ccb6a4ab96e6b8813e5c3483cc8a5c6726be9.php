@@ -8,14 +8,9 @@
         <div class="card-header">
             <h4 class="card-title">Edit Shift</h4>
         </div>
-        <?php if(session('success')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-        <?php if(session()->has('error')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
-        <?php endif; ?>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
-            <form method="POST" action="<?php echo e(route('save-shift-details')); ?>">
+            <form method="POST" action="<?php echo e(route('update-shift-details')); ?>">
                 <?php echo csrf_field(); ?>
                 <div class="">
                   <input name="id" type="hidden" value="<?php echo e($editShift->id); ?>">
@@ -37,7 +32,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group">
                         <div class="appoinmentedit">
                         <label for="from_time" class="appoimmentlabel">From Time<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" id="from_time" name="from_time" required  <?php if(isset($editShift->from_time)): ?> value="<?php echo e(date('Y-m-d',strtotime($editShift->from_time))); ?>" <?php endif; ?>>
+                        <input type="time" class="form-control" id="from_time" name="from_time" required  <?php if(isset($editShift->from_time)): ?> value="<?php echo e($editShift->from_time); ?>" <?php endif; ?>>
                         <?php $__errorArgs = ['from_time'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -54,7 +49,7 @@ unset($__errorArgs, $__bag); ?>
                     <div class="form-group">
                         <div class="appoinmentedit">
                         <label for="from_to" class="appoimmentlabelone">From To<span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" id="from_to" name="from_to"  required <?php if(isset($editShift->from_to)): ?> value="<?php echo e(date('Y-m-d',strtotime($editShift->from_to))); ?>" <?php endif; ?>>
+                        <input type="time" class="form-control" id="from_to" name="from_to"  required <?php if(isset($editShift->from_to)): ?> value="<?php echo e($editShift->from_to); ?>" <?php endif; ?>>
                         <?php $__errorArgs = ['from_to'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -71,7 +66,7 @@ unset($__errorArgs, $__bag); ?>
 
 
                 </div>
-                <button type="submit" class="btn btn-primary mt-4 mb-0">Add Shift</button>
+                <button type="submit" class="btn btn-primary mt-4 mb-0">Edit Shift</button>
             </form>
         </div>
     </div>
