@@ -875,5 +875,8 @@ class PermissionSeeder extends Seeder
         //HR
 
 
+        //inventory issue list
+        Permission::create(['name' => 'Item Issue Inventory']);
+        Permission::create(['name' => 'Create Item Issue Inventory']);
     }
 }

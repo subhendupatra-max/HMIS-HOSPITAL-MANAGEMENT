@@ -12,7 +12,7 @@
                 <div class="col-md-8 text-right">
                     <div class="d-block">
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('add medicine purchase order')): ?>
-                        <a href="<?php echo e(route('add-medicine-purchase-order')); ?>" class="btn btn-primary"><i class="fa fa-plus"></i> Create Purchase Order</a>
+                        <a href="<?php echo e(route('add-medicine-purchase-order')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Create Purchase Order</a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -20,12 +20,7 @@
             </div>
         </div>
 
-        <?php if(session('success')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
-        <?php endif; ?>
-        <?php if(session()->has('error')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
-        <?php endif; ?>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('View Medicine Purchase Order')): ?>
 
         <div class="card-body">
@@ -58,17 +53,13 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right" style="">
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Print Medicine Purchase Order')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(url('po-print')); ?>/<?php echo e(base64_encode($po->po_id)); ?>"><i class="fa fa-print"></i> Print</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('po-print',['po_id'=> base64_encode($po->id)])); ?>"><i class="fa fa-print"></i> Print</a>
                                             <?php endif; ?>
                                             <a class="dropdown-item" href="<?php echo e(route('purchase-order-details')); ?>/<?php echo e(base64_encode($po->id)); ?>"><i class="fa fa-eye"></i> View</a>
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Edit medicine purchase order')): ?>
-                                            <?php if($po->po_status<=11 || $po->po_status==17): ?>
-                                                <a class="dropdown-item" href="<?php echo e(route('po-edit')); ?>/<?php echo e(base64_encode($po->id)); ?>"><i class="fa fa-edit"></i> Edit</a>
-                                                <?php endif; ?>
-                                                <?php endif; ?>
-                                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine purchase order')): ?>
-                                                <a class="dropdown-item" href="<?php echo e(url('po-delete')); ?>/<?php echo e(base64_encode($po->po_id)); ?>"><i class="fa fa-trash"></i> Delete</a>
-                                                <?php endif; ?>
+                                            
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine purchase order')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('po-delete',['id'=>base64_encode($po->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </td>

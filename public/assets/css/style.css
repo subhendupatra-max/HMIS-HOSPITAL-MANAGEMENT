@@ -26217,6 +26217,9 @@ margin: 29px 0px 0px 0px;
 .newuserchangeedesign{
     margin: 16px 0px 0px 0px;
 }
+.itemrequisedit{
+  margin: 28px 0px 0px 0px;
+}
 input[type=search]{
     margin-top: 11px;
 }
@@ -26246,7 +26249,15 @@ input[type=search]{
  }
  input[type=file]{
     margin: 6px 0px 0px 0px;
+
  }
+ .requis-edit{
+  
+    width: 49%;
+   
+    
+ }
+
 /* ------------------generalsettings-------------------------- */
 /* ------------------Add Charge------------------------------- */
 .addchargedesign{
@@ -27223,6 +27234,7 @@ border-radius: 2%;
     width: 700px;
 }
 
+<<<<<<< HEAD
 .icon-button {
   position: relative;
   display: flex;
@@ -27264,3 +27276,16 @@ border-radius: 2%;
    
     margin: 0px 0px 0px -14px;
 }
+=======
+.avqty_area
+{
+  font-size: 12px;
+  color: #204199;
+  font-weight: 600;
+}
+.avi_td{
+    position: absolute;
+    right: 167px;
+    top: 40px;
+}
+>>>>>>> 19be5e20e8d6a8b516ec458a2859767fbaff3541

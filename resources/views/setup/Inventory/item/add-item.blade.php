@@ -80,8 +80,8 @@
                                 <div class="input-group">
                                     <label>Item Unit<span class="required"> *</span></label>
                                     <div class="input-group">
-                                        <select id="unit" name="unit[]" class="form-control select2" multiple>
-                                            <option value="">---Select---</option>
+                                        <select id="unit" name="unit" class="form-control select2">
+                                            <option value="">Select Unit</option>
                                             @foreach ($units as $item)
                                             <option value="{{  $item->id }}">{{ $item->units }}</option>
                                             @endforeach
@@ -153,7 +153,7 @@
                             <div class="col-md-6 mb-2 itemeditinventory">
                                 <div class="input-group">
                                     <label >Uses<span class="required"> *</span></label>
-                                    <input type="text"  id="Uses" name="Uses">
+                                    <input type="text"  id="Uses" name="uses">
                                     @error('uses')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror

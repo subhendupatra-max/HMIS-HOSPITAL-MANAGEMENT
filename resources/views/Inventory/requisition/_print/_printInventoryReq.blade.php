@@ -9,7 +9,7 @@
             size: A4 portrait;
             margin: 0;
             padding: 0;
-            /* change the margins as you want them to be. */
+            / change the margins as you want them to be. /
         }
 
         @media print {
@@ -46,13 +46,13 @@
             color: #ffffff !important;
             display: inline-block;
             text-align: center;
-            font-size: 25px;
+            font-size: 17px;
             font-weight: 700;
             padding: 10px 0px;
         }
 
         .headingdesign {
-            background: #010c45 !important;
+            background: #000000 !important;
         }
 
         .marksheetheading1 {
@@ -65,12 +65,26 @@
         }
 
         .headingdesign1 {
-            background: #010c45 !important;
+            background: #3f51b5 !important;
         }
     </style>
 
 
     <div style="position:relative;background-color:#fff;padding:30px;">
+        <!-- =================================first heading========================= -->
+        <table style="width:100%;text-align: center;background: #3f51b5;">
+            <tr>
+                <td>
+                    <h1 style="color: #FFF;margin: 0px;padding: 10px 0px 0px 0px;font-size: 40px;letter-spacing: 1px;font-family: math;">
+                        DITS Hospital
+                    </h1>
+                    <p style="margin: 0px; font-size: 15px; color: #FFF;padding: 0px 0px 5px 0px;">
+                        Devant Office Complex, Kolkata 
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <!-- =================================first heading========================= -->
         <!-- ========================================first heading============================== -->
         <table cellspacing="0" border="0" width="100%" hright="100%" style="text-align:center;margin-top: 0px;width: 100%;border-bottom: none;">
             <tr>
@@ -85,34 +99,34 @@
         <!-- ====================================main area====================================== -->
         <table cellspacing="0" border="0" width="100%" hright="100%" style="margin-top: 0px;width: 100%;border-bottom: none;">
             <tr>
-                <th style="padding: 10px 0px 10px 7px;text-align: left;font-size: 12px;border-left: 2px solid #010c45;width: 150px;border-bottom: 2px solid #010c45;">
+                <th style="padding: 10px 0px 10px 7px;text-align: left;font-size: 12px;border-left: 2px solid #3f51b5;width: 150px;border-bottom: 2px solid #3f51b5;">
                     <b>REQUISITION NO :-</b>
                 </th>
-                <td style="padding: 10px 0px 10px 7px;font-size: 12px;border-right: 2px solid #010c45;border-bottom: 2px solid #010c45;text-align:left;">
-                    {{@$requisition_details->requisition_prefix}}{{@$requisition_details->id}}
+                <td style="padding: 10px 0px 10px 7px;font-size: 12px;border-right: 2px solid #3f51b5;border-bottom: 2px solid #3f51b5;text-align:left;">
+                    {{@$requisition_details->requisition_prefix}}{{@$requisition_details->req_no}}
                 </td>
-                <th style="padding: 10px 0px 10px 7px;text-align: left;font-size: 12px;width: 150px;border-bottom: 2px solid #010c45;">
+                <th style="padding: 10px 0px 10px 7px;text-align: left;font-size: 12px;width: 150px;border-bottom: 2px solid #3f51b5;">
                     <b>REQUISITION DATE :-</b>
                 </th>
-                <td style="padding: 10px 0px 10px 7px;font-size: 12px;border-bottom: 2px solid #010c45;border-right: 2px solid #010c45;text-align:left;">
+                <td style="padding: 10px 0px 10px 7px;font-size: 12px;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;text-align:left;">
                     <?= date('d-m-Y h:i', strtotime($requisition_details->date)); ?>
                 </td>
             </tr>
             <tr>
-                <th style="padding: 10px 0px 10px 7px;text-align: left;font-size: 12px;border-left: 2px solid #010c45;border-bottom: 2px solid #010c45;">
-                    <b>Store Room :-</b>
+                <th style="padding: 10px 0px 10px 7px;text-align: left;font-size: 12px;border-left: 2px solid #3f51b5;border-bottom: 2px solid #3f51b5;">
+                    <b>WORKSHOP :-</b>
                 </th>
-                <td style="padding: 10px 0px 10px 7px;font-size: 12px;border-bottom: 2px solid #010c45;text-align: left;">
-                    {{ @$requisition_details->store_room->name }}
+                <td style="padding: 10px 0px 10px 7px;font-size: 12px;border-bottom: 2px solid #3f51b5;text-align: left;">
+                    {{ @$requisition_details->workshop_name }}
                 </td>
-                @if($vendor_selected_quataion != null && $vendor_selected_quataion != '')
-                <th style="padding: 10px 0px 10px 7px;text-align: left;font-size: 12px;border-left: 2px solid #010c45;border-bottom: 2px solid #010c45;">
+                @if(@$vendor_selected_quataion)
+                <th style="padding: 10px 0px 10px 7px;text-align: left;font-size: 12px;border-left: 2px solid #3f51b5;border-bottom: 2px solid #3f51b5;">
                     <b>VENDOR :-</b>
                 </th>
-                <td style="padding: 10px 0px 10px 7px;font-size: 12px;border-right: 2px solid #010c45;border-bottom: 2px solid #010c45;text-align: left;">
+                <td style="padding: 10px 0px 10px 7px;font-size: 12px;border-right: 2px solid #3f51b5;border-bottom: 2px solid #3f51b5;text-align: left;">
 
                     @foreach($vendor_selected_quataion as $value)
-                    {{ $loop->iteration }}. {{$value->sl_vendors_join->vendor_name}}<br>
+                    {{ $loop->iteration }}. {{$value->vendor_name}}<br>
                     @endforeach
 
                 </td>
@@ -121,66 +135,112 @@
         </table>
         <table cellspacing="0" border="0" width="100%" style="">
             <tr style="text-align: center; font-size: 13px;">
-                <th style="padding: 7px 0px 7px 0px;border-left: 2px solid #010c45;border-bottom: 2px solid #010c45;border-right: 2px solid #010c45;">
+                <th style="padding: 7px 0px 7px 0px;border-left: 2px solid #3f51b5;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;">
                     SL No.
                 </th>
-                <th style="padding: 7px 0px 7px 0px;border-bottom: 2px solid #010c45;border-right: 2px solid #010c45;width: 400px;">
-                    Medicine Catagory
+                <th style="padding: 7px 0px 7px 0px;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;width: 400px;">
+                    ITEM
                 </th>
-                <th style="padding: 7px 0px 7px 0px;border-right:2px solid #010c45;border-bottom:2px solid #010c45;width: 100px;">
-                   Quantity
+                <th style="padding: 7px 0px 7px 0px;border-right:2px solid #3f51b5;border-bottom:2px solid #3f51b5;width: 100px;">
+                    QTY
                 </th>
-                <th style="padding: 7px 0px 7px 0px;border-right:2px solid #010c45;border-bottom:2px solid #010c45;width: 100px;">
-                    Medicine Unit
+                <th style="padding: 7px 0px 7px 0px;border-right:2px solid #3f51b5;border-bottom:2px solid #3f51b5;width: 100px;">
+                    UOM
                 </th>
             </tr>
 
             @if(isset($requisition_item) && $requisition_item != '')
             @foreach($requisition_item as $requisition)
             <tr style="text-align: left; font-size: 13px;">
-                <td style="width: 70px;padding: 7px 0px 7px 0px;text-align: center;vertical-align:top;border-left: 2px solid #010c45;border-bottom: 2px solid #010c45;border-right: 2px solid #010c45;">
+                <td style="width: 70px;padding: 7px 0px 7px 0px;text-align: center;vertical-align:top;border-left: 2px solid #3f51b5;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;">
                     {{ $loop->iteration }}
                 </td>
-                <td style="width: 70px;padding: 7px 0px 7px 10px;text-align: left;vertical-align:top;border-bottom: 2px solid #010c45;border-right: 2px solid #010c45;">
-                    {{@$requisition->medicine_catagory_name}}
+                <td style="width: 70px;padding: 7px 0px 7px 10px;text-align: left;vertical-align:top;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;">
+                    {{@$requisition->item_name}}({{@$requisition->part_no}})(Brand : {{@$requisition->item_brand_name}})(Manufacturer : {{@$requisition->manufacture_name}})<br>({{@$requisition->item_description}})
                 </td>
-                <td style="padding: 7px 0px 7px 0px;vertical-align:top;text-align: center;border-bottom: 2px solid #010c45;border-right: 2px solid #010c45;">
+                <td style="padding: 7px 0px 7px 0px;vertical-align:top;text-align: center;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;">
                     {{@$requisition->quantity}}
                 </td>
-                <td style="padding: 7px 0px 7px 0px;text-align: center;vertical-align:top;border-bottom: 2px solid #010c45;border-right: 2px solid #010c45;">
-                    {{@$requisition->medicine_unit_name}}
+                <td style="padding: 7px 0px 7px 0px;text-align: center;vertical-align:top;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;">
+                    {{@$requisition->units}}
                 </td>
             </tr>
             @endforeach
             @endif
-
+            <tr style="text-align: center; font-size: 13px;">
+                <th style="padding: 7px 0px 7px 0px;border-left: 2px solid #3f51b5;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;">
+                    Notes
+                </th>
+                <td style="padding: 7px 0px 7px 0px;text-align: center;vertical-align:top;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;" colspan="3">
+                    {{@$requisition_details->notes}}
+                </td>
+            </tr>
         </table>
         <!-- ====================================main area====================================== -->
         <!-- ============================footer area============================================ -->
+        <!-- ================================signature area========================= -->
         <table cellspacing="0" border="0" width="100%" hright="100%" style="width:100%;">
             <tr>
-                <!-- <td style="padding: 50px 5px 5px 10px;font-size: 13px;text-align:left;border-left: 2px solid #010c45;">
-                       <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;">  REQUESTED BY  </b> 
-                    </td> -->
-                <td style="padding: 50px 5px 5px 10px;font-size: 13px;text-align:left;align:left;">
-                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> GENERATED BY </b>
+                <td style="padding: 20px 5px 5px 10px;font-size: 13px;text-align:center;border-left: 2px solid #3f51b5;">
+                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> Generated By</b>
                 </td>
-                <td style="padding: 50px 5px 5px 10px;font-size: 13px;text-align:left;align:left; border-right: 2px solid #010c45;">
-                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> SIGNATURE</b>
+                <td style="padding: 20px 5px 5px 10px;font-size: 13px;text-align:center;">
+                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> Checked By</b>
+                </td>
+                <td style="padding: 20px 5px 5px 10px;font-size: 13px;text-align:center;">
+                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> Issued By</b>
+                </td>
+                <td style="padding: 20px 5px 5px 10px;font-size: 13px;text-align:center;border-right: 2px solid #3f51b5;">
+                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> Approved By</b>
                 </td>
             </tr>
             <tr>
-                <!-- <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:left;border-left: 2px solid #010c45; border-bottom: 2px solid #010c45;">
-                       {{@$requisition_requested_by->name}}
-                    </td> -->
-                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:left;align:left;border-bottom: 2px solid #010c45;">
-                    {{@$requisition_details->generate_by_name->first_name}}   {{@$requisition_details->generate_by_name->last_name}}
+                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:center;border-left: 2px solid #3f51b5;">
+                    {{@$requisition_details->generated_by_details->name}}
                 </td>
-                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:left;align:left; border-right: 2px solid #010c45;border-bottom: 2px solid #010c45;">
+                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:center;">
+                    {{@$requisition_details->checked_by_details->name}}
+                </td>
+                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:center;">
+                    {{@$requisition_details->issueed_by_details->name}}
+                </td>
+                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:center;border-right: 2px solid #3f51b5;">
 
                 </td>
             </tr>
         </table>
+
+        <table cellspacing="0" border="0" width="100%" hright="100%" style="width:100%;">
+            <!-- <tr>
+                <td style="padding: 20px 5px 5px 10px;font-size: 13px;text-align:center;border-left: 2px solid #3f51b5;">
+                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> Site Supervisor</b>
+                </td>
+                <td style="padding: 20px 5px 5px 10px;font-size: 13px;text-align:center;">
+                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> Site Incharge</b>
+                </td>
+                <td style="padding: 20px 5px 5px 10px;font-size: 13px;text-align:center;">
+                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> Store Keeper</b>
+                </td>
+                <td style="padding: 20px 5px 5px 10px;font-size: 13px;text-align:center;border-right: 2px solid #3f51b5;">
+                    <b style="border-bottom: 2px dotted #c0c0c0;padding: 0px 0px 3px 0px;"> Partner</b>
+                </td>
+            </tr> -->
+            <tr>
+                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:center;border-left: 2px solid #3f51b5;border-bottom: 2px solid #3f51b5;">
+                  
+                </td>
+                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:center;border-bottom: 2px solid #3f51b5;">
+
+                </td>
+                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:center;border-bottom: 2px solid #3f51b5;">
+
+                </td>
+                <td style="padding: 5px 5px 5px 10px;font-size: 13px;text-align:center;border-bottom: 2px solid #3f51b5;border-right: 2px solid #3f51b5;">
+
+                </td>
+            </tr>
+        </table>
+        <!-- ================================signature area========================= -->
         <!-- ============================footer area============================================ -->
     </div>
 </body>

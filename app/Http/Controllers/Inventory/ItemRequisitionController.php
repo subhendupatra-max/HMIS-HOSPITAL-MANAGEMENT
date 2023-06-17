@@ -24,9 +24,9 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use PDF;
 use URL;
-
-
-
+use App\Models\AllHeader;
+use App\Models\ItemUnit;
+use Google\Service\CloudAsset\Inventory;
 
 class ItemRequisitionController extends Controller
 {
@@ -36,6 +36,7 @@ class ItemRequisitionController extends Controller
             ->orderBy('inventory_requisitions.id', 'DESC')
             ->get();
 
+        // dd($inventory_requisition);
         return view('Inventory.requisition.inventory-requisition-listing', compact('inventory_requisition'));
     }
 
@@ -52,15 +53,23 @@ class ItemRequisitionController extends Controller
 
     public function get_item_details(Request $req)
     {
-        $item_details = Item::select('item_brands.id as brand_id', 'brands.brand_name', 'item_types.id as item_type_id', 'items.item_description', 'items.id as item_id', 'items.item_name', 'item_types.item_type', 'manufactures.id as manufactures_id', 'manufactures.manufacture_name')
+        $item_details = Item::select('item_brands.id as brand_id', 'brands.item_brand_name', 'item_types.id as item_type_id', 'items.item_description', 'items.id as item_id', 'items.item_name', 'item_types.item_type', 'manufactures.id as manufactures_id', 'manufactures.manufacture_name', 'item_units.units')
             ->join('item_types', 'item_types.id', '=', 'items.item_type_id')
             ->join('item_brands', 'item_brands.id', '=', 'items.brand_id')
+            ->join('item_units', 'item_units.id', '=', 'items.unit_id')
             ->join('manufactures', 'manufactures.id', '=', 'items.manufacture')
             ->where('product_code', $req->post('item_code'))
             ->orwhere('part_no', $req->post('item_code'))
             ->first();
 
-        $item_unit = UnitOfItem::select('item_units.id as unit_id', 'item_units.units')->join('item_units', 'item_units.id', '=', 'unit_of_items.unit_id')->where('unit_of_items.item_id', $item_details->item_id)->get();
+        // $item_unit = UnitOfItem::select('item_units.id as unit_id', 'item_units.units')->join('item_units', 'item_units.id', '=', 'unit_of_items.unit_id')->where('unit_of_items.item_id', $item_details->item_id)->get();
+
+        $item_unit = Item::where('items.id', $item_details->item_id)
+            ->select('item_units.id as unit_id', 'item_units.units')
+            ->join('item_units', 'item_units.id', '=', 'items.unit_id')
+            ->first();
+
+            // dd($item_unit);
 
         return response()->json(array('item_details' => $item_details, 'item_unit' => $item_unit));
     }
@@ -68,20 +77,18 @@ class ItemRequisitionController extends Controller
     public function get_item_ajax(Request $req)
     {
         $item_type = $req->post('item_type_id');
-        $item = ItemType::join('items', 'item_types.id', '=', 'items.item_type_id')->leftjoin('item_brands', 'items.brand_id', '=', 'item_brands.id')->leftjoin('manufactures', 'items.manufacture', '=', 'manufactures.id')->select('items.item_name', 'items.id as item_id', 'manufactures.manufacture_name', 'item_brands.item_brand_name', 'items.item_description')->where('items.item_type_id', $item_type)->get();
+        $item = ItemType::join('items', 'item_types.id', '=', 'items.item_type_id')->leftjoin('item_brands', 'items.brand_id', '=', 'item_brands.id')->leftjoin('manufactures', 'items.manufacture', '=', 'manufactures.id')->select('items.item_name', 'items.id as item_id', 'manufactures.manufacture_name', 'item_brands.item_brand_name', 'items.item_description',)->where('items.item_type_id', $item_type)->get();
         return response()->json($item);
     }
 
     public function get_item_brand_all(Request $req)
     {
         $item_id = $req->item_id;
-
-        $item_unit = UnitOfItem::select('item_units.id as unit_id', 'item_units.units')
-            ->join('item_units', 'item_units.id', '=', 'unit_of_items.unit_id')
-            ->where('unit_of_items.item_id', $item_id)
-            ->get();
-
-        return response()->json(array('item_unit' => $item_unit));
+        $item_unit = Item::where('items.id', $item_id)
+            ->select('item_units.id as unit_id', 'item_units.units')
+            ->join('item_units', 'item_units.id', '=', 'items.unit_id')
+            ->first();
+        return response()->json($item_unit);
     }
 
     public function save_inventory_requisition_details(Request $request)
@@ -95,31 +102,31 @@ class ItemRequisitionController extends Controller
 
             ]);
 
-            $permission = $request->post('need_permission');
+            // $permission = $request->post('need_permission');
 
             $prefix = Prefix::where('name', '=', 'Inventory_Requisition')->first();
 
-            if ($permission == 'yes') {
-                $requisition = new InventoryRequisition();
-                $requisition->requisition_prefix               = $prefix->prefix;
-                $requisition->stock_room                       = $request->stockroom;
-                $requisition->date                             = $request->date;
-                $requisition->checked_by                       = $request->checked_by;
-                $requisition->requested_by                     = $request->requested_by;
-                $requisition->genarated_by                     = Auth::user()->id;
-                $requisition->status                           = 1;
-                $status     =  $requisition->save();
-            } else {
-                $requisition = new InventoryRequisition();
-                $requisition->requisition_prefix               = $prefix->prefix;
-                $requisition->stock_room                       = $request->stockroom;
-                $requisition->date                             = $request->date;
-                $requisition->checked_by                       = $request->checked_by;
-                $requisition->requested_by                     = $request->requested_by;
-                $requisition->genarated_by                     = Auth::user()->id;
-                $requisition->status                           = 3;
-                $status     =  $requisition->save();
-            }
+            // if ($permission == 'yes') {
+            //     $requisition = new InventoryRequisition();
+            //     $requisition->requisition_prefix               = $prefix->prefix;
+            //     $requisition->stock_room                       = $request->stockroom;
+            //     $requisition->date                             = $request->date;
+            //     $requisition->checked_by                       = $request->checked_by;
+            //     $requisition->requested_by                     = $request->requested_by;
+            //     $requisition->genarated_by                     = Auth::user()->id;
+            //     $requisition->status                           = 1;
+            //     $status     =  $requisition->save();
+            // } else {
+            $requisition = new InventoryRequisition();
+            $requisition->requisition_prefix               = $prefix->prefix;
+            $requisition->stock_room                       = $request->stockroom;
+            $requisition->date                             = $request->date;
+            $requisition->checked_by                       = $request->checked_by;
+            $requisition->requested_by                     = $request->requested_by;
+            $requisition->genarated_by                     = Auth::user()->id;
+            $requisition->status                           = 3;
+            $status     =  $requisition->save();
+            // }
 
             foreach ($request->item as $key => $items) {
                 $requisition_details = new InventoryRequisitionDetail();
@@ -131,19 +138,19 @@ class ItemRequisitionController extends Controller
             }
 
 
-            if ($permission == 'yes') {
-                foreach ($request->permission_authority as $key => $permission_authority) {
-                    $permission = new InventoryPermissionAuthority();
-                    $permission->requisition_id              = $requisition->id;
-                    $permission->user_id                     = $request->permission_authority[$key];
-                    $permission->permission_type             = $request->permission_type;
-                    $permission->need_permission             = $request->need_permission;
-                    $permission->status                      = 'Pending';
-                    $permission->date                        = '';
-                    $permission->comment                     = '';
-                    $status = $permission->save();
-                }
-            }
+            // if ($permission == 'yes') {
+            //     foreach ($request->permission_authority as $key => $permission_authority) {
+            //         $permission = new InventoryPermissionAuthority();
+            //         $permission->requisition_id              = $requisition->id;
+            //         $permission->user_id                     = $request->permission_authority[$key];
+            //         $permission->permission_type             = $request->permission_type;
+            //         $permission->need_permission             = $request->need_permission;
+            //         $permission->status                      = 'Pending';
+            //         $permission->date                        = '';
+            //         $permission->comment                     = '';
+            //         $status = $permission->save();
+            //     }
+            // }
 
             DB::commit();
 
@@ -488,5 +495,226 @@ class ItemRequisitionController extends Controller
         } else {
             return back()->withErrors(['error' => 'Unable to Select Quatation, Try Again Later.']);
         }
+    }
+
+    public function _printInventoryRequisition($id)
+    {
+
+        $requisition_details = InventoryRequisition::select('inventory_requisitions.requisition_prefix', 'item_store_rooms.item_store_room as workshop_name', 'inventory_requisitions.requested_by', 'inventory_requisitions.id as req_no', 'inventory_requisitions.date',  'working_statuses.status as req_status', 'inventory_requisitions.status', 'users.first_name as issue_by_name')
+            ->join('users', 'users.id', '=', 'inventory_requisitions.genarated_by')
+            ->join('working_statuses', 'working_statuses.id', '=', 'inventory_requisitions.status')
+            ->join('item_store_rooms', 'item_store_rooms.id', '=', 'inventory_requisitions.stock_room')
+            ->where('inventory_requisitions.id', $id)
+            ->first();
+
+
+        $requisition_requested_by = User::select('users.first_name', 'users.last_name')->where('id', $requisition_details->requested_by)->first();
+
+        $requisition_item = InventoryRequisitionDetail::select('inventory_requisition_details.id as requisition_details_id', 'inventory_requisition_details.quantity', 'items.item_name', 'items.product_code', 'items.item_description', 'item_units.units', 'item_brands.item_brand_name', 'manufactures.manufacture_name', 'inventory_requisition_details.po_status', 'items.part_no')
+            ->join('items', 'items.id', '=', 'inventory_requisition_details.item_id')
+            ->join('item_units', 'item_units.id', '=', 'inventory_requisition_details.unit_id')
+            ->join('item_brands', 'item_brands.id', '=', 'items.brand_id')
+            ->join('manufactures', 'manufactures.id', '=', 'items.manufacture')
+            ->where('requisition_id', $id)
+            ->get();
+
+
+        $vendor_selected_quataion = InventoryVendorQuatation::join('inventory_vendors', 'inventory_vendors.id', '=', 'inventory_vendor_quatations.vendor_id')->select('inventory_vendors.vendor_ph_no', 'inventory_vendors.vendor_address', 'inventory_vendors.vendor_gst', 'inventory_vendors.vendor_name', 'inventory_vendors.id as vendor_id', 'inventory_vendor_quatations.vendor_quatation', 'inventory_vendor_quatations.comment')->where('req_id', $id)->where('status', 1)->get();
+
+
+        $pdf = PDF::loadView('Inventory.requisition._print._printInventoryReq', compact('requisition_details', 'requisition_requested_by', 'requisition_item', 'vendor_selected_quataion'));
+        return $pdf->setPaper('a4')->setWarnings(false)->stream('myfile.pdf');
+
+        return redirect('/all-inventory-requisition-details/' . $id);
+    }
+
+    public function edit_requisition($id)
+    {
+        $id = base64_decode($id);
+        // dd($id );
+        $sl_vender = InventoryVendorQuatation::join('inventory_vendors', 'inventory_vendors.id', '=', 'inventory_vendor_quatations.vendor_id')->select('inventory_vendor_quatations.comment', 'inventory_vendor_quatations.vendor_quatation', 'inventory_vendor_quatations.status as quatation_status', 'inventory_vendors.id as vendor_id', 'inventory_vendors.vendor_name', 'inventory_vendors.vendor_ph_no', 'inventory_vendors.vendor_address', 'inventory_vendors.vendor_gst')->where('req_id', $id)->get();
+
+        // $emergency_challan = EmgChallan::where('status','=','0')->orwhere('requisition_id',$id)->get();
+
+        $requisition_details = InventoryRequisition::select('item_store_rooms.item_store_room as workshop_name', 'inventory_requisitions.requested_by', 'inventory_requisitions.id as req_no', 'inventory_requisitions.date', 'inventory_requisitions.requisition_prefix',  'working_statuses.status as req_status', 'inventory_requisitions.status', DB::raw('CONCAT(users.first_name, " ", users.last_name) as issue_by_name'), 'inventory_requisitions.stock_room', 'inventory_requisitions.*')
+            ->join('users', 'users.id', '=', 'inventory_requisitions.requested_by')
+            ->join('working_statuses', 'working_statuses.id', '=', 'inventory_requisitions.status')
+            ->join('item_store_rooms', 'item_store_rooms.id', '=', 'inventory_requisitions.stock_room')
+            ->where('inventory_requisitions.id', $id)
+            ->first();
+
+        $requisition_requested_by = User::select('users.first_name', 'users.last_name')->where('id', $requisition_details->requested_by)->first();
+
+
+        $vendor_details = InventoryVendor::where('is_active', '1')->get();
+
+        $requisition_item = InventoryRequisitionDetail::select('inventory_requisition_details.id as inventory_requisition_details_id', 'inventory_requisition_details.quantity', 'inventory_requisition_details.item_id', 'items.item_name', 'items.product_code', 'items.item_description', 'item_units.units', 'item_brands.item_brand_name', 'manufactures.manufacture_name', 'inventory_requisition_details.po_status', 'item_types.id as item_type_id', 'items.id as item_id_no', 'item_types.item_type_name', 'inventory_requisition_details.unit_id as item_unit_id', 'items.part_no')
+            ->join('items', 'items.id', '=', 'inventory_requisition_details.item_id')
+            ->join('item_types', 'item_types.id', '=', 'items.item_type_id')
+            ->join('item_units', 'item_units.id', '=', 'inventory_requisition_details.unit_id')
+            ->join('item_brands', 'item_brands.id', '=', 'items.brand_id')
+            ->join('manufactures', 'manufactures.id', '=', 'items.manufacture')
+            ->where('requisition_id', $id)
+            ->get();
+
+        $permisison_users = InventoryPermissionAuthority::select('inventory_permission_authorities.status', 'inventory_permission_authorities.date', 'inventory_permission_authorities.comment', 'users.first_name', 'users.last_name', 'inventory_permission_authorities.user_id', 'inventory_permission_authorities.permission_type as permission_type_user_all')->join('users', 'users.id', '=', 'inventory_permission_authorities.user_id')->where('inventory_permission_authorities.requisition_id', $id)->get();
+        // dd($permisison_users);
+
+
+        $permisison_status_own = InventoryPermissionAuthority::select('status', 'comment')->where('requisition_id', $id)->where('user_id', Auth::id())->first();
+
+        $permisison_status_own_vendor = InventoryVendorPermission::select('status', 'comment')->where('req_id', $id)->where('user_id', Auth::id())->first();
+
+        $permisison_users_vendor = InventoryVendorPermission::select('inventory_vendor_permissions.status', 'inventory_vendor_permissions.date', 'users.first_name', 'users.last_name', 'inventory_vendor_permissions.comment', 'inventory_vendor_permissions.user_id', 'inventory_vendor_permissions.permission_type as permission_type_user')->join('users', 'users.id', '=', 'inventory_vendor_permissions.user_id')->where('inventory_vendor_permissions.req_id', $id)->get();
+
+        $prefix = DB::table('prefixes')->where('name', '=', 'requisition')->first();
+        //dd($permisison_users_vendor);
+        $vendor_selected_quataion = InventoryVendorQuatation::join('inventory_vendors', 'inventory_vendors.id', '=', 'inventory_vendor_quatations.vendor_id')->select('inventory_vendors.vendor_ph_no', 'inventory_vendors.vendor_address', 'inventory_vendors.vendor_gst', 'inventory_vendors.vendor_name', 'inventory_vendors.id as vendor_id', 'inventory_vendor_quatations.vendor_quatation', 'inventory_vendor_quatations.comment')->where('req_id', $id)->where('status', 1)->get();
+
+        $show_for_permission = InventoryPermissionAuthority::where('requisition_id', $id)->where('permission_type', 'Sequential')->where('status', 'Pending')->orWhere('status', 'Need Clarification')->orWhere('status', 'Rejected')->first();
+
+        $show_for_permission_vendor = InventoryVendorPermission::where('req_id', $id)->where('permission_type', 'Sequential')->where('status', 'Pending')->orWhere('status', 'Need Clarification')->orWhere('status', 'Rejected')->first();
+
+        //   dd($show_for_permission_vendor);
+
+        $item_type_list = ItemType::get();
+        $brand_list = ItemBrand::get();
+        $manufacturer_list = Manufacture::get();
+        $workshop_list = ItemStoreRoom::select('item_store_rooms.id', 'item_store_rooms.item_store_room')->where('is_active', '1')->get();
+        $user_list = User::select('users.id', 'users.first_name', 'users.last_name')->get();
+        //    dd($user_list);
+
+        return view('Inventory.requisition.edit-inventory-requisition', compact('requisition_requested_by', 'requisition_details', 'prefix', 'requisition_item', 'permisison_users', 'vendor_details', 'vendor_selected_quataion', 'user_list', 'permisison_users_vendor', 'sl_vender', 'permisison_status_own', 'permisison_status_own_vendor', 'show_for_permission', 'show_for_permission_vendor', 'item_type_list', 'brand_list', 'manufacturer_list', 'workshop_list',));
+    }
+
+    public function update_requisition(Request $req)
+    {
+        // try {
+        //     DB::beginTransaction();
+        $validator = $req->validate([
+            'workshop' => 'required',
+            'requisition_date' => 'required',
+            'requested_by' => 'required',
+            'checked_by' => 'required',
+            // 'issued_by' => 'required',
+            // 'need_permission' => 'required',
+            // 'need_permission_for_emg' => 'required',
+
+        ]);
+
+        // if ($req->post('need_permission_for_emg') == 'yes') {
+        //     $emg_status = 'emergency';
+        //     if ($req->emergency_no != null) {
+        //         $emg_challan_no = implode(",", $req->emergency_no);
+        //         foreach ($req->emergency_no as $key => $value) {
+        //             EmgChallan::where('id', $value)->update(['status' => '1']);
+        //         }
+        //     } else {
+        //         $emg_challan_no = '';
+        //     }
+        // } else {
+        //     $emg_status = '';
+        //     $emg_challan_no = '';
+        // }
+
+        if ($req->post('need_permission') == 'yes') {
+            $status = 1;
+        } else {
+            $status = 3;
+        }
+
+        $prefix = DB::table('prefixes')->where('name', '=', 'requisition')->first();
+
+        $requisition_id = $req->requisition_id;
+
+        $inventory_requatation = InventoryRequisition::where('id', $requisition_id)->first();
+        $inventory_requatation->stock_room = $req->workshop;
+        $inventory_requatation->date = $req->requisition_date;
+        $inventory_requatation->genarated_by = Auth::user()->id;
+        $inventory_requatation->requested_by = $req->requested_by;
+        $inventory_requatation->checked_by = $req->checked_by;
+        $inventory_requatation->status = $status;
+        $inventory_requatation->save();
+
+        // Requisition::where('id', $req->post('requisition_id'))->update($data);
+
+        InventoryRequisitionDetail::where('requisition_id', $requisition_id)->delete();
+        InventoryPermissionAuthority::where('requisition_id', $requisition_id)->delete();
+
+        $no_of_item = count($req->post('item'));
+        $item = $req->post('item');
+        $unit = $req->post('unit');
+        $quantity = $req->post('qty');
+
+        for ($i = 0; $i < $no_of_item; $i++) {
+
+            $requisition_details = array(
+                'requisition_id' => $requisition_id,
+                'item_id' => $item[$i],
+                'unit_id' => $unit[$i],
+                'quantity' => $quantity[$i],
+            );
+            $requisition_details_id = InventoryRequisitionDetail::insertGetId($requisition_details);
+        }
+
+        if ($req->post('need_permission') == 'yes') {
+            $permission_authority = $req->post('permission_authority');
+            $no_of_permission_authority = count($req->post('permission_authority'));
+
+            for ($j = 0; $j < $no_of_permission_authority; $j++) {
+
+                $requisition_permission = array(
+                    'requisition_id' => $requisition_id,
+                    'user_id' => $permission_authority[$j],
+                    'permission_type' => $req->post('permission_type'),
+                    'status' => 'Pending',
+                    'date' => '',
+                    'comment' => '',
+                );
+
+                InventoryPermissionAuthority::insertGetId($requisition_permission);
+            }
+        }
+
+        DB::commit();
+        if ($requisition_id != null) {
+            return redirect()->route('all-inventory-requisition-listing')->with('success', "Requisition Updated Sucessfully");
+        } else {
+            return redirect()->route('all-inventory-requisition-listing')->with('error', "Something Went Wrong");
+        }
+        // } catch (\Throwable $th) {
+        //     return redirect()->route('all-inventory-requisition-listing')->with('error', "Something Went Wrong");
+        // }
+    }
+
+
+    public function get_requisition_item($requisition_details_id)
+    {
+
+        $requisition_item = InventoryRequisitionDetail::select('items.item_type_id', 'inventory_requisition_details.id as requisition_details_id', 'inventory_requisition_details.quantity', 'items.item_name', 'items.id as item_id', 'items.product_code', 'items.item_description', 'item_units.units', 'item_units.id as unit_id', 'brands.id as brand_id', 'item_brands.item_brand_name', 'manufactures.manufacture_name', 'manufactures.id as manufacturer_id', 'items.part_no')
+            ->join('items', 'items.id', '=', 'inventory_requisition_details.item_id')
+            ->join('item_types', 'items.item_type_id', '=', 'item_types.id')
+            ->join('item_units', 'item_units.id', '=', 'inventory_requisition_details.unit_id')
+            ->join('item_brands', 'item_brands.id', '=', 'inventory_requisition_details.brand_id')
+            ->join('manufactures', 'manufactures.id', '=', 'inventory_requisition_details.manufacturer_id')
+            ->where('inventory_requisition_details.id', $requisition_details_id)
+            ->first();
+
+        return response()->json($requisition_item);
+    }
+
+    public function get_item_details_part_no(Request $req)
+    {
+        $item_details = Item::select('item_brands.id as brand_id', 'item_brands.item_brand_name', 'item_types.id as item_type_id', 'items.item_description', 'items.id as item_id', 'items.item_name', 'item_types.item_type', 'manufactures.id as manufactures_id', 'manufactures.manufacture_name', 'items.part_no')
+            ->join('item_types', 'item_types.id', '=', 'items.item_type_id')
+            ->join('item_brands', 'item_brands.id', '=', 'items.brand_id')
+            ->join('manufactures', 'manufactures.id', '=', 'items.manufacturer')
+            ->where('product_code', $req->post('item_code'))
+            ->orwhere('part_no', $req->post('item_code'))
+            ->first();
+
+        $item_unit = DB::table('unit_of_items')->select('item_units.id as unit_id', 'item_units.units')->join('item_units', 'item_units.id', '=', 'unit_of_items.unit_id')->where('unit_of_items.item_id', $item_details->item_id)->get();
+
+        return response()->json(array('item_details' => $item_details, 'item_unit' => $item_unit));
     }
 }

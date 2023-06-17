@@ -81,12 +81,12 @@ unset($__errorArgs, $__bag); ?>
                                         <?php echo csrf_field(); ?>
                                         <input type="hidden" name="vender_name" value="<?php echo e($value->vendor_id); ?>">
                                         <input type="hidden" name="req_id" value="<?php echo e($requisition_details->id); ?>">
-                                        <input type="file" <?php if (@$value['status'] == 1) {
+                                        <input class="requis-edit" type="file" <?php if (@$value['status'] == 1) {
                                                                 echo "disabled";
                                                             } ?> name="vendor_quatation" required>
                                         <button class="btn btn-indigo btn-sm" <?php if (@$value['status'] == 1) {
                                                                                     echo "disabled";
-                                                                                } ?> type="submit"><i class="fa fa-file"></i> Save</button>
+                                                                                } ?> type="submit" style="margin-left: 20px;"><i class="fa fa-file"></i> Save</button>
                                     </form>
                                     <?php if($value->vendor_quatation != null): ?>
                                     <a style="color:blue" href="<?php echo e(asset('public/inventory-quatation/')); ?>/<?php echo e(@$value->vendor_quatation); ?>" target="_blank"><i class="fa fa-eye"></i> View Quatation</a>
@@ -204,8 +204,8 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <?php endif; ?>
                         </select>
                     </div>
-                    <div class="col-md-12">
-                        <label class="form-label">Permission Type<span class="required"> *</span></label>
+                    <div class="col-md-12 itemrequisedit">
+                        <label>Permission Type<span class="required"> *</span></label>
                         <select name="permission_type" required class="select2-show-search">
                             <option value="" disabled>Select One</option>
                             <option value="Parallal" selected>Parallal</option>
@@ -233,7 +233,7 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                     </div>
 
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print requisition')): ?>
-                    <a href="<?php echo e(route('print-requisition',['id'=>$requisition_details->id])); ?>" class="btn btn-primary allbtndemo"><i class="fa fa-print"> Print</i></a>
+                    <a href="<?php echo e(route('print-inventory-req',['id'=>$requisition_details->id])); ?>" class="btn btn-primary allbtndemo"><i class="fa fa-print"> Print</i></a>
                     <?php endif; ?>
 
                     <?php if(!empty($requisition_details->status > 2)): ?>
@@ -359,8 +359,8 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                             <?php $__currentLoopData = $permisison_users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <li class="mt-0">
                                 <div class="d-flex"><span class="time-data"><?php echo e(@$user->permission_user_details->first_name); ?> <?php echo e(@$user->permission_user_details->last_name); ?></span><span class="ml-auto text-muted fs-11"><?php if ($user->date != '' && $user->date != null) {
-                                    echo  date('d-m-Y h:i', strtotime($user->date));
-                                       } ?></span></div>          
+                                                                                                                                                                                                                            echo  date('d-m-Y h:i', strtotime($user->date));
+                                                                                                                                                                                                                        } ?></span></div>
                                 <p class="text-muted fs-12">
                                     <span class="text-info">
                                         <?php if($user->user_id == Auth::id() && ( $user->permission_type == 'Parallal' || @$show_for_permission->user_id == Auth::id()) ): ?>
@@ -379,7 +379,7 @@ $generatorPNG = new Picqer\Barcode\BarcodeGeneratorPNG();
                         </ul>
                     </div>
                 </div>
-             
+
             </div>
             <?php endif; ?>
 

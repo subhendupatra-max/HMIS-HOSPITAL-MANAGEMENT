@@ -12,6 +12,7 @@ class InventoryVendorController extends Controller
     public function inventory_vendor_listing()
     {
         $vendors = InventoryVendor::all();
+        // dd($vendors);
         return view('setup.Inventory.vendor.vendor-listing', compact('vendors'));
     }
 
@@ -58,7 +59,7 @@ class InventoryVendorController extends Controller
     {
         $vendorId = base64_decode($id);
         $data = InventoryVendor::find($vendorId);
-        return view('setup.pharmacy.medicine-vendor.edit-vendor', compact('data'));
+        return view('setup.Inventory.vendor.edit-vendor', compact('data'));
     }
 
     public function update_inventory_vendor(Request $request)

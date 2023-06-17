@@ -31,8 +31,8 @@
                     @csrf
                     <div class="col-md-12">
                         <div class="row">
-                        <input type="hidden" name="id" value="{{$item->id}}" />
-                            <div class="col-md-4">
+                            <input type="hidden" name="id" value="{{$item->id}}" />
+                            <div class="col-md-4 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Item Type<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -50,7 +50,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Item Name<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -62,7 +62,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Part No.<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -74,23 +74,19 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Item Category<span class="required"> *</span></label>
                                     <div class="input-group">
                                         <select name="item_categoris[]" required class="form-control select2" multiple>
-                                            <option value="" disabled >Select One</option>
+                                            <option value="" disabled>Select One</option>
                                             @if(isset($item_category))
                                             @foreach($item_category as $value)
-                                            <option value="{{$value->id}}"
-                                                <?php for($i = 0 ; $i < (count($cate)-1); $i++)
-                                                {
-                                                  if($cate[$i] == $value->id)
-                                                  {
-                                                    echo 'selected';
-                                                  }
-                                                } ?>
-                                                >{{$value->item_catagory_name}}</option>
+                                            <option value="{{$value->id}}" <?php for ($i = 0; $i < (count($cate) - 1); $i++) {
+                                                                                if ($cate[$i] == $value->id) {
+                                                                                    echo 'selected';
+                                                                                }
+                                                                            } ?>>{{$value->item_catagory_name}}</option>
                                             @endforeach
                                             @endif
                                         </select>
@@ -102,35 +98,27 @@
 
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-4 mb-3 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Item Unit<span class="required"> *</span></label>
                                     <div class="input-group">
-                                        <select id="unit" name="unit[]" class="form-control select2" multiple>
-                                        <option value="">---Select---</option>
-                                            <?php foreach ($units as $values)
-                                                { ?>
-                                            <option value="{{  $values->id }}"
-                                                <?php foreach ($item_unit as $value)
-                                                {
-                                                  if($values->id == $value->unit_id)
-                                                  {
-                                                    echo 'selected';
-                                                  }
-                                                } ?>
-
-
-                                                >{{ $values->units }}</option>
-                                           <?php } ?>
+                                        <select id="unit" name="unit" class="form-control select2">
+                                            <option>Select One</option>
+                                            @if(isset($units))
+                                            @foreach($units as $value)
+                                            <option value="{{$value->id}}" {{ $value->id == $item->unit_id ? 'selected' : '' }}>{{$value->units}}</option>
+                                            @endforeach
+                                            @endif
                                         </select>
                                     </div>
+
                                     @error('unit')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-4 mb-3 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Loworder Level<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -141,7 +129,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Brand<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -157,7 +145,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Manufacturer<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -173,8 +161,8 @@
                                     @enderror
                                 </div>
                             </div>
-                            
-                            <div class="col-md-6 mb-2">
+
+                            <div class="col-md-6 mb-2 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Stored<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -185,7 +173,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-6 mb-2 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Uses<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -196,7 +184,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">Product Code<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -207,7 +195,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6 mb-3 itemeditinventory">
                                 <div class="input-group">
                                     <label class="form-label">HSN or SAC No<span class="required"> *</span></label>
                                     <div class="input-group">
@@ -218,7 +206,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 itemeditinventorythree">
                                 <label class="form-label">Item Picture <span class="text-danger">*</span> (245px x 48px)(File size must be less then 5mb)</label>
                                 <input type="file" name="item_pic" onchange="readURL(this);">
                                 <img id="blah" width="50px" height="30px" alt="your image" />
