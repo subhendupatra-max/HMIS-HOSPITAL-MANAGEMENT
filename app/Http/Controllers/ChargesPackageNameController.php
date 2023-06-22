@@ -85,7 +85,7 @@ class ChargesPackageNameController extends Controller
             'charge_package_sub_catagory_id'  => 'required',
             'charge_package_catagory_id'      => 'required',
             'package_name'                    => 'required',
-            'type'                                    => 'required',
+            'type'                            => 'required',
             'total_amount'                    => 'required',
         ]);
         try {
