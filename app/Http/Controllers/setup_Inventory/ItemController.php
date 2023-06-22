@@ -160,7 +160,7 @@ class ItemController extends Controller
             'item_pic' => 'max:2048',
             'hsn_or_sac_no' => 'required',
             'product_code' => 'required',
-
+ 
         ]);
 
         ItemAttributeValue::where('item_id', $req->id)->delete();
