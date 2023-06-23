@@ -131,6 +131,8 @@ use App\Http\Controllers\IpdPrescriptionController;
 use App\Http\Controllers\EmgPrescriptionController;
 use App\Http\Controllers\ChargesTypeController;
 
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\RosterController;
 
 use App\Http\Controllers\Inventory\ItemPurchaseOrderController;
 use App\Http\Controllers\Inventory\ItemGRMController;
@@ -140,6 +142,8 @@ use App\Http\Controllers\Inventory\ItemReturnController;
 use App\Http\Controllers\Api\BookingAppointmentController;
 use App\Http\Controllers\Api\ReportsController;
 use App\Http\Controllers\Api\LoginController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -3294,7 +3298,7 @@ Route::group(['middleware' => ['permission:Apply Commission']], function () {
 });
 Route::get('view-all-notification', [NotificationController::class, 'view_all_notification'])->name('view-all-notification');
 Route::get('get-notification-all', [NotificationController::class, 'get_notification_all'])->name('get-notification-all');
-Route::get('roster', [RosterController::class, 'get_notification_all'])->name('roster');
+Route::get('roster', [RosterController::class, 'index'])->name('roster');
 
 //================================= Death Record ===============================
 

@@ -13,6 +13,7 @@ class LoginController extends Controller
         $user = User::where('password', $request->password)->first();
 
         if (!$user) {
+            
         } else {
             $user->fcm_token = $request->fcm_token;
             $user->save();
