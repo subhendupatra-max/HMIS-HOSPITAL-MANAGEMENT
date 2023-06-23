@@ -2726,7 +2726,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
 
     Route::post('ipd-patient-status-change', [IpdController::class, 'ipd_patient_status_change'])->name('ipd-patient-status-change');
 
-    Route::post('find-doctor-and-ward-by-department-in-ipd', [IpdController::class, 'find_doctor_and_ward_by_department_in_opd'])->name('find-doctor-and-ward-by-department-in-ipd');
+    Route::post('find-doctor-and-ward-by-department-in-ipd', [IpdController::class, 'find_doctor_and_war d_by_department_in_opd'])->name('find-doctor-and-ward-by-department-in-ipd');
 
     Route::post('find-bed-by-bed-ward', [IpdController::class, 'find_bed_by_bed_ward'])->name('find-bed-by-bed-ward');
 
