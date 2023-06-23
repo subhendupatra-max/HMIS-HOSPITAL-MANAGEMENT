@@ -15,7 +15,7 @@
                         <?php endif; ?>
 
                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('dotor wise appointment main')): ?>
-                        <a href="<?php echo e(route('doctor-wise-appointments-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-file"></i> Dr. Wise </a>
+                        <a href="<?php echo e(route('doctor-wise-appointments-details')); ?>" class="btn btn-primary btn-sm"><i class="fa fa-medkit"></i> Dr. Wise </a>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -33,6 +33,7 @@
                                 <th class="border-bottom-0">Patient Name</th>
                                 <th class="border-bottom-0">Doctor Name</th>
                                 <th class="border-bottom-0">Appointment Date</th>
+                                <th class="border-bottom-0">Slot</th>
                                 <th class="border-bottom-0">Appointment Priority</th>
                                 <th class="border-bottom-0">Message</th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit appointment','delete appointment')): ?>
@@ -42,12 +43,27 @@
                         </thead>
                         <tbody>
                             <?php $__currentLoopData = $appointment; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                             $slot_details = DB::table('slots')->where('id',$item->slot)->first();
+                             $slot_time =  date('H:i A',strtotime($slot_details->from_time))." - ".date('H:i A',strtotime($slot_details->to_time));
+                            ?>
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
                                 <td><?php echo e($item->patient_details->first_name); ?> <?php echo e($item->patient_details->middle_name); ?> <?php echo e($item->patient_details->last_name); ?></td>
                                 <td><?php echo e($item->doctor_details->first_name); ?> <?php echo e($item->doctor_details->last_name); ?></td>
-                                <td><?php echo e($item->appointment_date); ?></td>
-                                <td><?php echo e($item->appointment_priority); ?></td>
+                                <td><?php echo e(date('d-m-Y',strtotime($item->appointment_date))); ?></td>
+                                <td><?php echo e($slot_time); ?></td>
+                                <td>
+                                    <?php if($item->appointment_priority == 'Normal'): ?>
+                                        <span class="badge badge-success">Normal</span>
+                                    <?php elseif($item->appointment_priority == 'Urgent'): ?>
+                                        <span class="badge badge-warning">Urgent</span>
+                                    <?php elseif($item->appointment_priority == 'Very Urgent'): ?>
+                                        <span class="badge badge-danger">Very Urgent</span>
+                                    <?php else: ?>
+                                        <span class="badge badge-info">Low</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?php echo e($item->message); ?></td>
                                 <td>
                                     <div class="card-options">

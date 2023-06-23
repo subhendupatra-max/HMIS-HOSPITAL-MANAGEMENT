@@ -138,8 +138,8 @@ use App\Http\Controllers\Inventory\ItemReturnController;
 
 // ------------- Api Controller -----------------
 use App\Http\Controllers\Api\BookingAppointmentController;
-
-
+use App\Http\Controllers\Api\ReportsController;
+use App\Http\Controllers\Api\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -3285,9 +3285,16 @@ Route::group(['middleware' => ['permission:death record']], function () {
 Route::group(['middleware' => ['permission:Apply Commission']], function () {
     Route::get('apply-opd-commission/{case_id?}/{ref_id?}', [ReferralController::class, 'apply_opd_commission'])->name('apply-opd-commission');
 });
+Route::get('view-all-notification', [NotificationController::class, 'view_all_notification'])->name('view-all-notification');
+Route::get('get-notification-all', [NotificationController::class, 'get_notification_all'])->name('get-notification-all');
+Route::get('roster', [RosterController::class, 'get_notification_all'])->name('roster');
+
 //================================= Death Record ===============================
 
 
 ///////////////////////////////////////////   API For App   /////////////////////////////////////////////////
 
-Route::get('doctor-list', [BookingAppointmentController::class, 'doctor_list'])->name('doctor-list');
+
+
+
+
