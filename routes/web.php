@@ -393,6 +393,13 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
     // ====================== All Header ==================
 
     // ====================== Patient Details  ==================
+    Route::group(['middleware' => ['permission:Patient Billing']], function () {
+        Route::get('patient-billing-list/{id?}', [PatientController::class, 'patient_billing_list'])->name('patient-billing-list');
+        Route::group(['middleware' => ['permission:Add Patient Billing']], function () {
+            Route::get('add-patient-billing/{id?}', [PatientController::class, 'add_patient_billing'])->name('add-patient-billing');
+        });
+    });
+
     Route::group(['middleware' => ['permission:Patient Master']], function () {
         Route::get('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
     });

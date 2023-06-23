@@ -100,7 +100,7 @@
                             <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                             <select class="form-control" id="status" name="status">
                                 <option value="">Select......</option>
-                                <option value="no">Ready For Use</option>
+                                <option value="no">Ready For Used</option>
                             </select>
                             <?php $__errorArgs = ['status'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

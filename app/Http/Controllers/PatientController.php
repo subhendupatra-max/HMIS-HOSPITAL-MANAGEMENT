@@ -17,6 +17,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\OpdDetails;
 use App\Models\EmgDetails;
 use App\Models\IpdDetails;
+use App\Models\Billing;
 use Validator;
 
 use function PHPSTORM_META\type;
@@ -512,5 +513,16 @@ class PatientController extends Controller
     {
         $dat = Excel::import(new PatientImport, request()->file('patient_file'));
         return redirect()->route('patient_details')->with('success', 'Patient Import Sucessful');
+    }
+    public function patient_billing_list($id)
+    {
+        $patient_id = base64_decode($id);
+        $billing_details = Billing::where('patient_id',$patient_id)->get();
+        return view('setup.patient.billing-list', compact('billing_details','patient_id'));
+    }
+    public function add_patient_billing($id)
+    {
+        $patient_id = base64_decode($id);
+        return view('setup.patient.add-billing', compact('patient_id'));
     }
 }
