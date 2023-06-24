@@ -21,32 +21,59 @@
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="card-header d-block">
+            <form action="<?php echo e(route('ipd-patient-listing')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
+                <div class="row">
+                    <div class="col-md-3 card-title">
+                        <input type="text" name="patient_first_name" value="<?php echo e(@$request_data['patient_first_name']); ?>" placeholder="Search By Patient Name ....." />
+                    </div>
+                    <div class="col-md-2 card-title">
+                        <input type="text" name="patient_uhid"  value="<?php echo e(@$request_data['patient_uhid']); ?>" placeholder="Search By Patient UHID ....." />
+                    </div>
+                    <div class="col-md-1 card-title">
+                        <input type="text" name="patient_phone_no"  value="<?php echo e(@$request_data['patient_phone_no']); ?>" placeholder="Phone No ....." />
+                    </div>
+                    <div class="col-md-1 card-title">
+                        <input type="text" name="ipd_id"  value="<?php echo e(@$request_data['ipd_id']); ?>" placeholder="IPD Id ....." />
+                    </div>
+                    <div class="col-md-1 card-title">
+                        <input type="text" name="case_id"  value="<?php if(@$request_data['case_id'] != null): ?><?php echo e($request_data['case_id']); ?> <?php endif; ?>" placeholder="Case Id ....." />
+                    </div>
+                    <div class="col-md-2 card-title">
+                        <input type="date" style="margin: 6px 0px 0px 0px" name="appointment_date"  value="<?php echo e(@$request_data['appointment_date']); ?>" />
+                    </div>
+                    <div class="col-md-2 card-title">
+                        <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-search"></i> Search</button>
+                        <a class="btn btn-primary btn-sm" href="<?php echo e(route('ipd-patient-listing')); ?>"><i class="fa fa-list"></i> All List</a>
+                    </div>
+                </div>
+            </form>
         </div>
         <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered text-nowrap" id="example">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">IPD Id</th>
-                            <th scope="col">Case Id</th>
-                            <th scope="col">Patient Details</th>
-                            <th scope="col">Mobile No.</th>
-                            <th scope="col">Admission Details</th>
-                            <th scope="col">Admission Date</th>
-                            <th scope="col">Admitted By</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Action</th>
+                <table class="table table-hover card-table table-vcenter text-nowrap border-left border-right border-bottom">
+                    <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                            <th class="text-white">IPD Id</th>
+                            <th class="text-white">Case Id</th>
+                            <th class="text-white">Patient Details</th>
+                            <th class="text-white">Mobile No.</th>
+                            <th class="text-white">Admission Details</th>
+                            <th class="text-white">Patient Type</th>
+                            <th class="text-white">Admission Date</th>
+                            <th class="text-white">Admitted By</th>
+                            <th class="text-white">Status</th>
+                            <th class="text-white">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if(isset($ipd_patient_list)): ?>
+                        <?php if(@$ipd_patient_list[0]->id != null): ?>
                         <?php $__currentLoopData = $ipd_patient_list; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                            <td><?php echo e($loop->iteration); ?></td>
                             <td><a class="textlink" href="<?php echo e(route('ipd-profile',['id'=>base64_encode($value->id)])); ?>"><?php echo e(@$value->id); ?></a></td>
                             <td><?php echo e(@$value->case_id); ?></td>
                             <td>
@@ -72,6 +99,21 @@
                                 <?php endif; ?>
                                 <?php if(isset($value->bed_ward_id)): ?>
                                 <i class="fa fa-bed text-primary"></i> <?php echo e(@$value->bed_details->bed_name); ?> - <?php echo e(@$value->ward_details->ward_name); ?> - <?php echo e(@$value->unit_details->bedUnit_name); ?>
+
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <i class="fa fa-adjust text-primary"></i> <?php echo e(@$value->patient_type); ?>
+
+                                <?php if(@$value->tpa_organization != null): ?>
+                                <br>
+                                <i class="fa fa-adjust text-primary"></i> <?php echo e(@$value->tpa_details->TPA_name); ?>
+
+                                <?php endif; ?>
+                               
+                                <?php if(@$value->type_no != null): ?>
+                                <br>
+                                <i class="fa fa-adjust text-primary"></i> <?php echo e(@$value->type_no); ?>
 
                                 <?php endif; ?>
                             </td>
@@ -114,9 +156,20 @@
                             </td>
                         </tr>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php else: ?>
+                        <tr>
+                            <td colspan="8" style="text-align: center;">
+                                <img src="<?php echo e(asset('public/no_found_data/no_data.png')); ?>" alt="loader" width="400px"
+                                height="160px">
+                            </td>
+                        </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
+                <div class="mt-2">
+                    <?php echo $ipd_patient_list->links(); ?>
+
+                </div> 
             </div>
         </div>
 

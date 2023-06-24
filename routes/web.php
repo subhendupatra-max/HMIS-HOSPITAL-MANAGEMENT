@@ -2388,7 +2388,7 @@ Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'
 
 //================================= Emg ===================================================
 Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], function () {
-    Route::get('emg-patient-list', [EmgController::class, 'index'])->name('emg-patient-list');
+    Route::any('emg-patient-list', [EmgController::class, 'index'])->name('emg-patient-list');
     Route::group(['middleware' => ['permission:Emg registation']], function () {
         Route::post('emg-after-new-old', [EmgController::class, 'after_new_old'])->name('emg-after-new-old');
 
@@ -2719,7 +2719,7 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
         Route::any('direct-ipd-admission/{id?}', [IpdController::class, 'direct_ipd_admission'])->name('direct-ipd-admission');
     });
 
-    Route::get('ipd-patient-listing', [IpdController::class, 'index'])->name('ipd-patient-listing');
+    Route::any('ipd-patient-listing', [IpdController::class, 'index'])->name('ipd-patient-listing');
 
     Route::group(['middleware' => ['permission:IPD registation']], function () {
         Route::post('ipd-registation', [IpdController::class, 'ipd_registation'])->name('ipd-registation');
@@ -3113,6 +3113,7 @@ Route::group(['middleware' => ['permission:bill summary'], 'prefix' => 'bill-sum
 Route::group(['middleware' => ['permission:bed-status'], 'prefix' => 'bed-status'], function () {
     Route::get('bed-status-list', [BedController::class, 'bed_status_list_in_header'])->name('bed-status-list');
     Route::post('update-status-bed', [BedController::class, 'update_status_bed'])->name('update-status-bed');
+    Route::post('search-by-bed-and-ward', [BedController::class, 'search_by_bed_and_ward'])->name('search-by-bed-and-ward');
 });
 
 //================================= bed status ==============================

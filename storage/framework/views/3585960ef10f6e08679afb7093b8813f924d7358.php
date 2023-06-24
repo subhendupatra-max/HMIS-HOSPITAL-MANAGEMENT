@@ -145,7 +145,7 @@
                 <?php echo csrf_field(); ?>
                 <div class="col-md-12">
                     <label>Description</label>
-                    <textarea name="description" class="content" ><?php echo e($radio_test->description); ?></textarea>
+                    <textarea name="description" class="content" ><?php echo e(@$radiology_patient_test_details->description != null ? $radiology_patient_test_details->description : $radio_test->description); ?></textarea>
                 </div>
                 <input name="p_test_id" value="<?php echo e($p_id); ?>" type="hidden" />
 
@@ -170,7 +170,7 @@
                                             <td><?php echo @$value->reference_range; ?>
 
                                             </td>
-                                            <td><?php echo @$value->unit_name; ?></td>
+                                            <td><?php echo @$value->unit; ?></td>
                                             <td><input type="text" name="report_value[]" value="<?php echo e(@$value->report_value); ?>" required="" /></td>
                                             <td><textarea class="form-control" name="parameter_description[]"><?php echo e(@$value->parameter_description); ?></textarea></td>
                                         </tr>

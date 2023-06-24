@@ -11,12 +11,12 @@
                 </div>
 
                 <div class="col-md-6 text-right">
+                    <?php if($medicine_bill->status != '1'): ?>
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete medicine bill')): ?>
                     <a href="<?php echo e(route('delete-medicine-bill',['bill_id'=>base64_encode($medicine_bill->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-trash"></i> Delete</a>
                     <?php endif; ?>
-                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
-                    <a href="<?php echo e(route('edit-patient-details', base64_encode($medicine_bill->all_patient_details->id))); ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit</a>
                     <?php endif; ?>
+          
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print medicine bill')): ?>
                     <a href="<?php echo e(route('print-medicine-bill',['bill_id'=>base64_encode($medicine_bill->id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-print"></i> Print</a>
                     <?php endif; ?>
