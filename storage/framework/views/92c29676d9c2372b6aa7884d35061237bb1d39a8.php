@@ -156,14 +156,14 @@
           Dr. In Charge
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->latest_opd_visit_details_for_patient->doctor->first_name); ?> <?php echo e($opd_details->latest_opd_visit_details_for_patient->doctor->last_name); ?>
+          <?php echo e(@$opd_details->latest_opd_visit_details_for_patient->doctor->first_name); ?> <?php echo e(@$opd_details->latest_opd_visit_details_for_patient->doctor->last_name); ?>
 
         </td>
         <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
           Unit
         </th>
         <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-          <?php echo e($opd_details->latest_opd_visit_details_for_patient->unit); ?>
+          <?php echo e(@$opd_details->latest_opd_visit_details_for_patient->unit); ?>
 
         </td>
         <!-- <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
@@ -292,9 +292,67 @@
 
     </table>
     <?php endif; ?>
-    <table>
-      <h1 style="font-size: 20px;"> Total : <?php echo e(@$total.' Rs'); ?> </h1>
-    </table>
+    <table style="width: 100%;
+
+    margin: 10px 0px 0px 0px;
+    border-collapse: collapse;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;border-top: 1px solid black;">
+          <tr>
+            <th style="text-align: left;font-size: 13px; padding: 10px 10px 10px 10px;">
+              Bill Date:
+            </th>
+            <td style="text-align: left;font-size: 13px;">
+              <?php echo e(@date('d-m-Y h:i A', strtotime($bill->bill_date))); ?> 
+            </td>
+    
+    
+            <th style="text-align: left;font-size: 13px; ">
+              Total Amount:
+            </th>
+            <td style="text-align: right;font-size: 13px; padding: 0px 10px 0px 0px;">
+             <?php echo e(@$bill->total_amount); ?>
+
+            </td>
+            
+          </tr>
+    
+    
+          <tr>
+            <th style="text-align: left;font-size: 13px;padding: 10px 10px 10px 10px;">
+              
+            </th>
+            <td style="text-align: left;font-size: 13px;">
+           
+            </td>
+            <?php if(@$discount_details->given_discount_amount != null): ?>
+            <th style="text-align: left;font-size: 13px;">
+              Discount:
+            </th>
+            <td style="text-align: right;font-size: 13px; padding: 0px 10px 0px 0px;">
+              <?php echo e(@$discount_details->given_discount_amount); ?> <?php echo e($discount_details->given_discount_type == 'Flat'?'Rs':'%'); ?>
+
+            </td>
+            <?php endif; ?>
+          </tr>
+          <tr>
+            <th  style="text-align: left;font-size: 13px; padding: 10px 10px 10px 10px;">
+              
+            </th>
+            <td  style="text-align: right;font-size: 13px;padding: 0px 10px 0px 0px; ">
+              
+            </td>
+            <th  style="text-align: left;font-size: 13px;">
+              Grand Total
+            </th>
+            <td  style="text-align: right;font-size: 13px;padding: 0px 10px 0px 0px; ">
+              <?php echo e(@$bill->grand_total); ?>
+
+            </td>
+          </tr>
+        </table>
+
 
 
     <!-- =================================================================================================== -->

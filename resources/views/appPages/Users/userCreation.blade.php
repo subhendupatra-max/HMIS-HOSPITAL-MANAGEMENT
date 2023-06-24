@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+ @extends('layouts.layout')
 @section('content')
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -167,8 +167,8 @@
 
                         <div class="col-md-2 useradddtwoo">
 
-                            <input type="number" name="phone_no" id="phone_no" value="{{ old('phone_no') }}" required="">
-                            <label for="phone_no"> Phone</label>
+                            <input type="number" name="phone_no" id="phone_no" value="{{ old('phone_no') }}" required=""> 
+                            <label for="phone_no"> Phone <span class="text-danger">*</span></label>
                             @error('phone_no')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror

@@ -1,4 +1,4 @@
-
+ 
 <?php $__env->startSection('content'); ?>
 <div class="col-lg-12 col-xl-12 col-md-12 col-sm-12">
     <div class="card">
@@ -257,8 +257,8 @@ unset($__errorArgs, $__bag); ?>
 
                         <div class="col-md-2 useradddtwoo">
 
-                            <input type="number" name="phone_no" id="phone_no" value="<?php echo e(old('phone_no')); ?>" required="">
-                            <label for="phone_no"> Phone</label>
+                            <input type="number" name="phone_no" id="phone_no" value="<?php echo e(old('phone_no')); ?>" required=""> 
+                            <label for="phone_no"> Phone <span class="text-danger">*</span></label>
                             <?php $__errorArgs = ['phone_no'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
