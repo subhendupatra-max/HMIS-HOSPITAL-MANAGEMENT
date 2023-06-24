@@ -19,7 +19,7 @@ class CreateBillingsTable extends Migration
             $table->string('bill_date');
             $table->string('patient_id');
             $table->string('section');
-            $table->string('case_id');
+            $table->string('case_id')->nullable();
             $table->string('opd_id')->nullable();
             $table->string('emg_id')->nullable();
             $table->string('ipd_id')->nullable();

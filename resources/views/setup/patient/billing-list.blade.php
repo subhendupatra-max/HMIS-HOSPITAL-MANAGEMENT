@@ -25,9 +25,13 @@
                     <thead>
                         <tr>
                             <th scope="col">Sl No.</th>
-                            <th scope="col">Bill No</th>
+                            <th scope="col">Bill No.</th>
                             <th scope="col">Bill Date</th>
                             <th scope="col">Bill Amount</th>
+                            <th scope="col">Discount Status</th>
+                            <th scope="col">Payment Status</th>
+                            <th scope="col">Payment Amount</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,6 +44,28 @@
                                         <td>{{ $value->bill_prefix }}{{ $value->id }}</td>
                                         <td>{{ date('d-m-Y h:i A',strtotime($value->bill_date)) }}</td>
                                         <td>{{ $value->grand_total }}</td>
+                                        <td>{{ $value->grand_total }}</td>
+                                        <td>{{ $value->grand_total }}</td>
+                                        <td>{{ $value->grand_total }}</td>
+                                        <td>
+                                            <div class="card-options">
+                                                <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right" style="">
+                                                    <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
+                                                    @can('edit patient')
+                                                    <a class="dropdown-item" href="">
+                                                        <i class="fa fa-edit"></i> Edit</a>
+                                                    @endcan
+                                                    @can('delete patient billing')
+                                                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
+                                                    @endcan
+                                                    @can('OPD registation')
+                                                    <a class="dropdown-item" href=""><i class="fa fa-file-alt"></i> Add Payment</a>
+                                                    @endcan
+                                            
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                             @endforeach
                         @endif

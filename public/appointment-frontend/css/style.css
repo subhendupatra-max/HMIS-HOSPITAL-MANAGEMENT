@@ -1,0 +1,734 @@
+body
+{
+	margin: 0px;
+	padding: 0px;
+}
+::-webkit-scrollbar 
+{
+  width: 5px;
+} 
+::-webkit-scrollbar-track 
+{
+  background: #FFF;
+}
+::-webkit-scrollbar-thumb 
+{
+  background: #2a3c92; 
+}
+.outside_arealogin 
+{
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user_loginbackarea 
+{
+  padding: 0px;
+}
+.outside_arealogin video 
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.blck_areabacks 
+{
+  width: 100%;
+  height: 100%;
+  background-color: #00000026;
+  position: absolute;
+  top: 0px;
+}
+.login_section 
+{
+  position: relative;
+  margin: 0px auto;
+  z-index: 1;
+  max-width: 1000px;
+  margin-top: -10px;
+  padding-bottom: 110px;
+}
+.login_pglogo 
+{
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+/*==================================appointments button==================================*/
+.bapcenter_area
+{
+  text-align: center;
+}
+.bap_btnarea 
+{
+  font-size: 13px;
+  position: relative;
+  background: transparent;
+  color: #FFF;
+  text-transform: uppercase;
+  border: 2px solid #FFF;
+  transition: all 0.7s;
+  overflow: hidden;
+  height: 55px;
+  width: 190px;
+  font-weight: 700;
+  padding: 0px 0px 0px 0px;
+  margin: 18px 0px 0px 0px;
+  font-family: 'Roboto', sans-serif;
+}
+.bap_btnarea:hover 
+{
+  color: #FFF;
+}
+span 
+{
+  transition: all 0.7s;
+  z-index: -1;
+}
+.bap_btnarea .first 
+{
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 0;
+  width: 25%;
+  height: 100%;
+  background: #ef4239;
+}
+.bap_btnarea:hover .first 
+{
+  top: 0;
+  right: 0;
+}
+.bap_btnarea .second 
+{
+  content: "";
+  position: absolute;
+  left: 25%;
+  top: -100%;
+  height: 100%;
+  width: 25%;
+  background: #ef4239;
+}
+.bap_btnarea:hover .second 
+{
+  top: 0;
+  left: 50%;
+}
+.bap_btnarea .third 
+{
+  content: "";
+  position: absolute;
+  left: 50%;
+  height: 100%;
+  top: 100%;
+  width: 25%;
+  background: #ef4239;
+}
+.bap_btnarea:hover .third 
+{
+  top: 0;
+  left: 25%;
+}
+.bap_btnarea .fourth 
+{
+  content: "";
+  position: absolute;
+  left: 100%;
+  top: 0;
+  height: 100%;
+  width: 25%;
+  background: #ef4239;
+}
+.bap_btnarea:hover .fourth 
+{
+  top: 0;
+  left: 0;
+}
+.fle_icndesign
+{
+  padding: 0px 0px 0px 7px;
+}
+/*==================================appointments button==================================*/
+/*==================================login area===========================================*/
+.gmd_toparea
+{
+  margin: 150px 0px 0px 0px;
+}
+.login-wrap{
+  width:100%;
+  margin:auto;
+  max-width:525px;
+  min-height:370px;
+  position:relative;
+  background:url('../images/booking-back.jpg');
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.login-html{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  padding: 50px 20px 50px 20px;
+  background: #3536394f;
+}
+.login-html .sign-in-htm,
+.login-html .sign-up-htm{
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  position:absolute;
+  transform:rotateY(180deg);
+  backface-visibility:hidden;
+  transition:all .4s linear;
+}
+.login-html .sign-in,
+.login-html .sign-up,
+.login-form .group .check{
+  display:none;
+}
+.login-html .tab,
+.login-form .group .label,
+.login-form .group .button{
+  text-transform:uppercase;
+}
+.login-html .tab{
+  font-size:20px;
+  margin-right:15px;
+  padding-bottom:5px;
+  margin:0 15px 10px 0;
+  display:inline-block;
+  border-bottom:2px solid transparent;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+  color: #FFF;
+}
+.login-html .sign-in:checked + .tab,
+.login-html .sign-up:checked + .tab{
+  color:#FFF;
+  border-color:#FFF;
+}
+.login-form{
+  min-height:345px;
+  position:relative;
+  perspective:1000px;
+  transform-style:preserve-3d;
+}
+.login-form .group{
+  margin-bottom:15px;
+}
+.login-form .group .label,
+.login-form .group .input,
+.login-form .group .button{
+  width:100%;
+  color:#fff;
+  display:block;
+}
+.login-form .group .input,
+.login-form .group .button{
+  border:none;
+  padding:15px 20px;
+  border-radius:25px;
+  background:rgba(255,255,255,.1);
+}
+.login-form .group input[data-type="password"]{
+  text-security:circle;
+  -webkit-text-security:circle;
+}
+.login-form .group .label{
+  color:#aaa;
+  font-size:12px;
+}
+.login-form .group .button{
+  background:#1161ee;
+}
+.login-form .group label .icon{
+  width:15px;
+  height:15px;
+  border-radius:2px;
+  position:relative;
+  display:inline-block;
+  background:rgba(255,255,255,.1);
+}
+.login-form .group label .icon:before,
+.login-form .group label .icon:after{
+  content:'';
+  width:10px;
+  height:2px;
+  background:#fff;
+  position:absolute;
+  transition:all .2s ease-in-out 0s;
+}
+.login-form .group label .icon:before{
+  left:3px;
+  width:5px;
+  bottom:6px;
+  transform:scale(0) rotate(0);
+}
+.login-form .group label .icon:after{
+  top:6px;
+  right:0;
+  transform:scale(0) rotate(0);
+}
+.login-form .group .check:checked + label{
+  color:#fff;
+}
+.login-form .group .check:checked + label .icon{
+  background:#1161ee;
+}
+.login-form .group .check:checked + label .icon:before{
+  transform:scale(1) rotate(45deg);
+}
+.login-form .group .check:checked + label .icon:after{
+  transform:scale(1) rotate(-45deg);
+}
+.login-html .sign-in:checked + .tab + .sign-up + .tab + .login-form .sign-in-htm{
+  transform:rotate(0);
+}
+.login-html .sign-up:checked + .tab + .login-form .sign-up-htm{
+  transform:rotate(0);
+}
+
+.hr{
+  height:2px;
+  margin:60px 0 50px 0;
+  background:rgba(255,255,255,.2);
+}
+.foot-lnk{
+  text-align:center;
+}
+.tgap_area
+{
+  margin: 30px 0px 0px 0px;
+}
+/*==================================login area===========================================*/
+/*===================================input field area=============================*/
+.material-textfield 
+{
+  position: relative;  
+}
+.material-textfield label {
+   position: absolute;
+   font-size: 13px;
+   left: 12%;
+   top: 50%;
+   transform: translateY(-50%);
+   background-color: white;
+   color: gray;
+   padding: 0 0.3rem;
+   margin: 0 0.5rem;
+   transition: .1s ease-out;
+   transform-origin: left top;
+   pointer-events: none;
+   font-family: 'Roboto', sans-serif;
+}
+.material-textfield input {
+  font-size: 13px;
+  outline: none;
+  border: 1px solid #e5e3e3;
+  border-radius: 30px;
+  color: gray;
+  transition: 0.1s ease-out;
+  height: 45px;
+  width: 100%;
+  padding: 0px 0px 0px 40px;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+}
+.material-textfield input:focus {
+  border-color: #FFF;  
+}
+.material-textfield input:focus + label {
+  color: #2a3c92;
+  top: 0;
+  transform: translateY(-50%) scale(.9);
+}
+.material-textfield input:not(:placeholder-shown) + label {
+  top: 0;
+  transform: translateY(-50%) scale(.9);
+}
+.materialfldi_icondesign
+{
+    position: absolute;
+    top: 33%;
+    left: 5%;
+    color: #ef4239;
+}
+.materialfldi_icondesign1
+{
+    position: absolute;
+    top: 45%;
+    left: 2%;
+    color: #ef4239;
+}
+.ymemsg_area
+{
+    left: 4% !important;
+}
+.ymemsg_section
+{
+    padding: 0px 0px 0px 40px !important;
+    height: 200px !important;
+    border-radius: 10px !important;
+}
+.slctd_area
+{
+    font-size: 13px;
+    outline: none;
+    border: 1px solid #e5e3e3;
+    border-radius: 30px;
+    color: gray;
+    height: 45px;
+    width: 100%;
+    padding: 0px 0px 0px 40px;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+}
+.baabtn_design
+{
+    background: #2a3c92;
+    color: #FFF;
+    width: 140px;
+    height: 50px;
+    border: none;
+    outline: none;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 5px;
+    transition: 0.5s;
+    margin-top: 20px;
+}
+.baabtn_design:hover
+{
+    background: #ef4239;
+}
+.baabtn_design a
+{
+  color: #FFF !important;
+  text-decoration: none !important;
+}
+.aprmnt_mdlfromarea
+{
+    margin: 0px 0px 20px 0px;
+}
+/*.sngltwo_leftarea
+{
+    left: 3% !important;
+}*/
+/*===================================input field area=============================*/
+/*===============================top header area==================================*/
+.topheader_outsection
+{
+    
+}
+.topheader_inleftsection
+{
+  margin: 0px 0px 0px 15px;
+}
+.tophead_inrightsection
+{
+  text-align: right;
+} 
+.site_logo
+{
+    width: 150px;
+}
+.fle_icndesign
+{
+    padding: 0px 7px 0px 0px;
+    font-size: 15px;
+}
+.phnnumber_area
+{
+   margin: 30px 18px 0px 0px;
+   display: inline-block;
+}
+.phnnumber_area li
+{
+   list-style: none;
+   display: inline-block;
+   padding: 0px 10px 0px 10px;
+}
+.phnnumber_area i
+{
+   color: #2a3c92;
+}
+.phnnumber_area a
+{
+  text-decoration: none;
+  color: #2a3c92;
+  font-weight: 600;
+}
+/*===============================top header area==================================*/
+/*===============================banner area======================================*/
+.banner_outarea
+{
+  background: #f9f9f9 url('../images/medical.png') no-repeat bottom center;
+    min-height: 300px;
+    background-size: 100% auto;
+    position: relative;
+    background-blend-mode: Darken;
+    padding: 80px 0;
+    z-index: 0;
+}
+.search_doctortext
+{
+  font-family: 'Roboto', sans-serif;
+  font-size: 40px;
+  color: #ef4239;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0px 0px 30px 0px;
+}
+/*===============================banner area======================================*/
+/*===============================department area==================================*/
+.department_sndoutsection
+{
+  margin: 60px 0px 30px 0px;
+}
+.single_cardoutsection
+{
+  position: relative;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0px 0px 20px 0px;
+  clip-path: polygon(0 15%,100% 0,100% 85%,0 100%);
+}
+.department_imgdesign
+{
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+.department_blackclr
+{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #00000059;
+  top: 0px;
+  border-radius: 5px;
+}
+.department_textdesignx
+{
+  position: absolute;
+  font-family: 'Roboto', sans-serif;
+  color: #ffffff;
+  font-size: 25px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 800;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+/*===============================department area==================================*/
+/*===============================doctor area======================================*/
+.sddoctor_outsection
+{
+  margin: 60px 0px 60px 0px;
+}
+.rating_starimgdesign
+{
+  width: 90px;
+}
+/*===============================doctor area======================================*/
+/*===================================tab pills====================================*/
+.doctor_timingarea
+{
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+}
+.doctor_timingarea .nav-link.active
+{
+    color: #FFF;
+    background-color: #2a3c92;
+    border-radius: 3px !important;
+}
+.doctor_shp_area
+{
+    border: none !important;
+    margin: 0px 0px 0px 15px;
+}
+.doctor_timingarea a
+{
+    border: none !important;
+}
+.single_panel
+{
+    background: #ef4239;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    width: 120px;
+    height: 40px;
+    line-height: 40px;
+    padding: 2px 0px 0px 0px;
+    margin: 5px 2px 0px 2px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.time_zonearea
+{
+   font-family: 'Roboto', sans-serif;
+   font-size: 11px;
+   padding: 12px 0px 0px 0px;
+   color: #FFF;
+}
+.greentime_zonearea
+{
+  background: #48d325;
+  overflow: hidden;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  padding: 2px 0px 0px 0px;
+  margin: 5px 2px 0px 2px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.filterwise_doctoroutsection
+{
+    margin: 20px 0px 40px 0px;
+}
+.doctor_department_tab
+{
+    font-family: 'Roboto', sans-serif;
+}
+.doctor_department_tab .nav-link.active
+{
+    color: #FFF !important;
+    background-color: #ef4239 !important;
+    border-radius: 3px !important;
+}
+.doctor_imgdesign
+{
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.doctor_namedesign
+{
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    color: #ef4239;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 0px 0px 0px;
+}
+.doctor_desedcsection
+{
+   font-family: 'Roboto', sans-serif;
+   font-size: 14px;
+   color: #444;
+   margin: 0px;
+   padding: 3px 0px 3px 0px;
+}
+.dcotor_apmntarea
+{
+    margin: 20px 0px 0px 0px;
+}
+/*===================================tab pills====================================*/
+/*===================================footer area===================================*/
+.footer_cpyrghtout
+{
+    background: #2a3c92;
+    padding: 10px 0px 10px 0px;
+    text-align: center;
+}
+.cpyrght_text 
+{
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+    color: #FFF;
+    margin: 0px;
+}
+.cpyrght_text a 
+{
+    color: #FFF;
+    text-decoration: none;
+}
+/*===================================footer area===================================*/
+/*===================================responsive area==============================*/
+@media(max-width: 767px)
+{
+    .site_logo
+    {
+        width: 100px;
+    }
+    .search_doctortext
+    {
+        font-size: 15px;
+    }
+    .banner_outarea
+    {
+        min-height: 100px;
+    }
+    .doctor_listoutsection
+    {
+        padding: 12px;
+    }
+    .phnnumber_area li
+    {
+        padding: 0px 3px 0px 3px;
+        font-size: 13px;
+    }
+    .topheader_inleftsection
+    {
+        margin: 0px 0px 0px 0px;
+    }
+    .tophead_inrightsection
+    {
+        text-align: left;
+    }
+    .phnnumber_area
+    {
+        margin: 17px 0px 0px 0px;
+    }
+    .doctor_shp_area
+    {
+        margin: 0px 0px 0px 12px;
+    }
+    .doctor_namedesign
+    {
+        padding: 10px 0px 0px 12px;
+    }
+    .doctor_desedcsection
+    {
+        padding: 2px 0px 2px 12px;
+    }
+    .material-textfield label
+    {
+        left: 9%;
+    }
+    .department_textdesignx
+    {
+      font-size: 15px;
+    }
+}
+/*===================================responsive area==============================*/

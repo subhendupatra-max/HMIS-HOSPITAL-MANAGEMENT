@@ -130,6 +130,7 @@ use App\Http\Controllers\OpdPrescriptionController;
 use App\Http\Controllers\IpdPrescriptionController;
 use App\Http\Controllers\EmgPrescriptionController;
 use App\Http\Controllers\ChargesTypeController;
+use App\Http\Controllers\Frontend\AppointmentBookingController;
 
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RosterController;
@@ -163,6 +164,16 @@ Route::get('/', function () {
 // Route::get('/dashboard', function () {
 //     return view('appPages/dashboard');
 // })->middleware(['auth'])->name('dashboard');
+
+
+
+
+// ================================APPOINTMENT FROND END=================
+Route::get('/appointment-booking', [AppointmentBookingController::class, 'index']);
+
+// ================================APPOINTMENT FROND END=================
+
+
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -401,6 +412,8 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
         Route::get('patient-billing-list/{id?}', [PatientController::class, 'patient_billing_list'])->name('patient-billing-list');
         Route::group(['middleware' => ['permission:Add Patient Billing']], function () {
             Route::get('add-patient-billing/{id?}', [PatientController::class, 'add_patient_billing'])->name('add-patient-billing');
+            Route::post('get-charge-amount-patient/{id?}', [PatientController::class, 'get_charge_amount_patient'])->name('get-charge-amount-patient');
+            Route::post('add-new-billing/{id?}', [PatientController::class, 'add_new_billing'])->name('add-new-billing');
         });
     });
 
@@ -2190,7 +2203,7 @@ Route::post('get-charge-amount-opd', [BillingController::class, 'get_charge_amou
 //================================= OPD ===================================================
 
 Route::group(['middleware' => ['permission:OPD out-patients'], 'prefix' => 'opd'], function () {
-    Route::get('OPD-Patient-list', [OpdController::class, 'index'])->name('OPD-Patient-list');
+    Route::any('OPD-Patient-list', [OpdController::class, 'index'])->name('OPD-Patient-list');
     Route::group(['middleware' => ['permission:OPD registation']], function () {
         Route::post('after-new-old', [OpdController::class, 'after_new_old'])->name('after-new-old');
         Route::post('add-opd-registration', [OpdController::class, 'add_opd_registation'])->name('add-opd-registration');

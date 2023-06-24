@@ -881,5 +881,6 @@ class PermissionSeeder extends Seeder
 
         Permission::create(['name' => 'Patient Billing']);
         Permission::create(['name' => 'Add Patient Billing']);
+        Permission::create(['name' => 'delete patient billing']);
     }
 }

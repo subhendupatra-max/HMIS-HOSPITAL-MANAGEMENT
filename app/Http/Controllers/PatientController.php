@@ -10,6 +10,8 @@ use App\Models\State;
 use App\Models\District;
 use App\Models\Prefix;
 use App\Models\Country;
+use App\Models\ChargeType;
+use App\Models\Charge;
 use Illuminate\Support\Facades\DB;
 use App\Imports\PatientImport;
 use App\Models\PatientPhysicalDetails;
@@ -18,6 +20,13 @@ use App\Models\OpdDetails;
 use App\Models\EmgDetails;
 use App\Models\IpdDetails;
 use App\Models\Billing;
+use App\Models\ChargesCatagory;
+use App\Models\Discount;
+use App\Models\DiscountDetails;
+use App\Models\Payment;
+use App\Models\PatientCharge;
+use App\Models\BillDetails;
+use Auth;
 use Validator;
 
 use function PHPSTORM_META\type;
@@ -523,6 +532,133 @@ class PatientController extends Controller
     public function add_patient_billing($id)
     {
         $patient_id = base64_decode($id);
-        return view('setup.patient.add-billing', compact('patient_id'));
+        $charge_category =  ChargesCatagory::all();
+        return view('setup.patient.add-billing', compact('patient_id','charge_category'));
+    }
+    public function get_charge_amount_patient(Request $request)
+    {
+        $patient_type_id = ChargeType::where('charge_type_name', 'General')->first();
+        $charge_amount = Charge::select('charges_with_charges_types.standard_charges as charge_amount')->join('charges_with_charges_types', 'charges.id', '=', 'charges_with_charges_types.charge_id')->where('charges.id', $request->chargeName)->where('charges_with_charges_types.charge_type_id', $patient_type_id->id)->first();
+        return response()->json($charge_amount);
+    }
+    public function add_new_billing(Request $request)
+    {
+        //dd($request->all());
+        $validate = $request->validate([
+            'bill_date'   => 'required',
+        ]);
+        // try {
+        //     DB::beginTransaction();
+        if ($request->take_discount == 'yes') {
+            $status = 'Done';
+            $tax_total = $request->total;
+            $grand_total = number_format((float)($tax_total), 2, '.', '');
+            $discount_status = 'Requested';
+        } else {
+            $discount_status = 'Not applied';
+            $tax_total = $request->total;
+            $grand_total = number_format((float)($tax_total), 2, '.', '');
+            $status = 'Done';
+        }
+
+        if ($request->payment_amount != null) {
+            if ($request->payment_amount == $request->grand_total) {
+                $payment_status = 'Done';
+            } else {
+                $payment_status = 'Due';
+            }
+        } else {
+            $payment_status = 'Due';
+        }
+
+        // ====================== Billing ===========================================
+        $billing_prefix = Prefix::where('name', 'bill')->first();
+        $bill = new Billing;
+        $bill->bill_prefix = $billing_prefix->prefix;
+        $bill->bill_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+        $bill->patient_id = $request->patient_id;
+        $bill->section = 'Direct';
+        $bill->total_amount = $request->total;
+        $bill->payment_status = $payment_status;
+        $bill->discount_status =  $discount_status;
+        $bill->status =  'done';
+        $bill->created_by = Auth::user()->id;
+        $bill->note = $request->note;
+        $bill->grand_total = $grand_total;
+        $bill->save();
+        // ====================== Billing ===========================================
+        foreach ($request->charge_category as $key => $value) {
+                $patient_charge = new PatientCharge();
+                $patient_charge->section = 'Direct';
+                $patient_charge->charges_date = $request->date;
+                $patient_charge->patient_id = $request->patient_id;
+                $patient_charge->charge_category = $request->charge_category[$key];
+                $patient_charge->charge_sub_category = $request->charge_sub_category[$key];
+                $patient_charge->charge_name = $request->charge_name[$key];
+                $patient_charge->standard_charges = $request->standard_charges[$key];
+                $patient_charge->qty = $request->qty[$key];
+                $patient_charge->amount = $request->amount[$key];
+                $patient_charge->generated_by = Auth::user()->id;
+                $patient_charge->billing_status = '1';
+                $patient_charge->save();
+                $charge_id = $patient_charge->id;
+
+                // ====================== Billing Details ===========================================
+                $bill_details_charges = new BillDetails();
+                $bill_details_charges->bill_id = $bill->id;
+                $bill_details_charges->purpose_for = 'charges';
+                $bill_details_charges->purpose_for_id = $charge_id;
+                $bill_details_charges->save();
+                // ====================== Billing Details ===========================================
+        }
+
+        //payment
+        if ($request->payment_amount != null || $request->payment_amount != 0 || $request->payment_amount != '') {
+            // ====================== add payment =======================================
+            $payment_prefix = Prefix::where('name', 'payment')->first();
+            $payment = new Payment();
+            $payment->patient_id = $request->patient_id;
+            $payment->section = 'Direct';
+            $payment->payment_prefix = $payment_prefix->prefix;
+            $payment->payment_amount = $request->payment_amount;
+            $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
+            $payment->payment_recived_by = Auth::user()->id;
+            $payment->payment_mode = $request->payment_mode;
+            $payment->note = $request->payment_note;
+            $payment->save();
+            // ====================== add payment =======================================
+        }
+        //payment
+
+        if ($request->take_discount == 'yes') {
+            // ====================== Discount ===========================================
+            $discount = new Discount();
+            $discount->discount_type =  $request->discount_type;
+            $discount->patient_id =  $request->patient_id;
+            $discount->section =  $request->section;
+            $discount->asking_discount_amount =  $request->total_discount;
+            $discount->discount_status = 'Pending';
+            $discount->requested_by = Auth::user()->id;
+            $discount->asking_discount_time = date('Y-m-d h:m:s', strtotime($request->bill_date));
+            $discount->save();
+            // ====================== Discount ===========================================
+            // ====================== Discount Detaiils ==================================
+            $discount_details = new DiscountDetails();
+            $discount_details->bill_id = $bill->id;
+            $discount_details->discount_id = $discount->id;
+            $discount_details->bill_amount = $request->total;
+            $discount_details->save();
+            // ====================== Discount Detaiils ==================================
+            $bill_update = Billing::find($bill->id);
+            $bill_update->discount_id = $discount->id;
+            $bill_update->save();
+        }
+            // DB::commit();
+        return redirect()->route('patient-billing-list', ['id' => base64_encode($request->patient_id)])->with('success', "Billing added Successfully");
+        
+        // } catch (\Throwable $th) {
+        //     DB::rollback();
+        //     return back()->withErrors(['error' => $th->getMessage()]);
+        // }
     }
 }

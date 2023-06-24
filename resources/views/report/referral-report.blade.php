@@ -35,7 +35,7 @@
                                           
                                             <div class="form-group col-md-4 addopdd">
                                                 <label>From Date <span class="text-danger">*</span></label>
-                                                <input type="date" value="{{ date('Y-m-d',strtotime($all_search_data['from_date'])) }}" name="from_date"
+                                                <input type="date" value="@if(@$all_search_data['from_date'] != null) {{ date('Y-m-d',strtotime($all_search_data['from_date'])) }} @endif" name="from_date"
                                                     required />
                                                 @error('from_date')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -45,7 +45,7 @@
                                             <div class="form-group col-md-4 addopdd ">
                                                 <label>To Date <span class="text-danger">*</span></label>
                                                 <input type="date" name="to_date"
-                                                    value="{{ date('Y-m-d',strtotime($all_search_data['to_date'])) }}" required />
+                                                    value="@if(@$all_search_data['from_date'] != null) {{ date('Y-m-d',strtotime($all_search_data['to_date'])) }}  @endif" required />
                                                 @error('to_date')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror

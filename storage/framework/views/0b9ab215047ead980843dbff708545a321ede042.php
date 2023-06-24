@@ -43,7 +43,7 @@ unset($__errorArgs, $__bag); ?>
                                           
                                             <div class="form-group col-md-4 addopdd">
                                                 <label>From Date <span class="text-danger">*</span></label>
-                                                <input type="date" value="<?php echo e(date('Y-m-d',strtotime($all_search_data['from_date']))); ?>" name="from_date"
+                                                <input type="date" value="<?php if(@$all_search_data['from_date'] != null): ?> <?php echo e(date('Y-m-d',strtotime($all_search_data['from_date']))); ?> <?php endif; ?>" name="from_date"
                                                     required />
                                                 <?php $__errorArgs = ['from_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -60,7 +60,7 @@ unset($__errorArgs, $__bag); ?>
                                             <div class="form-group col-md-4 addopdd ">
                                                 <label>To Date <span class="text-danger">*</span></label>
                                                 <input type="date" name="to_date"
-                                                    value="<?php echo e(date('Y-m-d',strtotime($all_search_data['to_date']))); ?>" required />
+                                                    value="<?php if(@$all_search_data['from_date'] != null): ?> <?php echo e(date('Y-m-d',strtotime($all_search_data['to_date']))); ?>  <?php endif; ?>" required />
                                                 <?php $__errorArgs = ['to_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
