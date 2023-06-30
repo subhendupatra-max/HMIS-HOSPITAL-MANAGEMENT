@@ -35,20 +35,21 @@
                                         @endforeach
                                         @endif
                                     </select>
+                                    @error('patient_id')
+                                    <small class="text-danger">{{ $message }}</sma>
+                                @enderror
                                 </div>
                                 <div class="col-md-12 mb-2">
                                     <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search"></i> Search</button>
                                 </div>
                             </div>
                         </form>
-
+       
                     </div>
 
                     @if(isset($patient_details_information))
                     {{-- ================== patient Details ====================== --}}
-                    @error('patientId')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
+
                     <div class="options px-5  pb-3">
                         <div class="row">
 
@@ -154,7 +155,7 @@
 
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="slot">Slot <span class="text-danger">*</span></label>
-                                    <select name="slot" class="form-control select2-show-search" id="slot" required>
+                                    <select name="slot" onchange="getAppointmentFees(this.value)" class="form-control select2-show-search" id="slot" required>
                                         <option value=" ">Select slot...</option>
                                     </select>
                                     @error('slot')
@@ -174,16 +175,47 @@
                                     <small class="text-danger">{{ $message }}</sma>
                                         @enderror
                                 </div>
-
-
-                                <div class="form-group col-md-8 newaddappon">
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="appointment_fees">Appointment Fees <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="appointment_fees" value="{{ old('appointment_fees') }}" id="appointment_fees" style="margin:0px 0px 0px 0px;" />
+                                    @error('appointment_fees')
+                                        <small class="text-danger">{{ $appointment_fees }}</sma>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
                                     <label for="message">Message </label>
                                     <input type="text" class="form-control" name="message" value="{{ old('message') }}" id="message" style="margin:0px 0px 0px 0px;" />
 
                                     @error('message')
                                     <small class="text-danger">{{ $message }}</sma>
-                                        @enderror
+                                    @enderror
                                 </div>
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="appointment_fees">Payment Mode <span class="text-danger">*</span></label>
+                                    <select class="form-control" name="payment_mode">
+                                        <option value="">Select One...</option>
+                                        @foreach (Config::get('static.payment_mode_name') as $lang => $payment_mode_name)
+                                            <option value="{{ $payment_mode_name }}"> {{ $payment_mode_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('payment_mode')
+                                    <small class="text-danger">{{ $message }}</sma>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label class="form-label">Payment Amount </label>
+                                    <input type="text" name="payment_amount" id="payment_amount" class="form-control" />
+                                    @error('payment_amount')
+                                    <small class="text-danger">{{ $message }}</sma>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label class="form-label">Note </label>
+                                    <input type="text" name="note" class="form-control" />
+                                </div>
+                
+
                             </div>
                         </div>
                 </div>
@@ -224,6 +256,25 @@
             }
         });
        
+    }
+
+    function getAppointmentFees(slot_id)
+    {
+        $.ajax({
+            url: "{{ route('get-appointment-fees-by-slot') }}",
+            type: "POST",
+            data: {
+                _token : '{{ csrf_token() }}',
+                slotId : slot_id,
+            },
+            success: function(response) {
+                $('#appointment_fees').val(response.standard_charges);
+                $('#payment_amount').val(response.standard_charges);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
     }
 </script>
 

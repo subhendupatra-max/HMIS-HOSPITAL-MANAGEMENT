@@ -797,10 +797,6 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'False Generation']);
         Permission::create(['name' => 'OPD False']);
 
-        // bill summary
-        Permission::create(['name' => 'bill summary']);
-        Permission::create(['name' => 'create bill summary']);
-
         //medicine 
         Permission::create(['name' => 'Medicine Details']);
         Permission::create(['name' => 'print medicine bill']);
@@ -882,5 +878,10 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Patient Billing']);
         Permission::create(['name' => 'Add Patient Billing']);
         Permission::create(['name' => 'delete patient billing']);
+
+        Permission::create(['name' => 'bill summary']);
+        Permission::create(['name' => 'Take Payment']);
+        Permission::create(['name' => 'edit Payment']);
+        Permission::create(['name' => 'delete Payment']);
     }
 }

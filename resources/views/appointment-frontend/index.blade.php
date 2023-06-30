@@ -51,74 +51,87 @@
                <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Existing patient</label>
                <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">New patient</label>
                <div class="login-form">
-                  <div class="sign-in-htm tgap_area">
-                     <div class="row">
-                          <div class="col-lg-12">
-                            <div class="aprmnt_mdlfromarea">
-                                <div class="material-textfield">
-                                    <i class="fas fa-phone-volume materialfldi_icondesign"></i>
-                                    <input placeholder=" " type="text">
-                                    <label>Enter Mobile No.</label>
-                                </div>
-                                <button class="baabtn_design">
-                                    <a href="departments.html">
-                                        Submit
-                                        <i class="fas fa-paper-plane fle_icndesign"></i>
-                                    </a>
-                               </button>
-                             </div>
-                          </div>
+
+                  <form action="{{ route('appointment-booking.search-patient-for-appointment') }}" method="POST">
+                     @csrf
+                     <div class="sign-in-htm tgap_area">
+                        <div class="row">
+                           <div class="col-lg-12">
+                              <div class="aprmnt_mdlfromarea">
+                                 <div class="material-textfield">
+                                       <i class="fas fa-phone-volume materialfldi_icondesign"></i>
+                                       <input placeholder=" " name="patient_mobile_no" type="text">
+                                       <label>Patient Search by Mobile No.</label>
+                                 </div>
+                                 <button class="baabtn_design">Search <i class="fa fa-search fle_icndesign"></i></button>
+                              </div>
+                           </div>
+                        </div>
                      </div>
-                  </div>
-                  <div class="sign-up-htm tgap_area">
-                      <div class="row">
-                           <div class="col-lg-6">
-                              <div class="aprmnt_mdlfromarea">
-                                 <div class="material-textfield">
-                                    <i class="fas fa-user materialfldi_icondesign"></i>
-                                    <input placeholder=" " type="text">
-                                    <label>Enter Name</label>
+                  </form>
+
+                  <form action="{{ route('appointment-booking.add-new-patient-for-appointment') }}" method="POST">
+                     @csrf
+                     <div class="sign-up-htm tgap_area">
+                        <div class="row">
+                              <div class="col-lg-12">
+                                 <div class="aprmnt_mdlfromarea">
+                                    <div class="material-textfield">
+                                       <i class="fas fa-user materialfldi_icondesign"></i>
+                                       <input placeholder=" " name="patient_name" type="text" required>
+                                       <label>Enter Patient Name</label>
+                                    </div>
                                  </div>
                               </div>
-                           </div>
-                           <div class="col-lg-6">
-                              <div class="aprmnt_mdlfromarea">
-                                 <div class="material-textfield">
-                                    <i class="fas fa-envelope materialfldi_icondesign"></i>
-                                    <input placeholder=" " type="text">
-                                    <label>Email</label>
+                              <div class="col-lg-6">
+                                 <div class="aprmnt_mdlfromarea">
+                                    <div class="material-textfield">
+                                       <i class="fas fa-user materialfldi_icondesign"></i>
+                                       <input placeholder=" " name="guardian_name" type="text" required>
+                                       <label>Enter Guardian Name</label>
+                                    </div>
                                  </div>
                               </div>
-                           </div>
-                           <div class="col-lg-6">
-                              <div class="aprmnt_mdlfromarea">
-                                 <div class="material-textfield">
-                                    <i class="fas fa-phone-volume materialfldi_icondesign"></i>
-                                    <input placeholder=" " type="text">
-                                    <label>Phone No.</label>
+               
+                              <div class="col-lg-6">
+                                 <div class="aprmnt_mdlfromarea">
+                                    <div class="material-textfield">
+                                       <i class="fas fa-phone-volume materialfldi_icondesign"></i>
+                                       <input placeholder=" " name="patient_phone" type="text" required>
+                                       <label>Phone No.</label>
+                                    </div>
                                  </div>
                               </div>
-                           </div>
-                           <div class="col-lg-6">
-                               <div class="aprmnt_mdlfromarea">
-                                  <div class="material-textfield">
-                                      <i class="fas fa-user materialfldi_icondesign"></i>
-                                      <select name="prefix" id="prefix" class="slctd_area">
-                                            <option value="">Choose Gender</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                      </select>
-                                  </div>
-                               </div>
-                           </div>
-                            <button class="baabtn_design">
-                              <a href="departments.html">
-                              Submit
-                              <i class="fas fa-paper-plane fle_icndesign"></i>
-                              </a>
-                            </button>
-                      </div>
-                  </div>
+                              <div class="col-lg-6">
+                                 <div class="aprmnt_mdlfromarea">
+                                    <div class="material-textfield">
+                                       <i class="fa fa-calendar materialfldi_icondesign"></i>
+                                       <input placeholder=" " name="patient_age" type="text" required>
+                                       <label>Age</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col-lg-6">
+                                 <div class="aprmnt_mdlfromarea">
+                                    <div class="material-textfield">
+                                       <i class="fas fa-user materialfldi_icondesign"></i>
+                                       <select name="patient_gender" id="prefix" class="slctd_area">
+                                             <option value="">Choose Gender</option>
+                                             <option value="Male">Male</option>
+                                             <option value="Female">Female</option>
+                                             <option value="Others">Others</option>
+                                       </select>
+                                    </div>
+                                 </div>
+                              </div>
+                              <button class="baabtn_design" type="submit">
+                            
+                                 Submit<i class="fas fa-paper-plane fle_icndesign"></i>
+                                 
+                              </button>
+                        </div>
+                     </div>
+               </form>
                </div>
             </div>
          </div>

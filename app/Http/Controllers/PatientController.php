@@ -26,6 +26,7 @@ use App\Models\DiscountDetails;
 use App\Models\Payment;
 use App\Models\PatientCharge;
 use App\Models\BillDetails;
+use App\Models\AllHeader;
 use Auth;
 use Validator;
 
@@ -526,7 +527,7 @@ class PatientController extends Controller
     public function patient_billing_list($id)
     {
         $patient_id = base64_decode($id);
-        $billing_details = Billing::where('patient_id',$patient_id)->get();
+        $billing_details = Billing::where('patient_id',$patient_id)->where('case_id','=',null)->get();
         return view('setup.patient.billing-list', compact('billing_details','patient_id'));
     }
     public function add_patient_billing($id)
@@ -619,6 +620,7 @@ class PatientController extends Controller
             $payment = new Payment();
             $payment->patient_id = $request->patient_id;
             $payment->section = 'Direct';
+            $payment->bill_id = $bill->id;
             $payment->payment_prefix = $payment_prefix->prefix;
             $payment->payment_amount = $request->payment_amount;
             $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->bill_date));
@@ -660,5 +662,180 @@ class PatientController extends Controller
         //     DB::rollback();
         //     return back()->withErrors(['error' => $th->getMessage()]);
         // }
+    }
+
+    public function delete_patient_bill($id)
+    {
+        try {
+            DB::beginTransaction();
+            $billId = base64_decode($bill_id);
+            $bill_details_charges_ = BillDetails::where('bill_id', $billId)->get();
+
+            foreach ($bill_details_charges_ as $key => $value) {
+
+                if ($bill_details_charges_[$key]->purpose_for == 'charges') {
+                    $patient_charge_update = PatientCharge::where('id', $bill_details_charges_[$key]->purpose_for_id)->update(['billing_status' => '0']);
+                }
+            }
+            BillDetails::where('bill_id', $billId)->delete();
+            Billing::where('id', $billId)->delete();
+            Payment::where('bill_id', $billId)->delete();
+            DB::commit();
+            return redirect()->back()->with('success', "Billing Deleted Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
+    }
+
+    public function view_bill_details($id)
+    {
+        $bill_details = Billing::where('id',$id)->first();
+        $discount_details = DiscountDetails::where('bill_id', $id)->first();
+        $payment_details = Payment::where('bill_id',$id)->get();
+
+        $patient_charge_details = BillDetails::select('charges.charges_name', 'patient_charges.amount', 'patient_charges.standard_charges', 'patient_charges.tax', 'patient_charges.qty')->where('bill_details.purpose_for', '=', 'charges')->leftjoin('patient_charges', 'patient_charges.id', '=', 'bill_details.purpose_for_id')->leftjoin('charges', 'patient_charges.charge_name', '=', 'charges.id')->where('bill_details.bill_id', $id)->get();
+        
+        return view('setup.patient.view-billing-details', compact('bill_details','discount_details','patient_charge_details','payment_details'));
+    }
+    public function print_patient_bill($bill_id)
+    {
+        $billId = base64_decode($bill_id);
+        $bill = Billing::where('id', $billId)->first();
+        $bill_details_for_charges = BillDetails::where('bill_id', $billId)->where('purpose_for', 'charges')->get();
+        $ids = $bill_details_for_charges->pluck('id');
+        $patientCharges = PatientCharge::whereIn('id', $ids)->get();
+
+        $header_image = AllHeader::where('header_name', 'common_header')->first();
+        $patient_details = Patient::where('id',$bill->patient_id)->first();
+
+        $payment_amount = Payment::where('bill_id', $billId)->sum('payment_amount');
+
+        return view('setup.patient.bill-print', compact('patient_details', 'patientCharges', 'bill','header_image','payment_amount'));
+    }
+    public function add_payment_bill($bill_id)
+    {
+        $billid = base64_decode($bill_id);
+        $bill = Billing::where('id', $billid)->first();
+        $payment = Payment::where('bill_id', $billid)->sum('payment_amount');
+
+        $due_amount =  $bill->grand_total - $payment;
+        return view('setup.patient.add-due-payment',compact('billid','due_amount'));
+    }
+
+    public function save_patient_due_bill(Request $request)
+    {
+        try {
+            $bill = Billing::where('id', $request->bill_id)->first();
+
+            $payment_prefix = Prefix::where('name', 'payment')->first();
+            $payment = new Payment();
+            $payment->patient_id = $bill->patient_id;
+            $payment->section = 'Direct';
+            $payment->bill_id = $request->bill_id;
+            $payment->payment_prefix = $payment_prefix->prefix;
+            $payment->payment_amount = $request->payment_amount;
+            $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->payment_date));
+            $payment->payment_recived_by = Auth::user()->id;
+            $payment->payment_mode = $request->payment_mode;
+            $payment->note = $request->note;
+            $payment->save();
+
+            $payment = Payment::where('bill_id', $request->bill_id)->sum('payment_amount');
+            $due_amount =  $bill->grand_total - $payment;
+
+            if($due_amount <= 0){
+                Billing::where('id', $request->bill_id)->update(['payment_status'=>'Done']);      
+            }
+
+            DB::commit();
+            return redirect()->route('view-bill-details',$request->bill_id)->with('success', "New Payment Accepted");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
+    }
+
+    public function edit_payment_bill($id)
+    {
+        $payment_id = base64_decode($id);
+        $payment_details = Payment::where('id', $payment_id)->first();
+        return view('setup.patient.edit-due-payment',compact('payment_details','payment_id'));
+    }
+    public function update_patient_due_bill(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+           
+            $payment = Payment::where('id',$request->payment_id)->first();
+            $payment->payment_amount = $request->payment_amount;
+            $payment->payment_date = date('Y-m-d h:m:s', strtotime($request->payment_date));
+            $payment->payment_recived_by = Auth::user()->id;
+            $payment->payment_mode = $request->payment_mode;
+            $payment->note = $request->note;
+            $payment->save();
+
+            $payment_de = Payment::where('id',$request->payment_id)->first();
+            $bill = Billing::where('id', $payment_de->bill_id)->first();
+
+            $payment = Payment::where('bill_id', $payment_de->bill_id)->sum('payment_amount');
+            $due_amount =  $bill->grand_total - $payment;
+
+            if($due_amount <= 0){
+                Billing::where('id', $payment_de->bill_id)->update(['payment_status'=>'Done']);      
+            }
+            else{
+                Billing::where('id', $payment_de->bill_id)->update(['payment_status'=>'Due']); 
+            }
+
+            DB::commit();
+            return redirect()->route('view-bill-details',$payment_de->bill_id)->with('success', " Payment Updated Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
+    }
+
+    public function delete_bill_payment($payment_id)
+    {
+        try {
+            DB::beginTransaction();
+        
+            $paymentId = base64_decode($payment_id);
+            $payment_de = Payment::where('id',$paymentId)->first();
+            $bill_id = $payment_de->bill_id;
+            $bill = Billing::where('id', $bill_id)->first();
+            Payment::where('id',$paymentId)->delete();
+            $payment = Payment::where('bill_id', $bill_id)->sum('payment_amount');
+            $due_amount =  $bill->grand_total - $payment;
+
+            if($due_amount <= 0){
+                Billing::where('id', $bill_id)->update(['payment_status'=>'Done']);      
+            }
+            else{
+                Billing::where('id', $bill_id)->update(['payment_status'=>'Due']); 
+            }
+
+            DB::commit();
+            return redirect()->route('view-bill-details',$payment_de->bill_id)->with('success', " Payment Deleted Successfully");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withErrors(['error' => $th->getMessage()]);
+        }
+    }
+
+
+    public function print_patient_payement_slip($bill_id)
+    {
+        $billId = base64_decode($bill_id);
+        $bill = Billing::where('id',$billId)->first();
+        $header_image = AllHeader::where('header_name', 'common_header')->first();
+        $patient_details = Patient::where('id',$bill->patient_id)->first();
+
+        $payment_amount = Payment::where('bill_id', $billId)->sum('payment_amount');
+        $payment_details = Payment::where('bill_id', $billId)->get();
+
+        return view('setup.patient.print-payment-slip', compact('patient_details', 'payment_details', 'bill','header_image','payment_amount'));
+
     }
 }

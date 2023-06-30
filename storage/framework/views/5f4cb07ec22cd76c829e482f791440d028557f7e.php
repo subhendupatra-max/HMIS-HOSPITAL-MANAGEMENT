@@ -27,9 +27,9 @@
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Doctor</th>
-                                <th class="border-bottom-0">Days</th>
-                                <th class="border-bottom-0">From Time</th>
-                                <th class="border-bottom-0">To Time</th>
+                                <th class="border-bottom-0">Date</th>
+                                <th class="border-bottom-0">Status</th>
+                                <th class="border-bottom-0">Slot</th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit slots','delete slots')): ?>
                                 <th>Action</th>
                                 <?php endif; ?>
@@ -40,9 +40,17 @@
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
                                 <td><?php echo e(@$item->fetch_doctor_name->first_name); ?> <?php echo e(@$item->fetch_doctor_name->last_name); ?></td>
-                                <td><?php echo e($item->days); ?></td>
-                                <td><?php echo e(date('H:i A',strtotime($item->from_time))); ?></td>
-                                <td><?php echo e(date('H:i A',strtotime($item->to_time))); ?></td>
+                                <td><?php echo e(date('d-m-Y',strtotime($item->date))); ?></td>
+                                <td>
+                                    <?php if($item->status == 'active'): ?>
+                                    <a class="badge badge-success" href="<?php echo e(route('doctor-slot-status-change',['status'=>'deactive','slot_id'=>$item->id])); ?>">Activeted</a>
+                                    <?php else: ?>
+                                    <a class="badge badge-danger" href="<?php echo e(route('doctor-slot-status-change',['status'=>'active','slot_id'=>$item->id])); ?>">Deactiveted</a>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?php echo e(date('h:i A',strtotime($item->from_time))); ?> - 
+                                <?php echo e(date('h:i A',strtotime($item->to_time))); ?></td>
+                          
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>

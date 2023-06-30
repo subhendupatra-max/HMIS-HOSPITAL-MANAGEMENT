@@ -24,14 +24,9 @@
                     </div>
 
                     <div class="form-group col-md-3 appoinmentdays">
-                        <label for="days">Days <span class="text-danger">*</span></label>
-                        <select id="days" class="form-control" name="days">
-                            <option value="">Select</option>
-                            @foreach (Config::get('static.weeks') as $lang => $item)
-                            <option value="{{$item}}"> {{$item}}</option>
-                            @endforeach
-                        </select>
-                        @error('days')
+                        <label for="date">Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                        @error('date')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -52,60 +47,27 @@
                         @enderror
                     </div>
 
-                    {{-- <div class="form-group col-md-4 appoinmentadd">
-                        <label for="charge_category">Charges Catagory <span class="text-danger">*</span></label>
-                        <select id="charge_category" class="form-control select2-show-search" name="charge_category">
-                            <option value=" ">Select Catagory</option>
-                            @foreach ($catagory as $item)
-                            <option value="{{$item->id}}">{{$item->charges_catagories_name}}</option>
-                            @endforeach
-                        </select>
-                        @error('charge_category')
-                        <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div> --}}
-
-                    {{-- <div class="form-group col-md-4 appoinmentadd">
-                        <label for="charge_sub_category">Charges Sub Catagory <span class="text-danger">*</span></label>
-                        <select name="charge_sub_category" class="form-control select2-show-search" id="charge_sub_category" required>
-                            <option value="">Select Sub Catagory...</option>
-                        </select>
-                        <small class="text-danger">{{ $errors->first('charge_sub_category') }}</small>
-                    </div> --}}
-
-                    {{-- <div class="form-group col-md-4 appoinmentadd">
+                    <div class="form-group col-md-6 appoinmentadd">
                         <label for="charge">Charges <span class="text-danger">*</span></label>
                         <select name="charge" class="form-control select2-show-search" id="charge" required>
                             <option value="">Select charge...</option>
+                            @if($charge_name)
+                            @foreach($charge_name as $key => $value)
+                                <option value="{{  $value->id }}">{{ $value->charges_name }}</option>
+                            @endforeach
+                            @endif
                         </select>
                         <small class="text-danger">{{ $errors->first('charge') }}</small>
-                    </div> --}}
-
-                    {{-- <div class="form-group col-md-4 appoinmentaddd">
-                        <label for="tax">Tax<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="tax" value="{{ old('tax') }}" onkeyup="totalAmount()" name="tax" placeholder="Enter Tax">
-                        <small class="text-danger">{{ $errors->first('tax') }}</small>
-                    </div> --}}
-
-                    {{-- <div class="form-group col-md-4 appoinmentaddd">
-                        <label for="standard_charges">Charge Amount<span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="standard_charges" onkeydown="fdsfds()" onkeyup="totalAmount()" name="standard_charges">
-
-                        <div class="mt-3" style="display:none;" id="pop">
-                            <input type="checkbox" value="on" id="button1" name="button1" style="margin-right: 5px;" /><label for="permission" class="textlink">Are You Want To Change This ? </label>
-                        </div>
-
-                        <small class="text-danger">{{ $errors->first('standard_charges') }}</small>
-                    </div> --}}
-
-                    {{-- <div class="form-group col-md-4 appoinmentaddd">
-                        <label for="total_amount">Total Amount<span class="text-danger">*</span></label>
-                        <input type="text" id="total_amount" name="total_amount">
-                        <small class="text-danger">{{ $errors->first('total_amount') }}</small>
-                    </div> --}}
-
+                    </div>
+                    <div class="form-group col-md-3 appoinmentadd">
+                        <label for="standard_charges">Standard Charges <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="standard_charges" name="standard_charges" required style="margin: 0px 0px 0px 0px;">
+                        @error('standard_charges')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
-
+                <hr>
                 <div class="text-center m-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-file"></i> Save</button>
                 </div>
@@ -117,7 +79,7 @@
 
 </div>
 
-<script>
+{{-- <script>
     $(document).ready(function() {
         $("#charge_category").change(function(event) {
             // alert('ok')
@@ -130,7 +92,7 @@
                 type: "POST",
                 data: {
                     _token: '{{ csrf_token() }}',
-                    catagory_id: catagory,
+                    catagory_id: 16,
                 },
 
                 success: function(response) {
@@ -146,9 +108,9 @@
             });
         });
     });
-</script>
+</script> --}}
 
-<script>
+{{-- <script>
     $(document).ready(function() {
         $("#charge_sub_category").change(function(event) {
             event.preventDefault();
@@ -174,7 +136,7 @@
             });
         });
     });
-</script>
+</script> --}}
 
 <script>
     $(document).ready(function() {
@@ -192,7 +154,7 @@
 
                 success: function(response) {
                     console.log(response);
-                    $('#standard_charges').val(response.standard_charges);
+                    $('#standard_charges').val(response.charge_amount);
                 },
                 error: function(error) {
                     console.log(error);

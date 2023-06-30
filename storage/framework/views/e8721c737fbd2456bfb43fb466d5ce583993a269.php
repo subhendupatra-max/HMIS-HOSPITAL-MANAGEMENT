@@ -31,14 +31,9 @@ unset($__errorArgs, $__bag); ?>
                     </div>
 
                     <div class="form-group col-md-3 appoinmentdays">
-                        <label for="days">Days <span class="text-danger">*</span></label>
-                        <select id="days" class="form-control" name="days">
-                            <option value="">Select</option>
-                            <?php $__currentLoopData = Config::get('static.weeks'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <option value="<?php echo e($item); ?>"> <?php echo e($item); ?></option>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        </select>
-                        <?php $__errorArgs = ['days'];
+                        <label for="date">Date <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                        <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
@@ -80,20 +75,34 @@ endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
 
-                    
-
-                    
-
-                    
-
-                    
-
-                    
-
-                    
-
+                    <div class="form-group col-md-6 appoinmentadd">
+                        <label for="charge">Charges <span class="text-danger">*</span></label>
+                        <select name="charge" class="form-control select2-show-search" id="charge" required>
+                            <option value="">Select charge...</option>
+                            <?php if($charge_name): ?>
+                            <?php $__currentLoopData = $charge_name; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($value->id); ?>"><?php echo e($value->charges_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
+                        </select>
+                        <small class="text-danger"><?php echo e($errors->first('charge')); ?></small>
+                    </div>
+                    <div class="form-group col-md-3 appoinmentadd">
+                        <label for="standard_charges">Standard Charges <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="standard_charges" name="standard_charges" required style="margin: 0px 0px 0px 0px;">
+                        <?php $__errorArgs = ['standard_charges'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
                 </div>
-
+                <hr>
                 <div class="text-center m-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-file"></i> Save</button>
                 </div>
@@ -105,64 +114,9 @@ unset($__errorArgs, $__bag); ?>
 
 </div>
 
-<script>
-    $(document).ready(function() {
-        $("#charge_category").change(function(event) {
-            // alert('ok')
-            event.preventDefault();
-            let catagory = $(this).val();
-            // alert(state);
-            $('#charge_sub_category').html('<option vaule="" >Select Sub Catagory...</option>');
-            $.ajax({
-                url: "<?php echo e(route('find-sub-catagory-by-catagory')); ?>",
-                type: "POST",
-                data: {
-                    _token: '<?php echo e(csrf_token()); ?>',
-                    catagory_id: catagory,
-                },
-
-                success: function(response) {
 
 
-                    $.each(response, function(key, value) {
-                        $('#charge_sub_category').append(`<option value="${value.id}">${value.charges_sub_catagories_name}</option>`);
-                    });
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
-    });
-</script>
 
-<script>
-    $(document).ready(function() {
-        $("#charge_sub_category").change(function(event) {
-            event.preventDefault();
-            let charge = $(this).val();
-
-            $("#charge").html('<option value=" ">Select Charge...</option>');
-            $.ajax({
-                url: "<?php echo e(route('find-charge-by-sub-catagory')); ?>",
-                type: "POST",
-                data: {
-                    _token: '<?php echo e(csrf_token()); ?>',
-                    charge_id: charge,
-                },
-
-                success: function(response) {
-                    $.each(response, function(key, value) {
-                        $('#charge').append(`<option value="${value.id}">${value.charges_name}</option>`);
-                    });
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-        });
-    });
-</script>
 
 <script>
     $(document).ready(function() {
@@ -180,7 +134,7 @@ unset($__errorArgs, $__bag); ?>
 
                 success: function(response) {
                     console.log(response);
-                    $('#standard_charges').val(response.standard_charges);
+                    $('#standard_charges').val(response.charge_amount);
                 },
                 error: function(error) {
                     console.log(error);

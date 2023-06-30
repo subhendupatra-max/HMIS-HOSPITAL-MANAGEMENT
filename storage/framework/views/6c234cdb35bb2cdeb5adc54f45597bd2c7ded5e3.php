@@ -9,14 +9,21 @@
                 </div>
                 <div class="col-md-6 text-right">
                     <div class="d-block">
-                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('opd payment')): ?>
+                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('emg payment')): ?>
                         <a href="<?php echo e(route('add-payment-in-emg',['id'=> base64_encode($emg_id)])); ?>" class="btn btn-primary btn-sm"><i class="fa fa-user"></i> Add Payment </a>
                         <?php endif; ?>
+                        <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-building"></i> <i class="fa fa-caret-down"></i></a>
+                        <div class="dropdown-menu dropdown-menu-right" style="">
+                            <?php echo $__env->make('emg.include.menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="card-header">
+            <?php echo $__env->make('emg.include.patient-name', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+        </div>
+        <?php echo $__env->make('message.notification', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <div class="card-body">
             <div class="">
                 <div class="table-responsive">
@@ -44,11 +51,15 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit-payment-in-emg')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('edit-payment-in-emg',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
+                                            <a class="dropdown-item" href="<?php echo e(route('edit-payment-in-emg',['id'=> base64_encode($item->id),'emg_id'=> base64_encode($emg_patient_details->id)])); ?>"><i class="fa fa-edit"></i> Edit</a>
                                             <?php endif; ?>
 
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete-payment-in-emg')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('delete-payment-in-emg',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
+                                            <?php endif; ?>
+
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-payment-in-emg')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('print-payment-in-emg',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Print</a>
                                             <?php endif; ?>
                                         </div>
                                     </div>
@@ -57,10 +68,10 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </tbody>
                     </table>
-
                 </div>
             </div>
         </div>
     </div>
-    <?php $__env->stopSection(); ?>
+</div>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/emg/payment/payment-listing.blade.php ENDPATH**/ ?>

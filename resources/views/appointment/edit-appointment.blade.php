@@ -93,18 +93,20 @@
                 <script>
                     function getSlot(doctor_id,slot=null)
                     {
+                        // alert(slot);
                         var appointment_date = $('#appointment_date').val();
                        // alert(patient_type);
                         var div_data = '';
                         var sel = '';
                         $('#slot').html('<option value="">Select One....</option>');
                         $.ajax({
-                            url: "{{ route('get-slot-details-using-doctor_id') }}",
+                            url: "{{ route('get-slot-details-using-doctor_id-edit') }}",
                             type: "POST",
                             data: {
                                 _token : '{{ csrf_token() }}',
                                 appointmentDate : appointment_date,
                                 doctorId : doctor_id,
+                                slotId : slot,
                             },
                             success: function(response) {
                                 $.each(response, function(key, value) {
@@ -112,8 +114,12 @@
                                     {
                                         sel = 'selected';
                                     }
+                                    else{
+                                        sel = '';
+                                    }
                                     div_data += `<option value="${value.id}" ${sel}>${value.from_time} - ${value.to_time}</option>`;
                                 });
+                                getAppointmentFees(slot)
                                 $('#slot').append(div_data);
                             },
                             error: function(error) {
@@ -121,6 +127,24 @@
                             }
                         });
                        
+                    }
+                    function getAppointmentFees(slot_id)
+                    {
+                        $.ajax({
+                            url: "{{ route('get-appointment-fees-by-slot') }}",
+                            type: "POST",
+                            data: {
+                                _token : '{{ csrf_token() }}',
+                                slotId : slot_id,
+                            },
+                            success: function(response) {
+                                $('#appointment_fees').val(response.standard_charges);
+                                $('#payment_amount').val(response.standard_charges);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
                     }
                 </script>
                 <div class="col-lg-8 col-xl-8">
@@ -135,7 +159,7 @@
                                 <div class="form-group col-md-4 opd-bladedesign ">
                                     <label class="date-format">Appointment Date <span class="text-danger">*</span></label>
 
-                                    <input type="date" style="margin:9px 0px 0px 0px" name="appointment_date"  required value="{{date('Y-m-d',strtotime($editAppointment->appointment_date))}}" />
+                                    <input type="date" style="margin:9px 0px 0px 0px" name="appointment_date" id="appointment_date"  required value="{{date('Y-m-d',strtotime($editAppointment->appointment_date))}}" />
 
                                     @error('appointment_date')
                                     <small class="text-danger">{{ $message }}</small>
@@ -157,7 +181,7 @@
                                 </div>
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="slot">Slot <span class="text-danger">*</span></label>
-                                    <select name="slot" class="form-control select2-show-search" id="slot" required>
+                                    <select name="slot" onchange="getAppointmentFees(this.value)" class="form-control select2-show-search" id="slot" required>
                                         <option value=" ">Select slot...</option>
                                     </select>
                                     @error('slot')
@@ -176,14 +200,44 @@
                                     <small class="text-danger">{{ $message }}</sma>
                                         @enderror
                                 </div>
-
-                                <div class="form-group col-md-8 newaddappon">
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="appointment_fees">Appointment Fees <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="appointment_fees" value="{{ @$editAppointment->appointment_fees }}" id="appointment_fees" style="margin:0px 0px 0px 0px;" />
+                                    @error('appointment_fees')
+                                        <small class="text-danger">{{ $appointment_fees }}</sma>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
                                     <label for="message">Message </label>
                                     <input type="text" class="form-control" name="message" style="margin:0px 0px 0px 0px" value="{{ $editAppointment->message }}" id="message" />
 
                                     @error('message')
                                     <small class="text-danger">{{ $message }}</sma>
                                         @enderror
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="appointment_fees">Payment Mode <span class="text-danger">*</span></label>
+                                    <select class="form-control" name="payment_mode">
+                                        <option value="">Select One...</option>
+                                        @foreach (Config::get('static.payment_mode_name') as $lang => $payment_mode_name)
+                                            <option value="{{ $payment_mode_name }}" {{ $editAppointment->payment_mode == $payment_mode_name?'selected':'' }}> {{ $payment_mode_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('payment_mode')
+                                    <small class="text-danger">{{ $message }}</sma>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label class="form-label">Payment Amount </label>
+                                    <input type="text" value="{{ $editAppointment->payment_amount }}" name="payment_amount" id="payment_amount" class="form-control" />
+                                    @error('payment_amount')
+                                    <small class="text-danger">{{ $message }}</sma>
+                                    @enderror
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label class="form-label">Note </label>
+                                    <input type="text" name="note" value="{{ $editAppointment->note }}" class="form-control" />
                                 </div>
                             </div>
                         </div>

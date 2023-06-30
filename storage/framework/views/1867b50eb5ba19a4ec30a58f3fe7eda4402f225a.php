@@ -146,12 +146,14 @@ $login_details = DB::table('users')
                         </a>
                     </li>
                     <?php endif; ?>
+                    <?php if(auth()->user()->can('bill summary')): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="<?php echo e(route('billing-summary')); ?>">
                             <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/invoice.png')); ?>">
                             </div>Bill
                         </a>
                     </li>
+                    <?php endif; ?>
                     <?php if(auth()->user()->can('discount')): ?>
                     <li class="nav-item <?php echo e(Request::segment(1) == 'discount' ? 'active' : ''); ?>">
                         <a class="nav-link" href="<?php echo e(route('discount-list')); ?>">

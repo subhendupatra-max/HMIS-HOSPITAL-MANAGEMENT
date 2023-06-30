@@ -28,39 +28,39 @@
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
                         <thead>
                             <tr>
-                                <th class="border-bottom-0">Sl. No</th>
+                                <th class="border-bottom-0">OT. No</th>
                                 <th class="border-bottom-0">Operation Name</th>
                                 <th class="border-bottom-0">Operation Catagory </th>
                                 <th class="border-bottom-0">Consultant Doctor </th>
                                 <th class="border-bottom-0">Operaiton Type</th>
                                 <th class="border-bottom-0">From Date</th>
                                 <th class="border-bottom-0">To Date</th>
-                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit physical condition','delete physical condition')): ?>
+                                <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit physical condition','delete physical condition')): ?>
                                 <th>Action</th>
-                                <?php endif; ?>
+                                <?php endif; ?> -->
                             </tr>
                         </thead>
                         <tbody>
                             <?php if(@$operation_details[0]->operation_name != null ): ?>
                             <?php $__currentLoopData = $operation_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr>
-                                <td><?php echo e($loop->iteration); ?></td>
-                                <td><?php echo e($item->operation_name); ?></td>
+                                <td>
+                                    <a href="<?php echo e(route('opd-operation-details',['opd_id' => base64_encode($item->opd_id)])); ?>" style="color:blue"><?php echo e($item->booking_id); ?></a>
+                                </td>
+                                <td><?php echo e($item->operation_name); ?></td> 
                                 <td><?php echo e($item->operation_catagory_name); ?></td>
                                 <td><?php echo e($item->doctor_first_name); ?> <?php echo e($item->doctor_last_name); ?></td>
                                 <td><?php echo e($item->operation_type_name); ?></td>
                                 <td><?php echo e($item->operation_date_from); ?></td>
                                 <td><?php echo e($item->operation_date_to); ?></td>
-                                <td>
+                                <!-- <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit operation details')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('edit-opd-operation-in-opd',['id'=> base64_encode($item->id) ])); ?>"><i class="fa fa-edit"></i> Edit</a>
-                                            <?php endif; ?>
+                                            
                                         </div>
                                     </div>
-                                </td>
+                                </td> -->
                             </tr>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php endif; ?>
@@ -71,5 +71,6 @@
             </div>
         </div>
     </div>
-    <?php $__env->stopSection(); ?>
+</div>
+<?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS\resources\views/OPD/operation/operation-listing-in-opd.blade.php ENDPATH**/ ?>

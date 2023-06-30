@@ -167,7 +167,7 @@ span
   width:100%;
   margin:auto;
   max-width:525px;
-  min-height:370px;
+  min-height:430px;
   position:relative;
   background:url('../images/booking-back.jpg');
   background-position: center center;
@@ -311,6 +311,26 @@ span
 .tgap_area
 {
   margin: 30px 0px 0px 0px;
+}
+.tgap_areafe
+{
+  margin: 134px 0px 0px 0px;
+}
+.text-link-bookimgh
+{
+  text-decoration: none;
+  color: #1161ee;
+}
+.material-textfield1{
+  margin: 39px 0px 0px 0px !important;
+}
+.doctor_shp_area {
+  overflow-x: scroll;
+  white-space: nowrap;
+  height: 70px;
+}
+.gffgfgf{
+  cursor: pointer;
 }
 /*==================================login area===========================================*/
 /*===================================input field area=============================*/
@@ -652,6 +672,36 @@ span
 {
     margin: 20px 0px 0px 0px;
 }
+.patient_outtable
+{
+   height: 150px;
+   overflow-y: scroll;
+   display: flex;
+   margin: 20PX 0PX 0PX 0PX;
+}
+.patient_table
+{
+
+}
+.patient_table thead
+{
+  background: #2a3c92;
+}
+.patient_table tr 
+{
+
+}
+.patient_table th
+{
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+}
+.patient_table td
+{
+  background: #fff;
+  font-size: 12px;
+}
 /*===================================tab pills====================================*/
 /*===================================footer area===================================*/
 .footer_cpyrghtout
@@ -729,6 +779,14 @@ span
     .department_textdesignx
     {
       font-size: 15px;
+    }
+    .patient_table th
+    {
+      font-size: 9px;
+    }
+    .patient_table td
+    {
+      font-size: 10px;
     }
 }
 /*===================================responsive area==============================*/

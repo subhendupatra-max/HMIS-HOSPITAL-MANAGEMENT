@@ -169,7 +169,22 @@ Route::get('/', function () {
 
 
 // ================================APPOINTMENT FROND END=================
-Route::get('/appointment-booking', [AppointmentBookingController::class, 'index']);
+Route::get('/appointment-booking', [AppointmentBookingController::class, 'index'])->name('appointment-booking');
+Route::post('/appointment-booking/add-new-patient-for-appointment', [AppointmentBookingController::class, 'add_new_patient_for_appointment'])->name('appointment-booking.add-new-patient-for-appointment');
+Route::get('/appointment-booking/otp-varification', [AppointmentBookingController::class, 'otp_varification'])->name('appointment-booking.otp-varification');
+Route::get('/appointment-booking/patient-search', [AppointmentBookingController::class, 'patient_search'])->name('appointment-booking.patient-search');
+Route::get('/appointment-booking/patient-details/{id?}', [AppointmentBookingController::class, 'patient_details'])->name('appointment-booking.patient-details');
+
+Route::post('/appointment-booking/search-patient-for-appointment', [AppointmentBookingController::class, 'search_patient_for_appointment'])->name('appointment-booking.search-patient-for-appointment');
+
+Route::post('/appointment-booking/verify-otp', [AppointmentBookingController::class, 'verifyOTP'])->name('appointment-booking.verify-otp');
+
+Route::get('/appointment-booking/department-list/{id?}', [AppointmentBookingController::class, 'department_list'])->name('appointment-booking.department-list');
+Route::get('/appointment-booking/department-doctor-list/{department_id?}/{patient_id?}', [AppointmentBookingController::class, 'department_doctor_list'])->name('appointment-booking.department-doctor-list');
+Route::post('appointment-booking/get-slot-by-appointment-doctor-and-date', [AppointmentBookingController::class, 'get_slot_by_appointment_doctor_and_date'])->name('appointment-booking.get-slot-by-appointment-doctor-and-date');
+
+Route::get('/appointment-booking/slot-booking/{slot?}/{patient_id?}/{doctor?}/{appointment_date?}', [AppointmentBookingController::class, 'slot_booking'])->name('appointment-booking.slot-booking');
+
 
 // ================================APPOINTMENT FROND END=================
 
@@ -414,16 +429,33 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
             Route::get('add-patient-billing/{id?}', [PatientController::class, 'add_patient_billing'])->name('add-patient-billing');
             Route::post('get-charge-amount-patient/{id?}', [PatientController::class, 'get_charge_amount_patient'])->name('get-charge-amount-patient');
             Route::post('add-new-billing/{id?}', [PatientController::class, 'add_new_billing'])->name('add-new-billing');
+            Route::get('view-bill-details/{id?}', [PatientController::class, 'view_bill_details'])->name('view-bill-details');
+            Route::get('print-patient-bill/{bill_id?}', [PatientController::class, 'print_patient_bill'])->name('print-patient-bill');
+            Route::get('delete-patient-bill/{bill_id?}', [PatientController::class, 'delete_patient_bill'])->name('delete-patient-bill');
+
+            Route::group(['middleware' => ['permission:Take Payment']], function () {
+                Route::get('add-payment-bill/{bill_id?}', [PatientController::class, 'add_payment_bill'])->name('add-payment-bill');
+                Route::post('save-patient-due-bill', [PatientController::class, 'save_patient_due_bill'])->name('save-patient-due-bill');
+            });
+            Route::group(['middleware' => ['permission:edit Payment']], function () {
+                Route::get('edit-bill-payment/{payment_id?}', [PatientController::class, 'edit_payment_bill'])->name('edit-bill-payment');
+                Route::post('update-patient-due-bill', [PatientController::class, 'update_patient_due_bill'])->name('update-patient-due-bill');
+            });
+            Route::group(['middleware' => ['permission:delete Payment']], function () {
+                Route::get('delete-bill-payment/{payment_id?}', [PatientController::class, 'delete_bill_payment'])->name('delete-bill-payment');
+            });
+            Route::get('print-patient-payement-slip/{bill_id?}', [PatientController::class, 'print_patient_payement_slip'])->name('print-patient-payement-slip');
         });
     });
 
     Route::group(['middleware' => ['permission:Patient Master']], function () {
-        Route::get('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
+        Route::any('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
     });
     Route::group(['middleware' => ['permission:add patient']], function () {
         Route::get('add-new-patient', [PatientController::class, 'add_new_patient'])->name('add_new_patient');
         Route::get('add_new_patient-in-ipd', [PatientController::class, 'add_new_patient_in_ipd'])->name('add_new_patient-in-ipd');
         Route::post('submit_new_patient_details', [PatientController::class, 'submit_new_patient_details'])->name('submit_new_patient_details');
+        Route::get('add-new-patient-in-appointment', [PatientController::class, 'add_new_patient_in_appointment'])->name('add_new_patient_in_appointment');
     });
     Route::group(['middleware' => ['permission:import patient']], function () {
         Route::get('import-patient', [PatientController::class, 'import_patient'])->name('import-patient');
@@ -839,6 +871,8 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
             Route::post('find-sub-catagory-by-catagory', [SlotController::class, 'find_sub_catagory_by_catagory'])->name('find-sub-catagory-by-catagory');
             Route::post('find-charge-by-sub-catagory', [SlotController::class, 'find_charge_by_sub_catagory'])->name('find-charge-by-sub-catagory');
             Route::post('find-charge-by-statndard-charges', [SlotController::class, 'find_charge_by_statndard_charges'])->name('find-charge-by-statndard-charges');
+
+            Route::get('doctor-slot-status-change/{status?}/{slot_id?}', [SlotController::class, 'doctor_slot_status_change'])->name('doctor-slot-status-change');
         });
         // =============================== slots =================
     });
@@ -2610,9 +2644,13 @@ Route::group(['middleware' => ['permission:appointment main']], function () {
 
     Route::group(['middleware' => ['permission:dotor wise appointment main']], function () {
         Route::get('doctor-wise-appointments-details', [AppointmentController::class, 'dr_wise_appointments_details'])->name('doctor-wise-appointments-details');
-
         Route::post('fetch-appointments-details-dr-wise', [AppointmentController::class, 'fetch_appointments_details_by_doctor_wise'])->name('fetch-appointments-details-dr-wise');
+        Route::post('get-slot-details-using-doctor_id', [AppointmentController::class, 'get_slot_details_using_doctor_id'])->name('get-slot-details-using-doctor_id');
     });
+    Route::post('get-appointment-fees-by-slot', [AppointmentController::class, 'get_appointment_fees_by_slot'])->name('get-appointment-fees-by-slot');
+    Route::post('get-slot-details-using-doctor_id-edit', [AppointmentController::class, 'get_slot_details_using_doctor_id_edit'])->name('get-slot-details-using-doctor_id-edit');
+
+    Route::post('add-new-patient-for-appointment', [AppointmentController::class, 'get_slot_details_using_doctor_id_edit'])->name('add-new-patient-for-appointment');
 });
 
 //================================= Appointment ===================================================
@@ -3240,6 +3278,11 @@ Route::group(['middleware' => ['permission:main operation'], 'prefix' => 'operat
     });
 });
 //================================= Main Operation  ==============================
+Route::group(['middleware' => ['permission:billing summary']], function () {
+    Route::any('billing-summary', [BillSummaryController::class, 'billing_summary'])->name('billing-summary');
+});
+
+
 
 //================================= OPD Operation Deratils ====================================
 Route::group(['middleware' => ['permission:OPD Operation']], function () {

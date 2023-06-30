@@ -15,7 +15,7 @@ class SlotController extends Controller
 {
     public function slots_details()
     {
-        $slots      = Slot::all();
+        $slots      = Slot::orderBy('id','DESC')->get();
         return view('setup.appointment.slots.slots-listing', compact('slots'));
     }
 
@@ -23,26 +23,30 @@ class SlotController extends Controller
     {
         $slots          = Slot::all();
         $shift          = Shift::all();
-        $catagory       = ChargesCatagory::all();
+        $charge_name      = Charge::where('charges_sub_catagory_id',27)->get();
         $doctor         = User::where('role', '=', 'Doctor')->get();
 
-        return view('setup.appointment.slots.add-slots', compact('slots', 'doctor', 'shift', 'catagory'));
+        return view('setup.appointment.slots.add-slots', compact('slots', 'doctor', 'shift', 'charge_name'));
     }
 
     public function save_slots_details(Request $request)
     {
         $validate = $request->validate([
             'doctor'                    => 'required',
-            'days'                      => 'required',
+            'date'                      => 'required',
             'from_time'                 => 'required',
             'to_time'                   => 'required',
+            'standard_charges'          => 'required',
+            'charge'                    => 'required',
         ]);
 
         $status = Slot::insert([
             'doctor'                    => $request->doctor,
-            'days'                      => $request->days,
-            'from_time'                 =>  date('H:i A',strtotime($request->from_time)),
-            'to_time'                   =>  date('H:i A',strtotime($request->to_time)),
+            'date'                      => $request->date,
+            'charge'                    => $request->charge,
+            'standard_charges'          => $request->standard_charges,
+            'from_time'                 =>  $request->from_time,
+            'to_time'                   =>  $request->to_time,
         ]);
 
         if ($status) {
@@ -57,27 +61,32 @@ class SlotController extends Controller
         $slots      = Slot::all();
         $shift      = Shift::all();
         $editSlots  = Slot::find($id);
-        $catagory   = ChargesCatagory::all();
+        $charge_name      = Charge::where('charges_sub_catagory_id',27)->get();
         $doctor     = User::where('role', '=', 'Doctor')->get();
 
-        return view('setup.appointment.slots.edit-slots', compact('slots', 'editSlots', 'shift','doctor','catagory'));
+        return view('setup.appointment.slots.edit-slots', compact('slots', 'editSlots', 'shift','doctor','charge_name'));
     }
 
     public function update_slots_details(Request $request)
     {
         $validate = $request->validate([
             'doctor'                    => 'required',
-            'days'                      => 'required',
+            'date'                      => 'required',
             'from_time'                 => 'required',
             'to_time'                   => 'required',
+            'standard_charges'          => 'required',
+            'charge'                    => 'required',
+
 
         ]);
 
         $slots = Slot::find($request->id);
         $slots->doctor                   = $request->doctor;
-        $slots->days                     = $request->days;
-        $slots->from_time                = date('H:i A',strtotime($request->from_time));
-        $slots->to_time                  = date('H:i A',strtotime($request->to_time));
+        $slots->date                     = $request->date;
+        $slots->charge                   = $request->charge;
+        $slots->standard_charges         = $request->standard_charges;
+        $slots->from_time                = $request->from_time;
+        $slots->to_time                  = $request->to_time;
         $status = $slots->save();
 
         if ($status) {
@@ -110,8 +119,20 @@ class SlotController extends Controller
 
     public function find_charge_by_statndard_charges(Request $request)
     {
-        $charges_value = Charge::where('id', $request->charges)->first();
+        $charge_amount = Charge::select('charges_with_charges_types.standard_charges as charge_amount')->join('charges_with_charges_types', 'charges.id', '=', 'charges_with_charges_types.charge_id')->where('charges.id', $request->charges)->where('charges_with_charges_types.charge_type_id', '1')->first();
 
-        return response()->json($charges_value);
+        return response()->json($charge_amount);
+    }
+
+    public function doctor_slot_status_change($status,$slot_id)
+    {
+        $slots = Slot::find($slot_id);
+        $slots->status                   = $status;
+        $status = $slots->save();
+        if ($status) {
+            return redirect()->route('slots-details')->with('success', 'Slot Status Updated Sucessfully');
+        } else {
+            return redirect()->route('slots-details')->with('error', "Something Went Wrong");
+        }
     }
 }

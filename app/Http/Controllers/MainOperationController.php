@@ -63,6 +63,7 @@ class MainOperationController extends Controller
         $operation_catagory = Operation::where('operation_department', $request->department_id)
             ->leftjoin('operation_catagories', 'operation_catagories.id', '=', 'operations.operation_catagory')
             ->get();
+            // dd($operation_catagory);
         return response()->json(['operation_catagory' => $operation_catagory]);
     }
 

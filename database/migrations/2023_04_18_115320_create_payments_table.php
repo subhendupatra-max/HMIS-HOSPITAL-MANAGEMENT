@@ -20,6 +20,7 @@ class CreatePaymentsTable extends Migration
             $table->string('opd_id')->nullable();
             $table->string('emg_id')->nullable();
             $table->string('ipd_id')->nullable();
+            $table->string('bill_id')->nullable();
             $table->string('section')->nullable();
             $table->string('payment_prefix')->nullable();
             $table->string('payment_amount')->nullable();

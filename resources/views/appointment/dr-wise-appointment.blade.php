@@ -19,7 +19,7 @@
 
                                         <div class="form-group col-md-4 addopdd">
                                             <label> Date <span class="text-danger">*</span></label>
-                                            <input type="date" name="date" id="date" style="margin: 11px 0px 0px 0px;" value="{{ date('Y-m-d',strtotime($all_search_data['date'])) }}" required />
+                                            <input type="date" name="date" id="date" style="margin: 11px 0px 0px 0px;" value="{{ @$all_search_data['date'] }}" required />
                                             @error('date')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -40,8 +40,8 @@
                                         </div>
 
                                         <div class="form-group col-md-4 addopdd">
-                                            <label for="slot">Slot <span class="text-danger">*</span></label>
-                                            <select name="slot" class="form-control select2-show-search" id="slot" required>
+                                            <label for="slot">Slot </label>
+                                            <select name="slot" class="form-control select2-show-search" id="slot" >
                                                 <option value=" ">Select slot...</option>
                                             </select>
                                             @error('slot')
@@ -88,7 +88,7 @@
                                 <td>{{$item->doctor_details->first_name}} {{$item->doctor_details->last_name}}</td>
                                 <td>{{$item->appointment_date}}</td>
                                 <td>
-                                    @if($item->appointment_priority == 'Normal')
+                                @if($item->appointment_priority == 'Normal')
                                     <span class="badge badge-success">Normal</span>
                                 @elseif($item->appointment_priority == 'Urgent')
                                     <span class="badge badge-warning">Urgent</span>

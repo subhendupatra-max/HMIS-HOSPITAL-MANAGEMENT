@@ -35,7 +35,12 @@
                                 <th class="border-bottom-0">Appointment Date</th>
                                 <th class="border-bottom-0">Slot</th>
                                 <th class="border-bottom-0">Appointment Priority</th>
+                                <th class="border-bottom-0">Appointment Fees</th>
                                 <th class="border-bottom-0">Message</th>
+                                <th class="border-bottom-0">Payment Mode</th>
+                                <th class="border-bottom-0">Payment Amount</th>
+                                <th class="border-bottom-0">Note</th>
+
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit appointment','delete appointment')): ?>
                                 <th>Action</th>
                                 <?php endif; ?>
@@ -64,7 +69,11 @@
                                         <span class="badge badge-info">Low</span>
                                     <?php endif; ?>
                                 </td>
+                                <td><?php echo e($item->appointment_fees); ?></td>
                                 <td><?php echo e($item->message); ?></td>
+                                <td><?php echo e($item->payment_mode); ?></td>
+                                <td><?php echo e($item->payment_amount); ?></td>
+                                <td><?php echo e($item->note); ?></td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>

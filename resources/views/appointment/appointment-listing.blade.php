@@ -35,7 +35,12 @@
                                 <th class="border-bottom-0">Appointment Date</th>
                                 <th class="border-bottom-0">Slot</th>
                                 <th class="border-bottom-0">Appointment Priority</th>
+                                <th class="border-bottom-0">Appointment Fees</th>
                                 <th class="border-bottom-0">Message</th>
+                                <th class="border-bottom-0">Payment Mode</th>
+                                <th class="border-bottom-0">Payment Amount</th>
+                                <th class="border-bottom-0">Note</th>
+
                                 @can('edit appointment','delete appointment')
                                 <th>Action</th>
                                 @endcan
@@ -64,7 +69,11 @@
                                         <span class="badge badge-info">Low</span>
                                     @endif
                                 </td>
+                                <td>{{ $item->appointment_fees }}</td>
                                 <td>{{$item->message}}</td>
+                                <td>{{ $item->payment_mode }}</td>
+                                <td>{{ $item->payment_amount }}</td>
+                                <td>{{ $item->note }}</td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>

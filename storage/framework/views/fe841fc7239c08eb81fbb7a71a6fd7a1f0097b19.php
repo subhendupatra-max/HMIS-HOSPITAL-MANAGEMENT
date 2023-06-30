@@ -19,7 +19,7 @@
 
                                         <div class="form-group col-md-4 addopdd">
                                             <label> Date <span class="text-danger">*</span></label>
-                                            <input type="date" name="date" id="date" style="margin: 11px 0px 0px 0px;" value="<?php echo e(date('Y-m-d',strtotime($all_search_data['date']))); ?>" required />
+                                            <input type="date" name="date" id="date" style="margin: 11px 0px 0px 0px;" value="<?php echo e(@$all_search_data['date']); ?>" required />
                                             <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -55,8 +55,8 @@ unset($__errorArgs, $__bag); ?>
                                         </div>
 
                                         <div class="form-group col-md-4 addopdd">
-                                            <label for="slot">Slot <span class="text-danger">*</span></label>
-                                            <select name="slot" class="form-control select2-show-search" id="slot" required>
+                                            <label for="slot">Slot </label>
+                                            <select name="slot" class="form-control select2-show-search" id="slot" >
                                                 <option value=" ">Select slot...</option>
                                             </select>
                                             <?php $__errorArgs = ['slot'];
@@ -110,7 +110,7 @@ unset($__errorArgs, $__bag); ?>
                                 <td><?php echo e($item->doctor_details->first_name); ?> <?php echo e($item->doctor_details->last_name); ?></td>
                                 <td><?php echo e($item->appointment_date); ?></td>
                                 <td>
-                                    <?php if($item->appointment_priority == 'Normal'): ?>
+                                <?php if($item->appointment_priority == 'Normal'): ?>
                                     <span class="badge badge-success">Normal</span>
                                 <?php elseif($item->appointment_priority == 'Urgent'): ?>
                                     <span class="badge badge-warning">Urgent</span>

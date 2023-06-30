@@ -108,18 +108,20 @@ unset($__errorArgs, $__bag); ?>
                 <script>
                     function getSlot(doctor_id,slot=null)
                     {
+                        // alert(slot);
                         var appointment_date = $('#appointment_date').val();
                        // alert(patient_type);
                         var div_data = '';
                         var sel = '';
                         $('#slot').html('<option value="">Select One....</option>');
                         $.ajax({
-                            url: "<?php echo e(route('get-slot-details-using-doctor_id')); ?>",
+                            url: "<?php echo e(route('get-slot-details-using-doctor_id-edit')); ?>",
                             type: "POST",
                             data: {
                                 _token : '<?php echo e(csrf_token()); ?>',
                                 appointmentDate : appointment_date,
                                 doctorId : doctor_id,
+                                slotId : slot,
                             },
                             success: function(response) {
                                 $.each(response, function(key, value) {
@@ -127,8 +129,12 @@ unset($__errorArgs, $__bag); ?>
                                     {
                                         sel = 'selected';
                                     }
+                                    else{
+                                        sel = '';
+                                    }
                                     div_data += `<option value="${value.id}" ${sel}>${value.from_time} - ${value.to_time}</option>`;
                                 });
+                                getAppointmentFees(slot)
                                 $('#slot').append(div_data);
                             },
                             error: function(error) {
@@ -136,6 +142,25 @@ unset($__errorArgs, $__bag); ?>
                             }
                         });
                        
+                    }
+                    function getAppointmentFees(slot_id)
+                    {
+                        alert(slot_id);
+                        $.ajax({
+                            url: "<?php echo e(route('get-appointment-fees-by-slot')); ?>",
+                            type: "POST",
+                            data: {
+                                _token : '<?php echo e(csrf_token()); ?>',
+                                slotId : slot_id,
+                            },
+                            success: function(response) {
+                                $('#appointment_fees').val(response.standard_charges);
+                                $('#payment_amount').val(response.standard_charges);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
                     }
                 </script>
                 <div class="col-lg-8 col-xl-8">
@@ -150,7 +175,7 @@ unset($__errorArgs, $__bag); ?>
                                 <div class="form-group col-md-4 opd-bladedesign ">
                                     <label class="date-format">Appointment Date <span class="text-danger">*</span></label>
 
-                                    <input type="date" style="margin:9px 0px 0px 0px" name="appointment_date"  required value="<?php echo e(date('Y-m-d',strtotime($editAppointment->appointment_date))); ?>" />
+                                    <input type="date" style="margin:9px 0px 0px 0px" name="appointment_date" id="appointment_date"  required value="<?php echo e(date('Y-m-d',strtotime($editAppointment->appointment_date))); ?>" />
 
                                     <?php $__errorArgs = ['appointment_date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -187,7 +212,7 @@ unset($__errorArgs, $__bag); ?>
                                 </div>
                                 <div class="form-group col-md-4 newaddappon">
                                     <label for="slot">Slot <span class="text-danger">*</span></label>
-                                    <select name="slot" class="form-control select2-show-search" id="slot" required>
+                                    <select name="slot" onchange="getAppointmentFees(this.value)" class="form-control select2-show-search" id="slot" required>
                                         <option value=" ">Select slot...</option>
                                     </select>
                                     <?php $__errorArgs = ['slot'];
@@ -220,8 +245,21 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                                 </div>
-
-                                <div class="form-group col-md-8 newaddappon">
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="appointment_fees">Appointment Fees <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="appointment_fees" value="<?php echo e(@$editAppointment->appointment_fees); ?>" id="appointment_fees" style="margin:0px 0px 0px 0px;" />
+                                    <?php $__errorArgs = ['appointment_fees'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                        <small class="text-danger"><?php echo e($appointment_fees); ?></sma>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
                                     <label for="message">Message </label>
                                     <input type="text" class="form-control" name="message" style="margin:0px 0px 0px 0px" value="<?php echo e($editAppointment->message); ?>" id="message" />
 
@@ -235,6 +273,45 @@ $message = $__bag->first($__errorArgs[0]); ?>
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label for="appointment_fees">Payment Mode <span class="text-danger">*</span></label>
+                                    <select class="form-control" name="payment_mode">
+                                        <option value="">Select One...</option>
+                                        <?php $__currentLoopData = Config::get('static.payment_mode_name'); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lang => $payment_mode_name): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <option value="<?php echo e($payment_mode_name); ?>" <?php echo e($editAppointment->payment_mode == $payment_mode_name?'selected':''); ?>> <?php echo e($payment_mode_name); ?>
+
+                                            </option>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </select>
+                                    <?php $__errorArgs = ['payment_mode'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e($message); ?></sma>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label class="form-label">Payment Amount </label>
+                                    <input type="text" value="<?php echo e($editAppointment->payment_amount); ?>" name="payment_amount" id="payment_amount" class="form-control" />
+                                    <?php $__errorArgs = ['payment_amount'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                                    <small class="text-danger"><?php echo e($message); ?></sma>
+                                    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                                </div>
+                                <div class="form-group col-md-4 newaddappon">
+                                    <label class="form-label">Note </label>
+                                    <input type="text" name="note" value="<?php echo e($editAppointment->note); ?>" class="form-control" />
                                 </div>
                             </div>
                         </div>

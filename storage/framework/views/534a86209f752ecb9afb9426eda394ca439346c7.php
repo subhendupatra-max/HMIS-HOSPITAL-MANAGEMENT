@@ -80,77 +80,48 @@ if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
                     </div>
-                </div>
-
+                
+                    <div class="form-group col-md-6 appoinmentadd">
+                        <label for="charge">Charges <span class="text-danger">*</span></label>
+                        <select name="charge" class="form-control select2-show-search" onchange="getStandardCharges(this.value)"  id="charge" required>
+                            <option value="">Select charge...</option>
+                            <?php if($charge_name): ?>
+                            <?php $__currentLoopData = $charge_name; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($value->id); ?>" <?php echo e(@$value->id == $editSlots->charge ? 'selected':''); ?>><?php echo e($value->charges_name); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
+                        </select>
+                        <small class="text-danger"><?php echo e($errors->first('charge')); ?></small>
+                    </div>
+                    <div class="form-group col-md-3 appoinmentadd">
+                        <label for="standard_charges">Standard Charges <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="standard_charges" name="standard_charges" value="<?php echo e($editSlots->standard_charges); ?>" required style="margin: 0px 0px 0px 0px;">
+                        <?php $__errorArgs = ['standard_charges'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                        <span class="text-danger"><?php echo e($message); ?></span>
+                        <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+                    </div>
+            </div>
+            <hr>
                 <div class="text-center m-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-file"></i> Edit</button>
                 </div>
         </div>
         </form>
     </div>
-
 </div>
 
 </div>
 
-<script>
-    function getSubCategory(charge_category,sub_category,charge_name)
-    {
-        $('#charge_sub_category').val('');
-        $("#charge_sub_category").html("<option value='l'>loading... </option>");
-        $.ajax({
-                url: "<?php echo e(route('find-sub-catagory-by-catagory')); ?>",
-                type: "POST",
-                data: {
-                    _token: '<?php echo e(csrf_token()); ?>',
-                    catagory_id: charge_category,
-                },
 
-                success: function(response) {
-                    $.each(response, function(key, value) {
-                        let sel = (value.id == sub_category ? 'selected' : '');
-                        $('#charge_sub_category').append(`<option value="${value.id}" ${sel}>${value.charges_sub_catagories_name}</option>`);
-                    });
-                    getChargeName(sub_category,charge_name);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-    }
-</script>
 
-<script>
-    function getChargeName(charge_Sub_category,charge_name)
-    {
-        var div_data = '';
-        $('#charge').val('');
-        $("#charge").html("<option value=''>loading... </option>");
-        var ijij =  $('#charge_Sub_category').val();
-        $.ajax({
-                url: "<?php echo e(route('find-charge-by-sub-catagory')); ?>",
-                type: "POST",
-                data: {
-                    _token: '<?php echo e(csrf_token()); ?>',
-                    charge_id: charge_Sub_category,
-                },
 
-                success: function(response) {
-                  //  console.log(response);
-                    console.log('nvifei'+response);
-                    $.each(response, function(key, value) {
-                        let sel = (value.id == charge_name ? 'selected' : '');
-                        div_data += `<option value="${value.id}" ${sel}>${value.charges_name}</option>`;
-                    });
-                    $('#charge').append(div_data);
-                    getStandardCharges(charge_name);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
-    }
-</script>
 <script>
     function getStandardCharges(charge)
     {
@@ -164,7 +135,7 @@ unset($__errorArgs, $__bag); ?>
 
                 success: function(response) {
                     console.log(response);
-                    $('#standard_charges').val(response.standard_charges);
+                    $('#standard_charges').val(response.charge_amount);
                 },
                 error: function(error) {
                     console.log(error);

@@ -38,31 +38,37 @@
                         <?php $total = 0; ?>
                         @if (isset($billing_details))
                             @foreach ($billing_details as $value)
-                            <?php $total += $value->grand_total; ?>
+                            <?php $total += $value->grand_total;
+                                $payment_amount = DB::table('payments')->where('bill_id',$value->id)->sum('payment_amount');
+                            ?>
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $value->bill_prefix }}{{ $value->id }}</td>
+                                        <td><a class="text-info" href="{{ route('view-bill-details',$value->id) }}">{{ $value->bill_prefix }}{{ $value->id }}</a></td>
                                         <td>{{ date('d-m-Y h:i A',strtotime($value->bill_date)) }}</td>
                                         <td>{{ $value->grand_total }}</td>
-                                        <td>{{ $value->grand_total }}</td>
-                                        <td>{{ $value->grand_total }}</td>
-                                        <td>{{ $value->grand_total }}</td>
+                                        <td><span class="badge badge-primary">{{ $value->discount_status }}</span></td>
+                                        <td><span class="badge badge-success">{{ $value->payment_status }}</span></td>
+                                        <td>{{ $payment_amount }}</td>
                                         <td>
                                             <div class="card-options">
                                                 <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right" style="">
-                                                    <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
-                                                    @can('edit patient')
+
+                                                    <a class="dropdown-item" href="{{ route('view-bill-details',$value->id) }}"><i class="fa fa-eye"></i> View</a>
+                                             
                                                     <a class="dropdown-item" href="">
                                                         <i class="fa fa-edit"></i> Edit</a>
+
+                                                    <a class="dropdown-item" href="{{route('print-patient-bill',['bill_id'=>base64_encode($value->id)])}}"><i class="fa fa-print"></i> Print </a>
+                                       
+                                                    <a class="dropdown-item" href="{{ route('delete-patient-bill',['bill_id'=>base64_encode($value->id)]) }}"><i class="fa fa-trash"></i> Delete</a>
+
+                                                @if($value->payment_status == 'Due')  
+                                                    @can('take Payment')
+                                                        <a class="dropdown-item" href="{{ route('add-payment-bill',['bill_id'=>base64_encode($value->id)]) }}"><i class="fa fa-rupee"></i> Add Payment</a>
                                                     @endcan
-                                                    @can('delete patient billing')
-                                                    <a class="dropdown-item" href="#"><i class="fa fa-trash"></i> Delete</a>
-                                                    @endcan
-                                                    @can('OPD registation')
-                                                    <a class="dropdown-item" href=""><i class="fa fa-file-alt"></i> Add Payment</a>
-                                                    @endcan
-                                            
+                                                @endif
+
                                                 </div>
                                             </div>
                                         </td>

@@ -24,15 +24,10 @@
                         @enderror
                     </div>
 
-                    <div class="form-group col-md-3 appoinmentdays ">
-                        <label for="days">Days <span class="text-danger">*</span></label>
-                        <select id="days" class="form-control" name="days">
-                            <option value="">Select</option>
-                            @foreach (Config::get('static.weeks') as $lang => $item)
-                            <option value="{{$item}}" {{ $item == $editSlots->days ? 'selected' : " " }}> {{$item}}</option>
-                            @endforeach
-                        </select>
-                        @error('days')
+                    <div class="form-group col-md-3 appoinmentdays">
+                        <label for="date">Date <span class="text-danger">*</span></label>
+                        <input type="date" value="{{ $editSlots->date }}" class="form-control" id="date" name="date" required>
+                        @error('date')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -52,20 +47,39 @@
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                </div>
-
+                
+                    <div class="form-group col-md-6 appoinmentadd">
+                        <label for="charge">Charges <span class="text-danger">*</span></label>
+                        <select name="charge" class="form-control select2-show-search" onchange="getStandardCharges(this.value)"  id="charge" required>
+                            <option value="">Select charge...</option>
+                            @if($charge_name)
+                            @foreach($charge_name as $key => $value)
+                                <option value="{{  $value->id }}" {{ @$value->id == $editSlots->charge ? 'selected':'' }}>{{ $value->charges_name }}</option>
+                            @endforeach
+                            @endif
+                        </select>
+                        <small class="text-danger">{{ $errors->first('charge') }}</small>
+                    </div>
+                    <div class="form-group col-md-3 appoinmentadd">
+                        <label for="standard_charges">Standard Charges <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="standard_charges" name="standard_charges" value="{{ $editSlots->standard_charges }}" required style="margin: 0px 0px 0px 0px;">
+                        @error('standard_charges')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+            </div>
+            <hr>
                 <div class="text-center m-auto">
                     <button type="submit" class="btn btn-primary"><i class="fa fa-file"></i> Edit</button>
                 </div>
         </div>
         </form>
     </div>
-
 </div>
 
 </div>
 
-<script>
+{{-- <script>
     function getSubCategory(charge_category,sub_category,charge_name)
     {
         $('#charge_sub_category').val('');
@@ -90,9 +104,9 @@
                 }
             });
     }
-</script>
+</script> --}}
 
-<script>
+{{-- <script>
     function getChargeName(charge_Sub_category,charge_name)
     {
         var div_data = '';
@@ -122,7 +136,7 @@
                 }
             });
     }
-</script>
+</script> --}}
 <script>
     function getStandardCharges(charge)
     {
@@ -136,7 +150,7 @@
 
                 success: function(response) {
                     console.log(response);
-                    $('#standard_charges').val(response.standard_charges);
+                    $('#standard_charges').val(response.charge_amount);
                 },
                 error: function(error) {
                     console.log(error);

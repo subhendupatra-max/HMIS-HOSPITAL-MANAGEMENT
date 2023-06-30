@@ -115,7 +115,7 @@
                         Guardian Name
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                        <?php echo e(@$opd_patient_details->all_patient_details->gurdaian_name); ?>
+                        <?php echo e(@$opd_patient_details->all_patient_details->guardian_name); ?>
 
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">

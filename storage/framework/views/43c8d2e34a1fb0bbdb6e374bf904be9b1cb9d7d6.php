@@ -38,31 +38,37 @@
                         <?php $total = 0; ?>
                         <?php if(isset($billing_details)): ?>
                             <?php $__currentLoopData = $billing_details; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php $total += $value->grand_total; ?>
+                            <?php $total += $value->grand_total;
+                                $payment_amount = DB::table('payments')->where('bill_id',$value->id)->sum('payment_amount');
+                            ?>
                                     <tr>
                                         <td><?php echo e($loop->iteration); ?></td>
-                                        <td><?php echo e($value->bill_prefix); ?><?php echo e($value->id); ?></td>
+                                        <td><a class="text-info" href="<?php echo e(route('view-bill-details',$value->id)); ?>"><?php echo e($value->bill_prefix); ?><?php echo e($value->id); ?></a></td>
                                         <td><?php echo e(date('d-m-Y h:i A',strtotime($value->bill_date))); ?></td>
                                         <td><?php echo e($value->grand_total); ?></td>
-                                        <td><?php echo e($value->grand_total); ?></td>
-                                        <td><?php echo e($value->grand_total); ?></td>
-                                        <td><?php echo e($value->grand_total); ?></td>
+                                        <td><span class="badge badge-primary"><?php echo e($value->discount_status); ?></span></td>
+                                        <td><span class="badge badge-success"><?php echo e($value->payment_status); ?></span></td>
+                                        <td><?php echo e($payment_amount); ?></td>
                                         <td>
                                             <div class="card-options">
                                                 <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                                                 <div class="dropdown-menu dropdown-menu-right" style="">
-                                                    <a class="dropdown-item" href=""><i class="fa fa-eye"></i> View</a>
-                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
+
+                                                    <a class="dropdown-item" href="<?php echo e(route('view-bill-details',$value->id)); ?>"><i class="fa fa-eye"></i> View</a>
+                                             
                                                     <a class="dropdown-item" href="">
                                                         <i class="fa fa-edit"></i> Edit</a>
+
+                                                    <a class="dropdown-item" href="<?php echo e(route('print-patient-bill',['bill_id'=>base64_encode($value->id)])); ?>"><i class="fa fa-print"></i> Print </a>
+                                       
+                                                    <a class="dropdown-item" href="<?php echo e(route('delete-patient-bill',['bill_id'=>base64_encode($value->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
+
+                                                <?php if($value->payment_status == 'Due'): ?>  
+                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('take Payment')): ?>
+                                                        <a class="dropdown-item" href="<?php echo e(route('add-payment-bill',['bill_id'=>base64_encode($value->id)])); ?>"><i class="fa fa-rupee"></i> Add Payment</a>
                                                     <?php endif; ?>
-                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('delete patient')): ?>
-                                                    <a class="dropdown-item" href=""><i class="fa fa-trash"></i> Delete</a>
-                                                    <?php endif; ?>
-                                                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('OPD registation')): ?>
-                                                    <a class="dropdown-item" href=""><i class="fa fa-file-alt"></i> Add Payment</a>
-                                                    <?php endif; ?>
-                                            
+                                                <?php endif; ?>
+
                                                 </div>
                                             </div>
                                         </td>

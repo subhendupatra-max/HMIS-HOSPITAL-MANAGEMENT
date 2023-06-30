@@ -27,9 +27,9 @@
                             <tr>
                                 <th class="border-bottom-0">Sl. No</th>
                                 <th class="border-bottom-0">Doctor</th>
-                                <th class="border-bottom-0">Days</th>
-                                <th class="border-bottom-0">From Time</th>
-                                <th class="border-bottom-0">To Time</th>
+                                <th class="border-bottom-0">Date</th>
+                                <th class="border-bottom-0">Status</th>
+                                <th class="border-bottom-0">Slot</th>
                                 @can('edit slots','delete slots')
                                 <th>Action</th>
                                 @endcan
@@ -40,9 +40,17 @@
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{ @$item->fetch_doctor_name->first_name}} {{ @$item->fetch_doctor_name->last_name}}</td>
-                                <td>{{ $item->days}}</td>
-                                <td>{{ date('H:i A',strtotime($item->from_time))}}</td>
-                                <td>{{ date('H:i A',strtotime($item->to_time))}}</td>
+                                <td>{{ date('d-m-Y',strtotime($item->date))}}</td>
+                                <td>
+                                    @if($item->status == 'active')
+                                    <a class="badge badge-success" href="{{ route('doctor-slot-status-change',['status'=>'deactive','slot_id'=>$item->id]) }}">Activeted</a>
+                                    @else
+                                    <a class="badge badge-danger" href="{{ route('doctor-slot-status-change',['status'=>'active','slot_id'=>$item->id]) }}">Deactiveted</a>
+                                    @endif
+                                </td>
+                                <td>{{ date('h:i A',strtotime($item->from_time))}} - 
+                                {{ date('h:i A',strtotime($item->to_time))}}</td>
+                          
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
