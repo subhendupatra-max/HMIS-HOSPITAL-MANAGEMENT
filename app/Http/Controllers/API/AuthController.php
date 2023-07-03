@@ -4,9 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -30,13 +32,11 @@ class AuthController extends Controller
                 ]);
             } else {
                 $data = User::where('phone_no', $request->phone)->first();
+                $data['profile_image'] = config('app.url') . '/' . 'public/profile_picture/' . $data['profile_image'];
 
-                $userInfo = [
-                    'name' =>   $data->first_name . $data->last_name,
-                    'email' => $data->email
-                ];
+
                 return response([
-                    'userInfo' => $userInfo,
+                    'userInfo' => $data,
                     'token' => $data->createToken("API TOKEN")->plainTextToken
                 ], 200);
             }
@@ -49,6 +49,48 @@ class AuthController extends Controller
             ]);
         }
     }
+
+
+    public function loginUserDetais(Request $request)
+    {
+
+        $data = User::where('id', $request->user_id)->first();
+        $data['profile_image'] = config('app.url') . '/' . 'public/profile_picture/' . $data['profile_image'];
+
+
+
+        $role_details = DB::table('roles')->where('name', $data->role)->first();
+
+        $permissions = DB::table('permissions')
+            ->select('permissions.name', DB::raw('CASE WHEN role_has_permissions.permission_id IS NOT NULL THEN TRUE ELSE FALSE END AS has_permission'))
+            ->leftJoin('role_has_permissions', function ($join) use ($role_details) {
+                $join->on('permissions.id', '=', 'role_has_permissions.permission_id')
+                    ->where('role_has_permissions.role_id', '=', $role_details->id);
+            })
+            ->get();
+
+
+
+        $newArray = [];
+        $newArray2 = [];
+
+        foreach ($permissions as $item) {
+
+            array_push($newArray, $item->name);
+        }
+
+        foreach ($permissions as $item) {
+
+            array_push($newArray2, $item->has_permission);
+        }
+
+        $all_permission = array_combine($newArray, $newArray2);
+
+
+
+        return response()->json(['all_permission' => $all_permission, 'user_details' => $data]);
+    }
+
 
     public function logout(Request $request)
     {

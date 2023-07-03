@@ -29,6 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // LOGIN USER
 Route::post('/login', [AuthController::class, 'loginUser']);
 
+// User Details Permission
+Route::post('/user-details', [AuthController::class, 'loginUserDetais']);
 
 // LOGOUT USER
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -81,6 +83,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['middleware' => ['permission:EMG Patient Report']], function () {
         Route::get('emg-patient-report', [ReportsController::class, 'emg_patient_index'])->name('emg-patient-report');
         Route::post('fetch-emg-patient-report', [ReportsController::class, 'fetch_emg_patient_report'])->name('fetch-emg-patient-report');
+    });
+
+    //for emg billing report
+    Route::group(['middleware' => ['permission:EMG Billing Report']], function () {
+        Route::post('fetch-emg-billing-report', [ReportsController::class, 'fetch_emg_billing_report'])->name('fetch-emg-billing-report');
     });
 
     //for ipd patient report
