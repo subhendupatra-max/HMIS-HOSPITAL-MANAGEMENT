@@ -96,66 +96,68 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <form action="<?php echo e(route('add-new-patient-for-appointment')); ?>" method="POST">
+                                    <form action="<?php echo e(route('appointment-booking.add-new-patient-for-appointment')); ?>" method="POST">
                                         <?php echo csrf_field(); ?>
                                         <div class="sign-up-htm tgap_area">
-                                            <div class="row">
-                                                <div class="col-lg-12">
+                                           <div class="row">
+                                                 <div class="col-lg-12">
                                                     <div class="aprmnt_mdlfromarea">
-                                                        <div class="material-textfield">
-                                                        <i class="fas fa-user materialfldi_icondesign"></i>
-                                                        <input placeholder=" " name="patient_name" type="text" required>
-                                                        <label>Enter Name</label>
-                                                        </div>
+                                                       <div class="material-textfield">
+                                                          <i class="fas fa-user materialfldi_icondesign"></i>
+                                                          <input name="patient_name" type="text" required>
+                                                          <label>Enter Patient Name</label>
+                                                       </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-6">
+                                                 </div>
+                                                 <div class="col-lg-6">
                                                     <div class="aprmnt_mdlfromarea">
-                                                        <div class="material-textfield">
-                                                        <i class="fas fa-envelope materialfldi_icondesign"></i>
-                                                        <input placeholder=" " name="patient_email" type="text">
-                                                        <label>Email</label>
-                                                        </div>
+                                                       <div class="material-textfield">
+                                                          <i class="fas fa-user materialfldi_icondesign"></i>
+                                                          <input name="guardian_name" type="text" required>
+                                                          <label>Enter Guardian Name</label>
+                                                       </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-6">
+                                                 </div>
+                                  
+                                                 <div class="col-lg-6">
                                                     <div class="aprmnt_mdlfromarea">
-                                                        <div class="material-textfield">
-                                                        <i class="fas fa-phone-volume materialfldi_icondesign"></i>
-                                                        <input placeholder=" " name="patient_phone" type="text" required>
-                                                        <label>Phone No.</label>
-                                                        </div>
+                                                       <div class="material-textfield">
+                                                          <i class="fas fa-phone-volume materialfldi_icondesign"></i>
+                                                          <input name="patient_phone" type="text" required>
+                                                          <label>Phone No.</label>
+                                                       </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-6">
+                                                 </div>
+                                                 <div class="col-lg-6">
                                                     <div class="aprmnt_mdlfromarea">
-                                                        <div class="material-textfield">
-                                                        <i class="fas fa-phone-volume materialfldi_icondesign"></i>
-                                                        <input placeholder=" " name="patient_age" type="text" required>
-                                                        <label>Age</label>
-                                                        </div>
+                                                       <div class="material-textfield">
+                                                          <i class="fa fa-calendar materialfldi_icondesign"></i>
+                                                          <input name="patient_age" type="text" required>
+                                                          <label>Age</label>
+                                                       </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-6">
+                                                 </div>
+                                                 <div class="col-lg-6">
                                                     <div class="aprmnt_mdlfromarea">
-                                                        <div class="material-textfield">
-                                                        <i class="fas fa-user materialfldi_icondesign"></i>
-                                                        <select name="patient_gender" id="prefix" class="slctd_area">
+                                                       <div class="material-textfield">
+                                                          <i class="fas fa-user materialfldi_icondesign"></i>
+                                                          <select name="patient_gender" id="prefix" class="slctd_area">
                                                                 <option value="">Choose Gender</option>
                                                                 <option value="Male">Male</option>
                                                                 <option value="Female">Female</option>
                                                                 <option value="Others">Others</option>
-                                                        </select>
-                                                        </div>
+                                                          </select>
+                                                       </div>
                                                     </div>
-                                                </div>
-                                                <button class="baabtn_design" type="submit">
-                                                    Submit
-                                                    <i class="fas fa-paper-plane fle_icndesign"></i>
-                                                </button>
-                                            </div>
+                                                 </div>
+                                                 <button class="baabtn_design" type="submit">
+                                               
+                                                    Submit<i class="fas fa-paper-plane fle_icndesign"></i>
+                                                    
+                                                 </button>
+                                           </div>
                                         </div>
-                                    </form>
+                                  </form>
                                 </div>
                                 </div>
                             </div>

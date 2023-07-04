@@ -139,7 +139,8 @@
                   <a href="https://devantitsolutions.com/" target="_blank">DITS</a>
               </h2>
           </div>
-     </div>
+     </div>00
+     .
 </div>
 
 <script>
@@ -159,9 +160,11 @@
                 dataType: 'json',
                 success: function(res) {
                     $.each(res, function(key, value) {
-                        div_data += `<a href=""><div class="single_panel">
-                                        <h2 class="time_zonearea">${value.from_time} - ${value.to_time}</h2>
-                                    </div></a>`;
+                        div_data += `<form>
+                                        @csrf
+                                        <input type="hidden" value="${value.id}" name="slot" />
+                                        <button type="submit" class="btn btn-danger">${value.from_time} - ${value.to_time}</button>
+                                    </form>`;
                     });
                    
                     $('#slot_details').html(div_data);

@@ -15,7 +15,8 @@ class AppointmentBookingController extends Controller
 {
     public function index()
     {
-        return view('appointment-frontend.index');
+        $general_setting = DB::table('general_settings')->first();
+        return view('appointment-frontend.index',compact('general_setting'));
     }
     public function search_patient_for_appointment(Request $request)
     {
@@ -35,7 +36,17 @@ class AppointmentBookingController extends Controller
     {
         $patient_id  = base64_decode($id);
         $patient_details = Patient::where('id',$patient_id)->first();
-        return view('appointment-frontend.patient-details',compact('patient_details'));
+        // Generate a 5-digit OTP
+        $otp = mt_rand(10000, 99999);
+        // Create a new Leads instance
+        $contacts = $patient_details->phone;
+        $patient_details->otp = $otp ;
+        $patient_details->save();
+
+        $msg= 'Your%20OTP%20for%20verification%20is%3A%20'.$otp;
+        $xx= $this->sendsms($contacts,$msg);
+
+        return view('appointment-frontend.patient-details',compact('patient_details'))->with('success','OTP send your mobile no!!!');
     }
     public function sendsms($contacts,$msg)
     { 
@@ -71,9 +82,9 @@ class AppointmentBookingController extends Controller
 
             $contacts = $request->patient_phone;
 
-            $msg= 'Your%20OTP%20for%20verification%20is%3A%20'.$otp;
-            $xx= $this->sendsms($contacts,$msg);
-            // Encrypt the insert ID
+            // $msg= 'Your%20OTP%20for%20verification%20is%3A%20'.$otp;
+            // $xx= $this->sendsms($contacts,$msg);
+            // // Encrypt the insert ID
 
             DB::commit();
             return redirect()->route('appointment-booking.patient-details', base64_encode($patient->id))->with('success', 'Registation Successfully and send a OTP to your mobile no.');

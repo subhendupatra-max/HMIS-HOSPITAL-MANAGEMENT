@@ -13,6 +13,7 @@ use App\Models\TpaManagement;
 use App\Models\Referral;
 use App\Models\Department;
 use App\Models\EmgDetails;
+use App\Models\Diagonasis;
 use App\Models\EmgPatientDetails;
 use App\Models\User;
 use App\Models\SymptomsHead;
@@ -319,8 +320,9 @@ class EmgController extends Controller
         $patient_source_id = $visit_details->emg_prefix . '' . $visit_details->id;
         $case_id = $visit_details->case_id;
         $patient_source = 'EMG';
+        $icd_code  = Diagonasis::all();
 
-        return view('Ipd.ipd-registration', compact('symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units'));
+        return view('Ipd.ipd-registration', compact('icd_code','symptoms_types', 'departments', 'referer', 'visit_details', 'tpa_management', 'patient_source_id', 'case_id', 'patient_source', 'emg_opd_id', 'units'));
     }
 
     public function charge_list($id = null)

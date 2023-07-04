@@ -78,11 +78,10 @@
                                                         <input type="hidden" name="patient_id" value="<?php echo e($patient_details->id); ?>" />
                                                         <div class="material-textfield material-textfield1">
                                                             <i class="fas fa-pen materialfldi_icondesign"></i>
-                                                            <input type="text" name="otp" >
+                                                            <input type="text" required name="otp" >
                                                             <label>Enter your OTP</label>
                                                         </div>
                                                         <button class="baabtn_design"><i class="fas fa-paper-plane fle_icndesign"></i> Submit</button>
-
                                                     </form>
                                                 </div>
                                             </div>

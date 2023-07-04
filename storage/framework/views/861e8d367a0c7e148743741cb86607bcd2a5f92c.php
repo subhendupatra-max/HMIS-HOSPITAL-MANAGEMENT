@@ -60,7 +60,7 @@
                               <div class="aprmnt_mdlfromarea">
                                  <div class="material-textfield">
                                        <i class="fas fa-phone-volume materialfldi_icondesign"></i>
-                                       <input placeholder=" " name="patient_mobile_no" type="text">
+                                       <input name="patient_mobile_no" type="text">
                                        <label>Patient Search by Mobile No.</label>
                                  </div>
                                  <button class="baabtn_design">Search <i class="fa fa-search fle_icndesign"></i></button>
@@ -78,7 +78,7 @@
                                  <div class="aprmnt_mdlfromarea">
                                     <div class="material-textfield">
                                        <i class="fas fa-user materialfldi_icondesign"></i>
-                                       <input placeholder=" " name="patient_name" type="text" required>
+                                       <input name="patient_name" type="text" required>
                                        <label>Enter Patient Name</label>
                                     </div>
                                  </div>
@@ -87,7 +87,7 @@
                                  <div class="aprmnt_mdlfromarea">
                                     <div class="material-textfield">
                                        <i class="fas fa-user materialfldi_icondesign"></i>
-                                       <input placeholder=" " name="guardian_name" type="text" required>
+                                       <input name="guardian_name" type="text" required>
                                        <label>Enter Guardian Name</label>
                                     </div>
                                  </div>
@@ -97,7 +97,7 @@
                                  <div class="aprmnt_mdlfromarea">
                                     <div class="material-textfield">
                                        <i class="fas fa-phone-volume materialfldi_icondesign"></i>
-                                       <input placeholder=" " name="patient_phone" type="text" required>
+                                       <input name="patient_phone" type="text" required>
                                        <label>Phone No.</label>
                                     </div>
                                  </div>
@@ -106,7 +106,7 @@
                                  <div class="aprmnt_mdlfromarea">
                                     <div class="material-textfield">
                                        <i class="fa fa-calendar materialfldi_icondesign"></i>
-                                       <input placeholder=" " name="patient_age" type="text" required>
+                                       <input name="patient_age" type="text" required>
                                        <label>Age</label>
                                     </div>
                                  </div>
