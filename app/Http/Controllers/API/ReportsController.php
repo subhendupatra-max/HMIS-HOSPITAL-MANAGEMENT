@@ -25,13 +25,18 @@ use App\Models\MedicineBillingDetails;
 use App\Models\Referral;
 use App\Models\ReferralCommissionPayment;
 use App\Models\EmgPatientDetails;
+use Illuminate\Support\Facades\DB;
 
 class ReportsController extends Controller
 {
     public function opd_patient_report_index()
     {
         $departments = Department::where('is_active', '1')->get();
-        $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
+        $doctors = User::where('is_active', '1')->where('role', 'Doctor')
+            ->get();
+
+
+
         $data = [
             'doctors' => $doctors,
             'departments' => $departments,
@@ -41,12 +46,20 @@ class ReportsController extends Controller
         return response()->json($data);
     }
 
+
+
+    
     public function opd_patient_report(Request $request)
     {
         $all_search_data = $request->all();
 
         $departments = Department::where('is_active', '1')->get();
-        $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
+        $doctors = User::where('is_active', '1')->where('role', 'Doctor')
+            // ->join('designations', 'designations.id', 'users.designation')
+            // ->join('departments', 'departments.id', 'users.department')
+            ->get();
+
+
 
         $opd_patient_report = OpdVisitDetails::where(function ($query) use ($request) {
             if (!auth()->user()->can('False Generation')) {
@@ -70,13 +83,15 @@ class ReportsController extends Controller
             if ($request->to_date != '') {
                 $query->where('appointment_date', '<=', $request->to_date);
             }
-        })->get();
-        // dd($opd_patient_report);
+        })
+            ->select(DB::raw("concat(patients.first_name, ' ', patients.middle_name, ' ', patients.last_name) as patient_name"), 'opd_details.id as opd_id', 'patients.year', 'patients.month', 'patients.day', 'patients.guardian_name', 'patients.phone', 'opd_visit_details.patient_type', 'opd_details.case_id', 'opd_visit_details.appointment_date', 'departments.department_name', 'opd_visit_details.visit_type')
+            ->leftjoin('opd_details', 'opd_details.id', '=', 'opd_visit_details.opd_details_id')
+            ->leftjoin('patients', 'patients.id', '=', 'opd_details.patient_id')
+            ->leftjoin('departments', 'departments.id', '=', 'opd_visit_details.department_id')
+            ->leftjoin('users', 'users.id', '=', 'opd_visit_details.cons_doctor')
+            ->get();
 
         $data = [
-            'all_search_data' => $all_search_data,
-            'departments' => $departments,
-            'doctors' => $doctors,
             'opd_patient_report' => $opd_patient_report,
         ];
 
@@ -98,27 +113,30 @@ class ReportsController extends Controller
             if ($request->to_date != '') {
                 $query->where('bill_date', '<=', $request->to_date);
             }
-        })->where('section', 'OPD')
+        })
+            ->select(DB::raw("concat(patients.first_name, ' ', patients.middle_name, ' ', patients.last_name) as patient_name"), 'billings.grand_total', 'billings.bill_date', 'billings.payment_status', 'billings.status', 'billings.bill_prefix', 'billings.id as billing_id')
+            ->leftjoin('patients', 'patients.id', '=', 'billings.patient_id')
+            ->where('section', 'OPD')
             ->get();
 
         $data = [
-            'all_search_data' => $all_search_data,
             'billing_report' => $billing_report,
         ];
 
         return response()->json($data);
     }
 
-    public function emg_patient_index()
-    {
-        $departments = Department::where('is_active', '1')->get();
-        $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
-        $data = [
-            'departments' => $departments,
-            'doctors' => $doctors,
-        ];
-        return response()->json($data);
-    }
+    // public function emg_patient_index()
+    // {
+    //     $departments = Department::where('is_active', '1')->get();
+    //     $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
+    //     $data = [
+    //         'departments' => $departments,
+    //         'doctors' => $doctors,
+    //     ];
+    //     return response()->json($data);
+    // }
+
     public function fetch_emg_patient_report(Request $request)
     {
         $all_search_data = $request->all();
@@ -141,12 +159,15 @@ class ReportsController extends Controller
             if ($request->to_date != '') {
                 $query->where('appointment_date', '<=', $request->to_date);
             }
-        })->get();
+        })
+            ->select(DB::raw("concat(patients.first_name, ' ', patients.middle_name, ' ', patients.last_name) as patient_name"), 'emg_details.id as emg_id', 'patients.date_of_birth', 'patients.guardian_name', 'patients.phone', 'emg_patient_details.patient_type', 'emg_details.case_id', 'emg_patient_details.appointment_date', 'departments.department_name', DB::raw("concat(users.first_name, ' ', users.last_name) as doctor_name"))
+            ->leftjoin('emg_details', 'emg_details.id', '=', 'emg_patient_details.emg_details_id')
+            ->leftjoin('patients', 'patients.id', '=', 'emg_details.patient_id')
+            ->leftjoin('departments', 'departments.id', '=', 'emg_patient_details.department_id')
+            ->leftjoin('users', 'users.id', '=', 'emg_patient_details.cons_doctor')
+            ->get();
 
         $data = [
-            '$all_search_data' => $all_search_data,
-            'departments' => $departments,
-            'doctors' => $doctors,
             'emg_patient_report' => $emg_patient_report,
         ];
         return response()->json($data);
@@ -166,11 +187,13 @@ class ReportsController extends Controller
             if ($request->to_date != '') {
                 $query->where('bill_date', '<=', $request->to_date);
             }
-        })->where('section', 'EMG')
+        })
+            ->select(DB::raw("concat(patients.first_name, ' ', patients.middle_name, ' ', patients.last_name) as patient_name"), 'billings.grand_total', 'billings.bill_date', 'billings.payment_status', 'billings.status' ,'billings.bill_prefix', 'billings.id as billing_id')
+            ->leftjoin('patients', 'patients.id', '=', 'billings.patient_id')
+            ->where('section', 'EMG')
             ->get();
 
         $data = [
-            '$all_search_data' => $all_search_data,
             'billing_report' => $billing_report,
         ];
         return response()->json($data);
@@ -195,9 +218,9 @@ class ReportsController extends Controller
         $departments = Department::where('is_active', '1')->get();
         $doctors = User::where('is_active', '1')->where('role', 'Doctor')->get();
         $ipd_patient_report = IpdDetails::where(function ($query) use ($request) {
-            // if (!auth()->user()->can('False Generation')) {
-            //     $query->where('ins_by', 'ori');
-            // }
+            if (!auth()->user()->can('False Generation')) {
+                $query->where('ins_by', 'ori');
+            }
             if ($request->patient_type != '') {
                 $query->where('patient_type', $request->patient_type);
             }
@@ -213,11 +236,13 @@ class ReportsController extends Controller
             if ($request->to_date != '') {
                 $query->where('appointment_date', '<=', $request->to_date);
             }
-        })->get();
+        })->select(DB::raw("concat(patients.first_name, ' ', patients.middle_name, ' ', patients.last_name) as patient_name"), 'ipd_details.id as ipd_id', 'patients.year', 'patients.month', 'patients.day', 'patients.guardian_name', 'patients.phone', 'ipd_details.patient_type', 'ipd_details.case_id', 'ipd_details.appointment_date', 'departments.department_name', DB::raw("concat(users.first_name, ' ', users.last_name) as doctor_name"))
+            ->leftjoin('patients', 'patients.id', '=', 'ipd_details.patient_id')
+            ->leftjoin('departments', 'departments.id', '=', 'ipd_details.department_id')
+            ->leftjoin('users', 'users.id', '=', 'ipd_details.cons_doctor')
+            ->get();
+
         $data = [
-            'all_search_data' => $all_search_data,
-            'departments' => $departments,
-            'doctors' => $doctors,
             'ipd_patient_report' => $ipd_patient_report,
         ];
         return response()->json($data);
@@ -238,12 +263,13 @@ class ReportsController extends Controller
             if ($request->to_date != '') {
                 $query->where('bill_date', '<=', $request->to_date);
             }
-        })->where('section', 'IPD')
+        })
+            ->select(DB::raw("concat(patients.first_name, ' ', patients.middle_name, ' ', patients.last_name) as patient_name"), 'billings.grand_total', 'billings.bill_date', 'billings.payment_status', 'billings.status', 'billings.bill_prefix', 'billings.id as billing_id')
+            ->leftjoin('patients', 'patients.id', '=', 'billings.patient_id')
+            ->where('section', 'IPD')
             ->get();
 
-
         $data = [
-            'all_search_data' => $all_search_data,
             'billing_report' => $billing_report,
         ];
         return response()->json($data);
@@ -281,12 +307,14 @@ class ReportsController extends Controller
             if ($request->to_date != '') {
                 $query->where('payment_date', '<=', $to_date);
             }
-        })->get();
+        })
+            ->select(DB::raw("concat(users.first_name, ' ', users.last_name) as received_by_name"), 'payments.payment_date', 'payments.payment_mode', 'payments.payment_amount', 'payments.section')
+            ->leftjoin('users', 'users.id', '=', 'payments.payment_recived_by')
+            ->get();
+
         $user = User::where('role', 'Receptionist')->get();
         $data = [
-            'all_search_data' => $all_search_data,
             'payment_report' => $payment_report,
-            'user' => $user,
         ];
         return response()->json($data);
     }
@@ -317,16 +345,18 @@ class ReportsController extends Controller
             if ($request->to_date != '') {
                 $query->where('discharge_date', '<=', $request->to_date);
             }
-        })->get();
+        })
+            ->select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'discharged_patients.discharge_date', 'discharged_patients.discharge_status', 'diagonases.diagonasis_name')
+            ->leftjoin('diagonases', 'diagonases.id', '=', 'discharged_patients.icd_code')
+            ->leftjoin('patients', 'patients.id', '=', 'discharged_patients.patient_id')
+            ->get();
 
 
         $icd_code = Diagonasis::all();
         // dd($appointment);
 
         $data = [
-            'all_search_data' => $all_search_data,
             'discharge_details' => $discharge_details,
-            'icd_code' => $icd_code,
         ];
 
         return response()->json($data);
@@ -340,7 +370,6 @@ class ReportsController extends Controller
 
     public function fetch_pharmacy_bill_report(Request $request)
     {
-        $all_search_data = $request->all();
 
         $pharmacy_bill_details = MedicineBillingDetails::where(function ($query) use ($request) {
             if (!auth()->user()->can('False Generation')) {
@@ -349,30 +378,18 @@ class ReportsController extends Controller
             if ($request->medicine_id != '') {
                 $query->where('medicine_billing_details.medicine_name', $request->medicine_id);
             }
-            // if ($request->from_date != '') {
-            //     $query->where('medicine_billing_details.created_at', '>=', $request->from_date);
-            // }
-            // if ($request->to_date != '') {
-            //     $query->where('medicine_billing_details.created_at', '<=', $request->to_date);
-            // }
 
             if ($request->from_date != '' && $request->to_date != '') {
                 $query->whereBetween('medicine_billing_details.created_at', [$request->from_date, $request->to_date]);
             }
-        })
+        })->select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'medicines.medicine_name', 'medicine_billing_details.sale_price')
             ->leftjoin('medicine_billings', 'medicine_billings.id', '=', 'medicine_billing_details.medicine_billing_id')
             ->leftjoin('patients', 'patients.id', '=', 'medicine_billings.patient_id')
             ->leftjoin('medicines', 'medicines.id', '=', 'medicine_billing_details.medicine_name')
             ->get();
 
-
-        $medicine_name = Medicine::all();
-        // dd($pharmacy_bill_details);
-
         $data = [
-            'all_search_data' => $all_search_data,
             'pharmacy_bill_details' => $pharmacy_bill_details,
-            'medicine_name' => $medicine_name,
         ];
         return response()->json($data);
     }
@@ -425,10 +442,6 @@ class ReportsController extends Controller
 
         $data = [
             'operation_details' => $operation_details,
-            'all_search_data' => $all_search_data,
-            'operation_catagory' => $operation_catagory,
-            'operation_id' => $operation_id,
-
         ];
         return response()->json($data);
     }
@@ -448,25 +461,22 @@ class ReportsController extends Controller
                 $query->where('ins_by', 'ori');
             }
             if ($request->blood_group_id != '') {
-                $query->where('blood_group', $request->blood_group_id);
+                $query->where('blood_issues.blood_group', $request->blood_group_id);
             }
-            // if ($request->from_date != '') {
-            //     $query->where('issue_date', '>=', $request->from_date);
-            // }
-            // if ($request->to_date != '') {
-            //     $query->where('issue_date', '<=', $request->to_date);
-            // }
+
             if ($request->from_date != '' && $request->to_date != '') {
-                $query->whereBetween('issue_date', [$request->from_date, $request->to_date]);
+                $query->whereBetween('blood_issues.issue_date', [$request->from_date, $request->to_date]);
             }
-        })
+        })->select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'users.first_name as doctor_first_name', 'users.last_name as doctor_last_name', 'blood_groups.blood_group_name', 'blood_issues.issue_date', 'blood_issues.technician', 'blood_issues.reference_name')
+            ->leftjoin('patients', 'patients.id', '=', 'blood_issues.patient_id')
+            ->leftjoin('users', 'users.id', '=', 'blood_issues.doctor')
+            ->leftjoin('blood_groups', 'blood_groups.id', '=', 'blood_issues.blood_group')
             ->get();
 
         $blood_group = BloodGroup::all();
         $data = [
             'blood_issue_details' => $blood_issue_details,
-            'all_search_data' => $all_search_data,
-            'blood_group' => $blood_group,
+
 
         ];
         return response()->json($data);
@@ -480,25 +490,24 @@ class ReportsController extends Controller
 
     public function fetch_blood_components_issue_report(Request $request)
     {
-        $all_search_data = $request->all();
+        // $all_search_data = $request->all();
 
         $blood_components_issue_details = BloodComponentIssue::where(function ($query) use ($request) {
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
             }
             if ($request->blood_group_id != '') {
-                $query->where('blood_group', $request->blood_group_id);
+                $query->where('blood_component_issues.blood_group', $request->blood_group_id);
             }
-            // if ($request->from_date != '') {
-            //     $query->where('issue_date', '>=', $request->from_date);
-            // }
-            // if ($request->to_date != '') {
-            //     $query->where('issue_date', '<=', $request->to_date);
-            // }
+
             if ($request->from_date != '' && $request->to_date != '') {
-                $query->whereBetween('issue_date', [$request->to_date, $request->from_date]);
+                $query->whereBetween('blood_component_issues.issue_date', [$request->from_date, $request->to_date]);
             }
         })
+            ->select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'users.first_name as issued_by_first_name', 'users.last_name as issued_by_last_name', 'blood_groups.blood_group_name', 'blood_component_issues.issue_date', 'blood_component_issues.technician', 'blood_component_issues.reference_name')
+            ->leftjoin('patients', 'patients.id', '=', 'blood_component_issues.patient_id')
+            ->leftjoin('users', 'users.id', '=', 'blood_component_issues.issed_by')
+            ->leftjoin('blood_groups', 'blood_groups.id', '=', 'blood_component_issues.blood_group')
             ->get();
 
         $blood_group = BloodGroup::all();
@@ -506,9 +515,6 @@ class ReportsController extends Controller
 
         $data = [
             'blood_components_issue_details' => $blood_components_issue_details,
-            'all_search_data' => $all_search_data,
-            'blood_group' => $blood_group,
-
         ];
         return response()->json($data);
     }
@@ -528,37 +534,30 @@ class ReportsController extends Controller
 
     public function fetch_blood_donor_details(Request $request)
     {
-        $all_search_data = $request->all();
+        // $all_search_data = $request->all();
 
         $blood_donor_details = BloodDonor::where(function ($query) use ($request) {
             if (!auth()->user()->can('False Generation')) {
                 $query->where('ins_by', 'ori');
             }
             if ($request->blood_group_id != '') {
-                $query->where('blood_group', $request->blood_group_id);
-            }
-            // if ($request->from_date != '') {
-            //     $query->where('created_at', '>=', $request->from_date);
-            // }
-            // if ($request->to_date != '') {
-            //     $query->where('created_at', '<=', $request->to_date);
-            // }
-            if ($request->from_date != '' && $request->to_date != '') {
-                $query->whereBetween('created_at', [$request->from_date, $request->to_date]);
+                $query->where('blood_donors.blood_group', $request->blood_group_id);
             }
 
+            if ($request->from_date != '' && $request->to_date != '') {
+                $query->whereBetween('blood_donors.created_at', [$request->from_date, $request->to_date]);
+            }
         })
+            ->select('blood_donors.donor_name', 'blood_donors.date_of_birth', 'blood_donors.blood_group', 'blood_donors.gender', 'blood_donors.father_name')
             ->get();
 
-        // dd($blood_donor_details);
+
+
         $blood_group = BloodGroup::all();
         $blood_donor = BloodDonor::all();
 
         $data = [
             'blood_donor_details' => $blood_donor_details,
-            'all_search_data' => $all_search_data,
-            'blood_group' => $blood_group,
-            'blood_donor' => $blood_donor,
         ];
 
         return response()->json($data);
@@ -567,7 +566,7 @@ class ReportsController extends Controller
 
     public function fetch_patient_death_details(Request $request)
     {
-        $all_search_data = $request->all();
+        // $all_search_data = $request->all();
 
         $death_details = DeathReport::where(function ($query) use ($request) {
             if (!auth()->user()->can('False Generation')) {
@@ -580,11 +579,14 @@ class ReportsController extends Controller
                 $query->where('death_date', '<=', $request->to_date);
             }
         })
+            ->select('patients.first_name', 'patients.middle_name', 'patients.last_name', 'death_reports.death_date', 'patients.gender')
+            ->leftjoin('ipd_details', 'ipd_details.id', '=', 'death_reports.ipd_id')
+            ->leftjoin('patients', 'patients.id', '=', 'ipd_details.patient_id')
             ->get();
 
 
         $data = [
-            'all_search_data' => $all_search_data,
+
             'death_details' => $death_details,
 
         ];

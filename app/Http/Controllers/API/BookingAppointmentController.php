@@ -13,7 +13,9 @@ class BookingAppointmentController extends Controller
 
     public function all_department_list()
     {
-        $department_list = Department::where('is_active', '1')->get();
+        $department_list = Department::where('is_active', '1')
+
+            ->get();
 
         return response()->json($department_list);
     }
@@ -21,25 +23,41 @@ class BookingAppointmentController extends Controller
     public function doctor_list(Request $request)
     {
         // dd($request->department_id);
-        $doctor_list = User::where('role', 'Doctor')->where('department','=', $request->department_id)->get();
-        //dd($doctor_list);
-        $Slot=Collect();
-        foreach($doctor_list as $dlist){
-        $Slotlist = Slot::where('doctor',$dlist->id)->get();
-        $Slot = $Slot->concat($Slotlist);
+        // $doctor_list = User::where('role', 'Doctor')->where('department','=', $request->department_id)->get();
+        $data = User::where('role', 'Doctor')
+            ->join('designations', 'designations.id', 'users.designation')
+            ->join('departments', 'departments.id', 'users.department')
+            ->get();
+
+        foreach ($data  as $key => $doctor) {
+            if ($doctor->profile_image != null || $doctor->profile_image != '') {
+                $data[$key]['profile_image'] = config('app.url') . '/' . 'public/profile_picture/' . $doctor->profile_image;
+            } else {
+                $data[$key]['profile_image'] = '';
+            }
         }
 
-        return response()->json(['doctors_list'=>$doctor_list,'slot'=>$Slot]);
+        //dd($doctor_list);
+        // $Slot = Collect();
+        // foreach ($doctor_list as $dlist) {
+        //     $Slotlist = Slot::where('doctor', $dlist->id)->get();
+        //     $Slot = $Slot->concat($Slotlist);
+        // }
+
+        return response()->json(['doctors_list' => $data]);
     }
-
-
-
 
     // -----------------------------------------
     public function fetch_all_staff()
     {
-        $staff_list = User::where('is_active', '1')->get();
-
-        return response()->json($staff_list);
+        $data = User::where('is_active', '1')->get();
+        foreach ($data  as $key => $staff) {
+            if ($staff->profile_image != null || $staff->profile_image != '') {
+                $data[$key]['profile_image'] = config('app.url') . '/' . 'public/profile_picture/' . $staff->profile_image;
+            } else {
+                $data[$key]['profile_image'] = '';
+            }
+        }
+        return response()->json(['staff_list' => $data]);
     }
 }
