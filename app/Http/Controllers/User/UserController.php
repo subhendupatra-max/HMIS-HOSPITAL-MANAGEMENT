@@ -45,10 +45,11 @@ class UserController extends Controller
             'first_name' => "required",
             'last_name' => "required",
             'gender' => "required|",
-            'phone_no' => "required|",
+            'phone_no' => "required|unique:users",
             'date_of_birth' => "required",
             'email' => "required|unique:users",
             'current_address' => "required",
+            
         ]);
 
 
@@ -231,6 +232,7 @@ class UserController extends Controller
             'date_of_birth' => "required|",
             'email' => Rule::unique('users')->ignore($request->id),
             'current_address' => "required",
+            'phone_no' => Rule::unique('users')->ignore($request->id),
 
         ]);
 

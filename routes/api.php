@@ -29,6 +29,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // LOGIN USER
 Route::post('/login', [AuthController::class, 'loginUser']);
 
+// User Details Permission
+Route::post('/user-details', [AuthController::class, 'loginUserDetais']);
 
 // LOGOUT USER
 Route::group(['middleware' => ['auth:sanctum']], function () {
@@ -83,6 +85,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('fetch-emg-patient-report', [ReportsController::class, 'fetch_emg_patient_report'])->name('fetch-emg-patient-report');
     });
 
+    //for emg billing report
+    Route::group(['middleware' => ['permission:EMG Billing Report']], function () {
+        Route::post('fetch-emg-billing-report', [ReportsController::class, 'fetch_emg_billing_report'])->name('fetch-emg-billing-report');
+    });
+
     //for ipd patient report
     Route::group(['middleware' => ['permission:IPD Patient Report']], function () {
         Route::get('ipd-patient-report', [ReportsController::class, 'ipd_patient_index'])->name('ipd-patient-report');
@@ -132,6 +139,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('blood-components-issue-report', [ReportsController::class, 'blood_components_issue_report_index'])->name('blood-components-issue-report');
         Route::post('fetch-blood-components-issue-report', [ReportsController::class, 'fetch_blood_components_issue_report'])->name('fetch-blood-components-issue-report');
     });
+    
     //for blood donor report
     Route::group(['middleware' => ['permission:Blood Donor Report']], function () {
         Route::get('blood-donor-details', [ReportsController::class, 'blood_donor_details'])->name('blood-donor-details');
