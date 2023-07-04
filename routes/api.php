@@ -139,6 +139,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('blood-components-issue-report', [ReportsController::class, 'blood_components_issue_report_index'])->name('blood-components-issue-report');
         Route::post('fetch-blood-components-issue-report', [ReportsController::class, 'fetch_blood_components_issue_report'])->name('fetch-blood-components-issue-report');
     });
+    
     //for blood donor report
     Route::group(['middleware' => ['permission:Blood Donor Report']], function () {
         Route::get('blood-donor-details', [ReportsController::class, 'blood_donor_details'])->name('blood-donor-details');
