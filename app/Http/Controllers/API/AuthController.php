@@ -32,6 +32,7 @@ class AuthController extends Controller
                 ]);
             } else {
                 $data = User::where('phone_no', $request->phone)->first();
+                // dd($data);
                 $data['profile_image'] = config('app.url') . '/' . 'public/profile_picture/' . $data['profile_image'];
 
 
@@ -57,8 +58,6 @@ class AuthController extends Controller
         $data = User::where('id', $request->user_id)->first();
         $data['profile_image'] = config('app.url') . '/' . 'public/profile_picture/' . $data['profile_image'];
 
-
-
         $role_details = DB::table('roles')->where('name', $data->role)->first();
 
         $permissions = DB::table('permissions')
@@ -69,8 +68,6 @@ class AuthController extends Controller
             })
             ->get();
 
-
-
         $newArray = [];
         $newArray2 = [];
 
@@ -80,13 +77,18 @@ class AuthController extends Controller
         }
 
         foreach ($permissions as $item) {
-
-            array_push($newArray2, $item->has_permission);
+            if($role_details->id == 1){
+                array_push($newArray2, 1);
+            }
+            else{
+                array_push($newArray2, $item->has_permission);
+            }
+          
         }
 
         $all_permission = array_combine($newArray, $newArray2);
 
-
+// dd($all_permission);
 
         return response()->json(['all_permission' => $all_permission, 'user_details' => $data]);
     }
