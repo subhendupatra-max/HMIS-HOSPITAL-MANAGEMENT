@@ -56,10 +56,15 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-2 useraddd">
-
-                            <input type="text" id="designation" value="{{ $user_details->designation }}" name="designation">
-                            <label for="first_name"> Designation </label>
+                        <div class="col-md-2 useradddone">
+                            <label class="form-label">Designation <span class="text-danger">*</span></label>
+                            <select class="form-control select2-show-search" name="designation"
+                                id="designation">
+                                <option value="">Select Designation</option>
+                                @foreach ($designation as $item)
+                                <option value="{{ $item->id }}"  {{ @$item->id == $user_details->designation ? 'selected' : ' ' }}>{{ $item->designation_name }}</option>
+                                @endforeach
+                            </select>
                             @error('designation')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -320,9 +325,9 @@
 
                         <div class="col-md-4 newuserchange">
 
-                            <input type="text" name="identification_number" id="identification_number" value="{{ $user_details->identification_number }}">
-                            <label for="identification_number">Identification Number</label>
-                            @error('identification_number')
+                            <input type="text" name="identification_name" id="identification_name" value="{{ $user_details->identification_name }}">
+                            <label for="identification_name">Identification Name</label>
+                            @error('identification_name')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -330,7 +335,7 @@
                         <div class="col-md-4 newuserchange">
 
                             <input type="text" name="local_identification_number" id="local_identification_number" value="{{ $user_details->local_identification_number }}">
-                            <label for="identification_number">Local Identification Number</label>
+                            <label for="identification_number"> Identification Number</label>
                             @error('local_identification_number')
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -338,16 +343,145 @@
                     </div>
                 </div>
             </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-md-9">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i> Update
-                                User</button>
+            </div>
+            <div class="row border-top">
+                <div class="card-body hospital_allcardbodydesign">
+                    <h5 class="font-weight-bold"><i class="fa fa-bank"></i> Bank Information</h5>
+                    <div class="main-profile-bio mb-0">
+                        <div class="row">
+                            <div class="col-md-3 useraddd">
+                                <input type="text" id="bank_account_no" value="{{ @$user_details->bank_account_no }}"
+                                    name="bank_account_no">
+                                <label for="bank_account_no"> Bank Account No. </label>
+                                @error('bank_account_no')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-3 useraddd">
+                                <input type="text" id="bank_name" value="{{ @$user_details->bank_name }}"
+                                    name="bank_name">
+                                <label for="bank_name"> Bank Name. </label>
+                                @error('bank_name')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-3 useraddd">
+                                <input type="text" id="ifsc_code" value="{{ @$user_details->ifsc_code }}"
+                                    name="ifsc_code">
+                                <label for="ifsc_code"> IFSC Code </label>
+                                @error('ifsc_code')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-3 useraddd">
+                                <input type="text" id="bank_branch_name" value="{{ @$user_details->bank_branch_name }}"
+                                    name="bank_branch_name">
+                                <label for="bank_branch_name"> Bank Branch Name </label>
+                                @error('bank_branch_name')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
+            <div class="row border-top">
+                <div class="card-body hospital_allcardbodydesign">
+                    <h5 class="font-weight-bold"><i class="fa fa-star"></i> Payroll</h5>
+                    <div class="main-profile-bio mb-0">
+                        <div class="row">
+                            <div class="col-md-3 useraddd">
+                                <input type="text" id="epf_no" value="{{ @$user_details->epf_no }}"
+                                    name="epf_no">
+                                <label for="epf_no"> EPF No. </label>
+                                @error('epf_no')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-3 useraddd">
+                                <input type="text" id="basic_salary" value="{{ @$user_details->basic_salary }}"
+                                    name="basic_salary">
+                                <label for="basic_salary">  Basic Salary </label>
+                                @error('basic_salary')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-3 useraddd">
+                                <select name="contract_type" class="form-control" id="contract_type"
+                               >
+                                    <option value="">Select One.....  </option>
+                                    @foreach (Config::get('static.contract_types') as $lang => $contract_types)
+                                    <option value="{{ $contract_types }}" {{ $contract_types == $user_details->contract_type ? 'selected':''  }}> {{ $contract_types }}</option>
+                                    @endforeach
+                                </select>
+                                <label for="ifsc_code"> Contract Type </label>
+                                @error('ifsc_code')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row border-top">
+                <div class="card-body hospital_allcardbodydesign">
+                    <h5 class="font-weight-bold"><i class="fa fa-leaf"></i> Leave</h5>
+                    <div class="main-profile-bio mb-0">
+                        <div class="row">
+                            <div class="col-md-2 useraddd">
+                                <input type="text" id="casual_leave" value="{{ @$user_details->casual_leave }}"
+                                    name="casual_leave">
+                                <label for="casual_leave"> Casual Leave </label>
+                                @error('casual_leave')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-2 useraddd">
+                                <input type="text" id="privilege_leave" value="{{ @$user_details->privilege_leave }}"
+                                    name="privilege_leave">
+                                <label for="privilege_leave">  Privilege Leave </label>
+                                @error('privilege_leave')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-2 useraddd">
+                                <input type="text" id="sick_leave" value="{{ @$user_details->sick_leave }}"
+                                    name="sick_leave">
+                                <label for="sick_leave">  Sick Leave </label>
+                                @error('sick_leave')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-2 useraddd">
+                                <input type="text" id="maternity_leave" value="{{ @$user_details->maternity_leave }}"
+                                    name="maternity_leave">
+                                <label for="maternity_leave">  Maternity Leave </label>
+                                @error('maternity_leave')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-2 useraddd">
+                                <input type="text" id="paternity_leave" value="{{ @$user_details->paternity_leave }}"
+                                    name="paternity_leave">
+                                <label for="paternity_leave">  Paternity Leave </label>
+                                @error('paternity_leave')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+       
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="card-body hospital_allcardbodydesign">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane"></i>
+                        Create
+                        User</button>
+                </div>
+            </div>
             </form>
         </div>
     </div>

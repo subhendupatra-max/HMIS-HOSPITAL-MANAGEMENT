@@ -49,7 +49,19 @@ class User extends Authenticatable
         'note',
         'pan_number',
         'identification_number',
-        'local_identification_number',
+        'identification_name',
+        'bank_account_no',
+        'bank_name',
+        'ifsc_code',
+        'bank_branch_name',
+        'epf_no',
+        'basic_salary',
+        'contract_type',
+        'casual_leave',
+        'privilege_leave',
+        'sick_leave',
+        'maternity_leave',
+        'paternity_leave',
 
 
     ];
@@ -72,8 +84,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function department()
+    public function department_details()
     {
         return $this->belongsTo(Department::class, 'department', 'id');
+    }
+    public function designation_details()
+    {
+        return $this->belongsTo(Designation::class, 'designation', 'id');
     }
 }

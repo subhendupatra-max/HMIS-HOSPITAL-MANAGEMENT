@@ -28,4 +28,6 @@ return [
     'patient_from' => ['Opd', 'Emg'],
     'main_operation_status' => ['Pending', 'Complete', 'Cancel'],
     'payment_terms' => ['Advance','After Billing'],
+    'contract_types' => ['Permanent','Probation'],
+    'leave_type' => ['Sick Leave','Causal Leave','Earn Leave'],
 ];

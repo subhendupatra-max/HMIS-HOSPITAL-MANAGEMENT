@@ -69,8 +69,6 @@ class AuthController extends Controller
             })
             ->get();
 
-
-
         $newArray = [];
         $newArray2 = [];
 
@@ -80,13 +78,16 @@ class AuthController extends Controller
         }
 
         foreach ($permissions as $item) {
-
-            array_push($newArray2, $item->has_permission);
+            if($role_details->id == 1){
+                array_push($newArray2, 1);
+            }
+            else{
+                array_push($newArray2, $item->has_permission);
+            }
+          
         }
 
         $all_permission = array_combine($newArray, $newArray2);
-
-
 
         return response()->json(['all_permission' => $all_permission, 'user_details' => $data]);
     }
@@ -101,4 +102,5 @@ class AuthController extends Controller
             'message' => 'User Logout',
         ]);
     }
+    
 }
