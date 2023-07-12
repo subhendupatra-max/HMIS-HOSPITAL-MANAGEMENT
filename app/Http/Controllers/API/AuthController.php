@@ -32,6 +32,7 @@ class AuthController extends Controller
                 ]);
             } else {
                 $data = User::where('phone_no', $request->phone)->first();
+                // dd($data);
                 $data['profile_image'] = config('app.url') . '/' . 'public/profile_picture/' . $data['profile_image'];
 
 
@@ -56,8 +57,6 @@ class AuthController extends Controller
 
         $data = User::where('id', $request->user_id)->first();
         $data['profile_image'] = config('app.url') . '/' . 'public/profile_picture/' . $data['profile_image'];
-
-
 
         $role_details = DB::table('roles')->where('name', $data->role)->first();
 
@@ -89,6 +88,11 @@ class AuthController extends Controller
 
         $all_permission = array_combine($newArray, $newArray2);
 
+<<<<<<< HEAD
+=======
+// dd($all_permission);
+
+>>>>>>> main
         return response()->json(['all_permission' => $all_permission, 'user_details' => $data]);
     }
 
@@ -102,5 +106,9 @@ class AuthController extends Controller
             'message' => 'User Logout',
         ]);
     }
+<<<<<<< HEAD
     
 }
+=======
+}
+>>>>>>> main
