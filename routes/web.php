@@ -145,13 +145,6 @@ use App\Http\Controllers\Inventory\ItemGRMController;
 use App\Http\Controllers\Inventory\ItemReturnController;
 
 // ------------- Api Controller -----------------
-<<<<<<< HEAD
-use App\Http\Controllers\Api\BookingAppointmentController;
-use App\Http\Controllers\Api\ReportsController;
-use App\Http\Controllers\Api\LoginController;
-use App\Http\Controllers\HouseKeepingController;
-=======
->>>>>>> main
 
 
 
