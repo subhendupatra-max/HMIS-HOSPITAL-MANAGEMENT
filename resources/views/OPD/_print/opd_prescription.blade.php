@@ -61,8 +61,9 @@
             <table>
                 <tr>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:240px">
+
                         <b>UHID No: {{ @$opd_patient_details->patient_prefix }}{{ @$opd_patient_details->patient_id
-                            }}</b>
+                            }} </b>
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:200px">
 
@@ -131,8 +132,8 @@
                     </th>
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         {{@$opd_patient_details->year == '0' ?'':$opd_patient_details->year.'Y'}}
-                        {{@$opd_patient_details->month == '0' ?'':$opd_patient_details->month.'Y'}}
-                        {{@$opd_patient_details->day == '0' ?'':$opd_patient_details->day.'Y'}}
+                        {{@$opd_patient_details->month == '0' ?'':$opd_patient_details->month.'M'}}
+                        {{@$opd_patient_details->day == '0' ?'':$opd_patient_details->day.'D'}}
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         Gurdian Mobile No.

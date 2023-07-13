@@ -321,7 +321,7 @@ class OpdController extends Controller
             $opd_visit_details->note                        = $request->note;
             $opd_visit_details->refference                  = $request->reference;
             $opd_visit_details->generated_by                = Auth::user()->id;
-            $opd_visit_details->save();
+            // $opd_visit_details->save();
             //SAVE in opd Visit details
             // dd($opd_visit_details);
 
@@ -339,8 +339,11 @@ class OpdController extends Controller
                 ->where('opd_visit_details.id', $opd_visit_details->id)
                 ->first();
 
+                // dd($opd_patient_details);
+                // dd($request->save);
             DB::commit();
             if ($request->save == 'save_and_print') {
+                // dd($opd_patient_details);
                 return view('OPD._print.opd_prescription', compact('opd_patient_details', 'header_image')) . redirect('/opd/OPD-Patient-list');
             } else {
                 return redirect()->route('OPD-Patient-list')->with('success', 'OPD Registation Sucessfully');
@@ -586,7 +589,7 @@ class OpdController extends Controller
             'patient_type' => 'required',
             'visit_type' => 'required',
             'department' => 'required',
-            'cons_doctor' => 'required',
+            // 'cons_doctor' => 'required',
             'unit' => 'required',
 
         ], [

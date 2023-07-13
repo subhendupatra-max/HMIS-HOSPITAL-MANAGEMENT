@@ -24,16 +24,16 @@
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
-                        <thead>
-                            <tr>
-                                <th class="border-bottom-0">Sl. No</th>
-                                <th class="border-bottom-0">Medicine Name </th>
-                                <th class="border-bottom-0">Medicine Category</th>
-                                <th class="border-bottom-0">Medicine Company </th>
-                                <th class="border-bottom-0">Medicine Composition</th>
-                                <th class="border-bottom-0">Medicine Group </th>
+                    <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                                <th class="text-white">Sl. No</th>
+                                <th class="text-white">Medicine Name </th>
+                                <th class="text-white">Medicine Category</th>
+                                <th class="text-white">Medicine Company </th>
+                                <th class="text-white">Medicine Composition</th>
+                                <th class="text-white">Medicine Group </th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine','delete medicine')): ?>
-                                <th>Action</th>
+                                <th class="text-white">Action</th>
                                 <?php endif; ?>
                             </tr>
                         </thead>

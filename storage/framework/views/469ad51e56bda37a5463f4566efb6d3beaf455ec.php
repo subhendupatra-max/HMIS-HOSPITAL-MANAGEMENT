@@ -19,7 +19,7 @@
 
                                         <div class="form-group col-md-4 addopdd">
                                             <label> Date <span class="text-danger">*</span></label>
-                                            <input type="date" name="date" id="date" style="margin: 11px 0px 0px 0px;" value="<?php echo e(date('Y-m-d',strtotime($all_search_data['date']))); ?>" required />
+                                            <input type="date" name="date" id="date" style="margin: 11px 0px 0px 0px;" value="<?php echo e(@$all_search_data['date']); ?>" required />
                                             <?php $__errorArgs = ['date'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
 if ($__bag->has($__errorArgs[0])) :
@@ -55,8 +55,8 @@ unset($__errorArgs, $__bag); ?>
                                         </div>
 
                                         <div class="form-group col-md-4 addopdd">
-                                            <label for="slot">Slot <span class="text-danger">*</span></label>
-                                            <select name="slot" class="form-control select2-show-search" id="slot" required>
+                                            <label for="slot">Slot </label>
+                                            <select name="slot" class="form-control select2-show-search" id="slot">
                                                 <option value=" ">Select slot...</option>
                                             </select>
                                             <?php $__errorArgs = ['slot'];
@@ -65,7 +65,7 @@ if ($__bag->has($__errorArgs[0])) :
 if (isset($message)) { $__messageOriginal = $message; }
 $message = $__bag->first($__errorArgs[0]); ?>
                                             <small class="text-danger"><?php echo e($message); ?></sma>
-                                            <?php unset($message);
+                                                <?php unset($message);
 if (isset($__messageOriginal)) { $message = $__messageOriginal; }
 endif;
 unset($__errorArgs, $__bag); ?>
@@ -86,24 +86,24 @@ unset($__errorArgs, $__bag); ?>
             <div class="">
                 <div class="table-responsive">
                     <table class="table table-bordered text-nowrap" id="example">
-                        <thead>
-                            <tr>
-                                <th scope="col">Sl. No</th>
-                                <th scope="col">Patient Name </th>
-                                <th scope="col">Doctor Name</th>
-                                <th scope="col">Appointment Date</th>
-                                <th scope="col">Appointment Priority</th>
-                                <th scope="col">Slot</th>
-                                <th scope="col">Message</th>
+                        <thead class="bg-primary text-white">
+                            <tr class="border-left">
+                                <th class="text-white">Sl. No</th>
+                                <th class="text-white">Patient Name </th>
+                                <th class="text-white">Doctor Name</th>
+                                <th class="text-white">Appointment Date</th>
+                                <th class="text-white">Appointment Priority</th>
+                                <th class="text-white">Slot</th>
+                                <th class="text-white">Message</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if(@$appointment[0]->id != null): ?>
                             <?php $__currentLoopData = $appointment; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <?php
-                            $slot_details = DB::table('slots')->where('id',$item->slot)->first();
-                            $slot_time =  date('H:i A',strtotime($slot_details->from_time))." - ".date('H:i A',strtotime($slot_details->to_time));
-                           ?>
+                            $slot_details = DB::table('slots')->where('id', $item->slot)->first();
+                            $slot_time =  date('H:i A', strtotime($slot_details->from_time)) . " - " . date('H:i A', strtotime($slot_details->to_time));
+                            ?>
                             <tr>
                                 <td><?php echo e($loop->iteration); ?></td>
                                 <td><?php echo e($item->patient_details->first_name); ?> <?php echo e($item->patient_details->middle_name); ?> <?php echo e($item->patient_details->last_name); ?></td>
@@ -112,13 +112,13 @@ unset($__errorArgs, $__bag); ?>
                                 <td>
                                     <?php if($item->appointment_priority == 'Normal'): ?>
                                     <span class="badge badge-success">Normal</span>
-                                <?php elseif($item->appointment_priority == 'Urgent'): ?>
+                                    <?php elseif($item->appointment_priority == 'Urgent'): ?>
                                     <span class="badge badge-warning">Urgent</span>
-                                <?php elseif($item->appointment_priority == 'Very Urgent'): ?>
+                                    <?php elseif($item->appointment_priority == 'Very Urgent'): ?>
                                     <span class="badge badge-danger">Very Urgent</span>
-                                <?php else: ?>
+                                    <?php else: ?>
                                     <span class="badge badge-info">Low</span>
-                                <?php endif; ?>
+                                    <?php endif; ?>
                                 </td>
                                 <td><?php echo e($slot_time); ?></td>
                                 <td><?php echo $item->message; ?></td>
@@ -134,25 +134,23 @@ unset($__errorArgs, $__bag); ?>
     </div>
 </div>
 <script>
-    function getSlot(doctor_id,slot=null)
-    {
+    function getSlot(doctor_id, slot = null) {
         var appointment_date = $('#date').val();
-         var sel = '';
+        var sel = '';
         var div_data = '';
         $('#slot').html('<option value="">Select One....</option>');
         $.ajax({
             url: "<?php echo e(route('get-slot-details-using-doctor_id')); ?>",
             type: "POST",
             data: {
-                _token : '<?php echo e(csrf_token()); ?>',
-                appointmentDate : appointment_date,
-                doctorId : doctor_id,
+                _token: '<?php echo e(csrf_token()); ?>',
+                appointmentDate: appointment_date,
+                doctorId: doctor_id,
             },
             success: function(response) {
                 $.each(response, function(key, value) {
-                    if(slot == value.id)
-                    {
-                         sel = 'Selected';
+                    if (slot == value.id) {
+                        sel = 'Selected';
                     }
                     div_data += `<option value="${value.id}" ${sel}>${value.from_time} - ${value.to_time}</option>`;
                 });
@@ -162,7 +160,7 @@ unset($__errorArgs, $__bag); ?>
                 console.log(error);
             }
         });
-       
+
     }
 </script>
 <?php $__env->stopSection(); ?>

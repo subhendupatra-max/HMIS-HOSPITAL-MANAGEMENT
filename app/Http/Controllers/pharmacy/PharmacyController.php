@@ -178,7 +178,7 @@ class PharmacyController extends Controller
         $Issue = IssueMedicine::where('medicine_name', $medicine_id)->sum('quantity');
         $Expired = ExpiredMedicine::where('medicine', $medicine_id)->sum('qty');
         $avilable_stock = $stock - ($Issue + $Expired);
-        dd($avilable_stock);
+        // dd($avilable_stock);
         return view('pharmacy.medicine.medicine-details', compact('medicine_details', 'medicine_details_stock', 'status', 'avilable_stock'));
     }
     public function add_bad_medicine($medicine_id)

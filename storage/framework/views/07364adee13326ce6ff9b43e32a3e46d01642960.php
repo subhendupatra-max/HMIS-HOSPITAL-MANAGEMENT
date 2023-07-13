@@ -27,17 +27,22 @@
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
-                        <thead>
-                            <tr>
-                                <th class="border-bottom-0">Sl. No</th>
-                                <th class="border-bottom-0">Patient Name</th>
-                                <th class="border-bottom-0">Doctor Name</th>
-                                <th class="border-bottom-0">Appointment Date</th>
-                                <th class="border-bottom-0">Slot</th>
-                                <th class="border-bottom-0">Appointment Priority</th>
-                                <th class="border-bottom-0">Message</th>
+                    <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                                <th class="text-white">Sl. No</th>
+                                <th class="text-white">Patient Name</th>
+                                <th class="text-white">Doctor Name</th>
+                                <th class="text-white">Appointment Date</th>
+                                <th class="text-white">Slot</th>
+                                <th class="text-white">Appointment Priority</th>
+                                <th class="text-white">Appointment Fees</th>
+                                <th class="text-white">Message</th>
+                                <th class="text-white">Payment Mode</th>
+                                <th class="text-white">Payment Amount</th>
+                                <th class="text-white">Note</th>
+
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit appointment','delete appointment')): ?>
-                                <th>Action</th>
+                                <th class="text-white">Action</th>
                                 <?php endif; ?>
                             </tr>
                         </thead>
@@ -64,7 +69,11 @@
                                         <span class="badge badge-info">Low</span>
                                     <?php endif; ?>
                                 </td>
+                                <td><?php echo e($item->appointment_fees); ?></td>
                                 <td><?php echo e($item->message); ?></td>
+                                <td><?php echo e($item->payment_mode); ?></td>
+                                <td><?php echo e($item->payment_amount); ?></td>
+                                <td><?php echo e($item->note); ?></td>
                                 <td>
                                     <div class="card-options">
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>

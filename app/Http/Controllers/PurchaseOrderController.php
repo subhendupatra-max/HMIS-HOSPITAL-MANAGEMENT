@@ -28,6 +28,7 @@ class PurchaseOrderController extends Controller
     public function medicine_purchase_order_details()
     {
         $po_list = PurchaseOrder::where('is_delete', 0)->orderBy('id', 'DESC')->get();
+        // dd($po_list);
 
         return view('pharmacy.purchase.purchase-order.medicine-purchase-order-listing', compact('po_list'));
     }
@@ -277,6 +278,7 @@ class PurchaseOrderController extends Controller
         $po_item = PurchaseOrderDetails::where('purchase_order_details.purchase_order_id', $po_id)
             ->get();
         $header = AllHeader::where('header_name','common_header')->first();
+        
         $pdf = PDF::loadView('pharmacy.purchase.purchase-order.print._PurchaseOrder', compact('header','po_list', 'po_item'));
         return $pdf->stream('purchase-order.pdf');
         return redirect()->back();

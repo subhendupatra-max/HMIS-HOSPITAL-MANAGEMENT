@@ -61,7 +61,8 @@
             <table>
                 <tr>
                     <td style="text-align: left;font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:240px">
-                        <b>UHID No: <?php echo e(@$opd_patient_details->patient_prefix); ?><?php echo e(@$opd_patient_details->patient_id); ?></b>
+
+                        <b>UHID No: <?php echo e(@$opd_patient_details->patient_prefix); ?><?php echo e(@$opd_patient_details->patient_id); ?> 33</b>
                     </td>
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:200px">
 
@@ -76,7 +77,7 @@
                     </td>
 
                     <td style="text-align: left; font-size: 11px; padding: 5px 10px 5px 10px;border: 1px solid #899499;width:100px">
-                        <b>Ticket No : <?php echo e(@$opd_patient_details->ticket_no); ?></b>
+                        <b>Ticket No : <?php echo e(@$opd_patient_details->ticket_no); ?> 33</b>
                     </td>
 
 
@@ -136,9 +137,9 @@
                     <td style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
                         <?php echo e(@$opd_patient_details->year == '0' ?'':$opd_patient_details->year.'Y'); ?>
 
-                        <?php echo e(@$opd_patient_details->month == '0' ?'':$opd_patient_details->month.'Y'); ?>
+                        <?php echo e(@$opd_patient_details->month == '0' ?'':$opd_patient_details->month.'M'); ?>
 
-                        <?php echo e(@$opd_patient_details->day == '0' ?'':$opd_patient_details->day.'Y'); ?>
+                        <?php echo e(@$opd_patient_details->day == '0' ?'':$opd_patient_details->day.'D'); ?>
 
                     </td>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">

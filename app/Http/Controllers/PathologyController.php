@@ -332,6 +332,7 @@ class PathologyController extends Controller
             'charge'                            => 'required',
         ]);
 
+        // dd($request->description);
         $pathology_test = new PathologyTest();
 
         $pathology_test->test_name                       = $request->test_name;
@@ -345,6 +346,7 @@ class PathologyController extends Controller
         $pathology_test->charge_sub_category             = $request->charge_sub_category;
         $pathology_test->charge                          = $request->charge;
         $pathology_test->description                     = $request->description;
+        // dd($pathology_test);
         $pathology_test->save();
 
         if (@$request->test_parameter_name[0] != null) {
