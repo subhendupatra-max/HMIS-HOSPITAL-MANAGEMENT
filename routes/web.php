@@ -3487,11 +3487,8 @@ Route::group(['middleware' => ['permission:Leave Request']], function () {
 });
 // ======================================== Leave Request ==================================================
 
-<<<<<<< HEAD
 
 
-=======
->>>>>>> main
 
 
 

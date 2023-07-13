@@ -73,7 +73,13 @@
 
                                 </td>
                                 <td><?php echo e($all_patients->gender); ?></td>
-                                <td><?php echo e($all_patients->year); ?>y <?php echo e($all_patients->month); ?>m <?php echo e($all_patients->day); ?>d
+                                <td>
+                                    <?php echo e(@$all_patients->year == '0' ?'':$all_patients->year.'Y'); ?>
+
+                                    <?php echo e(@$all_patients->month == '0' ?'':$all_patients->month.'M'); ?>
+
+                                    <?php echo e(@$all_patients->day == '0' ?'':$all_patients->day.'D'); ?>
+
                                 </td>
                                 <td><?php echo e($all_patients->phone); ?></td>
                                 <td><?php echo e($all_patients->address); ?>,<?php echo e(@$all_patients->_district->name); ?>,<br><?php echo e(@$all_patients->_state->name); ?>,<?php echo e($all_patients->pin_no); ?></td>
@@ -94,6 +100,9 @@
                                             <?php endif; ?>
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Emg registation')): ?>
                                             <a class="dropdown-item" href="<?php echo e(route('emg-registation', base64_encode($all_patients->id))); ?>"><i class="fa fa-file-alt"></i> EMG Registation</a>
+                                            <?php endif; ?>
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Ipd Admission')): ?>
+                                            <a class="dropdown-item" href="<?php echo e(route('direct-ipd-admission', $all_patients->id)); ?>"><i class="fa fa-bed"></i> Admission</a>
                                             <?php endif; ?>
                                         </div>
                                     </div>

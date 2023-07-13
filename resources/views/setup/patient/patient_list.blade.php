@@ -73,7 +73,10 @@
                                 <td>{{ $all_patients->guardian_name_realation }} {{ $all_patients->guardian_name }}
                                 </td>
                                 <td>{{ $all_patients->gender }}</td>
-                                <td>{{ $all_patients->year }}y {{ $all_patients->month }}m {{ $all_patients->day }}d
+                                <td>
+                                    {{@$all_patients->year == '0' ?'':$all_patients->year.'Y'}}
+                                    {{@$all_patients->month == '0' ?'':$all_patients->month.'M'}}
+                                    {{@$all_patients->day == '0' ?'':$all_patients->day.'D'}}
                                 </td>
                                 <td>{{ $all_patients->phone }}</td>
                                 <td>{{ $all_patients->address }},{{ @$all_patients->_district->name }},<br>{{
@@ -95,6 +98,9 @@
                                             @endcan
                                             @can('Emg registation')
                                             <a class="dropdown-item" href="{{ route('emg-registation', base64_encode($all_patients->id)) }}"><i class="fa fa-file-alt"></i> EMG Registation</a>
+                                            @endcan
+                                            @can('Ipd Admission')
+                                            <a class="dropdown-item" href="{{ route('direct-ipd-admission', $all_patients->id) }}"><i class="fa fa-bed"></i> Admission</a>
                                             @endcan
                                         </div>
                                     </div>
