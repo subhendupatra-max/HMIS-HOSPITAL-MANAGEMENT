@@ -10,11 +10,15 @@ use App\Http\Controllers\PrefixController;
 use App\Http\Controllers\Bed\BedController;
 use App\Http\Controllers\BedUnitController;
 use App\Http\Controllers\BedTypeController;
+use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\Bed\FloorController;
 use App\Http\Controllers\Bed\WardController;
 use App\Http\Controllers\BedGroupController;
+use App\Http\Controllers\AttendenceController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\WorkingTimingSlotController;
 use App\Http\Controllers\BillSummaryController;
 use App\Http\Controllers\charges\ChargeController;
 use App\Http\Controllers\ChargesCatagoryController;
@@ -134,12 +138,20 @@ use App\Http\Controllers\Frontend\AppointmentBookingController;
 
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RosterController;
+use App\Http\Controllers\WorkStationController;
 
 use App\Http\Controllers\Inventory\ItemPurchaseOrderController;
 use App\Http\Controllers\Inventory\ItemGRMController;
 use App\Http\Controllers\Inventory\ItemReturnController;
 
 // ------------- Api Controller -----------------
+<<<<<<< HEAD
+use App\Http\Controllers\Api\BookingAppointmentController;
+use App\Http\Controllers\Api\ReportsController;
+use App\Http\Controllers\Api\LoginController;
+use App\Http\Controllers\HouseKeepingController;
+=======
+>>>>>>> main
 
 
 
@@ -171,19 +183,20 @@ Route::post('/appointment-booking/add-new-patient-for-appointment', [Appointment
 Route::get('/appointment-booking/otp-varification', [AppointmentBookingController::class, 'otp_varification'])->name('appointment-booking.otp-varification');
 Route::get('/appointment-booking/patient-search', [AppointmentBookingController::class, 'patient_search'])->name('appointment-booking.patient-search');
 Route::get('/appointment-booking/patient-details/{id?}', [AppointmentBookingController::class, 'patient_details'])->name('appointment-booking.patient-details');
-
 Route::post('/appointment-booking/search-patient-for-appointment', [AppointmentBookingController::class, 'search_patient_for_appointment'])->name('appointment-booking.search-patient-for-appointment');
-
 Route::post('/appointment-booking/verify-otp', [AppointmentBookingController::class, 'verifyOTP'])->name('appointment-booking.verify-otp');
-
 Route::get('/appointment-booking/department-list/{id?}', [AppointmentBookingController::class, 'department_list'])->name('appointment-booking.department-list');
 Route::get('/appointment-booking/department-doctor-list/{department_id?}/{patient_id?}', [AppointmentBookingController::class, 'department_doctor_list'])->name('appointment-booking.department-doctor-list');
 Route::post('appointment-booking/get-slot-by-appointment-doctor-and-date', [AppointmentBookingController::class, 'get_slot_by_appointment_doctor_and_date'])->name('appointment-booking.get-slot-by-appointment-doctor-and-date');
-
 Route::get('/appointment-booking/slot-booking/{slot?}/{patient_id?}/{doctor?}/{appointment_date?}', [AppointmentBookingController::class, 'slot_booking'])->name('appointment-booking.slot-booking');
-
-
 // ================================APPOINTMENT FROND END=================
+
+// ================================ Patient =================
+Route::group(['middleware' => ['permission:Patient Master'], 'prefix' => 'Patient'], function () {
+    Route::any('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
+    Route::get('patient-details-profile/{id}', [PatientController::class, 'view_patient_details'])->name('patient-details-profile');
+});
+// ================================ Patient =================
 
 
 
@@ -445,9 +458,7 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
         });
     });
 
-    Route::group(['middleware' => ['permission:Patient Master']], function () {
-        Route::any('patient-list', [PatientController::class, 'patient_details'])->name('patient_details');
-    });
+
     Route::group(['middleware' => ['permission:add patient']], function () {
         Route::get('add-new-patient', [PatientController::class, 'add_new_patient'])->name('add_new_patient');
         Route::get('add_new_patient-in-ipd', [PatientController::class, 'add_new_patient_in_ipd'])->name('add_new_patient-in-ipd');
@@ -462,7 +473,7 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
     Route::get('view-new-patient/{id}', [PatientController::class, 'view_new_patient'])->name('view-new-patient');
 
     //show patient detils
-    Route::get('patient-details-profile/{id}', [PatientController::class, 'view_patient_details'])->name('patient-details-profile');
+
 
 
     Route::group(['middleware' => ['permission:edit patient']], function () {
@@ -509,22 +520,65 @@ Route::group(['middleware' => ['permission:Set Up']], function () {
         });
     });
     // ==================================prefix=======================
+    Route::group(['middleware' => ['permission:Setup HR']], function () {
+        // ==================================Department=================
+        Route::group(['middleware' => ['permission:Department']], function () {
+            Route::group(['middleware' => ['permission:add department']], function () {
+                Route::get('department-details', [DepartmentController::class, 'department_details'])->name('department-details');
+                Route::post('save-department-details', [DepartmentController::class, 'save_department_details'])->name('save-department-details');
+            });
+            Route::group(['middleware' => ['permission:delete department']], function () {
+                Route::get('delete-department-details/{id}', [DepartmentController::class, 'delete_department_details'])->name('delete-department-details');
+            });
+            Route::group(['middleware' => ['permission:edit department']], function () {
+                Route::get('edit-department-details/{id}', [DepartmentController::class, 'edit_department_details'])->name('edit-department-details');
+                Route::post('update-department-details', [DepartmentController::class, 'update_department_details'])->name('update-department-details');
+            });
+        });
+        // ================================== Department=================
 
-    // ==================================Department=================
-    Route::group(['middleware' => ['permission:Department']], function () {
-        Route::group(['middleware' => ['permission:add department']], function () {
-            Route::get('department-details', [DepartmentController::class, 'department_details'])->name('department-details');
-            Route::post('save-department-details', [DepartmentController::class, 'save_department_details'])->name('save-department-details');
+        // ==================================Work Station=================
+        Route::group(['middleware' => ['permission:Work Station']], function () {
+            Route::group(['middleware' => ['permission:add Work Station']], function () {
+                Route::get('work-station-details', [WorkStationController::class, 'work_station_details'])->name('work-station-details');
+                Route::post('save-work-station-details', [WorkStationController::class, 'save_work_station_details'])->name('save-work-station-details');
+            });
+            Route::group(['middleware' => ['permission:delete Work Station']], function () {
+                Route::get('delete-work-station-details/{id}', [WorkStationController::class, 'delete_work_station_details'])->name('delete-work-station-details');
+            });
+            Route::group(['middleware' => ['permission:edit Work Station']], function () {
+                Route::get('edit-work-station-details/{id}', [WorkStationController::class, 'edit_work_station_details'])->name('edit-work-station-details');
+                Route::post('update-work-station-details', [WorkStationController::class, 'update_work_station_details'])->name('update-work-station-details');
+            });
+            Route::group(['middleware' => ['permission:Work Station Details']], function () {
+                Route::get('work-station-details-user/{id}', [WorkStationController::class, 'work_station_details_user'])->name('work-station-details-user');
+            });
+            Route::group(['middleware' => ['permission:Add Work Station User']], function () {
+                Route::post('add-work-station-staff', [WorkStationController::class, 'add_work_station_user'])->name('add-work-station-staff');
+            });
+            Route::group(['middleware' => ['permission:Delete Work Station User']], function () {
+                Route::get('work-station-staff-delete/{id}/{station_id}', [WorkStationController::class, 'delete_work_station_user'])->name('work-station-staff-delete');
+            });
         });
-        Route::group(['middleware' => ['permission:delete department']], function () {
-            Route::get('delete-department-details/{id}', [DepartmentController::class, 'delete_department_details'])->name('delete-department-details');
+        // ================================== Work Station=================
+
+        // ==================================Designation=================
+        Route::group(['middleware' => ['permission:Designation']], function () {
+            Route::group(['middleware' => ['permission:add designation']], function () {
+                Route::get('designation-details', [DesignationController::class, 'designation_details'])->name('designation-details');
+                Route::post('save-designation-details', [DesignationController::class, 'save_designation_details'])->name('save-designation-details');
+            });
+            Route::group(['middleware' => ['permission:delete designation']], function () {
+                Route::get('delete-designation-details/{id}', [DesignationController::class, 'delete_designation_details'])->name('delete-designation-details');
+            });
+            Route::group(['middleware' => ['permission:edit designation']], function () {
+                Route::get('edit-designation-details/{id}', [DesignationController::class, 'edit_designation_details'])->name('edit-designation-details');
+                Route::post('update-designation-details', [DesignationController::class, 'update_designation_details'])->name('update-designation-details');
+            });
         });
-        Route::group(['middleware' => ['permission:edit department']], function () {
-            Route::get('edit-department-details/{id}', [DepartmentController::class, 'edit_department_details'])->name('edit-department-details');
-            Route::post('update-department-details', [DepartmentController::class, 'update_department_details'])->name('update-department-details');
-        });
+        // ================================== Designation=================
+
     });
-    // ================================== Department=================
 
     // ==================================bedMaster=================
 
@@ -3352,11 +3406,99 @@ Route::group(['middleware' => ['permission:Apply Commission']], function () {
 });
 Route::get('view-all-notification', [NotificationController::class, 'view_all_notification'])->name('view-all-notification');
 Route::get('get-notification-all', [NotificationController::class, 'get_notification_all'])->name('get-notification-all');
-Route::get('roster', [RosterController::class, 'index'])->name('roster');
+
+// Route::get('roster', [RosterController::class, 'index'])->name('roster');
 
 //================================= Death Record ===============================
 
+//================================= Roster ===============================
+Route::group(['middleware' => ['permission:Choose Work Station']], function () {
+    Route::get('roster', [RosterController::class, 'roster'])->name('roster');
+    Route::post('create-roster', [RosterController::class, 'create_roster'])->name('create-roster');
+});
+//================================= Roster ===============================
 
+//================================= Working time slot ===============================
+Route::group(['middleware' => ['permission:Work Timing Slot']], function () {
+    Route::get('work-timing-slot', [WorkingTimingSlotController::class, 'work_timing_slot'])->name('work-timing-slot');
+    Route::group(['middleware' => ['permission:add Work Timing Slot']], function () {
+        Route::post('save-working-slot-details', [WorkingTimingSlotController::class, 'save_working_slot_details'])->name('save-working-slot-details');
+    });
+    Route::group(['middleware' => ['permission:add Work Timing Slot']], function () {
+        Route::get('edit-working-slot-details/{id}', [WorkingTimingSlotController::class, 'edit_working_slot_details'])->name('edit-working-slot-details');
+        Route::post('update-working-slot-details', [WorkingTimingSlotController::class, 'update_working_slot_details'])->name('update-working-slot-details');
+    });
+    Route::group(['middleware' => ['permission:delete Work Timing Slot']], function () {
+        Route::get('delete-working-slot-details/{id}', [WorkingTimingSlotController::class, 'delete_working_slot_details'])->name('delete-working-slot-details');
+    });
+});
+//================================= Working time slot ===============================
+
+
+//================================= House Keeping ===============================
+Route::group(['middleware' => ['permission:House Keeping']], function () {
+    Route::get('work-list', [HouseKeepingController::class, 'work_list'])->name('house-keeping');
+    Route::group(['middleware' => ['permission:add new house keeping work']], function () {
+        Route::get('add-new-house-keeping-work', [HouseKeepingController::class, 'add_new_house_keeping_working'])->name('add-new-house-keeping-work');
+        Route::post('save-new-work', [HouseKeepingController::class, 'save_new_work'])->name('save-new-work');
+    });
+    Route::post('assign-house-keeper', [HouseKeepingController::class, 'assign_house_keeper'])->name('assign-house-keeper');
+    Route::get('change-status-houseing-allowence/{status?}/{work_id?}', [HouseKeepingController::class, 'change_status_houseing_allowence'])->name('change-status-houseing-allowence');
+    Route::group(['middleware' => ['permission:edit work details']], function () {
+        Route::get('edit-new-house-keeping-work/{id}', [HouseKeepingController::class, 'edit_new_house_keeping_working'])->name('edit-new-house-keeping-work');
+        Route::post('update-new-work', [HouseKeepingController::class, 'update_new_work'])->name('update-new-work');
+    });
+    Route::group(['middleware' => ['permission:delete work details']], function () {
+        Route::get('delete-new-house-keeping-work/{id}', [HouseKeepingController::class, 'delete_new_house_keeping_working'])->name('delete-new-house-keeping-work');
+    });
+});
+//================================= House Keeping ===============================
+
+//================================= Attendence ===============================
+Route::group(['middleware' => ['permission:User Attendence']], function () {
+    Route::get('user-attendence/{id}', [AttendenceController::class, 'user_attendence'])->name('user-attendence');
+});
+//================================= Attendence ===============================
+// ======================================== Leave Request ==================================================
+Route::group(['middleware' => ['permission:apply leave']], function () {
+    Route::get('leave-list/{id?}', [LeaveController::class, 'leave_list'])->name('leave-list');
+});
+
+Route::group(['middleware' => ['permission:apply leave']], function () {
+    Route::get('create-leave', [LeaveController::class, 'create_leave'])->name('create-leave');
+    Route::post('apply-leave-application', [LeaveController::class, 'apply_leave_application'])->name('apply-leave-application');
+});
+
+Route::group(['middleware' => ['permission:apply leave']], function () {
+    Route::get('edit-leave/{id?}', [LeaveController::class, 'edit_leave'])->name('edit-leave');
+    Route::post('update-leave-application', [LeaveController::class, 'update_leave_application'])->name('update-leave-application');
+});
+
+Route::get('leave-details/{id?}', [LeaveController::class, 'leave_details'])->name('leave-details');
+
+
+Route::group(['middleware' => ['permission:Leave Request']], function () {
+
+    Route::group(['middleware' => ['permission:Leave Request List']], function () {
+        Route::get('/user-leave-request-list', [LeaveController::class, 'leave_request_list'])->name('user-leave-request-list');
+
+        Route::get('/user-leave-request-list-details/{id?}', [LeaveController::class, 'leave_request_details'])->name('user-leave-request-list-details');
+
+        Route::post('/given-approval-for-leave-request', [LeaveController::class, 'given_approval_leave'])->name('given-approval-for-leave-request');
+
+        Route::get('hr-create-leave', [LeaveController::class, 'hr_create_leave'])->name('hr-create-leave');
+        Route::post('hr-leave-application', [LeaveController::class, 'hr_leave_application'])->name('hr-leave-application');
+
+        Route::get('delete-leave/{id?}', [LeaveController::class, 'leave_delete'])->name('delete-leave');
+    });
+});
+// ======================================== Leave Request ==================================================
+
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> main
 
 
 

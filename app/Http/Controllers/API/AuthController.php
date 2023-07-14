@@ -88,8 +88,11 @@ class AuthController extends Controller
 
         $all_permission = array_combine($newArray, $newArray2);
 
+<<<<<<< HEAD
+=======
 // dd($all_permission);
 
+>>>>>>> main
         return response()->json(['all_permission' => $all_permission, 'user_details' => $data]);
     }
 
@@ -103,4 +106,9 @@ class AuthController extends Controller
             'message' => 'User Logout',
         ]);
     }
+<<<<<<< HEAD
+    
 }
+=======
+}
+>>>>>>> main

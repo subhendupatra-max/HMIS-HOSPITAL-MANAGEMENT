@@ -27234,7 +27234,6 @@ border-radius: 2%;
     width: 700px;
 }
 
-<<<<<<< HEAD
 .icon-button {
   position: relative;
   display: flex;
@@ -27276,7 +27275,6 @@ border-radius: 2%;
    
     margin: 0px 0px 0px -14px;
 }
-=======
 .avqty_area
 {
   font-size: 12px;
@@ -27288,4 +27286,8 @@ border-radius: 2%;
     right: 167px;
     top: 40px;
 }
->>>>>>> 19be5e20e8d6a8b516ec458a2859767fbaff3541
+
+.nav-active{
+  color: #7cffd0 !important;
+}
+
