@@ -140,9 +140,6 @@ use App\Http\Controllers\Inventory\ItemGRMController;
 use App\Http\Controllers\Inventory\ItemReturnController;
 
 // ------------- Api Controller -----------------
-use App\Http\Controllers\Api\BookingAppointmentController;
-use App\Http\Controllers\Api\ReportsController;
-use App\Http\Controllers\Api\LoginController;
 
 
 
