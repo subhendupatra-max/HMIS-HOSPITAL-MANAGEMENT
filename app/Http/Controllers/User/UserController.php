@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\Designation;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
@@ -22,9 +23,10 @@ class UserController extends Controller
     public function UserCreate(Request $request)
     {
         $all_role = Role::all();
+        $designation = Designation::get();
         $department = Department::where('is_active', '=', 1)->get();
 
-        return view('appPages.Users.userCreation', compact('all_role', 'department'));
+        return view('appPages.Users.userCreation', compact('all_role', 'department','designation'));
     }
 
     public function userlist()
@@ -36,26 +38,22 @@ class UserController extends Controller
     public function UserCreateAction(Request $request)
     {
 
-
-        // $general_details = DB::table('settings')->first();
         $request->validate([
 
             'employee_id' => 'required|unique:users',
             'role' => "required",
             'first_name' => "required",
             'last_name' => "required",
+            'department' => "required",
+            'designation' => "required",
             'gender' => "required|",
             'phone_no' => "required|unique:users",
-            'date_of_birth' => "required",
             'email' => "required|unique:users",
-            'current_address' => "required",
-            
         ]);
 
 
-        // try {
-
-        //     DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
             if ($request->profile_image != null) {
 
@@ -68,7 +66,6 @@ class UserController extends Controller
             //  dd($filename);
             $password = rand(10000000, 99999999);
             $user = User::create([
-
                 'employee_id' => $request->employee_id,
                 'password' => Hash::make($password),
                 'role' => $request->role,
@@ -97,8 +94,19 @@ class UserController extends Controller
                 'note' => $request->note,
                 'pan_number' => $request->pan_number,
                 'identification_number' => $request->identification_number,
-                'local_identification_number' => $request->local_identification_number,
-
+                'identification_name' => $request->identification_name,
+                'bank_account_no' => $request->bank_account_no,
+                'bank_name' => $request->bank_name,
+                'ifsc_code' => $request->ifsc_code,
+                'bank_branch_name' => $request->bank_branch_name,
+                'epf_no' => $request->epf_no,
+                'basic_salary' => $request->basic_salary,
+                'contract_type' => $request->contract_type,
+                'casual_leave' => $request->casual_leave,
+                'privilege_leave' => $request->privilege_leave,
+                'sick_leave' => $request->sick_leave,
+                'maternity_leave' => $request->maternity_leave,
+                'paternity_leave' => $request->paternity_leave,
             ]);
 
             $user->assignRole($request->role);
@@ -117,10 +125,10 @@ class UserController extends Controller
             /*=======================================================================*/
 
             return redirect()->route('user-list')->with('success', 'User Created Sucessfully');
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return redirect()->route('UserCreate')->with('error', $th->getMessage());
-        // }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->route('UserCreate')->with('error', $th->getMessage());
+        }
     }
 
     public function userprofile($id)
@@ -214,46 +222,41 @@ class UserController extends Controller
         // dd( $user_details);
         $all_role = Role::all();
         $department = Department::where('is_active', '=', 1)->get();
+        $designation = Designation::get();
 
-
-        return view('appPages.Users.edit-user', compact('user_details', 'all_role', 'department'));
+        return view('appPages.Users.edit-user', compact('designation','user_details', 'all_role', 'department'));
     }
 
     public function user_update(Request $request)
     {
        // dd($request->all());
         $request->validate([
-
             'employee_id' => Rule::unique('users')->ignore($request->id),
             'role' => "required|",
             'first_name' => "required|",
             'last_name' => "required",
             'gender' => "required|",
-            'date_of_birth' => "required|",
             'email' => Rule::unique('users')->ignore($request->id),
-            'current_address' => "required",
             'phone_no' => Rule::unique('users')->ignore($request->id),
-
         ]);
 
         try {
 
             DB::beginTransaction();
-
+            $user = User::find($request->id);
             if ($request->hasfile('profile_image')) {
 
                 $file = $request->file('profile_image');
                 $filename = rand() . '.' . $file->getClientOriginalExtension();
                 $file->move("public/profile_picture/", $filename);
             } else {
-                $filename = Auth::user()->profile_image;
+                $filename = $user->profile_image;
             }
             $password = rand(10000000, 99999999);
-            $user = User::find($request->id);
+          
             $user->update([
-
                 'employee_id' => $request->employee_id,
-                'password' => Hash::make($password),
+                'password' => $user->password,
                 'role' => $request->role,
                 'designation' => $request->designation,
                 'department' => $request->department,
@@ -279,10 +282,22 @@ class UserController extends Controller
                 'specialization' => $request->specialization,
                 'note' => $request->note,
                 'pan_number' => $request->pan_number,
-                'identification_number' => $request->identification_number,
-                'local_identification_number' => $request->local_identification_number,
+                'identification_number' => $request->local_identification_number,
+                'identification_name' => $request->identification_name,
+                'bank_account_no' => $request->bank_account_no,
+                'bank_name' => $request->bank_name,
+                'ifsc_code' => $request->ifsc_code,
+                'bank_branch_name' => $request->bank_branch_name,
+                'epf_no' => $request->epf_no,
+                'basic_salary' => $request->basic_salary,
+                'contract_type' => $request->contract_type,
+                'casual_leave' => $request->casual_leave,
+                'privilege_leave' => $request->privilege_leave,
+                'sick_leave' => $request->sick_leave,
+                'maternity_leave' => $request->maternity_leave,
+                'paternity_leave' => $request->paternity_leave,
             ]);
-            // DB::commit();
+             DB::commit();
 
             return redirect()->route('user-list')->with('success', 'User Updated Sucessfully');
         } catch (\Throwable $th) {

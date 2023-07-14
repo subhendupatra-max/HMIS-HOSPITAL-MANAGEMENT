@@ -7,6 +7,7 @@ use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\BookingAppointmentController;
+use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ReportsController;
 
 /*
@@ -154,6 +155,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['middleware' => ['permission:Referral Report']], function () {
         Route::get('referral-details-report', [ReportsController::class, 'referral_details_report'])->name('referral-details-report');
         Route::post('fetch-referral-payment-report', [ReportsController::class, 'fetch_referral_payment_report'])->name('fetch-referral-payment-report');
+    });
+   // add user
+    Route::group(['middleware' => ['permission:User Add']], function () {
+        Route::get('/User-add', [UserController::class, 'UserCreate'])->name('UserCreate');
+        Route::post('/UserCreateAction', [UserController::class, 'UserCreateAction'])->name('UserCreateAction');
     });
 });
 

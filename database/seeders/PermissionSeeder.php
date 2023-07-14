@@ -118,6 +118,17 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'delete department']);
         Permission::create(['name' => 'add department']);
 
+        //Work Station
+        Permission::create(['name' => 'Work Station']);
+        Permission::create(['name' => 'edit Work Station']);
+        Permission::create(['name' => 'delete Work Station']);
+        Permission::create(['name' => 'add Work Station']);
+
+        //Work Station User
+        Permission::create(['name' => 'Work Station Details']);
+        Permission::create(['name' => 'Add Work Station User']);
+        Permission::create(['name' => 'Delete Work Station User']);
+
         //Dashboard
         Permission::create(['name' => 'Dashboard']);
 
@@ -883,5 +894,40 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => 'Take Payment']);
         Permission::create(['name' => 'edit Payment']);
         Permission::create(['name' => 'delete Payment']);
+
+
+
+        /////////////////////// house keeping ///////////////////
+        Permission::create(['name' => 'House Keeping']);
+        Permission::create(['name' => 'add new house keeping work']);
+        Permission::create(['name' => 'delete work details']);
+        Permission::create(['name' => 'assign house keeper']);
+        Permission::create(['name' => 'work status change']);
+
+        //////////////   Set up HR ///////////////
+
+        Permission::create(['name' => 'Setup HR']);
+        Permission::create(['name' => 'Designation']);
+        Permission::create(['name' => 'edit designation']);
+        Permission::create(['name' => 'delete designation']);
+        Permission::create(['name' => 'add designation']);
+
+        ///////////////////// attendence //////////////////
+        Permission::create(['name' => 'User Attendence']);
+
+        ///////////////////// Roster //////////////////
+        Permission::create(['name' => 'Roster']);
+        Permission::create(['name' => 'Work Timing Slot']);
+        Permission::create(['name' => 'edit Work Timing Slot']);
+        Permission::create(['name' => 'delete Work Timing Slot']);
+        Permission::create(['name' => 'add Work Timing Slot']);
+        //////////////////// Roster //////////////////
+
+        //////////////////// leave //////////////////
+        Permission::create(['name' => 'apply leave']);
+        Permission::create(['name' => 'edit leave']);
+        Permission::create(['name' => 'create leave']);
+        Permission::create(['name' => 'leave list']);
+        //////////////////// leave //////////////////
     }
 }

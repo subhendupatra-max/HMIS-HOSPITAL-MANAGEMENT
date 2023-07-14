@@ -112,12 +112,15 @@ $login_details = DB::table('users')
                             @if (auth()->user()->can('Roster'))
                             <a class="dropdown-item" href="{{ route('roster') }}">Roster</a>
                             @endif
+                            @if (auth()->user()->can('Leave Request List'))
+                            <a class="dropdown-item" href="{{ route('user-leave-request-list') }}">Leave</a>
+                            @endif
                         </div>
                     </li>
                     @endif
                     @if (auth()->user()->can('Patient Master'))
-                    <li class="nav-item {{ Request::segment(1) == 'Patient' ? 'nav-active' : '' }}">
-                        <a class="nav-link" href="{{ route('patient_details') }}">
+                    <li class="nav-item ">
+                        <a class="nav-link {{ Request::segment(1) == 'Patient' ? 'nav-active' : '' }}" href="{{ route('patient_details') }}">
                             <div class="icon-new"> <img
                                     src="{{ asset('public/assets/images/brand/hospitalisation.png') }}"></div>Patient
                         </a>
@@ -290,6 +293,26 @@ $login_details = DB::table('users')
                                         @can('package sub catagory')
                                         <li><a href="{{ route('charges-package-sub-catagory-details') }}">package sub
                                                 catagory</a></li>
+                                        @endcan
+                                    </ul>
+                                </li>
+                                @endif
+
+                                @if (auth()->user()->can('Setup HR'))
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">HR <i class="fa fa-chevron-right"></i></a>
+                                    <ul class="dropdown-menu">
+                                        @can('Department')
+                                        <li><a href="{{ route('department-details') }}">Department</a></li>
+                                        @endcan
+                                        @can('Designation')
+                                        <li><a href="{{ route('designation-details') }}">Designation</a></li>
+                                        @endcan
+                                        @can('Work Station')
+                                        <li><a href="{{ route('work-station-details') }}">Work Station</a></li>
+                                        @endcan
+                                        @can('Work Timing Slot')
+                                        <li><a href="{{ route('work-timing-slot') }}">Work Timing Slot</a></li>
                                         @endcan
                                     </ul>
                                 </li>
@@ -507,9 +530,7 @@ $login_details = DB::table('users')
                                     </ul>
                                 </li>
                                 @endif
-                                @if (auth()->user()->can('Department'))
-                                <li><a href="{{ route('department-details') }}">Department</a></li>
-                                @endif
+                               
                                 @if (auth()->user()->can('tpa management'))
                                 <li><a href="{{ route('tpa-management-details') }}">tpa management</a></li>
                                 @endif
@@ -571,6 +592,11 @@ $login_details = DB::table('users')
                                         <li><a href="{{ route('death-record') }}">Death Record</a></li>
                                     </ul>
                                 </li>
+
+                                @if (auth()->user()->can('House Keeping'))
+                                <li><a href="{{ route('house-keeping') }}">House Keeping</a></li>
+                                @endif
+
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">MRD<i class="fa fa-chevron-right"></i></a>
                                     <ul class="dropdown-menu">

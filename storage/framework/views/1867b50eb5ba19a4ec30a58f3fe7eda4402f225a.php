@@ -111,12 +111,15 @@ $login_details = DB::table('users')
                             <?php if(auth()->user()->can('Roster')): ?>
                             <a class="dropdown-item" href="<?php echo e(route('roster')); ?>">Roster</a>
                             <?php endif; ?>
+                            <?php if(auth()->user()->can('Leave Request List')): ?>
+                            <a class="dropdown-item" href="<?php echo e(route('user-leave-request-list')); ?>">Leave</a>
+                            <?php endif; ?>
                         </div>
                     </li>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('Patient Master')): ?>
-                    <li class="nav-item <?php echo e(Request::segment(1) == 'Patient' ? 'nav-active' : ''); ?>">
-                        <a class="nav-link" href="<?php echo e(route('patient_details')); ?>">
+                    <li class="nav-item ">
+                        <a class="nav-link <?php echo e(Request::segment(1) == 'Patient' ? 'nav-active' : ''); ?>" href="<?php echo e(route('patient_details')); ?>">
                             <div class="icon-new"> <img
                                     src="<?php echo e(asset('public/assets/images/brand/hospitalisation.png')); ?>"></div>Patient
                         </a>
@@ -262,6 +265,26 @@ $login_details = DB::table('users')
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('package sub catagory')): ?>
                                         <li><a href="<?php echo e(route('charges-package-sub-catagory-details')); ?>">package sub
                                                 catagory</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </li>
+                                <?php endif; ?>
+
+                                <?php if(auth()->user()->can('Setup HR')): ?>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">HR <i class="fa fa-chevron-right"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Department')): ?>
+                                        <li><a href="<?php echo e(route('department-details')); ?>">Department</a></li>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Designation')): ?>
+                                        <li><a href="<?php echo e(route('designation-details')); ?>">Designation</a></li>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Work Station')): ?>
+                                        <li><a href="<?php echo e(route('work-station-details')); ?>">Work Station</a></li>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Work Timing Slot')): ?>
+                                        <li><a href="<?php echo e(route('work-timing-slot')); ?>">Work Timing Slot</a></li>
                                         <?php endif; ?>
                                     </ul>
                                 </li>
@@ -477,9 +500,7 @@ $login_details = DB::table('users')
                                     </ul>
                                 </li>
                                 <?php endif; ?>
-                                <?php if(auth()->user()->can('Department')): ?>
-                                <li><a href="<?php echo e(route('department-details')); ?>">Department</a></li>
-                                <?php endif; ?>
+                               
                                 <?php if(auth()->user()->can('tpa management')): ?>
                                 <li><a href="<?php echo e(route('tpa-management-details')); ?>">tpa management</a></li>
                                 <?php endif; ?>
@@ -541,6 +562,11 @@ $login_details = DB::table('users')
                                         <li><a href="<?php echo e(route('death-record')); ?>">Death Record</a></li>
                                     </ul>
                                 </li>
+
+                                <?php if(auth()->user()->can('House Keeping')): ?>
+                                <li><a href="<?php echo e(route('house-keeping')); ?>">House Keeping</a></li>
+                                <?php endif; ?>
+
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">MRD<i class="fa fa-chevron-right"></i></a>
                                     <ul class="dropdown-menu">
