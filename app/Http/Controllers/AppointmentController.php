@@ -176,11 +176,6 @@ class AppointmentController extends Controller
         }
     }
 
-
-
-
-
-
     public function delete_appointments_details($id)
     {
         $id = base64_decode($id);
@@ -188,8 +183,6 @@ class AppointmentController extends Controller
 
         return back()->with('success', "Appointment Deleted Successfully");
     }
-
-
 
     public function find_doctor_fees_by_doctor(Request $request)
     {
