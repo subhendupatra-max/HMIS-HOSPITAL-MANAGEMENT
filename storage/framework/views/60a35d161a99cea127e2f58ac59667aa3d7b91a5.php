@@ -112,6 +112,15 @@
                                         <?php endif; ?>
                                     </td>
                                 </tr>
+                                
+                                <tr>
+                                    <td class="py-2 px-5">
+                                        <span class="font-weight-semibold w-50 text-success">Avilable Stock</span>
+                                    </td>
+                                    <td class="py-2 px-5">
+                                        <span class="text-success"><?php echo e(@$avilable_stock); ?></span>
+                                    </td>
+                                </tr>
 
 
                             </tbody>
@@ -130,11 +139,95 @@
                 </div>
             </div>
         </div>
-        <?php if(true): ?>
-        <?php echo $__env->make('pharmacy.medicine.medicine-bad-stock', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+        <?php if(@$status == 'good_medicine'): ?>
+        <div class="card-body">
+            <h5>Medicine Stock Details</h5>
+            <div class="">
+                <div class="table-responsive">
+                    <table id="example" class="table table-bordered text-nowrap key-buttons">
+                        <thead>
+                            <tr>
+                                <th class="border-bottom-0">Batch No</th>
+                                <th class="border-bottom-0">Expire Date</th>
+                                <th class="border-bottom-0">QTY</th>
+                                <th class="border-bottom-0">MRP</th>
+                                <th class="border-bottom-0">Discount</th>
+                                <th class="border-bottom-0">Purchase Rate</th>
+                                <th class="border-bottom-0">Sale Rate</th>
+                                <th class="border-bottom-0">CGST</th>
+                                <th class="border-bottom-0">SGST</th>
+                                <th class="border-bottom-0">IGST</th>
+                                <th class="border-bottom-0">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if(@$medicine_details_stock[0]->id != null): ?>
+                            <?php $__currentLoopData = $medicine_details_stock; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e(@$value->batch_no); ?></td>
+                                <td><?php echo e(@$value->exp_date); ?></td>
+                                <td><?php echo e(@$value->qty); ?></td>
+                                <td><?php echo e(@$value->mrp); ?></td>
+                                <td><?php echo e(@$value->discount); ?></td>
+                                <td><?php echo e(@$value->p_rate); ?></td>
+                                <td><?php echo e(@$value->s_rate); ?></td>
+                                <td><?php echo e(@$value->cgst); ?></td>
+                                <td><?php echo e(@$value->sgst); ?></td>
+                                <td><?php echo e(@$value->igst); ?></td>
+                                <td><?php echo e(@$value->amount); ?></td>
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
         <?php endif; ?>
-        <?php if(true): ?>
-        <?php echo $__env->make('pharmacy.medicine.medicine-good-stock', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+
+
+        <?php if(@$status == 'bad_medicine'): ?>
+        <div class="card-body">
+            <div class="card-header">
+
+                <div class="col-md-12 row">
+                    <div class="col-md-6 card-title">
+                        Expiry Medicine Details
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <a class="btn btn-primary btn-sm" href="<?php echo e(route('add-bad-medicine',['medicine_id'=>$medicine_details->id])); ?>"><i class="fa fa-plus"></i> Add Bad Medicine</a>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <div class="table-responsive">
+                    <table id="example" class="table table-bordered text-nowrap key-buttons">
+                        <thead>
+                            <tr>
+                                <th class="border-bottom-0">Batch No</th>
+                                <th class="border-bottom-0">Qty</th>
+                           
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if(@$medicine_bad_stock[0]->id != null): ?>
+                            <?php $__currentLoopData = $medicine_bad_stock; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <tr>
+                                <td><?php echo e($value->batch_no); ?></td>
+                                <td><?php echo e($value->qty); ?></td>
+                   
+                            </tr>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
         <?php endif; ?>
     </div>
 </div>

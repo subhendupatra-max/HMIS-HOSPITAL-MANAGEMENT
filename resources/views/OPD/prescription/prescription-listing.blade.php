@@ -28,16 +28,16 @@
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
-                        <thead>
-                            <tr>
-                                <th class="border-bottom-0">Sl. No</th>
-                                <th class="border-bottom-0">Date</th>
-                                <th class="border-bottom-0">Medicine Name</th>
-                                <th class="border-bottom-0">Medicine Catagory</th>
-                                <th class="border-bottom-0">Dose</th>
-                                <th class="border-bottom-0">Interval</th>
+                    <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                                <th class="text-white">Sl. No</th>
+                                <th class="text-white">Date</th>
+                                <th class="text-white">Medicine Name</th>
+                                <th class="text-white">Medicine Catagory</th>
+                                <th class="text-white">Dose</th>
+                                <th class="text-white">Interval</th>
                                 @can('edit opd payment','delete opd payment')
-                                <th>Action</th>
+                                <th class="text-white">Action</th>
                                 @endcan
                             </tr>
                         </thead>
@@ -55,7 +55,7 @@
                                         <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <i class="fa fa-caret-down"></i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             @can('edit-payment-in-opd')
-                                            <a class="dropdown-item" href="{{ route('prescription-view-in-opd',['id'=> base64_encode($item->id),'opd_id'=> base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-edit"></i> View</a>
+                                            <a class="dropdown-item" href="{{ route('prescription-view-in-opd',['id'=> base64_encode($item->id),'opd_id'=> base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-eye"></i> View</a>
                                             @endcan
 
                                             @can('edit-prescription-in-opd')
@@ -71,7 +71,7 @@
                                             @endcan -->
 
                                             @can('print-prescription-in-opd')
-                                            <a class="dropdown-item" href="{{ route('print-prescription-in-opd',['id'=> base64_encode($item->id), 'opd_id'=> base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-trash"></i> Print</a>
+                                            <a class="dropdown-item" href="{{ route('print-prescription-in-opd',['id'=> base64_encode($item->id), 'opd_id'=> base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-print"></i> Print</a>
                                             @endcan
                                         </div>
                                     </div>
@@ -85,4 +85,5 @@
             </div>
         </div>
     </div>
+</div>
     @endsection

@@ -111,36 +111,39 @@ $login_details = DB::table('users')
                             <?php if(auth()->user()->can('Roster')): ?>
                             <a class="dropdown-item" href="<?php echo e(route('roster')); ?>">Roster</a>
                             <?php endif; ?>
+                            <?php if(auth()->user()->can('Leave Request List')): ?>
+                            <a class="dropdown-item" href="<?php echo e(route('user-leave-request-list')); ?>">Leave</a>
+                            <?php endif; ?>
                         </div>
                     </li>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('Patient Master')): ?>
-                    <li class="nav-item <?php echo e(Request::segment(1) == 'Patient' ? 'nav-active' : ''); ?>">
-                        <a class="nav-link" href="<?php echo e(route('patient_details')); ?>">
+                    <li class="nav-item ">
+                        <a class="nav-link <?php echo e(Request::segment(1) == 'Patient' ? 'nav-active' : ''); ?>" href="<?php echo e(route('patient_details')); ?>">
                             <div class="icon-new"> <img
                                     src="<?php echo e(asset('public/assets/images/brand/hospitalisation.png')); ?>"></div>Patient
                         </a>
                     </li>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('OPD out-patients')): ?>
-                    <li class="nav-item <?php echo e(Request::segment(1) == 'opd' ? 'nav-active' : ''); ?>">
-                        <a class="nav-link" href="<?php echo e(route('OPD-Patient-list')); ?>">
+                    <li class="nav-item" >
+                        <a class="nav-link <?php echo e(Request::segment(1) == 'opd' ? 'nav-active' : ''); ?>" href="<?php echo e(route('OPD-Patient-list')); ?>">
                             <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/patient.png')); ?>">
                             </div>Opd
                         </a>
                     </li>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('Emergency Patients')): ?>
-                    <li class="nav-item <?php echo e(Request::segment(1) == 'emg' ? 'active' : ''); ?>">
-                        <a class="nav-link" href="<?php echo e(route('emg-patient-list')); ?>">
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo e(Request::segment(1) == 'emg' ? 'nav-active' : ''); ?>" href="<?php echo e(route('emg-patient-list')); ?>">
                             <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/hospital-bed.png')); ?>">
                             </div>EMG
                         </a>
                     </li>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('IPD ipd-patients')): ?>
-                    <li class="nav-item <?php echo e(Request::segment(1) == 'IPD' ? 'active' : ''); ?>">
-                        <a class="nav-link" href="<?php echo e(route('ipd-patient-listing')); ?>">
+                    <li class="nav-item ">
+                        <a class="nav-link <?php echo e(Request::segment(1) == 'ipd' ? 'nav-active' : ''); ?>" href="<?php echo e(route('ipd-patient-listing')); ?>">
                             <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/patient (1).png')); ?>">
                             </div>IPD
                         </a>
@@ -155,35 +158,36 @@ $login_details = DB::table('users')
                     </li>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('discount')): ?>
-                    <li class="nav-item <?php echo e(Request::segment(1) == 'discount' ? 'active' : ''); ?>">
-                        <a class="nav-link" href="<?php echo e(route('discount-list')); ?>">
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo e(Request::segment(1) == 'discount' ? 'nav-active' : ''); ?>" href="<?php echo e(route('discount-list')); ?>">
                             <div class="icon-new"><img src="<?php echo e(asset('public/assets/images/brand/offer.png')); ?>"></div>
                             Discount
                         </a>
                     </li>
                     <?php endif; ?>
                     <?php if(auth()->user()->can('pharmacy main')): ?>
-                    <li class="nav-item <?php echo e(Request::segment(1) == 'pharmacy' ? 'active' : ''); ?>">
-                        <a class="nav-link" href="<?php echo e(route('pharmacy-bill-listing')); ?>">
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo e(Request::segment(1) == 'pharmacy' ? 'nav-active' : ''); ?>" href="<?php echo e(route('pharmacy-bill-listing')); ?>">
                             <div class="icon-new"><img
                                     src="<?php echo e(asset('public/assets/images/brand/investigation.png')); ?>"></div>Pharmacy
                         </a>
                     </li>
                     <?php endif; ?>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle <?php echo e(Request::segment(1) == 'investigation' ? 'nav-active' : ''); ?>" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="icon-new"><img
                                     src="<?php echo e(asset('public/assets/images/brand/investigation.png')); ?>"></div>
                             Investigation
+                            
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <?php if(auth()->user()->can('pathology main')): ?>
-                            <a class="dropdown-item <?php echo e(Request::segment(1) == 'radiology' ? 'active' : ''); ?>"
+                            <a class="dropdown-item <?php echo e(Request::segment(1) == 'investigation' ? 'active' : ''); ?>"
                                 href="<?php echo e(route('pathology-test-charge')); ?>">Pathology</a>
                             <?php endif; ?>
                             <?php if(auth()->user()->can('radiology main')): ?>
-                            <a class="dropdown-item <?php echo e(Request::segment(1) == 'radiology' ? 'active' : ''); ?>"
+                            <a class="dropdown-item <?php echo e(Request::segment(1) == 'investigation' ? 'active' : ''); ?>"
                                 href="<?php echo e(route('radiology-test-charge')); ?>">Radiology</a>
                             <?php endif; ?>
                         </div>
@@ -199,7 +203,7 @@ $login_details = DB::table('users')
                         <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>"></div>
                         <li class="dropdown">
 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            <a href="#" class="dropdown-toggle <?php echo e(Request::segment(1) == 'setup' ? 'nav-active' : ''); ?>" data-toggle="dropdown" role="button"
                                 aria-expanded="false"> Setup <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <?php if(auth()->user()->can('General Setting')): ?>
@@ -262,6 +266,26 @@ $login_details = DB::table('users')
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('package sub catagory')): ?>
                                         <li><a href="<?php echo e(route('charges-package-sub-catagory-details')); ?>">package sub
                                                 catagory</a></li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </li>
+                                <?php endif; ?>
+
+                                <?php if(auth()->user()->can('Setup HR')): ?>
+                                <li class="dropdown-submenu">
+                                    <a tabindex="-1" href="#">HR <i class="fa fa-chevron-right"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Department')): ?>
+                                        <li><a href="<?php echo e(route('department-details')); ?>">Department</a></li>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Designation')): ?>
+                                        <li><a href="<?php echo e(route('designation-details')); ?>">Designation</a></li>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Work Station')): ?>
+                                        <li><a href="<?php echo e(route('work-station-details')); ?>">Work Station</a></li>
+                                        <?php endif; ?>
+                                        <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Work Timing Slot')): ?>
+                                        <li><a href="<?php echo e(route('work-timing-slot')); ?>">Work Timing Slot</a></li>
                                         <?php endif; ?>
                                     </ul>
                                 </li>
@@ -477,9 +501,7 @@ $login_details = DB::table('users')
                                     </ul>
                                 </li>
                                 <?php endif; ?>
-                                <?php if(auth()->user()->can('Department')): ?>
-                                <li><a href="<?php echo e(route('department-details')); ?>">Department</a></li>
-                                <?php endif; ?>
+                               
                                 <?php if(auth()->user()->can('tpa management')): ?>
                                 <li><a href="<?php echo e(route('tpa-management-details')); ?>">tpa management</a></li>
                                 <?php endif; ?>
@@ -522,7 +544,7 @@ $login_details = DB::table('users')
                         <div class="icon-new1"><img src="<?php echo e(asset('public/assets/images/brand/settings.png')); ?>"></div>
                         <li class="dropdown">
 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            <a href="#" class="dropdown-toggle <?php echo e(Request::segment(1) == 'others' ? 'nav-active' : ''); ?>" data-toggle="dropdown" role="button"
                                 aria-expanded="false"> Others <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <?php if(auth()->user()->can('Inventory')): ?>
@@ -541,6 +563,11 @@ $login_details = DB::table('users')
                                         <li><a href="<?php echo e(route('death-record')); ?>">Death Record</a></li>
                                     </ul>
                                 </li>
+
+                                <?php if(auth()->user()->can('House Keeping')): ?>
+                                <li><a href="<?php echo e(route('house-keeping')); ?>">House Keeping</a></li>
+                                <?php endif; ?>
+
                                 <li class="dropdown-submenu">
                                     <a tabindex="-1" href="#">MRD<i class="fa fa-chevron-right"></i></a>
                                     <ul class="dropdown-menu">

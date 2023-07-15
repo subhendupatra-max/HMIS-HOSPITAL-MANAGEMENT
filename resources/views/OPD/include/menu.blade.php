@@ -23,10 +23,10 @@
 
 {{-- <a class="dropdown-item {{ Request::segment(2) == 'bill-summary' ? 'active' : '' }}" href="{{ route('create-bill-summary', ['id' => base64_encode($opd_patient_details->id),'case_id'=>base64_encode($opd_patient_details->case_id)]) }}"><i class="fa fa-file"></i> Bill Summary</a> --}}
 
-<a class="dropdown-item {{ Request::segment(2) == 'opd-timeline' ? 'active' : '' }}" href="{{ route('physical-condition-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-receipt"></i> Physical Conditions</a>
+<a class="dropdown-item {{ Request::segment(2) == 'opd-physical-condition' ? 'active' : '' }}" href="{{ route('physical-condition-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-receipt"></i> Physical Conditions</a>
 
-<a class="dropdown-item {{ Request::segment(2) == 'opd-operation' ? 'active' : '' }}" href="{{ route('opd-operation-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-receipt"></i> Operation</a>
+<a class="dropdown-item {{ Request::segment(2) == 'opd-operation-in-opd' ? 'active' : '' }}" href="{{ route('opd-operation-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-receipt"></i> Operation</a>
 
-<a class="dropdown-item {{ Request::segment(2) == 'opd-blood-issue' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fas fa-tint"></i> Blood Details</a>
+<a class="dropdown-item {{ Request::segment(2) == 'blood-bank-detials-in-opd' ? 'active' : '' }}" href="{{ route('blood-bank-detials-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fas fa-tint"></i> Blood Details</a>
 
-<a class="dropdown-item {{ Request::segment(2) == 'opd-blood-issue' ? 'active' : '' }}" href="{{ route('prescription-lisitng-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa  fa-file-prescription "></i> Prescription</a>
+<a class="dropdown-item {{ Request::segment(2) == 'opd-prescription' ? 'active' : '' }}" href="{{ route('prescription-lisitng-in-opd', ['id' => base64_encode($opd_patient_details->id)]) }}"><i class="fa  fa-file-prescription "></i> Prescription</a>

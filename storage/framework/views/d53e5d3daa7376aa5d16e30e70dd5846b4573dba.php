@@ -29,15 +29,15 @@
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
-                        <thead>
-                            <tr>
-                                <th class="border-bottom-0">Sl. No</th>
-                                <th class="border-bottom-0">Requisition No.</th>
-                                <th class="border-bottom-0">Date</th>
-                                <th class="border-bottom-0">Generate By</th>
-                                <th class="border-bottom-0">Status</th>
+                        <thead class="bg-primary text-white">
+                            <tr class="border-left">
+                                <th class="text-white">Sl. No</th>
+                                <th class="text-white">Requisition No.</th>
+                                <th class="text-white">Date</th>
+                                <th class="text-white">Generate By</th>
+                                <th class="text-white">Status</th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit medicine requisition','delete medicine requisition')): ?>
-                                <th>Action</th>
+                                <th class="text-white">Action</th>
                                 <?php endif; ?>
                             </tr>
                         </thead>
@@ -74,12 +74,12 @@
                         </tbody>
 
                     </table>
-             
+
                 </div>
             </div>
         </div>
     </div>
-
+</div>
 
     <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\xampp\htdocs\DITS-HMIS-15-04-23\HMIS-HOSPITAL-MANAGEMENT\resources\views/pharmacy/purchase/requisition/medicine-requisition-listing.blade.php ENDPATH**/ ?>

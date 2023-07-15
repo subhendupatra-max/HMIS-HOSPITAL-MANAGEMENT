@@ -225,7 +225,7 @@ class EmgController extends Controller
                 ->where('emg_patient_details.id', $emg_patient_details->id)
                 ->first();
 
-            dd($emg_patient_details);
+            // dd($emg_patient_details);
 
 
             if ($request->save == 'save_and_print') {

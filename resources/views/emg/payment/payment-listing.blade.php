@@ -28,14 +28,14 @@
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
-                        <thead>
-                            <tr>
-                                <th class="border-bottom-0">Sl. No</th>
-                                <th class="border-bottom-0">Date</th>
-                                <th class="border-bottom-0">Amount</th>
-                                <th class="border-bottom-0">Payment Mode</th>
+                    <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                                <th class="text-white">Sl. No</th>
+                                <th class="text-white">Date</th>
+                                <th class="text-white">Amount</th>
+                                <th class="text-white">Payment Mode</th>
                                 @can('edit opd payment','delete opd payment')
-                                <th>Action</th>
+                                <th class="text-white">Action</th>
                                 @endcan
                             </tr>
                         </thead>

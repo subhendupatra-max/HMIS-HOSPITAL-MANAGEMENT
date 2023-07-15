@@ -185,12 +185,16 @@
                         Ward - Unit
                     </th>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                      Bed
+                        Bed
                     </th>
                     <th style="text-align: left;font-size: 11px; padding: 10px 10px 10px 10px;border: 1px solid #000;">
-                      Duration
+                        Duration
                     </th>
                 </tr>
+                <tr>
+                    <td></td>
+                </tr>
+
             </table>
 
         </table>

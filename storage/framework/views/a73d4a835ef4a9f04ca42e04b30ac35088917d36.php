@@ -34,14 +34,14 @@
                 <div class="col-md-12 mt-2">
                     <div class="table-responsive">
                         <table class="table table-bordered text-nowrap" id="example">
-                            <thead>
-                                <tr>
-                                    <th class="border-bottom-0">Sl. No</th>
-                                    <th class="border-bottom-0">Date</th>
-                                    <th class="border-bottom-0">Amount</th>
-                                    <th class="border-bottom-0">Payement Mode</th>
-                                    <th class="border-bottom-0">Note</th>
-                                    <th class="border-bottom-0">Action</th>
+                            <thead class="bg-primary text-white">
+                                <tr class="border-left">
+                                    <th class="text-white">Sl. No</th>
+                                    <th class="text-white">Date</th>
+                                    <th class="text-white">Amount</th>
+                                    <th class="text-white">Payement Mode</th>
+                                    <th class="text-white">Note</th>
+                                    <th class="text-white">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,10 +65,10 @@
                                                 <a class="dropdown-item" href="<?php echo e(route('delete-ipd-payment-details',['id' => base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Delete</a>
                                                 <?php endif; ?>
 
-                                                
-                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-payment-in-ipd')): ?>
-                                            <a class="dropdown-item" href="<?php echo e(route('print-payment-in-ipd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Print</a>
-                                            <?php endif; ?>
+
+                                                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('print-payment-in-ipd')): ?>
+                                                <a class="dropdown-item" href="<?php echo e(route('print-payment-in-ipd',['id'=> base64_encode($item->id)])); ?>"><i class="fa fa-trash"></i> Print</a>
+                                                <?php endif; ?>
 
                                             </div>
                                         </div>

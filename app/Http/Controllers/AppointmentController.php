@@ -226,6 +226,7 @@ class AppointmentController extends Controller
         $doctor_id = $request->doctorId;
         $doctor_slot_details = Slot::where('date',$appointment_date)->where('doctor',$doctor_id)->where('status','active')->where('from_time', '>=', date('H:i'))->where('is_booked', '0')->get();
         return response()->json($doctor_slot_details);
+        // dd($doctor_slot_details);
     }
     public function get_slot_details_using_doctor_id_edit(Request $request)
     {

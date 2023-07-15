@@ -28,17 +28,17 @@
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
-                        <thead>
-                            <tr>
-                                <th class="border-bottom-0">Sl. No</th>
-                                <th class="border-bottom-0">Height</th>
-                                <th class="border-bottom-0">Weight</th>
-                                <th class="border-bottom-0">Pulse</th>
-                                <th class="border-bottom-0">BP</th>
-                                <th class="border-bottom-0">Temperature</th>
-                                <th class="border-bottom-0">Respiration</th>
+                    <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                                <th class="text-white">Sl. No</th>
+                                <th class="text-white">Height</th>
+                                <th class="text-white">Weight</th>
+                                <th class="text-white">Pulse</th>
+                                <th class="text-white">BP</th>
+                                <th class="text-white">Temperature</th>
+                                <th class="text-white">Respiration</th>
                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit physical condition','delete physical condition')): ?>
-                                <th>Action</th>
+                                <th class="text-white">Action</th>
                                 <?php endif; ?>
                             </tr>
                         </thead>

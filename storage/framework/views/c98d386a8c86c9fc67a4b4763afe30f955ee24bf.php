@@ -454,7 +454,7 @@ unset($__errorArgs, $__bag); ?>
                 department_id: department,
             },
             success: function(response) {
-
+console.log(response);
                 $.each(response.operation_catagory, function(key, value) {
                     $('#operation_category_id').append(`<option value="${value.id}"  >${value.operation_catagory_name	}</option>`);
                 });

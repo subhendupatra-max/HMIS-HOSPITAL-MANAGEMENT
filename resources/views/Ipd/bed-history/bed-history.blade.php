@@ -34,16 +34,16 @@
                 <div class="col-md-12 mt-2">
                     <div class="table-responsive">
                         <table table class="table table-bordered text-nowrap" id="example">
-                            <thead>
-                                <tr>
-                                    <th class="border-bottom-0">Sl. No</th>
-                                    <th class="border-bottom-0">Department</th>
-                                    <th class="border-bottom-0">Ward - Unit</th>
-                                    <th class="border-bottom-0">Bed</th>
-                                    <th class="border-bottom-0">Duration</th>
-                                    <th class="border-bottom-0">Status</th>
+                            <thead class="bg-primary text-white">
+                                <tr class="border-left">
+                                    <th class="text-white">Sl. No</th>
+                                    <th class="text-white">Department</th>
+                                    <th class="text-white">Ward - Unit</th>
+                                    <th class="text-white">Bed</th>
+                                    <th class="text-white">Duration</th>
+                                    <th class="text-white">Status</th>
                                     @can('edit bed transfar history')
-                                    <th class="border-bottom-0">Action</th>
+                                    <th class="text-white">Action</th>
                                     @endcan
 
                                 </tr>

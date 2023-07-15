@@ -127,24 +127,24 @@ $login_details = DB::table('users')
                     </li>
                     @endif
                     @if (auth()->user()->can('OPD out-patients'))
-                    <li class="nav-item {{ Request::segment(1) == 'opd' ? 'nav-active' : '' }}">
-                        <a class="nav-link" href="{{ route('OPD-Patient-list') }}">
+                    <li class="nav-item" >
+                        <a class="nav-link {{ Request::segment(1) == 'opd' ? 'nav-active' : '' }}" href="{{ route('OPD-Patient-list') }}">
                             <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient.png') }}">
                             </div>Opd
                         </a>
                     </li>
                     @endif
                     @if (auth()->user()->can('Emergency Patients'))
-                    <li class="nav-item {{ Request::segment(1) == 'emg' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('emg-patient-list') }}">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::segment(1) == 'emg' ? 'nav-active' : '' }}" href="{{ route('emg-patient-list') }}">
                             <div class="icon-new"><img src="{{ asset('public/assets/images/brand/hospital-bed.png') }}">
                             </div>EMG
                         </a>
                     </li>
                     @endif
                     @if (auth()->user()->can('IPD ipd-patients'))
-                    <li class="nav-item {{ Request::segment(1) == 'IPD' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('ipd-patient-listing') }}">
+                    <li class="nav-item ">
+                        <a class="nav-link {{ Request::segment(1) == 'ipd' ? 'nav-active' : '' }}" href="{{ route('ipd-patient-listing') }}">
                             <div class="icon-new"><img src="{{ asset('public/assets/images/brand/patient (1).png') }}">
                             </div>IPD
                         </a>
@@ -159,35 +159,36 @@ $login_details = DB::table('users')
                     </li>
                     @endif
                     @if (auth()->user()->can('discount'))
-                    <li class="nav-item {{ Request::segment(1) == 'discount' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('discount-list') }}">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::segment(1) == 'discount' ? 'nav-active' : '' }}" href="{{ route('discount-list') }}">
                             <div class="icon-new"><img src="{{ asset('public/assets/images/brand/offer.png') }}"></div>
                             Discount
                         </a>
                     </li>
                     @endif
                     @if (auth()->user()->can('pharmacy main'))
-                    <li class="nav-item {{ Request::segment(1) == 'pharmacy' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('pharmacy-bill-listing') }}">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Request::segment(1) == 'pharmacy' ? 'nav-active' : '' }}" href="{{ route('pharmacy-bill-listing') }}">
                             <div class="icon-new"><img
                                     src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>Pharmacy
                         </a>
                     </li>
                     @endif
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        <a class="nav-link dropdown-toggle {{ Request::segment(1) == 'investigation' ? 'nav-active' : '' }}" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <div class="icon-new"><img
                                     src="{{ asset('public/assets/images/brand/investigation.png') }}"></div>
                             Investigation
+                            
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             @if (auth()->user()->can('pathology main'))
-                            <a class="dropdown-item {{ Request::segment(1) == 'radiology' ? 'active' : '' }}"
+                            <a class="dropdown-item {{ Request::segment(1) == 'investigation' ? 'active' : '' }}"
                                 href="{{ route('pathology-test-charge') }}">Pathology</a>
                             @endif
                             @if (auth()->user()->can('radiology main'))
-                            <a class="dropdown-item {{ Request::segment(1) == 'radiology' ? 'active' : '' }}"
+                            <a class="dropdown-item {{ Request::segment(1) == 'investigation' ? 'active' : '' }}"
                                 href="{{ route('radiology-test-charge') }}">Radiology</a>
                             @endif
                         </div>
@@ -227,7 +228,7 @@ $login_details = DB::table('users')
                         <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
                         <li class="dropdown">
 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            <a href="#" class="dropdown-toggle {{ Request::segment(1) == 'setup' ? 'nav-active' : '' }}" data-toggle="dropdown" role="button"
                                 aria-expanded="false"> Setup <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 @if (auth()->user()->can('General Setting'))
@@ -573,7 +574,7 @@ $login_details = DB::table('users')
                         <div class="icon-new1"><img src="{{ asset('public/assets/images/brand/settings.png') }}"></div>
                         <li class="dropdown">
 
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                            <a href="#" class="dropdown-toggle {{ Request::segment(1) == 'others' ? 'nav-active' : '' }}" data-toggle="dropdown" role="button"
                                 aria-expanded="false"> Others <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 @if (auth()->user()->can('Inventory'))
