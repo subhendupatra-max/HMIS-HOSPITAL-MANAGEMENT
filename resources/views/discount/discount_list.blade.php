@@ -12,41 +12,39 @@
         <!-- ================================ Alert Message===================================== -->
 
         @if (session('success'))
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert"
-                aria-hidden="true">×</button>{{ session('success') }}</div>
+        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{ session('success') }}</div>
         @endif
         @if (session()->has('error'))
-        <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert"
-                aria-hidden="true">×</button>{{ session('error') }}</div>
+        <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{{ session('error') }}</div>
         @endif
 
         <div class="card-body">
             <table class="table table-bordered text-nowrap" id="example">
-                <thead>
-                    <tr>
-                        <th scope="col">Discount No.</th>
-                        <th scope="col">Bill No.</th>
-                        <th scope="col">Patient Name</th>
-                        <th scope="col">Section</th>
-                        <th scope="col">Mobile No.</th>
-                        <th scope="col">Bill Amount</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Requested By </th>
-                        <th scope="col">Action</th>
+                <thead class="bg-primary text-white">
+                    <tr class="border-left">
+                        <th class="text-white">Discount No.</th>
+                        <th class="text-white">Bill No.</th>
+                        <th class="text-white">Patient Name</th>
+                        <th class="text-white">Section</th>
+                        <th class="text-white">Mobile No.</th>
+                        <th class="text-white">Bill Amount</th>
+                        <th class="text-white">Status</th>
+                        <th class="text-white">Requested By </th>
+                        <th class="text-white">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @if ($discountList[0]->section)
                     @foreach ($discountList as $value)
                     <?php $discount_details = App\Models\DiscountDetails::where('discount_id', $value->id);
-                                $total_bill_amount = $discount_details->sum('bill_amount');
-                                $_bill_id = $discount_details->get();
-                                ?>
+                    $total_bill_amount = $discount_details->sum('bill_amount');
+                    $_bill_id = $discount_details->get();
+                    ?>
                     <tr>
                         <td>{{ $value->id }}</td>
                         <td>
                             @foreach ($_bill_id as $values)
-                                <span style="color:brown">{{  $values->bill_id }} </span>
+                            <span style="color:brown">{{ $values->bill_id }} </span>
                             @endforeach
                         </td>
                         <td>
@@ -83,9 +81,7 @@
                         </td>
                         <td>{{ $value->request_by_details->first_name . ' ' . $value->request_by_details->last_name }}
                         </td>
-                        <td><a class="btn btn-primary btn-sm"
-                                href="{{route('view-discount-details',['discount_id'=>base64_encode($value->id)])}}"><i
-                                    class="fa fa-eye"></i> View</a></td>
+                        <td><a class="btn btn-primary btn-sm" href="{{route('view-discount-details',['discount_id'=>base64_encode($value->id)])}}"><i class="fa fa-eye"></i> View</a></td>
                     </tr>
                     @endforeach
                     @endif

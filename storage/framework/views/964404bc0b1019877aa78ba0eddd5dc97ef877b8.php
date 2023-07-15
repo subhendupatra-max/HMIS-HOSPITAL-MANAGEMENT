@@ -26,15 +26,15 @@
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
-                        <thead>
-                            <tr>
-                                <th class="border-bottom-0">OT. No</th>
-                                <th class="border-bottom-0">Operation Name</th>
-                                <th class="border-bottom-0">Operation Catagory </th>
-                                <th class="border-bottom-0">Consultant Doctor </th>
-                                <th class="border-bottom-0">Operaiton Type</th>
-                                <th class="border-bottom-0">From Date</th>
-                                <th class="border-bottom-0">To Date</th>
+                    <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                                <th class="text-white">OT. No</th>
+                                <th class="text-white">Operation Name</th>
+                                <th class="text-white">Operation Catagory </th>
+                                <th class="text-white">Consultant Doctor </th>
+                                <th class="text-white">Operaiton Type</th>
+                                <th class="text-white">From Date</th>
+                                <th class="text-white">To Date</th>
                                 <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit physical condition','delete physical condition')): ?>
                                 <th>Action</th>
                                 <?php endif; ?> -->

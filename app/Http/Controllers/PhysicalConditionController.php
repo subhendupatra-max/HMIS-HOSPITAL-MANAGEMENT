@@ -99,7 +99,7 @@ class PhysicalConditionController extends Controller
         $id = base64_decode($id);
         OpdPatientPhysicalDetail::find($id)->delete();
 
-        return back()->with('success', "Payment Deleted Successfully");
+        return back()->with('success', "Patient Physical Details Deleted Successfully");
     }
     //end for opd
 
@@ -188,7 +188,7 @@ class PhysicalConditionController extends Controller
         $id = base64_decode($id);
         EmgPatientPhysicalDetail::find($id)->delete();
 
-        return back()->with('success', "Payment Deleted Successfully");
+        return back()->with('success', "Patient Physical Details Deleted Successfully");
     }
     //for emg
 
@@ -277,7 +277,7 @@ class PhysicalConditionController extends Controller
         $id = base64_decode($id);
         IpdPatientPhysicalDetail::find($id)->delete();
 
-        return back()->with('success', "Physical Condition Deleted Successfully");
+        return back()->with('success', "Patient Physical Details Deleted Successfully");
     }
     //end for ipd
 }

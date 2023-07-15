@@ -12,41 +12,39 @@
         <!-- ================================ Alert Message===================================== -->
 
         <?php if(session('success')): ?>
-        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert"
-                aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
+        <div class="alert alert-success" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('success')); ?></div>
         <?php endif; ?>
         <?php if(session()->has('error')): ?>
-        <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert"
-                aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
+        <div class="alert alert-danger" role="alert"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button><?php echo e(session('error')); ?></div>
         <?php endif; ?>
 
         <div class="card-body">
             <table class="table table-bordered text-nowrap" id="example">
-                <thead>
-                    <tr>
-                        <th scope="col">Discount No.</th>
-                        <th scope="col">Bill No.</th>
-                        <th scope="col">Patient Name</th>
-                        <th scope="col">Section</th>
-                        <th scope="col">Mobile No.</th>
-                        <th scope="col">Bill Amount</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Requested By </th>
-                        <th scope="col">Action</th>
+                <thead class="bg-primary text-white">
+                    <tr class="border-left">
+                        <th class="text-white">Discount No.</th>
+                        <th class="text-white">Bill No.</th>
+                        <th class="text-white">Patient Name</th>
+                        <th class="text-white">Section</th>
+                        <th class="text-white">Mobile No.</th>
+                        <th class="text-white">Bill Amount</th>
+                        <th class="text-white">Status</th>
+                        <th class="text-white">Requested By </th>
+                        <th class="text-white">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if($discountList[0]->section): ?>
                     <?php $__currentLoopData = $discountList; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <?php $discount_details = App\Models\DiscountDetails::where('discount_id', $value->id);
-                                $total_bill_amount = $discount_details->sum('bill_amount');
-                                $_bill_id = $discount_details->get();
-                                ?>
+                    $total_bill_amount = $discount_details->sum('bill_amount');
+                    $_bill_id = $discount_details->get();
+                    ?>
                     <tr>
                         <td><?php echo e($value->id); ?></td>
                         <td>
                             <?php $__currentLoopData = $_bill_id; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $values): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <span style="color:brown"><?php echo e($values->bill_id); ?> </span>
+                            <span style="color:brown"><?php echo e($values->bill_id); ?> </span>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </td>
                         <td>
@@ -82,9 +80,7 @@
                         <td><?php echo e($value->request_by_details->first_name . ' ' . $value->request_by_details->last_name); ?>
 
                         </td>
-                        <td><a class="btn btn-primary btn-sm"
-                                href="<?php echo e(route('view-discount-details',['discount_id'=>base64_encode($value->id)])); ?>"><i
-                                    class="fa fa-eye"></i> View</a></td>
+                        <td><a class="btn btn-primary btn-sm" href="<?php echo e(route('view-discount-details',['discount_id'=>base64_encode($value->id)])); ?>"><i class="fa fa-eye"></i> View</a></td>
                     </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     <?php endif; ?>

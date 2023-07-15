@@ -14,6 +14,7 @@ use App\Models\DoseDuration;
 use App\Models\EPrescriptionMedicine;
 use App\Models\EPresPathologyTest;
 use App\Models\EPresRadiologyTest;
+use DB;
 use App\Models\AllHeader;
 
 
@@ -110,7 +111,7 @@ class EmgPrescriptionController extends Controller
         }
         // DB::commit();
         if ($status) {
-            return redirect()->route('prescription-lisitng-in-emg', ['id' => base64_encode($request->emg_id)])->with('success', 'emg Prescription Added Successfully');
+            return redirect()->route('prescription-lisitng-in-emg', ['id' => base64_encode($request->emg_id)])->with('success', 'Emg Prescription Added Successfully');
         } else {
             return redirect()->route('add-prescription-in-emg', ['id' => base64_encode($request->emg_id)])->with('success', 'Something went wrong');
         }
@@ -146,14 +147,14 @@ class EmgPrescriptionController extends Controller
     public function update_prescription_in_emg(Request $request)
     {
         // dd($request->all());
-        // $validate = $request->validate([
-        //     'patient_id' => 'required',
-        //     'discharge_date' => 'required',
-        //     'discharge_status' => 'required',
-        //     'icd_code' => 'required',
-        // ]);
-        // try {
-        //     DB::beginTransaction();
+        $validate = $request->validate([
+            'patient_id' => 'required',
+            'discharge_date' => 'required',
+            'discharge_status' => 'required',
+            'icd_code' => 'required',
+        ]);
+        try {
+            DB::beginTransaction();
 
 
         //SAVE in emg details
@@ -209,16 +210,16 @@ class EmgPrescriptionController extends Controller
                 $radiolo_discharged->save();
             }
         }
-        // DB::commit();
+        DB::commit();
         if ($status) {
-            return redirect()->route('prescription-lisitng-in-emg', ['id' => base64_encode($request->emg_id)])->with('success', 'Opd Prescription Updated Successfully');
+            return redirect()->route('prescription-lisitng-in-emg', ['id' => base64_encode($request->emg_id)])->with('success', 'Emg Prescription Updated Successfully');
         } else {
             return redirect()->route('add-prescription-in-emg', ['id' => base64_encode($request->emg_id)])->with('success', 'Something went wrong');
         }
-        // } catch (\Throwable $th) {
-        //     DB::rollback();
-        //     return redirect()->back()->with('error', $th->getMessage());
-        // }
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
 
     public function delete_prescription_in_emg($id)

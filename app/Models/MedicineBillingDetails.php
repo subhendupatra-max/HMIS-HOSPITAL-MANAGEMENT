@@ -10,13 +10,11 @@ class MedicineBillingDetails extends Model
 {
     use HasFactory;
 
-
-
     public function medicine_bill()
     {
         return $this->belongsTo(MedicineBilling::class, 'medicine_billing_id', 'id');
     }
-//
+    //
     public function medicine_names()
     {
         return $this->belongsTo(Medicine::class, 'medicine_name', 'id');

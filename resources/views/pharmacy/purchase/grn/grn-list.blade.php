@@ -13,9 +13,7 @@
                     <div class="d-block">
 
                         @can('Medicine GRN Create')
-
                         <a href="{{route('medicine-grn-create')}}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Create GRN</a>
-
                         @endcan
                     </div>
                 </div>
@@ -34,14 +32,14 @@
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-borderless text-nowrap key-buttons">
-                        <thead>
-                            <tr>
-                                <th scope="col">Sl No.</th>
-                                <th scope="col">GRN No.</th>
-                                <th scope="col">Store Room</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
+                    <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                                <th class="text-white">Sl No.</th>
+                                <th class="text-white">GRN No.</th>
+                                <th class="text-white">Store Room</th>
+                                <th class="text-white">Date</th>
+                                <th class="text-white">Status</th>
+                                <th class="text-white">Action</th>
                             </tr>
                         </thead>
                         <tbody>

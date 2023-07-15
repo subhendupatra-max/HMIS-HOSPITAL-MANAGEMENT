@@ -11,9 +11,14 @@
 
                 <div class="col-md-6 text-right">
 
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Patient Billing')): ?>
+                    <a href="<?php echo e(route('patient-billing-list', base64_encode($patient_details->id))); ?>" class="btn btn-primary btn-sm"><i class="fa fa-file-invoice-dollar"></i> Billing Details</a>
+                    <?php endif; ?>
+
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('edit patient')): ?>
                     <a href="<?php echo e(route('edit-patient-details', base64_encode($patient_details->id))); ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> Edit Details</a>
                     <?php endif; ?>
+               
 
                     <a href="#" class="btn btn-primary btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" style="">

@@ -1749,204 +1749,206 @@ Route::group(['middleware' => ['permission:pharmacy main'], 'prefix' => 'pharmac
 });
 // ================================== Pharmacy Main =================
 
-// ================================== Inventory  ==============================
-Route::group(['middleware' => ['permission:Inventory'], 'prefix' => 'inventory'], function () {
+Route::group(['prefix' => 'others'], function () {
+
+    // ================================== Inventory  ==============================
+    Route::group(['middleware' => ['permission:Inventory'], 'prefix' => 'inventory'], function () {
 
 
-    Route::get('item-stock-listing', [ItemStockController::class, 'item_stock_details'])->name('item-stock-listing');
+        Route::get('item-stock-listing', [ItemStockController::class, 'item_stock_details'])->name('item-stock-listing');
 
-    // ================================== Inventory requisition  ==============================
-    Route::group(['middleware' => ['permission:View Inventory Reqiuisition'], 'prefix' => 'inventory-requisition'], function () {
+        // ================================== Inventory requisition  ==============================
+        Route::group(['middleware' => ['permission:View Inventory Reqiuisition'], 'prefix' => 'inventory-requisition'], function () {
 
-        Route::get('all-inventory-requisition-listing', [ItemRequisitionController::class, 'inventory_requisition_listing'])->name('all-inventory-requisition-listing');
+            Route::get('all-inventory-requisition-listing', [ItemRequisitionController::class, 'inventory_requisition_listing'])->name('all-inventory-requisition-listing');
 
-        Route::group(['middleware' => ['permission:Add Inventory Reqiuisition'], 'prefix' => 'inventory-add-requisition'], function () {
+            Route::group(['middleware' => ['permission:Add Inventory Reqiuisition'], 'prefix' => 'inventory-add-requisition'], function () {
 
-            Route::get('add-inventory-requisition-details', [ItemRequisitionController::class, 'add_inventory_requisition_details'])->name('add-inventory-requisition-details');
-            Route::post('save-inventory-requisition-details', [ItemRequisitionController::class, 'save_inventory_requisition_details'])->name('save-inventory-requisition-details');
-            Route::post('/get-item-details', [ItemRequisitionController::class, 'get_item_details'])->name('get-item-details');
-            Route::post('/get-item-ajax', [ItemRequisitionController::class, 'get_item_ajax'])->name('get-item-inventoty');
-            Route::post('/get-item-brand-all', [ItemRequisitionController::class, 'get_item_brand_all'])->name('get-item-brand-all');
+                Route::get('add-inventory-requisition-details', [ItemRequisitionController::class, 'add_inventory_requisition_details'])->name('add-inventory-requisition-details');
+                Route::post('save-inventory-requisition-details', [ItemRequisitionController::class, 'save_inventory_requisition_details'])->name('save-inventory-requisition-details');
+                Route::post('/get-item-details', [ItemRequisitionController::class, 'get_item_details'])->name('get-item-details');
+                Route::post('/get-item-ajax', [ItemRequisitionController::class, 'get_item_ajax'])->name('get-item-inventoty');
+                Route::post('/get-item-brand-all', [ItemRequisitionController::class, 'get_item_brand_all'])->name('get-item-brand-all');
 
-            Route::post('/get-item-details-using-part-no-inventory', [RequisitionController::class, 'get_item_details_part_no'])->name('get-item-details-using-part-no-inventory');
+                Route::post('/get-item-details-using-part-no-inventory', [RequisitionController::class, 'get_item_details_part_no'])->name('get-item-details-using-part-no-inventory');
+            });
+
+            Route::group(['middleware' => ['permission:Add Inventory Reqiuisition']], function () {
+                Route::get('all-inventory-requisition-details/{id}', [ItemRequisitionController::class, 'all_inventory_requisition_details'])->name('all-inventory-requisition-details');
+            });
+
+            Route::group(['middleware' => ['permission:print Inventory Reqiuisition']], function () {
+                Route::get('/print-inventory-req/{id?}', [ItemRequisitionController::class, '_printInventoryRequisition'])->name('print-inventory-req');
+            });
+
+            Route::post('/add-inventory-vender-for-quatation', [ItemRequisitionController::class, 'add_inventory_vender_for_quatation'])->name('add-inventory-vender-for-quatation');
+            Route::post('/add-inventory-vendor-permission', [ItemRequisitionController::class, 'add_inventory_vendor_permission'])->name('add-inventory-vendor-permission');
+            Route::post('/given-approval-inventory', [ItemRequisitionController::class, 'given_approval_inventory'])->name('given-approval-inventory');
+            Route::post('/give-approval-vendor-in-inventory', [ItemRequisitionController::class, 'give_approval_vendor_in_inventory'])->name('give-approval-vendor-in-inventory');
+            Route::post('/vendor-quatation-inventory', [ItemRequisitionController::class, 'vendor_quatation_in_inventory'])->name('add-vendor-quatation-in-inventory');
+            Route::post('/vendor-select-for-po-in-inventory', [ItemRequisitionController::class, 'vendor_select_for_po_in_inventory'])->name('vendor-select-for-po-in-inventory');
+
+            Route::group(['middleware' => ['permission:delete requisition inventory']], function () {
+                Route::get('/delete-requisition-inven/{id?}', [ItemRequisitionController::class, 'requisition_delete'])->name('delete-requisition-inven');
+            });
+            Route::group(['middleware' => ['permission:edit requisition inventory']], function () {
+                Route::get('/edit-requisition-inven/{id?}', [ItemRequisitionController::class, 'edit_requisition'])->name('edit-requisition-inven');
+                Route::get('/get-requisition-item-inven/{id?}', [ItemRequisitionController::class, 'get_requisition_item'])->name('get-requisition-item-inven');
+                Route::post('/edit-requisition-inven', [ItemRequisitionController::class, 'update_requisition'])->name('edit-requisition')->name('edit-requisition-inven');
+            });
         });
+        // ================================== Inventory requisition  ==============================
 
-        Route::group(['middleware' => ['permission:Add Inventory Reqiuisition']], function () {
-            Route::get('all-inventory-requisition-details/{id}', [ItemRequisitionController::class, 'all_inventory_requisition_details'])->name('all-inventory-requisition-details');
-        });
+        // ================================== Inventory Purchase Order  ==============================
 
-        Route::group(['middleware' => ['permission:print Inventory Reqiuisition']], function () {
-            Route::get('/print-inventory-req/{id?}', [ItemRequisitionController::class, '_printInventoryRequisition'])->name('print-inventory-req');
-        });
+        Route::group(['middleware' => ['permission:Purchase Order']], function () {
+            Route::get('/Purchase-Order-list-inventory', [ItemPurchaseOrderController::class, 'index'])->name('Purchase-Order-list-inventory');
 
-        Route::post('/add-inventory-vender-for-quatation', [ItemRequisitionController::class, 'add_inventory_vender_for_quatation'])->name('add-inventory-vender-for-quatation');
-        Route::post('/add-inventory-vendor-permission', [ItemRequisitionController::class, 'add_inventory_vendor_permission'])->name('add-inventory-vendor-permission');
-        Route::post('/given-approval-inventory', [ItemRequisitionController::class, 'given_approval_inventory'])->name('given-approval-inventory');
-        Route::post('/give-approval-vendor-in-inventory', [ItemRequisitionController::class, 'give_approval_vendor_in_inventory'])->name('give-approval-vendor-in-inventory');
-        Route::post('/vendor-quatation-inventory', [ItemRequisitionController::class, 'vendor_quatation_in_inventory'])->name('add-vendor-quatation-in-inventory');
-        Route::post('/vendor-select-for-po-in-inventory', [ItemRequisitionController::class, 'vendor_select_for_po_in_inventory'])->name('vendor-select-for-po-in-inventory');
+            // Route::group(['middleware' => ['permission:All workshop']], function () {
+            //     Route::get('/Purchase-Order-list/{id?}', [ItemPurchaseOrderController::class, 'index_workshop']);
+            // });
 
-        Route::group(['middleware' => ['permission:delete requisition inventory']], function () {
-            Route::get('/delete-requisition-inven/{id?}', [ItemRequisitionController::class, 'requisition_delete'])->name('delete-requisition-inven');
+            Route::group(['middleware' => ['permission:Create Purchase Order']], function () {
+                Route::post('/save-purchase-order-in-inventory', [ItemPurchaseOrderController::class, 'save_purchase_order'])->name('save-purchase-order-in-inventory');
+                Route::get('/Purchase-Order-Create-inventory', [ItemPurchaseOrderController::class, 'create_po'])->name('create-po-inventory');
+
+                Route::get('/get-requisition-details-inventory/{vendor_id?}/{workshop?}', [ItemPurchaseOrderController::class, 'get_requisition_details'])->name('get-requisition-details-inventory');
+
+                Route::get('/get-requisition-item-details-inventory/{requisition_id?}', [ItemPurchaseOrderController::class, 'get_requisition_item_details'])->name('get-requisition-item-details-inventory');
+            });
+            Route::get('purchase-order-details-inventory/{id?}', [ItemPurchaseOrderController::class, 'purchase_order_details'])->name('purchase-order-details-inventory');
+
+            Route::group(['middleware' => ['permission:New Vendor Add in PO section']], function () {
+                Route::post('/vendor-select-change', [ItemPurchaseOrderController::class, 'vendor_select_change'])->name('vendor-select-change-afetr-po-inven');
+            });
+            Route::group(['middleware' => ['permission:Send PO with feedback form']], function () {
+                Route::get('send-po-feedback-inven/{po_id?}/{vendor_id?}', [ItemPurchaseOrderController::class, 'send_po_feedback'])->name('send-po-feedback-inven');
+            });
+            Route::group(['middleware' => ['permission:save feedback']], function () {
+                Route::post('feedback-save-inven', [ItemPurchaseOrderController::class, 'save_feedback'])->name('feedback-save-inven');
+            });
+            Route::post('expected-delivery-date-inven', [ItemPurchaseOrderController::class, 'save_expected_delivery_date'])->name('expected-delivery-date-inven');
+
+            Route::group(['middleware' => ['permission:permission on po section']], function () {
+                Route::post('po-status-change-inven', [ItemPurchaseOrderController::class, 'po_status_change'])->name('po-status-change-inven');
+            });
+
+            Route::group(['middleware' => ['permission:Delete Purchase Order']], function () {
+                Route::get('po-delete-inven/{po_id?}', [ItemPurchaseOrderController::class, 'delete_po'])->name('po-delete-inven');
+            });
+            Route::group(['middleware' => ['permission:Edit Purchase Order']], function () {
+                Route::get('po-edit/{po_id?}', [ItemPurchaseOrderController::class, 'edit_po']);
+                Route::post('/po-update', [ItemPurchaseOrderController::class, 'po_update'])->name('po-update');
+            });
+            Route::group(['middleware' => ['permission:Print Purchase Order']], function () {
+                Route::get('po-print-inven/{po_id?}', [ItemPurchaseOrderController::class, 'print_po'])->name('po-print-inven');
+            });
         });
-        Route::group(['middleware' => ['permission:edit requisition inventory']], function () {
-            Route::get('/edit-requisition-inven/{id?}', [ItemRequisitionController::class, 'edit_requisition'])->name('edit-requisition-inven');
-            Route::get('/get-requisition-item-inven/{id?}', [ItemRequisitionController::class, 'get_requisition_item'])->name('get-requisition-item-inven');
-            Route::post('/edit-requisition-inven', [ItemRequisitionController::class, 'update_requisition'])->name('edit-requisition')->name('edit-requisition-inven');
+        //==================== Inventory Purchase Order====================================================
+
+        //================================= GRM ================================================
+        Route::group(['middleware' => ['permission:GRN Inventory']], function () {
+            Route::get('grm-list-inven', [ItemGRMController::class, 'index'])->name('grm-list-inven');
+            // Route::group(['middleware' => ['permission:All workshop Inventory']], function () {
+            //     Route::get('grm-list/{id?}', [ItemGRMController::class, 'index_workshop']);
+            // });
+            Route::group(['middleware' => ['permission:GRN print Inventory']], function () {
+                Route::get('grm-print-inven/{id?}', [ItemGRMController::class, 'grm_print'])->name('grm-print-inven');
+            });
+
+            Route::group(['middleware' => ['permission:GRN Create Inventory']], function () {
+                Route::get('grm-create-inven', [ItemGRMController::class, 'create_grm'])->name('grm-create-inven');
+                Route::get('/get-po-item-details-inven/{id?}', [ItemGRMController::class, 'get_po_item_details'])->name('get-po-item-details-inven');
+                Route::post('save-grm-inven', [ItemGRMController::class, 'save_grm'])->name('save-grm-inven');
+            });
+
+            Route::get('grm-details-inven/{id?}', [ItemGRMController::class, 'grm_details'])->name('grm-details-inven');
+
+            Route::group(['middleware' => ['permission:GRN delete Inventory']], function () {
+                Route::get('grm-delete-inven/{id?}', [ItemGRMController::class, 'grm_delete'])->name('grm-delete-inven');
+            });
+
+            Route::group(['middleware' => ['permission:GRN edit Inventory']], function () {
+                Route::get('/grm-edit-inven/{id?}', [ItemGRMController::class, 'grm_edit'])->name('grm-edit-inven');
+                Route::post('/grm-update-inven', [ItemGRMController::class, 'update_grm'])->name('grm-update-inven');
+            });
+
+            Route::group(['middleware' => ['permission:GRN edit Inventory']], function () {
+                Route::get('/stock-update-after-grm-inven/{id?}', [ItemGRMController::class, 'stock_update_after_grm'])->name('stock-update-after-grm-inven');
+            });
         });
+        //================================= GRM ================================================
+
+
+        //================================= Inventory Return =============================================
+        Route::group(['middleware' => ['permission:Return PO Item Inventory']], function () {
+            Route::get('return-list-inventory', [ItemReturnController::class, 'index'])->name('return-list-inventory');
+            // Route::group(['middleware' => ['permission:All workshop']], function () {
+            //     Route::get('return-list/{id?}', [ItemReturnController::class, 'index_workshop']);
+            // });
+            Route::group(['middleware' => ['permission:Create Return PO Item Inventory']], function () {
+                Route::get('return-create-inventory', [ItemReturnController::class, 'create_return'])->name('return-create-inventory');
+                Route::get('/get-po-item-details-inventory-return/{po_id?}', [ItemReturnController::class, 'get_po_item_details_return'])->name('get-po-item-details-inventory-return');
+                Route::post('save-return-inventory', [ItemReturnController::class, 'save_return'])->name('save-return-inventory');
+            });
+
+            Route::group(['middleware' => ['permission:delete Return PO Item Inventory']], function () {
+                Route::get('return-delete-inventory/{id?}', [ItemReturnController::class, 'return_delete'])->name('return-delete-inventory');
+            });
+
+            Route::group(['middleware' => ['permission:edit Return PO Item Inventory']], function () {
+                Route::get('/get-po-item-details-by-grm-inven/{po_id?}', [ItemReturnController::class, 'get_po_item_details'])->name('get-po-item-details-by-grm-inven');
+                Route::get('return-edit-inventory/{id?}', [ItemReturnController::class, 'edit_Return'])->name('return-edit-inventory');
+                Route::post('return-update-inventory', [ItemReturnController::class, 'update_return'])->name('return-update-inventory');
+            });
+
+            Route::get('return-details-inventory/{id?}', [ItemReturnController::class, 'return_details'])->name('return-details-inventory');
+        });
+        //================================= Inventory  Return =============================================
+
+
+        // ================================== Item Issue  ==============================
+
+        Route::group(['middleware' => ['permission:Item Issue Inventory']], function () {
+
+            Route::get('item-issue-listing-inventory', [ItemStockController::class, 'index'])->name('item-issue-listing-inventory');
+
+            Route::get('item-issue-details-inventory/{issue_id?}', [ItemStockController::class, 'item_issue_details'])->name('item-issue-details-inventory');
+
+
+            Route::group(['middleware' => ['permission:Create Item Issue Inventory']], function () {
+                Route::get('add-item-issue-inventory', [ItemStockController::class, 'add_item_issue'])->name('add-item-issue-inventory');
+                Route::post('save-item-issue-inventory', [ItemStockController::class, 'save_item_issue'])->name('save-item-issue-inventory');
+
+                Route::post('get-item-avi-qty', [ItemStockController::class, 'get_item_avi_qty'])->name('get-item-avi-qty');
+
+                Route::post('find-issue-to-by-department', [ItemStockController::class, 'get_issue_to_by_department'])->name('find-issue-to-by-department');
+            });
+
+            Route::group(['middleware' => ['permission:edit item issue inventory']], function () {
+                Route::get('edit-item-issue-inventory/{issue_id?}', [ItemStockController::class, 'edit_item_issue'])->name('edit-item-issue-inventory');
+
+                Route::post('update-item-issue-inventory', [ItemStockController::class, 'update_item_issue'])->name('update-item-issue-inventory');
+
+                Route::post('get-item-avi-qty', [ItemStockController::class, 'get_item_avi_qty'])->name('get-item-avi-qty');
+            });
+            Route::group(['middleware' => ['permission:delete item issue inventory']], function () {
+                Route::get('delete-item-issue-inventory/{issue_id?}', [ItemStockController::class, 'delete_item_issue'])->name('delete-item-issue-inventory');
+            });
+
+            Route::group(['middleware' => ['permission:delete item issue inventory']], function () {
+                Route::get('update-inventory-stock/{item_id?}', [ItemStockController::class, 'update_inventory_stock'])->name('update-inventory-stock');
+
+                Route::post('save-update-inventory-stock', [ItemStockController::class, 'save_update_inventory_stock'])->name('save-update-inventory-stock');
+            });
+        });
+        // ==================================  Item Issue ==============================
+
+
+
     });
-    // ================================== Inventory requisition  ==============================
-
-    // ================================== Inventory Purchase Order  ==============================
-
-    Route::group(['middleware' => ['permission:Purchase Order']], function () {
-        Route::get('/Purchase-Order-list-inventory', [ItemPurchaseOrderController::class, 'index'])->name('Purchase-Order-list-inventory');
-
-        // Route::group(['middleware' => ['permission:All workshop']], function () {
-        //     Route::get('/Purchase-Order-list/{id?}', [ItemPurchaseOrderController::class, 'index_workshop']);
-        // });
-
-        Route::group(['middleware' => ['permission:Create Purchase Order']], function () {
-            Route::post('/save-purchase-order-in-inventory', [ItemPurchaseOrderController::class, 'save_purchase_order'])->name('save-purchase-order-in-inventory');
-            Route::get('/Purchase-Order-Create-inventory', [ItemPurchaseOrderController::class, 'create_po'])->name('create-po-inventory');
-
-            Route::get('/get-requisition-details-inventory/{vendor_id?}/{workshop?}', [ItemPurchaseOrderController::class, 'get_requisition_details'])->name('get-requisition-details-inventory');
-
-            Route::get('/get-requisition-item-details-inventory/{requisition_id?}', [ItemPurchaseOrderController::class, 'get_requisition_item_details'])->name('get-requisition-item-details-inventory');
-        });
-        Route::get('purchase-order-details-inventory/{id?}', [ItemPurchaseOrderController::class, 'purchase_order_details'])->name('purchase-order-details-inventory');
-
-        Route::group(['middleware' => ['permission:New Vendor Add in PO section']], function () {
-            Route::post('/vendor-select-change', [ItemPurchaseOrderController::class, 'vendor_select_change'])->name('vendor-select-change-afetr-po-inven');
-        });
-        Route::group(['middleware' => ['permission:Send PO with feedback form']], function () {
-            Route::get('send-po-feedback-inven/{po_id?}/{vendor_id?}', [ItemPurchaseOrderController::class, 'send_po_feedback'])->name('send-po-feedback-inven');
-        });
-        Route::group(['middleware' => ['permission:save feedback']], function () {
-            Route::post('feedback-save-inven', [ItemPurchaseOrderController::class, 'save_feedback'])->name('feedback-save-inven');
-        });
-        Route::post('expected-delivery-date-inven', [ItemPurchaseOrderController::class, 'save_expected_delivery_date'])->name('expected-delivery-date-inven');
-
-        Route::group(['middleware' => ['permission:permission on po section']], function () {
-            Route::post('po-status-change-inven', [ItemPurchaseOrderController::class, 'po_status_change'])->name('po-status-change-inven');
-        });
-
-        Route::group(['middleware' => ['permission:Delete Purchase Order']], function () {
-            Route::get('po-delete-inven/{po_id?}', [ItemPurchaseOrderController::class, 'delete_po'])->name('po-delete-inven');
-        });
-        Route::group(['middleware' => ['permission:Edit Purchase Order']], function () {
-            Route::get('po-edit/{po_id?}', [ItemPurchaseOrderController::class, 'edit_po']);
-            Route::post('/po-update', [ItemPurchaseOrderController::class, 'po_update'])->name('po-update');
-        });
-        Route::group(['middleware' => ['permission:Print Purchase Order']], function () {
-            Route::get('po-print-inven/{po_id?}', [ItemPurchaseOrderController::class, 'print_po'])->name('po-print-inven');
-        });
-    });
-    //==================== Inventory Purchase Order====================================================
-
-    //================================= GRM ================================================
-    Route::group(['middleware' => ['permission:GRN Inventory']], function () {
-        Route::get('grm-list-inven', [ItemGRMController::class, 'index'])->name('grm-list-inven');
-        // Route::group(['middleware' => ['permission:All workshop Inventory']], function () {
-        //     Route::get('grm-list/{id?}', [ItemGRMController::class, 'index_workshop']);
-        // });
-        Route::group(['middleware' => ['permission:GRN print Inventory']], function () {
-            Route::get('grm-print-inven/{id?}', [ItemGRMController::class, 'grm_print'])->name('grm-print-inven');
-        });
-
-        Route::group(['middleware' => ['permission:GRN Create Inventory']], function () {
-            Route::get('grm-create-inven', [ItemGRMController::class, 'create_grm'])->name('grm-create-inven');
-            Route::get('/get-po-item-details-inven/{id?}', [ItemGRMController::class, 'get_po_item_details'])->name('get-po-item-details-inven');
-            Route::post('save-grm-inven', [ItemGRMController::class, 'save_grm'])->name('save-grm-inven');
-        });
-
-        Route::get('grm-details-inven/{id?}', [ItemGRMController::class, 'grm_details'])->name('grm-details-inven');
-
-        Route::group(['middleware' => ['permission:GRN delete Inventory']], function () {
-            Route::get('grm-delete-inven/{id?}', [ItemGRMController::class, 'grm_delete'])->name('grm-delete-inven');
-        });
-
-        Route::group(['middleware' => ['permission:GRN edit Inventory']], function () {
-            Route::get('/grm-edit-inven/{id?}', [ItemGRMController::class, 'grm_edit'])->name('grm-edit-inven');
-            Route::post('/grm-update-inven', [ItemGRMController::class, 'update_grm'])->name('grm-update-inven');
-        });
-
-        Route::group(['middleware' => ['permission:GRN edit Inventory']], function () {
-            Route::get('/stock-update-after-grm-inven/{id?}', [ItemGRMController::class, 'stock_update_after_grm'])->name('stock-update-after-grm-inven');
-        });
-    });
-    //================================= GRM ================================================
-
-
-    //================================= Inventory Return =============================================
-    Route::group(['middleware' => ['permission:Return PO Item Inventory']], function () {
-        Route::get('return-list-inventory', [ItemReturnController::class, 'index'])->name('return-list-inventory');
-        // Route::group(['middleware' => ['permission:All workshop']], function () {
-        //     Route::get('return-list/{id?}', [ItemReturnController::class, 'index_workshop']);
-        // });
-        Route::group(['middleware' => ['permission:Create Return PO Item Inventory']], function () {
-            Route::get('return-create-inventory', [ItemReturnController::class, 'create_return'])->name('return-create-inventory');
-            Route::get('/get-po-item-details-inventory-return/{po_id?}', [ItemReturnController::class, 'get_po_item_details_return'])->name('get-po-item-details-inventory-return');
-            Route::post('save-return-inventory', [ItemReturnController::class, 'save_return'])->name('save-return-inventory');
-        });
-
-        Route::group(['middleware' => ['permission:delete Return PO Item Inventory']], function () {
-            Route::get('return-delete-inventory/{id?}', [ItemReturnController::class, 'return_delete'])->name('return-delete-inventory');
-        });
-
-        Route::group(['middleware' => ['permission:edit Return PO Item Inventory']], function () {
-            Route::get('/get-po-item-details-by-grm-inven/{po_id?}', [ItemReturnController::class, 'get_po_item_details'])->name('get-po-item-details-by-grm-inven');
-            Route::get('return-edit-inventory/{id?}', [ItemReturnController::class, 'edit_Return'])->name('return-edit-inventory');
-            Route::post('return-update-inventory', [ItemReturnController::class, 'update_return'])->name('return-update-inventory');
-        });
-
-        Route::get('return-details-inventory/{id?}', [ItemReturnController::class, 'return_details'])->name('return-details-inventory');
-    });
-    //================================= Inventory  Return =============================================
-
-
-    // ================================== Item Issue  ==============================
-
-    Route::group(['middleware' => ['permission:Item Issue Inventory']], function () {
-
-        Route::get('item-issue-listing-inventory', [ItemStockController::class, 'index'])->name('item-issue-listing-inventory');
-
-        Route::get('item-issue-details-inventory/{issue_id?}', [ItemStockController::class, 'item_issue_details'])->name('item-issue-details-inventory');
-
-
-        Route::group(['middleware' => ['permission:Create Item Issue Inventory']], function () {
-            Route::get('add-item-issue-inventory', [ItemStockController::class, 'add_item_issue'])->name('add-item-issue-inventory');
-            Route::post('save-item-issue-inventory', [ItemStockController::class, 'save_item_issue'])->name('save-item-issue-inventory');
-
-            Route::post('get-item-avi-qty', [ItemStockController::class, 'get_item_avi_qty'])->name('get-item-avi-qty');
-
-            Route::post('find-issue-to-by-department', [ItemStockController::class, 'get_issue_to_by_department'])->name('find-issue-to-by-department');
-        });
-
-        Route::group(['middleware' => ['permission:edit item issue inventory']], function () {
-            Route::get('edit-item-issue-inventory/{issue_id?}', [ItemStockController::class, 'edit_item_issue'])->name('edit-item-issue-inventory');
-
-            Route::post('update-item-issue-inventory', [ItemStockController::class, 'update_item_issue'])->name('update-item-issue-inventory');
-
-            Route::post('get-item-avi-qty', [ItemStockController::class, 'get_item_avi_qty'])->name('get-item-avi-qty');
-        });
-        Route::group(['middleware' => ['permission:delete item issue inventory']], function () {
-            Route::get('delete-item-issue-inventory/{issue_id?}', [ItemStockController::class, 'delete_item_issue'])->name('delete-item-issue-inventory');
-        });
-
-        Route::group(['middleware' => ['permission:delete item issue inventory']], function () {
-            Route::get('update-inventory-stock/{item_id?}', [ItemStockController::class, 'update_inventory_stock'])->name('update-inventory-stock');
-
-            Route::post('save-update-inventory-stock', [ItemStockController::class, 'save_update_inventory_stock'])->name('save-update-inventory-stock');
-        });
-    });
-    // ==================================  Item Issue ==============================
-
-
-
+    // ================================== Inventory  ==============================
 });
-// ================================== Inventory  ==============================
-
 
 
 
@@ -2042,196 +2044,206 @@ Route::group(['middleware' => ['permission:Blood Bank'], 'prefix' => 'blood-bank
 });
 // ================================== Blood Bank =================
 
-// ================================== Pathology Main =================
-Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathology'], function () {
-    Route::group(['middleware' => ['permission:pathology billing list']], function () {
-        Route::get('pathology-billing-list', [PathologyController::class, 'pathology_billing_list'])->name('pathology-details');
-    });
-    Route::group(['middleware' => ['permission:add pathology bill']], function () {
-        Route::get('add-pathology-billing', [PathologyController::class, 'add_pathology_bill'])->name('add-pathology-billing');
-        Route::post('add-pathology-billing-for-a-patient', [PathologyController::class, 'add_pathology_billing_for_a_patient'])->name('add-pathology-billing-for-a-patient');
-        Route::post('find-test-amount-by-test', [PathologyController::class, 'find_test_amount_by_test'])->name('find-test-amount-by-test');
-        Route::post('save-pathology-billing', [PathologyController::class, 'save_pathology_billing'])->name('save-pathology-billing');
-    });
 
-    Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
+
+
+
+Route::group(['prefix' => 'investigation'], function () {
+
+    // ================================== Pathology Main =================
+    Route::group(['middleware' => ['permission:pathology main'], 'prefix' => 'pathology'], function () {
+        Route::group(['middleware' => ['permission:pathology billing list']], function () {
+            Route::get('pathology-billing-list', [PathologyController::class, 'pathology_billing_list'])->name('pathology-details');
+        });
+        Route::group(['middleware' => ['permission:add pathology bill']], function () {
+            Route::get('add-pathology-billing', [PathologyController::class, 'add_pathology_bill'])->name('add-pathology-billing');
+            Route::post('add-pathology-billing-for-a-patient', [PathologyController::class, 'add_pathology_billing_for_a_patient'])->name('add-pathology-billing-for-a-patient');
+            Route::post('find-test-amount-by-test', [PathologyController::class, 'find_test_amount_by_test'])->name('find-test-amount-by-test');
+            Route::post('save-pathology-billing', [PathologyController::class, 'save_pathology_billing'])->name('save-pathology-billing');
+        });
+
         Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
-            Route::get('pathology-patient-test-list', [PathologyController::class, 'pathology_test_charge'])->name('pathology-test-charge');
-        });
-        Route::group(['middleware' => ['permission:print pathology result']], function () {
-            Route::get('print-pathology-result/{id}', [PathologyController::class, 'print_pathology_result'])->name('print-pathology-result');
-        });
-        Route::post('change-sample-status', [PathologyController::class, 'change_sample_status'])->name('change-sample-status');
-        Route::group(['middleware' => ['permission:add-pathology-test-to-a-patient']], function () {
-            Route::get('add-pathology-test-to-a-patient', [PathologyController::class, 'pathology_test_charge_add'])->name('add-pathology-test-to-a-patient');
-            Route::post('add-pathology-test-for-a-patient', [PathologyController::class, 'add_pathology_charges_for_a_patient'])->name('add-pathology-charges-for-a-patient');
-            Route::post('save-pathology-patient-test', [PathologyController::class, 'save_pathology_charge'])->name('save-pathology-charge');
-        });
-        Route::group(['middleware' => ['permission:add pathology test result details']], function () {
-            Route::get('add-pathology-test-result-details/{id}', [PathologyController::class, 'add_pathology_test_result_details'])->name('add-pathology-test-result-details');
-            Route::post('update-pathology-report', [PathologyController::class, 'update_pathology_report'])->name('update-pathology-report');
-        });
-        Route::group(['middleware' => ['permission:edit-pathology-test-to-a-patient']], function () {
-            Route::get('edit-pathology-test-patient/{id}', [PathologyController::class, 'edit_pathology_test_patient'])->name('edit-pathology-test-patient');
-            Route::post('update-pathology-patient-test', [PathologyController::class, 'update_pathology_charge'])->name('update-pathology-charge');
-        });
-        Route::group(['middleware' => ['permission:delete-pathology-test-to-a-patient']], function () {
-            Route::get('delete-pathology-test-patient/{id}', [PathologyController::class, 'delete_pathology_test_patient'])->name('delete-pathology-test-patient');
-        });
-    });
-
-
-
-
-    //pathology test
-    Route::group(['middleware' => ['permission:pathology test']], function () {
-        // ============= pathology master ====================
-        Route::group(['middleware' => ['permission:pathology test master']], function () {
-            Route::get('pathology-test-master-details', [PathologyController::class, 'pathology_test_master_details'])->name('pathology-test-master-details');
-        });
-        Route::group(['middleware' => ['permission:add pathology test master']], function () {
-            Route::get('add-pathology-test-master-details', [PathologyController::class, 'add_pathology_test_master_details'])->name('add-pathology-test-master-details');
-            Route::post('save-pathology-test-master-details', [PathologyController::class, 'save_pathology_test_master_details'])->name('save-pathology-test-master-details');
-        });
-
-        // ============= pathology master ====================
-        // ============= pathology test ====================
-        Route::group(['middleware' => ['permission:pathology test']], function () {
-            Route::any('getcharges-amount', [PathologyController::class, 'getcharges_amount'])->name('getcharges-amount');
-            Route::get('pathology-test-list', [PathologyController::class, 'pathology_test_list'])->name('pathology-test-list');
-            Route::group(['middleware' => ['permission:add pathology test']], function () {
-                Route::get('add-pathology-test', [PathologyController::class, 'add_pathology_test'])->name('add-pathology-test');
-                Route::post('save-pathology-test', [PathologyController::class, 'save_pathology_test'])->name('save-pathology-test');
+            Route::group(['middleware' => ['permission:pathology-test-to-a-patient']], function () {
+                Route::get('pathology-patient-test-list', [PathologyController::class, 'pathology_test_charge'])->name('pathology-test-charge');
+            });
+            Route::group(['middleware' => ['permission:print pathology result']], function () {
+                Route::get('print-pathology-result/{id}', [PathologyController::class, 'print_pathology_result'])->name('print-pathology-result');
+            });
+            Route::post('change-sample-status', [PathologyController::class, 'change_sample_status'])->name('change-sample-status');
+            Route::group(['middleware' => ['permission:add-pathology-test-to-a-patient']], function () {
+                Route::get('add-pathology-test-to-a-patient', [PathologyController::class, 'pathology_test_charge_add'])->name('add-pathology-test-to-a-patient');
+                Route::post('add-pathology-test-for-a-patient', [PathologyController::class, 'add_pathology_charges_for_a_patient'])->name('add-pathology-charges-for-a-patient');
+                Route::post('save-pathology-patient-test', [PathologyController::class, 'save_pathology_charge'])->name('save-pathology-charge');
+            });
+            Route::group(['middleware' => ['permission:add pathology test result details']], function () {
+                Route::get('add-pathology-test-result-details/{id}', [PathologyController::class, 'add_pathology_test_result_details'])->name('add-pathology-test-result-details');
+                Route::post('update-pathology-report', [PathologyController::class, 'update_pathology_report'])->name('update-pathology-report');
+            });
+            Route::group(['middleware' => ['permission:edit-pathology-test-to-a-patient']], function () {
+                Route::get('edit-pathology-test-patient/{id}', [PathologyController::class, 'edit_pathology_test_patient'])->name('edit-pathology-test-patient');
+                Route::post('update-pathology-patient-test', [PathologyController::class, 'update_pathology_charge'])->name('update-pathology-charge');
+            });
+            Route::group(['middleware' => ['permission:delete-pathology-test-to-a-patient']], function () {
+                Route::get('delete-pathology-test-patient/{id}', [PathologyController::class, 'delete_pathology_test_patient'])->name('delete-pathology-test-patient');
             });
         });
-        // ============= pathology test ====================
+
+        //pathology test
+        Route::group(['middleware' => ['permission:pathology test']], function () {
+            // ============= pathology master ====================
+            Route::group(['middleware' => ['permission:pathology test master']], function () {
+                Route::get('pathology-test-master-details', [PathologyController::class, 'pathology_test_master_details'])->name('pathology-test-master-details');
+            });
+            Route::group(['middleware' => ['permission:add pathology test master']], function () {
+                Route::get('add-pathology-test-master-details', [PathologyController::class, 'add_pathology_test_master_details'])->name('add-pathology-test-master-details');
+                Route::post('save-pathology-test-master-details', [PathologyController::class, 'save_pathology_test_master_details'])->name('save-pathology-test-master-details');
+            });
+
+            // ============= pathology master ====================
+            // ============= pathology test ====================
+            Route::group(['middleware' => ['permission:pathology test']], function () {
+                Route::any('getcharges-amount', [PathologyController::class, 'getcharges_amount'])->name('getcharges-amount');
+                Route::get('pathology-test-list', [PathologyController::class, 'pathology_test_list'])->name('pathology-test-list');
+                Route::group(['middleware' => ['permission:add pathology test']], function () {
+                    Route::get('add-pathology-test', [PathologyController::class, 'add_pathology_test'])->name('add-pathology-test');
+                    Route::post('save-pathology-test', [PathologyController::class, 'save_pathology_test'])->name('save-pathology-test');
+                });
+            });
+            // ============= pathology test ====================
 
 
-        Route::get('pathology-test-details', [PathologyController::class, 'pathology_test_details'])->name('pathology-test-details');
+            Route::get('pathology-test-details', [PathologyController::class, 'pathology_test_details'])->name('pathology-test-details');
 
+            Route::get('view-pathology-test-details/{id}', [PathologyController::class, 'view_pathology_test_details'])->name('view-pathology-test-details');
+
+            Route::group(['middleware' => ['permission:pathology test package']], function () {
+                Route::get('pathology-test-package', [PathologyController::class, 'pathology_test_package_list'])->name('pathology-test-package');
+                Route::group(['middleware' => ['permission:add pathology group test']], function () {
+                    Route::get('add-pathology-group-test', [PathologyController::class, 'add_pathology_group_test'])->name('add-pathology-group-test');
+                    Route::post('save-pathology-test-group', [PathologyController::class, 'save_pathology_test_group'])->name('save-pathology-test-group');
+                });
+            });
+        });
+        //pathology test
+
+        Route::post('find-range-by-parameter-pathology', [PathologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter-pathology');
+        Route::post('find-unit-by-parameter', [PathologyController::class, 'find_unit_by_parameter'])->name('find-unit-by-parameter');
+
+        Route::group(['middleware' => ['permission:delete pathology test']], function () {
+            Route::get('delete-pathology-test-details/{id}', [PathologyController::class, 'delete_pathology_test_details'])->name('delete-pathology-test-details');
+        });
+        Route::group(['middleware' => ['permission:edit pathology test']], function () {
+            Route::get('edit-pathology-test-details/{id}', [PathologyController::class, 'edit_pathology_test_details'])->name('edit-pathology-test-details');
+            Route::post('update-pathology-test-details', [PathologyController::class, 'update_pathology_test_details'])->name('update-pathology-test-details');
+        });
+        Route::get('view-pathology-test-details/{id}', [PathologyController::class, 'view_pathology_test_details'])->name('view-pathology-test-details');
+        Route::get('add-pathology-report', [PathologyController::class, 'add_pathology_report'])->name('add-pathology-report');
+    });
+    // ================================== Pathology Main =================
+
+    // ================================== Radiology Main =================
+    Route::group(['middleware' => ['permission:radiology main'], 'prefix' => 'radiology'], function () {
+        // Route::group(['middleware' => ['permission:pathology billing list']], function () {
+        //     Route::get('radiology-billing-list', [RadiologyController::class, 'radiology_test_charge'])->name('radiology-details');
+        // });
+
+        // --- #
+        Route::group(['middleware' => ['permission:pathology billing list']], function () {
+            Route::get('radiology-billing-list', [RadiologyController::class, 'radiology_billing_list'])->name('radiology-details');
+        });
+
+        Route::group(['middleware' => ['permission:add radiology bill']], function () {
+            Route::get('add-radiology-billing', [RadiologyController::class, 'add_radiology_bill'])->name('add-radiology-billing');
+            Route::any('add-radiology-billing-for-a-patient', [RadiologyController::class, 'add_radiology_billing_for_a_patient'])->name('add-radiology-billing-for-a-patient');
+
+            Route::post('find-test-amount-by-test-add', [RadiologyController::class, 'find_test_amount_by_test_add'])->name('find-test-amount-by-test-add');
+
+            Route::post('save-radiology-billing', [RadiologyController::class, 'save_radiology_billing'])->name('save-radiology-billing');
+        });
+
+
+        Route::group(['middleware' => ['permission:add radiology test result details']], function () {
+            Route::get('add-radiology-test-result-details/{id}', [RadiologyController::class, 'add_radiology_test_result_details'])->name('add-radiology-test-result-details');
+            Route::post('update-radiology-report', [RadiologyController::class, 'update_radiology_report'])->name('update-radiology-report');
+        });
+
+        Route::group(['middleware' => ['permission:print radiology result']], function () {
+            Route::get('print-radiology-result/{id}', [RadiologyController::class, 'print_radiology_result'])->name('print-radiology-result');
+        });
+
+        // -- *
+        Route::post('change-sample-status-radiology', [RadiologyController::class, 'change_sample_status'])->name('change-sample-status-radiology');
+
+        Route::group(['middleware' => ['permission:delete radiology test']], function () {
+            Route::get('delete-radiology-test-details/{id}', [RadiologyController::class, 'delete_radiology_test_details'])->name('delete-radiology-test-details');
+        });
+        Route::group(['middleware' => ['permission:edit pathology test']], function () {
+            Route::get('edit-radiology-test-details/{id}', [RadiologyController::class, 'edit_radiology_test_details'])->name('edit-radiology-test-details');
+            Route::post('update-radiology-test-details', [RadiologyController::class, 'update_radiology_test_details'])->name('update-radiology-test-details');
+        });
         Route::get('view-pathology-test-details/{id}', [PathologyController::class, 'view_pathology_test_details'])->name('view-pathology-test-details');
 
-        Route::group(['middleware' => ['permission:pathology test package']], function () {
-            Route::get('pathology-test-package', [PathologyController::class, 'pathology_test_package_list'])->name('pathology-test-package');
-            Route::group(['middleware' => ['permission:add pathology group test']], function () {
-                Route::get('add-pathology-group-test', [PathologyController::class, 'add_pathology_group_test'])->name('add-pathology-group-test');
-                Route::post('save-pathology-test-group', [PathologyController::class, 'save_pathology_test_group'])->name('save-pathology-test-group');
-            });
-        });
-    });
-    //pathology test
-
-    Route::post('find-range-by-parameter-pathology', [PathologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter-pathology');
-    Route::post('find-unit-by-parameter', [PathologyController::class, 'find_unit_by_parameter'])->name('find-unit-by-parameter');
-
-    Route::group(['middleware' => ['permission:delete pathology test']], function () {
-        Route::get('delete-pathology-test-details/{id}', [PathologyController::class, 'delete_pathology_test_details'])->name('delete-pathology-test-details');
-    });
-    Route::group(['middleware' => ['permission:edit pathology test']], function () {
-        Route::get('edit-pathology-test-details/{id}', [PathologyController::class, 'edit_pathology_test_details'])->name('edit-pathology-test-details');
-        Route::post('update-pathology-test-details', [PathologyController::class, 'update_pathology_test_details'])->name('update-pathology-test-details');
-    });
-    Route::get('view-pathology-test-details/{id}', [PathologyController::class, 'view_pathology_test_details'])->name('view-pathology-test-details');
-    Route::get('add-pathology-report', [PathologyController::class, 'add_pathology_report'])->name('add-pathology-report');
-});
-// ================================== Pathology Main =================
-
-// ================================== Radiology Main =================
-Route::group(['middleware' => ['permission:radiology main'], 'prefix' => 'radiology'], function () {
-    // Route::group(['middleware' => ['permission:pathology billing list']], function () {
-    //     Route::get('radiology-billing-list', [RadiologyController::class, 'radiology_test_charge'])->name('radiology-details');
-    // });
-
-    // --- #
-    Route::group(['middleware' => ['permission:pathology billing list']], function () {
-        Route::get('radiology-billing-list', [RadiologyController::class, 'radiology_billing_list'])->name('radiology-details');
-    });
-
-    Route::group(['middleware' => ['permission:add radiology bill']], function () {
-        Route::get('add-radiology-billing', [RadiologyController::class, 'add_radiology_bill'])->name('add-radiology-billing');
-        Route::any('add-radiology-billing-for-a-patient', [RadiologyController::class, 'add_radiology_billing_for_a_patient'])->name('add-radiology-billing-for-a-patient');
-
-        Route::post('find-test-amount-by-test-add', [RadiologyController::class, 'find_test_amount_by_test_add'])->name('find-test-amount-by-test-add');
-
-        Route::post('save-radiology-billing', [RadiologyController::class, 'save_radiology_billing'])->name('save-radiology-billing');
-    });
-
-
-    Route::group(['middleware' => ['permission:add radiology test result details']], function () {
-        Route::get('add-radiology-test-result-details/{id}', [RadiologyController::class, 'add_radiology_test_result_details'])->name('add-radiology-test-result-details');
-        Route::post('update-radiology-report', [RadiologyController::class, 'update_radiology_report'])->name('update-radiology-report');
-    });
-
-    Route::group(['middleware' => ['permission:print radiology result']], function () {
-        Route::get('print-radiology-result/{id}', [RadiologyController::class, 'print_radiology_result'])->name('print-radiology-result');
-    });
-
-    // -- *
-    Route::post('change-sample-status-radiology', [RadiologyController::class, 'change_sample_status'])->name('change-sample-status-radiology');
-
-    Route::group(['middleware' => ['permission:delete radiology test']], function () {
-        Route::get('delete-radiology-test-details/{id}', [RadiologyController::class, 'delete_radiology_test_details'])->name('delete-radiology-test-details');
-    });
-    Route::group(['middleware' => ['permission:edit pathology test']], function () {
-        Route::get('edit-radiology-test-details/{id}', [RadiologyController::class, 'edit_radiology_test_details'])->name('edit-radiology-test-details');
-        Route::post('update-radiology-test-details', [RadiologyController::class, 'update_radiology_test_details'])->name('update-radiology-test-details');
-    });
-    Route::get('view-pathology-test-details/{id}', [PathologyController::class, 'view_pathology_test_details'])->name('view-pathology-test-details');
-
-    Route::get('add-pathology-report', [PathologyController::class, 'add_pathology_report'])->name('add-pathology-report');
+        Route::get('add-pathology-report', [PathologyController::class, 'add_pathology_report'])->name('add-pathology-report');
 
 
 
-    // -----
-    Route::post('find-range-by-parameter-radiology', [RadiologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter-radiology');
+        // -----
+        Route::post('find-range-by-parameter-radiology', [RadiologyController::class, 'find_range_by_parameter'])->name('find-range-by-parameter-radiology');
 
-    Route::get('view-radiology-test-details/{id}', [RadiologyController::class, 'view_radiology_test_details'])->name('view-radiology-test-details');
+        Route::get('view-radiology-test-details/{id}', [RadiologyController::class, 'view_radiology_test_details'])->name('view-radiology-test-details');
 
 
-    Route::group(['middleware' => ['permission:radiology-test-to-a-patient']], function () {
         Route::group(['middleware' => ['permission:radiology-test-to-a-patient']], function () {
-            Route::get('radiology-patient-test-list', [RadiologyController::class, 'radiology_test_charge'])->name('radiology-test-charge');
-        });
+            Route::group(['middleware' => ['permission:radiology-test-to-a-patient']], function () {
+                Route::get('radiology-patient-test-list', [RadiologyController::class, 'radiology_test_charge'])->name('radiology-test-charge');
+            });
 
-        Route::group(['middleware' => ['permission:add-radiology-test-to-a-patient']], function () {
-            Route::get('add-radiology-test-to-a-patient', [RadiologyController::class, 'radiology_test_charge_add'])->name('add-radiology-test-to-a-patient');
-            Route::post('add-radiology-test-for-a-patient', [RadiologyController::class, 'add_radiology_charges_for_a_patient'])->name('add-radiology-charges-for-a-patient');
-            Route::post('save-radiology-patient-test', [RadiologyController::class, 'save_radiology_charge'])->name('save-radiology-charge');
-        });
-        Route::group(['middleware' => ['permission:edit-radiology-test-to-a-patient']], function () {
-            Route::get('edit-radiology-test-patient/{id}', [RadiologyController::class, 'edit_radiology_test_patient'])->name('edit-radiology-test-patient');
-            Route::post('update-radiology-patient-test', [RadiologyController::class, 'update_radiology_charge'])->name('update-radiology-charge');
-        });
-        Route::group(['middleware' => ['permission:delete-radiology-test-to-a-patient']], function () {
-            Route::get('delete-radiology-test-patient/{id}', [RadiologyController::class, 'delete_radiology_test_patient'])->name('delete-radiology-test-patient');
-        });
-    });
-
-    //radiology-test
-    Route::group(['middleware' => ['permission:pathology test']], function () {
-        // ============= radiology master ====================
-        Route::group(['middleware' => ['permission:radiology test master']], function () {
-            Route::get('radiology-test-master-details', [RadiologyController::class, 'radiology_test_master_details'])->name('radiology-test-master-details');
-        });
-        Route::group(['middleware' => ['permission:add radiology test master']], function () {
-            Route::get('add-radiology-test-master-details', [RadiologyController::class, 'add_radiology_test_master_details'])->name('add-radiology-test-master-details');
-            Route::post('save-radiology-test-master-details', [RadiologyController::class, 'save_radiology_test_master_details'])->name('save-radiology-test-master-details');
-        });
-
-        // ============= pathology master ====================
-        // ============= radiology test ====================
-        Route::group(['middleware' => ['permission:radiology test']], function () {
-            Route::get('radiology-test-list', [RadiologyController::class, 'radiology_test_list'])->name('radiology-test-list');
-            Route::group(['middleware' => ['permission:add radiology test']], function () {
-                Route::get('add-radiology-test', [RadiologyController::class, 'add_radiology_test'])->name('add-radiology-test');
-                Route::post('save-radiology-test', [RadiologyController::class, 'save_radiology_test'])->name('save-radiology-test');
+            Route::group(['middleware' => ['permission:add-radiology-test-to-a-patient']], function () {
+                Route::get('add-radiology-test-to-a-patient', [RadiologyController::class, 'radiology_test_charge_add'])->name('add-radiology-test-to-a-patient');
+                Route::post('add-radiology-test-for-a-patient', [RadiologyController::class, 'add_radiology_charges_for_a_patient'])->name('add-radiology-charges-for-a-patient');
+                Route::post('save-radiology-patient-test', [RadiologyController::class, 'save_radiology_charge'])->name('save-radiology-charge');
+            });
+            Route::group(['middleware' => ['permission:edit-radiology-test-to-a-patient']], function () {
+                Route::get('edit-radiology-test-patient/{id}', [RadiologyController::class, 'edit_radiology_test_patient'])->name('edit-radiology-test-patient');
+                Route::post('update-radiology-patient-test', [RadiologyController::class, 'update_radiology_charge'])->name('update-radiology-charge');
+            });
+            Route::group(['middleware' => ['permission:delete-radiology-test-to-a-patient']], function () {
+                Route::get('delete-radiology-test-patient/{id}', [RadiologyController::class, 'delete_radiology_test_patient'])->name('delete-radiology-test-patient');
             });
         });
-        // ============= radiology test ====================
-        Route::post('find-range-by-parameter-in-radiology', [RadiologyController::class, 'find_range_by_parameter_in_radiology'])->name('find-range-by-parameter-in-radiology');
+
+        //radiology-test
+        Route::group(['middleware' => ['permission:pathology test']], function () {
+            // ============= radiology master ====================
+            Route::group(['middleware' => ['permission:radiology test master']], function () {
+                Route::get('radiology-test-master-details', [RadiologyController::class, 'radiology_test_master_details'])->name('radiology-test-master-details');
+            });
+            Route::group(['middleware' => ['permission:add radiology test master']], function () {
+                Route::get('add-radiology-test-master-details', [RadiologyController::class, 'add_radiology_test_master_details'])->name('add-radiology-test-master-details');
+                Route::post('save-radiology-test-master-details', [RadiologyController::class, 'save_radiology_test_master_details'])->name('save-radiology-test-master-details');
+            });
+
+            // ============= pathology master ====================
+            // ============= radiology test ====================
+            Route::group(['middleware' => ['permission:radiology test']], function () {
+                Route::get('radiology-test-list', [RadiologyController::class, 'radiology_test_list'])->name('radiology-test-list');
+                Route::group(['middleware' => ['permission:add radiology test']], function () {
+                    Route::get('add-radiology-test', [RadiologyController::class, 'add_radiology_test'])->name('add-radiology-test');
+                    Route::post('save-radiology-test', [RadiologyController::class, 'save_radiology_test'])->name('save-radiology-test');
+                });
+            });
+            // ============= radiology test ====================
+            Route::post('find-range-by-parameter-in-radiology', [RadiologyController::class, 'find_range_by_parameter_in_radiology'])->name('find-range-by-parameter-in-radiology');
+        });
     });
+    // ================================== Radiology Main =================
+
+
 });
-// ================================== Radiology Main =================
+
+
+
+
 
 // ================================== Ambulance =================
 Route::group(['middleware' => ['permission:ambulance']], function () {
@@ -2276,7 +2288,7 @@ Route::post('get-charge-amount-emg', [BillingController::class, 'get_charge_amou
 Route::post('get-charge-amount-opd', [BillingController::class, 'get_charge_amount_opd'])->name('get-charge-amount-opd');
 // ===========================================================================
 
-// ===================================================================s==========
+// =============================================================================
 
 //================================= OPD ===================================================
 
@@ -2494,6 +2506,144 @@ Route::group(['middleware' => ['permission:Emg patients'], 'prefix' => 'emg'], f
     Route::group(['middleware' => ['permission:Admission From EMG']], function () {
         Route::get('admission-from-emg/{id}', [EmgController::class, 'admission_from_emg'])->name('ipd-registation-from-emg');
     });
+
+
+
+
+    //================================= Emg payment ====================================
+    Route::group(['middleware' => ['permission:emg payment'], 'prefix' => 'emg-payment'], function () {
+        Route::get('payment-listing-in-emg/{id}', [EmgPaymentController::class, 'payment_listing_in_emg'])->name('payment-listing-in-emg');
+
+        Route::get('print-payment-in-emg/{id}', [EmgPaymentController::class, 'payment_print_in_emg'])->name('print-payment-in-emg');
+
+        Route::group(['middleware' => ['permission:add emg payment']], function () {
+            Route::get('add-payment-in-emg/{id}', [EmgPaymentController::class, 'add_payment_in_emg'])->name('add-payment-in-emg');
+            Route::post('save-payment-in-emg', [EmgPaymentController::class, 'save_payment_in_emg'])->name('save-payment-in-emg');
+        });
+        Route::group(['middleware' => ['permission:delete emg payment']], function () {
+            Route::get('delete-payment-in-emg/{id}', [EmgPaymentController::class, 'delete_payment_in_emg'])->name('delete-payment-in-emg');
+        });
+        Route::group(['middleware' => ['permission:edit emg payment']], function () {
+            Route::get('edit-payment-in-emg/{id?}/{emg_id?}', [EmgPaymentController::class, 'edit_payment_in_emg'])->name('edit-payment-in-emg');
+            Route::post('update-payment-in-emg', [EmgPaymentController::class, 'update_payment_in_emg'])->name('update-payment-in-emg');
+        });
+    });
+    //================================= Emg payment ====================================
+
+    //================================= emg timeline ====================================
+    Route::group(['middleware' => ['permission:timeline list emg'], 'prefix' => 'emg-timeline'], function () {
+        Route::get('timeline-lisitng-in-emg/{id}', [TimelineController::class, 'timeline_listing_emg'])->name('timeline-lisitng-in-emg');
+        Route::group(['middleware' => ['permission:add timeline list emg']], function () {
+            Route::get('add-timeline-lisitng-in-emg/{id}', [TimelineController::class, 'add_timeline_listing_emg'])->name('add-timeline-lisitng-in-emg');
+            Route::post('save-timeline-lisitng-in-emg', [TimelineController::class, 'save_timeline_listing_emg'])->name('save-timeline-lisitng-in-emg');
+        });
+        Route::group(['middleware' => ['permission:delete timeline list emg']], function () {
+            Route::get('delete-timeline-lisitng-in-emg/{id}', [TimelineController::class, 'delete_timeline_listing_emg'])->name('delete-timeline-lisitng-in-emg');
+        });
+        Route::group(['middleware' => ['permission:edit timeline list emg']], function () {
+            Route::get('edit-timeline-lisitng-in-emg/{id}/{emg_id}', [TimelineController::class, 'edit_timeline_listing_emg'])->name('edit-timeline-lisitng-in-emg');
+            Route::post('update-timeline-lisitng-in-emg', [TimelineController::class, 'update_timeline_listing_emg'])->name('update-timeline-lisitng-in-emg');
+            Route::post('find-timeline-details', [TimelineController::class, 'find_timeline_details'])->name('find-timeline-details');
+        });
+    });
+
+    //================================= emg timeline ===================================
+
+    //================================= Emg billing ====================================
+    Route::group(['middleware' => ['permission:emg billing'], 'prefix' => 'emg-billing'], function () {
+        Route::get('emg-billing/{id}', [EmgBillingController::class, 'index_in_emg'])->name('emg-billing');
+        Route::group(['middleware' => ['permission:add emg billing']], function () {
+            Route::get('add-emg-billing/{id}', [EmgBillingController::class, 'create_billing_in_emg'])->name('add-emg-billing');
+            Route::post('add-new-emg-billing', [EmgBillingController::class, 'save_new_emg_billing'])->name('add-new-emg-billing');
+        });
+        Route::get('emg-bill-details/{bill_id}', [EmgBillingController::class, 'bill_details_in_emg'])->name('emg-bill-details');
+        Route::group(['middleware' => ['permission:edit emg billing']], function () {
+            Route::get('edit-emg-bill/{bill_id}', [EmgBillingController::class, 'edit_emg_bill'])->name('edit-emg-bill');
+        });
+        Route::group(['middleware' => ['permission:delete emg billing']], function () {
+            Route::get('delete-emg-bill/{bill_id}', [EmgBillingController::class, 'delete_emg_bill'])->name('delete-emg-bill');
+        });
+        Route::group(['middleware' => ['permission:print emg billing']], function () {
+            Route::get('print-emg-bill/{bill_id}', [EmgBillingController::class, 'print_emg_bill'])->name('print-emg-bill');
+        });
+    });
+    //================================= Emg billing ====================================
+
+
+    //================================= Emg Pathology ====================================
+    Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
+        Route::get('emg-pathology-investigation/{id}', [EmgController::class, 'emg_pathology_investigation'])->name('emg-pathology-investigation');
+    });
+    //================================= Emg Pathology ====================================
+    //================================= Emg radiology ====================================
+    Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
+        Route::get('emg-radiology-investigation/{id}', [EmgController::class, 'emg_radiology_investigation'])->name('emg-radiology-investigation');
+    });
+    //================================= Emg radiology ====================================
+
+
+    //================================= emg Physical Condition ====================================
+    Route::group(['middleware' => ['permission:emg physical condition'], 'prefix' => 'emg-physical-condition'], function () {
+        Route::get('physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'physical_condition_listing_in_emg'])->name('physical-condition-in-emg');
+        Route::group(['middleware' => ['permission:add emg physical condition']], function () {
+            Route::get('add-physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'add_physical_condition_emg'])->name('add-physical-condition-in-emg');
+            Route::post('save-physical-condition-in-emg', [PhysicalConditionController::class, 'save_physical_condition_emg'])->name('save-physical-condition-in-emg');
+        });
+        Route::group(['middleware' => ['permission:delete emg physical condition']], function () {
+            Route::get('delete-physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'delete_physical_condition_emg'])->name('delete-physical-condition-in-emg');
+        });
+        Route::group(['middleware' => ['permission:edit emg physical condition']], function () {
+            Route::get('edit-physical-condition-in-emg/{id}/{emg_id}', [PhysicalConditionController::class, 'edit_physical_condition_emg'])->name('edit-physical-condition-in-emg');
+            Route::post('update-physical-condition-in-emg', [PhysicalConditionController::class, 'update_physical_condition_emg'])->name('update-physical-condition-in-emg');
+        });
+    });
+    //================================= emg Physical Condition ==========================
+
+    //================================= Emg Operation Deratils ====================================
+    Route::group(['middleware' => ['permission:EMG Operation'], 'prefix' => 'emg-operation-details'], function () {
+        Route::get('emg-operation-in-emg/{id?}', [EmgController::class, 'emg_operation'])->name('emg-operation-in-emg');
+
+        Route::get('emg-operation-details/{emg_id?}', [EmgController::class, 'emg_operation_details'])->name('emg-operation-details');
+        Route::get('edit-emg-operation-in-emg/{id}', [EmgController::class, 'edit_emg_operation'])->name('edit-emg-operation-in-emg');
+        Route::post('update-operation-booking-details-in-emg', [EmgController::class, 'update_emg_operation'])->name('update-operation-booking-details-in-emg');
+    });
+    //================================= Emg Operation Deratils===================================
+
+
+
+    //================================= Blood Bank In Emg  ====================================
+    Route::group(['middleware' => ['permission:Emg Blood Bank Details']], function () {
+        Route::get('blood-bank-detials-in-emg/{id?}', [EmgController::class, 'blood_bank_details_in_emg'])->name('blood-bank-detials-in-emg');
+    });
+    //================================= Blood Bank In Emg ===================================
+
+    //================================= Emg E Prescirption ====================================
+    Route::group(['middleware' => ['permission:Emg prescription'], 'prefix' => 'emg-prescription'], function () {
+        Route::get('prescription-lisitng-in-emg/{id}', [EmgPrescriptionController::class, 'prescription_listing_in_emg'])->name('prescription-lisitng-in-emg');
+
+        Route::get('prescription-view-in-emg/{id}/{emg_id?}', [EmgPrescriptionController::class, 'prescription_view_in_emg'])->name('prescription-view-in-emg');
+
+        Route::group(['middleware' => ['permission:add emg prescription']], function () {
+            Route::get('add-prescription-in-emg/{id?}', [EmgPrescriptionController::class, 'add_prescription_in_emg'])->name('add-prescription-in-emg');
+            Route::post('save-prescription-in-emg', [EmgPrescriptionController::class, 'save_prescription_in_emg'])->name('save-prescription-in-emg');
+        });
+
+        Route::group(['middleware' => ['permission:edit emg prescription']], function () {
+            Route::get('edit-prescription-in-emg/{id}/{emg_id}', [EmgPrescriptionController::class, 'edit_prescription_in_emg'])->name('edit-prescription-in-emg');
+            Route::post('update-prescription-in-emg', [EmgPrescriptionController::class, 'update_prescription_in_emg'])->name('update-prescription-in-emg');
+        });
+
+        Route::get('print-prescription-in-emg/{id}/{emg_id}', [EmgPrescriptionController::class, 'prescription_print_in_emg'])->name('print-prescription-in-emg');
+
+        // Route::get('print-prescription-in-opd/{id}/{opd_id}', [OpdPrescriptionController::class, 'prescription_print_in_opd'])->name('print-prescription-in-opd');
+
+        Route::group(['middleware' => ['permission:delete emg payment']], function () {
+            Route::get('delete-prescription-in-emg/{id}', [EmgPrescriptionController::class, 'delete_prescription_in_emg'])->name('delete-prescription-in-emg');
+        });
+    });
+    //================================= Emg E Prescirption ====================================
+
+
 });
 
 
@@ -2512,123 +2662,16 @@ Route::group(['middleware' => ['permission:patient charges'], 'prefix' => 'emg-p
 //================================= Emg charges ====================================
 
 
-//================================= Emg Pathology ====================================
-Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
-    Route::get('emg-pathology-investigation/{id}', [EmgController::class, 'emg_pathology_investigation'])->name('emg-pathology-investigation');
-});
-//================================= Emg Pathology ====================================
-//================================= Emg radiology ====================================
-Route::group(['middleware' => ['permission:Emg Pathology Investigation']], function () {
-    Route::get('emg-radiology-investigation/{id}', [EmgController::class, 'emg_radiology_investigation'])->name('emg-radiology-investigation');
-});
-//================================= Emg radiology ====================================
-
-
-//================================= emg Physical Condition ====================================
-Route::group(['middleware' => ['permission:emg physical condition'], 'prefix' => 'emg-physical-condition'], function () {
-    Route::get('physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'physical_condition_listing_in_emg'])->name('physical-condition-in-emg');
-    Route::group(['middleware' => ['permission:add emg physical condition']], function () {
-        Route::get('add-physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'add_physical_condition_emg'])->name('add-physical-condition-in-emg');
-        Route::post('save-physical-condition-in-emg', [PhysicalConditionController::class, 'save_physical_condition_emg'])->name('save-physical-condition-in-emg');
-    });
-    Route::group(['middleware' => ['permission:delete emg physical condition']], function () {
-        Route::get('delete-physical-condition-in-emg/{id}', [PhysicalConditionController::class, 'delete_physical_condition_emg'])->name('delete-physical-condition-in-emg');
-    });
-    Route::group(['middleware' => ['permission:edit emg physical condition']], function () {
-        Route::get('edit-physical-condition-in-emg/{id}/{emg_id}', [PhysicalConditionController::class, 'edit_physical_condition_emg'])->name('edit-physical-condition-in-emg');
-        Route::post('update-physical-condition-in-emg', [PhysicalConditionController::class, 'update_physical_condition_emg'])->name('update-physical-condition-in-emg');
-    });
-});
-//================================= emg Physical Condition ==========================
-
-
-//================================= Emg E Prescirption ====================================
-Route::group(['middleware' => ['permission:Emg prescription'], 'prefix' => 'emg-prescription'], function () {
-    Route::get('prescription-lisitng-in-emg/{id}', [EmgPrescriptionController::class, 'prescription_listing_in_emg'])->name('prescription-lisitng-in-emg');
-
-    Route::get('prescription-view-in-emg/{id}/{emg_id?}', [EmgPrescriptionController::class, 'prescription_view_in_emg'])->name('prescription-view-in-emg');
-
-    Route::group(['middleware' => ['permission:add emg prescription']], function () {
-        Route::get('add-prescription-in-emg/{id?}', [EmgPrescriptionController::class, 'add_prescription_in_emg'])->name('add-prescription-in-emg');
-        Route::post('save-prescription-in-emg', [EmgPrescriptionController::class, 'save_prescription_in_emg'])->name('save-prescription-in-emg');
-    });
-
-    Route::group(['middleware' => ['permission:edit emg prescription']], function () {
-        Route::get('edit-prescription-in-emg/{id}/{emg_id}', [EmgPrescriptionController::class, 'edit_prescription_in_emg'])->name('edit-prescription-in-emg');
-        Route::post('update-prescription-in-emg', [EmgPrescriptionController::class, 'update_prescription_in_emg'])->name('update-prescription-in-emg');
-    });
-
-    Route::get('print-prescription-in-emg/{id}/{emg_id}', [EmgPrescriptionController::class, 'prescription_print_in_emg'])->name('print-prescription-in-emg');
-
-    // Route::get('print-prescription-in-opd/{id}/{opd_id}', [OpdPrescriptionController::class, 'prescription_print_in_opd'])->name('print-prescription-in-opd');
-
-    Route::group(['middleware' => ['permission:delete emg payment']], function () {
-        Route::get('delete-prescription-in-emg/{id}', [EmgPrescriptionController::class, 'delete_prescription_in_emg'])->name('delete-prescription-in-emg');
-    });
-});
-//================================= Emg E Prescirption ====================================
-
-//================================= emg timeline ====================================
-Route::group(['middleware' => ['permission:timeline list emg'], 'prefix' => 'emg-timeline'], function () {
-    Route::get('timeline-lisitng-in-emg/{id}', [TimelineController::class, 'timeline_listing_emg'])->name('timeline-lisitng-in-emg');
-    Route::group(['middleware' => ['permission:add timeline list emg']], function () {
-        Route::get('add-timeline-lisitng-in-emg/{id}', [TimelineController::class, 'add_timeline_listing_emg'])->name('add-timeline-lisitng-in-emg');
-        Route::post('save-timeline-lisitng-in-emg', [TimelineController::class, 'save_timeline_listing_emg'])->name('save-timeline-lisitng-in-emg');
-    });
-    Route::group(['middleware' => ['permission:delete timeline list emg']], function () {
-        Route::get('delete-timeline-lisitng-in-emg/{id}', [TimelineController::class, 'delete_timeline_listing_emg'])->name('delete-timeline-lisitng-in-emg');
-    });
-    Route::group(['middleware' => ['permission:edit timeline list emg']], function () {
-        Route::get('edit-timeline-lisitng-in-emg/{id}/{emg_id}', [TimelineController::class, 'edit_timeline_listing_emg'])->name('edit-timeline-lisitng-in-emg');
-        Route::post('update-timeline-lisitng-in-emg', [TimelineController::class, 'update_timeline_listing_emg'])->name('update-timeline-lisitng-in-emg');
-        Route::post('find-timeline-details', [TimelineController::class, 'find_timeline_details'])->name('find-timeline-details');
-    });
-});
-
-//================================= emg timeline ===================================
-
-//================================= Emg billing ====================================
-Route::group(['middleware' => ['permission:emg billing'], 'prefix' => 'emg-billing'], function () {
-    Route::get('emg-billing/{id}', [EmgBillingController::class, 'index_in_emg'])->name('emg-billing');
-    Route::group(['middleware' => ['permission:add emg billing']], function () {
-        Route::get('add-emg-billing/{id}', [EmgBillingController::class, 'create_billing_in_emg'])->name('add-emg-billing');
-        Route::post('add-new-emg-billing', [EmgBillingController::class, 'save_new_emg_billing'])->name('add-new-emg-billing');
-    });
-    Route::get('emg-bill-details/{bill_id}', [EmgBillingController::class, 'bill_details_in_emg'])->name('emg-bill-details');
-    Route::group(['middleware' => ['permission:edit emg billing']], function () {
-        Route::get('edit-emg-bill/{bill_id}', [EmgBillingController::class, 'edit_emg_bill'])->name('edit-emg-bill');
-    });
-    Route::group(['middleware' => ['permission:delete emg billing']], function () {
-        Route::get('delete-emg-bill/{bill_id}', [EmgBillingController::class, 'delete_emg_bill'])->name('delete-emg-bill');
-    });
-    Route::group(['middleware' => ['permission:print emg billing']], function () {
-        Route::get('print-emg-bill/{bill_id}', [EmgBillingController::class, 'print_emg_bill'])->name('print-emg-bill');
-    });
-});
-//================================= Emg billing ====================================
 
 
 
 
-//================================= Emg payment ====================================
-Route::group(['middleware' => ['permission:emg payment'], 'prefix' => 'emg-payment'], function () {
-    Route::get('payment-listing-in-emg/{id}', [EmgPaymentController::class, 'payment_listing_in_emg'])->name('payment-listing-in-emg');
 
-    Route::get('print-payment-in-emg/{id}', [EmgPaymentController::class, 'payment_print_in_emg'])->name('print-payment-in-emg');
 
-    Route::group(['middleware' => ['permission:add emg payment']], function () {
-        Route::get('add-payment-in-emg/{id}', [EmgPaymentController::class, 'add_payment_in_emg'])->name('add-payment-in-emg');
-        Route::post('save-payment-in-emg', [EmgPaymentController::class, 'save_payment_in_emg'])->name('save-payment-in-emg');
-    });
-    Route::group(['middleware' => ['permission:delete emg payment']], function () {
-        Route::get('delete-payment-in-emg/{id}', [EmgPaymentController::class, 'delete_payment_in_emg'])->name('delete-payment-in-emg');
-    });
-    Route::group(['middleware' => ['permission:edit emg payment']], function () {
-        Route::get('edit-payment-in-emg/{id?}/{emg_id?}', [EmgPaymentController::class, 'edit_payment_in_emg'])->name('edit-payment-in-emg');
-        Route::post('update-payment-in-emg', [EmgPaymentController::class, 'update_payment_in_emg'])->name('update-payment-in-emg');
-    });
-});
-//================================= Emg payment ====================================
+
+
+
+
 
 //================================= Emg ============================================
 
@@ -2664,39 +2707,40 @@ Route::group(['middleware' => ['permission:Finding']], function () {
 //====================== FindingCategory ========================================
 
 //================================= Appointment ===================================================
-Route::group(['middleware' => ['permission:appointment main']], function () {
+Route::group(['prefix' => 'others'], function () {
+    Route::group(['middleware' => ['permission:appointment main']], function () {
 
-    Route::get('all-appointments-details', [AppointmentController::class, 'appointments_details'])->name('all-appointments-details');
+        Route::get('all-appointments-details', [AppointmentController::class, 'appointments_details'])->name('all-appointments-details');
 
-    // Route::any('opd-registration/{id?}', [OpdController::class, 'opd_registation'])->name('opd-registration');
+        // Route::any('opd-registration/{id?}', [OpdController::class, 'opd_registation'])->name('opd-registration');
 
-    Route::post('find-fees-by-doctor', [AppointmentController::class, 'find_doctor_fees_by_doctor'])->name('find-fees-by-doctor');
+        Route::post('find-fees-by-doctor', [AppointmentController::class, 'find_doctor_fees_by_doctor'])->name('find-fees-by-doctor');
 
-    Route::group(['middleware' => ['permission:add appointment']], function () {
+        Route::group(['middleware' => ['permission:add appointment']], function () {
 
-        Route::any('add-appointments-details/{id?}', [AppointmentController::class, 'add_appointments_details'])->name('add-appointments-details');
+            Route::any('add-appointments-details/{id?}', [AppointmentController::class, 'add_appointments_details'])->name('add-appointments-details');
 
-        Route::post('save-appointments-details', [AppointmentController::class, 'save_appointments_details'])->name('save-appointments-details');
+            Route::post('save-appointments-details', [AppointmentController::class, 'save_appointments_details'])->name('save-appointments-details');
+        });
+        Route::group(['middleware' => ['permission:edit appointment']], function () {
+            Route::get('edit-appointments-details/{id}', [AppointmentController::class, 'edit_appointments_details'])->name('edit-appointments-details');
+            Route::post('update-appointments-details', [AppointmentController::class, 'update_appointments_details'])->name('update-appointments-details');
+        });
+        Route::group(['middleware' => ['permission:delete appointment']], function () {
+            Route::get('delete-appointments-details/{id}', [AppointmentController::class, 'delete_appointments_details'])->name('delete-appointments-details');
+        });
+
+        Route::group(['middleware' => ['permission:dotor wise appointment main']], function () {
+            Route::get('doctor-wise-appointments-details', [AppointmentController::class, 'dr_wise_appointments_details'])->name('doctor-wise-appointments-details');
+            Route::post('fetch-appointments-details-dr-wise', [AppointmentController::class, 'fetch_appointments_details_by_doctor_wise'])->name('fetch-appointments-details-dr-wise');
+            Route::post('get-slot-details-using-doctor_id', [AppointmentController::class, 'get_slot_details_using_doctor_id'])->name('get-slot-details-using-doctor_id');
+        });
+        Route::post('get-appointment-fees-by-slot', [AppointmentController::class, 'get_appointment_fees_by_slot'])->name('get-appointment-fees-by-slot');
+        Route::post('get-slot-details-using-doctor_id-edit', [AppointmentController::class, 'get_slot_details_using_doctor_id_edit'])->name('get-slot-details-using-doctor_id-edit');
+
+        Route::post('add-new-patient-for-appointment', [AppointmentController::class, 'get_slot_details_using_doctor_id_edit'])->name('add-new-patient-for-appointment');
     });
-    Route::group(['middleware' => ['permission:edit appointment']], function () {
-        Route::get('edit-appointments-details/{id}', [AppointmentController::class, 'edit_appointments_details'])->name('edit-appointments-details');
-        Route::post('update-appointments-details', [AppointmentController::class, 'update_appointments_details'])->name('update-appointments-details');
-    });
-    Route::group(['middleware' => ['permission:delete appointment']], function () {
-        Route::get('delete-appointments-details/{id}', [AppointmentController::class, 'delete_appointments_details'])->name('delete-appointments-details');
-    });
-
-    Route::group(['middleware' => ['permission:dotor wise appointment main']], function () {
-        Route::get('doctor-wise-appointments-details', [AppointmentController::class, 'dr_wise_appointments_details'])->name('doctor-wise-appointments-details');
-        Route::post('fetch-appointments-details-dr-wise', [AppointmentController::class, 'fetch_appointments_details_by_doctor_wise'])->name('fetch-appointments-details-dr-wise');
-        Route::post('get-slot-details-using-doctor_id', [AppointmentController::class, 'get_slot_details_using_doctor_id'])->name('get-slot-details-using-doctor_id');
-    });
-    Route::post('get-appointment-fees-by-slot', [AppointmentController::class, 'get_appointment_fees_by_slot'])->name('get-appointment-fees-by-slot');
-    Route::post('get-slot-details-using-doctor_id-edit', [AppointmentController::class, 'get_slot_details_using_doctor_id_edit'])->name('get-slot-details-using-doctor_id-edit');
-
-    Route::post('add-new-patient-for-appointment', [AppointmentController::class, 'get_slot_details_using_doctor_id_edit'])->name('add-new-patient-for-appointment');
 });
-
 //================================= Appointment ===================================================
 
 
@@ -3118,6 +3162,21 @@ Route::group(['middleware' => ['permission:IPD ipd-patients'], 'prefix' => 'ipd'
     Route::group(['middleware' => ['permission:ipd delete']], function () {
         Route::get('ipd-patient-delete/{ipd_id?}', [IpdController::class, 'ipd_patient_delete'])->name('ipd-patient-delete');
     });
+
+    //================================= IPD Operation Deratils ====================================
+    Route::group(['middleware' => ['permission:OPD Operation'], 'prefix' => 'ipd-operation'], function () {
+        Route::get('ipd-operation-in-ipd/{id?}', [IpdController::class, 'ipd_operation'])->name('ipd-operation-in-ipd');
+        Route::get('ipd-operation-details/{ipd_id?}', [IpdController::class, 'ipd_operation_details_for_a_patient'])->name('ipd-operation-details');
+        Route::get('edit-ipd-operation-in-ipd/{id}', [IpdController::class, 'edit_ipd_operation'])->name('edit-ipd-operation-in-ipd');
+        Route::post('update-operation-booking-details-in-ipd', [IpdController::class, 'update_ipd_operation'])->name('update-operation-booking-details-in-ipd');
+    });
+    //================================= IPD Operation Deratils===================================
+
+    //================================= Blood Bank In Ipd  ====================================
+    Route::group(['middleware' => ['permission:Ipd Blood Bank Details'], 'prefix' => 'ipd-blood-details'], function () {
+        Route::get('blood-bank-detials-in-ipd/{id?}', [IpdController::class, 'blood_bank_details_in_ipd'])->name('blood-bank-detials-in-ipd');
+    });
+    //================================= Blood Bank In Ipd ===================================
 });
 //================================= Ipd ===================================================
 
@@ -3329,7 +3388,7 @@ Route::group(['middleware' => ['permission:billing summary']], function () {
 
 
 //================================= OPD Operation Deratils ====================================
-Route::group(['middleware' => ['permission:OPD Operation']], function () {
+Route::group(['middleware' => ['permission:OPD Operation'], 'prefix' => 'opd'], function () {
     Route::get('opd-operation-in-opd/{id}', [OpdController::class, 'opd_operation'])->name('opd-operation-in-opd');
     Route::get('opd-operation-details/{opd_id}', [OpdController::class, 'opd_operation_details'])->name('opd-operation-details');
     Route::get('edit-opd-operation-in-opd/{id?}', [OpdController::class, 'edit_opd_operation'])->name('edit-opd-operation-in-opd');
@@ -3338,46 +3397,23 @@ Route::group(['middleware' => ['permission:OPD Operation']], function () {
 //================================= OPD Operation Deratils===================================
 
 
-//================================= IPD Operation Deratils ====================================
-Route::group(['middleware' => ['permission:OPD Operation']], function () {
-    Route::get('ipd-operation-in-ipd/{id?}', [IpdController::class, 'ipd_operation'])->name('ipd-operation-in-ipd');
-    Route::get('ipd-operation-details/{ipd_id?}', [IpdController::class, 'ipd_operation_details_for_a_patient'])->name('ipd-operation-details');
-    Route::get('edit-ipd-operation-in-ipd/{id}', [IpdController::class, 'edit_ipd_operation'])->name('edit-ipd-operation-in-ipd');
-    Route::post('update-operation-booking-details-in-ipd', [IpdController::class, 'update_ipd_operation'])->name('update-operation-booking-details-in-ipd');
-});
-//================================= IPD Operation Deratils===================================
 
 
-//================================= Emg Operation Deratils ====================================
-Route::group(['middleware' => ['permission:EMG Operation']], function () {
-    Route::get('emg-operation-in-emg/{id?}', [EmgController::class, 'emg_operation'])->name('emg-operation-in-emg');
 
-    Route::get('emg-operation-details/{emg_id?}', [EmgController::class, 'emg_operation_details'])->name('emg-operation-details');
-    Route::get('edit-emg-operation-in-emg/{id}', [EmgController::class, 'edit_emg_operation'])->name('edit-emg-operation-in-emg');
-    Route::post('update-operation-booking-details-in-emg', [EmgController::class, 'update_emg_operation'])->name('update-operation-booking-details-in-emg');
-});
-//================================= Emg Operation Deratils===================================
 
 
 //================================= Blood Bank In Opd  ====================================
-Route::group(['middleware' => ['permission:Opd Blood Bank Details']], function () {
+Route::group(['middleware' => ['permission:Opd Blood Bank Details'], 'prefix' => 'opd'], function () {
     Route::get('blood-bank-detials-in-opd/{id?}', [OpdController::class, 'blood_bank_details_in_opd'])->name('blood-bank-detials-in-opd');
 });
 //================================= Blood Bank In Opd ===================================
 
 
-//================================= Blood Bank In Ipd  ====================================
-Route::group(['middleware' => ['permission:Ipd Blood Bank Details']], function () {
-    Route::get('blood-bank-detials-in-ipd/{id?}', [IpdController::class, 'blood_bank_details_in_ipd'])->name('blood-bank-detials-in-ipd');
-});
-//================================= Blood Bank In Ipd ===================================
-
-
-//================================= Blood Bank In Emg  ====================================
-Route::group(['middleware' => ['permission:Emg Blood Bank Details']], function () {
-    Route::get('blood-bank-detials-in-emg/{id?}', [EmgController::class, 'blood_bank_details_in_emg'])->name('blood-bank-detials-in-emg');
-});
-//================================= Blood Bank In Emg ===================================
+// //================================= Blood Bank In Ipd  ====================================
+// Route::group(['middleware' => ['permission:Ipd Blood Bank Details']], function () {
+//     Route::get('blood-bank-detials-in-ipd/{id?}', [IpdController::class, 'blood_bank_details_in_ipd'])->name('blood-bank-detials-in-ipd');
+// });
+// //================================= Blood Bank In Ipd ===================================
 
 
 //================================= Ipd Admission Form  ====================================
@@ -3486,12 +3522,3 @@ Route::group(['middleware' => ['permission:Leave Request']], function () {
     });
 });
 // ======================================== Leave Request ==================================================
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> main
-
-
-

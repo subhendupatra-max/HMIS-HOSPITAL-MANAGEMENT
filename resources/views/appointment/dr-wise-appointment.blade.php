@@ -41,12 +41,12 @@
 
                                         <div class="form-group col-md-4 addopdd">
                                             <label for="slot">Slot </label>
-                                            <select name="slot" class="form-control select2-show-search" id="slot" >
+                                            <select name="slot" class="form-control select2-show-search" id="slot">
                                                 <option value=" ">Select slot...</option>
                                             </select>
                                             @error('slot')
                                             <small class="text-danger">{{ $message }}</sma>
-                                            @enderror
+                                                @enderror
                                         </div>
                                     </div>
 
@@ -64,39 +64,39 @@
             <div class="">
                 <div class="table-responsive">
                     <table class="table table-bordered text-nowrap" id="example">
-                        <thead>
-                            <tr>
-                                <th scope="col">Sl. No</th>
-                                <th scope="col">Patient Name </th>
-                                <th scope="col">Doctor Name</th>
-                                <th scope="col">Appointment Date</th>
-                                <th scope="col">Appointment Priority</th>
-                                <th scope="col">Slot</th>
-                                <th scope="col">Message</th>
+                        <thead class="bg-primary text-white">
+                            <tr class="border-left">
+                                <th class="text-white">Sl. No</th>
+                                <th class="text-white">Patient Name </th>
+                                <th class="text-white">Doctor Name</th>
+                                <th class="text-white">Appointment Date</th>
+                                <th class="text-white">Appointment Priority</th>
+                                <th class="text-white">Slot</th>
+                                <th class="text-white">Message</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (@$appointment[0]->id != null)
                             @foreach ($appointment as $item)
                             <?php
-                            $slot_details = DB::table('slots')->where('id',$item->slot)->first();
-                            $slot_time =  date('H:i A',strtotime($slot_details->from_time))." - ".date('H:i A',strtotime($slot_details->to_time));
-                           ?>
+                            $slot_details = DB::table('slots')->where('id', $item->slot)->first();
+                            $slot_time =  date('H:i A', strtotime($slot_details->from_time)) . " - " . date('H:i A', strtotime($slot_details->to_time));
+                            ?>
                             <tr>
                                 <td>{{$loop->iteration}}</td>
                                 <td>{{$item->patient_details->first_name}} {{$item->patient_details->middle_name}} {{$item->patient_details->last_name}}</td>
                                 <td>{{$item->doctor_details->first_name}} {{$item->doctor_details->last_name}}</td>
                                 <td>{{$item->appointment_date}}</td>
                                 <td>
-                                @if($item->appointment_priority == 'Normal')
+                                    @if($item->appointment_priority == 'Normal')
                                     <span class="badge badge-success">Normal</span>
-                                @elseif($item->appointment_priority == 'Urgent')
+                                    @elseif($item->appointment_priority == 'Urgent')
                                     <span class="badge badge-warning">Urgent</span>
-                                @elseif($item->appointment_priority == 'Very Urgent')
+                                    @elseif($item->appointment_priority == 'Very Urgent')
                                     <span class="badge badge-danger">Very Urgent</span>
-                                @else
+                                    @else
                                     <span class="badge badge-info">Low</span>
-                                @endif
+                                    @endif
                                 </td>
                                 <td>{{$slot_time}}</td>
                                 <td>{!! $item->message !!}</td>
@@ -112,25 +112,23 @@
     </div>
 </div>
 <script>
-    function getSlot(doctor_id,slot=null)
-    {
+    function getSlot(doctor_id, slot = null) {
         var appointment_date = $('#date').val();
-         var sel = '';
+        var sel = '';
         var div_data = '';
         $('#slot').html('<option value="">Select One....</option>');
         $.ajax({
             url: "{{ route('get-slot-details-using-doctor_id') }}",
             type: "POST",
             data: {
-                _token : '{{ csrf_token() }}',
-                appointmentDate : appointment_date,
-                doctorId : doctor_id,
+                _token: '{{ csrf_token() }}',
+                appointmentDate: appointment_date,
+                doctorId: doctor_id,
             },
             success: function(response) {
                 $.each(response, function(key, value) {
-                    if(slot == value.id)
-                    {
-                         sel = 'Selected';
+                    if (slot == value.id) {
+                        sel = 'Selected';
                     }
                     div_data += `<option value="${value.id}" ${sel}>${value.from_time} - ${value.to_time}</option>`;
                 });
@@ -140,7 +138,7 @@
                 console.log(error);
             }
         });
-       
+
     }
 </script>
 @endsection

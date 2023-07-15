@@ -33,15 +33,15 @@
                 <div class="col-md-12 mt-2">
                     <div class="table-responsive">
                         <table class="table table-bordered text-nowrap" id="example">
-                            <thead>
-                                <tr>
-                                    <th class="border-bottom-0">Sl. No</th>
-                                    <th class="border-bottom-0">Date</th>
-                                    <th class="border-bottom-0">Time</th>
-                                    <th class="border-bottom-0">Medicine Catagory</th>
-                                    <th class="border-bottom-0">Medicine Name</th>
-                                    <th class="border-bottom-0">Dosage</th>
-                                    <th class="border-bottom-0">Action</th>
+                        <thead class="bg-primary text-white">
+                        <tr class="border-left">
+                                    <th class="text-white">Sl. No</th>
+                                    <th class="text-white">Date</th>
+                                    <th class="text-white">Time</th>
+                                    <th class="text-white">Medicine Catagory</th>
+                                    <th class="text-white">Medicine Name</th>
+                                    <th class="text-white">Dosage</th>
+                                    <th class="text-white">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

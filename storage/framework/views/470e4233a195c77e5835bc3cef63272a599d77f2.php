@@ -134,7 +134,7 @@
                                                 <?php $__currentLoopData = $opdPrescriptionPathologyDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr id="rowpathology<?php echo e($key); ?>">
                                                     <td>
-                                                        <select class="form-control select2-show-search" name="pathology_test_id[]" id="pathology_test_id<?php echo e($key); ?>" required>
+                                                        <select class="form-control select2-show-search" name="pathology_test_id[]" id="pathology_test_id<?php echo e($key); ?>" >
                                                             <option value=" ">Select test</option>
                                                             <?php $__currentLoopData = $pathology_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                             <option value="<?php echo e($item->id); ?>" <?php echo e($item->id == @$value->test_id ? 'selected' : " "); ?>><?php echo e($item->test_name); ?></option>
@@ -170,7 +170,7 @@
                                                 <?php $__currentLoopData = $opdPrescriptionRadiologyDetails; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <tr id="rowradiology<?php echo e($key); ?>">
                                                     <td>
-                                                        <select class="form-control select2-show-search" name="radiology_test_id[]" id="radiology_test_id<?php echo e($key); ?>" required>
+                                                        <select class="form-control select2-show-search" name="radiology_test_id[]" id="radiology_test_id<?php echo e($key); ?>" >
                                                             <option value=" ">Select test</option>
                                                             <?php $__currentLoopData = $radiology_test; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                             <option value="<?php echo e($item->id); ?>" <?php echo e($item->id == @$value->test_id ? 'selected' : " "); ?>><?php echo e($item->test_name); ?></option>

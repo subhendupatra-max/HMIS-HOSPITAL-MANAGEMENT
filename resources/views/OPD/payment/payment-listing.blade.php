@@ -28,15 +28,15 @@
             <div class="">
                 <div class="table-responsive">
                     <table id="example" class="table table-bordered text-nowrap key-buttons">
-                        <thead>
-                            <tr>
-                                <th class="border-bottom-0">Sl. No</th>
-                                <th class="border-bottom-0">Date</th>
-                                <th class="border-bottom-0">Amount</th>
-                                <th class="border-bottom-0">Received By</th>
-                                <th class="border-bottom-0">Payment Mode</th>
+                        <thead class="bg-primary text-white">
+                            <tr class="border-left">
+                                <th class="text-white">Sl. No</th>
+                                <th class="text-white">Date</th>
+                                <th class="text-white">Amount</th>
+                                <th class="text-white">Received By</th>
+                                <th class="text-white">Payment Mode</th>
                                 @can('edit opd payment','delete opd payment')
-                                <th>Action</th>
+                                <th class="text-white" >Action</th>
                                 @endcan
                             </tr>
                         </thead>
@@ -61,7 +61,7 @@
                                             @endcan
 
                                             @can('print-payment-in-opd')
-                                            <a class="dropdown-item" href="{{ route('print-payment-in-opd',['id'=> base64_encode($item->id),'opd_id'=> base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-trash"></i> Print</a>
+                                            <a class="dropdown-item" href="{{ route('print-payment-in-opd',['id'=> base64_encode($item->id),'opd_id'=> base64_encode($opd_patient_details->id)]) }}"><i class="fa fa-print"></i> Print</a>
                                             @endcan
 
                                         </div>
@@ -77,4 +77,4 @@
         </div>
     </div>
 </div>
-    @endsection
+@endsection

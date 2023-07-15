@@ -224,9 +224,9 @@ class IpdPrescriptionController extends Controller
     {
         $p_id = base64_decode($id);
         EPrescription::where('id', $p_id)->first()->delete();
-        EPresPathologyTest::where('e_prescriptions_id', $p_id)->get()->delete();
-        EPresRadiologyTest::where('e_prescriptions_id', $p_id)->get()->delete();
-        EPrescriptionMedicine::where('e_prescriptions_id', $p_id)->get()->delete();
+        EPresPathologyTest::where('e_prescriptions_id', $p_id)->delete();
+        EPresRadiologyTest::where('e_prescriptions_id', $p_id)->delete();
+        EPrescriptionMedicine::where('e_prescriptions_id', $p_id)->delete();
 
         return redirect()->back()->with('success', 'Prescription Deleted Succesfully');
     }
